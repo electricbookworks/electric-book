@@ -1,0 +1,19 @@
+/*
+ * Code
+ */
+
+pre, code {
+	font-family: $font-code;
+	font-size: 90%;
+	line-height: $line-height-default;
+	white-space: pre-wrap;
+	background-color: #f9f9f9;
+	padding: 0.1em 0.3em;
+	border-radius: 0.2em;
+}
+pre code {
+	padding: 0;
+}
+pre + p {
+	text-indent: 0;
+}

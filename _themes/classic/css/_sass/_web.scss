@@ -1,0 +1,46 @@
+// ---------------------
+// Classic-theme modules
+// ---------------------
+
+// Structural HTML components
+@import "partials/web-wrappers";
+
+// Default typography
+@import "partials/web-base-typography";
+
+// Navigation
+@import "partials/web-nav-bar";
+@import "partials/web-footer";
+
+// Book parts
+@import "partials/web-cover";
+@import "partials/web-title-page";
+@import "partials/web-copyright-page";
+@import "partials/web-dedications";
+@import "partials/web-epigraphs";
+@import "partials/web-toc";
+
+// Book-feature classes
+@import "partials/web-bibliographies";
+@import "partials/web-boxes";
+@import "partials/web-buttons";
+@import "partials/web-code";
+@import "partials/web-definition-lists";
+@import "partials/web-figures";
+@import "partials/web-index";
+@import "partials/web-maths";
+@import "partials/web-notes";
+@import "partials/web-openers";
+@import "partials/web-pullquotes";
+@import "partials/web-quotations";
+@import "partials/web-tables";
+@import "partials/web-valedictions";
+@import "partials/web-verse";
+@import "partials/web-video";
+
+// Type-control classes
+@import "partials/web-smallcaps";
+@import "partials/web-type-fitting";  // E.g. tracking and shrinking
+
+// Logic (if this then that)
+@import "partials/web-reset-sequences"; // This should stay last in the @import list

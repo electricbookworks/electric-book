@@ -1,0 +1,17 @@
+/* 
+ * Dedications
+ */
+
+.dedication-page {
+	margin-top: 6em;
+}
+p.dedication {
+	text-indent: 0;
+	text-align: center;
+	-moz-font-feature-settings: "c2sc", "smcp", "onum";
+	-ms-font-feature-settings: "c2sc", "smcp", "onum";
+	-o-font-feature-settings: "c2sc", "smcp", "onum";
+	-webkit-font-feature-settings: "c2sc", "smcp", "onum";
+	font-feature-settings: "c2sc", "smcp", "onum";
+	font-style: inherit;
+}

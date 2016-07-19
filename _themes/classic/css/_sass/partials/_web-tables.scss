@@ -1,0 +1,45 @@
+/*
+ * Tables 
+ */
+ 
+table {
+	border-collapse: collapse;
+	margin: 0 0 1em 0;
+}
+thead, th, .table-subhead {
+	page-break-after: avoid;
+	background-color: #F2F2F2;
+	line-height: 120%;
+}
+thead, th {
+	font-weight: 600;
+}
+th, td {
+	border: 1px solid #ccc;
+	padding: 0.5em;
+}
+.table-row-stub {
+	font-weight: 600;
+}
+td p, td ol, td ul {
+	margin: 0;
+	padding: 0;
+	-moz-font-feature-settings: "tnum";
+	-ms-font-feature-settings: "tnum";
+	-o-font-feature-settings: "tnum";
+	-webkit-font-feature-settings: "tnum";
+	font-feature-settings: "tnum";
+}
+td ul, td ol {
+	margin: 0;
+	padding: 0 0 0 1em;
+}
+.table-caption {
+	page-break-after:avoid;
+	font-style: italic;
+	text-indent: 0;
+	margin: 1.5em 0 1em 0;
+}
+.table-caption em {
+	font-style: normal;
+}

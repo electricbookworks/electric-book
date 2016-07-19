@@ -1,0 +1,15 @@
+/* Definition lists used in a simple glossary */
+
+.glossary dl, dl.glossary {
+	color: inherit;
+}
+
+/* By default this is commented out of epub.css because ADE doesn't support pseaudo classes 
+.glossary dt {
+	float: left;
+	color: inherit;
+}
+.glossary dt:after {
+    content: ":\00a0";
+}
+*/

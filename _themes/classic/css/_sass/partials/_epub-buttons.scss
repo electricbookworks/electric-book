@@ -1,0 +1,21 @@
+/*
+ * Buttons
+ */
+
+a.button {
+	display: inline-block;
+	background-color: #4f89d2;
+	color: white;
+	font-family: $font-text-secondary;
+	padding: 0.5em;
+	margin: 0;
+	border-radius: 0.2em;
+	text-align: center;
+	text-decoration: none;
+	line-height: 100%;
+	box-shadow: 0.02em 0.02em 0.02em 0.02em #ccc;
+	cursor: pointer;
+}
+a.button:hover {
+	background-color: #4faad2;
+}

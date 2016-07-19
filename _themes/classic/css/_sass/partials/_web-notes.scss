@@ -1,0 +1,58 @@
+/*
+ * Footnotes, endnotes and sidenotes
+ * Note: What kramdown creates as .footnotes are actually, in a paged book context, endnotes.
+ */
+
+.footnotes {
+  margin: 2em 0 0 0;
+  border-top: 1px solid #e9e9e9;
+  color: #555555;
+}
+.footnotes p {
+	text-indent: 0;
+}
+sup:target {
+	padding-top: 3.5em; /* Prevents footnote references from disappearing below the fixed nav bar when linked to. */
+}
+.sidenote {
+	font-family: $font-text-secondary;
+	font-weight: 300;
+	clear: both;
+	float: right;
+	max-width: 10em;
+	min-width: 5em;
+	margin: 0 -12em 0.5em 2em;
+	padding: 0.5em;
+	border-top: 1px solid #eeeeee;
+	text-indent: 0;
+	font-size: 0.8em;
+	font-style: inherit;
+	line-height: 120%;
+	background-color: white;
+}
+	@media only screen 
+	and (max-width: 85em) { /* On narrow screens, text wraps around sidenotes */
+		.sidenote {
+			float: right;
+			position: relative;
+			max-width: 40%;
+			margin: 0 0 0.5em 0.5em;
+		}
+	}
+
+/* If sidenotes are blockquotes, the text will be in a p, so inherit appearance from .sidenote, not p */
+.sidenote p {
+	line-height: inherit;
+	color: inherit;
+}
+/* Some sidenotes are inside boxes and need different margins */
+.box .sidenote {
+	margin-right: -13.25em;
+}
+@media only screen and (max-width: 55em) {
+	.box .sidenote {
+		margin-right: inherit;
+	}
+}
+
+.bottom {} /* Only used for print output, ignored for screen. */

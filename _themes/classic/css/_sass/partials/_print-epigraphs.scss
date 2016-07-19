@@ -1,0 +1,24 @@
+// Epigraphs 
+
+p.epigraph {
+	font-style: italic;
+	text-indent: 0;
+	padding: 0 ($line-height-default * 4);
+	max-width: 20em;
+}
+p.epigraph-source {
+	text-indent: 0;
+	padding: 0 ($line-height-default * 4);
+	max-width: 20em;
+	letter-spacing: 0.025em;
+	font-variant: prince-opentype(c2sc, smcp, onum);
+	font-style: inherit;
+	page-break-before: avoid;
+}
+p.epigraph-source:before {
+	content: ""; // E.g. add a — before
+}
+.epigraph-source + p, .dedication + p { /* Paragraphs after epigraphs and dedications should be flush left after space. */
+	text-indent: 0;
+	margin-top: $line-height-default; 
+}

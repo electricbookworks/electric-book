@@ -1,0 +1,75 @@
+# Prose.io configuration for the EBW Electric Book Workflow.
+# Users with GitHub contributor access can edit your book with http://prose.io. 
+# These settings control what they see. See https://github.com/prose/prose/wiki/Prose-Configuration for more info.
+# (We don't use prose.io live previews with siteurl. they are slower than the default preview and unreliable in multi-site repos.)
+prose:
+  ignore:
+    - .gitattributes
+    - .gitignore
+    - _config.yml
+    - _prose.yml
+    - /_layouts
+    - /_includes
+    - /_site
+    - /css
+    - /*/.gitattributes
+    - /*/.gitignore
+    - /*/_config*
+    - /*/_prose.yml
+    - /*/_layouts
+    - /*/_includes
+    - /*/_site
+    - /*/css
+    - /*/*/0-0-cover.md
+    - /*/*/index.md
+    - /*/linux-pdf.sh
+    - /*/mac-pdf.sh
+    - /*/win-pdf.bat
+    - /*/win-web.bat
+    - /*/*/file-list
+  media: "media"
+  metadata:
+    "":
+      - name: "layout"
+        field:
+          element: "select"
+          label: "Page type"
+          value: "default"
+          options:
+            - name: "Default"
+              value: "default"
+            - name: "Minimal"
+              value: "min"
+      - name: "stylesheet"
+        field:
+          element: "hidden"
+          value: "screen.css"
+      - name: "title"
+        field:
+          element: "text"
+          label: "Chapter title"
+      - name: "style"
+        field:
+          element: "select"
+          label: "Page style"
+          options:
+            - name: "Chapter"
+              value: "chapter"
+            - name: "Collection home page"
+              value: "index"
+            - name: "Cover"
+              value: "cover"
+            - name: "Half-title page"
+              value: "halftitle-page"
+            - name: "Title page"
+              value: "title-page"
+            - name: "Copyright page"
+              value: "copyright-page"
+            - name: "Contents page"
+              value: "contents-page"
+            - name: "Dedication page"
+              value: "dedication-page"
+            - name: "Epigraph page"
+              value: "epigraph-page"
+            - name: "Other frontmatter"
+              value: "frontmatter"

@@ -1,0 +1,14 @@
+/* 
+ * Classes for openers
+ */
+
+p.first { /* A paragraph that starts a new set of paragraphs, with a gap above it. */
+	text-indent: 0;
+	margin-top: $line-height-default; /* Overridden by later rule for paragraphs after headings, blockquotes, lists and definition lists */
+}
+p.chapter-number {
+	font-weight: bold;
+	font-size: $font-size-default * 4;
+	line-height: $line-height-default * 4;
+	margin: 0 0 $line-height-default 0;
+}

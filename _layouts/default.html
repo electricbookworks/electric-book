@@ -1,0 +1,26 @@
+{% if page.type == 'file-list' %}
+
+{{ content }}
+
+
+{% elsif site.output == 'epub' %}
+
+{% include header.html %}
+{% include start-wrapper.html %}
+{{ content }}
+{% include close-wrapper.html %}
+{% include close-body.html %}
+
+
+{% else %}
+
+{% include header.html %}
+{% include nav.html %}
+{% include start-wrapper.html %}
+{{ content }}
+{% include close-wrapper.html %}
+{% include footer.html %}
+{% include close-body.html %}
+
+
+{% endif %}

@@ -1,0 +1,13 @@
+// Pull quotes
+
+ .pullquote {
+	text-indent: 0;
+	font-size: $font-size-default * 2;
+	font-style: italic;
+	text-align: center;
+	margin: $line-height-default 0;
+	line-height: $line-height-default * 2;
+}
+.pullquote + p {
+	text-indent: 0;
+}

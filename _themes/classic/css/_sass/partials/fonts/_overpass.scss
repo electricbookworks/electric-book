@@ -1,0 +1,43 @@
+// Overpass http://overpassfont.org/
+@font-face {
+    font-family: "Overpass";
+    src: url(fonts/Overpass-Regular.ttf);
+}
+@font-face {
+    font-family: "Overpass";
+    src: url(fonts/Overpass-Bold.ttf);
+	font-weight: bold;
+}
+@font-face {
+    font-family: "Overpass";
+    src: url(fonts/Overpass-Regular-Italic.ttf);
+	font-style: italic;
+}
+@font-face {
+    font-family: "Overpass";
+    src: url(fonts/Overpass-Bold-Italic.ttf);
+	font-weight: bold;
+	font-style: italic;
+}
+@font-face {
+    font-family: "Overpass";
+    src: url(fonts/Overpass-Light.ttf);
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Overpass";
+    src: url(fonts/Overpass-Light-Italic.ttf);
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Overpass";
+    src: url(fonts/Overpass-ExtraLight.ttf);
+    font-weight: 200;
+}
+@font-face {
+    font-family: "Overpass";
+    src: url(fonts/Overpass-ExtraLight-Italic.ttf);
+    font-weight: 200;
+    font-style: italic;
+}

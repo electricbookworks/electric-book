@@ -1,0 +1,40 @@
+// Footnotes
+
+// kramdown gives footnote references the class .footnote
+// and the div containing the footnotes .footnotes
+// Styling for sup and sub is in base typography
+
+.footnote {
+	line-height: inherit;
+}
+
+.footnotes {
+	margin: ($line-height-default * 2) 0 0 0;
+	font-size: $font-size-default * 0.9;
+	line-height: $line-height-default * 0.9;
+}
+.footnotes p {
+	text-indent: 0;
+}
+.reversefootnote { // The link back to the footnote reference from the footnote text.
+	display: none;
+}
+.sidenote {
+	font-family: $font-text-secondary;
+	clear: both;
+	float: right;
+	max-width: 10em;
+	min-width: 5em;
+	margin: ($line-height-default * 0.5) 0 ($line-height-default * 0.5) ($line-height-default * 2);
+	padding: $line-height-default * 0.5;
+	border-top: 0.5pt solid #eeeeee;
+	text-indent: 0;
+	font-size: $font-size-default * 0.8;
+	font-style: inherit;
+	line-height: $line-height-default * 0.8;
+}
+.bottom {
+	float: bottom;
+	max-width: 100%;
+	margin: $line-height-default 0 0 0;
+}

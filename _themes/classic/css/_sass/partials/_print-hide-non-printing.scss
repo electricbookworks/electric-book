@@ -1,0 +1,8 @@
+// Hide screen-only and non-printing elements. 
+// By default we add the .non-printing class to screen-only elements like #nav-bar and #footer.
+
+.non-printing, // Anything marked tagged .non-printing
+.sigil_split_marker // Split-markers for epub output with Sigil
+{
+    display: none;
+}

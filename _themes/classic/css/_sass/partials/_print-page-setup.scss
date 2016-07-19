@@ -1,0 +1,43 @@
+/* Set up our basic page margins */
+@page { 
+	size: $page-size;
+	margin-top: $margin-top;
+	margin-bottom: $margin-bottom;
+	margin-outside: $margin-outside;
+	margin-inside: $margin-inside;
+	padding: 0;
+	marks: $crop-marks;
+	prince-bleed: $bleed;
+	prince-trim: $trim;
+}
+/* Name our book-part styles as divs. PrinceXML needs the pages named for @page rules. */
+.title-page {
+	page: title-page;
+}
+.halftitle-page {
+	page: halftitle-page;
+}
+.previous-publications-page {
+	page: previous-publications-page;
+}
+.copyright-page {
+	page: copyright-page;
+}
+.dedication-page {
+	page: dedication-page;
+}
+.frontispiece-page {
+	page: frontispiece-page;
+}
+.chapter {
+	page: chapter;
+}
+.contents-page {
+	page: contents-page;
+}
+.cover {
+	page: cover;
+}
+.frontmatter {
+	page: frontmatter; /* Use for any other frontmatter */
+}

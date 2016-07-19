@@ -1,0 +1,75 @@
+{% include get-slug.html %}
+{% if site.output == 'epub' %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ site.data.meta.titles.[slug].language }}">
+<head>
+    <title>
+    {% if site.data.meta.titles.[slug].title %}
+    {{ site.data.meta.titles.[slug].title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ site.data.meta.series.name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../Styles/{{ page.stylesheet-epub }}" />
+    
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+        <meta name="DC.Title" content="{{ site.data.meta.titles.[slug].title }}" />
+        <meta name="DC.Language" content="{{ site.data.meta.titles.[slug].language }}" />
+        <meta name="DC.Creator" content="{{ site.data.meta.titles.[slug].creator }}" />
+        <meta name="DC.Publisher" content="{{ site.data.meta.titles.[slug].publisher }}" />
+        <meta name="DC.Date" content="{{ site.data.meta.titles.[slug].date }}" />
+        <meta name="DC.Identifier" content="{{ site.data.meta.titles.[slug].epub.identifier }}" scheme="ISBN" />
+        <meta name="DC.Relation" content="{{ site.data.metatitles..[slug].print.identifier }}" />
+        <meta name="DC.Description" CONTENT="{{ site.data.meta.titles.[slug].description }}" />
+
+</head>
+<body class="{{ page.style }}">
+
+{% elsif site.output == 'pdf-ebook' %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ site.data.meta.titles.[slug].language }}" xml:lang="{{ site.data.meta.titles.[slug].language }}">
+<head>
+    <title>
+    {% if site.data.meta.titles.[slug].title %}
+    {{ site.data.meta.titles.[slug].title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ site.data.meta.series.name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ site.baseurl }}/_themes/{{ site.theme }}/css/{{ page.stylesheet-web }}" />
+    <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/_themes/{{ site.theme }}/css/{{ page.stylesheet-print }}" />
+    <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/_themes/{{ site.theme }}/css/mods/print-no-bleed.css" />
+</head>
+<body class="{{ page.style }}">
+
+{% else %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ site.data.meta.titles.[slug].language }}" xml:lang="{{ site.data.meta.titles.[slug].language }}">
+<head>
+    <title>
+    {% if site.data.meta.titles.[slug].title %}
+    {{ site.data.meta.titles.[slug].title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ site.data.meta.series.name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ site.baseurl }}/_themes/{{ site.theme }}/css/{{ page.stylesheet-web }}" />
+    <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/_themes/{{ site.theme }}/css/{{ page.stylesheet-print }}" />
+
+    <!-- Google Analytics, runs unless this is running through PrinceXML -->
+    <script>
+        if (typeof Prince  === "undefined") {
+            <!--Paste any Google Analytics code here. The surrounding if statement stops the script slowing down PrinceXML-->
+        }
+    </script>
+
+</head>
+<!--ontouchstart="" onmouseover="" required for iOS devices-->
+<body class="{{ page.style }}" ontouchstart="" onmouseover="">
+
+{% endif %}

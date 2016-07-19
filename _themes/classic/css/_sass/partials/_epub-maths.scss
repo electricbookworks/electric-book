@@ -1,0 +1,9 @@
+/* Automatic fractions */
+.fractions { 
+	-moz-font-feature-settings: "frac"; 
+	-ms-font-feature-settings: "frac"; 
+	-o-font-feature-settings: "frac"; 
+	-webkit-font-feature-settings: "frac"; 
+	font-feature-settings: "frac"; 
+	font-style: inherit;
+}

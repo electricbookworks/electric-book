@@ -1,0 +1,33 @@
+/*
+ * Footnotes, endnotes and sidenotes
+ * Note: What kramdown creates as .footnotes are actually, in a paged book context, endnotes.
+ */
+
+.footnotes {
+  margin: 2em 0 0 0;
+  border-top: 1px solid #e9e9e9;
+}
+.footnotes p {
+	text-indent: 0;
+}
+sup:target {
+	padding-top: 3.5em; /* Prevents footnote references from disappearing below the fixed nav bar when linked to. */
+}
+.sidenote {
+	font-family: $font-text-secondary;
+	clear: both;
+	float: right;
+	min-width: 5em;
+	padding: 0.5em;
+	border-top: 1px solid #eeeeee;
+	text-indent: 0;
+	font-size: 0.8em;
+	font-style: inherit;
+	line-height: 120%;
+	position: relative;
+	max-width: 40%;
+	margin: 0 0 0.5em 0.5em;
+	background-color: white;
+}
+
+.bottom {} /* Only used for print output, ignored for screen. */

@@ -1,0 +1,30 @@
+/* 
+ * Epigraphs
+ */
+.epigraph-page {
+	margin-top: 6em;
+}
+p.epigraph {
+	font-style: italic;
+	text-indent: 0;
+	padding: 0 4em;
+	max-width: 20em;
+}
+p.epigraph-source {
+	text-indent: 0;
+	padding: 0 4em;
+	max-width: 20em;
+	-moz-font-feature-settings: "c2sc", "smcp", "onum";
+	-ms-font-feature-settings: "c2sc", "smcp", "onum";
+	-o-font-feature-settings: "c2sc", "smcp", "onum";
+	-webkit-font-feature-settings: "c2sc", "smcp", "onum";
+	font-feature-settings: "c2sc", "smcp", "onum";
+	font-style: inherit;
+}
+p.epigraph-source:before {
+	content: ""; // E.g. "– "
+}
+.epigraph-source + p, .dedication + p { /* Paragraphs after epigraphs and dedications should be flush left after space. */
+	text-indent: 0;
+	margin-top: 1em; 
+}

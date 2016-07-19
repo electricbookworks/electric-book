@@ -1,0 +1,86 @@
+########
+# SERIES
+########
+
+series:
+  # The name of the organisation or entity that owns this series
+  organisation: "My Organisation"
+  # A live web address for the organisation
+  url: "https://example.com/"
+  # The name of the series of books in this folder.
+  name: "My Series"
+  # A one-liner about this series. Useful for Open Graph metadata.
+  description: "A new series of books."
+
+########
+# TITLES
+########
+
+## Metadata follows [Dublin Core](https://en.wikipedia.org/wiki/Dublin_Core#DCMI_Metadata_Terms)
+## Custom fields added to standard DC terms: subtitle, publisher URL
+## When listing files, exlude file extensions, and surround them in quotes especially if they contain only numbers.
+
+titles:
+  book-template: # change `book-template` to match your book's folder name exactly
+    title: "The Title"
+    subtitle: ""
+    creator: "A. N. Author" # E.g. the author
+    contributor: "" # E.g. other contributors
+    subject: "Fiction" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
+    description: "This is my awesome book." # E.g. the blurb
+    publisher: "My Brand" # E.g. the publisher, imprint or brand name
+    publisher-url: ""
+    date: "2015-12-31" # YYYY-MM-DD e.g. publication date
+    modified: "2016-06-09" # YYYY-MM-DD e.g. date of last revision
+    type: "Novel" # e.g. Novel, Poetry, Memoir
+    format: "Digital" # e.g. Paperback, Digital download, Digital online
+    identifier: "" # e.g. ISBN or UUID
+    source: "" # e.g. parent ISBN or ISTC
+    language: "en" # use ISO 639-1, 639-2, or 639-3 codes (in that order of preference)
+    relation: "" # e.g. other edition ISBN
+    coverage: "" # e.g. geographic place or chronological time span
+    rights: "All rights reserved.<br />No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher." # e.g. a copyright statement
+    products: # Metadata for each product for this title (only use values that override parent metadata)
+      print: 
+        date: "2016-05-07" # YYYY-MM-DD e.g. publication or creation date
+        format: "Print" # e.g. Paperback, Digital download, Digital online
+        identifier: "" # e.g. ISBN or UUID
+        files:
+          - "0-1-titlepage"
+          - "0-2-copyright"
+          - "0-3-contents"
+          - "01"
+          - "02"
+      web:
+        date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
+        format: "Digital online" # e.g. Paperback, Digital download, Digital online
+        identifier: "" # e.g. ISBN or UUID
+        files: # To add a file to web navigation, give a file a value, e.g. 0-4-preface: "Preface"
+          - "0-1-titlepage"
+          - "0-2-copyright"
+          - "0-3-contents"
+          - "01": "Chapter One"
+          - "02": "Chapter Two"
+        footer: "" # Text that appears in the footer of the website. You can include HTML.
+      epub:
+        date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
+        format: "Digital download" # e.g. Paperback, Digital download, Digital online
+        identifier: "" # e.g. ISBN or UUID
+        files:
+          - "0-0-cover"
+          - "0-1-titlepage"
+          - "0-2-copyright"
+          - "0-3-contents"
+          - "01"
+          - "02"
+      pdf-ebook:
+        date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
+        format: "Digital download" # e.g. Paperback, Digital download, Digital online
+        identifier: "" # e.g. ISBN or UUID
+        files:
+          - "0-0-cover"
+          - "0-1-titlepage"
+          - "0-2-copyright"
+          - "0-3-contents"
+          - "01"
+          - "02"

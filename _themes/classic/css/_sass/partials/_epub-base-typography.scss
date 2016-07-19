@@ -1,0 +1,118 @@
+/* General typography */
+
+body {
+	font-family: $font-text-main;
+	font-size: $font-size-default;
+	line-height: $line-height-default;
+	-moz-font-feature-settings: "liga", "kern";
+	-ms-font-feature-settings: "liga", "kern";
+	-o-font-feature-settings: "liga", "kern";
+	-webkit-font-feature-settings: "liga", "kern";
+	font-feature-settings: "liga", "kern";
+} 
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 600;
+	line-height: 120%;
+	page-break-after: avoid;
+	margin: 2em 0 1em 0;
+}
+h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
+	padding-top: 3.5em; /* Prevents #-linked headings from disappearing below the fixed nav bar. */
+}
+h1 {
+	line-height: 100%;
+}
+h1 strong:first-of-type { /* Useful for chapter numbers: make the number first and bold in the h1 */
+	display: block;
+	margin: 0 0 0.5em 0;
+}
+h2 {
+	margin: 1.5em 0 0.5em 0;
+	padding-top: 0.5em;
+}
+h3 {
+	margin: 1.5em 0 0.5em 0;
+	padding-top: 0.5em;
+}
+h4 {
+	font-style: italic;
+}
+p, ul, ol {
+	line-height: $line-height-default;
+	-moz-font-feature-settings: "onum";
+	-ms-font-feature-settings: "onum";
+	-o-font-feature-settings: "onum";
+	-webkit-font-feature-settings: "onum";
+	font-feature-settings: "onum";
+}
+p {
+	margin: 0;
+	text-indent: 1em;
+}
+sup, sub {
+	line-height: 100%;
+}
+
+/* Blockquotes */
+
+blockquote {
+	margin: 1em 0 0.5em 0;
+	padding: 0 1em;
+	line-height: 120%;
+	color: #444444;
+}
+blockquote p {
+	line-height: $line-height-default;
+}
+blockquote p:first-of-type {
+	text-indent: 0;
+}
+blockquote p:last-of-type, blockquote ol, blockquote ul {
+	margin: 0 0 1em 0;
+}
+
+/* Definition lists */
+
+dl {
+	color: #666;
+}
+dt {
+	margin: 0 0 0.25em 0;
+	font-weight: 600;
+}
+dd {
+	margin: 0 0 1em 1em;
+}
+
+/* Code */
+
+pre, code {
+	font-family: $font-code;
+	white-space: pre-wrap;
+	background-color: #f9f9f9;
+	padding: 0.1em 0.3em;
+	border-radius: 0.2em;
+	font-weight: 200;
+	font-size: 0.9em;
+}
+pre code {
+	padding: 0;
+}
+
+/* Links */
+
+a {
+	text-decoration: none;
+	color: #5f738c;
+}
+
+/* Horizontal rules */
+
+// Used in text as dividers (*** in markdown)
+hr {
+    content: "***";
+    border: 0;
+    font-family: $font-display-main;
+    text-align: center;
+    margin: 1em 0;
+}

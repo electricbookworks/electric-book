@@ -1,0 +1,4 @@
+/* Start these layouts with a big top margin */
+.halftitle-page, .title-page, .dedication-page, .epigraph-page, .contents-page, .chapter {
+	margin-top: $start-depth;
+}

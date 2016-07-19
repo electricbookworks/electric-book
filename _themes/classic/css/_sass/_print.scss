@@ -1,0 +1,71 @@
+// WHAT IS THIS?
+// This is print typography for the EBW book framework (https://github.com/electricbookworks/book-framework).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// Jekyll will compile the finished CSS for your books in _site/css.
+// It is designed specifically for use with PrinceXML (http://princexml.com)
+// 
+// HOW TO USE IT
+// This file, print.scss, sets the parent print styles for all books in its collection.
+//
+// Switch existing book-design elements on or off with double-slash line comments.
+// Elements are gathered in design sets. Pick one or mix-n-match. And set variables, like fonts.
+// Our 'Classic' design set is on by default.
+//
+// To create a child stylesheet for a specific book, copy this file, change variables and if necessary add imports.
+// For new CSS, create new partials to import (named sensibly and saved in _scss), and/or add new CSS at the bottom of this file.
+// Save the child stylesheet alongside this file with a different name, e.g. print-child-mybook.scss.
+// Use the parent and the child stylesheets (in that order) when creating PDFs with Prince.
+
+// First, let's set character encoding. Don't change this.
+@charset "utf-8";
+
+// ----------------------
+// Hide unwanted elements
+// ----------------------
+
+@import "partials/hide-footer";
+@import "partials/hide-nav-bar";
+
+// --------------------------------------------
+// Page setup and control, avoid changing these
+// --------------------------------------------
+
+@import "partials/print-pdf-view"; // Sets the default initial view on PDFs
+@import "partials/print-page-setup"; // Sets up the page from your variables
+@import "partials/print-page-break-tools"; // Provides classes for semantic page breaks
+@import "partials/print-hide-non-printing"; // Hides anything .non-printing
+@import "partials/print-hide-video"; // Hides video from print output
+@import "partials/print-fitting"; // Classes for floating, tracking, shrinking, etc.
+@import "partials/print-hyphenation"; // Sets hyphenation dictionary
+
+// ---------------------
+// Classic-theme modules
+// ---------------------
+
+@import "partials/print-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
+@import "partials/print-page-start-depth"; // Sets a top margin on opening pages
+@import "partials/print-base-typography"; // Default typography for HTML elements
+@import "partials/print-verse"; // Default typography for verse, poetry, lyrics
+@import "partials/print-bibliographies";
+@import "partials/print-epigraphs"; // 
+@import "partials/print-dedications"; // 
+@import "partials/print-definition-lists"; // Including .glossary
+@import "partials/print-pullquotes"; // Supports .pullquote
+@import "partials/print-boxes"; // 
+@import "partials/print-code"; // For computer code and preformatted text
+@import "partials/print-tables"; // 
+@import "partials/print-figures"; // 
+@import "partials/print-notes"; // Footnotes, endnotes, sidenotes
+@import "partials/print-title-pages"; // Half-title and title pages
+@import "partials/print-copyright-page"; // 
+@import "partials/print-toc"; // Tables of contents
+@import "partials/print-front-cover"; // Front-cover image for PDF ebooks
+@import "partials/print-smallcaps"; // 
+@import "partials/print-maths"; // 
+@import "partials/print-valedictions"; // 
+@import "partials/print-quotations"; // 
+@import "partials/print-openers"; // 
+@import "partials/print-index"; // 
+@import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
+@import "partials/print-page-headers-footers-content"; // Sets content for headers and footers
+@import "partials/print-page-headers-footers-style"; // Sets styling for headers and footers

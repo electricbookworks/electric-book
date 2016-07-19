@@ -1,0 +1,27 @@
+// After certain elements, don't indent paragraphs
+// and remove any top-margin inadvertently added with .first or similar
+
+h1 + p, // Paragraphs after headings
+h2 + p, 
+h3 + p, 
+h4 + p, 
+h5 + p, 
+h6 + p, 
+blockquote + p, // Paragraphs after blockquotes
+ol + p, // Paragraphs after ordered lists
+ul + p, // Paragraphs after unordered lists
+dl + p, // Paragraphs after definition lists
+pre + p, // Paragraphs after code blocks
+h1 + p.sidenote + p, // Paragraphs after headings with a sidenote in between
+h2 + p.sidenote + p, 
+h3 + p.sidenote + p, 
+h4 + p.sidenote + p, 
+h5 + p.sidenote + p, 
+h6 + p.sidenote + p,
+.box + p.sidenote + p, // Paragraphs after boxes with a sidenote in between
+table + p.sidenote + p, // Paragraphs after tables with a sidenote in between
+.pullquote + p // Paragraphs after pullquotes
+{
+	text-indent: 0;
+	margin-top: 0; 
+}

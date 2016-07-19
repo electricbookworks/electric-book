@@ -1,0 +1,120 @@
+# This is the configuration of your book-making machine.
+# To store book metadata, rather use the _data folder.
+
+# ------------------------------
+# UPDATE THESE SETTINGS ON SETUP
+# ------------------------------
+
+# The primary language used in this series. You can set the language for each book individually below at 'defaults'. 
+# To understand what language tags to use, read: http://www.w3.org/International/articles/language-tags/ 
+# For the registry of tags: http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry 
+# Useful lookup tool: http://r12a.github.io/apps/subtags/
+language: en
+
+# What theme are you using?
+# Use only the theme's folder name here.
+theme: classic
+
+# Which file is your standard book landing page in this series?
+# E.g. the cover (e.g. `0-0-cover`) or contents page (e.g. `0-3-contents`).
+# Do not use a file extension here.
+start-page: "0-3-contents"
+
+# While file is your contents page?
+# If your books don't have one, use the landing page again.
+# Do not use a file extension here.
+contents-page: "0-3-contents"
+
+# Which edition are we creating? You can leave this as `default`.
+# This can be used to create different editions of a book using Liquid control-flow tags, 
+# e.g. in includes, layouts and file-list
+edition: "default"
+#edition: ""
+
+# If you're using GitHub Pages, make this the name of your repo, e.g. /electric-book-workflow
+# See http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
+# Otherwise you can leave it blank.
+baseurl: ""
+
+# --------------------------------------------
+# CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
+# --------------------------------------------
+
+# Output different HTML structures based on intent.
+# You can change these here, or rather override by loading two config files at the command line, e.g.:
+# jekyll build -c _config.yml,_config.epub.yml
+output: "print"
+#output: "web"
+#output: "epub"
+#output: "pdf-ebook"
+#output: "lightning-source-colour"
+
+# Which image set shall we use?
+# This should be the path to the relevant set, relative to the markdown files.
+image-set: "images"
+#image-set: "images/epub"
+#image-set: "images/web"
+#image-set: "images/print"
+#image-set: "images/pdf-ebook"
+
+# Jekyll will ignore these files and folders. 
+# Useful for temporarily speeding up processing for particular files
+# Once your CSS is stable, exclude `css` here and keep it below under `keep_files`.
+exclude:
+#- css
+#- book-template
+- linux-pdf.bat
+- mac-pdf.bat
+- win-pdf.bat
+- win-web.bat
+- win-epub.bat
+- win-pdf-ebook.bat
+- js/node_modules
+
+# Can be useful to stop Jekyll overwriting files in _site.
+# E.g. generate CSS once, then exclude above but keep here to make content regeneration faster.
+keep_files:
+#- css
+
+# ----------------------------
+# DO NOT CHANGE THESE SETTINGS
+# ----------------------------
+
+# Version of this EBW template
+version: "0.1.4"
+
+# Leave this unchanged as http://localhost:4000 unless you really know what you're doing here. This is the URL that Jekyll will run at by default locally.
+url: http://localhost:4000
+
+# Leave this unchanged as kramdown unless you really know how and why to change your markdown processor
+markdown: kramdown
+
+# Leave this unchanged as none. This way, your book's chapters will all generate correctly named in one folder.
+# This is really useful for grabbing all your HTML files at once for including in epubs or sending to PrinceXML.
+permalink: none
+
+# Leave this unchanged. It tells Jekyll where to find Sass partials
+# (see http://jekyllrb.com/docs/assets/#sassscss)
+# and whether to compress stylesheets
+sass:
+  sass_dir: /_themes/
+  style: compressed
+
+# Jekyll should include these files which would otherwise be ignored.
+include:
+- _themes
+
+# Set default values here for all documents/pages in this publication. 
+# (For technical details, see http://jekyllrb.com/docs/configuration/#front-matter-defaults).
+# Store only site configurations here, e.g. stylesheets, page styles, layouts, image folder, start page
+# Store all book metadata (title, author, ISBNs) in _data, one file per book, named for its slug/path folder
+defaults: 
+  -
+    scope: # Sets default page frontmatter for all files in this series (an empty string "" for path means all files).
+      path: ""
+    values:
+      layout: "default"
+      style: "chapter"
+      stylesheet-print: "print.css"
+      stylesheet-web: "web.css"
+      stylesheet-epub: "epub.css"

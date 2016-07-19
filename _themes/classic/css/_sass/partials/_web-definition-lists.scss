@@ -1,0 +1,12 @@
+/* Definition lists used in a simple glossary */
+
+.glossary dl, dl.glossary {
+	color: inherit;
+}
+.glossary dt {
+	float: left;
+	color: inherit;
+}
+.glossary dt:after {
+    content: ":\00a0";
+}

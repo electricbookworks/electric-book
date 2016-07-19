@@ -1,0 +1,109 @@
+---
+# Screen styles
+---
+
+// WHAT IS THIS?
+// This is screen typography for the EBW book framework (https://github.com/electricbookworks/book-framework).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// Jekyll will compile the finished CSS for your books in _site/css.
+// 
+// HOW TO USE IT
+// This file, screen.scss, sets the parent screen styles for all books in its collection.
+//
+// Switch existing book-design elements on or off with double-slash line comments.
+// Elements are gathered in design sets. Pick one or mix-n-match. And set variables, like fonts.
+// Our 'Classic' design set is on by default.
+//
+// To create a child stylesheet for a specific book, copy this file, change variables and if necessary add imports.
+// For new CSS, create new partials to import (named sensibly and saved in _scss), and/or add new CSS at the bottom of this file.
+// Save the child stylesheet alongside this file with a different name, e.g. screen-child-mybook.scss.
+// (Remember to name the child stylesheet, with a .css extension, for each book in _config.yml, e.g. screen-child-mybook.css.)
+
+// First, let's set character encoding. Don't change this.
+@charset "utf-8";
+
+// ----------------------
+// Hide unwanted elements
+// ----------------------
+
+// Uncomment these @imports to hide elements completely (also comment out @imports for these elements):
+// @import "hide-footer";
+// @import "hide-nav-bar";
+
+// -------------
+// Set variables
+// -------------
+
+$font-text-main: "Crimson", serif;
+$font-text-secondary: "Source Sans Pro", sans-serif;
+$font-display-main: "Source Sans Pro", sans-serif;
+$font-display-secondary: "Crimson", serif;
+$font-code: "Inconsolata", monospace;
+
+$font-size-default: 1.2em;
+$line-height-default: 150%;
+
+// ----------------------------------------------------
+// Import font files (@font-face) for fonts you specify
+// ----------------------------------------------------
+
+//@import "fonts/linux-libertine";
+@import "classic/css/_sass/partials/fonts/source-sans-pro";
+@import "classic/css/_sass/partials/fonts/inconsolata";
+@import "classic/css/_sass/partials/fonts/crimson";
+
+// -------------------
+// Import master theme
+// -------------------
+
+// Classic theme
+@import "classic/css/_sass/web";
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom style rules here.
+
+// E.g. uncomment the following lines to use space between paragraphs rather than text indents.
+//p {
+//    margin-bottom: 1em;
+//    text-indent: 0;
+//}
+
+// Half-title page
+
+.halftitle-page {}
+
+// Title page
+
+.title-page {}
+
+// Previous publications page ('Also by the author')
+
+.previous-publications-page {}
+
+// Copyright page
+
+.copyright-page {}
+
+// Table of contents
+
+.contents-page {}
+
+// Dedication page
+
+.dedication-page {}
+
+// Epigraph page
+
+.epigraph-page {}
+
+// Frontispiece
+
+.frontispiece-page {}
+
+// Other frontmatter
+
+.frontmatter {}
+

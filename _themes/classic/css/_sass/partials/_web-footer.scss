@@ -1,0 +1,38 @@
+/* 
+ * Footer
+ */
+
+#footer {
+	border-top: 1px solid #f2f2f2;
+	margin: 2em 0 0 0;
+	padding: 1em 0.3em 2em 0.3em;
+	width: 100%; // Prevents floating when preceding elemtns float or flex
+}
+.footer-content {
+	clear: both;
+	max-width: 40em;
+	margin: auto;
+	color: grey;
+}
+#footer p,
+#footer ol,
+#footer ul {
+	font-size: 0.8em;
+	text-indent: 0;
+	margin: 0 0 0.5em 0;
+}
+#footer a.footer-publisher:after,
+#footer a.footer-series:after,
+#footer a.footer-book:after {
+	content: " \2022"
+}
+
+// Add a little space below the text on the home page
+.home {
+	margin-bottom: 2em;
+}
+
+// No automatic book title on the home (index) page, because we're not in a book yet
+.home #footer a.footer-book {
+	display: none;
+}

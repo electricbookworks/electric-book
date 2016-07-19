@@ -1,0 +1,70 @@
+// Navigation
+ 
+#nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: white;
+    width: 100%;
+    opacity: 0.9;
+    border-bottom: 1px solid #f2f2f2;
+    z-index: 1;
+    font-size: 0.8em;
+    font-family: $font-text-secondary;
+    font-weight: 300;
+    color: #333333;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    ul { // Top level list
+        list-style-type: none;
+        float: right;
+        margin: 0;
+        li {
+            float: left;
+            margin: 0.5em 2em 0.5em 0;
+            &.nav-page-active:before {
+                content: "\2022 ";
+            }
+        }
+        &:hover ul,
+        &:active ul,
+        &:focus ul {
+            display: inline-block;
+        }
+        ul { // Nested list of chapters
+            display: none; // this gets overridden on hover/active/focus
+            clear: both; // so that this falls beneath the parent list
+            //position: absolute;
+            text-align: right;
+            li {
+                float: none;
+                position: relative;
+            }
+        }
+    }
+    a {
+        text-decoration: none;
+        color: inherit;
+        &.nav-series:after,
+        &.nav-book:after {
+            content: " \2022"
+        }
+        &:hover {
+            color: #666666;
+        }
+    }
+}
+
+// Hide navigation on series-home and cover pages
+.home #nav,
+.cover #nav {
+    display: none;
+}
+
+// Narrow screens
+@media only screen 
+and (max-height: 320px) { // Let nav-bar scroll out of view on small screens
+    #nav {
+        position: relative;
+    }
+}

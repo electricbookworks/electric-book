@@ -1,0 +1,24 @@
+/*
+ * Boxes
+ */
+ 
+.box {
+	background-color: inherit;
+	color: inherit;
+	font-weight: inherit;
+	font-size: inherit;
+	border: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 1em 1em 0 1em;
+	box-shadow: 2px 2px 2px 0 #f2f2f2;
+}
+p.box {
+	padding-bottom: 1em;
+	text-indent: 0;
+}
+.box h1, .box h2, .box h3, .box h4, .box h5, .box h6 {
+	margin-top: 0;
+}
+.box dl:first-of-type { /* Definition lists inside a box */
+	margin-top: 0;
+}

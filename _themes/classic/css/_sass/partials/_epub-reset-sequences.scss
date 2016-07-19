@@ -1,0 +1,31 @@
+/* Finally, set flush left and override any top-margin inadvertently added with .first or similar on a paragraph after a heading, blockquote, list, code, or definition list, or after sidenotes after headings, tables or boxes */
+
+h1 + p, 
+h2 + p, 
+h3 + p, 
+h4 + p, 
+h5 + p, 
+h6 + p, 
+blockquote + p, 
+ol + p, 
+ul + p, 
+dl + p, 
+pre + p, 
+h1 + p.sidenote + p, 
+h2 + p.sidenote + p, 
+h3 + p.sidenote + p, 
+h4 + p.sidenote + p, 
+h5 + p.sidenote + p, 
+h6 + p.sidenote + p,
+.box + p.sidenote + p, 
+table + p.sidenote + p { 
+	text-indent: 0;
+	margin-top: 0; 
+}
+
+.box + p {
+	text-indent: 0;
+}
+pre + p {
+	text-indent: 0;
+}

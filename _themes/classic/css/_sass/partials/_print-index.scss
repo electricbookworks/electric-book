@@ -1,0 +1,30 @@
+// Index
+.reference-index {
+	columns: 2;
+	font-size: $font-size-default * 0.8;
+}
+.reference-index li {
+	list-style-type: none;
+	margin: 0 0 0 ($line-height-default * 1);
+	text-indent: $line-height-default * (-1);
+	column-break-inside: avoid;
+}
+.reference-index li li {
+	margin: 0 0 0 ($line-height-default / 2);
+}
+.reference-index a {
+	content: target-counter(attr(href), page);
+}
+.reference-index a:after {
+	content: ", ";
+}
+.reference-index a:last-of-type:after {
+	content: "";
+}
+.reference-index .duplicate {
+	display: none;
+}
+a.indexed {
+	color: inherit;
+	text-decoration: none;
+}

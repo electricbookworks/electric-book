@@ -1,0 +1,35 @@
+/*
+ * Title-page 
+ */
+
+.title-page p {
+	text-indent: 0;
+}
+.title-page-title {
+	font-size: 3em;
+	font-weight: 700;
+	margin: 20% 0 0 0;
+	line-height: 100%;
+	text-indent: 0;
+	string-set: book-title content();
+}
+.title-page-subtitle {
+	font-size: 3em;
+	font-weight: 400;
+	margin: 0 0 1em 0;
+	line-height: 100%;
+	text-indent: 0;
+}
+.title-page-author {
+	font-size: 1.5em;
+	margin: 0 0 2em 0;
+	text-indent: 0;
+}
+.title-page-publisher {
+	font-size: 1em;
+	margin: 2em 0;
+	text-indent: 0;
+}
+.title-page-logo {
+	width: 100px;
+}

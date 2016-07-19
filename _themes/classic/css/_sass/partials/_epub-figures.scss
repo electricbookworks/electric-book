@@ -1,0 +1,40 @@
+/* 
+ * Figures 
+ */
+ 
+/* Figures. Note: we use the blockquote element to wrap figures and their captions in valid XHTML. 
+ * This keeps them EPUB2 compatible (unlike the <figure> element, which is not.)
+ * Use the .figure class for the blockquote wrapping an image and a caption. Add .fixed, .small and/or .large for layout and size options. */
+
+blockquote.figure {
+	clear: both;
+	page-break-inside: avoid;
+	background-color: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	color: #666;
+	margin: 1em 0;
+	padding: 0.5em;
+}
+.figure p {
+	clear: both;
+	text-align: center;
+	page-break-inside: avoid;
+	page-break-before: avoid;
+}
+.figure p img {
+	padding: 0.5em 0 1em 0;
+	margin: 0 auto;
+	max-width: 100%; 
+	object-fit: scale-down;
+}
+.figure p:nth-child(2) { /* This controls the appearance of captions added as a paragraph following the image inside the blockquote */
+	padding: 0.5em 0 0 0;
+	text-align: center;
+	text-indent: 0;
+}
+.figure.x-small p img {}
+.figure.small p img {}
+.figure.large p img {
+	max-height:inherit;
+}

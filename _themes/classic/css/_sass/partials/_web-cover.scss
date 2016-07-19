@@ -1,0 +1,33 @@
+// Cover image. This is useful for landing pages for individual books.
+
+// No nav bar obscuring cover image
+.cover #nav-bar {
+    display: none;
+}
+body.cover {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+.cover h1 {
+	line-height: 0;
+	font-size: 0;
+}
+p.cover {
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
+	text-indent: 0;
+	height: 100vh;
+}
+img.cover {
+	max-height: 100%;
+	max-width: 100%;
+	border: 1px solid #f9f9f9;
+}
+img.thumbnail {
+	margin: 0 2em 0 0;
+	height: 10em;
+	float: left;
+	border: 1px solid #f9f9f9;
+}

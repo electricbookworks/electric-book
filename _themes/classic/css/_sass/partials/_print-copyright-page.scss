@@ -1,0 +1,23 @@
+/*
+ * Copyright page
+ */
+ 
+.copyright-page {
+	position: absolute;
+	bottom: 0;	
+}
+.copyright-page h1 {
+	font-size: $font-size-default * 0.8;
+	line-height: $line-height-default * 0.8;
+	margin: $line-height-default 0;
+	letter-spacing: 0.025em;
+	font-variant: prince-opentype(c2sc, smcp, onum);
+	text-align: left;
+}
+.copyright-page p, .copyright-page li {
+	margin: 0 0 ($line-height-default * 0.8) 0;
+	text-indent: 0;
+	font-size: $font-size-default * 0.8;
+	line-height: $line-height-default * 0.8;
+	hyphens: none; /* Prince will not hyphenate here */
+}

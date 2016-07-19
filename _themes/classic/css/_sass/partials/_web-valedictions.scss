@@ -1,0 +1,9 @@
+// A valediction, the sign-off at the end of a letter
+.valediction {
+	text-indent: 0;
+	margin: 1em 0;
+	font-style: italic;
+}
+.valediction + p {
+	text-indent: 0; // Paragraphs after a valediction should be flush left
+}

@@ -1,0 +1,57 @@
+/*
+ * Table of Contents page. Also styles page-reference lists marked as .page-ref-list
+ */
+
+.contents-page {
+	margin-left: auto;
+	margin-right: auto;
+	a::after, .page-ref-list a::after { 
+		content: leader(" ") target-counter(attr(href), page);
+		font-variant: prince-opentype(lnum);
+	}
+	a.frontmatter-reference::after, .page-ref-list a.frontmatter-reference::after {
+		content: leader(" ") target-counter(attr(href), page, $frontmatter-reference-style);
+	}
+	ul, ol {
+		list-style-type: none;
+	}
+	li {
+		margin: 0 0 ($line-height-default / 2) 0;
+	}
+	li li {
+		margin: 0;
+	}
+	h2 {
+		font-size: $font-size-default * 1.2;
+		margin: $line-height-default 0 ($line-height-default / 2) 0;
+	}
+}
+
+/* TOCs in individual pages, created in kramdown with a placeholder ol/ul followed by {:toc} */
+
+ul#markdown-toc, ol#markdown-toc {
+	list-style-type: none;
+	border-top: 0.5pt solid #f9f9f9;
+	border-bottom: 0.5pt solid #f9f9f9;
+	padding: $line-height-default 0;
+	margin: ($line-height-default * 2) 0;
+}
+#markdown-toc {
+	ul, ol {
+		list-style-type: none;
+		margin: 0;
+	}
+	li {
+		font-variant: prince-opentype(lnum);
+		margin: 0;
+	}
+	li li {
+		margin-left: $line-height-default;
+	}
+	a {
+		text-decoration: none;
+	}
+	a::after {
+		content: leader(" ") target-counter(attr(href), page);
+	}
+}

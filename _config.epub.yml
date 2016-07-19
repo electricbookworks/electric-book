@@ -1,0 +1,4 @@
+# Addon config the sets layout to epub for epub-compatible-HTML output
+# To run from command line:
+# jekyll build -c _config.yml,config.epub.yml
+output: "epub"
