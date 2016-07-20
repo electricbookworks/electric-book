@@ -1,10 +1,17 @@
 ---
-Description: Print-output settings for the Electric Book Workflow
-Author: Electric Book Works
-URL: http://github.com/electricbookworks/electric-book-workflow
-Version: 1.0.0
-Syntax: Sass
+# Print styles
 ---
+
+// WHAT IS THIS?
+// This is typography for the Electric Book Classic theme (http://electricbook.io).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// Jekyll will compile the finished CSS for your books in _site/_themes/classic/css.
+// 
+// HOW TO USE IT
+//
+// Edit the default variables below.
+// Comment/uncomment or add font imports below.
+// Add your own custom CSS at the bottom.
 
 // First, let's set character encoding. Don't change this.
 @charset "utf-8";

@@ -3,21 +3,15 @@
 ---
 
 // WHAT IS THIS?
-// This is screen typography for the EBW book framework (https://github.com/electricbookworks/book-framework).
+// This is typography for the Electric Book Classic theme (http://electricbook.io).
 // It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
-// Jekyll will compile the finished CSS for your books in _site/css.
+// Jekyll will compile the finished CSS for your books in _site/_themes/classic/css.
 // 
 // HOW TO USE IT
-// This file, screen.scss, sets the parent screen styles for all books in its collection.
 //
-// Switch existing book-design elements on or off with double-slash line comments.
-// Elements are gathered in design sets. Pick one or mix-n-match. And set variables, like fonts.
-// Our 'Classic' design set is on by default.
-//
-// To create a child stylesheet for a specific book, copy this file, change variables and if necessary add imports.
-// For new CSS, create new partials to import (named sensibly and saved in _scss), and/or add new CSS at the bottom of this file.
-// Save the child stylesheet alongside this file with a different name, e.g. screen-child-mybook.scss.
-// (Remember to name the child stylesheet, with a .css extension, for each book in _config.yml, e.g. screen-child-mybook.css.)
+// Edit the default variables below.
+// Comment/uncomment or add font imports below.
+// Add your own custom CSS at the bottom.
 
 // First, let's set character encoding. Don't change this.
 @charset "utf-8";
