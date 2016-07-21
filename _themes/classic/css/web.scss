@@ -59,11 +59,8 @@ $line-height-default: 150%;
 
 // Add any custom style rules here.
 
-// E.g. uncomment the following lines to use space between paragraphs rather than text indents.
-//p {
-//    margin-bottom: 1em;
-//    text-indent: 0;
-//}
+// Comment out the following line to use first-line-indent paragraphs, rather than space between.
+p { margin-bottom: 1em; text-indent: 0; }
 
 // Half-title page
 
@@ -100,4 +97,13 @@ $line-height-default: 150%;
 // Other frontmatter
 
 .frontmatter {}
+
+// Headings
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
 

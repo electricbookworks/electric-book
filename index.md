@@ -7,4 +7,4 @@ style: home
 
 {{ site.data.meta.series.description }}
 
-For more information, visit [{{ site.data.meta.series.organisation }}]({{ site.data.meta.series.url }}).
+[Read book](book-template/{{site.start-page}}.html){:.button}
