@@ -14,7 +14,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 600; 
 	line-height: 120%;
 	page-break-after: avoid;
-	margin: 2em 0 1em 0;
+	margin: 3em 0 1em 0;
 }
 h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
 	padding-top: 3.5em; /* Prevents #-linked headings from disappearing below the fixed nav bar. */

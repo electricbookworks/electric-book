@@ -3,7 +3,7 @@
         <div id="nav" class="non-printing">
         <ul>
         <li class="nav-series-home"><a href="{{ site.baseurl }}/" title="Home: {{ site.data.meta.series.name }}" class="nav-series-home-link">{{ site.data.meta.series.name }}</a></li>
-        <li class="nav-book"><a href="{{ site.contents-page }}" title="Contents: {{ site.data.meta.titles.[slug].title }}" class="nav-book-link">Contents</a></li>
+        <li class="nav-book"><a href="{{ site.contents-page }}" title="Contents: {{ site.data.meta.titles.[slug].title }}" class="nav-book-link">{{ site.data.meta.titles.[slug].title }}</a></li>
             <ul>
                 {% comment %}
                 - Get the file-list

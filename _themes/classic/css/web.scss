@@ -37,6 +37,11 @@ $font-code: "Inconsolata", monospace;
 $font-size-default: 1.2em;
 $line-height-default: 150%;
 
+// Some features rearrange at certain screen sizes.
+// What are your break points for rearrangement?
+$break-point-height: 600px;
+$break-point-width: 600px;
+
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
