@@ -89,6 +89,12 @@ url: http://localhost:4000
 # Leave this unchanged as kramdown unless you really know how and why to change your markdown processor
 markdown: kramdown
 
+# kramdown options (see http://kramdown.gettalong.org/options.html)
+# auto_id_stripping remove formatting from headings before generating IDs
+# which keeps your IDs neat and tidy, and links persistent even if you format headings
+kramdown:
+  auto_id_stripping: true;
+
 # Leave this unchanged as none. This way, your book's chapters will all generate correctly named in one folder.
 # This is really useful for grabbing all your HTML files at once for including in epubs or sending to PrinceXML.
 permalink: none
