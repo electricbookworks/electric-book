@@ -1,10 +1,21 @@
 // Montserrat https://www.google.com/fonts/specimen/Montserrat
+// Or https://github.com/google/fonts/tree/master/ofl/montserrat
 @font-face {
     font-family: "Montserrat";
     src: url(../fonts/Montserrat-Regular.ttf);
 }
 @font-face {
     font-family: "Montserrat";
+    src: url(../fonts/Montserrat-Thin.ttf);
+    font-weight: 200;
+}
+@font-face {
+    font-family: "Montserrat";
+    src: url(../fonts/Montserrat-Light.ttf);
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Montserrat";
     src: url(../fonts/Montserrat-Bold.ttf);
-	font-weight: bold;
+    font-weight: bold;
 }
