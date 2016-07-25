@@ -22,9 +22,10 @@ h1 {
 	line-height: $line-height-default * 3;
 	margin: 0 0 ($line-height-default * 3) 0;
 }
-h1 strong:first-of-type { /* Useful for chapter numbers: make the number first and bold in the h1 */
+h1 strong:first-of-type { // Useful for chapter numbers: make the number first and bold in the h1
 	display: block;
 	margin: 0 0 $line-height-default 0;
+	line-height: inherit;
 }
 h2 {
 	font-size: $font-size-default * 2;
