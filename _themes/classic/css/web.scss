@@ -28,6 +28,9 @@
 // Set variables
 // -------------
 
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+$edition-suffix: null;
+
 $font-text-main: "Crimson", serif;
 $font-text-secondary: "Source Sans Pro", sans-serif;
 $font-display-main: "Source Sans Pro", sans-serif;
