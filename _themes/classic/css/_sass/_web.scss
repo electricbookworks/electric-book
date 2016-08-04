@@ -40,7 +40,7 @@
 
 // Type-control classes
 @import "partials/web-smallcaps";
-@import "partials/web-type-fitting";  // E.g. tracking and shrinking
+@import "partials/web-fitting";  // E.g. tracking and shrinking
 
 // Logic (if this then that)
 @import "partials/web-reset-sequences"; // This should stay last in the @import list
