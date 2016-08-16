@@ -17,7 +17,7 @@ do
 	# let the user know we're on it!
 	echo "Generating HTML..."
 	# ...and run Jekyll to build new HTML
-	jekyll build --config="_config.yml,$config"
+	bundle exec jekyll build --config="_config.yml,$config"
 	# Navigate into the book's folder in _site output
 	cd _site/$book
 	# Let the user know we're now going to make the PDF

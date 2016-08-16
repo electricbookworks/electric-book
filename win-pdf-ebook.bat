@@ -14,7 +14,7 @@ SET /p config=Any extra config files? (full filename, comma-separated, no spaces
 :: let the user know we're on it!
 ECHO Generating HTML...
 :: ...and run Jekyll to build new HTML
-CALL jekyll build --config="_config.yml,_config.pdf-ebook.yml,%config%"
+CALL bundle exec jekyll build --config="_config.yml,_config.pdf-ebook.yml,%config%"
 :: Navigate into the book's folder in _site output
 CD _site\%book%
 :: Let the user know we're now going to make the PDF
