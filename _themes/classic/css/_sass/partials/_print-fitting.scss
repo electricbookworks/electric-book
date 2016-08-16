@@ -12,7 +12,7 @@
 }
  
 // These classes control letter-spacing (tracking), usually to save widows and orphans.
-@for $i from 1 through 50 {
+@for $i from 1 through 100 {
   $add-space: $i * 0.001em;
   .tighten-#{$i}#{$edition-suffix} {
     letter-spacing: $letter-spacing-text - $add-space;
@@ -30,7 +30,7 @@
 // Especially useful for controlling the height of images to retain a baseline grid.
 // $line-height-default should be set in a non-relative unit, like points,
 // otherwise you'll get exponential differences in height.
-@for $i from 1 through 50 {
+@for $i from 1 through 100 {
   $height: $i * $line-height-default;
   .height-#{$i}#{$edition-suffix} {
     height: $height;

@@ -17,7 +17,7 @@ ECHO You may need to reload the web page once this server is running.
 :: Open the web browser...
 START "" "http://127.0.0.1:4000/%baseurl%/"
 :: ...and run Jekyll to build new HTML
-CALL jekyll serve --config="_config.yml,%config%" --baseurl="/%baseurl%"
+CALL bundle exec jekyll serve --config="_config.yml,%config%" --baseurl="/%baseurl%"
 :: And we're done here.
 GOTO end
 :: Route for serving without a baseurl
