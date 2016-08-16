@@ -1,5 +1,5 @@
 ---
-title: Series home
+title: Home
 style: home
 ---
 
