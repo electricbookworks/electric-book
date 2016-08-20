@@ -1,5 +1,7 @@
 #!/bin/bash
-# That tells Linux to use a Bourne shell interpreter.
+cd -- "$(dirname "$0")"
+# That tells OSX to use a Bourne shell interpreter,
+# and then to run this script from the current directory.
 # Don't echo these commands:
 set +v
 # Ask user which folder to process
