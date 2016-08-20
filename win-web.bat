@@ -25,7 +25,7 @@ GOTO end
 :: Open the web browser...
 START "" "http://127.0.0.1:4000/"
 :: ...and run Jekyll to build new HTML
-CALL jekyll serve --config="_config.yml,%config%" --baseurl=""
+CALL bundle exec jekyll serve --config="_config.yml,%config%" --baseurl=""
 :: And we're done here.
 GOTO end
 :end
