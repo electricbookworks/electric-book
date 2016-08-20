@@ -1,5 +1,5 @@
 ---
-title: Home
+title: Series home
 style: home
 ---
 
@@ -7,4 +7,6 @@ style: home
 
 {{ site.data.meta.series.description }}
 
-[Read book](book-template/{{site.start-page}}.html){:.button}
+{% for book in site.data.meta.titles %}
+*[{{ book[1].title }}]({{ book[0] }}/{{site.start-page}}.html)*
+{% endfor %}
