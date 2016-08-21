@@ -1,4 +1,44 @@
-{% include get-slug.html %}
-{% for file in site.data.meta.titles.[slug].products.[site.output].files %}
-{{ file }}.html
+{% include get-metadata %}
+
+{% if site.output == 'print-pdf' %}
+
+{% for file in print-pdf-file-list %}
+{% for file-title in file %}
+{{ file-title }}.html
 {% endfor %}
+{% endfor %}
+
+{% endif %}
+
+
+{% if site.output == 'screen-pdf' %}
+
+{% for file in screen-pdf-file-list %}
+{% for file-title in file %}
+{{ file-title }}.html
+{% endfor %}
+{% endfor %}
+
+{% endif %}
+
+
+{% if site.output == 'epub' %}
+
+{% for file in epub-file-list %}
+{% for file-title in file %}
+{{ file-title }}.html
+{% endfor %}
+{% endfor %}
+
+{% endif %}
+
+
+{% if site.output == 'web' %}
+
+{% for file in web-file-list %}
+{% for file-title in file %}
+{{ file-title[0] }}.html
+{% endfor %}
+{% endfor %}
+
+{% endif %}

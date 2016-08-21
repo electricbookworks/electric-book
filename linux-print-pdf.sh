@@ -1,15 +1,13 @@
 #!/bin/bash
-cd -- "$(dirname "$0")"
-# That tells OSX to use a Bourne shell interpreter,
-# and then to run this script from the current directory.
+# That tells Linux to use a Bourne shell interpreter.
 # Don't echo these commands:
 set +v
 # Ask user which folder to process
 echo -n "Which book folder are we processing? "
 read book
 echo "Okay, let's process $book..."
-# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
-echo -n "Any extra config files? (full filename, comma-separated, no spaces) "
+# Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+echo -n "Any extra config files? (in addition to _config.print-pdf.yml; use full filenames, comma-separated, no spaces) "
 read config
 echo "Rightio, we'll add $config to the configuration"
 
@@ -19,14 +17,13 @@ do
 	# let the user know we're on it!
 	echo "Generating HTML..."
 	# ...and run Jekyll to build new HTML
-	bundle exec jekyll build --config="_config.yml,$config"
+	bundle exec jekyll build --config="_config.yml,_config-print-pdf.yml,$config"
 	# Navigate into the book's folder in _site output
 	cd _site/$book
 	# Let the user know we're now going to make the PDF
 	echo Creating PDF...
 	# Run prince, showing progress (-v), printing the docs in file-list
 	# and saving the resulting PDF to the _output folder
-	# (For some reason this has to be run with CALL)
 	prince -v -l file-list -o ../../_output/$book.pdf
 	# Navigate back to where we began.
 	cd ../..
@@ -35,8 +32,8 @@ do
 	# Navigate to the _output folder...
 	cd _output
 	# and open the PDF we just created
-	# (for Linux, this will need to be xdg-open)
-	open $book.pdf
+	# (for OSX, this will need to be open, not xdg-open)
+	xdg-open $book.pdf
 	# Navigate back to where we began.
 	cd ../
 

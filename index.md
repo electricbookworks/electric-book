@@ -3,10 +3,12 @@ title: Series home
 style: home
 ---
 
-# {{ site.data.meta.series.name }}
+{% include get-metadata %}
 
-{{ site.data.meta.series.description }}
+# {{ series-name }}
 
-{% for book in site.data.meta.titles %}
-*[{{ book[1].title }}]({{ book[0] }}/{{site.start-page}}.html)*
+{{ series-description }}
+
+{% for book in site.data.meta.works %}
+*[{{ book.title }}]({{ book.directory }}/{{ book.products.web.start-page }}.html)*
 {% endfor %}

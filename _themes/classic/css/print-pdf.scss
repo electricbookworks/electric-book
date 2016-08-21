@@ -94,26 +94,26 @@ $frontmatter-reference-style: lower-roman; // lower-roman, decimal, see http://w
 // For other special characters, see CSS (ISO) at https://brajeshwar.github.io/entities/
 
 // Verso (left-hand-page)
-$verso-top: normal;
+$verso-top: string(h1-text, last);
 $verso-top-left: normal;
 $verso-top-right: normal;
 $verso-top-left-corner: normal;
 $verso-top-right-corner: normal;
-$verso-bottom: string(h1-text, last);
-$verso-bottom-left: counter(page);
+$verso-bottom: counter(page);
+$verso-bottom-left: normal;
 $verso-bottom-right: normal;
 $verso-bottom-left-corner: normal;
 $verso-bottom-right-corner: normal;
 
 // Recto (right-hand-page)
-$recto-top: normal;
+$recto-top: string(h2-text, last);
 $recto-top-left: normal;
 $recto-top-right: normal;
 $recto-top-left-corner: normal;
 $recto-top-right-corner: normal;
-$recto-bottom: string(h2-text, last);
+$recto-bottom: counter(page);
 $recto-bottom-left: normal;
-$recto-bottom-right: counter(page);
+$recto-bottom-right: normal;
 $recto-bottom-left-corner: normal;
 $recto-bottom-right-corner: normal;
 
