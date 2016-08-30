@@ -3,7 +3,7 @@
 {{ content }}
 
 
-{% elsif site.output == 'epub' %}
+{% elsif site.output == 'epub' or site.output == 'print-pdf' or site.output == 'screen-pdf' %}
 
 {% include header.html %}
 {% include start-wrapper.html %}

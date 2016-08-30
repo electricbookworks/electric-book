@@ -1,13 +1,15 @@
 #!/bin/bash
-# That tells Linux to use a Bourne shell interpreter.
+cd -- "$(dirname "$0")"
+# That tells OSX to use a Bourne shell interpreter,
+# and then to run this script from the current directory.
 # Don't echo these commands:
 set +v
 # Ask user which folder to process
 echo -n "Which book folder are we processing? "
 read book
 echo "Okay, let's process $book..."
-# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
-echo -n "Any extra config files? (full filename, comma-separated, no spaces) "
+# Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+echo -n "Any extra config files? (in addition to _config.print-pdf.yml; use full filenames, comma-separated, no spaces) "
 read config
 echo "Rightio, we'll add $config to the configuration"
 
@@ -17,7 +19,7 @@ do
 	# let the user know we're on it!
 	echo "Generating HTML..."
 	# ...and run Jekyll to build new HTML
-	bundle exec jekyll build --config="_config.yml,$config"
+	bundle exec jekyll build --config="_config.yml,_config.print-pdf.yml,$config"
 	# Navigate into the book's folder in _site output
 	cd _site/$book
 	# Let the user know we're now going to make the PDF

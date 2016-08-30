@@ -1,9 +1,9 @@
-{% include get-slug.html %}
+{% include get-metadata %}
 
         <div id="nav" class="non-printing">
         <ul>
-        <li class="nav-series-home"><a href="{{ site.baseurl }}/" title="Home: {{ site.data.meta.series.name }}" class="nav-series-home-link">{{ site.data.meta.series.name }}</a></li>
-        <li class="nav-book"><a href="{{ site.contents-page }}" title="Contents: {{ site.data.meta.titles.[slug].title }}" class="nav-book-link">{{ site.data.meta.titles.[slug].title }}</a></li>
+        <li class="nav-series-home"><a href="{{ site.baseurl }}/" title="Home: {{ series-name }}" class="nav-series-home-link">{{ series-name }}</a></li>
+        <li class="nav-book"><a href="{{ web-contents-page }}" title="Contents: {{ title }}" class="nav-book-link">{{ title }}</a></li>
             <ul>
                 {% comment %}
                 - Get the file-list
@@ -13,11 +13,11 @@
                 - And if the current page.url contains the file name, this must be the active page
                 - So add the class `nav-page-active` to the list item.
                 {% endcomment %}
-                {% for file in site.data.meta.titles.[slug].products.web.files %}
+                {% for file in web-file-list %}
                     {% for file-title in file %}
                         {% if file-title[1] %}
                             <li class="nav-page{% if page.url contains file-title[0] %} nav-page-active{% endif %}">
-                                <a href="{{ site.baseurl }}/{{ slug }}/{{ file-title[0] }}.html" title="{{ file-title[1] }}" class="nav-page-link">{{ file-title[1] }}</a>
+                                <a href="{{ site.baseurl }}/{{ directory }}/{{ file-title[0] }}.html" title="{{ file-title[1] }}" class="nav-page-link">{{ file-title[1] }}</a>
                             </li>
                         {% endif %}
                     {% endfor %}

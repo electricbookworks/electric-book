@@ -1,7 +1,7 @@
 ---
 # Generates list of files for output format
 # Ensure your files are listed in meta.yml for each output format:
-# print, web, epub, pdf-ebook
+# print-pdf, web, epub, screen-pdf
 # Then you don't have to touch this file.
 type: file-list
 ---

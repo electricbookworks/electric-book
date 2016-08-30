@@ -1,17 +1,20 @@
+:: Creates a PDF ebook
 :: Don't show these commands to the user
 @ECHO off
 :: Set the title of the window
-TITLE Making new PDF...
+TITLE Making new PDF ebook...
 :: Ask user which folder to process
+:choosefolder
 SET /p book=Which book folder are we processing? 
-:: Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
-SET /p config=Any extra config files? (in addition to _config.print.yml; full filename, comma-separated, no spaces) 
+IF "%book%"=="" GOTO choosefolder
+:: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+SET /p config=Any extra config files? (in addition to _config.screen-pdf.yml; use full filenames, comma-separated, no spaces) 
 :: Loop back to this point to refresh the build and PDF
 :refresh
 :: let the user know we're on it!
 ECHO Generating HTML...
 :: ...and run Jekyll to build new HTML
-CALL bundle exec jekyll build --config="_config.yml,_config.print.yml,%config%"
+CALL bundle exec jekyll build --config="_config.yml,_config.screen-pdf.yml,%config%"
 :: Navigate into the book's folder in _site output
 CD _site\%book%
 :: Let the user know we're now going to make the PDF

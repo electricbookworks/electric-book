@@ -1,0 +1,2 @@
+# Addon config that sets output to screen-pdf
+output: "screen-pdf"

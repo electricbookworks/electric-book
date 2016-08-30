@@ -1,4 +1,0 @@
-# Addon config that sets site.output to print
-# To run from command line:
-# jekyll build -c _config.yml,config.print.yml
-output: "print"
