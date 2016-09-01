@@ -1,0 +1,90 @@
+---
+# EPUB styles
+---
+
+// -------------
+// Set variables
+// -------------
+
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+$edition-suffix: null;
+
+$font-text-main: "Linux Libertine", serif;
+$font-text-secondary: "Source Sans Pro", sans-serif;
+$font-display-main: "Source Sans Pro", sans-serif;
+$font-display-secondary: "Linux Libertine", serif;
+$font-code: "Inconsolata", monospace;
+
+$font-size-default: 1.2em;
+$line-height-default: 1.5em;
+
+// ----------------------------------------------------
+// Import font files (@font-face) for fonts you specify
+// ----------------------------------------------------
+
+// We do not recommend importing and embedding fonts in epubs. However, if you must, uncomment and change here.
+// @import "_partials/linux-libertine";
+// @import "_partials/source-sans-pro";
+// @import "_partials/inconsolata";
+// @import "_partials/crimson";
+
+// Import the default theme styles
+@import 'epub';
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom style rules here.
+
+// E.g. uncomment the following lines to use space between paragraphs rather than text indents.
+//p {
+//    margin-bottom: 1em;
+//    text-indent: 0;
+//}
+
+// Half-title page
+
+.halftitle-page {}
+
+// Title page
+
+.title-page {}
+
+// Previous publications page ('Also by the author')
+
+.previous-publications-page {}
+
+// Copyright page
+
+.copyright-page {}
+
+// Table of contents
+
+.contents-page {}
+
+// Dedication page
+
+.dedication-page {}
+
+// Epigraph page
+
+.epigraph-page {}
+
+// Frontispiece
+
+.frontispiece-page {}
+
+// Other frontmatter
+
+.frontmatter {}
+
+// Headings
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
+

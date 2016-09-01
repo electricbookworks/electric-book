@@ -10,5 +10,5 @@ style: home
 {{ series-description }}
 
 {% for book in site.data.meta.works %}
-*[{{ book.title }}]({{ book.directory }}/{{ book.products.web.start-page }}.html)*
+*[{{ book.title }}]({{ book.directory }}/text/{{ book.products.web.start-page }}.html)*
 {% endfor %}
