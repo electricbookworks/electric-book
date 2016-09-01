@@ -13,7 +13,6 @@ language: en
 
 # What theme are you using?
 theme: electric-book-classic-theme
-# theme: minima
 
 # Which edition are we creating? You can leave this as `default`.
 # This can be used to create different editions of a book using Liquid control-flow tags, 
