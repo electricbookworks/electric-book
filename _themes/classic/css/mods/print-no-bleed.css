@@ -1,7 +1,0 @@
-@charset "utf-8";
-
-/* Remove bleed */
-@page { 
-	prince-bleed: 0 !important;
-	prince-trim: 0 !important;
-}

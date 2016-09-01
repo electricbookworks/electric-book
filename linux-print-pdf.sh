@@ -17,16 +17,16 @@ do
 	# let the user know we're on it!
 	echo "Generating HTML..."
 	# ...and run Jekyll to build new HTML
-	bundle exec jekyll build --config="_config.yml,$config"
-	# Navigate into the book's folder in _site output
-	cd _site/$book
+	bundle exec jekyll build --config="_config.yml,_config.print-pdf.yml,$config"
+	# Navigate into the book's folder in _html output
+	cd _html/$book/text
 	# Let the user know we're now going to make the PDF
 	echo Creating PDF...
 	# Run prince, showing progress (-v), printing the docs in file-list
 	# and saving the resulting PDF to the _output folder
-	prince -v -l file-list -o ../../_output/$book.pdf
+	prince -v -l file-list -o ../../../_output/$book.pdf
 	# Navigate back to where we began.
-	cd ../..
+	cd ../../..
 	# Tell the user we're done
 	echo Done!
 	# Navigate to the _output folder...

@@ -12,16 +12,16 @@ SET /p config=Any extra config files? (in addition to _config.print-pdf.yml; ful
 ECHO Generating HTML...
 :: ...and run Jekyll to build new HTML
 CALL bundle exec jekyll build --config="_config.yml,_config.print-pdf.yml,%config%"
-:: Navigate into the book's folder in _site output
-CD _site\%book%
+:: Navigate into the book's folder in _html output
+CD _html\%book%\text
 :: Let the user know we're now going to make the PDF
 ECHO Creating PDF...
 :: Run prince, showing progress (-v), printing the docs in file-list
 :: and saving the resulting PDF to the _output folder
 :: (For some reason this has to be run with CALL)
-CALL prince -v -l file-list -o ..\..\_output\%book%.pdf
+CALL prince -v -l file-list -o ..\..\..\_output\%book%.pdf
 :: Navigate back to where we began.
-CD ..\..
+CD ..\..\..
 :: Tell the user we're done
 ECHO Done! Opening PDF...
 :: Navigate to the _output folder...

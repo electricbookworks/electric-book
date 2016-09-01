@@ -1,6 +1,0 @@
-@charset "utf-8";
-
-/* Remove crop marks */
-@page { 
-	marks: none !important;
-}

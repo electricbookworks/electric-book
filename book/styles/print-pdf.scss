@@ -1,0 +1,212 @@
+---
+# Print styles
+---
+
+// -------------
+// Set variables
+// -------------
+
+// Edition suffix: identifies this edition in page-fitting classes (in _print-fitting.scss).
+// For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
+// A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
+// If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.
+$edition-suffix: null;
+
+// First, we set several variables related to overall page setup.
+$page-size: 129mm 198mm; // Width, then height. 129×198 is B-format (Lightning Source compatible)
+$margin-top: 15mm;
+$margin-bottom: 20mm;
+$margin-outside: 13mm;
+$margin-inside: 19mm;
+$bleed: 3mm;
+$trim: 3mm;
+$crop-marks: crop; // crop | none
+
+// PDF file setup options
+$black-ink: true; // true or rich (true for pure black or rich for rich black)
+
+// We name font variables for two categories:
+// - 'text' fonts are used for body text and some page features;
+// - 'display' fonts are used for headings and similar short-string features.
+// For each category, we set a main font and a secondary font, allowing up to four fonts.
+// Finally, we set a fifth, monospace font for elements like computer code.
+$font-text-main: "Crimson", serif;
+$font-text-secondary: "Source Sans Pro", sans-serif;
+$font-display-main: "Source Sans Pro", sans-serif;
+$font-display-secondary: "Crimson", serif;
+$font-code: "Inconsolata", monospace;
+
+// Finally, we set variables related to text flow.
+$font-size-default: 11pt;
+$line-height-default: 15pt; // Set in points. For consistent baselines, all other line heights and vertical spaces are based on this.
+$text-align: left;
+$orphans: 1; // Minimum number of lines that must be left at the bottom of the first page
+$widows: 1; // Minimum number of lines that must be left at the top of the second page
+$letter-spacing-text: 0em; // Default letter-spacing for p, ul, ol, dl. Set in ems, e.g. 0.01em for 10/1000s of an em.
+
+// Hyphenation
+// Variables here apply to p, ul, ol, dl
+$hyphenation: auto; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation-dictionary: ""; // File name of dictionary in css/dictionaries. Overrides PrinceXML built-in hyphenation.
+$hyphenate-after: 3; /* Minimum letters on new line after hyphen */
+$hyphenate-before: 3; /* Minimum letters at end of line before hyphen */
+$hyphenate-lines: 1; /* Maximum number of consecutive lines ending with hyphens */
+
+// Should chapters start on a right-hand page (recto) or on any page?
+// This setting applies to the frontmatter, dedication-page, epigraph-page and chapter page styles.
+// (The halftitle-page, title-page and contents-page page styles always start on a recto.)
+$start-on: right; // right or auto or left ()
+
+// Set the default start-depth of pages.
+// This is the distance from the top of the page to the first element on the first page.
+// Set it in multiples of $line-height-default to preserve your baseline grid.
+$start-depth: $line-height-default * 6;
+
+// Style of page numbers on frontmatter pages
+// Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
+$frontmatter-reference-style: lower-roman; // lower-roman, decimal, see http://www.princexml.com/doc/gen-content/#idp54010640
+
+// Set the content of headers and footers.
+//
+// For no content: normal
+// For a page number: counter(page)
+// For the last h1 (increment to h2, h3, h4, h5, h6 as needed): string(h1-text, last)
+// Instead of last (last on page) you can also use first (first on page) or start (string set on previous page).
+// For the title attribute of the last h1 (increment to h2, h3, h4, h5, h6 as needed): string(h1-title, last)
+// (Note: if you use title attributes, you must add them for every heading at the heading-level you choose.)
+// For the book title, subtitle or author set with .title-page-title, .title-page-subtitle and .title-page-author: book-title, book-subtitle, book-author
+// For a phrase: "Any phrase in quotes"
+// For an em space: "\2003"
+// For other special characters, see CSS (ISO) at https://brajeshwar.github.io/entities/
+
+// Verso (left-hand-page)
+$verso-top: string(h1-text, last);
+$verso-top-left: normal;
+$verso-top-right: normal;
+$verso-top-left-corner: normal;
+$verso-top-right-corner: normal;
+$verso-bottom: counter(page);
+$verso-bottom-left: normal;
+$verso-bottom-right: normal;
+$verso-bottom-left-corner: normal;
+$verso-bottom-right-corner: normal;
+
+// Recto (right-hand-page)
+$recto-top: string(h2-text, last);
+$recto-top-left: normal;
+$recto-top-right: normal;
+$recto-top-left-corner: normal;
+$recto-top-right-corner: normal;
+$recto-bottom: counter(page);
+$recto-bottom-left: normal;
+$recto-bottom-right: normal;
+$recto-bottom-left-corner: normal;
+$recto-bottom-right-corner: normal;
+
+// Verso (left-hand-page) for .frontmatter pages (`style: frontmatter`)
+$verso-top-frontmatter: normal;
+$verso-top-left-frontmatter: normal;
+$verso-top-right-frontmatter: normal;
+$verso-top-left-corner-frontmatter: normal;
+$verso-top-right-corner-frontmatter: normal;
+$verso-bottom-frontmatter: counter(page, $frontmatter-reference-style);
+$verso-bottom-left-frontmatter: normal;
+$verso-bottom-right-frontmatter: normal;
+$verso-bottom-left-corner-frontmatter: normal;
+$verso-bottom-right-corner-frontmatter: normal;
+
+// Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
+$recto-top-frontmatter: normal;
+$recto-top-left-frontmatter: normal;
+$recto-top-right-frontmatter: normal;
+$recto-top-left-corner-frontmatter: normal;
+$recto-top-right-corner-frontmatter: normal;
+$recto-bottom-frontmatter: counter(page, $frontmatter-reference-style);
+$recto-bottom-left-frontmatter: normal;
+$recto-bottom-right-frontmatter: normal;
+$recto-bottom-left-corner-frontmatter: normal;
+$recto-bottom-right-corner-frontmatter: normal;
+
+// Special highlights for temporary debugging/viewing:
+// Specify a colour for highlighting; use 'inherit' for none.
+$highlight-tightened: inherit;
+$highlight-loosened: inherit;
+
+// -------------------------------------------------------------
+// Import font files (@font-face) for fonts you specify
+// You may need to add the actual font files to `css/fonts`
+// Download locations for each noted in the end-of-line comments
+// -------------------------------------------------------------
+
+// @import "partials/modules/fonts/adobe-caslon-pro"; // Proprietary: https://typekit.com/fonts/adobe-caslon-pro
+// @import "partials/modules/fonts/crimson-text"; // Open: https://www.google.com/fonts/specimen/Crimson+Text
+// @import "partials/modules/fonts/crimson"; // Open: https://github.com/skosch/Crimson
+// @import "partials/modules/fonts/inconsolata"; // Open: https://www.google.com/fonts/specimen/Inconsolata
+// @import "partials/modules/fonts/kalam"; // Open: https://www.google.com/fonts/specimen/Kalam
+// @import "partials/modules/fonts/linux-biolinum"; // Open: http://www.linuxlibertine.org/
+// @import "partials/modules/fonts/linux-libertine"; // Open: http://www.linuxlibertine.org/
+// @import "partials/modules/fonts/montserrat"; // Open: https://www.google.com/fonts/specimen/Montserrat
+// @import "partials/modules/fonts/overpass"; // Open: https://github.com/RedHatBrand/overpass
+// @import "partials/modules/fonts/source-sans-pro"; // Open: https://www.google.com/fonts/specimen/Source+Sans+Pro
+// @import "partials/modules/fonts/trajan-pro"; // Proprietary: https://typekit.com/fonts/trajan-pro-3
+// @import "partials/modules/fonts/cormorant-garamond"; // Open: https://www.google.com/fonts/specimen/Cormorant+Garamond
+// @import "partials/modules/fonts/libre-baskerville"; // Open: https://fonts.google.com/specimen/Libre+Baskerville
+// @import "partials/modules/fonts/roboto"; // Open: https://fonts.google.com/specimen/Roboto
+// @import "partials/modules/fonts/oswald"; // Open: https://fonts.google.com/specimen/Oswald
+
+
+// Import the default theme styles
+@import 'print-pdf';
+
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom style rules here.
+
+// Half-title page
+
+.halftitle-page {}
+
+// Title page
+
+.title-page {}
+
+// Previous publications page ('Also by the author')
+
+.previous-publications-page {}
+
+// Copyright page
+
+.copyright-page {}
+
+// Table of contents
+
+.contents-page {}
+
+// Dedication page
+
+.dedication-page {}
+
+// Epigraph page
+
+.epigraph-page {}
+
+// Frontispiece
+
+.frontispiece-page {}
+
+// Other frontmatter
+
+.frontmatter {}
+
+// Headings
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
+

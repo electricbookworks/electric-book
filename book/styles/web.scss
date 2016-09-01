@@ -1,0 +1,93 @@
+---
+# Web styles
+---
+
+// -------------
+// Set variables
+// -------------
+
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+$edition-suffix: null;
+
+$font-text-main: "Crimson", serif;
+$font-text-secondary: "Source Sans Pro", sans-serif;
+$font-display-main: "Source Sans Pro", sans-serif;
+$font-display-secondary: "Crimson", serif;
+$font-code: "Inconsolata", monospace;
+
+$font-size-default: 1.2em;
+$line-height-default: 150%;
+
+// Some features rearrange at certain screen sizes.
+// What are your break points for rearrangement?
+$break-point-height: 600px;
+$break-point-width: 600px;
+
+// ----------------------------------------------------
+// Import font files (@font-face) for fonts you specify
+// ----------------------------------------------------
+
+// @import "fonts/linux-libertine";
+// @import "classic/css/_sass/partials/fonts/source-sans-pro";
+// @import "classic/css/_sass/partials/fonts/inconsolata";
+// @import "classic/css/_sass/partials/fonts/crimson";
+
+
+// Import the default theme styles
+@import 'web';
+
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom style rules here.
+
+// Comment out the following line to use first-line-indent paragraphs, rather than space between.
+p { margin-bottom: 1em; text-indent: 0; }
+
+// Half-title page
+
+.halftitle-page {}
+
+// Title page
+
+.title-page {}
+
+// Previous publications page ('Also by the author')
+
+.previous-publications-page {}
+
+// Copyright page
+
+.copyright-page {}
+
+// Table of contents
+
+.contents-page {}
+
+// Dedication page
+
+.dedication-page {}
+
+// Epigraph page
+
+.epigraph-page {}
+
+// Frontispiece
+
+.frontispiece-page {}
+
+// Other frontmatter
+
+.frontmatter {}
+
+// Headings
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
+

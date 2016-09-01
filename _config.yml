@@ -12,8 +12,8 @@
 language: en
 
 # What theme are you using?
-# Use only the theme's folder name here.
-theme: classic
+theme: electric-book-classic-theme
+# theme: minima
 
 # Which edition are we creating? You can leave this as `default`.
 # This can be used to create different editions of a book using Liquid control-flow tags, 
@@ -30,17 +30,24 @@ baseurl: ""
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
 # --------------------------------------------
 
+# By default Jekyll puts generated HTML in a _site folder. 
+# For Electric Book purposes, we prefer to call this '_html'
+destination: ./_html
+
 # Output different HTML structures based on intent.
 # You can change these here, or rather override by loading two config files at the command line, e.g.:
 # jekyll build -c _config.yml,_config.epub.yml
-output: "print-pdf"
-# output: "web"
+# output: "print-pdf"
+output: "web"
 # output: "epub"
 # output: "screen-pdf"
 # output: "lightning-source-colour"
 
-# Which image set shall we use?
-# This should be the path to the relevant set, relative to the markdown files.
+# You can switch between sets of images for different purposes.
+# For instance, small, colour images for epub and screen-pdf, and high-res greyscale for print-pdf.
+# Set your default image set here. This refers to the `images` directory in each book's directory,
+# and then to any subdirectories you create per set.
+# The default, `images`, assumes you'll use the same images for all outputs.
 image-set: "images"
 # image-set: "images/epub"
 # image-set: "images/web"
@@ -72,7 +79,7 @@ keep_files:
 # ----------------------------
 
 # Version of this Electric Book template
-version: "0.3.0"
+version: "0.4.0"
 
 # Leave this unchanged as http://localhost:4000 unless you really know what you're doing here. This is the URL that Jekyll will run at by default locally.
 url: http://localhost:4000
@@ -84,7 +91,7 @@ markdown: kramdown
 # auto_id_stripping remove formatting from headings before generating IDs
 # which keeps your IDs neat and tidy, and links persistent even if you format headings
 kramdown:
-  auto_id_stripping: true;
+  auto_id_stripping: true
 
 # Leave this unchanged as none. This way, your book's chapters will all generate correctly named in one folder.
 # This is really useful for grabbing all your HTML files at once for including in epubs or sending to PrinceXML.
@@ -94,12 +101,8 @@ permalink: none
 # (see http://jekyllrb.com/docs/assets/#sassscss)
 # and whether to compress stylesheets
 sass:
-  sass_dir: /_themes/
+  sass_dir: _sass
   style: compressed
-
-# Jekyll should include these files which would otherwise be ignored.
-include:
-- _themes
 
 # Set default values here for all documents/pages in this publication. 
 # (For technical details, see http://jekyllrb.com/docs/configuration/#front-matter-defaults).
