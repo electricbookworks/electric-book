@@ -133,27 +133,16 @@ $highlight-tightened: inherit;
 $highlight-loosened: inherit;
 
 // -------------------------------------------------------------
-// Import font files (@font-face) for fonts you specify
-// You may need to add the actual font files to `css/fonts`
-// Download locations for each noted in the end-of-line comments
+// Add @font-face rules for fonts you specify
+// Add the actual font files to `../fonts`
+// For snippets, try https://github.com/arthurattwell/font-faces
 // -------------------------------------------------------------
 
-// @import "classic/css/_sass/partials/fonts/adobe-caslon-pro"; // Proprietary: https://typekit.com/fonts/adobe-caslon-pro
-// @import "classic/css/_sass/partials/fonts/crimson-text"; // Open: https://www.google.com/fonts/specimen/Crimson+Text
-// @import "classic/css/_sass/partials/fonts/crimson"; // Open: https://github.com/skosch/Crimson
-// @import "classic/css/_sass/partials/fonts/inconsolata"; // Open: https://www.google.com/fonts/specimen/Inconsolata
-// @import "classic/css/_sass/partials/fonts/kalam"; // Open: https://www.google.com/fonts/specimen/Kalam
-// @import "classic/css/_sass/partials/fonts/linux-biolinum"; // Open: http://www.linuxlibertine.org/
-// @import "classic/css/_sass/partials/fonts/linux-libertine"; // Open: http://www.linuxlibertine.org/
-// @import "classic/css/_sass/partials/fonts/montserrat"; // Open: https://www.google.com/fonts/specimen/Montserrat
-// @import "classic/css/_sass/partials/fonts/overpass"; // Open: https://github.com/RedHatBrand/overpass
-// @import "classic/css/_sass/partials/fonts/source-sans-pro"; // Open: https://www.google.com/fonts/specimen/Source+Sans+Pro
-// @import "classic/css/_sass/partials/fonts/trajan-pro"; // Proprietary: https://typekit.com/fonts/trajan-pro-3
-// @import "classic/css/_sass/partials/fonts/cormorant-garamond"; // Open: https://www.google.com/fonts/specimen/Cormorant+Garamond
-// @import "classic/css/_sass/partials/fonts/libre-baskerville"; // Open: https://fonts.google.com/specimen/Libre+Baskerville
-// @import "classic/css/_sass/partials/fonts/roboto"; // Open: https://fonts.google.com/specimen/Roboto
-// @import "classic/css/_sass/partials/fonts/oswald"; // Open: https://fonts.google.com/specimen/Oswald
 
+
+// -------------
+// Master theme
+// -------------
 
 // Import the default theme styles
 @import 'screen-pdf';
@@ -164,6 +153,17 @@ $highlight-loosened: inherit;
 // -------------
 
 // Add any custom style rules here.
+
+// Base typography
+
+// Headings
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
 
 // Half-title page
 
@@ -200,13 +200,3 @@ $highlight-loosened: inherit;
 // Other frontmatter
 
 .frontmatter {}
-
-// Headings
-
-h1 {}
-h2 {}
-h3 {}
-h4 {}
-h5 {}
-h6 {}
-
