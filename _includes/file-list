@@ -1,4 +1,4 @@
-{% include get-metadata %}
+{% include metadata %}
 
 {% if site.output == 'print-pdf' %}
 
