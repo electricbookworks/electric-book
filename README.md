@@ -17,6 +17,12 @@ Jekyll 3.2.1 does not run on Windows due to [a bug](https://github.com/jekyll/je
 
 ## Changelog
 
+### 0.4.1
+
+* Rename `get-metadata` include to `metadata` for simpler tag
+* Fix broken font paths and management (fonts now all called from custom CSS)
+* Add experimental Windows bundle install script
+
 ### 0.4.0
 
 * Overhaul to work with Jekyll 3.2, supporting themes as gems.

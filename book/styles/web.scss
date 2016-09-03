@@ -23,14 +23,18 @@ $line-height-default: 150%;
 $break-point-height: 600px;
 $break-point-width: 600px;
 
-// ----------------------------------------------------
-// Import font files (@font-face) for fonts you specify
-// ----------------------------------------------------
+// -------------------------------------------------------------
+// Add @font-face rules for fonts you specify
+// Add the actual font files to `../fonts`
+// For snippets, try https://github.com/arthurattwell/font-faces
+// Or use @import rules to fetch online fonts.
+// -------------------------------------------------------------
 
-// @import "fonts/linux-libertine";
-// @import "classic/css/_sass/partials/fonts/source-sans-pro";
-// @import "classic/css/_sass/partials/fonts/inconsolata";
-// @import "classic/css/_sass/partials/fonts/crimson";
+
+
+// -------------
+// Master theme
+// -------------
 
 
 // Import the default theme styles
@@ -43,8 +47,20 @@ $break-point-width: 600px;
 
 // Add any custom style rules here.
 
+// Base typogrpahy
+
 // Comment out the following line to use first-line-indent paragraphs, rather than space between.
 p { margin-bottom: 1em; text-indent: 0; }
+
+// Headings
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
+
 
 // Half-title page
 
@@ -81,13 +97,3 @@ p { margin-bottom: 1em; text-indent: 0; }
 // Other frontmatter
 
 .frontmatter {}
-
-// Headings
-
-h1 {}
-h2 {}
-h3 {}
-h4 {}
-h5 {}
-h6 {}
-

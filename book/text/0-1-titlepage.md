@@ -3,7 +3,7 @@ title: Title page
 style: title-page
 ---
 
-{% include get-metadata %}
+{% include metadata %}
 
 {{ title }}
 {:.title-page-title}

@@ -23,10 +23,10 @@ $line-height-default: 1.5em;
 // ----------------------------------------------------
 
 // We do not recommend importing and embedding fonts in epubs. However, if you must, uncomment and change here.
-// @import "_partials/linux-libertine";
-// @import "_partials/source-sans-pro";
-// @import "_partials/inconsolata";
-// @import "_partials/crimson";
+
+// -------------
+// Master theme
+// -------------
 
 // Import the default theme styles
 @import 'epub';
@@ -37,11 +37,23 @@ $line-height-default: 1.5em;
 
 // Add any custom style rules here.
 
+// Base typography
+
 // E.g. uncomment the following lines to use space between paragraphs rather than text indents.
 //p {
 //    margin-bottom: 1em;
 //    text-indent: 0;
 //}
+
+// Headings
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
+
 
 // Half-title page
 
@@ -78,13 +90,3 @@ $line-height-default: 1.5em;
 // Other frontmatter
 
 .frontmatter {}
-
-// Headings
-
-h1 {}
-h2 {}
-h3 {}
-h4 {}
-h5 {}
-h6 {}
-

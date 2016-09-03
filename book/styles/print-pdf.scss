@@ -133,27 +133,16 @@ $highlight-tightened: inherit;
 $highlight-loosened: inherit;
 
 // -------------------------------------------------------------
-// Import font files (@font-face) for fonts you specify
-// You may need to add the actual font files to `css/fonts`
-// Download locations for each noted in the end-of-line comments
+// Add @font-face rules for fonts you specify
+// Add the actual font files to `../fonts`
+// For snippets, try https://github.com/arthurattwell/font-faces
 // -------------------------------------------------------------
 
-// @import "partials/modules/fonts/adobe-caslon-pro"; // Proprietary: https://typekit.com/fonts/adobe-caslon-pro
-// @import "partials/modules/fonts/crimson-text"; // Open: https://www.google.com/fonts/specimen/Crimson+Text
-// @import "partials/modules/fonts/crimson"; // Open: https://github.com/skosch/Crimson
-// @import "partials/modules/fonts/inconsolata"; // Open: https://www.google.com/fonts/specimen/Inconsolata
-// @import "partials/modules/fonts/kalam"; // Open: https://www.google.com/fonts/specimen/Kalam
-// @import "partials/modules/fonts/linux-biolinum"; // Open: http://www.linuxlibertine.org/
-// @import "partials/modules/fonts/linux-libertine"; // Open: http://www.linuxlibertine.org/
-// @import "partials/modules/fonts/montserrat"; // Open: https://www.google.com/fonts/specimen/Montserrat
-// @import "partials/modules/fonts/overpass"; // Open: https://github.com/RedHatBrand/overpass
-// @import "partials/modules/fonts/source-sans-pro"; // Open: https://www.google.com/fonts/specimen/Source+Sans+Pro
-// @import "partials/modules/fonts/trajan-pro"; // Proprietary: https://typekit.com/fonts/trajan-pro-3
-// @import "partials/modules/fonts/cormorant-garamond"; // Open: https://www.google.com/fonts/specimen/Cormorant+Garamond
-// @import "partials/modules/fonts/libre-baskerville"; // Open: https://fonts.google.com/specimen/Libre+Baskerville
-// @import "partials/modules/fonts/roboto"; // Open: https://fonts.google.com/specimen/Roboto
-// @import "partials/modules/fonts/oswald"; // Open: https://fonts.google.com/specimen/Oswald
 
+
+// -------------
+// Master theme
+// -------------
 
 // Import the default theme styles
 @import 'print-pdf';
@@ -164,6 +153,17 @@ $highlight-loosened: inherit;
 // -------------
 
 // Add any custom style rules here.
+
+// Base typography
+
+// Headings
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
 
 // Half-title page
 
@@ -200,13 +200,3 @@ $highlight-loosened: inherit;
 // Other frontmatter
 
 .frontmatter {}
-
-// Headings
-
-h1 {}
-h2 {}
-h3 {}
-h4 {}
-h5 {}
-h6 {}
-

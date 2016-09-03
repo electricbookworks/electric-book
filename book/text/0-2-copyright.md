@@ -6,7 +6,7 @@ style: copyright-page
 # from this book's YML file in _data
 ---
 
-{% include get-metadata %}
+{% include metadata %}
 
 # Copyright
 {:.non-printing}
