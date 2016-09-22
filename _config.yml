@@ -12,6 +12,8 @@
 language: en
 
 # What theme are you using?
+# If you are not using a theme (i.e. your have local _sass, _includes and _layouts)
+# then comment out this value to prevent Jekyll searching in vain for your theme.
 theme: electric-book-classic-theme
 
 # Which edition are we creating? You can leave this as `default`.
