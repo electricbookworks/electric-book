@@ -27,6 +27,11 @@ edition: "default"
 # Otherwise you can leave it blank.
 baseurl: ""
 
+# Web navigation source: select either files or nav
+# files: navigation will be taken from the web files list in `meta.yml` (this is default)
+# nav: navigation will be taken from the web nav tree in `meta.yml` (allows submenu nesting)
+nav-source: files
+
 # --------------------------------------------
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
 # --------------------------------------------
@@ -67,6 +72,7 @@ exclude:
 - win-web.bat
 - win-epub.bat
 - win-screen-pdf.bat
+- win-install.bat
 - Gemfile
 - Gemfile.lock
 
