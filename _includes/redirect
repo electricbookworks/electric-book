@@ -1,0 +1,23 @@
+{% comment %}
+To call this include, use the following tag with a target to redirect to:
+{% include redirect target="http://example.com" %}
+Thanks to http://insider.zone/tools/client-side-url-redirect-generator/ 
+{% endcomment %}
+
+<link rel="canonical" href="{{ include.target }}"/>
+<noscript>
+    <meta http-equiv="refresh" content="0;URL={{ include.target }}">
+</noscript>
+<!--[if lt IE 9]><script type="text/javascript">var IE_fix=true;</script><![endif]-->
+<script type="text/javascript">
+    var url = "{{ include.target }}";
+    if(typeof IE_fix != "undefined") // IE8 and lower fix to pass the http referer
+    {
+        document.write("redirecting..."); // Don't remove this line or appendChild() will fail because it is called before document.onload to make the redirect as fast as possible. Nobody will see this text, it is only a tech fix.
+        var referLink = document.createElement("a");
+        referLink.href = url;
+        document.body.appendChild(referLink);
+        referLink.click();
+    }
+    else { window.location.replace(url); } // All other browsers
+</script>
