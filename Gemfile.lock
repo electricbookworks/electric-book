@@ -2,7 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     colorator (1.1.0)
-    electric-book-classic-theme (0.1.0)
+    electric-book-classic-theme (0.1.2)
+    ffi (1.9.14)
     ffi (1.9.14-x64-mingw32)
     forwardable-extended (2.6.0)
     jekyll (3.2.1)
@@ -39,7 +40,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
-  electric-book-classic-theme (= 0.1.0)
+  electric-book-classic-theme (= 0.1.2)
   jekyll (~> 3.2)
 
 BUNDLED WITH
