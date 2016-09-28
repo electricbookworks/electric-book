@@ -24,6 +24,7 @@ Jekyll 3.2.1 does not run on Windows due to [a bug](https://github.com/jekyll/je
 * Add index page to book folder that redirects to `text/index`
 * Add related `redirect` include for redirecting any page
 * Add `head-elements` include for injecting scripts and links in `<head>`
+* Use electric-book-classic-theme v0.1.3
 
 ### 0.4.1
 
