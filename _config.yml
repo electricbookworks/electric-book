@@ -12,6 +12,8 @@
 language: en
 
 # What theme are you using?
+# If you are not using a theme (i.e. your have local _sass, _includes and _layouts)
+# then comment out this value to prevent Jekyll searching in vain for your theme.
 theme: electric-book-classic-theme
 
 # Which edition are we creating? You can leave this as `default`.
@@ -24,6 +26,11 @@ edition: "default"
 # See http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
 # Otherwise you can leave it blank.
 baseurl: ""
+
+# Web navigation source: select either files or nav
+# files: navigation will be taken from the web files list in `meta.yml` (this is default)
+# nav: navigation will be taken from the web nav tree in `meta.yml` (allows submenu nesting)
+nav-source: files
 
 # --------------------------------------------
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
@@ -65,6 +72,7 @@ exclude:
 - win-web.bat
 - win-epub.bat
 - win-screen-pdf.bat
+- win-install.bat
 - Gemfile
 - Gemfile.lock
 
@@ -78,7 +86,7 @@ keep_files:
 # ----------------------------
 
 # Version of this Electric Book template
-version: "0.4.1"
+version: "0.4.2"
 
 # Leave this unchanged as http://localhost:4000 unless you really know what you're doing here. This is the URL that Jekyll will run at by default locally.
 url: http://localhost:4000

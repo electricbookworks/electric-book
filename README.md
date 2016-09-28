@@ -17,6 +17,15 @@ Jekyll 3.2.1 does not run on Windows due to [a bug](https://github.com/jekyll/je
 
 ## Changelog
 
+### 0.4.2
+
+* New web navigation option to allow nested menu items: add a web nav tree to `meta.yml`, and enable in `_config.yml`.
+* Move `youtube` include to theme and out of template. (How to manage embeds should be a theme decision.)
+* Add index page to book folder that redirects to `text/index`
+* Add related `redirect` include for redirecting any page
+* Add `head-elements` include for injecting scripts and links in `<head>`
+* Use electric-book-classic-theme v0.1.3
+
 ### 0.4.1
 
 * Rename `get-metadata` include to `metadata` for simpler tag

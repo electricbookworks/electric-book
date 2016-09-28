@@ -61,6 +61,7 @@ Now capture each metadata value as a Liquid tag, to be used in HTML and book con
 {% capture web-start-page %}{{ work.products.web.start-page }}{% endcapture %}
 {% capture web-contents-page %}{{ work.products.web.contents-page }}{% endcapture %}
 {% assign web-file-list = work.products.web.files %}
+{% assign web-nav-tree = work.products.web.nav %}
 
 {% capture epub-date %}{{ work.products.epub.date }}{% endcapture %}
 {% capture epub-format %}{{ work.products.epub.format }}{% endcapture %}

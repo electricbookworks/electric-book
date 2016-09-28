@@ -7,7 +7,20 @@ prose:
     - .gitattributes
     - .gitignore
     - _config.yml
+    - _config.epub.yml
+    - _config.print-pdf.yml
+    - _config.screen-pdf.yml
+    - _config.web.yml
     - _prose.yml
+    - Gemfile
+    - Gemfile.lock
+    - linux-print-pdf.sh
+    - mac-print-pdf.command
+    - win-epub.bat
+    - win-install.bat
+    - win-print-pdf.bat
+    - win-screen-pdf.bat
+    - win-web.bat
     - /_layouts
     - /_includes
     - /_site
