@@ -11,6 +11,7 @@ SET config=
 SET repeat=
 SET baseurl=
 SET location=
+SET firstfile=
 
 :: Ask what we're going to be doing.
 ECHO Electric Book options
@@ -62,6 +63,9 @@ SET /p process=Enter a number and hit return.
     CD _html\%bookfolder%\text
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
+    :: Check if the _output folder exists, or create it if not.
+    IF not exist ..\..\..\_output\NUL
+    MKDIR ..\..\..\_output
     :: Run prince, showing progress (-v), printing the docs in file-list
     :: and saving the resulting PDF to the _output folder
     :: (For some reason this has to be run with CALL)
@@ -164,7 +168,7 @@ SET /p process=Enter a number and hit return.
     SET /p baseurl=
     ECHO.
     :: let the user know we're on it!
-    ECHO Building your site...
+    ECHO Getting your site ready...
     ECHO You may need to reload the web page once this server is running.
     :: Open the web browser
     :: (This is before jekyll s, because jekyll s pauses the script.)
@@ -204,11 +208,16 @@ SET /p process=Enter a number and hit return.
     ECHO.
     ECHO Okay, let's make epub-ready files.
     ECHO.
-    :: Remember where we are by assigning a vairable to the current directory
+    :: Remember where we are by assigning a variable to the current directory
     SET location=%~dp0
     :: Ask user which folder to process
     :choosefolder
     SET /p bookfolder=Which book folder are we processing? 
+    ECHO.
+    ECHO What is the first file in your book? Usually the cover.
+    ECHO (Don't include the .html file extension.)
+    ECHO.
+    SET /p firstfile=
     IF "%bookfolder%"=="" GOTO choosefolder
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
@@ -232,7 +241,7 @@ SET /p process=Enter a number and hit return.
     :: Temporarily put Sigil in the PATH, whether x86 or not
     PATH=%PATH%;C:\Program Files\Sigil;C:\Program Files (x86)\Sigil
     :: and open the cover HTML file in it, to load metadata into Sigil
-    START "" sigil.exe "0-0-cover.html"
+    START "" sigil.exe "$firstfile.html"
     :: Open file explorer to make it easy to see the HTML to assemble
     %SystemRoot%\explorer.exe "%location%_html\%bookfolder%\"
     :: Navigate back to where we began
