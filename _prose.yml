@@ -21,6 +21,7 @@ prose:
     - win-print-pdf.bat
     - win-screen-pdf.bat
     - win-web.bat
+    - /_configs
     - /_layouts
     - /_includes
     - /_site

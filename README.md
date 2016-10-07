@@ -4,7 +4,14 @@ A Jekyll template for making books, ebooks and book-like websites.
 
 ## Usage and documentation
 
-[Read the guide](http://electricbook.io). The guide is also an example of the template in action.
+1. Copy or clone this folder
+2. Edit as needed:
+	- `_data/meta.yml` 
+	- the stylesheet variables in `book/styles`
+	- the content files in `book/text`
+3. Run the `run-` script for your operating system.
+
+[Read the guide](http://electricbookworks.github.io/electric-book-workflow/) for much more. The guide is also an example of the template in action.
 
 ## Known bug in Jekyll 3.2.1 on Windows
 
