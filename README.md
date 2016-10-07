@@ -24,6 +24,12 @@ Jekyll 3.2.1 does not run on Windows due to [a bug](https://github.com/jekyll/je
 
 ## Changelog
 
+### 0.4.3
+
+* Add output scripts for all formats for OSX and Linux
+* Combine output scripts into one for each OS
+* Minor bug fixes
+
 ### 0.4.2
 
 * New web navigation option to allow nested menu items: add a web nav tree to `meta.yml`, and enable in `_config.yml`.
