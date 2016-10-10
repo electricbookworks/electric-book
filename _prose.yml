@@ -14,17 +14,11 @@ prose:
     - _prose.yml
     - Gemfile
     - Gemfile.lock
-    - linux-print-pdf.sh
-    - mac-print-pdf.command
-    - win-epub.bat
-    - win-install.bat
-    - win-print-pdf.bat
-    - win-screen-pdf.bat
-    - win-web.bat
     - /_configs
     - /_layouts
     - /_includes
     - /_site
+    - /_html
     - /css
     - /*/.gitattributes
     - /*/.gitignore
@@ -36,10 +30,9 @@ prose:
     - /*/css
     - /*/*/0-0-cover.md
     - /*/*/index.md
-    - /*/linux-pdf.sh
-    - /*/mac-pdf.sh
-    - /*/win-pdf.bat
-    - /*/win-web.bat
+    - /*/run-linux.sh
+    - /*/run-mac.command
+    - /*/run-windows.bat
     - /*/*/file-list
   media: "media"
   metadata:
