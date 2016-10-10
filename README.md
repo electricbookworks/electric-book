@@ -24,6 +24,10 @@ Jekyll 3.2.1 does not run on Windows due to [a bug](https://github.com/jekyll/je
 
 ## Changelog
 
+### 0.4.4
+
+* `run-windows` script now installs Bundler if it's not installed
+
 ### 0.4.3
 
 * Add output scripts for all formats for OSX and Linux

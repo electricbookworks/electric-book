@@ -64,8 +64,9 @@ SET /p process=Enter a number and hit return.
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Check if the _output folder exists, or create it if not.
-    IF not exist ..\..\..\_output\NUL
-    MKDIR ..\..\..\_output
+    :: (this check is currently not working in some setups, disabling it)
+    rem IF not exist ..\..\..\_output\NUL
+    rem MKDIR ..\..\..\_output
     :: Run prince, showing progress (-v), printing the docs in file-list
     :: and saving the resulting PDF to the _output folder
     :: (For some reason this has to be run with CALL)
@@ -262,10 +263,28 @@ SET /p process=Enter a number and hit return.
     :install
     :: Encouraging message
     ECHO.
-    ECHO Running Bundler to update and install dependencies. 
-    ECHO If Bundler is not already installed, exit and run
-    ECHO gem install bundler
-    ECHO from the command line.
+    ECHO We're going to run Bundler to update and install dependencies. 
+    ECHO If Bundler is not already installed, we'll install it first.
+    ECHO If you get a rubygems error about SSL certificate failure, see
+    ECHO http://guides.rubygems.org/ssl-certificate-update/
+    ECHO.
+    ECHO This may take a few minutes.
+    :: Check if Bundler is installed. If not, install it.
+    :: (Thanks http://stackoverflow.com/a/4781795/1781075)
+    set FOUND=
+    for %%e in (%PATHEXT%) do (
+      for %%X in (bundler%%e) do (
+        if not defined FOUND (
+          set FOUND=%%~$PATH:X
+        )
+      )
+    )
+    IF NOT "%FOUND%"=="" goto bundlerinstalled
+    IF "%FOUND%"=="" echo Installing Bundler...
+    gem install bundler
+    :bundlerinstalled
+    ECHO.
+    ECHO Running Bundler...
     ECHO.
     :: Run bundle update
     CALL bundle update
