@@ -34,6 +34,11 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 ### 0.4.4
 
 * `run-windows` script now installs Bundler if it's not installed
+* `run-windows` script fixes: correct baseurl, correct epub firstfile
+* Test with Jekyll 3.3.0 and allow in dependencies
+* Update prose config
+* Allow gh-pages repo in config
+* Minor fixes
 
 ### 0.4.3
 
