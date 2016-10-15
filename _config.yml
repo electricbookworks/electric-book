@@ -23,9 +23,15 @@ edition: "default"
 #edition: ""
 
 # If you're using GitHub Pages, make this the name of your repo, e.g. /electric-book-workflow
+# It must start with a slash.
 # See http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
 # Otherwise you can leave it blank.
 baseurl: ""
+
+# If you're publishing a website on GitHub Pages:
+# add username/repository here and
+# uncomment `gem 'github-pages', group: :jekyll_plugins` in this project's Gemfile.
+repository: ""
 
 # Web navigation source: select either files or nav
 # files: navigation will be taken from the web files list in `meta.yml` (this is default)
@@ -66,13 +72,9 @@ image-set: "images"
 exclude:
 # - css
 # - book
-- linux-print-pdf.sh
-- mac-print-pdf.command
-- win-print-pdf.bat
-- win-web.bat
-- win-epub.bat
-- win-screen-pdf.bat
-- win-install.bat
+- run-linux.sh
+- run-mac.command
+- run-windows.bat
 - Gemfile
 - Gemfile.lock
 
@@ -86,7 +88,7 @@ keep_files:
 # ----------------------------
 
 # Version of this Electric Book template
-version: "0.4.3"
+version: "0.4.4"
 
 # Leave this unchanged as http://localhost:4000 unless you really know what you're doing here. This is the URL that Jekyll will run at by default locally.
 url: http://localhost:4000
