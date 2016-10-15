@@ -243,7 +243,7 @@ SET /p process=Enter a number and hit return.
     :: Temporarily put Sigil in the PATH, whether x86 or not
     PATH=%PATH%;C:\Program Files\Sigil;C:\Program Files (x86)\Sigil
     :: and open the cover HTML file in it, to load metadata into Sigil
-    START "" sigil.exe "$firstfile.html"
+    START "" sigil.exe "%firstfile%.html"
     :: Open file explorer to make it easy to see the HTML to assemble
     %SystemRoot%\explorer.exe "%location%_html\%bookfolder%\"
     :: Navigate back to where we began
