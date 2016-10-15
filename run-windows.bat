@@ -64,8 +64,9 @@ SET /p process=Enter a number and hit return.
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Check if the _output folder exists, or create it if not.
-    IF not exist ..\..\..\_output\NUL
-    MKDIR ..\..\..\_output
+    :: (this check is currently not working in some setups, disabling it)
+    rem IF not exist ..\..\..\_output\NUL
+    rem MKDIR ..\..\..\_output
     :: Run prince, showing progress (-v), printing the docs in file-list
     :: and saving the resulting PDF to the _output folder
     :: (For some reason this has to be run with CALL)
@@ -170,21 +171,22 @@ SET /p process=Enter a number and hit return.
     :: let the user know we're on it!
     ECHO Getting your site ready...
     ECHO You may need to reload the web page once this server is running.
-    :: Open the web browser
-    :: (This is before jekyll s, because jekyll s pauses the script.)
-    START "" "http://127.0.0.1:4000/"
     :: Two routes to go with or without a baseurl
     IF "%baseurl%"=="" GOTO servewithoutbaseurl
         :: Route 1, for serving with a baseurl
         :servewithbaseurl
+        :: Open the web browser
+        :: (This is before jekyll s, because jekyll s pauses the script.)
+        START "" "http://127.0.0.1:4000/%baseurl%/"
         :: Run Jekyll
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl="/%baseurl%"
-        :: Open the web browser
-        START "" "http://127.0.0.1:4000/%baseurl%/"
         :: And we're done here
         GOTO websiterepeat
         :: Route 2, for serving without a baseurl
         :servewithoutbaseurl
+        :: Open the web browser
+        :: (This is before jekyll s, because jekyll s pauses the script.)
+        START "" "http://127.0.0.1:4000/"
         :: Run Jekyll
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
     :: Let the user rebuild and restart
@@ -241,7 +243,7 @@ SET /p process=Enter a number and hit return.
     :: Temporarily put Sigil in the PATH, whether x86 or not
     PATH=%PATH%;C:\Program Files\Sigil;C:\Program Files (x86)\Sigil
     :: and open the cover HTML file in it, to load metadata into Sigil
-    START "" sigil.exe "$firstfile.html"
+    START "" sigil.exe "%firstfile%.html"
     :: Open file explorer to make it easy to see the HTML to assemble
     %SystemRoot%\explorer.exe "%location%_html\%bookfolder%\"
     :: Navigate back to where we began
@@ -262,10 +264,28 @@ SET /p process=Enter a number and hit return.
     :install
     :: Encouraging message
     ECHO.
-    ECHO Running Bundler to update and install dependencies. 
-    ECHO If Bundler is not already installed, exit and run
-    ECHO gem install bundler
-    ECHO from the command line.
+    ECHO We're going to run Bundler to update and install dependencies. 
+    ECHO If Bundler is not already installed, we'll install it first.
+    ECHO If you get a rubygems error about SSL certificate failure, see
+    ECHO http://guides.rubygems.org/ssl-certificate-update/
+    ECHO.
+    ECHO This may take a few minutes.
+    :: Check if Bundler is installed. If not, install it.
+    :: (Thanks http://stackoverflow.com/a/4781795/1781075)
+    set FOUND=
+    for %%e in (%PATHEXT%) do (
+      for %%X in (bundler%%e) do (
+        if not defined FOUND (
+          set FOUND=%%~$PATH:X
+        )
+      )
+    )
+    IF NOT "%FOUND%"=="" goto bundlerinstalled
+    IF "%FOUND%"=="" echo Installing Bundler...
+    gem install bundler
+    :bundlerinstalled
+    ECHO.
+    ECHO Running Bundler...
     ECHO.
     :: Run bundle update
     CALL bundle update

@@ -13,16 +13,32 @@ A Jekyll template for making books, ebooks and book-like websites.
 
 [Read the guide](http://electricbookworks.github.io/electric-book-workflow/) for much more. The guide is also an example of the template in action.
 
-## Known bug in Jekyll 3.2.1 on Windows
+## Known bugs on Windows
 
-Jekyll 3.2.1 does not run on Windows due to [a bug](https://github.com/jekyll/jekyll/issues/5192). Until this is fixed, [a workaround](https://github.com/jekyll/jekyll/issues/5192#issuecomment-237484567):
+**Jekyll 3.2.1** does not run on Windows due to [a bug](https://github.com/jekyll/jekyll/issues/5192). Until this is fixed, [a workaround](https://github.com/jekyll/jekyll/issues/5192#issuecomment-237484567):
 
 1. At a command prompt, type `gem environment`. See where your gems are installed.
-2. Go there and in the `jekyll` folder find `lib/jekyll/layout.rb`.
+2. Go there and in the `jekyll-3.2.1` folder find `lib/jekyll/layout.rb`.
 3. Open `layout.rb` in a text editor and replace line 38 with `@path = base + "/" + name`.
 4. Save and close `layout.rb`.
 
+In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascination with shiny new things like Windows Bash](https://github.com/jekyll/jekyll/issues/5462). A [workaround](https://github.com/jekyll/jekyll/issues/5462#issuecomment-252237991): 
+
+1. At a command prompt, type `gem environment`. See where your gems are installed.
+2. Go there and in the `jekyll-3.3.0` folder find `lib/jekyll/commands/build.rb`.
+3. Open `build.rb` in a text editor and replace everything with the code in [this file](https://raw.githubusercontent.com/jekyll/jekyll/d590d7a73863c896e3fe0292e8b2976172fa91f7/lib/jekyll/commands/build.rb), which is the `build.rb` from Jekyll 3.2.1. (The only affected lines are 73 to the end.)
+4. Save and close `build.rb`.
+
 ## Changelog
+
+### 0.4.4
+
+* `run-windows` script now installs Bundler if it's not installed
+* `run-windows` script fixes: correct baseurl, correct epub firstfile
+* Test with Jekyll 3.3.0 and allow in dependencies
+* Update prose config
+* Allow gh-pages repo in config
+* Minor fixes
 
 ### 0.4.3
 
