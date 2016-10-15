@@ -171,21 +171,22 @@ SET /p process=Enter a number and hit return.
     :: let the user know we're on it!
     ECHO Getting your site ready...
     ECHO You may need to reload the web page once this server is running.
-    :: Open the web browser
-    :: (This is before jekyll s, because jekyll s pauses the script.)
-    START "" "http://127.0.0.1:4000/"
     :: Two routes to go with or without a baseurl
     IF "%baseurl%"=="" GOTO servewithoutbaseurl
         :: Route 1, for serving with a baseurl
         :servewithbaseurl
+        :: Open the web browser
+        :: (This is before jekyll s, because jekyll s pauses the script.)
+        START "" "http://127.0.0.1:4000/%baseurl%/"
         :: Run Jekyll
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl="/%baseurl%"
-        :: Open the web browser
-        START "" "http://127.0.0.1:4000/%baseurl%/"
         :: And we're done here
         GOTO websiterepeat
         :: Route 2, for serving without a baseurl
         :servewithoutbaseurl
+        :: Open the web browser
+        :: (This is before jekyll s, because jekyll s pauses the script.)
+        START "" "http://127.0.0.1:4000/"
         :: Run Jekyll
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
     :: Let the user rebuild and restart
