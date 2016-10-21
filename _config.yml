@@ -22,10 +22,10 @@ theme: electric-book-classic-theme
 edition: "default"
 #edition: ""
 
-# If you're using GitHub Pages, make this the name of your repo, e.g. /electric-book-workflow
-# It must start with a slash.
+# If you're using GitHub Pages without a custom domain, make this
+# the name of your repo, e.g. /electric-book-workflow
+# It must start with a slash. Otherwise you can leave it blank.
 # See http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
-# Otherwise you can leave it blank.
 baseurl: ""
 
 # If you're publishing a website on GitHub Pages:
