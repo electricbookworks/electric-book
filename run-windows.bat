@@ -43,7 +43,8 @@ SET /p process=Enter a number and hit return.
     ECHO Okay, let's make a print-ready PDF.
     ECHO.
     :: Ask user which folder to process
-    SET /p bookfolder=Which book folder are we processing? 
+    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+    IF "%bookfolder%"=="" SET bookfolder=book
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
