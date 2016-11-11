@@ -1,0 +1,150 @@
+$print-verse: true !default;
+@if $print-verse {
+
+	// Verse, poetry, lyrics
+
+	// To do:
+	// * convert indents to a more efficient Sass loop
+	// * for width classes, use a Sass loop to create fine-grained
+	//   width control for every percentage.
+
+	.verse {
+		text-indent: 0;
+		margin: $line-height-default 0;
+		hyphens: none;
+	}
+	.verse + p {
+		text-indent: 0; // Paragraphs after verse should be flush left
+	}
+	ul.verse {
+		list-style-type: none;
+		padding: 0;
+		margin: $line-height-default 0;
+	}
+	// Hanging indent for runover lines.
+	ul.verse li {
+		text-indent: $line-height-default * (-2);
+		margin-left: $line-height-default * 2;
+	}
+
+	// Indents for lines of verse. 
+	// In markdown, add {:.indent-x} to the start of the list item text, e.g. -	{:.indent-3}My line of poetry indented 3em
+	// Note that indentation here includes the ul.verse li margin-left above.
+	// To do: turn this into a concise Sass @for loop.
+	ul.verse li.indent-1 { margin-left: ($line-height-default * 2) + 1 * $line-height-default; }
+	ul.verse li.indent-2 { margin-left: ($line-height-default * 2) + 2 * $line-height-default; }
+	ul.verse li.indent-3 { margin-left: ($line-height-default * 2) + 3 * $line-height-default; }
+	ul.verse li.indent-4 { margin-left: ($line-height-default * 2) + 4 * $line-height-default; }
+	ul.verse li.indent-5 { margin-left: ($line-height-default * 2) + 5 * $line-height-default; }
+	ul.verse li.indent-6 { margin-left: ($line-height-default * 2) + 6 * $line-height-default; }
+	ul.verse li.indent-7 { margin-left: ($line-height-default * 2) + 7 * $line-height-default; }
+	ul.verse li.indent-8 { margin-left: ($line-height-default * 2) + 8 * $line-height-default; }
+	ul.verse li.indent-9 { margin-left: ($line-height-default * 2) + 9 * $line-height-default; }
+	ul.verse li.indent-10 { margin-left: ($line-height-default * 2) + 10 * $line-height-default; }
+	ul.verse li.indent-11 { margin-left: ($line-height-default * 2) + 11 * $line-height-default; }
+	ul.verse li.indent-12 { margin-left: ($line-height-default * 2) + 12 * $line-height-default; }
+	ul.verse li.indent-13 { margin-left: ($line-height-default * 2) + 13 * $line-height-default; }
+	ul.verse li.indent-14 { margin-left: ($line-height-default * 2) + 14 * $line-height-default; }
+	ul.verse li.indent-15 { margin-left: ($line-height-default * 2) + 15 * $line-height-default; }
+	ul.verse li.indent-16 { margin-left: ($line-height-default * 2) + 16 * $line-height-default; }
+	ul.verse li.indent-17 { margin-left: ($line-height-default * 2) + 17 * $line-height-default; }
+	ul.verse li.indent-18 { margin-left: ($line-height-default * 2) + 18 * $line-height-default; }
+	ul.verse li.indent-19 { margin-left: ($line-height-default * 2) + 19 * $line-height-default; }
+	ul.verse li.indent-20 { margin-left: ($line-height-default * 2) + 20 * $line-height-default; }
+	ul.verse li.indent-21 { margin-left: ($line-height-default * 2) + 21 * $line-height-default; }
+	ul.verse li.indent-22 { margin-left: ($line-height-default * 2) + 22 * $line-height-default; }
+	ul.verse li.indent-23 { margin-left: ($line-height-default * 2) + 23 * $line-height-default; }
+	ul.verse li.indent-24 { margin-left: ($line-height-default * 2) + 24 * $line-height-default; }
+	ul.verse li.indent-25 { margin-left: ($line-height-default * 2) + 25 * $line-height-default; }
+	ul.verse li.indent-26 { margin-left: ($line-height-default * 2) + 26 * $line-height-default; }
+	ul.verse li.indent-27 { margin-left: ($line-height-default * 2) + 27 * $line-height-default; }
+	ul.verse li.indent-28 { margin-left: ($line-height-default * 2) + 28 * $line-height-default; }
+	ul.verse li.indent-29 { margin-left: ($line-height-default * 2) + 29 * $line-height-default; }
+	ul.verse li.indent-30 { margin-left: ($line-height-default * 2) + 30 * $line-height-default; }
+	ul.verse li.indent-31 { margin-left: ($line-height-default * 2) + 31 * $line-height-default; }
+	ul.verse li.indent-32 { margin-left: ($line-height-default * 2) + 32 * $line-height-default; }
+	ul.verse li.indent-33 { margin-left: ($line-height-default * 2) + 33 * $line-height-default; }
+	ul.verse li.indent-34 { margin-left: ($line-height-default * 2) + 34 * $line-height-default; }
+	ul.verse li.indent-35 { margin-left: ($line-height-default * 2) + 35 * $line-height-default; }
+	ul.verse li.indent-36 { margin-left: ($line-height-default * 2) + 36 * $line-height-default; }
+	ul.verse li.indent-37 { margin-left: ($line-height-default * 2) + 37 * $line-height-default; }
+	ul.verse li.indent-38 { margin-left: ($line-height-default * 2) + 38 * $line-height-default; }
+	ul.verse li.indent-39 { margin-left: ($line-height-default * 2) + 39 * $line-height-default; }
+	ul.verse li.indent-40 { margin-left: ($line-height-default * 2) + 40 * $line-height-default; }
+	ul.verse li.indent-41 { margin-left: ($line-height-default * 2) + 41 * $line-height-default; }
+	ul.verse li.indent-42 { margin-left: ($line-height-default * 2) + 42 * $line-height-default; }
+	ul.verse li.indent-43 { margin-left: ($line-height-default * 2) + 43 * $line-height-default; }
+	ul.verse li.indent-44 { margin-left: ($line-height-default * 2) + 44 * $line-height-default; }
+	ul.verse li.indent-45 { margin-left: ($line-height-default * 2) + 45 * $line-height-default; }
+	ul.verse li.indent-46 { margin-left: ($line-height-default * 2) + 46 * $line-height-default; }
+	ul.verse li.indent-47 { margin-left: ($line-height-default * 2) + 47 * $line-height-default; }
+	ul.verse li.indent-48 { margin-left: ($line-height-default * 2) + 48 * $line-height-default; }
+	ul.verse li.indent-49 { margin-left: ($line-height-default * 2) + 49 * $line-height-default; }
+	ul.verse li.indent-50 { margin-left: ($line-height-default * 2) + 50 * $line-height-default; }
+	ul.verse li.indent-51 { margin-left: ($line-height-default * 2) + 51 * $line-height-default; }
+	ul.verse li.indent-52 { margin-left: ($line-height-default * 2) + 52 * $line-height-default; }
+	ul.verse li.indent-53 { margin-left: ($line-height-default * 2) + 53 * $line-height-default; }
+	ul.verse li.indent-54 { margin-left: ($line-height-default * 2) + 54 * $line-height-default; }
+	ul.verse li.indent-55 { margin-left: ($line-height-default * 2) + 55 * $line-height-default; }
+	ul.verse li.indent-56 { margin-left: ($line-height-default * 2) + 56 * $line-height-default; }
+	ul.verse li.indent-57 { margin-left: ($line-height-default * 2) + 57 * $line-height-default; }
+	ul.verse li.indent-58 { margin-left: ($line-height-default * 2) + 58 * $line-height-default; }
+	ul.verse li.indent-59 { margin-left: ($line-height-default * 2) + 59 * $line-height-default; }
+	ul.verse li.indent-60 { margin-left: ($line-height-default * 2) + 60 * $line-height-default; }
+
+	// Verse in a blockquote centres on its longest line, which is best-practice poetry layout
+	blockquote.verse {
+		color: inherit;
+		margin-top: 0;
+		width: 100%;
+	    padding: 0;
+	}
+	blockquote.verse h1, 
+	blockquote.verse h2,
+	blockquote.verse h3, 
+	blockquote.verse h4,
+	blockquote.verse h5, 
+	blockquote.verse h6 {
+		margin-bottom: $line-height-default;
+	}
+	blockquote.verse ul {
+		margin-bottom: 0; // Already gets its space after from ul.verse
+	}
+
+	// If verse is in a list, we can preserve line breaks and white space
+	ul.verse li {
+		white-space: pre-wrap;
+	}
+	ul.verse li h1,
+	ul.verse li h2,
+	ul.verse li h3,
+	ul.verse li h4,
+	ul.verse li h5,
+	ul.verse li h6 {
+		margin-bottom: 0; margin-top: 0; // Overrides extra line-breaks caused by li pre-wrap
+	} 
+
+	// If a line is blank it's an empty list item. That will collapse away by default, so we add a blank line back in.
+	ul.verse li:empty:after {
+		content: " ";
+	}
+
+	// In print, the width and visual centering of verse is controlled by specifying how wide, in per cent, you want your poem to be.
+	// We use a different approach on screen.
+
+	blockquote.verse ul.verse {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.width-10, .width-10 .verse { width: 10%; }
+	.width-20, .width-20 .verse { width: 20%; }
+	.width-30, .width-30 .verse { width: 30%; }
+	.width-40, .width-40 .verse { width: 40%; }
+	.width-50, .width-50 .verse { width: 50%; }
+	.width-60, .width-60 .verse { width: 60%; }
+	.width-70, .width-70 .verse { width: 70%; }
+	.width-80, .width-80 .verse { width: 80%; }
+	.width-90, .width-90 .verse { width: 90%; }
+
+}

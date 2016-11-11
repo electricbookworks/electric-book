@@ -1,0 +1,19 @@
+<div class="masthead">
+
+{% if is-homepage == true or is-series-search == true %}
+    <ul>
+        <li class="masthead-series-name"><a href="{{ site.baseurl }}/" title="Home: {{ series-name }}">{{ series-name }}</a></li>
+    </ul>
+
+{% else %}
+
+    <ul>
+        {%if number-of-works > 1 %}
+        <li class="masthead-series-name"><a href="{{ site.baseurl }}/" title="Home: {{ series-name }}">{{ series-name }}</a></li>
+        {% endif %}
+        <li class="masthead-book-title"><a href="{{ web-contents-page }}" title="Contents: {{ title }}">{{ title }}</a></li>
+    </ul>
+
+{% endif %}
+
+</div><!--.masthead-->

@@ -1,0 +1,26 @@
+$epub-smallcaps: true !default;
+@if $epub-smallcaps {
+
+	// Use small-cap alternate glyphs
+	.smallcaps { 
+		-moz-font-feature-settings: "smcp", "onum";
+		-ms-font-feature-settings: "smcp", "onum";
+		-o-font-feature-settings: "smcp", "onum";
+		-webkit-font-feature-settings: "smcp", "onum";
+		font-feature-settings: "smcp", "onum";
+		font-style: inherit;
+		font-weight: inherit;
+	}
+
+	// Convert both upper and lowercase to small caps (affects punctuation also)
+	.allsmallcaps { 
+		-moz-font-feature-settings: "c2sc", "smcp", "onum";
+		-ms-font-feature-settings: "c2sc", "smcp", "onum";
+		-o-font-feature-settings: "c2sc", "smcp", "onum";
+		-webkit-font-feature-settings: "c2sc", "smcp", "onum";
+		font-feature-settings: "c2sc", "smcp", "onum";
+		font-style: inherit;
+		font-weight: inherit;
+	}
+
+}

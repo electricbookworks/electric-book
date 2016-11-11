@@ -1,0 +1,19 @@
+$print-openers: true !default;
+@if $print-openers {
+
+    // A paragraph that starts a new set of paragraphs, with a gap above it.
+    .first {
+    	text-indent: 0;
+    	margin-top: $line-height-default; // Overridden by later rule for paragraphs after headings, blockquotes, lists and definition lists
+    }
+    .chapter-number {
+        display: block;
+    	font-size: $font-size-default * 2;
+    	line-height: $line-height-default * 2;
+    	margin: 0 0 $line-height-default 0;
+        text-align: center;
+        font-style: inherit;
+        font-weight: inherit;
+    }
+
+}

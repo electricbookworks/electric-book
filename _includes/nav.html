@@ -1,0 +1,79 @@
+{% include metadata %}
+
+{% if site.nav-source == "nav" %}
+
+    <div class="nav-wrapper">
+        <div id="nav" class="non-printing">
+        
+            <div class="search">
+                {% include search %}
+            </div><!--.search-->
+
+            <div class="nav-list">
+
+                {% comment %}If this is not the homepage, include a link to the homepage.{% endcomment %}
+                {% if is-homepage != true %}
+                    <ol class="nav-series-home">
+                        <li><a href="{{ baseurl }}/">{{ series-home-label }}</a></li>
+                    </ol>
+                {% endif %}
+
+                {% if is-homepage == true or is-series-search == true %}
+                    <ol class="nav-book-list">
+                    {% for work in site.data.meta.works | sort: "order" %}
+                    {% assign home-nav-work-directory = work.directory %}
+                    {% assign home-nav-work-tree = work.products.web.nav %}
+                        <li>
+                            <a href="{{ base.url}}/{{ work.directory }}/text/{{ work.products.web.start-page }}.html">
+                                {{ work.title }}
+                            </a>
+                        </li>
+                        {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                    {% endfor %}
+                    </ol>
+
+                {% else %}
+
+                    {% comment %}Fetch recursive navigation{% endcomment %}
+                    {% include nav-list nav-tree=web-nav-tree %}
+
+                {% endif %}
+
+            </div><!--.nav-list-->
+
+            <div class="widgets">
+                {% include widgets %}
+            </div><!--.widgets-->
+
+        </div><!--#nav-->
+    </div><!--.nav-wrapper-->
+
+{% else %}
+
+    <div class="nav-wrapper">
+        <div id="nav" class="non-printing">
+            <div class="nav-list">
+                <ul>
+                    {% comment %}
+                    - Get the file-list
+                    - Pull out file-titles in the file-list
+                    - If the file key has a value, that's a file-title
+                    - Put it in a list item, with a hyperlink pointing to the file
+                    - And if the current page.url contains the file name, this must be the active page
+                    - So add the class `nav-page-active` to the list item.
+                    {% endcomment %}
+                    {% for file in web-file-list %}
+                        {% for file-title in file %}
+                            {% if file-title[1] %}
+                                <li class="nav-page{% if page.url contains file-title[0] %} nav-page-active{% endif %}">
+                                    <a href="{{ site.baseurl }}/{{ directory }}/text/{{ file-title[0] }}.html" title="{{ file-title[1] }}" class="nav-page-link">{{ file-title[1] }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div><!--.nav-list-->
+        </div><!--#nav-->
+    </div><!--.nav-wrapper-->
+
+{% endif %}

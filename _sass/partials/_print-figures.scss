@@ -1,0 +1,118 @@
+$print-figures: true !default;
+@if $print-figures {
+
+	// Figures. Note: we use the blockquote element to wrap figures and their captions in valid XHTML. 
+	// Use the .figure class for the blockquote wrapping an image and a caption. 
+	// Add .fixed, .small and/or .large for layout and size options. 
+
+	// To do:
+	// * Add styling for <figure> element as created with figure include
+
+	.figure {
+		clear: both;
+		float: top; // By default all figures float to the tops of their pages
+		page-break-inside: avoid;
+		background-color: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+		color: inherit;
+		margin: 0 0 $line-height-default 0;
+		padding: 0;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	// Experimental. Effectively overrides 'unless-fit' to reduce ugly instances
+	// of indented images in lists beside floated, non-indented images.
+	ol li .figure, ul li .figure {
+		display: inline-block;
+	}
+
+	// Fix figures in place, for when they must keep their position in the text flow,
+	// and not float to the top of the page.
+	.figure.fixed {
+		clear: both;
+		float: none;
+		margin-top: $line-height-default;
+	}
+
+	// The p (some with child img) elements inside the figure
+	.figure p {
+		clear: both;
+		page-break-inside: avoid;
+		page-break-before: avoid;
+		text-align: center;
+		text-indent: 0;
+		hyphens: none;
+		font-style: italic;
+		em {
+			font-style: normal;
+		}
+	}
+
+	// The image(s) in the figure
+	.figure p img, .figure img {
+		width: auto;
+		max-width: 100%;
+		max-height: 100%; // Prevents image from expanding below a parent p set to a specific height
+		margin: 0 auto 0 auto;
+	}
+
+	// The caption (.caption, or assumed to be the last paragraph in the figure)
+	// Note doesn't allow for multi-para captions – have to use line breaks :(
+	.figure .caption,
+	.figure p:last-of-type {
+		padding: ($line-height-default / 2) 0 ($line-height-default / 2) 0;
+		margin: 0;
+		text-align: center;
+		text-indent: 0;
+	}
+
+	// Image size options
+	// These need to be deprecated in favour of a multiple-based system.
+	.figure.x-small p img {
+		width: auto;
+		max-height: $line-height-default * 5;
+	}
+	.figure.small p img {
+		width: auto;
+		max-height: $line-height-default * 7;
+	}
+	.figure.medium p img {
+		width: auto;
+		max-height: $line-height-default * 10;
+	}
+	.figure.large {
+		float: none;
+		page-break-before: always;
+	}
+	.figure.large img {
+		max-height: $page-height - ($margin-top + $margin-bottom);
+		max-width: 100%;
+		width: auto;
+	}
+
+	// For another way to fit images to size, see _print-fitting.scss
+
+	// Paragraphs that follow figures should:
+	// have an indent when following floated figures
+	// not have an indent when following fixed figures.
+	blockquote.figure + p {
+		text-indent: $line-height-default;
+	}
+	blockquote.figure.fixed + p {
+		text-indent: 0;
+	}
+
+	// Thumbnail figures
+	.figure.thumbnail {
+		max-width: 25%;
+		float: right;
+		margin: 0 0 0 ($line-height-default / 2);
+    	padding: 0;
+		img {
+			padding: 0;
+		}
+	}
+
+}

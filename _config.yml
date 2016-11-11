@@ -11,10 +11,10 @@
 # Useful lookup tool: http://r12a.github.io/apps/subtags/
 language: en
 
-# What theme are you using?
-# If you are not using a theme (i.e. your have local _sass, _includes and _layouts)
-# then comment out this value to prevent Jekyll searching in vain for your theme.
-theme: electric-book-classic-theme
+# Are you importing a gem-based theme? By default we do not.
+# If you are, remove the # before `theme:` and enter your theme's gem name.
+# If you're using GitHub Pages, note that it may not support your theme.
+# theme: your-theme-gem-name-here
 
 # Which edition are we creating? You can leave this as `default`.
 # This can be used to create different editions of a book using Liquid control-flow tags, 
@@ -22,21 +22,33 @@ theme: electric-book-classic-theme
 edition: "default"
 #edition: ""
 
+# To make absolute links work, e.g. in canonical links in <head>,
+# include the url where this site will live when it's live (production).
+canonical-url: "http://example.com"
+
 # If you're using GitHub Pages without a custom domain, make this
-# the name of your repo, e.g. /electric-book-workflow
+# the name of your repo, e.g. /electric-book
 # It must start with a slash. Otherwise you can leave it blank.
 # See http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
 baseurl: ""
 
-# If you're publishing a website on GitHub Pages:
-# add username/repository here and
-# uncomment `gem 'github-pages', group: :jekyll_plugins` in this project's Gemfile.
+# If you're publishing a website on GitHub Pages
+# and want to ensure you're using a compatible setup,
+# add username/repository here and uncomment/enable
+# gem 'github-pages', group: :jekyll_plugins
+# in this project's Gemfile.
 repository: ""
 
 # Web navigation source: select either files or nav
-# files: navigation will be taken from the web files list in `meta.yml` (this is default)
+# files: navigation will be taken from the web files list in `meta.yml`
 # nav: navigation will be taken from the web nav tree in `meta.yml` (allows submenu nesting)
-nav-source: files
+nav-source: nav
+
+# Enable MathJax to render mathematics. MathJax adds a large script to your pages,
+# so this is off (false) by default. Change to true to load MathJax.
+# See http://docs.mathjax.org/en/latest/configuration.html for details.
+# MathJax scripts are linked from the head-elements include.
+mathjax-enabled: false
 
 # --------------------------------------------
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
@@ -56,11 +68,15 @@ output: "web"
 # output: "lightning-source-colour"
 
 # You can switch between sets of images for different purposes.
-# For instance, small, colour images for epub and screen-pdf, and high-res greyscale for print-pdf.
-# Set your default image set here. This refers to the `images` directory in each book's directory,
-# and then to any subdirectories you create per set.
-# The default, `images`, assumes you'll use the same images for all outputs.
-image-set: "images"
+# For instance, small, colour images for epub and screen-pdf, 
+# and high-res greyscale for print-pdf.
+# Set your default image set here. This refers to the `images`
+# directory in each book's directory, and then to any 
+# subdirectories you create per set. The default, `images`,
+# assumes you'll use the same images for all outputs.
+# (We use an uppercase I in Images for compatibility with Sigil, 
+# for epub output, where validation is case-sensitive.)
+image-set: "Images"
 # image-set: "images/epub"
 # image-set: "images/web"
 # image-set: "images/print-pdf"
@@ -79,7 +95,8 @@ exclude:
 - Gemfile.lock
 
 # Can be useful to stop Jekyll overwriting files in _site.
-# E.g. generate CSS once, then exclude above but keep here to make content regeneration faster.
+# E.g. generate CSS once, then exclude above but keep here
+# to make content regeneration faster.
 keep_files:
 # - css
 
@@ -88,7 +105,7 @@ keep_files:
 # ----------------------------
 
 # Version of this Electric Book template
-version: "0.4.4"
+version: "0.5.0"
 
 # Leave this unchanged as http://localhost:4000 unless you really know what you're doing here. This is the URL that Jekyll will run at by default locally.
 url: http://localhost:4000

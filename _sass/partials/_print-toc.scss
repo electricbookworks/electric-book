@@ -1,0 +1,57 @@
+$print-toc: true !default;
+@if $print-toc {
+
+	// Table of Contents pages
+	// Also adds page numbers to any block of links classed as .page-ref-list
+
+	// Regarding classes for frontmatter entries in TOCs:
+	// a.frontmatter-reference is legacy, we now prefer
+	// li.frontmatter-entry a
+
+	.contents-page,
+	.page-ref-list {
+		ul, ol {
+			list-style-type: none;
+		}
+		li {
+			margin: 0;
+			a::after,
+			a::after { 
+				content: leader(" ") target-counter(attr(href), page);
+			}
+			a.frontmatter-reference::after {
+				content: leader(" ") target-counter(attr(href), page, $frontmatter-reference-style);
+			}
+			&.frontmatter-entry {
+				a::after {
+					content: leader(" ") target-counter(attr(href), page, $frontmatter-reference-style);
+				}
+			}
+			&.cover-entry {
+				display: none; // Hide the cover in the table of contents, e.g. if it's there from web nav
+			}
+		}
+		ul, ol {
+			margin-left: $line-height-default;
+		}
+	}
+
+	// TOCs in individual pages
+	// As created in kramdown with a placeholder ol/ul followed by {:toc}
+
+	#markdown-toc {
+		font-family: $font-text-secondary;
+		list-style-type: none;
+		margin: $line-height-default 0;
+		li {
+			margin: 0;
+		}
+		li li {
+			margin-left: $line-height-default;
+		}
+		a::after {
+			content: leader(" ") target-counter(attr(href), page);
+		}
+	}
+
+}

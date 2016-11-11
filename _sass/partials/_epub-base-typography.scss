@@ -1,0 +1,165 @@
+$epub-base-typography: true !default;
+@if $epub-base-typography {
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: $color-background;
+        font-family: $font-text-main;
+        font-size: $font-size-default;
+        color: $color-text-main;
+        line-height: $line-height-default;
+        overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-family: $font-text-secondary;
+        font-size: $font-size-default;
+    	font-weight: bold;
+    	line-height: $line-height-default;
+    	page-break-after: avoid;
+    	margin: $line-height-default 0 0 0;
+    }
+    h1 {
+        font-family: $font-display-main;
+        font-size: $font-size-default * $font-size-bigger;
+        line-height: 1;
+        margin: ($line-height-default) 0 ($line-height-default * 0.5) 0;
+    }
+    h2 {
+        font-size: $font-size-default * ($font-size-bigger * 0.75);
+        line-height: 1;
+        margin: ($line-height-default) 0 ($line-height-default * 0.5) 0;
+    }
+    h3 {}
+    h4 {
+        font-style: italic;
+        font-weight: inherit;
+    }
+    h5 {
+        font-family: $font-text-main;
+        font-style: italic;
+        font-weight: inherit;
+    }
+    h6 {
+        font-family: $font-text-main;
+        font-weight: inherit;
+    }
+    p {
+        margin: 0;
+        text-indent: $font-size-default;
+    }
+    p:first-of-type {
+        text-indent: 0;
+    }
+
+    // Lists
+
+    ol {
+        list-style: decimal;
+        list-style-position: outside;
+        margin: 0 0 $line-height-default 1em;
+    }
+    ul {
+        list-style-type: disc;
+        list-style-position: outside;
+        margin: 0 0 $line-height-default 1em;
+    }
+    ul ul, ol ol, blockquote ul ul, blockquote ol ol {
+    	margin-bottom: 0;
+    }
+    ol ol {
+    	list-style-type: lower-alpha;
+    }
+
+
+    // Blockquotes
+
+    blockquote {
+    	margin: $line-height-default 0 $line-height-default 0;
+    	padding: 0 $line-height-default;
+    }
+    // Suspect this isn't necessary. To remove after testing.
+    // blockquote p {
+    //  line-height: $line-height-default;
+    // }
+    blockquote p:first-of-type {
+    	text-indent: 0;
+    }
+    blockquote p:last-of-type, blockquote ol, blockquote ul {
+    	margin: 0 0 $line-height-default 0;
+    }
+
+    // Definition lists
+
+    dl {
+        margin: $line-height-default 0;
+    }
+    dt {}
+    dd {
+    	margin: 0 0 $line-height-default 0;
+    }
+
+    // Horizontal rules
+
+    // Used in text as dividers (*** in markdown)
+    hr {
+        border: 0;
+        font-family: $font-display-main;
+        text-align: center;
+        margin: $line-height-default 0;
+        &:after {
+            content: "\2014";
+        }
+        & + p {
+            text-indent: 0;
+        }
+    }
+
+    // Superscripts and subscripts
+
+    sup, sub {
+        line-height: 100%;
+        font-size: 1em * $font-size-smaller;
+    }
+    sup {
+        vertical-align: super;
+    }
+    sub {
+        vertical-align: sub;
+    }
+
+    // Links
+
+    a {
+        text-decoration: none;
+        color: $color-links;
+    }
+
+    // Bold and italic
+    em {
+        font-style: italic;
+    }
+    strong {
+        font-weight: bold;
+    }
+
+    // Forms
+
+    input {
+        padding: 0.75em 0.75em;
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: inherit;
+        border: 1px solid $color-light;
+    }
+
+    // An option to change the default text-indented paragraphs
+    // and close-up lists etc. to have space-between instead.
+    @if $spaced-paras {
+        p {
+            margin-bottom: $line-height-default;
+            text-indent: 0;
+        }
+    }
+
+}

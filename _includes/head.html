@@ -1,0 +1,121 @@
+{% include metadata %}
+{% if site.output == 'epub' %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ language }}">
+<head>
+    <title>
+    {% if title %}
+    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../Styles/{{ page.stylesheet-epub }}" />
+    
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+        <meta name="DC.Title" content="{{ title }}" />
+        <meta name="DC.Language" content="{{ language }}" />
+        <meta name="DC.Creator" content="{{ creator }}" />
+        <meta name="DC.Publisher" content="{{ publisher }}" />
+        <meta name="DC.Date" content="{{ date }}" />
+        <meta name="DC.Identifier" content="{{ epub-identifier }}" />
+        <meta name="DC.Relation" content="{{ print-pdf-identifier }}" />
+        <meta name="DC.Description" CONTENT="{{ description }}" />
+
+    {% include head-elements %}
+
+</head>
+<body class="{{ directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}" {% if page.header != nil %}title="{{ page.header }}"{% else %}title="{{ page.title }}"{% endif %}>
+<div id="wrapper">
+
+
+{% elsif site.output == 'screen-pdf' %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<head>
+    <title>
+    {% if title %}
+    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="print" href="../styles/{{ page.stylesheet-screen-pdf }}" />
+
+    {% include head-elements %}
+
+</head>
+<body class="{{ directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}" {% if page.header != nil %}title="{{ page.header }}"{% else %}title="{{ page.title }}"{% endif %}>
+<div id="wrapper">
+
+{% elsif site.output == 'print-pdf' %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<head>
+    <title>
+    {% if title %}
+    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="print" href="../styles/{{ page.stylesheet-print-pdf }}" />
+
+    {% include head-elements %}
+
+</head>
+<!--ontouchstart="" onmouseover="" required for iOS devices-->
+<body class="{{ directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}" {% if page.header != nil %}title="{{ page.header }}"{% else %}title="{{ page.title }}"{% endif %} ontouchstart="" onmouseover="">
+<div id="wrapper">
+
+
+{% else %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<head>
+    <title>
+    {% if title %}
+    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ site.canonical-url}}{{ page.url }}" />
+    {% if page.image %}
+    <meta property="og:image" content="{{ page.image }}" />
+    {% elsif web-image != "" %}
+    <meta property="og:image" content="{{ site.canonical-url }}/{{ current-directory }}/{{ site.image-set }}/{{ web-image }}" />
+    {% elsif image != "" %}
+    <meta property="og:image" content="{{ site.canonical-url }}/{{ current-directory }}/{{ site.image-set }}/{{ image }}" />
+    {% else %}
+    <meta property="og:image" content="{{ site.canonical-url }}/assets/{{ series-image }}" />
+    {% endif %}
+
+    {% if is-homepage == true or is-series-search == true %}
+    {% for book in site.data.meta.works %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ book.directory }}/styles/{{ page.stylesheet-web }}" />
+    <link rel="stylesheet" type="text/css" media="print" href="{{ book.directory }}/styles/{{ page.stylesheet-screen-pdf }}" />
+    {% endfor %}
+    {% else %}
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/{{ page.stylesheet-web }}" />
+    <link rel="stylesheet" type="text/css" media="print" href="../styles/{{ page.stylesheet-screen-pdf }}" />
+    {% endif %}
+
+    {% include head-elements %}
+
+</head>
+<!--ontouchstart="" onmouseover="" required for iOS devices-->
+<body class="{{ directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-series-search == true %} series-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}" {% if page.header != nil %}title="{{ page.header }}"{% else %}title="{{ page.title }}"{% endif %} ontouchstart="" onmouseover="">
+<div id="wrapper">
+
+{% endif %}

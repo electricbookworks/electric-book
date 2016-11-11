@@ -1,5 +1,7 @@
 :: Don't show these commands to the user
 @ECHO off
+:: Keep variables local, and expand at execution time not parse time
+Setlocal enabledelayedexpansion
 :: Set the title of the window
 TITLE Electric Book
 
@@ -21,16 +23,18 @@ ECHO 1. Create a print PDF
 ECHO 2. Create a screen PDF
 ECHO 3. Run as a website
 ECHO 4. Create EPUB-ready files
-ECHO 5. Install or update dependencies
-ECHO 6. Exit
+ECHO 5. Export to Word
+ECHO 6. Install or update dependencies
+ECHO 7. Exit
 ECHO.
 SET /p process=Enter a number and hit return. 
     IF "%process%"=="1" GOTO printpdf
     IF "%process%"=="2" GOTO screenpdf
     IF "%process%"=="3" GOTO website
     IF "%process%"=="4" GOTO epub
-    IF "%process%"=="5" GOTO install
-    IF "%process%"=="6" GOTO:EOF
+    IF "%process%"=="5" GOTO word
+    IF "%process%"=="6" GOTO install
+    IF "%process%"=="7" GOTO:EOF
     GOTO choose
 
     :: :: :: :: :: ::
@@ -101,9 +105,8 @@ SET /p process=Enter a number and hit return.
     ECHO Okay, let's make a screen PDF.
     ECHO.
     :: Ask user which folder to process
-    :choosefolder
-    SET /p bookfolder=Which book folder are we processing? 
-    IF "%bookfolder%"=="" GOTO choosefolder
+    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+    IF "%bookfolder%"=="" SET bookfolder=book
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
@@ -215,13 +218,14 @@ SET /p process=Enter a number and hit return.
     SET location=%~dp0
     :: Ask user which folder to process
     :choosefolder
-    SET /p bookfolder=Which book folder are we processing? 
+    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+    IF "%bookfolder%"=="" SET bookfolder=book
     ECHO.
     ECHO What is the first file in your book? Usually the cover.
-    ECHO (Don't include the .html file extension.)
+    ECHO Just hit return for the default "0-0-cover"
     ECHO.
     SET /p firstfile=
-    IF "%bookfolder%"=="" GOTO choosefolder
+    IF "%firstfile%"=="" SET firstfile=0-0-cover
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
@@ -255,6 +259,84 @@ SET /p process=Enter a number and hit return.
     SET repeat=
     SET /p repeat=Enter to run again, or any other key and enter to stop. 
     IF "%repeat%"=="" GOTO epubrefresh
+    ECHO.
+    GOTO begin
+
+    :: :: :: :: :: ::
+    :: WORD EXPORT ::
+    :: :: :: :: :: ::
+
+    :word
+    :: Encouraging message
+    ECHO.
+    ECHO Okay, let's export to Word.
+    ECHO.
+    :: Remember where we are by assigning a variable to the current directory
+    SET location=%~dp0
+    :: Ask user which folder to process
+    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+    IF "%bookfolder%"=="" SET bookfolder=book
+    :: Ask user which output type to work from
+    ECHO Which format are we converting? Enter P, S, or E:
+    ECHO P for print-pdf (default)
+    ECHO S for screen-pdf
+    ECHO E for epub
+    SET /p format=
+    :: Turn that choice into the name of an output format for our config
+    IF "%format%"=="" SET format=print-pdf
+    IF "%format%"=="P" SET format=print-pdf
+    IF "%format%"=="p" SET format=print-pdf
+    IF "%format%"=="S" SET format=screen-pdf
+    IF "%format%"=="s" SET format=screen-pdf
+    IF "%format%"=="E" SET format=epub
+    IF "%format%"=="e" SET format=epub
+    :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+    ECHO.
+    ECHO Any extra config files?
+    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
+    ECHO _configs/_config.myconfig.yml
+    ECHO If not, just hit return.
+    ECHO.
+    SET /p config=
+    ECHO.
+    :: Loop back to this point to refresh the build again
+    :wordrefresh
+    :: let the user know we're on it!
+    ECHO Generating HTML...
+    :: ...and run Jekyll to build new HTML
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.%format%.yml,%config%"
+    :: Navigate to the HTML we just generated
+    CD _html\%bookfolder%\text
+    :: What're we doing?
+    ECHO Converting %bookfolder% HTML to Word...
+    :: Loop through the list of files in file-list
+    :: and convert them each from .html to .docx.
+    :: We end up with the same filenames, 
+    :: with .docx extensions appended.
+    FOR /F "tokens=*" %%F IN (file-list) DO (
+        pandoc %%F -f html -t docx -s -o %%F.docx
+        )
+    :: What are we doing next?
+    ECHO Fixing file extensions...
+    :: What are we finding and replacing?
+    SET find=.html
+    SET replace=
+    :: Loop through all .docx files and remove the .html
+    :: from those filenames pandoc created.
+    FOR %%# in (.\*.docx) DO (
+        Set "File=%%~nx#"
+        Ren "%%#" "!File:%find%=%replace%!"
+    )
+    :: Whassup?
+    ECHO Done, opening folder...
+    :: Open file explorer to show the docx files.
+    %SystemRoot%\explorer.exe "%location%_html\%bookfolder%\text"
+    :: Navigate back to where we began
+    CD "%location%"
+    :: Let the user easily run that again
+    SET repeat=
+    SET /p repeat=Enter to try again, or any other key and enter to stop. 
+    IF "%repeat%"=="" GOTO word
     ECHO.
     GOTO begin
 

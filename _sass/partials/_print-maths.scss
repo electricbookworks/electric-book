@@ -1,0 +1,17 @@
+$print-maths: true !default;
+@if $print-maths {
+
+    // Math
+
+    math {
+        margin: $line-height-default auto;
+    }
+
+    // Automatic fractions
+
+    .fractions { 
+    	font-variant: prince-opentype(frac);
+    	font-style: inherit;
+    }
+
+}

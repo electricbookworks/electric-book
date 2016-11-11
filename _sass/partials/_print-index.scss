@@ -1,0 +1,38 @@
+$print-index: true !default;
+@if $print-index {
+
+	// Index
+	.reference-index {
+		columns: 2;
+		font-size: $font-size-default * $font-size-smaller;
+		margin: $line-height-default 0 0 0;
+		li {
+			list-style-type: none;
+			margin: 0 0 0 ($line-height-default * 1);
+			text-indent: $line-height-default * (-1);
+			column-break-inside: avoid;
+			li {
+				margin: 0 0 0 ($line-height-default / 2);
+			}
+		}
+		a {
+			content: target-counter(attr(href), page);
+			&:after {
+				content: ", ";
+			}
+			&:last-of-type:after {
+				content: "";
+			}
+		}
+		// To hide but not delete duplicate entries.
+		.duplicate {
+			display: none;
+		}
+	}
+	// For links in main body text that jump to index.
+	a.indexed {
+		color: inherit;
+		text-decoration: none;
+	}
+
+}

@@ -1,0 +1,60 @@
+// Also see .search in web-nav-bar
+
+$web-search: true !default;
+@if $web-search {
+
+    // Search in nav bar
+
+    #nav {
+        .search {
+            input {
+                width: 90%; // Keeps input within nav-bar bounds
+                // padding: 0.75em 0.75em;
+                border: 0;
+                // font-family: $font-text-secondary;
+                // font-size: inherit;
+                overflow-x: hidden; // Prevents scroll bar popping up when very long searches are entered
+                background-color: $nav-bar-search-background-color;
+                color: $color-mid;
+            }
+        }
+    }
+
+    // Search on search page
+
+    #content {
+        .search {
+            input {
+                // padding: 0.75em 0.75em;
+                // border: 1px solid $color-light;
+                // font-family: $font-text-secondary;
+                // font-size: inherit;
+                // color: inherit;
+                width: 100%;
+            }
+        }
+    }
+
+    // Search results
+
+    ul#search-results {
+        list-style-type: none;
+        margin: $line-height-default 0;
+    }
+
+    // Marked search results (wuth mark.js)
+    mark {
+        background-color: $color-highlight;
+        color: inherit;
+        border-radius: $button-border-radius;
+    }
+
+} // @if $web-search
+
+@else {
+    #nav {
+        .search {
+            display: none;
+        }
+    }
+}

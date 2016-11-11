@@ -1,0 +1,35 @@
+$epub-toc: true !default;
+@if $epub-toc {
+
+	// Tables of contents
+
+	.contents-page {
+		#content { // Only applies to #content in contents-page, i.e. not to the nav or footer
+			ol, ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				ol, ul {
+					margin-left: $line-height-default;
+				}
+			}
+		} // #content
+	} // .contents-page
+
+		/* TOCs in individual pages, created in kramdown with a placeholder ol/ul followed by {:toc} */
+
+	#content {
+		#markdown-toc {
+			font-family: $font-text-secondary;
+			list-style-type: none;
+			margin: $line-height-default 0;
+			li {
+				margin: 0;
+			}
+			li li {
+				margin-left: $line-height-default;
+			}
+		} // #markdown-toc
+	} // #content
+
+}

@@ -1,0 +1,17 @@
+$epub-copyright-page: true !default;
+@if $epub-copyright-page {
+
+    // Copyright page
+
+    .copyright-page {
+        p {
+           text-indent: 0;
+           margin: 0 0 ($line-height-default / 2) 0;
+        }
+        h1, h2 {
+            font-size: $font-size-default;
+            margin-top: $line-height-default * 2;
+        }
+    }
+
+}

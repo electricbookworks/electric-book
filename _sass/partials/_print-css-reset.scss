@@ -1,0 +1,647 @@
+$print-css-reset: true !default;
+@if $print-css-reset {
+
+    ////////////////////////////////////////////////////////////////
+    //                                                            //
+    // This Sass file resets PrinceXML's built-in styles.         //
+    // It includes as comments the full original stylesheet       //
+    // that ships with Prince 10v7 in engine/styles/xhtml.css.    //
+    //                                                            //
+    ////////////////////////////////////////////////////////////////
+
+    /* Reset PrinceXML CSS (XHTML stylesheet) */
+
+    // /*
+    //     Prince - XHTML stylesheet
+    //     http://www.princexml.com
+    // */
+
+    // html { display: block }
+
+    // /* Head */
+
+    // head { display: none }
+    // title { display: none }
+    // style { display: none }
+    // link { display: none }
+    // meta { display: none }
+    // base { display: none }
+
+    // /* Body */
+
+    // body { display: block }
+
+    // body[text] { color: attr(text) }
+
+    // /* Headings */
+
+    // h1, h2, h3, h4, h5, h6 {
+    //     display: block;
+    //     font-weight: bold;
+    //     page-break-after: avoid
+    // }
+
+    // h1 { font-size: 24pt; margin: 16pt   0; prince-bookmark-level: 1 }
+    // h2 { font-size: 18pt; margin: 15pt   0; prince-bookmark-level: 2 }
+    // h3 { font-size: 14pt; margin: 14pt   0; prince-bookmark-level: 3 }
+    // h4 { font-size: 12pt; margin: 16pt   0; prince-bookmark-level: 4 }
+    // h5 { font-size: 10pt; margin: 16.5pt 0; prince-bookmark-level: 5 }
+    // h6 { font-size:  8pt; margin: 21pt   0; prince-bookmark-level: 6 }
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: inherit;
+        font-size: inherit;
+    }
+
+    // /* Block elements */
+
+    // article, aside, section, hgroup { display: block }
+    // header, footer, nav { display: block }
+    // figure, figcaption { display: block }
+
+    // address {
+    //     display: block;
+    //     font-style: italic
+    // }
+    address {
+        font-style: inherit;
+    }
+
+    // blockquote {
+    //     display: block;
+    //     margin-top: 1.12em;
+    //     margin-bottom: 1.12em;
+    //     margin-left: 22.5pt;
+    //     margin-right: 22.5pt
+    // }
+    blockquote {
+        margin-top: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+    }
+
+    // div { display: block }
+
+    // p {
+    //     display: block;
+    //     margin-top: 1.12em;
+    //     margin-bottom: 1.12em
+    // }
+    p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    // pre {
+    //     display: block;
+    //     margin-top: 1.12em;
+    //     margin-bottom: 1.12em;
+    //     font-family: monospace;
+    //     white-space: pre
+    // }
+    pre {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    // hr {
+    //     display: block;
+    //     border: 1pt inset black
+    // }
+    hr {
+        border: 0;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    //                                                                 //
+    // The following hr styles from PrinceXML are for deprecated HTML. //
+    // We're not resetting them. If you're using deprecated HTML,      //
+    // you probably want these expected settings, which are unlikely   //
+    // to be styled for otherwise.                                     //
+    //                                                                 //
+    /////////////////////////////////////////////////////////////////////
+
+    // hr[noshade] { border-style: solid }
+
+    // hr[size] { height: attr(size, px) }
+
+    // hr[size="1"] {
+    //     border-style: none;
+    //     border-top-style: solid;
+    //     height: auto
+    // }
+
+    // hr[align=right] { margin-left: auto }
+
+    // /* Images */
+
+    // img, embed {
+    //     display: inline-block;
+    //     content: prince-fallback(attr(src, url)), attr(alt)
+    // }
+
+    // object {
+    //     display: inline-block;
+    //     content: prince-fallback(attr(data, url))
+    // }
+
+    // /* Flash */
+
+    // embed[type="application/x-shockwave-flash"],
+    // object[type="application/x-shockwave-flash"] {
+    //     display: table-cell;
+    //     width: attr(width, px);
+    //     height: attr(height, px);
+    //     content: "Flash";
+    //     background: #f0f0f0;
+    //     color: black;
+    //     font: bold 12px sans-serif;
+    //     text-align: center;
+    //     vertical-align: middle
+    // } 
+    embed[type="application/x-shockwave-flash"],
+    object[type="application/x-shockwave-flash"] {
+        background: inherit;
+        color: inherit;
+        font: inherit;
+        text-align: inherit;
+        vertical-align: inherit;
+    }
+
+    // /* Scripting */
+
+    // script { display: none }
+    // noscript { display: block }
+
+    // /* Forms */
+
+    // form, fieldset { display: block }
+
+    // /* Forms - buttons */
+
+    // button, input[type="button"], 
+    // input[type="reset"], input[type="submit"], 
+    // input[type="file"]::after { 
+    //     display: inline-block;
+    //     padding: 0.2em 0.5em;
+    //     min-height: 1.2em;
+    //     color: buttontext;
+    //     background: buttonface;
+    //     border: outset 1px gray;
+    // }
+    button,
+    input[type="button"], 
+    input[type="reset"],
+    input[type="submit"], 
+    input[type="file"]::after {
+        padding: 0;
+        min-height: 0;
+        border: 0 solid buttonface;
+    }
+        
+    // input[type="button"] {
+    //     content: attr(value, string);
+    // }
+
+    // input[type="file"] {
+    //     display: inline-block;
+    //     width: 10em;
+    //     height: 1.2em;
+    //     border: inset 1px gray;
+    // }
+    input[type="file"] {
+        width: auto;
+        height: auto;
+        border: 0 solid buttonface;
+    }
+
+    // input[type="file"]::after {
+    //     content: "Browse...";
+    //     margin-left: 10.2em;
+    // }
+    input[type="file"]::after {
+        content: normal;
+        margin-left: 0;
+    }
+
+    // input[type="reset"] {
+    //     content: attr(value, string, "Reset");
+    // }
+
+    // input[type="submit"] {
+    //     content: attr(value, string, "Submit");
+    // }
+
+    // /* Forms - checkbox and radio box */
+
+    // input[type="checkbox"], input[type="radio"] {
+    //     content: " ";
+    //     display: inline-block;
+    //     text-align: center;
+    //     min-width: 1em;
+    //     height: 1em;
+    //     border: inset 1px gray;
+    // }
+    input[type="checkbox"], input[type="radio"] {
+        border: 0 solid buttontext;
+    }
+
+    // input[type="checkbox"][checked] {
+    //     content: "\2713";
+    // }
+
+    // input[type="radio"] {
+    //     border-radius: 0.5em 0.5em;
+    // } 
+
+    // input[type="radio"][checked] {
+    //     content: "\2022";
+    // }
+
+    // /* Forms - image button */
+
+    // input[type="image"] {
+    //     content: attr(src, url);
+    //     display: inline-block;
+    // }
+
+    // /* Forms - password, text input */
+
+    // input[type="password"], input[type="text"], input[type="email"] {
+    //     display: inline-block;
+    //     white-space: pre;
+    //     overflow: hidden;
+    //     content: attr(value, string, " ");
+    //     width: attr(size, ex, 10em);
+    //     height: 1.2em;
+    //     border: inset 1px gray;
+    // }
+    input[type="password"], input[type="text"], input[type="email"] {
+        height: auto;
+        border: 0 solid buttonface;
+    }
+
+    // input[type="password"] {
+    //     content: " "
+    // }
+
+    // input[type="hidden"] {
+    //     display: none
+    // }
+
+    // /* Forms - textarea */
+
+    // textarea {
+    //     display: inline-block;
+    //     border: inset 1px gray;
+    //     white-space: pre-wrap;
+    //     width: attr(cols, ex, 10em);
+    //     height: attr(rows, em);
+    //     overflow: hidden
+    // }
+    textarea {
+        border: 0 solid buttontext;
+    }
+
+    // /* Forms - select, option */
+
+    // select {
+    //     display: inline-table;
+    //     border: inset 1px gray
+    // }
+    select {
+        border: 0 solid buttontext;
+    }
+
+    // option { display: table-row }
+
+    // select[size="1"] option:not(:first-of-type),
+    // select:not([size]):not([multiple]) option:not(:first-of-type) {
+    //     display: none
+    // }
+
+    // /* Frames */
+
+    // frameset, noframes { display: block }
+
+    // /* Lists */
+
+    // dl { display: block }
+
+    // dt {
+    //     display: block;
+    //     font-weight: bold;
+    //     page-break-after: avoid
+    // }
+    dt {
+        font-weight: inherit;
+    }
+
+    // dd {
+    //     display: block;
+    //     margin-left: 22.5pt;
+    //     margin-bottom: 1.0em
+    // }
+    dd {
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+
+    // ol {
+    //     display: block;
+    //     margin-left: 40pt;
+    //     margin-top: 1.12em;
+    //     margin-bottom: 1.12em;
+    //     list-style-type: decimal;
+    //     counter-reset: list-item
+    // }
+    ol {
+        margin-top: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+    }
+
+    // ol[start] {
+    //     counter-reset: list-item attr(start);
+    //     counter-increment: list-item -1
+    // }
+
+    // ul {
+    //     display: block;
+    //     margin-left: 40pt;
+    //     margin-top: 1.12em;
+    //     margin-bottom: 1.12em;
+    //     list-style-type: disc;
+    //     counter-reset: list-item
+    // }
+    ul {
+        margin-top: 0;
+        margin-top: 0;
+        margin-top: 0;
+        margin-top: 0;
+    }
+
+    // li { display: list-item }
+
+    // li[value] {
+    //     counter-reset: list-item attr(value);
+    //     counter-increment: list-item 0
+    // }
+
+    // li::marker {
+    //     padding-right: 8pt;
+    //     text-align: right
+    // }
+    li::marker {
+        padding-right: 0;
+        text-align: inherit;
+    }
+
+    // ol ul, ul ul, dl ul,
+    // ol ol, ul ol, dl ol {
+    //     margin-top: 0;
+    //     margin-bottom: 0
+    // }
+
+    // ul ul, ol ul { list-style-type: circle }
+    // ul ul ul, ol ul ul, ol ol ul, ul ol ul { list-style-type: square } 
+    ul ul, ol ul { list-style-type: disc }
+    ul ul ul, ol ul ul, ol ol ul, ul ol ul { list-style-type: disc } 
+
+    // ul[type="disc"] { list-style-type: disc }
+    // ul[type="circle"] { list-style-type: circle }
+    // ul[type="square"] { list-style-type: square }
+
+    // ol[type="1"] { list-style-type: decimal }
+    // ol[type="a"] { list-style-type: lower-alpha }
+    // ol[type="A"] { list-style-type: upper-alpha }
+    // ol[type="i"] { list-style-type: lower-roman }
+    // ol[type="I"] { list-style-type: upper-roman } 
+
+    // /* Tables */
+
+    // table {
+    //     display: table;
+    //     box-sizing: border-box;
+    //     border-spacing: attr(cellspacing, px, 2px);
+    //     border-style: outset;
+    //     border-width: attr(border, px, 0)
+    // }
+    table {
+        border-spacing: 0;
+        border-style: none;
+        border-width: 0;
+    }
+
+    // table[border=""] { border-width: 1px }
+
+    // tr    { display: table-row }
+    // thead { display: table-header-group }
+    // tfoot { display: table-footer-group }
+    // tbody { display: table-row-group }
+
+    // caption {
+    //     display: table-caption;
+    //     text-align: center;
+    //     page-break-after: avoid;
+    //     page-break-inside: avoid
+    // }
+    caption {
+        text-align: inherit;
+    }
+
+    // col { display: table-column }
+    // colgroup { display: table-column-group }
+
+    // table[border]:not([border="0"]) > thead > tr > td { border: inset 1px }
+    // table[border]:not([border="0"]) > thead > tr > th { border: inset 1px }
+    // table[border]:not([border="0"]) > tfoot > tr > td { border: inset 1px }
+    // table[border]:not([border="0"]) > tfoot > tr > th { border: inset 1px }
+    // table[border]:not([border="0"]) > tbody > tr > td { border: inset 1px }
+    // table[border]:not([border="0"]) > tbody > tr > th { border: inset 1px }
+    // table[border]:not([border="0"]) > tr > td { border: inset 1px }
+    // table[border]:not([border="0"]) > tr > th { border: inset 1px }
+    table[border]:not([border="0"]) > thead > tr > td { border: solid 1px }
+    table[border]:not([border="0"]) > thead > tr > th { border: solid 1px }
+    table[border]:not([border="0"]) > tfoot > tr > td { border: solid 1px }
+    table[border]:not([border="0"]) > tfoot > tr > th { border: solid 1px }
+    table[border]:not([border="0"]) > tbody > tr > td { border: solid 1px }
+    table[border]:not([border="0"]) > tbody > tr > th { border: solid 1px }
+    table[border]:not([border="0"]) > tr > td { border: solid 1px }
+    table[border]:not([border="0"]) > tr > th { border: solid 1px }
+
+    // td, th {
+    //     display: table-cell;
+    //     vertical-align: middle
+    // }
+    td, th {
+        vertical-align: middle
+    }
+
+    // th {
+    //     font-weight: bold;
+    //     text-align: center
+    // }
+    th {
+        font-weight: inherit;
+        text-align: inherit;
+    }
+
+    // tr[align="left"] > th:not([align]) { text-align: left }
+    // tr[align="right"] > th:not([align]) { text-align: right }
+
+    // td[valign=top], th[valign=top] { vertical-align: top }
+    // td[valign=bottom], th[valign=bottom] { vertical-align: bottom }
+
+    // td[colspan], th[colspan] { table-column-span: attr(colspan) }
+    // td[rowspan], th[rowspan] { table-row-span: attr(rowspan) }
+
+    // td[nowrap], th[nowrap] { white-space: nowrap }
+
+    // /* Bidi */
+
+    // bdo[dir="ltr"] { direction: ltr; unicode-bidi: bidi-override }
+    // bdo[dir="rtl"] { direction: rtl; unicode-bidi: bidi-override }
+
+    // *[dir="ltr"] { direction: ltr; unicode-bidi: embed }
+    // *[dir="rtl"] { direction: rtl; unicode-bidi: embed }
+
+    // /* Inline elements */
+
+    // abbr, acronym { text-underline-style: dotted }
+    abbr, acronym { text-underline-style: none; }
+
+    // i, cite, dfn, em, var { font-style: italic }
+    cite, dfn, var { font-style: inherit; }
+
+    // tt, code, kbd, samp { font-family: monospace }
+
+    // b, strong { font-weight: bold }
+
+    // ins, u { text-decoration: underline }
+    // del, s, strike { text-decoration: line-through }
+
+    // big { font-size: 1.17em }
+    // small { font-size: 0.83em }
+
+    // sub { vertical-align: sub }
+    // sup { vertical-align: super }
+
+    // sub, sup { font-size: 0.83em }
+    sub, sup { font-size: 100%; }
+
+    // br {
+    //     content: '\A';
+    //     white-space: pre;
+    //     background: none
+    // }
+
+    // br[clear="left"] { clear: left }
+    // br[clear="right"] { clear: right }
+    // br[clear="all"] { clear: both }
+
+    // /* Quotes */
+
+    // q::before { content: "\201C" }
+    // q::after { content: "\201D" }
+    q::before { content: ""; content: none; }
+    q::after { content: ""; content: none; }
+
+    // q:lang(fr)::before { content: "\AB" }
+    // q:lang(fr)::after { content: "\BB" }
+    q:lang(fr)::before { content: ""; content: none; }
+    q:lang(fr)::after { content: ""; content: none; }
+
+    // q:lang(de)::before { content: "\201E" }
+    // q:lang(de)::after { content: "\201C" }
+    q:lang(de)::before { content: ""; content: none; }
+    q:lang(de)::after { content: ""; content: none; }
+
+    // /* Links */
+
+    // a[href] {
+    //     text-decoration: underline;
+    //     prince-link: attr(href)
+    // }
+    a[href] {
+        text-decoration: none;
+    }
+
+    // /* Presentational attributes */
+
+    // *[width] { width: attr(width, px, attr(width, percent)) }
+    // *[height] { height: attr(height, px, attr(height, percent)) }
+
+    // *[bgcolor] { background-color: attr(bgcolor) }
+
+    // /* Deprecated center tag */
+
+    // center {
+    //     display: block;
+    //     text-align: center
+    // }
+
+    // /* Deprecated font tag */
+
+    // font[face] { font-family: attr(face) }
+
+    // font[color] { color: attr(color) }
+
+    // font[size="1"] { font-size: 8pt }
+    // font[size="2"] { font-size: 10pt }
+    // font[size="3"] { font-size: 12pt }
+    // font[size="4"] { font-size: 14pt }
+    // font[size="5"] { font-size: 18pt }
+    // font[size="6"] { font-size: 24pt }
+    // font[size="7"] { font-size: 32pt }
+
+    // font[size="+1"] { font-size: 120% }
+    // font[size="+2"] { font-size: 140% }
+    // font[size="+3"] { font-size: 160% }
+    // font[size="+4"] { font-size: 190% }
+    // font[size="+5"] { font-size: 220% }
+    // font[size="+6"] { font-size: 260% }
+    // font[size="+7"] { font-size: 310% }
+
+    // font[size="-1"] { font-size: 83% }
+    // font[size="-2"] { font-size: 71% }
+    // font[size="-3"] { font-size: 62% }
+    // font[size="-4"] { font-size: 52% }
+    // font[size="-5"] { font-size: 45% }
+    // font[size="-6"] { font-size: 38% }
+    // font[size="-7"] { font-size: 32% }
+
+    // /* nobr */
+
+    // nobr { white-space: nowrap }
+
+    // /* Deprecated align attribute */
+
+    // *:not(table)[align="left"] { text-align: left }
+    // *:not(table)[align="right"] { text-align: right }
+    // *:not(table)[align="center"] { text-align: center }
+    // *:not(table)[align="justify"] { text-align: justify }
+
+    // table[align="right"] {
+    //     margin-left: auto
+    // }
+
+    // table[align="center"] {
+    //     margin-left: auto;
+    //     margin-right: auto
+    // }
+
+    // img[align="baseline"] { vertical-align: baseline }
+    // img[align="bottom"] { vertical-align: bottom }
+    // img[align="middle"] { vertical-align: middle }
+    // img[align="top"] { vertical-align: top }
+    // img[align="texttop"] { vertical-align: text-top }
+    // img[align="left"] { float: left }
+    // img[align="right"] { float: right }
+
+    // /* Non-standard background attribute */
+
+    // *[background] { background-image: attr(background) }
+
+}

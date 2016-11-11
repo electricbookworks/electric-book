@@ -1,0 +1,6 @@
+{% comment %}
+After this comment block, include any HTML you want 
+to appear in the widgets section of your webpages.
+Include these widgets with {% include widgets %}
+{% endcomment %}
+
