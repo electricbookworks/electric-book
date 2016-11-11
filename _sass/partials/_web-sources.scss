@@ -1,0 +1,22 @@
+$web-quotations: true !default;
+@if $web-quotations {
+
+    // Styles not covered by the default blockquote element in base-typography
+    // The source of a quotation, e.g. a name or book title, that appears after the quote
+    p.source {
+        font-style: italic;
+        margin: 0 $line-height-default $line-height-default $line-height-default;
+        text-indent: 0;
+        page-break-before: avoid;
+    }
+    em.source,
+    strong.strong,
+    span.source {
+        display: block;
+        page-break-before: avoid;
+        margin: 0 $line-height-default $line-height-default $line-height-default;
+        font-style: italic;
+        font-weight: inherit;
+    }
+
+}

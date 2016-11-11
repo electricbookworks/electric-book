@@ -11,6 +11,11 @@ series:
   name: "My Series"
   # A one-liner about this series. Useful for Open Graph metadata.
   description: "A new series of books."
+  # An image in /assets that stands for the series
+  image: "publisher-logo.jpg"
+  # For web navigation, the label for links to  the series homepage
+  # For English sites, you can leave this as "Home".
+  home-label: "Home"
 
 ########
 # TITLES
@@ -39,21 +44,35 @@ works:
     relation: "" # e.g. other edition ISBN
     coverage: "" # e.g. geographic place or chronological time span
     rights: "All rights reserved.<br />No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher." # e.g. a copyright statement
+    image: "cover.jpg"
     products: # Metadata for each product for this title (only use values that override parent metadata)
       print-pdf: 
         date: "2016-05-07" # YYYY-MM-DD e.g. publication or creation date
         format: "Print" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
+        image: "cover.jpg"
         files:
           - "0-1-titlepage"
           - "0-2-copyright"
           - "0-3-contents"
           - "01"
           - "02"
+        toc: # For each menu item, include at least label and file. Optionally add id (for deep linking) and children.
+          - label: "Chapter 1"
+            file: "01"
+            id: "hello-world"
+          - label: "Chapter 2"
+            file: "02"
+            id: "goodbye-world"
+            children: 
+              - label: "Example child"
+                file: "02"
+                id: "example-id"
       web:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital online" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
+        image: "cover.jpg"
         files: # To add a file to web navigation, give a file a value, e.g. 0-4-preface: "Preface"
           - "index": Cover
           - "0-1-titlepage"
@@ -82,11 +101,12 @@ works:
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
         contents-page: "0-3-contents" # Your contents-page file, if you have one.
-        footer: "Powered by the <a href='http://electricbook.io'>Electric Book</a>" # Text that appears in the footer of the website. You can include HTML.
+        footer: "Powered by the <a href='http://electricbook.works'>Electric Book</a>" # Text that appears in the footer of the website. You can include HTML.
       epub:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
+        image: "cover.jpg"
         files:
           - "0-0-cover"
           - "0-1-titlepage"
@@ -98,6 +118,7 @@ works:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
+        image: "cover.jpg"
         files:
           - "0-0-cover"
           - "0-1-titlepage"

@@ -1,0 +1,252 @@
+$print-page-headers-footers-content: true !default;
+@if $print-page-headers-footers-content {
+
+  // This partial sets page header and footer content.
+  // It sets separate content for .frontmatter and .chapter pages.
+
+  // Assign a string to the body title attribute.
+  // In markdown, this is set with header: in a file's YAML frontmatter.
+
+  body {
+    string-set:
+      page-header attr(title);
+  }
+
+  // Assign strings to use in headers and footers for each level of heading (h1-h6),
+  // to be called by the header and footer variables ($verso-top-center etc.).
+  // For each heading, we use the title attribute, with the heading text as fallback.
+  // h1 also sets the string for h2, in case there is no h2 on the page yet.
+  //
+  // Note string-set lets us define multiple values, which can be used as fallbacks.
+  // Unlike CSS overrides, the first string is not overriden by later strings.
+  h1 { 
+    string-set: 
+      h1-text content(),
+      h2-text content(),
+      h1-title attr(title),
+      h2-title attr(title);
+  }
+  h2 {
+    string-set: 
+      h2-text content(), 
+      h2-title attr(title); 
+  }
+  h3 { 
+    string-set: 
+      h3-text content(), 
+      h3-title attr(title); 
+  }
+  h4 { 
+    string-set: 
+      h4-text content(), 
+      h4-title attr(title); 
+  }
+  h5 { 
+    string-set: 
+      h5-text content(), 
+      h5-title attr(title);
+  }
+  h6 { 
+    string-set: 
+      h6-text content(), 
+      h6-title attr(title); 
+  }
+
+  // Now we place our content for `.chapter` pages
+
+  // Verso
+  @page chapter:left {
+    @top {
+      content: $verso-top;
+    }
+    @top-right {
+      content: $verso-top-right;
+    }
+    @top-left {
+      content: $verso-top-left;
+    }
+    @top-right-corner {
+      content: $verso-top-right-corner;
+    }
+    @top-left-corner {
+      content: $verso-top-left-corner;
+    }
+    @bottom {
+      content: $verso-bottom;
+    }
+    @bottom-left {
+      content: $verso-bottom-left;
+    }
+    @bottom-right {
+      content: $verso-bottom-right;
+    }
+    @bottom-left-corner {
+      content: $verso-bottom-left-corner;
+    }
+    @bottom-right-corner {
+      content: $verso-bottom-right-corner;
+    }
+  }
+
+  // Recto
+  @page chapter:right {
+    @top {
+      content: $recto-top;
+    }
+    @top-right {
+      content: $recto-top-right;
+    }
+    @top-left {
+      content: $recto-top-left;
+    }
+    @top-right-corner {
+      content: $recto-top-right-corner;
+    }
+    @top-left-corner {
+      content: $recto-top-left-corner;
+    }
+    @bottom {
+      content: $recto-bottom;
+    }
+    @bottom-left {
+      content: $recto-bottom-left;
+    }
+    @bottom-right {
+      content: $recto-bottom-right;
+    }
+    @bottom-left-corner {
+      content: $recto-bottom-left-corner;
+    }
+    @bottom-right-corner {
+      content: $recto-bottom-right-corner;
+    }
+  }
+
+  // No headers on first pages of chapters
+  .chapter, h1 {
+    prince-page-group: start;
+  }
+  @page chapter:first {
+    @top { content: normal; }
+    @top-left { content: normal; }
+    @top-right { content: normal; }
+    @top-left-corner { content: normal; }
+    @top-right-corner { content: normal; }
+  }
+
+  // No headers or footers on blank pages of chapters
+  @page chapter:blank {
+    @top { content: normal; }
+    @top-left { content: normal; }
+    @top-right { content: normal; }
+    @top-left-corner { content: normal; }
+    @top-right-corner { content: normal; }
+    @bottom { content: normal; }
+    @bottom-left { content: normal; }
+    @bottom-right { content: normal; }
+    @bottom-left-corner { content: normal; }
+    @bottom-right-corner { content: normal; }
+  }
+
+  // Now we place our content for `.frontmatter` pages
+
+  // Verso
+  @page frontmatter:left {
+    @top {
+      content: $verso-top-frontmatter;
+    }
+    @top-right {
+      content: $verso-top-right-frontmatter;
+    }
+    @top-left {
+      content: $verso-top-left-frontmatter;
+    }
+    @top-right-corner {
+      content: $verso-top-right-corner-frontmatter;
+    }
+    @top-left-corner {
+      content: $verso-top-left-corner-frontmatter;
+    }
+    @bottom {
+      content: $verso-bottom-frontmatter;
+    }
+    @bottom-left {
+      content: $verso-bottom-left-frontmatter;
+    }
+    @bottom-right {
+      content: $verso-bottom-right-frontmatter;
+    }
+    @bottom-left-corner {
+      content: $verso-bottom-left-corner-frontmatter;
+    }
+    @bottom-right-corner {
+      content: $verso-bottom-right-corner-frontmatter;
+    }
+  }
+
+  // Recto
+  @page frontmatter:right {
+    @top {
+      content: $recto-top-frontmatter;
+    }
+    @top-right {
+      content: $recto-top-right-frontmatter;
+    }
+    @top-left {
+      content: $recto-top-left-frontmatter;
+    }
+    @top-right-corner {
+      content: $recto-top-right-corner-frontmatter;
+    }
+    @top-left-corner {
+      content: $recto-top-left-corner-frontmatter;
+    }
+    @bottom {
+      content: $recto-bottom-frontmatter;
+    }
+    @bottom-left {
+      content: $recto-bottom-left-frontmatter;
+    }
+    @bottom-right {
+      content: $recto-bottom-right-frontmatter;
+    }
+    @bottom-left-corner {
+      content: $recto-bottom-left-corner-frontmatter;
+    }
+    @bottom-right-corner {
+      content: $recto-bottom-right-corner-frontmatter;
+    }
+  }
+
+  // No headers on first pages of frontmatter
+  .frontmatter {
+    prince-page-group: start;
+  }
+  @page frontmatter:first {
+    @top { content: normal; }
+    @top-left { content: normal; }
+    @top-right { content: normal; }
+    @top-left-corner { content: normal; }
+    @top-right-corner { content: normal; }
+  }
+
+  // No headers or footers on blank pages of frontmatter
+  @page frontmatter:blank {
+    @top { content: normal; }
+    @top-left { content: normal; }
+    @top-right { content: normal; }
+    @top-left-corner { content: normal; }
+    @top-right-corner { content: normal; }
+    @bottom { content: normal; }
+    @bottom-left { content: normal; }
+    @bottom-right { content: normal; }
+    @bottom-left-corner { content: normal; }
+    @bottom-right-corner { content: normal; }
+  }
+
+  // Reset page numbering to 1
+  .page-1 {
+    counter-reset: page 1;
+  }
+
+}

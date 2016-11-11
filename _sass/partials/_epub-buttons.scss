@@ -1,0 +1,88 @@
+$epub-buttons: true !default;
+@if $epub-buttons {
+
+	// Buttons
+
+    // Applied to inline elements
+    a.button,
+    em.button,
+    strong.button,
+    span.button, {
+        display: inline-block;
+		font-family: $font-text-secondary;
+		color: $color-background;
+		line-height: 100%;
+        text-decoration: none;
+		background-color: $color-buttons;
+		padding: 0.2em 0.4em;
+		margin: 0;
+		text-align: center;
+        text-indent: 0;
+		border-radius: $button-border-radius;
+		box-shadow: 0.02em 0.02em 0.02em 0.02em $color-buttons;
+		cursor: pointer;
+		&:hover {
+			background-color: darken( $color-buttons, 5% );
+		}
+    }
+
+    // Applied to block-level elements
+    p.button,
+    ol.button,
+    ul.button,
+    li.button,
+    blockquote.button,
+    table.button,
+    div.button,
+    h1.button,
+    h2.button,
+    h3.button,
+    h4.button,
+    h5.button,
+    h6.button, {
+        text-indent: 0;
+        a {
+            display: inline-block;
+            font-family: $font-text-secondary;
+            color: $color-background;
+            background-color: $color-buttons;
+            padding: 0.5em;
+            margin: $line-height-default 0;
+            line-height: 1;
+			text-align: center;
+            text-decoration: none;
+            border-radius: $button-border-radius;
+			box-shadow: 0.02em 0.02em 0.02em 0.02em $color-buttons;
+			cursor: pointer;
+			&:hover {
+				background-color: darken( $color-buttons, 5% );
+			}
+        }
+        & + p {
+            text-indent: 0;
+        }
+    }
+
+    // An option to change the default text-indented paragraphs
+    // and close-up lists etc. to have space-between instead.
+    @if $spaced-paras {
+        p.button,
+        ol.button,
+        ul.button,
+        li.button,
+        blockquote.button,
+        table.button,
+        div.button,
+        h1.button,
+        h2.button,
+        h3.button,
+        h4.button,
+        h5.button,
+        h6.button, {
+            a {
+                margin: 0;
+            }
+        }
+    }
+
+}

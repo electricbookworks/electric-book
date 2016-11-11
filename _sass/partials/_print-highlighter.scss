@@ -1,0 +1,11 @@
+$print-highlighter: true !default;
+@if $print-highlighter {
+
+    // Highlighter
+
+    .highlighter,
+    a[href="highlighter"] {
+        background-color: yellow;
+    }
+
+}

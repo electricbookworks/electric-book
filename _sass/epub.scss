@@ -1,0 +1,171 @@
+// What is this?
+// -------------
+// This is typography for the Electric Book Elements theme (see http://electricbook.works).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
+// 
+// How to use it
+// -------------
+// Edit the default variables below.
+// Comment/uncomment or add font imports below.
+// Add your own custom CSS at the bottom.
+
+// First, let's set character encoding. Don't change this.
+@charset "utf-8";
+
+// -------------
+// Set variables
+// -------------
+
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+$edition-suffix: null !default;
+
+// We name font variables for two categories:
+// - 'text' fonts are used for body text and some page features;
+// - 'display' fonts are used for headings and similar short-string features.
+// For each category, we set a main font and a secondary font, allowing up to four fonts.
+// Finally, we set a fifth, monospace font for elements like computer code.
+$font-text-main: "Crimson", serif !default;
+$font-text-secondary: "Crimson", sans-serif !default;
+$font-display-main: "Crimson", sans-serif !default;
+$font-display-secondary: "Crimson", serif !default;
+$font-code: "Inconsolata", monospace !default;
+
+// Set font size and line-height in ems or px.
+// These values, especially $line-height-default, are used to compute vertical rhythm
+// for many features in this theme. So do not use a unitless value for line-height,
+// and don't use percentages, which will break layouts computed by multiplying this value.
+$font-size-default: 1.2em !default;
+$line-height-default: 1.5em !default;
+$font-size-smaller: 0.8 !default; // How much smaller than font-size-default for features like sidenotes and footers?
+$font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
+
+// Do you want space between paragraphs, rather than a text-indent?
+$spaced-paras: false !default;
+
+// Buttons
+$button-border-radius: 0.1em !default; // Roundness of button corners.
+
+// Colours
+$color-text-main: initial !default;
+$color-text-secondary: initial !default;
+$color-background: white !default;
+$color-light: #e0e0e0 !default;
+$color-mid: #9c9c9c !default;
+$color-accent: #000000 !default;
+$color-links: #5f738c !default;
+$color-buttons: #5f738c !default;
+$color-highlight: #ffd54d !default;
+
+// Set the default start-depth of pages.
+// This is the distance from the top of the page to the first element on the first page.
+$start-depth: $line-height-default * 2 !default;
+
+// Hyphenation
+// Variables here apply to p, ul, ol, dl.
+// Note: Most browsers and ereaders do not support hyphenation rules.
+$hyphenation: auto !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
+$hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
+$hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
+$hyphenate-lines: 1 !default; // Maximum number of consecutive lines ending with hyphens
+
+// ---------------------------------
+// Set to false to turn partials off
+// ---------------------------------
+
+// Reset ereader CSS as best we can
+$epub-css-reset: true !default;
+
+// Structural HTML components
+$epub-wrappers: true !default; // 
+
+// Default typography
+$epub-base-typography: true !default; // 
+
+// Book parts
+$epub-cover: true !default; // 
+$epub-previous-publications-page: true !default; //
+$epub-title-pages: true !default; // 
+$epub-copyright-page: true !default; // 
+$epub-dedications: true !default; // 
+$epub-epigraphs: true !default; // 
+$epub-toc: true !default; // 
+
+// Book-feature classes
+$epub-bibliographies: true !default; // 
+$epub-boxes: true !default; // 
+$epub-buttons: true !default; // 
+$epub-code: true !default; // 
+$epub-figures: true !default; // 
+$epub-glossaries: true !default; //
+$epub-highlighter: true !default; //
+$epub-index: true !default; // 
+$epub-maths: true !default; // 
+$epub-notes: true !default; // 
+$epub-openers: true !default; // 
+$epub-pullquotes: true !default; // 
+$epub-sources: true !default; // 
+$epub-tables: true !default; // 
+$epub-letters: true !default; // 
+$epub-verse: true !default; // 
+
+// Type-control classes
+$epub-smallcaps: true !default; // 
+$epub-fitting: true !default; // 
+
+// Logic (if this then that)
+$epub-reset-sequences: true !default; // 
+
+// ----------------------------------------------------
+// Import font files (@font-face) for fonts you specify
+// ----------------------------------------------------
+
+// Import fonts from book-specific CSS.
+
+// ---------------------
+// Theme modules
+// ---------------------
+
+// Reset ereader CSS as best we can
+@import "partials/epub-css-reset";
+
+// Structural HTML components
+@import "partials/epub-wrappers"; // 
+
+// Default typography
+@import "partials/epub-base-typography"; // 
+
+// Book parts
+@import "partials/epub-cover"; // 
+@import "partials/epub-previous-publications-page"; // 
+@import "partials/epub-title-pages"; // 
+@import "partials/epub-copyright-page"; // 
+@import "partials/epub-dedications"; // 
+@import "partials/epub-epigraphs"; // 
+@import "partials/epub-toc"; // 
+
+// Book-feature classes
+@import "partials/epub-bibliographies"; // 
+@import "partials/epub-boxes"; // 
+@import "partials/epub-buttons"; // 
+@import "partials/epub-code"; // 
+@import "partials/epub-figures"; // 
+@import "partials/epub-glossaries"; //
+@import "partials/epub-highlighter"; //
+@import "partials/epub-index"; // 
+@import "partials/epub-maths"; // 
+@import "partials/epub-notes"; // 
+@import "partials/epub-openers"; // 
+@import "partials/epub-pullquotes"; // 
+@import "partials/epub-sources"; // 
+@import "partials/epub-tables"; // 
+@import "partials/epub-letters"; // 
+@import "partials/epub-verse"; // 
+
+// Type-control classes
+@import "partials/epub-smallcaps"; // 
+@import "partials/epub-fitting"; // 
+
+// Logic (if this then that)
+@import "partials/epub-reset-sequences"; // 

@@ -1,0 +1,11 @@
+$epub-highlighter: true !default;
+@if $epub-highlighter {
+
+    // Highlighter
+
+    .highlighter,
+    a[href="highlighter"] {
+        background-color: yellow;
+    }
+
+}

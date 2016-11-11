@@ -1,0 +1,23 @@
+$print-hyphenation: true !default;
+@if $print-hyphenation {
+
+    // Hyphenation
+
+    // Basic hyphenation variables
+    p, ul, ol, dl {
+        hyphens: $hyphenation;
+        hyphenate-after: $hyphenate-after; // Minimum letters on new line after hyphen
+        hyphenate-before: $hyphenate-before; // Minimum letters at end of line before hyphen
+        hyphenate-lines: $hyphenate-lines; // Maximum number of consecutive lines ending with hyphens
+    }
+
+    // Is a hyphenation dictionary specified?
+    // If not, don't use one, and let Prince use its default.
+    p, ul, ol, dl {
+        @if $hyphenation-dictionary == "" {}
+        @else {
+            prince-hyphenate-patterns: url("#{$hyphenation-dictionary}");
+        }
+    }
+
+}

@@ -1,0 +1,39 @@
+$web-code: true !default;
+@if $web-code {
+
+    // Preformatted text and code
+    // In our HTML, we assume that inline code is in <code> tags
+    // and blocks of <code> are in <pre> tags.
+
+    code {
+        font-family: $font-code;
+        font-size: 90%;
+        line-height: $line-height-default;
+        white-space: pre-wrap;
+        background-color: $color-light;
+        padding: 0.1em 0.3em;
+        border-radius: 0.2em;
+    }
+    pre {
+        background-color: $color-light;
+        border-radius: 0.2em;
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        code {
+            padding: 0;
+        }
+        & + p {
+           text-indent: 0;
+        }
+    }
+    // Remove text-indent on paragraphs after the code-highlighting
+    // div that Jekyll inserts. This attribute selector should work
+    // even if the site's code highlighter is not the default Rouge.
+    // Jekyll's inserting this div is ridiculous, see heated discussions at
+    // https://github.com/jekyll/jekyll/issues/3738
+    // and https://github.com/jekyll/jekyll/issues/4905
+    div[class*="highlighter-"] + p {
+       text-indent: 0;
+    }
+
+}

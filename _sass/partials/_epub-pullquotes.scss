@@ -1,0 +1,16 @@
+$epub-pullquotes: true !default;
+@if $epub-pullquotes {
+
+    // Pull quotes
+
+    .pullquote {
+        text-indent: 0;
+        font-size: $font-size-default * $font-size-bigger;
+        text-align: center;
+        margin: $line-height-default 0;
+    }
+    .pullquote + p {
+        text-indent: 0;
+    }
+
+}

@@ -1,0 +1,39 @@
+$web-tables: true !default;
+@if $web-tables {
+
+	// Tables
+	 
+	table {
+		border-collapse: collapse;
+		margin: $line-height-default 0;
+		font-size: $font-size-default * $font-size-smaller;
+		width: 100%;
+	}
+	thead, th, .table-subhead {
+		page-break-after: avoid;
+		font-weight: bold;
+	}
+	th, td {
+		border: 1px solid $color-light;
+		padding: $line-height-default / 2;
+		& p,
+		& ol,
+		& ul {
+			margin: 0;
+			padding: 0;
+		}
+	}
+	.table-row-stub {
+		font-weight: bold;
+	}
+	.table-caption {
+		page-break-after:avoid;
+		font-style: italic;
+		text-indent: 0;
+		margin: $line-height-default 0 0 0;
+		& em {
+			font-style: normal;
+		}
+	}
+
+}

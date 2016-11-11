@@ -1,0 +1,211 @@
+$web-nav-bar: true !default;
+@if $web-nav-bar {
+
+    // Navigation
+     
+    .nav-wrapper {
+        @if $nav-bar-scrollbar == true {
+            overflow: visible;
+        }
+        @else {
+            overflow: hidden;
+        }
+        // position: fixed;
+        // top: 0;
+        // bottom: 0;
+        float: left;
+        width: $nav-bar-width;
+    }
+    // For Webkit, this is the easy way to remove the scrollbar
+    // #nav::-webkit-scrollbar {
+    //     display: none;
+    // }
+    #nav {
+        font-family: $font-text-secondary;
+        font-size: $nav-bar-text-size;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden; // Hides horizontal scrollbar
+        overflow-y: auto; // Must let this div scroll; we'll hide the scrollbar elsewhere
+        background-color: $nav-bar-background-color;
+        border-right: 1px solid $nav-bar-border-color;
+        padding-right: 17px; // Hides scroll bar
+
+        // Search
+        $search-enabled: true !default;
+        @if $search-enabled {
+            .search {
+                // padding: 0 17px 0 0;
+                margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
+                background-color: $nav-bar-search-background-color;
+                input {
+                    width: 90%; // Keeps input within nav-bar bounds
+                    padding: 0.75em 0.75em;
+                    border: 0;
+                    font-family: $font-text-secondary;
+                    font-size: inherit;
+                    overflow-x: hidden; // Prevents scroll bar popping up when very long searches are entered
+                    background-color: $nav-bar-search-background-color;
+                }
+            }
+        } // if
+        @else {
+            .search {
+                display: none;
+            }
+        } // else
+        .nav-list {
+            margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
+            // First level parent navigation
+            ol, ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                background-color: $nav-bar-parent-background-color;
+                li {
+                    padding: 0.25em 0.75em;
+                    width: 100%; // Use full width of li area
+                    // Indicator that a list item has children
+                    &.has-children a:after {
+                        content: $nav-bar-children-prompt;
+                    }
+                    a { // Make link fill entire li area
+                        display: block;
+                        // width: 100%;
+                        padding: 0.25em 0.75em;
+                        margin: -0.25em -0.75em;
+                        color: $nav-bar-parent-text-color;
+                        &:hover, &:focus, &:active {
+                            color: inherit; // inherits from full-width, hover li
+                        }
+                    }
+                    &:hover, &:focus, &:active { // Hovered, focused, tapped on touchscreen
+                        color: $nav-bar-parent-text-hover-color;
+                        background-color: $nav-bar-parent-hover-color;
+                        width: 100%; // extend right to edge
+                    }
+                    &.active { // The active page
+                        background-color: $nav-bar-child-hover-color;
+                        width: 100%; // extend right to edge
+                        a {
+                            color: $nav-bar-child-text-hover-color;
+                        }
+                    }
+                } // li
+                // Child navifation, after the parent, the rest of the nav-list
+                ol, ul {
+                    @if $nav-bar-item-collapse == true {
+                        max-height: 0; // Instead of display: none, because it works with transitions
+                    } @else {
+                        max-height: none;
+                    }
+                    transition: max-height 0.5s ease-out; // See http://stackoverflow.com/a/8331169/1781075
+                    background-color: $nav-bar-child-background-color;
+                    width: 100%;
+                    overflow-x: hidden;
+                    li {
+                        padding: 0.25em 0.75em;
+                        width: 100%; // Use full width of li area
+                        a { // Make link fill entire li area
+                            display: block;
+                            width: 100%;
+                            color: $nav-bar-child-text-color;
+                            &:hover, &:focus, &:active {
+                                color: inherit;
+                            }
+                        }
+                        &:hover, &:focus, &:active {
+                            color: $nav-bar-child-text-hover-color;
+                            background-color: $nav-bar-child-hover-color;
+                            width: 100%; // extend right to edge
+                        }
+                    } // li
+                    // Indent sub-sub lists, while keeping full-width background hover
+                    ol, ul {
+                        margin-left: -1em;
+                        padding-left: 2em;
+                        li {
+                            padding-left: 3em;
+                            position: relative;
+                            left: -2em;
+                        } // li
+                    } // ol, ul
+                } // ol, ul
+                // Show sublist when preceding (i.e. parent) li is hovered
+                // and when the list contains the current page.
+                li:hover + ol, li:active + ol, li:focus + ol,
+                li:hover + ul, li:active + ul, li:focus + ul,
+                ol.active, ul.active {
+                    height: auto;
+                    max-height: 500em; // Bigger than it will ever be, for transition to work. See http://stackoverflow.com/a/8331169/1781075
+                    transition: max-height 1s ease-in;
+                }
+                ol:hover, ul:hover, ol:active, ul:active, ol:focus, ul:focus,
+                ol.active, ul.active {
+                    height: auto; // Keep sublist visible once it's visible
+                    max-height: 500em; // Matches max-height above
+                }
+            } // ol, ul
+        } // .nav-list
+        .widgets {
+            margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
+            min-height: 10em;
+            } // .widgets
+    } // #nav
+
+    // Optionally, hide sidebar behind menu icon
+    // till menu is hovered or tapped
+    $nav-bar-hide: true !default;
+    @if $nav-bar-hide {
+        .nav-wrapper {
+            #nav {
+                max-width: 0;
+                max-height: 0;
+                // transition: max-width 0.5s; // Disabled because of flickering problem
+                padding-right: 0;
+            }
+            &:before {
+                content: $nav-bar-prompt;
+                font-family: $font-text-secondary;
+                color: $color-mid;
+                display: block;
+                position: fixed;
+                left: 0;
+                top: 0;
+                padding: 0.5em 1em;
+                cursor: pointer;
+            }
+            &:hover, &:active, &.focus {
+                #nav {
+                    max-width: $nav-bar-width;
+                    max-height: none;
+                    // transition: max-width 0.5s; // Disabled because of flickering problem
+                    position: fixed;
+                    top: 0;
+                }
+                &:before {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    // On small screens, hide sidebar behind menu icon
+    // till menu is hovered or tapped
+    @media only screen 
+    and (max-width: $max-width-default) {
+        .nav-wrapper {
+            &:before {
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: $nav-bar-background-color;
+                padding: 0.5em;
+                border-top: 1px solid $nav-bar-border-color;
+                border-right: 1px solid $nav-bar-border-color;
+                border-bottom: 1px solid $nav-bar-border-color;
+            }
+        }
+    }
+
+}

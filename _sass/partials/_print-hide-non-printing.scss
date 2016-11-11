@@ -1,0 +1,12 @@
+$print-hide-non-printing: true !default;
+@if $print-hide-non-printing {
+
+    // For hiding elements that must not appear in print editions.
+
+    .non-printing, // Anything marked tagged .non-printing
+    .sigil_split_marker // Split-markers for epub output with Sigil
+    {
+        display: none;
+    }
+
+}

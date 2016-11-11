@@ -1,0 +1,17 @@
+{% comment %}
+To do: create HTML5 <figure> option here based on site.output
+when theme stylesheet has definitions. Problem is that Jekyll/kramdown 
+adds paragraph tags around the include.foo arguments. 
+{% endcomment %}
+
+> ![{{ include.description }}](../{{ site.image-set}}/{{ include.image }})
+> {% if include.image-height != nil %}{:.height-{{ include.image-height }}}{% endif %}
+>
+> {% if include.reference != nil %}*{{ include.reference }}*{:.figure-reference} {% endif %}{{ include.caption }}
+> {:.caption}
+{:.figure}
+
+{% if include.source != nil %}
+{{ include.source }}
+{:.source }
+{% endif %}

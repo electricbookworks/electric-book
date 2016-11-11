@@ -1,0 +1,66 @@
+$print-boxes: true !default;
+@if $print-boxes {
+
+	//Boxes
+
+	.box {
+		clear: both; // Don't let hanging sidenotes overlap over boxes
+		background-color: inherit;
+		color: inherit;
+		font-weight: inherit;
+		font-size: inherit;
+		border: 0.5pt solid $color-accent;
+		margin: $line-height-default 0;
+		padding: $line-height-default $line-height-default 0 $line-height-default;
+		// No text-indent on paragraphs after boxes
+		& + p {
+			text-indent: 0;
+		}
+		// But paragraphs after boxes floated out of the flow must still be indented
+		&.float-top + p,
+		&.float-bottom + p {
+			text-indent: $line-height-default;
+		}
+		// No margin above the first headings in a box
+		h1:first-of-type, 
+		h2:first-of-type, 
+		h3:first-of-type, 
+		h4:first-of-type, 
+		h5:first-of-type, 
+		h6:first-of-type {
+			margin-top: 0;
+		}
+		li {
+			// Paragraphs within list items in a box
+			p:last-of-type {
+				margin-bottom: 0;
+			}
+		}
+		// Definition lists inside a box
+		dl {
+			&:first-of-type {
+				margin-top: 0;
+			}
+			&:last-of-type {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	// A regular paragraph as a box
+	p.box {
+		padding-bottom: $line-height-default;
+		text-indent: 0;
+	}
+	// A list as a box
+	ol.box,
+	ul.box {
+		padding: $line-height-default;
+	}
+	// A regular list item as a box
+	li.box {
+		padding: $line-height-default;
+		margin-left: $line-height-default;
+	}
+
+}

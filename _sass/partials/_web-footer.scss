@@ -1,0 +1,34 @@
+$web-footer: true !default;
+@if $web-footer {
+
+	// Footer
+
+	#footer {
+		// position: fixed; // Make this fixed to make footer always visible
+		clear: both;
+		bottom: 0;
+		background-color: $color-footer;
+		font-family: $font-text-secondary;
+		border-top: 1px solid $nav-bar-border-color;
+		margin: ($line-height-default * 2) 0 0 0;
+		padding: $line-height-default / 2;
+		width: 100%; // Prevents floating when preceding elements float or flex
+	}
+	.footer-content {
+		clear: both;
+		max-width: $max-width-default;
+	}
+	#footer p,
+	#footer ol,
+	#footer ul {
+		font-size: $font-size-default * $font-size-smaller;
+		color: $color-footer-text;
+		text-indent: 0;
+		margin: 0;
+		a {
+			color: $color-footer-text;
+			text-decoration: underline;
+		}
+	}
+
+}

@@ -1,0 +1,51 @@
+$print-page-break-tools: true !default;
+@if $print-page-break-tools {
+
+	// For a manual page break before an element, apply this class to it
+	.page-break-before {
+		page-break-before: always;
+	}
+
+	// For a manual page break after an element, apply this class to it
+	.page-break-after {
+		page-break-after: always;
+	}
+
+	// To keep an element on the same page as the next element, apply this class
+	.keep-with-next {
+		page-break-after: avoid;
+	}
+
+	// To prevent an element breaking across pages, apply this class
+	.keep-together {
+		page-break-inside: avoid;
+	}
+	// To allow a break where default styles would normally avoid one. Apply the class to the parent element.
+	// These are !important because they must override rules that might appear later in generated CSS.
+	.allow-break {
+		page-break-before: auto !important;
+		page-break-after: auto !important;
+		page-break-inside: auto !important;
+	}
+	.allow-break * {
+		page-break-before: inherit !important;
+		page-break-after: inherit !important;
+		page-break-inside: inherit !important;
+	}
+
+	// To end a section on a left or a right page, apply one of these classes to a block element
+	// Specifying left or right might not seem intuitive. 
+	// You don't tell the element what side page is supposed to be last.
+	// Rather, you're adding an extra page if your last side is specified.
+	.end-on-left {
+		page-break-after: right !important;
+	}
+	.end-on-right {
+		page-break-after: left !important;
+	}
+
+	// Also see:
+	// _print-front-cover.scss
+	// _print-start-on-recto-and-verso
+
+}

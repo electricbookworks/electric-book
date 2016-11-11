@@ -1,7 +1,6 @@
 ---
 title: Cover
 style: cover
-layout: min
 ---
 
 {% include metadata %}

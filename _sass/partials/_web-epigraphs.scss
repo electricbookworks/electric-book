@@ -1,0 +1,31 @@
+$web-epigraphs: true !default;
+@if $web-epigraphs {
+
+    // Epigraphs
+
+    .epigraph-page {
+        #content {
+    	   margin-top: $start-depth;
+        }
+    }
+    
+    p.epigraph {
+    	text-indent: 0;
+    	padding: 0 ($line-height-default * 2);
+    }
+    p.epigraph-source {
+    	text-indent: 0;
+    	padding: 0 ($line-height-default * 2);
+        text-align: right;
+        font-style: italic;
+        em {
+            font-style: normal;
+        }
+    }
+    // Paragraphs after epigraph sources
+    .epigraph-source + p {
+    	text-indent: 0;
+    	margin-top: $line-height-default; 
+    }
+
+}

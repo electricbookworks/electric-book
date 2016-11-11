@@ -1,0 +1,19 @@
+$epub-dedications: true !default;
+@if $epub-dedications {
+
+    // Dedications
+
+    .dedication-page {
+    	margin-top: $line-height-default * 2;
+    }
+    p.dedication {
+    	text-indent: 0;
+    	text-align: center;
+    }
+    // Paragraphs after dedications
+    .dedication + p {
+        text-indent: 0;
+        margin-top: $line-height-default;
+    }
+
+}

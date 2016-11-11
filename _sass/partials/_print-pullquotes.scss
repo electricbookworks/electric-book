@@ -1,0 +1,17 @@
+$print-pullquotes: true !default;
+@if $print-pullquotes {
+
+    // Pull quotes
+
+     .pullquote {
+    	text-indent: 0;
+    	font-size: $font-size-default * $font-size-bigger;
+    	text-align: center;
+    	margin: $line-height-default 0;
+    	line-height: $line-height-default * $font-size-bigger;
+    }
+    .pullquote + p {
+    	text-indent: 0;
+    }
+
+}

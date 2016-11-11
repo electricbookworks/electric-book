@@ -1,0 +1,64 @@
+$web-masthead: true !default;
+@if $web-masthead {
+
+    // Masthead
+
+    .masthead {
+        font-family: $font-text-secondary;
+        background-color: $masthead-background-color;
+        border-bottom: 1px solid $masthead-border-color;
+        width: 100%;
+        text-align: center;
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+        a {
+            color: $masthead-text-color;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0 0 0 1em;
+            li {
+                display: inline-block;
+                margin: 0 1em 0 0;
+                padding: 0.5em 0;
+                // The divider between series and book title
+                // Should not show if there is only one work,
+                // and therefore no series title in masthead.
+                &:nth-of-type(2):before {
+                    content: "\2022";
+                    color: $masthead-text-color;
+                    margin-right: 1em;
+                }
+                // On small screens, only show the book title.
+                // But see below...
+                @media only screen
+                and (max-width: $max-width-default) {
+                    &:nth-of-type(2):before {
+                        content: normal;
+                    }
+                    &.masthead-series-name {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        // Possible future styles for these classes.
+        .masthead-series-name {}
+        .masthead-book-title {}
+
+    } // .masthead
+
+    // ...unless it's the home page, and we're on a small screen,
+    // in which case do show the series name.
+    @media only screen
+    and (max-width: $max-width-default) {
+        body.home .masthead li.masthead-series-name {
+            display: inline-block !important;
+        }
+    }
+
+}

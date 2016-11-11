@@ -1,0 +1,18 @@
+$print-glossaries: true !default;
+@if $print-glossaries {
+
+    // Definition lists used in a simple glossary
+    // Note dl rules are also defined in base typography
+
+    .glossary dl, dl.glossary {
+    	color: inherit;
+    }
+    .glossary dt {
+    	float: left;
+    	color: inherit;
+    }
+    .glossary dt:after {
+        content: ":\00a0";
+    }
+
+}

@@ -1,0 +1,34 @@
+$print-smallcaps: true !default;
+@if $print-smallcaps {
+
+    // Use small-cap alternate glyphs
+    .smallcaps {
+        letter-spacing: 0.025em;
+        font-variant: prince-opentype(smcp, onum);
+        font-style: inherit;
+        font-weight: inherit;
+        line-height: 100%;
+        &.italic {
+            font-style: italic;
+        }
+        &.bold {
+            font-weight: bold;
+        }
+    }
+
+    // Convert both upper and lowercase to small caps (affects punctuation also)
+    .allsmallcaps { 
+        letter-spacing: 0.025em;
+        font-variant: prince-opentype(c2sc, smcp, onum);
+        font-style: inherit;
+        font-weight: inherit;
+        line-height: 100%;
+        &.italic {
+            font-style: italic;
+        }
+        &.bold {
+            font-weight: bold;
+        }
+    }
+
+}

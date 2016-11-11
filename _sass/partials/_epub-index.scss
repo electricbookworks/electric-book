@@ -1,0 +1,34 @@
+$epub-index: true !default;
+@if $epub-index {
+
+    // Index
+
+    ol.reference-index,
+    ul.reference-index {
+        margin-left: $line-height-default;
+        list-style-type: none;
+        ul, ol {
+            list-style-type: none;
+        }
+        li {
+            text-indent: -($line-height-default);
+            li {
+                margin: 0;
+            }
+            a:after {
+                content: ", ";
+            }
+            a:last-of-type:after {
+                content: "";
+            }
+            a.indexed {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+        .duplicate {
+            display: none;
+        }
+    }
+
+}

@@ -1,0 +1,25 @@
+$print-copyright-page: true !default;
+@if $print-copyright-page {
+
+	// Copyright page
+	 
+	.copyright-page {
+		position: absolute;
+		bottom: 0;	
+	}
+	.copyright-page h1 {
+		font-size: $font-size-default * $font-size-smaller;
+		line-height: $line-height-default * $font-size-smaller;
+		margin: ($line-height-default * $font-size-smaller) 0;
+		text-align: left;
+	}
+	.copyright-page p, .copyright-page li {
+		text-align: left;
+		margin: 0 0 ($line-height-default * $font-size-smaller) 0;
+		text-indent: 0;
+		font-size: $font-size-default * $font-size-smaller;
+		line-height: $line-height-default * $font-size-smaller;
+		hyphens: none; // Prince will not hyphenate here
+	}
+
+}

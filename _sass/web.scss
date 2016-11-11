@@ -1,0 +1,222 @@
+// What is this?
+// -------------
+// This is typography for the Electric Book Elements theme (see http://electricbook.works).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
+// 
+// How to use it
+// -------------
+// Edit the default variables below.
+// Comment/uncomment or add font imports below.
+// Add your own custom CSS at the bottom.
+
+// First, let's set character encoding. Don't change this.
+@charset "utf-8";
+
+// -------------
+// Set variables
+// -------------
+
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+$edition-suffix: null !default;
+
+// Max width of main body area
+$max-width-default: 40em !default;
+
+// We name font variables for two categories:
+// - 'text' fonts are used for body text and some page features;
+// - 'display' fonts are used for headings and similar short-string features.
+// For each category, we set a main font and a secondary font, allowing up to four fonts.
+// Finally, we set a fifth, monospace font for elements like computer code.
+$font-text-main: "Crimson", serif !default;
+$font-text-secondary: "Source Sans Pro", sans-serif !default;
+$font-display-main: "Source Sans Pro", sans-serif !default;
+$font-display-secondary: "Crimson", serif !default;
+$font-code: "Inconsolata", monospace !default;
+
+// Set font size and line-height in ems or px.
+// These values, especially $line-height-default, are used to compute vertical rhythm
+// for many features in this theme. So do not use a unitless value for line-height,
+// and don't use percentages, which will break layouts computed by multiplying this value.
+$font-size-default: 1.2em !default;
+$line-height-default: 1.5em !default;
+$font-size-smaller: 0.7 !default; // How much smaller than font-size-default for features like sidenotes and footers?
+$font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
+
+// Do you want space between paragraphs, rather than a text-indent?
+$spaced-paras: true !default;
+
+// Buttons
+$button-border-radius: 0.1em !default; // Roundness of button corners.
+
+// Colours
+$color-text-main: #222222 !default;
+$color-text-secondary: #222222 !default;
+$color-footer-text: #222222 !default;
+$color-background: white !default;
+$color-footer: #e0e0e0 !default;
+$color-light: #e0e0e0 !default;
+$color-mid: #9c9c9c !default;
+$color-accent: #000000 !default;
+$color-links: #5f738c !default;
+$color-buttons: #5f738c !default;
+$color-highlight: #ffd54d !default;
+
+// Some features rearrange at certain screen sizes.
+// What are your break points for rearrangement?
+$break-point-height: 600px !default;
+$break-point-width: 600px !default;
+
+// Set the default start-depth of pages.
+// This is the distance from the top of the page to the first element on the first page.
+$start-depth: $line-height-default * 2 !default;
+
+// Hyphenation
+// Variables here apply to p, ul, ol, dl.
+// Note: Most browsers and ereaders do not support hyphenation rules.
+$hyphenation: auto !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
+$hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
+$hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
+$hyphenate-lines: 1 !default; // Maximum number of consecutive lines ending with hyphens
+
+// Website masthead
+$masthead-text-color: $color-light !default;
+$masthead-background-color: $color-accent !default;
+$masthead-border-color: $color-light !default;
+
+
+
+// Website sidebar/navigation
+$nav-bar-text-size: 0.8em !default;
+$nav-bar-hide: true !default;
+$nav-bar-prompt: "Contents" !default;
+$nav-bar-item-collapse: true !default; // Does the nav list fully expand, or collapse until mouseover?
+$nav-bar-children-prompt: " \2026"; // \2026 is an ellipsis (…)
+$nav-bar-scrollbar: true !default;
+$nav-bar-width: 15em !default;
+$nav-bar-border-color: $color-light !default;
+$nav-bar-background-color: white !default;
+$nav-bar-search-background-color: white !default;
+$nav-bar-parent-background-color: white !default;
+$nav-bar-parent-text-color: black !default;
+$nav-bar-parent-hover-color: #4f89d2 !default;
+$nav-bar-parent-text-hover-color: white !default;
+$nav-bar-child-background-color: $color-light !default;
+$nav-bar-child-text-color: black !default;
+$nav-bar-child-hover-color: #4f89d2 !default;
+$nav-bar-child-text-hover-color: white !default;
+
+// ---------------------------------
+// Set to false to turn partials off
+// ---------------------------------
+
+// Reset browser CSS as best we can
+$web-css-reset: true !default;
+
+// Structural HTML components
+$web-wrappers: true !default;
+
+// Default typography
+$web-base-typography: true !default;
+
+// Navigation
+$web-masthead: true !default;
+$web-search: true !default;
+$web-nav-bar: true !default;
+$web-footer: true !default;
+
+// Book parts
+$web-cover: true !default;
+$web-previous-publications-page: true !default;
+$web-title-pages: true !default;
+$web-copyright-page: true !default;
+$web-dedications: true !default;
+$web-epigraphs: true !default;
+$web-toc: true !default;
+
+// Book-feature classes
+$web-bibliographies: true !default;
+$web-boxes: true !default;
+$web-buttons: true !default;
+$web-code: true !default;
+$web-figures: true !default;
+$web-highlighter: true !default;
+$web-glossaries: true !default;
+$web-index: true !default;
+$web-maths: true !default;
+$web-notes: true !default;
+$web-openers: true !default;
+$web-pullquotes: true !default;
+$web-sources: true !default;
+$web-tables: true !default;
+$web-letters: true !default;
+$web-verse: true !default;
+$web-video: true !default;
+
+// Type-control classes
+$web-smallcaps: true !default;
+$web-fitting: true !default;  // E.g. tracking and shrinking
+
+// Logic (if this then that)
+$web-reset-sequences: true !default; // This should stay last in the @import list
+
+// ----------------------------------------------------
+// Import font files (@font-face) for fonts you specify
+// ----------------------------------------------------
+
+// Import fonts from book-specific CSS.
+
+// ---------------------
+// Theme modules
+// ---------------------
+
+// Reset browser CSS as best we can
+@import "partials/web-css-reset";
+
+// Structural HTML components
+@import "partials/web-wrappers";
+
+// Default typography
+@import "partials/web-base-typography";
+
+// Navigation
+@import "partials/web-masthead";
+@import "partials/web-nav-bar";
+@import "partials/web-search";
+@import "partials/web-footer";
+
+// Book parts
+@import "partials/web-cover";
+@import "partials/web-previous-publications-page";
+@import "partials/web-title-pages";
+@import "partials/web-copyright-page";
+@import "partials/web-dedications";
+@import "partials/web-epigraphs";
+@import "partials/web-toc";
+
+// Book-feature classes
+@import "partials/web-bibliographies";
+@import "partials/web-boxes";
+@import "partials/web-buttons";
+@import "partials/web-code";
+@import "partials/web-figures";
+@import "partials/web-glossaries";
+@import "partials/web-highlighter";
+@import "partials/web-index";
+@import "partials/web-maths";
+@import "partials/web-notes";
+@import "partials/web-openers";
+@import "partials/web-pullquotes";
+@import "partials/web-sources";
+@import "partials/web-tables";
+@import "partials/web-letters";
+@import "partials/web-verse";
+@import "partials/web-video";
+
+// Type-control classes
+@import "partials/web-smallcaps";
+@import "partials/web-fitting";  // E.g. tracking and shrinking
+
+// Logic (if this then that)
+@import "partials/web-reset-sequences"; // This should stay last in the @import list

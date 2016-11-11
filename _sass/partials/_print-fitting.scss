@@ -1,0 +1,47 @@
+$print-fitting: true !default;
+@if $print-fitting {
+
+  // Typographic control for fitting text and elements on fixed pages
+  // These classes include an optional edition suffix, 
+  // for producing different layouts from the same source markdown/HTML.
+
+  // Float an element, like a box, to the top of bottom of a page (print only)
+  .float-top#{$edition-suffix} {
+    float: top;
+  }
+  .float-bottom#{$edition-suffix} {
+    float: bottom;
+  }
+  // If a paragraph would normally be flush left after an element, 
+  // but that element is floated away, it should get its indent back.
+  .float-top#{$edition-suffix} + p, .float-bottom#{$edition-suffix} + p {
+    text-indent: $line-height-default;
+  }
+   
+  // These classes control letter-spacing (tracking), usually to save widows and orphans.
+  @for $i from 1 through 100 {
+    $add-space: $i * 0.001em;
+    .tighten-#{$i}#{$edition-suffix} {
+      letter-spacing: $letter-spacing-text - $add-space;
+      font-style: inherit;
+      background-color: $highlight-tightened;
+    }
+    .loosen-#{$i}#{$edition-suffix} {
+      letter-spacing: $letter-spacing-text + $add-space;
+      font-style: inherit;
+      background-color: $highlight-loosened;
+    }
+  }
+
+  // These classes set the height of any element relative to the $line-height-default.
+  // Especially useful for controlling the height of images to retain a baseline grid.
+  // $line-height-default should be set in a non-relative unit, like points,
+  // otherwise you'll get exponential differences in height.
+  @for $i from 1 through 100 {
+    $height: $i * $line-height-default;
+    .height-#{$i}#{$edition-suffix} {
+      height: $height;
+    }
+  }
+
+}

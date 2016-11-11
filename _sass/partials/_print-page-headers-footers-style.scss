@@ -1,0 +1,155 @@
+// Mixins, which cannot be inside Sass control directives (the @if section below).
+@mixin header-style() {
+    font-family: $font-text-secondary;
+    font-size: $font-size-default * $font-size-smaller;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+$print-page-headers-footers-style: true !default;
+@if $print-page-headers-footers-style {
+
+  // Styling of headers and footers
+
+  // Let's define our header typography as a mixin
+  // Note we don't set margins here. 
+  // By default the header will center vertically in the margin box. 
+  // Control its position with `vertical-align: top` and then `margin-top`.
+
+  // Verso
+  @page chapter:left {
+    @top {
+      @include header-style();
+    }
+    @top-right {
+      @include header-style();
+    }
+    @top-left {
+      @include header-style();
+    }
+    @top-right-corner {
+      @include header-style();
+    }
+    @top-left-corner {
+      @include header-style();
+    }
+    @bottom {
+      @include header-style();
+    }
+    @bottom-left {
+      @include header-style();
+    }
+    @bottom-right {
+      @include header-style();
+    }
+    @bottom-left-corner {
+      @include header-style();
+    }
+    @bottom-right-corner {
+      @include header-style();
+    }
+  }
+
+  // Recto
+  @page chapter:right {
+    @top {
+      @include header-style();
+    }
+    @top-right {
+      @include header-style();
+    }
+    @top-left {
+      @include header-style();
+    }
+    @top-right-corner {
+      @include header-style();
+    }
+    @top-left-corner {
+      @include header-style();
+    }
+    @bottom {
+      @include header-style();
+    }
+    @bottom-left {
+      @include header-style();
+    }
+    @bottom-right {
+      @include header-style();
+    }
+    @bottom-left-corner {
+      @include header-style();
+    }
+    @bottom-right-corner {
+      @include header-style();
+    }
+  }
+
+  // Verso
+  @page frontmatter:left {
+    @top {
+      @include header-style();
+    }
+    @top-right {
+      @include header-style();
+    }
+    @top-left {
+      @include header-style();
+    }
+    @top-right-corner {
+      @include header-style();
+    }
+    @top-left-corner {
+      @include header-style();
+    }
+    @bottom {
+      @include header-style();
+    }
+    @bottom-left {
+      @include header-style();
+    }
+    @bottom-right {
+      @include header-style();
+    }
+    @bottom-left-corner {
+      @include header-style();
+    }
+    @bottom-right-corner {
+      @include header-style();
+    }
+  }
+
+  // Recto
+  @page frontmatter:right {
+    @top {
+      @include header-style();
+    }
+    @top-right {
+      @include header-style();
+    }
+    @top-left {
+      @include header-style();
+    }
+    @top-right-corner {
+      @include header-style();
+    }
+    @top-left-corner {
+      @include header-style();
+    }
+    @bottom {
+      @include header-style();
+    }
+    @bottom-left {
+      @include header-style();
+    }
+    @bottom-right {
+      @include header-style();
+    }
+    @bottom-left-corner {
+      @include header-style();
+    }
+    @bottom-right-corner {
+      @include header-style();
+    }
+  }
+
+}

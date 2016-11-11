@@ -1,0 +1,23 @@
+$epub-cover: true !default;
+@if $epub-cover {
+
+	// Cover image. Forms the cover image in epubs.
+	body.cover {
+		margin: 0;
+		padding: 0;
+		text-align: center;
+	}
+	p.cover {
+		margin: 0 auto;
+		padding: 0;
+		text-align: center;
+		text-indent: 0;
+		height: 100vh;
+	}
+	img.cover {
+		max-height: 100%;
+		max-width: 100%;
+		border: 1px solid $color-light;
+	}
+
+}

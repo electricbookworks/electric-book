@@ -1,0 +1,25 @@
+$web-letters: true !default;
+@if $web-letters {
+
+    // A letter, usually as a div or blockquote
+    // and its valediction (the sign-off)
+    
+    .letter {
+        p {
+            text-indent: 0;
+            margin-bottom: $line-height-default;
+        }
+    }
+    
+    p.valediction {
+        text-indent: 0;
+        margin: $line-height-default 0;
+        page-break-before: avoid;
+        page-break-inside: avoid;
+    }
+    // Paragraphs after a valediction should be flush left
+    .valediction + p {
+        text-indent: 0;
+    }
+
+}

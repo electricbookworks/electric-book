@@ -1,0 +1,28 @@
+$web-video: true !default;
+@if $web-video {
+
+    // Video
+    // Works specifically with our `youtube` video include
+
+    .videowrapper {
+        float: none;
+        clear: both;
+        width: 100%;
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 25px;
+        height: 0;
+    	margin: 1em 0;
+    }
+    .videowrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .videowrapper + p {
+    	text-indent: 0; // Don't indent a paragraph after a video.
+    }
+
+}

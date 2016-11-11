@@ -11,6 +11,14 @@ Assign series information to variables. This is the same for all books in the se
 {% capture series-url %}{{ site.data.meta.series.url }}{% endcapture %}
 {% capture series-name %}{{ site.data.meta.series.name }}{% endcapture %}
 {% capture series-description %}{{ site.data.meta.series.description }}{% endcapture %}
+{% capture series-image %}{{ site.data.meta.series.image }}{% endcapture %}
+{% capture series-home-label %}{{ site.data.meta.series.home-label }}{% endcapture %}
+
+{% comment %}
+It's useful to know how many books are in this series
+{% endcomment %}
+
+{% assign number-of-works = site.data.meta.works | size %}
 
 {% comment %}
 Get the current directory for this book only
@@ -48,15 +56,18 @@ Now capture each metadata value as a Liquid tag, to be used in HTML and book con
 {% capture relation %}{{ work.relation }}{% endcapture %}
 {% capture coverage %}{{ work.coverage }}{% endcapture %}
 {% capture rights %}{{ work.rights }}{% endcapture %}
+{% capture image %}{{ work.image }}{% endcapture %}
 
 {% capture print-pdf-date %}{{ work.products.print-pdf.date }}{% endcapture %}
 {% capture print-pdf-format %}{{ work.products.print-pdf.format }}{% endcapture %}
 {% capture print-pdf-identifier %}{{ work.products.print-pdf.identifier }}{% endcapture %}
+{% capture print-pdf-image %}{{ work.products.print-pdf.image }}{% endcapture %}
 {% assign print-pdf-file-list = work.products.print-pdf.files %}
 
 {% capture web-date %}{{ work.products.web.date }}{% endcapture %}
 {% capture web-format %}{{ work.products.web.format }}{% endcapture %}
 {% capture web-identifier %}{{ work.products.web.identifier }}{% endcapture %}
+{% capture web-image %}{{ work.products.web.image }}{% endcapture %}
 {% capture web-footer %}{{ work.products.web.footer }}{% endcapture %}
 {% capture web-start-page %}{{ work.products.web.start-page }}{% endcapture %}
 {% capture web-contents-page %}{{ work.products.web.contents-page }}{% endcapture %}
@@ -66,11 +77,42 @@ Now capture each metadata value as a Liquid tag, to be used in HTML and book con
 {% capture epub-date %}{{ work.products.epub.date }}{% endcapture %}
 {% capture epub-format %}{{ work.products.epub.format }}{% endcapture %}
 {% capture epub-identifier %}{{ work.products.epub.identifier }}{% endcapture %}
+{% capture epub-image %}{{ work.products.epub.image }}{% endcapture %}
 {% assign epub-file-list = work.products.epub.files %}
 
 {% capture screen-pdf-date %}{{ work.products.screen-pdf.date }}{% endcapture %}
 {% capture screen-pdf-format %}{{ work.products.screen-pdf.format }}{% endcapture %}
 {% capture screen-pdf-identifier %}{{ work.products.screen-pdf.identifier }}{% endcapture %}
+{% capture screen-pdf-image %}{{ work.products.screen-pdf.image }}{% endcapture %}
 {% assign screen-pdf-file-list = work.products.screen-pdf.files %}
 
 {% endfor %}
+
+{% comment %}
+Check if we're on the series homepage:
+* Get a slugified version of the page URL to compare to a slugified
+  version of the baseurl. We slugify to remove slashes, which 
+  may differ between the two.
+* Then we can compare them to test if we're on the series home page. 
+* If we are, they will match. Hopefully.
+{% endcomment %}
+{% capture pageurl-slug %}{{ page.url | slugify }}{% endcapture %}
+{% capture baseurl-slug %}{{ site.baseurl | slugify }}{% endcapture %}
+{% if pageurl-slug == baseurl-slug %}
+{% assign is-homepage = true %}
+{% endif %}
+
+{% comment %}
+Check if we're on the search pages.
+{% endcomment %}
+{% capture series-search-url %}{{ baseurl }}/search.html{% endcapture %}
+{% capture book-search-url %}{{ baseurl }}/{{ directory }}/text/search.html{% endcapture %}
+{% if page.url contains "/search.html" %}
+    {% assign is-search = true %}
+{% endif %}
+{% if page.url == series-search-url %}
+    {% assign is-series-search = true %}
+{% endif %}
+{% if page.url == book-search-url %}
+    {% assign is-book-search = true %}
+{% endif %}

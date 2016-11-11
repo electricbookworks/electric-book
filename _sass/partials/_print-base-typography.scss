@@ -1,0 +1,193 @@
+$print-base-typography: true !default;
+@if $print-base-typography {
+
+	// Base typography
+
+	@page {
+		background-color: $color-background;
+	}
+
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: $font-text-main;
+		font-size: $font-size-default;
+		color: $color-text-main;
+		line-height: $line-height-default;
+		orphans: $orphans;
+		widows: $widows;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		font-family: $font-text-secondary;
+		font-size: $font-size-default;
+		line-height: $line-height-default;
+		font-weight: bold;
+		margin: $line-height-default 0 0 0;
+		page-break-after: avoid;
+		page-break-inside: avoid;
+	}
+	h1 {
+		font-family: $font-display-main;
+		font-size: $font-size-default * $font-size-bigger;
+		line-height: $line-height-default * $font-size-bigger;
+		margin: ($line-height-default * 2) 0 ($line-height-default * 10) 0;
+	    text-align: center;
+	}
+	h2 {
+		font-size: $font-size-default * ($font-size-bigger * 0.75);
+		margin: ($line-height-default * 2) 0 $line-height-default 0;
+	}
+	h3 {}
+	h4 {
+		font-style: italic;
+		font-weight: inherit;
+	}
+	h5 {
+		font-family: $font-text-main;
+		font-style: italic;
+		font-weight: inherit;
+	}
+	h6 {
+		font-family: $font-text-main;
+		font-weight: inherit;
+	}
+	p, ul, ol, dl {
+		text-align: $text-align;
+		letter-spacing: $letter-spacing-text;
+	}
+	p {
+		margin: 0;
+		text-indent: $line-height-default;
+	}
+	p:first-of-type {
+		text-indent: 0;
+	}
+	a {
+		text-decoration: none;
+		color: $color-links;
+		// Let long urls break over lines
+		// (See https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/)
+		overflow-wrap: break-word;
+	 	word-wrap: break-word;
+	 	word-break: break-word;
+	}
+	em, strong {
+		line-height: 100%; // Prevents some fonts from expanding/contracting a line's line height when em, strong present
+	}
+
+	// Lists
+	// For detail on styling lists, see https://www.princexml.com/doc/lists/
+
+	ul, ol {
+		margin: 0 0 $line-height-default 0;
+	}
+	ol {
+		list-style: decimal;
+		ol {
+			list-style-type: lower-alpha;
+			ol {
+				list-style-type: lower-roman;
+			}
+		}
+	}
+	ul {
+        list-style-type: disc;
+	}
+	ul ul, ol ol, blockquote ul ul, blockquote ol ol {
+		margin-bottom: 0;
+	}
+	li > ul {
+		margin-bottom: 0; // manages line space after sublists in lists
+	}
+	li {
+    	list-style-position: outside;
+		margin-left: $line-height-default;
+		&::marker {
+			width: $line-height-default;
+			text-align: left;
+		}
+	}
+	li:first-of-type {
+		page-break-after: avoid;
+	}
+	li:last-of-type {
+		page-break-before: avoid;
+	}
+	li li:first-of-type {
+		page-break-before:avoid;
+	}
+
+	// Blockquotes
+
+	blockquote {
+		margin: $line-height-default 0 0 0;
+		padding: 0 $line-height-default;
+	}
+	blockquote p {
+		margin: 0;
+		padding: 0;
+	}
+	blockquote p:first-of-type {
+		text-indent: 0;
+	}
+	blockquote p:last-of-type, blockquote ol, blockquote ul {
+		margin: 0 0 $line-height-default 0;
+	}
+
+	/* Definition lists */
+
+	dl {
+		margin: $line-height-default 0;
+	}
+	dt {
+		page-break-after: avoid;
+	}
+	dd {
+		margin: 0 0 $line-height-default $line-height-default;
+	}
+
+	// Super and subscripts
+
+	// Prevent them from increasing line height in print output
+    sup, sub {
+        line-height: 0;
+        font-size: 1em * $font-size-smaller;
+    }
+    sup {
+        vertical-align: super;
+    }
+    sub {
+        vertical-align: sub;
+    }
+
+	// Horizontal rules
+
+	// Using <hr> as a divider (in markdown created with ***)
+	hr {
+	    content: "\2014"; // \2014 is an em dash, for others see https://css-tricks.com/snippets/html/glyphs/
+	    border: 0;
+	    font-family: $font-display-main;
+	    text-align: center;
+	    margin: $line-height-default 0;
+	    & + p {
+	    	text-indent: 0;
+	    }
+	}
+
+	// Images
+	// Also see figures partial
+
+	img {
+		max-width: 100%;
+	}
+
+    // An option to change the default text-indented paragraphs
+    // and close-up lists etc. to have space-between instead.
+    @if $spaced-paras {
+        p {
+            margin-bottom: $line-height-default;
+            text-indent: 0;
+        }
+    }
+
+}

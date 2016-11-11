@@ -1,0 +1,38 @@
+$web-reset-sequences: true !default;
+@if $web-reset-sequences {
+
+    // After certain elements, don't indent paragraphs
+    // and remove any top-margin inadvertently added with .first or similar.
+    // Many partials include their own reset sequences like this.
+    // This partial should be included after all others, as a fallback.
+
+    h1 + p, // Paragraphs after headings
+    h2 + p, 
+    h3 + p, 
+    h4 + p, 
+    h5 + p, 
+    h6 + p, 
+    blockquote + p, // Paragraphs after blockquotes
+    ol + p, // Paragraphs after ordered lists
+    ul + p, // Paragraphs after unordered lists
+    dl + p, // Paragraphs after definition lists
+    pre + p, // Paragraphs after code blocks
+    .box + p.sidenote + p, // Paragraphs after boxes with a sidenote in between
+    table + p.sidenote + p, // Paragraphs after tables with a sidenote in between
+    .pullquote + p, // Paragraphs after pullquotes
+    table + p
+    {
+    	text-indent: 0;
+    	margin-top: 0; 
+    }
+
+    // Legacy: to be removed after testing
+
+    // h1 + .sidenote + p, // Paragraphs after headings with a sidenote in between
+    // h2 + .sidenote + p, 
+    // h3 + .sidenote + p, 
+    // h4 + .sidenote + p, 
+    // h5 + .sidenote + p, 
+    // h6 + .sidenote + p,
+
+}

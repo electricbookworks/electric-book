@@ -1,0 +1,53 @@
+$print-pdf-view: true !default;
+@if $print-pdf-view {
+
+    // Set the initial default view when this PDF is opened. See http://www.princexml.com/forum/topic/2650/prince-pdf
+    @prince-pdf {
+    	prince-pdf-open-action: command(FitPage); // none | print | command(NamedAction) See http://www.planetpdf.com/planetpdf/pdfs/A4NamedActions.pdf
+    	prince-pdf-page-layout: two-page-right; // single-page snaps to single pages | one-column scrolls single pages| two-column | two-column-left | two-column-right | two-page-left for no cover page | two-page-right to show cover page
+    	prince-pdf-page-mode: show-bookmarks; // auto | show-attachments | show-bookmarks | fullscreen
+    	prince-pdf-paper-tray: auto; // auto | pick-tray-by-pdf-size
+    	prince-pdf-print-scaling: auto; // auto | none
+    	prince-pdf-script: ""; // Insert Javascript between the quotes if needed: http://www.princexml.com/doc/properties/prince-pdf-script/
+        prince-pdf-color-options: use-#{$black-ink}-black; //  takes two values, use-true-black (/DeviceGray black in the PDF) and use-rich-black (/DeviceRGB black in PDF)
+    }
+
+    // Make the PDF page labels (numbers in PDF navigation) match the numbers of the book pages
+    // First, set the default for all pages (in case we create new ones in custom CSS)
+    @page {
+        prince-pdf-page-label: counter(page);
+    }
+
+    // Then set specific page labels for pages we support out of the box
+    @page cover {
+        prince-pdf-page-label: counter(page, lower-alpha);
+    }
+    @page halftitle-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page title-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page previous-publications-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page copyright-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page frontispiece-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page dedication-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page contents-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page frontmatter {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page chapter {
+        prince-pdf-page-label: counter(page);
+    }
+
+}

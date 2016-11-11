@@ -19,7 +19,9 @@ prose:
     - /_includes
     - /_site
     - /_html
-    - /css
+    - /_sass
+    - search.md
+    - /*/search.md
     - /*/.gitattributes
     - /*/.gitignore
     - /*/_config*
@@ -30,6 +32,9 @@ prose:
     - /*/css
     - /*/*/0-0-cover.md
     - /*/*/index.md
+    - run-linux.sh
+    - run-mac.command
+    - run-windows.bat
     - /*/run-linux.sh
     - /*/run-mac.command
     - /*/run-windows.bat

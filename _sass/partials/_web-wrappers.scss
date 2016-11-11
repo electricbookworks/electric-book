@@ -1,0 +1,15 @@
+$web-wrappers: true !default;
+@if $web-wrappers {
+
+    #wrapper {
+        background-color: $color-background;
+    }
+
+    #content {
+        clear: none;
+        padding: 0 2em;
+        margin: 0 auto ($line-height-default) auto;
+        max-width: $max-width-default;
+    }
+
+}

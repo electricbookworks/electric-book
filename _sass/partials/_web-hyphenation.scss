@@ -1,0 +1,47 @@
+$web-hyphenation: true !default;
+@if $web-hyphenation {
+
+    // Hyphenation
+
+    // Basic hyphenation variables.
+    p, ul, ol, dl {
+        -moz-hyphens: $hyphenation;
+        -ms-hyphens: $hyphenation;
+        -webkit-hyphens: $hyphenation;
+        hyphens: $hyphenation;
+        // Not yet supported in many browsers.
+        -moz-hyphenate-limit-chars: ($hyphenate-before + $hyphenate-after) $hyphenate-before $hyphenate-after;
+        -webkit-hyphenate-limit-chars: ($hyphenate-before + $hyphenate-after) $hyphenate-before $hyphenate-after;
+        -ms-hyphenate-limit-chars: ($hyphenate-before + $hyphenate-after) $hyphenate-before $hyphenate-after;
+        hyphenate-limit-chars: ($hyphenate-before + $hyphenate-after) $hyphenate-before $hyphenate-after;
+        -moz-hyphenate-limit-lines: $hyphenate-lines;
+        -webkit-hyphenate-limit-lines: $hyphenate-lines;
+        -ms-hyphenate-limit-lines: $hyphenate-lines;
+        hyphenate-limit-lines: $hyphenate-lines;
+    }
+
+    // Is a hyphenation dictionary specified? If yes, use it.
+    // If not, don't specify one, so the browser can use its default.
+    p, ul, ol, dl {
+        @if $hyphenation-dictionary == "" {}
+        @else {
+            -moz-hyphenate-resource: url("#{$hyphenation-dictionary}");
+            -webkit-hyphenate-resource: url("#{$hyphenation-dictionary}");
+            -ms-hyphenate-resource: url("#{$hyphenation-dictionary}");
+            hyphenate-resource: url("#{$hyphenation-dictionary}");
+        }
+    }
+
+    // Notes
+    // -----
+    //
+    // hyphenate-limit-chars: the minimum number of characters a word must have before it is hyphenated.
+    // It can take up to three values: length of the word, minimum number of characters before the hyphen, 
+    // and minimum number of characters after the hyphen.
+    //
+    // hyphenate-limit-lines:  the maximum number of lines that can be hyphenated in a row.
+    // The value can be either no-limit or a number.
+    //
+    // hyphenate-resource: a hyphenation dictionary.
+
+}

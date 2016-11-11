@@ -1,0 +1,149 @@
+$epub-verse: true !default;
+@if $epub-verse {
+
+	// Verse, poetry, lyrics
+
+	// To do:
+	// * convert indents to a more efficient Sass loop
+
+	.verse {
+		text-indent: 0;
+		margin: $line-height-default 0;
+	}
+	.verse + p {
+		text-indent: 0; // Paragraphs after verse should be flush left
+	}
+	ul.verse {
+		list-style-type: none;
+		padding: 0;
+		margin: $line-height-default 0;
+	}
+	// Hanging indent for runover lines
+	ul.verse li {
+		text-indent: -2em;
+		margin-left: 2em;
+	}
+
+	// Indents for lines of verse.
+	// In markdown, add {:.indent-x} to the start of the list item text,
+	// e.g. -	{:.indent-3}My line of poetry indented by three ems.
+	// To do: make this a concise Sass @for loop.
+	ul.verse li.indent-1 { margin-left: 3em; }
+	ul.verse li.indent-2 { margin-left: 4em; }
+	ul.verse li.indent-3 { margin-left: 5em; }
+	ul.verse li.indent-4 { margin-left: 6em; }
+	ul.verse li.indent-5 { margin-left: 7em; }
+	ul.verse li.indent-6 { margin-left: 8em; }
+	ul.verse li.indent-7 { margin-left: 9em; }
+	ul.verse li.indent-8 { margin-left: 10em; }
+	ul.verse li.indent-9 { margin-left: 11em; }
+	ul.verse li.indent-10 { margin-left: 12em; }
+	ul.verse li.indent-11 { margin-left: 13em; }
+	ul.verse li.indent-12 { margin-left: 14em; }
+	ul.verse li.indent-13 { margin-left: 15em; }
+	ul.verse li.indent-14 { margin-left: 16em; }
+	ul.verse li.indent-15 { margin-left: 17em; }
+	ul.verse li.indent-16 { margin-left: 18em; }
+	ul.verse li.indent-17 { margin-left: 19em; }
+	ul.verse li.indent-18 { margin-left: 20em; }
+	ul.verse li.indent-19 { margin-left: 21em; }
+	ul.verse li.indent-20 { margin-left: 22em; }
+	ul.verse li.indent-21 { margin-left: 23em; }
+	ul.verse li.indent-22 { margin-left: 24em; }
+	ul.verse li.indent-23 { margin-left: 25em; }
+	ul.verse li.indent-24 { margin-left: 26em; }
+	ul.verse li.indent-25 { margin-left: 27em; }
+	ul.verse li.indent-26 { margin-left: 28em; }
+	ul.verse li.indent-27 { margin-left: 29em; }
+	ul.verse li.indent-28 { margin-left: 30em; }
+	ul.verse li.indent-29 { margin-left: 31em; }
+	ul.verse li.indent-30 { margin-left: 32em; }
+	ul.verse li.indent-31 { margin-left: 33em; }
+	ul.verse li.indent-32 { margin-left: 34em; }
+	ul.verse li.indent-33 { margin-left: 35em; }
+	ul.verse li.indent-34 { margin-left: 36em; }
+	ul.verse li.indent-35 { margin-left: 37em; }
+	ul.verse li.indent-36 { margin-left: 38em; }
+	ul.verse li.indent-37 { margin-left: 39em; }
+	ul.verse li.indent-38 { margin-left: 40em; }
+	ul.verse li.indent-39 { margin-left: 41em; }
+	ul.verse li.indent-40 { margin-left: 42em; }
+	ul.verse li.indent-41 { margin-left: 43em; }
+	ul.verse li.indent-42 { margin-left: 44em; }
+	ul.verse li.indent-43 { margin-left: 45em; }
+	ul.verse li.indent-44 { margin-left: 46em; }
+	ul.verse li.indent-45 { margin-left: 47em; }
+	ul.verse li.indent-46 { margin-left: 48em; }
+	ul.verse li.indent-47 { margin-left: 49em; }
+	ul.verse li.indent-48 { margin-left: 50em; }
+	ul.verse li.indent-49 { margin-left: 51em; }
+	ul.verse li.indent-50 { margin-left: 52em; }
+	ul.verse li.indent-51 { margin-left: 53em; }
+	ul.verse li.indent-52 { margin-left: 54em; }
+	ul.verse li.indent-53 { margin-left: 55em; }
+	ul.verse li.indent-54 { margin-left: 56em; }
+	ul.verse li.indent-55 { margin-left: 57em; }
+	ul.verse li.indent-56 { margin-left: 58em; }
+	ul.verse li.indent-57 { margin-left: 59em; }
+	ul.verse li.indent-58 { margin-left: 60em; }
+	ul.verse li.indent-59 { margin-left: 61em; }
+	ul.verse li.indent-60 { margin-left: 62em; }
+
+	/* Verse in a blockquote centres on its longest line, which is best-practice poetry layout */
+	blockquote.verse {
+		color: inherit;
+		margin-top: 0;
+		width: 100%;
+	    padding: 0;
+	}
+	blockquote.verse h1, 
+	blockquote.verse h2,
+	blockquote.verse h3, 
+	blockquote.verse h4,
+	blockquote.verse h5, 
+	blockquote.verse h6 {
+		margin-bottom: 1em;
+	}
+	blockquote.verse ul {
+		margin-bottom: 0; /* Already gets its space after from ul.verse */
+	}
+
+	// We originally included this to center poems on their longest line. But on small screens it's unnecessary.
+	// blockquote.verse {
+	//     text-align: center;
+	// }
+	// blockquote.verse ul.verse {
+	//     text-align: left;
+	//     display: inline-block;
+	//     min-width: 51%; // Ensures verses with short lines don't end up floating side by side
+	// }
+
+	/* If verse is in a list, we can preserve line breaks and white space */
+	ul.verse li {
+		white-space: pre-wrap;
+	}
+	ul.verse li h1,
+	ul.verse li h2,
+	ul.verse li h3,
+	ul.verse li h4,
+	ul.verse li h5,
+	ul.verse li h6 {
+		display: inline; // To avoid pre-wrap line breaks inside the li
+	}
+	// Override indents applied to .verse li
+	ul.verse li h1 { margin-left: -1.75em; }
+	ul.verse li h2 { margin-left: -2.25em; }
+	ul.verse li h3 { margin-left: -3em; }
+	ul.verse li h4 { margin-left: -3.5em; }
+	ul.verse li h5 { margin-left: -4.25em; }
+	ul.verse li h6 { margin-left: -5em; }
+
+	// If a line is blank it's an empty list item. That will collapse away by default, so we add a blank line back in.
+	ul.verse li:empty {
+	    line-height: 100%; // On screens, this keeps line heights consistent. Don't use this in print where baseline grid is important.
+	}
+	ul.verse li:empty:after {
+		content: " ";
+	}
+
+}

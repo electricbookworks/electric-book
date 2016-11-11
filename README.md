@@ -31,6 +31,10 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 
 ## Changelog
 
+### 0.4.5
+
+* Set `book` folder as default in `run-windows`
+
 ### 0.4.4
 
 * `run-windows` script now installs Bundler if it's not installed
