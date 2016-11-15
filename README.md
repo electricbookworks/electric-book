@@ -6,9 +6,9 @@ A Jekyll template for making books, ebooks and book-like websites.
 
 1. Copy or clone this folder
 2. Edit as needed:
-    - `_data/meta.yml` 
-    - the stylesheet variables in `book/styles`
-    - the content files in `book/text`
+	- `_data/meta.yml` 
+	- the stylesheet variables in `book/styles`
+	- the content files in `book/text`
 3. Run the `run-` script for your operating system.
 
 [Read the guide](http://electricbook.works) for much more. The guide is also an example of the template in action.
@@ -30,10 +30,6 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 4. Save and close `build.rb`.
 
 ## Changelog
-
-### 0.5.1
-
-Bug fixes and minor improvements
 
 ### 0.5.0
 
