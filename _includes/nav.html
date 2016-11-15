@@ -19,32 +19,18 @@
                 {% endif %}
 
                 {% if is-homepage == true or is-series-search == true %}
-
-                    {% comment %}If there is only one book, don't include its title in home-page- and search nav.{% endcomment %}
-                    {% if number-of-works == 1 %}
-
-                        {% for work in site.data.meta.works | sort: "order" %}
-                            {% assign home-nav-work-directory = work.directory %}
-                            {% assign home-nav-work-tree = work.products.web.nav %}
-                            {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
-                        {% endfor %}
-
-                    {% else %}
-
-                        <ol class="nav-book-list">
-                        {% for work in site.data.meta.works | sort: "order" %}
-                        {% assign home-nav-work-directory = work.directory %}
-                        {% assign home-nav-work-tree = work.products.web.nav %}
-                            <li>
-                                <a href="{{ base.url}}/{{ work.directory }}/text/{{ work.products.web.start-page }}.html">
-                                    {{ work.title }}
-                                </a>
-                            </li>
-                            {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
-                        {% endfor %}
-                        </ol>
-
-                    {% endif %}
+                    <ol class="nav-book-list">
+                    {% for work in site.data.meta.works | sort: "order" %}
+                    {% assign home-nav-work-directory = work.directory %}
+                    {% assign home-nav-work-tree = work.products.web.nav %}
+                        <li>
+                            <a href="{{ base.url}}/{{ work.directory }}/text/{{ work.products.web.start-page }}.html">
+                                {{ work.title }}
+                            </a>
+                        </li>
+                        {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                    {% endfor %}
+                    </ol>
 
                 {% else %}
 

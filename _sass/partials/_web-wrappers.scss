@@ -3,7 +3,6 @@ $web-wrappers: true !default;
 
     #wrapper {
         background-color: $color-background;
-        overflow-x: hidden; // Prevents horizontal scroll esp. on small screens
     }
 
     #content {

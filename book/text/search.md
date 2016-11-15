@@ -1,6 +1,5 @@
 ---
 title: Search
-style: search
 ---
 
 # Search
