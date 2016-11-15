@@ -96,7 +96,7 @@ Check if we're on the series homepage:
 * Then we can compare them to test if we're on the series home page. 
 * If we are, they will match. Hopefully.
 {% endcomment %}
-{% capture pageurl-slug %}{{ page.url | slugify }}{% endcapture %}
+{% capture pageurl-slug %}{{ site.baseurl | slugify }}{{ page.url | slugify }}{% endcapture %}
 {% capture baseurl-slug %}{{ site.baseurl | slugify }}{% endcapture %}
 {% if pageurl-slug == baseurl-slug %}
 {% assign is-homepage = true %}
