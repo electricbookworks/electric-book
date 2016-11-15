@@ -31,6 +31,10 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 
 ## Changelog
 
+### 0.5.2
+
+* Hide web-only elements (e.g. masthead) from print output for printing from browser
+
 ### 0.5.1
 
 Bug fixes and minor improvements.
