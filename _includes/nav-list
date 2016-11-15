@@ -22,7 +22,7 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
     {% for item in include.nav-tree | sort: "order" %}
         <li class="{% unless page-list contains item.file %}no-file{% endunless %}
         {% if item.children == nil %}no-children{% else %}has-children{% endif %}">
-            <a {% if item.file != nil %}href="{{ baseurl }}/{{ include.directory }}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
+            <a {% if item.file != nil %}href="{{ site.baseurl }}/{{ include.directory }}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
                 {{ item.label }}
             </a>
         </li>
