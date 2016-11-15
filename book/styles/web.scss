@@ -2,14 +2,6 @@
 # Web styles
 ---
 
-// What is this?
-// -------------
-// This is typography for the Electric Book Elements theme (see http://electricbook.works).
-// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
-// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
-// 
-// How to use it
-// -------------
 // Edit the default variables below.
 // Comment/uncomment or add font imports below.
 // Add your own custom CSS at the bottom.
@@ -32,39 +24,33 @@ $max-width-default: 40em;
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson", serif;
+$font-text-main: "Source Sans Pro", serif;
 $font-text-secondary: "Source Sans Pro", sans-serif;
-$font-display-main: "Source Sans Pro", sans-serif;
-$font-display-secondary: "Crimson", serif;
+$font-display-main: "Abhaya Libre", sans-serif;
+$font-display-secondary: "Abhaya Libre", serif;
 $font-code: "Inconsolata", monospace;
 
 // Set font size and line-height in ems or px.
 // These values, especially $line-height-default, are used to compute vertical rhythm
 // for many features in this theme. So do not use a unitless value for line-height,
 // and don't use percentages, which will break layouts computed by multiplying this value.
-$font-size-default: 1.2em;
+$font-size-default: 1.1em;
 $line-height-default: 1.5em;
-$font-size-smaller: 0.7; // How much smaller than font-size-default for features like sidenotes and footers?
-$font-size-bigger: 2; // How many times bigger than font-size-default for features like headings and pullquotes?
-
-// Do you want space between paragraphs, rather than a text-indent?
-$spaced-paras: true;
-
-// Buttons
-$button-border-radius: 0.1em; // Roundness of button corners.
+$font-size-smaller: 0.8; // How much smaller than font-size-default for features like sidenotes and footers?
+$font-size-bigger: 3; // How many times bigger than font-size-default for features like headings and pullquotes?
 
 // Colours
-$color-text-main: #222222;
-$color-text-secondary: #222222;
-$color-footer-text: #222222;
-$color-background: white;
-$color-footer: #e0e0e0;
-$color-light: #e0e0e0;
-$color-mid: #9c9c9c;
-$color-accent: #000000;
-$color-links: #5f738c;
-$color-buttons: #5f738c;
-$color-highlight: #ffd54d;
+$color-text-main: #222222 !default;
+$color-text-secondary: #222222 !default;
+$color-footer-text: #222222 !default;
+$color-background: white !default;
+$color-footer: #e0e0e0 !default;
+$color-light: #f6f6f6 !default;
+$color-mid: #9c9c9c !default;
+$color-accent: #000000 !default;
+$color-links: #5f738c !default;
+$color-buttons: #5f738c !default;
+$color-highlight: #ffd54d !default;
 
 // Some features rearrange at certain screen sizes.
 // What are your break points for rearrangement?
@@ -85,29 +71,29 @@ $hyphenate-before: 3; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
 
 // Website masthead
-$masthead-text-color: $color-light;
-$masthead-background-color: $color-accent;
-$masthead-border-color: $color-light;
+$masthead-text-color: $color-light !default;
+$masthead-background-color: $color-accent !default;
+$masthead-border-color: $color-light !default;
 
 // Website sidebar/navigation
-$nav-bar-text-size: 0.8em;
-$nav-bar-hide: true;
-$nav-bar-prompt: "Contents";
-$nav-bar-item-collapse: true; // Does the nav list fully expand, or collapse until mouseover?
+$nav-bar-text-size: 0.8em !default;
+$nav-bar-hide: true !default;
+$nav-bar-prompt: "Contents" !default;
+$nav-bar-item-collapse: true !default; // Does the nav list fully expand, or collapse until mouseover?
 $nav-bar-children-prompt: " \2026"; // \2026 is an ellipsis (…)
-$nav-bar-scrollbar: true;
-$nav-bar-width: 15em;
-$nav-bar-border-color: $color-light;
-$nav-bar-background-color: white;
-$nav-bar-search-background-color: white;
-$nav-bar-parent-background-color: white;
-$nav-bar-parent-text-color: black;
-$nav-bar-parent-hover-color: #4f89d2;
-$nav-bar-parent-text-hover-color: white;
-$nav-bar-child-background-color: $color-light;
-$nav-bar-child-text-color: black;
-$nav-bar-child-hover-color: #4f89d2;
-$nav-bar-child-text-hover-color: white;
+$nav-bar-scrollbar: true !default;
+$nav-bar-width: 20em !default;
+$nav-bar-border-color: $color-light !default;
+$nav-bar-background-color: white !default;
+$nav-bar-search-background-color: white !default;
+$nav-bar-parent-background-color: white !default;
+$nav-bar-parent-text-color: black !default;
+$nav-bar-parent-hover-color: #4f89d2 !default;
+$nav-bar-parent-text-hover-color: white !default;
+$nav-bar-child-background-color: $color-light !default;
+$nav-bar-child-text-color: black !default;
+$nav-bar-child-hover-color: #4f89d2 !default;
+$nav-bar-child-text-hover-color: white !default;
 
 // ---------------------------------
 // Set to false to turn partials off
@@ -123,14 +109,11 @@ $web-wrappers: true;
 $web-base-typography: true;
 
 // Navigation
-$web-masthead: true;
-$web-search: true;
 $web-nav-bar: true;
 $web-footer: true;
 
 // Book parts
 $web-cover: true;
-$web-previous-publications-page: true;
 $web-title-pages: true;
 $web-copyright-page: true;
 $web-dedications: true;
@@ -142,9 +125,8 @@ $web-bibliographies: true;
 $web-boxes: true;
 $web-buttons: true;
 $web-code: true;
-$web-figures: true;
-$web-highlighter: true;
 $web-glossaries: true;
+$web-figures: true;
 $web-index: true;
 $web-maths: true;
 $web-notes: true;
@@ -152,7 +134,7 @@ $web-openers: true;
 $web-pullquotes: true;
 $web-sources: true;
 $web-tables: true;
-$web-letters: true;
+$web-valedictions: true;
 $web-verse: true;
 $web-video: true;
 
@@ -163,24 +145,79 @@ $web-fitting: true;  // E.g. tracking and shrinking
 // Logic (if this then that)
 $web-reset-sequences: true; // This should stay last in the @import list
 
-// ------------
-// Import fonts
-// ------------
+// ----------------------------------------------------
+// Import font files (@font-face) for fonts you specify
+// ----------------------------------------------------
 
-// Add @font-face rules for fonts you specify here.
-// Add the actual font files to `../fonts`
-// For snippets, try https://github.com/arthurattwell/font-faces
+// Import fonts from book-specific CSS.
+@import url('https://fonts.googleapis.com/css?family=Abhaya+Libre:400,700|Source+Sans+Pro:400,400i,700,700i');
 
 // -------------
 // Master theme
 // -------------
 
-// Import master styles
+// Import the default theme styles
 @import 'web';
 
 // -------------
 // Custom styles
 // -------------
 
-// Add any custom Sass or CSS here.
+// Add any custom style rules here.
+
+// Base typogrpahy
+
+// Headings
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
+
+// Half-title page
+
+.halftitle-page {}
+
+// Title page
+
+.title-page {}
+
+// Previous publications page ('Also by the author')
+
+.previous-publications-page {}
+
+// Copyright page
+
+.copyright-page {}
+
+// Table of contents
+
+.contents-page {}
+
+// Dedication page
+
+.dedication-page {}
+
+// Epigraph page
+
+.epigraph-page {}
+
+// Frontispiece
+
+.frontispiece-page {}
+
+// Other frontmatter
+
+.frontmatter {}
+
+.chapter-intro {
+    font-family: $font-text-secondary;
+    margin: 0 -50em 1em -52em;
+    padding: 1em 52em 0.5em 52em;
+    border-top: 3px solid $color-mid;
+    border-bottom: 3px solid $color-mid;
+    background: $color-light;
+}
 

@@ -11,7 +11,7 @@ A Jekyll template for making books, ebooks and book-like websites.
 	- the content files in `book/text`
 3. Run the `run-` script for your operating system.
 
-[Read the guide](http://electricbook.works) for much more. The guide is also an example of the template in action.
+[Read the guide](http://electricbookworks.github.io/electric-book-workflow/) for much more. The guide is also an example of the template in action.
 
 ## Known bugs on Windows
 
@@ -30,14 +30,6 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 4. Save and close `build.rb`.
 
 ## Changelog
-
-### 0.5.0
-
-Major revision, the key change is that we no longer use a gem-based theme, but rather package everything in the template. Far more powerful Sass configs and better web navigation.
-
-### 0.4.5
-
-* Set `book` folder as default in `run-windows`
 
 ### 0.4.4
 
