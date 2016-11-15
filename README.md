@@ -31,6 +31,10 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 
 ## Changelog
 
+### 0.5.1
+
+Bug fixes and minor improvements.
+
 ### 0.5.0
 
 Major revision, the key change is that we no longer use a gem-based theme, but rather package everything in the template. Far more powerful Sass configs and better web navigation.
