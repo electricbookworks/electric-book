@@ -8,8 +8,9 @@ $print-page-start-depth: true !default;
     .dedication-page,
     .epigraph-page,
     .contents-page,
+    .frontmatter,
     .chapter {
-    	margin-top: $start-depth;
+        margin-top: $start-depth;
     }
 
 }

@@ -33,7 +33,8 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 
 ### 0.5.2
 
-* Hide web-only elements (e.g. masthead) from print output for printing from browser
+* Hide web-only elements (e.g. masthead) from print output for printing from browser.
+* Fix start depth for frontmatter.
 
 ### 0.5.1
 
