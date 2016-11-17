@@ -25,10 +25,10 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
             <a {% if item.file != nil %}href="{{ site.baseurl }}/{{ include.directory }}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
                 {{ item.label }}
             </a>
+            {% if item.children != nil %}
+              {% include nav-list nav-tree=item.children directory=include.directory %}
+            {% endif %}
         </li>
-        {% if item.children != nil %}
-          {% include nav-list nav-tree=item.children directory=include.directory %}
-        {% endif %}
     {% endfor %}
   </ol>
 
@@ -47,10 +47,10 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
                class="{% if page.url contains item.file %}active{% endif %}">
                 {{ item.label }}
             </a>
+            {% if item.children != nil %}
+              {% include nav-list nav-tree=item.children %}
+            {% endif %}
         </li>
-        {% if item.children != nil %}
-          {% include nav-list nav-tree=item.children %}
-        {% endif %}
     {% endfor %}
   </ol>
 
