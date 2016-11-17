@@ -56,9 +56,7 @@ $button-border-radius: 0.1em; // Roundness of button corners.
 // Colours
 $color-text-main: #222222;
 $color-text-secondary: #222222;
-$color-footer-text: #222222;
 $color-background: white;
-$color-footer: #e0e0e0;
 $color-light: #e0e0e0;
 $color-mid: #9c9c9c;
 $color-accent: #000000;
@@ -84,6 +82,11 @@ $hyphenate-after: 3; // Minimum letters on new line after hyphen
 $hyphenate-before: 3; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
 
+// Footer
+$footer-text-color: $color-text-main;
+$footer-background-color: $color-accent;
+$footer-border-color: $color-accent;
+
 // Website masthead
 $masthead-text-color: $color-light;
 $masthead-background-color: $color-accent;
@@ -93,8 +96,9 @@ $masthead-border-color: $color-light;
 $nav-bar-text-size: 0.8em;
 $nav-bar-hide: true;
 $nav-bar-prompt: "Contents";
+$nav-bar-prompt-text-color: $color-mid;
 $nav-bar-item-collapse: true; // Does the nav list fully expand, or collapse until mouseover?
-$nav-bar-children-prompt: " \2026"; // \2026 is an ellipsis (…)
+$nav-bar-children-prompt: ""; // \2026 is an ellipsis (…)
 $nav-bar-scrollbar: true;
 $nav-bar-width: 15em;
 $nav-bar-border-color: $color-light;
