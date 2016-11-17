@@ -35,6 +35,10 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 
 * Hide web-only elements (e.g. masthead) from print output for printing from browser.
 * Fix start depth for frontmatter.
+* Add mispelling fallback for `.half-title-page`/`.halftitle-page`.
+* Define nav-bar-prompt text color.
+* Add contact-form include using formspree.io
+* Various bug fixes and minor improvements.
 
 ### 0.5.1
 
