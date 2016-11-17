@@ -9,6 +9,7 @@ Assign series information to variables. This is the same for all books in the se
 
 {% capture series-organisation %}{{ site.data.meta.series.organisation }}{% endcapture %}
 {% capture series-url %}{{ site.data.meta.series.url }}{% endcapture %}
+{% capture series-email %}{{ site.data.meta.series.email }}{% endcapture %}
 {% capture series-name %}{{ site.data.meta.series.name }}{% endcapture %}
 {% capture series-description %}{{ site.data.meta.series.description }}{% endcapture %}
 {% capture series-image %}{{ site.data.meta.series.image }}{% endcapture %}
