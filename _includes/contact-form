@@ -1,0 +1,16 @@
+{% comment %}
+Contact form createed with Formspree.
+See https://formspree.io for how to initialise.
+{% endcomment %}
+
+{% include metadata %}
+
+<form action="https://formspree.io/{{ series-email }}"
+      method="POST">
+    <input type="text" name="name" placeholder="Name">
+    <input type="email" name="_replyto" placeholder="Email address">
+    <textarea type="text" name="message" placeholder="Message"></textarea>
+    <input type="submit" value="Send">
+    <input type="hidden" name="_next" value="" />
+    <input type="text" name="_gotcha" style="display:none" />
+</form>
