@@ -97,7 +97,7 @@ $nav-bar-text-size: 0.8em;
 $nav-bar-hide: true;
 $nav-bar-prompt: "Contents";
 $nav-bar-prompt-text-color: $color-mid;
-$nav-bar-item-collapse: true; // Does the nav list fully expand, or collapse until mouseover?
+$nav-bar-item-collapse: false; // Does the nav list fully expand, or collapse until mouseover?
 $nav-bar-children-prompt: ""; // \2026 is an ellipsis (…)
 $nav-bar-scrollbar: true;
 $nav-bar-width: 15em;

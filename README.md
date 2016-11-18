@@ -39,6 +39,7 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 * Define nav-bar-prompt text color.
 * Add contact-form include using formspree.io
 * Various bug fixes and minor improvements.
+* Some smarter defaults.
 
 ### 0.5.1
 
