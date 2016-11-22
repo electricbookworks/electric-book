@@ -11,7 +11,12 @@ var index = elasticlunr(function () {
   page.url contains ".css" or
   page.url contains ".js" or
   page.url contains "file-list" or
-  page.url contains "search.html"
+  page.url contains "search.html" or
+  page.url contains "cover.html" or
+  page.url contains "titlepage.html" or
+  page.url contains "copyright.html" or
+  page.url contains "contents.html" or
+  page.url contains "preface.html"
   %}
   index.addDoc({
     id: {{count}},
@@ -29,7 +34,12 @@ var store = [
     page.url contains ".css" or
     page.url contains ".js" or
     page.url contains "file-list" or
-    page.url contains "search.html"
+    page.url contains "search.html" or
+    page.url contains "cover.html" or
+    page.url contains "titlepage.html" or
+    page.url contains "copyright.html" or
+    page.url contains "contents.html" or
+    page.url contains "preface.html"
     %}{
     'title': {{page.title | jsonify}},
     'content': {{page.content | strip_html | jsonify}},
