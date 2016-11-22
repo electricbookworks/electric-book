@@ -103,8 +103,8 @@
 
     {% if is-homepage == true or is-series-search == true %}
     {% for book in site.data.meta.works %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ book.directory }}/styles/{{ page.stylesheet-web }}" />
-    <link rel="stylesheet" type="text/css" media="print" href="{{ book.directory }}/styles/{{ page.stylesheet-screen-pdf }}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ page.stylesheet-web }}" />
+    <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ page.stylesheet-screen-pdf }}" />
     {% endfor %}
     {% else %}
     <link rel="stylesheet" type="text/css" media="screen" href="../styles/{{ page.stylesheet-web }}" />
