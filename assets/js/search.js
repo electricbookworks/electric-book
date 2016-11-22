@@ -43,8 +43,7 @@ var store = [
  {% endfor %}
 ];
 
-var searchTerm = getQueryVariable('query'),
-    searchResults = document.getElementById('search-results'),
+var searchResults = document.getElementById('search-results'),
     searchBox = document.getElementById('search-box');
 
 function displaySearchResults(results, store) {

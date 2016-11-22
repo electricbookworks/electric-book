@@ -11,3 +11,5 @@ function getQueryVariable(variable) {
     }
   }
 }
+
+var searchTerm = getQueryVariable('query');
