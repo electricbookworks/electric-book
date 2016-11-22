@@ -16,6 +16,7 @@ https://markjs.io/
 <script src="{{ baseurl }}/assets/js/mark-search-terms.js" async defer></script>
     {% if page.url contains "search.html" %}
     <script src="{{ baseurl }}/assets/js/elasticlunr.min.js"></script>
+    <script src="{{ baseurl }}/assets/js/search-data.js"></script>
     <script src="{{ baseurl }}/assets/js/search.js" async defer></script>
     {% endif %}
 {% endif %}
