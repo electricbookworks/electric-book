@@ -33,7 +33,9 @@ function displaySearchResults(results, store) {
 if (searchTerm) {
 
   // perform the search
-  var results = index.search(searchTerm);
+  var results = index.search(searchTerm, {
+    bool: "AND"
+  });
 
   // display the results
   displaySearchResults(results, store);
