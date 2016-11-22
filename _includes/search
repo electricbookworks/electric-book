@@ -10,14 +10,14 @@ Searches all books in the series.
 
 <form class="search" action="{{ baseurl }}/search.html" method="get">
   <label for="search-box"></label>
-  <input type="text" id="search-box" name="query" placeholder="Search">
+  <input type="text" id="search-box" class="search-box" name="query" placeholder="Search">
 </form>
 
 {% else %}
 
 <form class="search" action="{{ baseurl }}/{{ current-directory }}/text/search.html" method="get">
   <label for="search-box"></label>
-  <input type="text" id="search-box" name="query" placeholder="Search">
+  <input type="text" id="search-box" class="search-box" name="query" placeholder="Search">
 </form>
 
 {% endif %}

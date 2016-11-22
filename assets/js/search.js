@@ -3,7 +3,7 @@ layout: null
 ---
 
 var searchResults = document.getElementById('search-results'),
-    searchBox = document.getElementById('search-box');
+    searchBox = document.querySelectorAll('.search-box');
 
 function displaySearchResults(results, store) {
 
@@ -24,7 +24,9 @@ function displaySearchResults(results, store) {
 if (searchTerm) {
 
   // show the just-searched-term
-  searchBox.setAttribute("value", searchTerm);
+  for (i = 0; i < searchBox.length; ++i) {
+    searchBox[i].setAttribute("value", searchTerm);
+  }
 
   // perform the search
   var results = index.search(searchTerm);
