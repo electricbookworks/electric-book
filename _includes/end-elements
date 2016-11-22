@@ -15,6 +15,7 @@ https://markjs.io/
 <script src="{{ baseurl }}/assets/js/mark.min.js"></script>
 <script src="{{ baseurl }}/assets/js/search.js"></script>
 <script src="{{ baseurl }}/assets/js/mark-search-terms.js"></script>
+<script src="{{ baseurl }}/assets/js/get-query-variable.js"></script>
 {% endif %}
 
 {% comment %}
