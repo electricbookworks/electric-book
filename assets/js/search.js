@@ -1,20 +1,36 @@
-var searchResults = document.getElementById('search-results'),
-    searchBox = document.querySelectorAll('.search-box');
+var searchBox = document.querySelectorAll('.search-box'),
+    searchForm = document.querySelector('#content .search');
 
 function displaySearchResults(results, store) {
 
+  var appendString = '';
+
   if (results.length) {
-    var appendString = '';
+
+    appendString += '<div class="search-results" id="search-results">'
+
+    appendString += '<p>' + results.length + ' result';
+    if (results.length > 1) {
+      appendString += 's';
+    }
+    appendString +=  ' found for "<mark>' + searchTerm + '</mark>".</p>';
+
+    appendString += '<ul>';
 
     for (var i = 0; i < results.length; i++) {
       var item = store[results[i].ref];
       appendString += '<li><a href="{{ site.baseurl }}' + item.url + '?query=' + searchTerm + '">' + item.title + ' </a></li>';
     }
 
-    searchResults.innerHTML = appendString;
+    appendString += '</ul>';
+
+    appendString += '</div>';
+
   } else {
-    searchResults.innerHTML = '<li>No results found for "' + searchTerm + '".</li>';
+    appendString += '<p>No results found for "' + searchTerm + '".</p>';
   }
+  
+  searchForm.parentNode.innerHTML += appendString;
 }
 
 if (searchTerm) {
