@@ -12,4 +12,13 @@ function getQueryVariable(variable) {
   }
 }
 
-var searchTerm = getQueryVariable('query');
+var searchTerm = getQueryVariable('query'),
+    searchBox = document.querySelectorAll('.search-box'),
+    searchForm = document.querySelector('#content .search');
+
+if (searchTerm && searchBox) {
+  // show the just-searched-term
+  for (i = 0; i < searchBox.length; ++i) {
+    searchBox[i].setAttribute("value", searchTerm);
+  }
+}

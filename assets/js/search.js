@@ -1,6 +1,3 @@
-var searchBox = document.querySelectorAll('.search-box'),
-    searchForm = document.querySelector('#content .search');
-
 function displaySearchResults(results, store) {
 
   var appendString = '';
@@ -29,16 +26,11 @@ function displaySearchResults(results, store) {
   } else {
     appendString += '<p>No results found for "' + searchTerm + '".</p>';
   }
-  
+
   searchForm.parentNode.innerHTML += appendString;
 }
 
 if (searchTerm) {
-
-  // show the just-searched-term
-  for (i = 0; i < searchBox.length; ++i) {
-    searchBox[i].setAttribute("value", searchTerm);
-  }
 
   // perform the search
   var results = index.search(searchTerm);
