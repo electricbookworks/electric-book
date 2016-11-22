@@ -93,6 +93,8 @@
     <meta property="og:url" content="{{ site.canonical-url}}{{ page.url }}" />
     {% if page.image %}
     <meta property="og:image" content="{{ page.image }}" />
+    {% elsif is-homepage == true or is-series-search == true %}
+    <meta property="og:image" content="{{ site.canonical-url }}/{{ site.image-set }}/{{ series-image }}" />
     {% elsif web-image != "" %}
     <meta property="og:image" content="{{ site.canonical-url }}/{{ current-directory }}/{{ site.image-set }}/{{ web-image }}" />
     {% elsif image != "" %}
