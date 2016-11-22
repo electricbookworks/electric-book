@@ -57,11 +57,11 @@ function getQueryVariable(variable) {
   }
 }
 
-var searchTerm = getQueryVariable('query');
-
+var searchTerm = getQueryVariable('query'),
+    searchResults = document.getElementById('search-results'),
+    searchBox = document.getElementById('search-box');
 
 function displaySearchResults(results, store) {
-  var searchResults = document.getElementById('search-results');
 
   if (results.length) {
     var appendString = '';
@@ -76,8 +76,6 @@ function displaySearchResults(results, store) {
     searchResults.innerHTML = '<li>No results found for "' + searchTerm + '".</li>';
   }
 }
-
-var searchBox = document.getElementById('search-box');
 
 if (searchTerm) {
 
