@@ -1,7 +1,3 @@
----
-layout: null
----
-
 // set up elasticlunr
 var index = elasticlunr(function () {
     this.addField('title');

@@ -11,13 +11,9 @@ http://elasticlunr.com/
 https://markjs.io/
 {% endcomment %}
 {% if site.output == "web" %}
-<script src="{{ baseurl }}/assets/js/get-query-variable.js"></script>
-<script src="{{ baseurl }}/assets/js/mark.min.js"></script>
-<script src="{{ baseurl }}/assets/js/mark-search-terms.js" async defer></script>
+<script src="{{ baseurl }}/assets/js/bundle-mark.js"></script>
     {% if is-series-search or is-book-search %}
-    <script src="{{ baseurl }}/assets/js/elasticlunr.min.js"></script>
-    <script src="{{ baseurl }}/assets/js/search-data.js"></script>
-    <script src="{{ baseurl }}/assets/js/search.js" async defer></script>
+    <script src="{{ baseurl }}/assets/js/bundle-search.js"></script>
     {% endif %}
 {% endif %}
 

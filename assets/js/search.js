@@ -1,7 +1,3 @@
----
-layout: null
----
-
 var searchResults = document.getElementById('search-results'),
     searchBox = document.querySelectorAll('.search-box');
 
