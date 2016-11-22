@@ -106,8 +106,8 @@ Check if we're on the series homepage:
 {% comment %}
 Check if we're on the search pages.
 {% endcomment %}
-{% capture series-search-url %}{{ baseurl }}/search.html{% endcapture %}
-{% capture book-search-url %}{{ baseurl }}/{{ directory }}/text/search.html{% endcapture %}
+{% capture series-search-url %}{{ site.baseurl }}/search.html{% endcapture %}
+{% capture book-search-url %}{{ site.baseurl }}/{{ directory }}/text/search.html{% endcapture %}
 {% if page.url contains "/search.html" %}
     {% assign is-search = true %}
 {% endif %}
