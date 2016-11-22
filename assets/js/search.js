@@ -6,6 +6,8 @@ function displaySearchResults(results, store) {
 
     appendString += '<div class="search-results" id="search-results">'
 
+    appendString += '<h2>Search results</h2>';
+
     appendString += '<p>' + results.length + ' result';
     if (results.length > 1) {
       appendString += 's';
@@ -16,7 +18,10 @@ function displaySearchResults(results, store) {
 
     for (var i = 0; i < results.length; i++) {
       var item = store[results[i].ref];
-      appendString += '<li><a href="{{ site.baseurl }}' + item.url + '?query=' + searchTerm + '">' + item.title + ' </a></li>';
+      appendString += '<li>';
+      appendString += '<h3><a href="{{ site.baseurl }}' + item.url + '?query=' + searchTerm + '">' + item.title + ' </a></h3>';
+      appendString += '<p>' + item.excerpt + '</p>';
+      appendString += '</li>';
     }
 
     appendString += '</ul>';

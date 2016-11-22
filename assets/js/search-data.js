@@ -41,8 +41,8 @@ var store = [
     page.url contains "contents.html" or
     page.url contains "preface.html"
     %}{
-    'title': {{page.title | jsonify}},
-    'content': {{page.content | strip_html | jsonify}},
+    'title': {{ page.title | jsonify}},
+    'excerpt': {{ page.content | split: "<p>" | shift | first | strip_html | jsonify}},
     'url': {{ page.url | jsonify}}
    }{% unless forloop.last %},{% endunless %}
    {% endunless %}
