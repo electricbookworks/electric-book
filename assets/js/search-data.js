@@ -42,7 +42,7 @@ var store = [
     page.url contains "preface.html"
     %}{
     'title': {{ page.title | jsonify}},
-    'excerpt': {{ page.content | split: "<p>" | shift | first | strip_html | jsonify}},
+    'excerpt': {{ page.content | truncatewords: 20, "&hellip;" | strip_html | jsonify}},
     'url': {{ page.url | jsonify}}
    }{% unless forloop.last %},{% endunless %}
    {% endunless %}
