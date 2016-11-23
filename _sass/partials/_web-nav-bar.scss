@@ -2,7 +2,17 @@ $web-nav-bar: true !default;
 @if $web-nav-bar {
 
     // Navigation
-     
+
+    [href="#nav"] {
+      font-family: $font-text-secondary;
+      font-size: $nav-bar-text-size;
+      color: #9c9c9c;
+      padding: 0.5em 1em;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
     .nav-wrapper {
         @if $nav-bar-scrollbar == true {
             overflow: visible;
@@ -10,12 +20,6 @@ $web-nav-bar: true !default;
         @else {
             overflow: hidden;
         }
-        // position: fixed;
-        // top: 0;
-        // bottom: 0;
-        float: left;
-        width: $nav-bar-width;
-        margin-right: 2em; // prevents overlaps with .content
     }
     // For Webkit, this is the easy way to remove the scrollbar
     // #nav::-webkit-scrollbar {
@@ -29,7 +33,7 @@ $web-nav-bar: true !default;
         overflow-x: hidden; // Hides horizontal scrollbar
         overflow-y: auto; // Must let this div scroll; we'll hide the scrollbar elsewhere
         background-color: $nav-bar-background-color;
-        border-right: 1px solid $nav-bar-border-color;
+        border-top: 1px solid $nav-bar-border-color;
         padding-right: 17px; // Hides scroll bar
 
         // Search
@@ -162,90 +166,13 @@ $web-nav-bar: true !default;
         } // .nav-list
         .widgets {
             margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
-            min-height: 10em;
             } // .widgets
+
+        h2 {
+          padding-left: 0.4em;
+        }
+
     } // #nav
 
-    // Optionally, hide sidebar behind menu icon
-    // till menu is hovered or tapped
-    $nav-bar-hide: true !default;
-    @if $nav-bar-hide {
-        .nav-wrapper {
-            #nav {
-                max-width: 0;
-                max-height: 0;
-                // transition: max-width 0.5s; // Disabled because of flickering problem
-                padding-right: 0;
-            }
-            &:before {
-                content: $nav-bar-prompt;
-                font-family: $font-text-secondary;
-                color: $nav-bar-prompt-text-color;
-                display: block;
-                position: fixed;
-                left: 0;
-                top: 0;
-                padding: 0.5em 1em;
-                cursor: pointer;
-            }
-            &:hover, &:active, &.focus {
-                #nav {
-                    max-width: $nav-bar-width;
-                    max-height: none;
-                    // transition: max-width 0.5s; // Disabled because of flickering problem
-                    position: fixed;
-                    top: 0;
-                }
-                &:before {
-                    display: none;
-                }
-            }
-        }
-    }
-
-    // On small screens, hide sidebar behind menu icon
-    // till menu is hovered or tapped
-    @media only screen 
-    and (max-width: $break-point-width) {
-        .nav-wrapper {
-            &:before {
-                // Repeat many of these in case nav-bar-hide is false,
-                // in which case they will not be around to be inherited.
-                content: $nav-bar-prompt;
-                font-family: $font-text-secondary;
-                color: $nav-bar-prompt-text-color;
-                display: block;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                background-color: $nav-bar-background-color;
-                padding: 0.5em;
-                border-top: 1px solid $nav-bar-border-color;
-                border-right: 1px solid $nav-bar-border-color;
-                border-bottom: 1px solid $nav-bar-border-color;
-                cursor: pointer;
-            }
-            // Hide menu on small screens even if nav-bar-hide is false
-            #nav {
-                max-width: 0;
-                max-height: 0;
-                // transition: max-width 0.5s; // Disabled because of flickering problem
-                padding-right: 0;
-            }
-            &:hover, &:active, &.focus {
-                #nav {
-                    max-width: $nav-bar-width;
-                    max-height: none;
-                    // transition: max-width 0.5s; // Disabled because of flickering problem
-                    position: fixed;
-                    top: 0;
-                }
-                &:before {
-                    display: none;
-                }
-            }
-        }
-    }
 
 }
