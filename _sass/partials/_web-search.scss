@@ -9,6 +9,7 @@ $web-search: true !default;
         .search {
             input {
                 width: 90%; // Keeps input within nav-bar bounds
+                margin: 0; // Unlike default input
                 // padding: 0.75em 0.75em;
                 border: 0;
                 // font-family: $font-text-secondary;

@@ -7,6 +7,8 @@ series:
   organisation: "My Organisation"
   # A live web address for the organisation
   url: "https://example.com/"
+  # The default contact email address
+  email: "name@example.com"
   # The name of the series of books in this folder.
   name: "My Series"
   # A one-liner about this series. Useful for Open Graph metadata.

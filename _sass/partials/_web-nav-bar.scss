@@ -15,6 +15,7 @@ $web-nav-bar: true !default;
         // bottom: 0;
         float: left;
         width: $nav-bar-width;
+        margin-right: 2em; // prevents overlaps with .content
     }
     // For Webkit, this is the easy way to remove the scrollbar
     // #nav::-webkit-scrollbar {
@@ -63,17 +64,24 @@ $web-nav-bar: true !default;
                 padding: 0;
                 background-color: $nav-bar-parent-background-color;
                 li {
-                    padding: 0.25em 0.75em;
+                    // padding: 0.25em 0.75em; // debugging
+                    padding: 0; // debugging
                     width: 100%; // Use full width of li area
                     // Indicator that a list item has children
                     &.has-children a:after {
                         content: $nav-bar-children-prompt;
                     }
+                    // but don't inherit that if there are no children
+                    &.no-children a:after {
+                        content: normal;
+                    }
                     a { // Make link fill entire li area
                         display: block;
                         // width: 100%;
-                        padding: 0.25em 0.75em;
-                        margin: -0.25em -0.75em;
+                        padding: 0.1em 0.75em; // debugging
+                        // padding: 0.25em 0.75em; // debugging
+                        // padding: 0.25em 0.75em 0.25em 1.5em; // debugging
+                        // margin: -0.25em -0.75em; // debugging
                         color: $nav-bar-parent-text-color;
                         &:hover, &:focus, &:active {
                             color: inherit; // inherits from full-width, hover li
@@ -92,7 +100,7 @@ $web-nav-bar: true !default;
                         }
                     }
                 } // li
-                // Child navifation, after the parent, the rest of the nav-list
+                // Child navigation, after the parent, the rest of the nav-list
                 ol, ul {
                     @if $nav-bar-item-collapse == true {
                         max-height: 0; // Instead of display: none, because it works with transitions
@@ -104,7 +112,8 @@ $web-nav-bar: true !default;
                     width: 100%;
                     overflow-x: hidden;
                     li {
-                        padding: 0.25em 0.75em;
+                        // padding: 0.25em 0.75em; // debugging
+                        padding-left: 1em; // debugging // Indent sub lists, while keeping full-width background hover
                         width: 100%; // Use full width of li area
                         a { // Make link fill entire li area
                             display: block;
@@ -125,7 +134,7 @@ $web-nav-bar: true !default;
                         margin-left: -1em;
                         padding-left: 2em;
                         li {
-                            padding-left: 3em;
+                            padding-left: 2em; // debugging
                             position: relative;
                             left: -2em;
                         } // li
@@ -133,8 +142,12 @@ $web-nav-bar: true !default;
                 } // ol, ul
                 // Show sublist when preceding (i.e. parent) li is hovered
                 // and when the list contains the current page.
+                // Allow for direct li + ol siblings (deprecated HTML nested-list structure)
+                // and for direct li > ol children (correct HTML nested-list structure).
                 li:hover + ol, li:active + ol, li:focus + ol,
                 li:hover + ul, li:active + ul, li:focus + ul,
+                li:hover > ol, li:active > ol, li:focus > ol,
+                li:hover > ul, li:active > ul, li:focus > ul,
                 ol.active, ul.active {
                     height: auto;
                     max-height: 500em; // Bigger than it will ever be, for transition to work. See http://stackoverflow.com/a/8331169/1781075
@@ -167,7 +180,7 @@ $web-nav-bar: true !default;
             &:before {
                 content: $nav-bar-prompt;
                 font-family: $font-text-secondary;
-                color: $color-mid;
+                color: $nav-bar-prompt-text-color;
                 display: block;
                 position: fixed;
                 left: 0;
@@ -193,9 +206,16 @@ $web-nav-bar: true !default;
     // On small screens, hide sidebar behind menu icon
     // till menu is hovered or tapped
     @media only screen 
-    and (max-width: $max-width-default) {
+    and (max-width: $break-point-width) {
         .nav-wrapper {
             &:before {
+                // Repeat many of these in case nav-bar-hide is false,
+                // in which case they will not be around to be inherited.
+                content: $nav-bar-prompt;
+                font-family: $font-text-secondary;
+                color: $nav-bar-prompt-text-color;
+                display: block;
+                position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
@@ -204,6 +224,26 @@ $web-nav-bar: true !default;
                 border-top: 1px solid $nav-bar-border-color;
                 border-right: 1px solid $nav-bar-border-color;
                 border-bottom: 1px solid $nav-bar-border-color;
+                cursor: pointer;
+            }
+            // Hide menu on small screens even if nav-bar-hide is false
+            #nav {
+                max-width: 0;
+                max-height: 0;
+                // transition: max-width 0.5s; // Disabled because of flickering problem
+                padding-right: 0;
+            }
+            &:hover, &:active, &.focus {
+                #nav {
+                    max-width: $nav-bar-width;
+                    max-height: none;
+                    // transition: max-width 0.5s; // Disabled because of flickering problem
+                    position: fixed;
+                    top: 0;
+                }
+                &:before {
+                    display: none;
+                }
             }
         }
     }

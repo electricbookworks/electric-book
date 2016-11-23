@@ -4,9 +4,13 @@ $print-hide-non-printing: true !default;
     // For hiding elements that must not appear in print editions.
 
     .non-printing, // Anything marked tagged .non-printing
-    .sigil_split_marker // Split-markers for epub output with Sigil
+    .sigil_split_marker, // Split-markers for epub output with Sigil
+    .masthead, // Web masthead, hidden when users print web version from browser
+    #nav, // Web navigation, hidden when users print web version from browser
+    #footer, // Web footer, hidden when users print web version from browser
     {
         display: none;
     }
+
 
 }
