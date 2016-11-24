@@ -25,6 +25,7 @@ $web-search: true !default;
 
     #content {
         .search {
+            margin: $line-height-default 0;
             input {
                 // padding: 0.75em 0.75em;
                 // border: 1px solid $color-light;
@@ -38,9 +39,11 @@ $web-search: true !default;
 
     // Search results
 
-    ul#search-results {
+    .search-results {
+       ul {
         list-style-type: none;
         margin: $line-height-default 0;
+      }
     }
 
     // Marked search results (wuth mark.js)
