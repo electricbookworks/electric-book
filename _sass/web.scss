@@ -92,6 +92,7 @@ $masthead-border-color: $color-light !default;
 $nav-bar-text-size: 0.8em !default;
 $nav-bar-item-collapse: false !default; // Does the nav list fully expand, or collapse until mouseover?
 $nav-bar-children-prompt: normal !default; // \2026 is an ellipsis (…)
+$nav-bar-children-prompt-hide: normal !default;
 $nav-bar-scrollbar: true !default;
 $nav-bar-width: 15em !default;
 $nav-bar-border-color: $color-light !default;

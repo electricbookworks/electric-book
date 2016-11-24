@@ -92,8 +92,17 @@ $web-nav-bar: true !default;
                     padding: 0; // debugging
                     width: 100%; // Use full width of li area
                     // Indicator that a list item has children
-                    &.has-children a:after {
+                    &.has-children {
+                      a:after {
+                        position: absolute;
+                        right: 1em;
                         content: $nav-bar-children-prompt;
+                      }
+                    }
+                    &.showing-children {
+                      > a:after {
+                        content: $nav-bar-children-prompt-hide;
+                      }
                     }
                     // but don't inherit that if there are no children
                     &.no-children a:after {
