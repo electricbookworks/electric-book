@@ -15,6 +15,7 @@ https://markjs.io/
 <script src="{{ site.baseurl }}/assets/js/mark.min.js"></script>
 <script src="{{ site.baseurl }}/assets/js/search.js"></script>
 <script src="{{ site.baseurl }}/assets/js/mark-search-terms.js"></script>
+<script src="{{ site.baseurl }}/assets/js/nav.js" async defer></script>
 {% endif %}
 
 {% comment %}

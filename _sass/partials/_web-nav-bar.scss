@@ -11,16 +11,24 @@ $web-nav-bar: true !default;
       position: absolute;
       top: 0;
       left: 0;
+      .js-nav-open & {
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+      }
     }
 
-    .nav-wrapper {
-        @if $nav-bar-scrollbar == true {
-            overflow: visible;
-        }
-        @else {
-            overflow: hidden;
-        }
+    .visuallyhidden {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
     }
+
     // For Webkit, this is the easy way to remove the scrollbar
     // #nav::-webkit-scrollbar {
     //     display: none;
@@ -35,6 +43,16 @@ $web-nav-bar: true !default;
         background-color: $nav-bar-background-color;
         border-top: 1px solid $nav-bar-border-color;
         padding-right: 17px; // Hides scroll bar
+
+        .js-nav & {
+          width: $nav-bar-width;
+          margin-right: 2em; // prevents overlaps with .content
+          border-top: none;
+          border-right: 1px solid $nav-bar-border-color;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
 
         // Search
         $search-enabled: true !default;
