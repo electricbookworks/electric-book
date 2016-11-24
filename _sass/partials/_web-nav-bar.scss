@@ -91,23 +91,6 @@ $web-nav-bar: true !default;
                     // padding: 0.25em 0.75em; // debugging
                     padding: 0; // debugging
                     width: 100%; // Use full width of li area
-                    // Indicator that a list item has children
-                    &.has-children {
-                      a:after {
-                        position: absolute;
-                        right: 1em;
-                        content: $nav-bar-children-prompt;
-                      }
-                    }
-                    &.showing-children {
-                      > a:after {
-                        content: $nav-bar-children-prompt-hide;
-                      }
-                    }
-                    // but don't inherit that if there are no children
-                    &.no-children a:after {
-                        content: normal;
-                    }
                     a { // Make link fill entire li area
                         display: block;
                         // width: 100%;
@@ -203,5 +186,30 @@ $web-nav-bar: true !default;
 
     } // #nav
 
+  .has-children {
+    position: relative;
+  }
+
+  [data-toggle-nav] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    border: none;
+    color: $nav-bar-child-text-hover-color;
+    font-size: 1.25em;
+    padding: 0 0.5em;
+    &:focus {
+      outline: none;
+    }
+    &:after {
+      content: "+";
+    }
+    &.show-children {
+      &:after {
+        content: "-";
+      }
+    }
+  }
 
 }

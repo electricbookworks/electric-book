@@ -20,10 +20,12 @@
       // hide the menu until we click the link
       menu.classList.add("visuallyhidden");
 
-      // hide the children
-      var subMenus = document.querySelectorAll('#nav .has-children ol, #nav .has-children ul');
+      // hide the children and add the button for toggling
+      var subMenus = document.querySelectorAll('#nav .has-children, #nav .has-children');
+      var showChildrenButton = '<button data-toggle-nav><span class="visuallyhidden">Toggle children</button>';
       for (var i = 0; i < subMenus.length; i++) {
-        subMenus[i].classList.add('visuallyhidden');
+        subMenus[i].querySelector('ol, ul').classList.add('visuallyhidden');
+        subMenus[i].querySelector('a').insertAdjacentHTML('afterend', showChildrenButton);
       }
 
       // show the menu when we click the link
@@ -35,9 +37,9 @@
 
       // show the children when we click a .has-children
       menu.addEventListener("click", function(ev) {
-        if (!ev.target.hasAttribute("href")) {
+        if (ev.target.hasAttribute("data-toggle-nav")) {
           ev.preventDefault();
-          ev.target.parentNode.classList.toggle('showing-children');
+          ev.target.classList.toggle('show-children');
           ev.target.nextElementSibling.classList.toggle('visuallyhidden');
         }
       }, true)
