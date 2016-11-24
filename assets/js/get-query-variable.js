@@ -18,7 +18,7 @@ var searchTerm = getQueryVariable('query'),
 
 if (searchTerm && searchBox) {
   // show the just-searched-term
-  for (i = 0; i < searchBox.length; ++i) {
-    searchBox[i].setAttribute("value", searchTerm);
+  for (var j = 0; j < searchBox.length; ++j) {
+    searchBox[j].setAttribute("value", searchTerm);
   }
 }
