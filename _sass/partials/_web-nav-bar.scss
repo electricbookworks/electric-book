@@ -39,14 +39,16 @@ $web-nav-bar: true !default;
         width: 100%;
         height: 100%;
         overflow-x: hidden; // Hides horizontal scrollbar
-        overflow-y: auto; // Must let this div scroll; we'll hide the scrollbar elsewhere
         background-color: $nav-bar-background-color;
         border-top: 1px solid $nav-bar-border-color;
         padding-right: 17px; // Hides scroll bar
 
+        .js-nav-open & {
+          overflow-y: auto; // Must let this div scroll; we'll hide the scrollbar elsewhere
+        }
+
         .js-nav & {
           width: $nav-bar-width;
-          margin-right: 2em; // prevents overlaps with .content
           border-top: none;
           border-right: 1px solid $nav-bar-border-color;
           position: absolute;
