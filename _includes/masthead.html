@@ -10,9 +10,11 @@
     <ul>
         {%if number-of-works == 1 %}
             <li class="masthead-book-title"><a href="{{ site.baseurl }}/" title="{{ series-name }}: {{ series-home-label }}">{{ title }}</a></li>
+            {% include breadcrumbs breadcrumb-tree=web-nav-tree %}
         {% else %}
             <li class="masthead-series-name"><a href="{{ site.baseurl }}/" title="{{ series-name }}: {{ series-home-label }}">{{ series-name }}</a></li>
             <li class="masthead-book-title"><a href="{{ web-contents-page }}" title="{{ title }}">{{ title }}</a></li>
+            {% include breadcrumbs breadcrumb-tree=web-nav-tree %}
         {% endif %}
     </ul>
 
