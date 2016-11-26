@@ -1,0 +1,97 @@
+{% comment %}
+Breadcrumbs.
+Include in content with {% include breadcrumbs breadcrumb-tree=web-nav-tree %}.
+{% endcomment %}
+
+{% comment %}This way works but only goes and many levels deep
+as we hard-code here. Currently, six levels.{% endcomment %}
+
+{% for item-1 in include.breadcrumb-tree %}
+    {% capture label-1 %}{{ item-1.label }}{% endcapture %}
+    {% assign children-1 = item-1.children %}
+    {% if item-1.file == current-file %}
+    <li>{{ label-1 }}</li>
+    {% else %}
+        {% for item-2 in children-1 %}
+            {% capture label-2 %}{{ item-2.label }}{% endcapture %}
+            {% assign children-2 = item-2.children %}
+            {% if item-2.file == current-file %}
+            <li>{{ label-1 }}</li>
+            <li>{{ label-2 }}</li>
+            {% else %}
+                {% for item-3 in children-2 %}
+                    {% capture label-3 %}{{ item-3.label }}{% endcapture %}
+                    {% assign children-3 = item-3.children %}
+                    {% if item-3.file == current-file %}
+                    <li>{{ label-1 }}</li>
+                    <li>{{ label-2 }}</li>
+                    <li>{{ label-3 }}</li>
+                    {% else %}
+                        {% for item-4 in children-3 %}
+                            {% capture label-4 %}{{ item-4.label }}{% endcapture %}
+                            {% assign children-4 = item-4.children %}
+                            {% if item-4.file == current-file %}
+                            <li>{{ label-1 }}</li>
+                            <li>{{ label-2 }}</li>
+                            <li>{{ label-3 }}</li>
+                            <li>{{ label-4 }}</li>
+                            {% else %}
+                                {% for item-5 in children-4 %}
+                                    {% capture label-5 %}{{ item-5.label }}{% endcapture %}
+                                    {% assign children-5 = item-5.children %}
+                                    {% if item-5.file == current-file %}
+                                    <li>{{ label-1 }}</li>
+                                    <li>{{ label-2 }}</li>
+                                    <li>{{ label-3 }}</li>
+                                    <li>{{ label-4 }}</li>
+                                    <li>{{ label-5 }}</li>
+                                    {% else %}
+                                        {% for item-6 in children-5 %}
+                                            {% capture label-6 %}{{ item-6.label }}{% endcapture %}
+                                            {% assign children-6 = item-6.children %}
+                                            {% if item-6.file == current-file %}
+                                            <li>{{ label-1 }}</li>
+                                            <li>{{ label-2 }}</li>
+                                            <li>{{ label-3 }}</li>
+                                            <li>{{ label-4 }}</li>
+                                            <li>{{ label-5 }}</li>
+                                            <li>{{ label-6 }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% comment %}
+This way should be more efficient and would go as infinitely deep 
+as the nav tree, but I can't get it working, because unlike 
+the hard-coded version above, it adds all the labels it finds 
+till the current-file.
+
+Works much like nav-list, passing child items to itself 
+as new parameters to drill down through web-nav-tree, 
+and outputting only list items relevant to the current file.
+Include in content with {% include breadcrumbs breadcrumb-tree=web-nav-tree %}.
+The crumbs-array is created empty in _includes/metadata.
+{% endcomment %}
+
+{% comment %}{% for item in include.breadcrumb-tree %}
+    {% capture label %}{{ item.label }}{% endcapture %}
+    {% assign crumbs-array = crumbs-array | push: label %}
+    {% assign children = item.children %}
+    {% if item.file == current-file %}
+        {% for crumb in include.crumbs-array %}
+            <li>{{ crumb }}</li>
+        {% endfor %}
+        <li>{{ item.label }}</li>
+    {% else %}
+        {% include breadcrumbs breadcrumb-tree=children crumbs-array=crumbs-array %}
+    {% endif %}
+{% endfor %}{% endcomment %}
