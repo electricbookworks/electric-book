@@ -9,6 +9,7 @@ $web-masthead: true !default;
         border-bottom: 1px solid $masthead-border-color;
         width: 100%;
         text-align: center;
+        color: $masthead-text-color;
         &:after {
             content: "";
             display: block;
