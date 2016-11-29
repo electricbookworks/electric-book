@@ -11,9 +11,9 @@ http://elasticlunr.com/
 https://markjs.io/
 {% endcomment %}
 {% if site.output == "web" %}
-<script src="{{ baseurl }}/assets/js/bundle.js"></script>
+<script src="{{ site.baseurl }}/assets/js/bundle.js"></script>
     {% if is-series-search or is-book-search %}
-    <script src="{{ baseurl }}/assets/js/bundle-search.js"></script>
+    <script src="{{ site.baseurl }}/assets/js/bundle-search.js"></script>
     {% endif %}
 {% endif %}
 

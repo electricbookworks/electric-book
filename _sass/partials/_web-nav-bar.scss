@@ -127,6 +127,7 @@ $web-nav-bar: true !default;
                     background-color: $nav-bar-child-background-color;
                     width: 100%;
                     overflow-x: hidden;
+                    overflow-y: hidden;
                     li {
                         // padding: 0.25em 0.75em; // debugging
                         padding-left: 1em; // debugging // Indent sub lists, while keeping full-width background hover
