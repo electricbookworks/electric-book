@@ -28,6 +28,12 @@ Get the current directory for this book only
 {% capture current-directory %}{{ page.path | replace: "/", " " | truncatewords: 1, "" }}{% endcapture %}
 
 {% comment %}
+Get the current file
+{% endcomment %}
+
+{% capture current-file %}{{ page.url | remove_first: ".html" | replace: "/", " " | split, " " | last }}{% endcapture %}
+
+{% comment %}
 From meta.yml, get only the values where the directory matches the current directory
 {% endcomment %}
 
@@ -129,3 +135,9 @@ then on these pages any links that use {{ current-directory }} will be broken
 {% if is-homepage == true or is-series-search == true %}
 {% assign current-directory = nil %}
 {% endif %}
+
+{% comment %}
+Create an empty array for the breadcrumbs include to start with
+(thanks https://talk.jekyllrb.com/t/how-do-you-add-items-to-an-array-in-jekyll/324/4)
+{% endcomment %}
+{% assign crumbs-array = "" | split: "|" %}
