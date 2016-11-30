@@ -70,6 +70,7 @@ Now capture each metadata value as a Liquid tag, to be used in HTML and book con
 {% capture web-identifier %}{{ work.products.web.identifier }}{% endcapture %}
 {% capture web-image %}{{ work.products.web.image }}{% endcapture %}
 {% capture web-footer %}{{ work.products.web.footer }}{% endcapture %}
+{% capture web-nav-text %}{{ work.products.web.nav-text }}{% endcapture %}
 {% capture web-start-page %}{{ work.products.web.start-page }}{% endcapture %}
 {% capture web-contents-page %}{{ work.products.web.contents-page }}{% endcapture %}
 {% assign web-file-list = work.products.web.files %}

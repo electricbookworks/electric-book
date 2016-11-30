@@ -101,6 +101,7 @@ works:
               - label: "Example child"
                 file: "02"
                 id: "example-id"
+        nav-text: "Contents"
         start-page: "0-3-contents" # At which file should users start reading?
         contents-page: "0-3-contents" # Your contents-page file, if you have one.
         footer: "Powered by the <a href='http://electricbook.works'>Electric Book</a>" # Text that appears in the footer of the website. You can include HTML.
