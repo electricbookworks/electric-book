@@ -119,6 +119,7 @@ $web-nav-bar: true !default;
                         display: block;
                         // width: 100%;
                         padding: 0.1em 0.75em; // debugging
+                        max-width: $nav-bar-width * 0.7; // Leaves space for child prompt
                         // padding: 0.25em 0.75em; // debugging
                         // padding: 0.25em 0.75em 0.25em 1.5em; // debugging
                         // margin: -0.25em -0.75em; // debugging
@@ -224,6 +225,9 @@ $web-nav-bar: true !default;
     color: $nav-bar-child-text-hover-color;
     font-size: 1.25em;
     padding: 0 0.5em;
+    margin: 0 0 0 -0.5em;
+    left: $nav-bar-width * 0.7; // Keeps item text aligned in complex lists
+    height: 1.65em; // This magic number may not always work
     &:focus {
       outline: none;
     }
@@ -238,5 +242,10 @@ $web-nav-bar: true !default;
       }
     }
   }
+    // If link does not link to a file, make toggle cover entire link to expand children
+    .no-file [data-toggle-nav] {
+        margin-left: -($nav-bar-width * 0.7);
+        padding-left: $nav-bar-width * 0.7;
+    }
 
 }
