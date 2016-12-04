@@ -14,7 +14,7 @@ Assign series information to variables. This is the same for all books in the se
 {% capture series-description %}{{ site.data.meta.series.description }}{% endcapture %}
 {% capture series-image %}{{ site.data.meta.series.image }}{% endcapture %}
 {% capture series-home-label %}{{ site.data.meta.series.home-label }}{% endcapture %}
-{% capture series-nav-text %}{{ site.data.meta.series.nav-text }}{% endcapture %}
+{% capture series-nav-label %}{{ site.data.meta.series.nav-label }}{% endcapture %}
 
 {% comment %}
 It's useful to know how many books are in this series
@@ -71,7 +71,6 @@ Now capture each metadata value as a Liquid tag, to be used in HTML and book con
 {% capture web-identifier %}{{ work.products.web.identifier }}{% endcapture %}
 {% capture web-image %}{{ work.products.web.image }}{% endcapture %}
 {% capture web-footer %}{{ work.products.web.footer }}{% endcapture %}
-{% capture web-nav-text %}{{ work.products.web.nav-text }}{% endcapture %}
 {% capture web-start-page %}{{ work.products.web.start-page }}{% endcapture %}
 {% capture web-contents-page %}{{ work.products.web.contents-page }}{% endcapture %}
 {% assign web-file-list = work.products.web.files %}

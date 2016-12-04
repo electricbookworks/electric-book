@@ -19,7 +19,7 @@ series:
   # For English sites, you can leave this as "Home".
   home-label: "Home"
   # For web navigation, the label for the navigation menu
-  nav-text: "Contents"
+  nav-label: "Contents"
 
 ########
 # TITLES
