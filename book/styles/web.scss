@@ -95,10 +95,12 @@ $masthead-border-color: $color-light;
 // Website sidebar/navigation
 $nav-bar-text-size: 0.8em;
 $nav-bar-item-collapse: false; // Does the nav list fully expand, or collapse until mouseover?
-$nav-bar-children-prompt: "+"; // \2026 is an ellipsis (…)
-$nav-bar-children-prompt-hide: "-";
+$nav-bar-children-prompt: "+";
+$nav-bar-children-prompt-hide: "\2212"; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true;
 $nav-bar-width: 15em;
+$nav-bar-fixed: true;
+$nav-bar-label-color: $color-mid;
 $nav-bar-border-color: $color-light;
 $nav-bar-background-color: white;
 $nav-bar-search-background-color: white;
@@ -106,6 +108,7 @@ $nav-bar-parent-background-color: white;
 $nav-bar-parent-text-color: black;
 $nav-bar-parent-hover-color: #4f89d2;
 $nav-bar-parent-text-hover-color: white;
+$nav-bar-children-prompt-color: $color-mid;
 $nav-bar-child-background-color: $color-light;
 $nav-bar-child-text-color: black;
 $nav-bar-child-hover-color: #4f89d2;
