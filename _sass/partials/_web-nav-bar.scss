@@ -4,21 +4,21 @@ $web-nav-bar: true !default;
     // Navigation
 
     [href="#nav"] {
-      font-family: $font-text-secondary;
-      font-size: inherit;
-      color: $nav-bar-label-color;
-      background-color: $masthead-background-color;
-      border-radius: $button-border-radius;
-      padding: 0.25em 0.5em;
-      margin: 0.25em;
-      position: absolute;
-      top: 0;
-      left: 0;
-      .js-nav-open & {
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0,0,0,0.5);
-      }
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: $nav-bar-label-color;
+        background-color: $masthead-background-color;
+        border-radius: $button-border-radius;
+        padding: 0.25em 0.5em;
+        margin: 0.25em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        .js-nav-open & {
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+        }
     }
     // Reset position to fixed if $nav-bar-fixed: true
     $nav-bar-fixed: true !default;
@@ -61,16 +61,16 @@ $web-nav-bar: true !default;
         padding-right: 17px; // Hides scroll bar
 
         .js-nav-open & {
-          overflow-y: auto; // Must let this div scroll; we'll hide the scrollbar elsewhere
+            overflow-y: auto; // Must let this div scroll; we'll hide the scrollbar elsewhere
         }
 
         .js-nav & {
-          width: $nav-bar-width;
-          border-top: none;
-          border-right: 1px solid $nav-bar-border-color;
-          position: absolute;
-          top: 0;
-          left: 0;
+            width: $nav-bar-width;
+            border-top: none;
+            border-right: 1px solid $nav-bar-border-color;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         // Reset position to fixed if $nav-bar-fixed: true
         $nav-bar-fixed: true !default;
@@ -112,17 +112,13 @@ $web-nav-bar: true !default;
                 padding: 0;
                 background-color: $nav-bar-parent-background-color;
                 li {
-                    // padding: 0.25em 0.75em; // debugging
-                    padding: 0; // debugging
+                    padding: 0;
                     width: 100%; // Use full width of li area
                     a { // Make link fill entire li area
                         display: block;
                         // width: 100%;
-                        padding: 0.1em 0.75em; // debugging
+                        padding: 0.1em 0.75em;
                         max-width: $nav-bar-width * 0.7; // Leaves space for child prompt
-                        // padding: 0.25em 0.75em; // debugging
-                        // padding: 0.25em 0.75em 0.25em 1.5em; // debugging
-                        // margin: -0.25em -0.75em; // debugging
                         color: $nav-bar-parent-text-color;
                         &:hover, &:focus, &:active {
                             color: inherit; // inherits from full-width, hover li
@@ -154,8 +150,7 @@ $web-nav-bar: true !default;
                     overflow-x: hidden;
                     overflow-y: hidden;
                     li {
-                        // padding: 0.25em 0.75em; // debugging
-                        padding-left: 1em; // debugging // Indent sub lists, while keeping full-width background hover
+                        padding-left: 1em; // Indent sub lists, while keeping full-width background hover
                         width: 100%; // Use full width of li area
                         a { // Make link fill entire li area
                             display: block;
@@ -176,7 +171,7 @@ $web-nav-bar: true !default;
                         margin-left: -1em;
                         padding-left: 2em;
                         li {
-                            padding-left: 2em; // debugging
+                            padding-left: 2em;
                             position: relative;
                             left: -2em;
                         } // li
@@ -204,44 +199,44 @@ $web-nav-bar: true !default;
         } // .nav-list
         .widgets {
             margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
-            } // .widgets
+        } // .widgets
 
         h2 {
-          padding-left: 0.4em;
+            padding-left: 0.4em;
         }
 
     } // #nav
 
-  .has-children {
-    position: relative;
-  }
+    .has-children {
+        position: relative;
+    }
 
-  [data-toggle-nav] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: transparent;
-    border: none;
-    color: $nav-bar-child-text-hover-color;
-    font-size: 1.25em;
-    padding: 0 0.5em;
-    margin: 0 0 0 -0.5em;
-    left: $nav-bar-width * 0.7; // Keeps item text aligned in complex lists
-    height: 1.65em; // This magic number may not always work
-    &:focus {
-      outline: none;
+    [data-toggle-nav] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: transparent;
+        border: none;
+        color: $nav-bar-child-text-hover-color;
+        font-size: 1.25em;
+        padding: 0 0.5em;
+        margin: 0 0 0 -0.5em;
+        left: $nav-bar-width * 0.7; // Keeps item text aligned in complex lists
+        height: 1.65em; // This magic number may not always work
+        &:focus {
+            outline: none;
+        }
+        &:after {
+            content: $nav-bar-children-prompt;
+            color: $nav-bar-children-prompt-color;
+        }
+        &.show-children {
+            &:after {
+                content: $nav-bar-children-prompt-hide;
+                color: $nav-bar-children-prompt-color;
+            }
+        }
     }
-    &:after {
-      content: $nav-bar-children-prompt;
-      color: $nav-bar-children-prompt-color;
-    }
-    &.show-children {
-      &:after {
-        content: $nav-bar-children-prompt-hide;
-        color: $nav-bar-children-prompt-color;
-      }
-    }
-  }
     // If link does not link to a file, make toggle cover entire link to expand children
     .no-file [data-toggle-nav] {
         margin-left: -($nav-bar-width * 0.7);
