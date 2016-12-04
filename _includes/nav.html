@@ -2,7 +2,11 @@
 
     <div id="nav" class="non-printing">
 
-            <h2>{{ series-nav-label }}</h2>
+            {% if is-homepage == true or is-series-search == true %}
+            <h2>{{ series-name }}</h2>
+            {% else %}
+            <h2>{{ title }}</h2>
+            {% endif %}
 
             <div class="search">
                 {% include search %}
@@ -64,7 +68,11 @@
 
     <div id="nav" class="non-printing">
 
-            <h2>{{ series-nav-label }}</h2>
+            {% if is-homepage == true or is-series-search == true %}
+            <h2>{{ series-name }}</h2>
+            {% else %}
+            <h2>{{ title }}</h2>
+            {% endif %}
 
             <div class="nav-list">
                 <ul>
