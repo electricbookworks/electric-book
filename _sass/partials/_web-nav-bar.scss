@@ -5,9 +5,12 @@ $web-nav-bar: true !default;
 
     [href="#nav"] {
       font-family: $font-text-secondary;
-      font-size: $nav-bar-text-size;
-      color: #9c9c9c;
-      padding: 0.5em 1em;
+      font-size: inherit;
+      color: $nav-bar-label-color;
+      background-color: $masthead-background-color;
+      border-radius: $button-border-radius;
+      padding: 0.25em 0.5em;
+      margin: 0.25em;
       position: absolute;
       top: 0;
       left: 0;
