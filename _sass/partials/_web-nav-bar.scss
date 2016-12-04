@@ -11,10 +11,6 @@ $web-nav-bar: true !default;
       position: absolute;
       top: 0;
       left: 0;
-      &:after {
-        content: $nav-bar-prompt;
-        padding-left: 0.5em;
-      }
       .js-nav-open & {
         right: 0;
         bottom: 0;
