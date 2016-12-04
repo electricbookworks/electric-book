@@ -228,11 +228,13 @@ $web-nav-bar: true !default;
       outline: none;
     }
     &:after {
-      content: "+";
+      content: $nav-bar-children-prompt;
+      color: $nav-bar-children-prompt-color;
     }
     &.show-children {
       &:after {
-        content: "-";
+        content: $nav-bar-children-prompt-hide;
+        color: $nav-bar-children-prompt-color;
       }
     }
   }
