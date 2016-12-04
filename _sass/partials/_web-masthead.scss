@@ -20,11 +20,12 @@ $web-masthead: true !default;
         }
         ul {
             list-style-type: none;
-            margin: 0 0 0 1em;
+            margin: 0 auto;
+            padding: 0.5em 0;
+            max-width: 70%;
             li {
                 display: inline-block;
                 margin: 0 0.25em 0 0;
-                padding: 0.5em 0;
                 // The divider between series and book title
                 // Should not show if there is only one work,
                 // and therefore no series title in masthead.
