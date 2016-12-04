@@ -17,6 +17,13 @@ $web-nav-bar: true !default;
         background-color: rgba(0,0,0,0.5);
       }
     }
+    // Reset position to fixed if $nav-bar-fixed: true
+    $nav-bar-fixed: true !default;
+    @if $nav-bar-fixed {
+        [href="#nav"] {
+            position: fixed;
+        }
+    }
 
     .visuallyhidden {
         border: 0;
@@ -27,6 +34,13 @@ $web-nav-bar: true !default;
         padding: 0;
         position: absolute;
         width: 1px;
+    }
+    // Reset position to fixed if $nav-bar-fixed: true
+    $nav-bar-fixed: true !default;
+    @if $nav-bar-fixed {
+        .visuallyhidden {
+            position: fixed;
+        }
     }
 
     // For Webkit, this is the easy way to remove the scrollbar
@@ -54,6 +68,13 @@ $web-nav-bar: true !default;
           position: absolute;
           top: 0;
           left: 0;
+        }
+        // Reset position to fixed if $nav-bar-fixed: true
+        $nav-bar-fixed: true !default;
+        @if $nav-bar-fixed {
+            .js-nav & {
+                position: fixed;
+            }
         }
 
         // Search
