@@ -95,7 +95,7 @@ $nav-bar-children-prompt: "+" !default;
 $nav-bar-children-prompt-hide: "\2212" !default; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true !default;
 $nav-bar-width: 15em !default;
-$nav-bar-fixed: true !default;
+$nav-bar-fixed: false !default; // fixed is not fully supported on many mobile browsers
 $nav-bar-label-color: $color-mid !default;
 $nav-bar-border-color: $color-light !default;
 $nav-bar-background-color: white !default;
