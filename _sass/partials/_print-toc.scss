@@ -12,6 +12,9 @@ $print-toc: true !default;
 	.page-ref-list {
 		ul, ol {
 			list-style-type: none;
+			ul, ol {
+				margin-left: $line-height-default;
+			}
 		}
 		li {
 			margin: 0;
@@ -30,9 +33,6 @@ $print-toc: true !default;
 			&.cover-entry {
 				display: none; // Hide the cover in the table of contents, e.g. if it's there from web nav
 			}
-		}
-		ul, ol {
-			margin-left: $line-height-default;
 		}
 	}
 
