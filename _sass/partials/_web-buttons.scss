@@ -21,7 +21,7 @@ $web-buttons: true !default;
 		border-radius: $button-border-radius;
 		cursor: pointer;
 		&:hover {
-			box-shadow: 0.02em 0.02em 0.02em 0.02em $color-buttons;
+			background-color: $color-buttons-hover;
 		}
 	}
 
@@ -53,7 +53,7 @@ $web-buttons: true !default;
 			border-radius: $button-border-radius;
 			cursor: pointer;
 			&:hover {
-				box-shadow: 0.02em 0.02em 0.02em 0.02em $color-buttons;
+				background-color: $color-buttons-hover;
 			}
 		}
 		& + p {
