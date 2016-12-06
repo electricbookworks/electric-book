@@ -30,8 +30,12 @@ Fall back to print-pdf toc, then web nav list, then print file list.
 {% elsif site.output == "screen-pdf" %}
     {% if work.products.screen-pdf.toc != nil %}
         {% assign toc = work.products.screen-pdf.toc %}
-    {% else %}
+    {% elsif work.products.print-pdf.toc != nil %}
         {% assign toc = work.products.print-pdf.toc %}
+    {% elsif work.products.web.nav != nil %}
+        {% assign toc = work.products.web.nav %}
+    {% else %}
+        Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% elsif site.output == "epub" %}
@@ -39,6 +43,10 @@ Fall back to print-pdf toc, then web nav list, then print file list.
         {% assign toc = work.products.epub.toc %}
     {% else %}
         {% assign toc = work.products.print-pdf.toc %}
+    {% elsif work.products.web.nav != nil %}
+        {% assign toc = work.products.web.nav %}
+    {% else %}
+        Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% elsif site.output == "web" %}
@@ -48,6 +56,8 @@ Fall back to print-pdf toc, then web nav list, then print file list.
         {% assign toc = work.products.web.nav %}
     {% else %}
         {% assign toc = work.products.print-pdf.toc %}
+    {% else %}
+        Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% else %}
