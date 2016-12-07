@@ -58,6 +58,7 @@ $color-mid: #9c9c9c !default;
 $color-accent: #000000 !default;
 $color-links: #5f738c !default;
 $color-buttons: #5f738c !default;
+$color-buttons-hover: darken( $color-buttons, 20% ) !default;
 $color-highlight: #ffd54d !default;
 
 // Some features rearrange at certain screen sizes.
