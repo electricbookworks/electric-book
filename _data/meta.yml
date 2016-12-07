@@ -18,6 +18,8 @@ series:
   # For web navigation, the label for links to  the series homepage
   # For English sites, you can leave this as "Home".
   home-label: "Home"
+  # For web navigation, the label for the navigation menu
+  nav-label: "Contents"
 
 ########
 # TITLES
@@ -83,12 +85,14 @@ works:
           - "01": "Chapter One"
           - "02": "Chapter Two"
         nav: # For each menu item, include at least label and file. Optionally add id (for deep linking) and children.
-          - label: "Cover"
-            file: "index"
-          - label: "Title page"
-            file: "0-1-titlepage"
-          - label: "Copyright"
-            file: "0-2-copyright"
+          - label: "Frontmatter"
+            children:
+              - label: "Cover"
+                file: "index"
+              - label: "Title page"
+                file: "0-1-titlepage"
+              - label: "Copyright"
+                file: "0-2-copyright"
           - label: "Contents"
             file: "0-3-contents"
           - label: "Chapter One"
