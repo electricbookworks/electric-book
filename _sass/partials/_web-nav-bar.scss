@@ -21,7 +21,7 @@ $web-nav-bar: true !default;
         }
     }
     // Reset position to fixed if $nav-bar-fixed: true
-    $nav-bar-fixed: true !default;
+    $nav-bar-fixed: false !default;
     @if $nav-bar-fixed {
         [href="#nav"] {
             position: fixed;
@@ -39,7 +39,7 @@ $web-nav-bar: true !default;
         width: 1px;
     }
     // Reset position to fixed if $nav-bar-fixed: true
-    $nav-bar-fixed: true !default;
+    $nav-bar-fixed: false !default;
     @if $nav-bar-fixed {
         .visuallyhidden {
             position: fixed;
@@ -73,7 +73,7 @@ $web-nav-bar: true !default;
             left: 0;
         }
         // Reset position to fixed if $nav-bar-fixed: true
-        $nav-bar-fixed: true !default;
+        $nav-bar-fixed: false !default;
         @if $nav-bar-fixed {
             .js-nav & {
                 position: fixed;
