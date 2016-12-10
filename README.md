@@ -31,7 +31,7 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 
 ## Changelog
 
-### 0.6.0
+### 0.6.1
 
 * Major improvements to web navigation
 * Text search (client-side, using elasticlunr)
