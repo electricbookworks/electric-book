@@ -1,10 +1,13 @@
-{% include metadata %}
-
 {% if site.nav-source == "nav" %}
 
-    <div class="nav-wrapper">
-        <div id="nav" class="non-printing">
-        
+    <div id="nav" class="non-printing">
+
+            {% if is-homepage == true or is-series-search == true %}
+            <h2>{{ series-name }}</h2>
+            {% else %}
+            <h2>{{ title }}</h2>
+            {% endif %}
+
             <div class="search">
                 {% include search %}
             </div><!--.search-->
@@ -60,12 +63,17 @@
             </div><!--.widgets-->
 
         </div><!--#nav-->
-    </div><!--.nav-wrapper-->
 
 {% else %}
 
-    <div class="nav-wrapper">
-        <div id="nav" class="non-printing">
+    <div id="nav" class="non-printing">
+
+            {% if is-homepage == true or is-series-search == true %}
+            <h2>{{ series-name }}</h2>
+            {% else %}
+            <h2>{{ title }}</h2>
+            {% endif %}
+
             <div class="nav-list">
                 <ul>
                     {% comment %}
@@ -88,6 +96,5 @@
                 </ul>
             </div><!--.nav-list-->
         </div><!--#nav-->
-    </div><!--.nav-wrapper-->
 
 {% endif %}

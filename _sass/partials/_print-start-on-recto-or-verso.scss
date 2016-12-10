@@ -2,7 +2,7 @@ $print-start-on-recto-or-verso: true !default;
 @if $print-start-on-recto-or-verso {
 
     // Halftitle and title pages will always start on a right
-    .halftitle-page,
+    .halftitle-page, .half-title-page,
     .title-page {
         page-break-before: right;
     }

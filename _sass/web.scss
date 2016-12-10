@@ -52,14 +52,13 @@ $button-border-radius: 0.1em !default; // Roundness of button corners.
 // Colours
 $color-text-main: #222222 !default;
 $color-text-secondary: #222222 !default;
-$color-footer-text: #222222 !default;
 $color-background: white !default;
-$color-footer: #e0e0e0 !default;
 $color-light: #e0e0e0 !default;
 $color-mid: #9c9c9c !default;
 $color-accent: #000000 !default;
 $color-links: #5f738c !default;
 $color-buttons: #5f738c !default;
+$color-buttons-hover: darken( $color-buttons, 20% ) !default;
 $color-highlight: #ffd54d !default;
 
 // Some features rearrange at certain screen sizes.
@@ -80,6 +79,11 @@ $hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
 $hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1 !default; // Maximum number of consecutive lines ending with hyphens
 
+// Footer
+$footer-text-color: $color-text-main !default;
+$footer-background-color: $color-accent !default;
+$footer-border-color: $color-accent !default;
+
 // Website masthead
 $masthead-text-color: $color-light !default;
 $masthead-background-color: $color-accent !default;
@@ -87,12 +91,13 @@ $masthead-border-color: $color-light !default;
 
 // Website sidebar/navigation
 $nav-bar-text-size: 0.8em !default;
-$nav-bar-hide: true !default;
-$nav-bar-prompt: "Contents" !default;
-$nav-bar-item-collapse: true !default; // Does the nav list fully expand, or collapse until mouseover?
-$nav-bar-children-prompt: " \2026"; // \2026 is an ellipsis (…)
+$nav-bar-item-collapse: false !default; // Does the nav list fully expand, or collapse until mouseover?
+$nav-bar-children-prompt: "+" !default;
+$nav-bar-children-prompt-hide: "\2212" !default; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true !default;
 $nav-bar-width: 15em !default;
+$nav-bar-fixed: false !default; // fixed is not fully supported on many mobile browsers
+$nav-bar-label-color: $color-mid !default;
 $nav-bar-border-color: $color-light !default;
 $nav-bar-background-color: white !default;
 $nav-bar-search-background-color: white !default;
@@ -100,6 +105,7 @@ $nav-bar-parent-background-color: white !default;
 $nav-bar-parent-text-color: black !default;
 $nav-bar-parent-hover-color: #4f89d2 !default;
 $nav-bar-parent-text-hover-color: white !default;
+$nav-bar-children-prompt-color: $color-mid !default;
 $nav-bar-child-background-color: $color-light !default;
 $nav-bar-child-text-color: black !default;
 $nav-bar-child-hover-color: #4f89d2 !default;

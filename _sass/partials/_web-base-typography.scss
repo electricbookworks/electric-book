@@ -7,7 +7,7 @@ $web-base-typography: true !default;
         margin: 0;
         padding: 0;
         color: $color-text-main;
-        background-color: $color-footer; // See -wrappers for content background-color
+        background-color: $footer-background-color; // See -wrappers for content background-color
         font-family: $font-text-main;
         font-size: $font-size-default;
         line-height: $line-height-default;
@@ -16,10 +16,10 @@ $web-base-typography: true !default;
     h1, h2, h3, h4, h5, h6 {
         font-family: $font-text-secondary;
         font-size: $font-size-default;
-    	font-weight: bold;
-    	line-height: $line-height-default;
-    	page-break-after: avoid;
-    	margin: $line-height-default 0 0 0;
+        font-weight: bold;
+        line-height: $line-height-default;
+        page-break-after: avoid;
+        margin: $line-height-default 0 0 0;
     }
     h1 {
         font-family: $font-display-main;
@@ -67,28 +67,28 @@ $web-base-typography: true !default;
         margin: 0 0 $line-height-default 1em;
     }
     ul ul, ol ol, blockquote ul ul, blockquote ol ol {
-    	margin-bottom: 0;
+        margin-bottom: 0;
     }
     ol ol {
-    	list-style-type: lower-alpha;
+        list-style-type: lower-alpha;
     }
 
 
     // Blockquotes
 
     blockquote {
-    	margin: $line-height-default 0 $line-height-default 0;
-    	padding: 0 $line-height-default;
+        margin: $line-height-default 0 $line-height-default 0;
+        padding: 0 $line-height-default;
     }
     // Suspect this isn't necessary. To remove after testing.
     // blockquote p {
     //  line-height: $line-height-default;
     // }
     blockquote p:first-of-type {
-    	text-indent: 0;
+        text-indent: 0;
     }
     blockquote p:last-of-type, blockquote ol, blockquote ul {
-    	margin: 0 0 $line-height-default 0;
+        margin: 0 0 $line-height-default 0;
     }
 
     // Definition lists
@@ -98,7 +98,7 @@ $web-base-typography: true !default;
     }
     dt {}
     dd {
-    	margin: 0 0 $line-height-default 0;
+        margin: 0 0 $line-height-default 0;
     }
 
     // Horizontal rules
@@ -147,12 +147,22 @@ $web-base-typography: true !default;
 
     // Forms
 
-    input {
+    input,
+    textarea {
         padding: 0.75em 0.75em;
         font-family: $font-text-secondary;
         font-size: inherit;
         color: inherit;
-        border: 1px solid $color-light;
+        border: 1px solid $color-mid;
+        display: block;
+        margin: $line-height-default 0;
+        width: 100%;
+        &[type="submit"] {
+            width: auto;
+        }
+    }
+    textarea {
+        min-height: $line-height-default * 3;
     }
 
     // Images

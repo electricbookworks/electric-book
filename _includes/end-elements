@@ -11,10 +11,10 @@ http://elasticlunr.com/
 https://markjs.io/
 {% endcomment %}
 {% if site.output == "web" %}
-<script src="{{ baseurl }}/assets/js/elasticlunr.min.js"></script>
-<script src="{{ baseurl }}/assets/js/mark.min.js"></script>
-<script src="{{ baseurl }}/assets/js/search.js"></script>
-<script src="{{ baseurl }}/assets/js/mark-search-terms.js"></script>
+<script src="{{ site.baseurl }}/assets/js/bundle.js"></script>
+    {% if is-series-search or is-book-search %}
+    <script src="{{ site.baseurl }}/assets/js/bundle-search.js"></script>
+    {% endif %}
 {% endif %}
 
 {% comment %}

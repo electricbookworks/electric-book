@@ -30,8 +30,12 @@ Fall back to print-pdf toc, then web nav list, then print file list.
 {% elsif site.output == "screen-pdf" %}
     {% if work.products.screen-pdf.toc != nil %}
         {% assign toc = work.products.screen-pdf.toc %}
-    {% else %}
+    {% elsif work.products.print-pdf.toc != nil %}
         {% assign toc = work.products.print-pdf.toc %}
+    {% elsif work.products.web.nav != nil %}
+        {% assign toc = work.products.web.nav %}
+    {% else %}
+        Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% elsif site.output == "epub" %}
@@ -39,6 +43,10 @@ Fall back to print-pdf toc, then web nav list, then print file list.
         {% assign toc = work.products.epub.toc %}
     {% else %}
         {% assign toc = work.products.print-pdf.toc %}
+    {% elsif work.products.web.nav != nil %}
+        {% assign toc = work.products.web.nav %}
+    {% else %}
+        Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% elsif site.output == "web" %}
@@ -48,6 +56,8 @@ Fall back to print-pdf toc, then web nav list, then print file list.
         {% assign toc = work.products.web.nav %}
     {% else %}
         {% assign toc = work.products.print-pdf.toc %}
+    {% else %}
+        Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% else %}
@@ -85,42 +95,16 @@ Otherwise, the toc-branch should be the children called by this include recursiv
 Now we'll use all that to output the toc list.
 {% endcomment %}
 
-{% unless site.output == "epub" %}
-
 <ol class="toc-list {% if toc-branch contains current-file %}active{% endif %}">
 {% for item in toc-branch | sort: "order" %}
     <li class="toc-entry-title{% if page.url contains item.file %} active{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
-        <a href="{{ base.url}}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"
-           {% if page.url contains item.file %}class="active"{% endif %}>
+        {% if item.file != nil %}<a href="{{ base.url}}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"
+           {% if page.url contains item.file %}class="active"{% endif %}>{% endif %}
             {{ item.label }}
-        </a>
-    </li>
-    {% if item.children != nil %}
-        {% include toc start=item.children %}
-    {% endif %}
-{% endfor %}
-</ol>
-
-{% endunless %}
-
-{% comment %}
-EPUB2's XHTML 1.1 requires that nested ol is inside the li element,
-so we need different HTML structure.
-{% endcomment %}
-{% if site.output == "epub" %}
-
-<ol class="toc-list {% if toc-branch contains current-file %}active{% endif %}">
-{% for item in toc-branch | sort: "order" %}
-    <li class="toc-entry-title{% if page.url contains item.file %} active{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
-        <a href="{{ base.url}}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"
-           {% if page.url contains item.file %}class="active"{% endif %}>
-            {{ item.label }}
-        </a>
+        {% if item.file != nil %}</a>{% endif %}
         {% if item.children != nil %}
             {% include toc start=item.children %}
         {% endif %}
     </li>
 {% endfor %}
 </ol>
-
-{% endif %}

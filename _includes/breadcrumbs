@@ -1,0 +1,25 @@
+{% comment %}
+Works much like nav-list, passing child items to itself
+as new parameters to drill down through web-nav-tree,
+and outputting only list items relevant to the current file.
+Include in content with {% include breadcrumbs breadcrumb-tree=web-nav-tree %}.
+The crumbs-array is created empty in _includes/metadata.
+{% endcomment %}
+
+{% if include.breadcrumb-tree %}
+    {% for item in include.breadcrumb-tree %}
+        {% capture label %}{{ item.label }}{% endcapture %}
+        {% assign crumbs-array = crumbs-array | push: label %}
+        {% assign children = item.children %}
+        {% if item.file == current-file %}
+            {% for crumb in include.crumbs-array %}
+                <li>{{ crumb }}</li>
+            {% endfor %}
+            <li>{{ item.label }}</li>
+        {% else %}
+            {% include breadcrumbs breadcrumb-tree=children crumbs-array=crumbs-array %}
+        {% endif %}
+    {% endfor %}
+{% else %}
+    {% assign crumbs-array = "" | split: "|" %}
+{% endif %}

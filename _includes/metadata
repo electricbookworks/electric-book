@@ -9,10 +9,12 @@ Assign series information to variables. This is the same for all books in the se
 
 {% capture series-organisation %}{{ site.data.meta.series.organisation }}{% endcapture %}
 {% capture series-url %}{{ site.data.meta.series.url }}{% endcapture %}
+{% capture series-email %}{{ site.data.meta.series.email }}{% endcapture %}
 {% capture series-name %}{{ site.data.meta.series.name }}{% endcapture %}
 {% capture series-description %}{{ site.data.meta.series.description }}{% endcapture %}
 {% capture series-image %}{{ site.data.meta.series.image }}{% endcapture %}
 {% capture series-home-label %}{{ site.data.meta.series.home-label }}{% endcapture %}
+{% capture series-nav-label %}{{ site.data.meta.series.nav-label }}{% endcapture %}
 
 {% comment %}
 It's useful to know how many books are in this series
@@ -25,6 +27,12 @@ Get the current directory for this book only
 {% endcomment %}
 
 {% capture current-directory %}{{ page.path | replace: "/", " " | truncatewords: 1, "" }}{% endcapture %}
+
+{% comment %}
+Get the current file
+{% endcomment %}
+
+{% capture current-file %}{{ page.url | remove_first: ".html" | replace: "/", " " | split, " " | last }}{% endcapture %}
 
 {% comment %}
 From meta.yml, get only the values where the directory matches the current directory
@@ -90,14 +98,14 @@ Now capture each metadata value as a Liquid tag, to be used in HTML and book con
 
 {% comment %}
 Check if we're on the series homepage:
-* Get a slugified version of the page URL to compare to a slugified
-  version of the baseurl. We slugify to remove slashes, which 
+* Get a slugified version of the page URL, without hyphens, to compare to 
+  a slugified version of the baseurl. We slugify to remove slashes, which 
   may differ between the two.
 * Then we can compare them to test if we're on the series home page. 
 * If we are, they will match. Hopefully.
 {% endcomment %}
-{% capture pageurl-slug %}{{ site.baseurl | slugify }}{{ page.url | slugify }}{% endcapture %}
-{% capture baseurl-slug %}{{ site.baseurl | slugify }}{% endcapture %}
+{% capture pageurl-slug %}{{ site.baseurl | slugify | remove: "-" }}{{ page.url | slugify | remove: "-" }}{% endcapture %}
+{% capture baseurl-slug %}{{ site.baseurl | slugify | remove: "-" }}{% endcapture %}
 {% if pageurl-slug == baseurl-slug %}
 {% assign is-homepage = true %}
 {% endif %}
@@ -105,14 +113,32 @@ Check if we're on the series homepage:
 {% comment %}
 Check if we're on the search pages.
 {% endcomment %}
-{% capture series-search-url %}{{ baseurl }}/search.html{% endcapture %}
-{% capture book-search-url %}{{ baseurl }}/{{ directory }}/text/search.html{% endcapture %}
+{% capture series-search-url %}{{ site.baseurl }}/search.html{% endcapture %}
+{% capture book-search-url %}{{ site.baseurl }}/{{ directory }}/text/search.html{% endcapture %}
+{% capture series-search-url-slug %}{{ series-search-url | slugify | remove: "-" }}{% endcapture %}
+{% capture book-search-url-slug %}{{ book-search-url | slugify | remove: "-" }}{% endcapture %}
+
 {% if page.url contains "/search.html" %}
     {% assign is-search = true %}
 {% endif %}
-{% if page.url == series-search-url %}
+{% if pageurl-slug == series-search-url-slug %}
     {% assign is-series-search = true %}
 {% endif %}
-{% if page.url == book-search-url %}
+{% if pageurl-slug == book-search-url-slug %}
     {% assign is-book-search = true %}
 {% endif %}
+
+{% comment %}
+On homepage and series-search we are not in a book directory,
+so make the current-directory variable nil. If we don't, 
+then on these pages any links that use {{ current-directory }} will be broken
+{% endcomment %}
+{% if is-homepage == true or is-series-search == true %}
+{% assign current-directory = nil %}
+{% endif %}
+
+{% comment %}
+Create an empty array for the breadcrumbs include to start with
+(thanks https://talk.jekyllrb.com/t/how-do-you-add-items-to-an-array-in-jekyll/324/4)
+{% endcomment %}
+{% assign crumbs-array = "" | split: "|" %}

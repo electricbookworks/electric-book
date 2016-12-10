@@ -31,6 +31,23 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 
 ## Changelog
 
+### 0.6.0
+
+* Major improvements to web navigation
+* Text search (client-side, using elasticlunr)
+* Breadcrumbs in masthead
+* Many fixes and minor improvements 
+
+### 0.5.2
+
+* Hide web-only elements (e.g. masthead) from print output for printing from browser.
+* Fix start depth for frontmatter.
+* Add mispelling fallback for `.half-title-page`/`.halftitle-page`.
+* Define nav-bar-prompt text color.
+* Add contact-form include using formspree.io
+* Various bug fixes and minor improvements.
+* Some smarter defaults.
+
 ### 0.5.1
 
 Bug fixes and minor improvements.

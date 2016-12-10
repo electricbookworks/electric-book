@@ -9,6 +9,7 @@ $web-masthead: true !default;
         border-bottom: 1px solid $masthead-border-color;
         width: 100%;
         text-align: center;
+        color: $masthead-text-color;
         &:after {
             content: "";
             display: block;
@@ -19,18 +20,23 @@ $web-masthead: true !default;
         }
         ul {
             list-style-type: none;
-            margin: 0 0 0 1em;
+            margin: 0 auto;
+            padding: 0.5em 0;
+            max-width: 70%;
             li {
                 display: inline-block;
-                margin: 0 1em 0 0;
-                padding: 0.5em 0;
+                margin: 0 0.25em 0 0;
                 // The divider between series and book title
                 // Should not show if there is only one work,
                 // and therefore no series title in masthead.
-                &:nth-of-type(2):before {
-                    content: "\2022";
+                &:after {
+                    content: "\2044"; // 2044 is a fraction slash
                     color: $masthead-text-color;
-                    margin-right: 1em;
+                    margin-left: 0.5em;
+                }
+                // No symbol after last item
+                &:last-of-type:after {
+                    content: normal;
                 }
                 // On small screens, only show the book title.
                 // But see below...

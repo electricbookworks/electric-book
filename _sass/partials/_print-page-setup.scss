@@ -17,7 +17,7 @@ $print-page-setup: true !default;
 	.cover {
 		page: cover;
 	}
-	.halftitle-page {
+	.halftitle-page, .half-title-page {
 		page: halftitle-page;
 	}
 	.title-page {

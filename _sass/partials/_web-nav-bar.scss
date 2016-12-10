@@ -2,20 +2,50 @@ $web-nav-bar: true !default;
 @if $web-nav-bar {
 
     // Navigation
-     
-    .nav-wrapper {
-        @if $nav-bar-scrollbar == true {
-            overflow: visible;
+
+    [href="#nav"] {
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: $nav-bar-label-color;
+        background-color: $masthead-background-color;
+        border-radius: $button-border-radius;
+        padding: 0.25em 0.5em;
+        margin: 0.25em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        .js-nav-open & {
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
         }
-        @else {
-            overflow: hidden;
-        }
-        // position: fixed;
-        // top: 0;
-        // bottom: 0;
-        float: left;
-        width: $nav-bar-width;
     }
+    // Reset position to fixed if $nav-bar-fixed: true
+    $nav-bar-fixed: false !default;
+    @if $nav-bar-fixed {
+        [href="#nav"] {
+            position: fixed;
+        }
+    }
+
+    .visuallyhidden {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+    // Reset position to fixed if $nav-bar-fixed: true
+    $nav-bar-fixed: false !default;
+    @if $nav-bar-fixed {
+        .visuallyhidden {
+            position: fixed;
+        }
+    }
+
     // For Webkit, this is the easy way to remove the scrollbar
     // #nav::-webkit-scrollbar {
     //     display: none;
@@ -26,10 +56,29 @@ $web-nav-bar: true !default;
         width: 100%;
         height: 100%;
         overflow-x: hidden; // Hides horizontal scrollbar
-        overflow-y: auto; // Must let this div scroll; we'll hide the scrollbar elsewhere
         background-color: $nav-bar-background-color;
-        border-right: 1px solid $nav-bar-border-color;
+        border-top: 1px solid $nav-bar-border-color;
         padding-right: 17px; // Hides scroll bar
+
+        .js-nav-open & {
+            overflow-y: auto; // Must let this div scroll; we'll hide the scrollbar elsewhere
+        }
+
+        .js-nav & {
+            width: $nav-bar-width;
+            border-top: none;
+            border-right: 1px solid $nav-bar-border-color;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        // Reset position to fixed if $nav-bar-fixed: true
+        $nav-bar-fixed: false !default;
+        @if $nav-bar-fixed {
+            .js-nav & {
+                position: fixed;
+            }
+        }
 
         // Search
         $search-enabled: true !default;
@@ -63,17 +112,13 @@ $web-nav-bar: true !default;
                 padding: 0;
                 background-color: $nav-bar-parent-background-color;
                 li {
-                    padding: 0.25em 0.75em;
+                    padding: 0;
                     width: 100%; // Use full width of li area
-                    // Indicator that a list item has children
-                    &.has-children a:after {
-                        content: $nav-bar-children-prompt;
-                    }
                     a { // Make link fill entire li area
                         display: block;
                         // width: 100%;
-                        padding: 0.25em 0.75em;
-                        margin: -0.25em -0.75em;
+                        padding: 0.1em 0.75em;
+                        max-width: $nav-bar-width * 0.7; // Leaves space for child prompt
                         color: $nav-bar-parent-text-color;
                         &:hover, &:focus, &:active {
                             color: inherit; // inherits from full-width, hover li
@@ -92,7 +137,7 @@ $web-nav-bar: true !default;
                         }
                     }
                 } // li
-                // Child navifation, after the parent, the rest of the nav-list
+                // Child navigation, after the parent, the rest of the nav-list
                 ol, ul {
                     @if $nav-bar-item-collapse == true {
                         max-height: 0; // Instead of display: none, because it works with transitions
@@ -103,8 +148,9 @@ $web-nav-bar: true !default;
                     background-color: $nav-bar-child-background-color;
                     width: 100%;
                     overflow-x: hidden;
+                    overflow-y: hidden;
                     li {
-                        padding: 0.25em 0.75em;
+                        padding-left: 1em; // Indent sub lists, while keeping full-width background hover
                         width: 100%; // Use full width of li area
                         a { // Make link fill entire li area
                             display: block;
@@ -125,7 +171,7 @@ $web-nav-bar: true !default;
                         margin-left: -1em;
                         padding-left: 2em;
                         li {
-                            padding-left: 3em;
+                            padding-left: 2em;
                             position: relative;
                             left: -2em;
                         } // li
@@ -133,8 +179,12 @@ $web-nav-bar: true !default;
                 } // ol, ul
                 // Show sublist when preceding (i.e. parent) li is hovered
                 // and when the list contains the current page.
+                // Allow for direct li + ol siblings (deprecated HTML nested-list structure)
+                // and for direct li > ol children (correct HTML nested-list structure).
                 li:hover + ol, li:active + ol, li:focus + ol,
                 li:hover + ul, li:active + ul, li:focus + ul,
+                li:hover > ol, li:active > ol, li:focus > ol,
+                li:hover > ul, li:active > ul, li:focus > ul,
                 ol.active, ul.active {
                     height: auto;
                     max-height: 500em; // Bigger than it will ever be, for transition to work. See http://stackoverflow.com/a/8331169/1781075
@@ -149,63 +199,48 @@ $web-nav-bar: true !default;
         } // .nav-list
         .widgets {
             margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
-            min-height: 10em;
-            } // .widgets
+        } // .widgets
+
+        h2 {
+            padding-left: 0.4em;
+        }
+
     } // #nav
 
-    // Optionally, hide sidebar behind menu icon
-    // till menu is hovered or tapped
-    $nav-bar-hide: true !default;
-    @if $nav-bar-hide {
-        .nav-wrapper {
-            #nav {
-                max-width: 0;
-                max-height: 0;
-                // transition: max-width 0.5s; // Disabled because of flickering problem
-                padding-right: 0;
-            }
-            &:before {
-                content: $nav-bar-prompt;
-                font-family: $font-text-secondary;
-                color: $color-mid;
-                display: block;
-                position: fixed;
-                left: 0;
-                top: 0;
-                padding: 0.5em 1em;
-                cursor: pointer;
-            }
-            &:hover, &:active, &.focus {
-                #nav {
-                    max-width: $nav-bar-width;
-                    max-height: none;
-                    // transition: max-width 0.5s; // Disabled because of flickering problem
-                    position: fixed;
-                    top: 0;
-                }
-                &:before {
-                    display: none;
-                }
+    .has-children {
+        position: relative;
+    }
+
+    [data-toggle-nav] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: transparent;
+        border: none;
+        color: $nav-bar-child-text-hover-color;
+        font-size: 1.25em;
+        padding: 0 0.5em;
+        margin: 0 0 0 -0.5em;
+        left: $nav-bar-width * 0.7; // Keeps item text aligned in complex lists
+        height: 1.65em; // This magic number may not always work
+        &:focus {
+            outline: none;
+        }
+        &:after {
+            content: $nav-bar-children-prompt;
+            color: $nav-bar-children-prompt-color;
+        }
+        &.show-children {
+            &:after {
+                content: $nav-bar-children-prompt-hide;
+                color: $nav-bar-children-prompt-color;
             }
         }
     }
-
-    // On small screens, hide sidebar behind menu icon
-    // till menu is hovered or tapped
-    @media only screen 
-    and (max-width: $max-width-default) {
-        .nav-wrapper {
-            &:before {
-                top: 0;
-                left: 0;
-                width: 100%;
-                background-color: $nav-bar-background-color;
-                padding: 0.5em;
-                border-top: 1px solid $nav-bar-border-color;
-                border-right: 1px solid $nav-bar-border-color;
-                border-bottom: 1px solid $nav-bar-border-color;
-            }
-        }
+    // If link does not link to a file, make toggle cover entire link to expand children
+    .no-file [data-toggle-nav] {
+        margin-left: -($nav-bar-width * 0.7);
+        padding-left: $nav-bar-width * 0.7;
     }
 
 }
