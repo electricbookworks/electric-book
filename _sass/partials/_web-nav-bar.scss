@@ -135,6 +135,11 @@ $web-nav-bar: true !default;
                         a {
                             color: $nav-bar-child-text-hover-color;
                         }
+                        li {
+                            a {
+                                color: $nav-bar-child-text-color;
+                            }
+                        }
                     }
                 } // li
                 // Child navigation, after the parent, the rest of the nav-list
