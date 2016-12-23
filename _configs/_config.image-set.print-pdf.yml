@@ -1,0 +1,2 @@
+# Addon config that sets site.image-set to images/print-pdf
+image-set: "images/print-pdf"
