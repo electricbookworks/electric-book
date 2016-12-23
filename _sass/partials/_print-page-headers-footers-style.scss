@@ -1,9 +1,19 @@
 // Mixins, which cannot be inside Sass control directives (the @if section below).
 @mixin header-style() {
-    font-family: $font-text-secondary;
-    font-size: $font-size-default * $font-size-smaller;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+  font-family: $font-text-secondary;
+  font-size: $font-size-default * $font-size-smaller;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+@mixin header-position() {
+  vertical-align: top;
+  margin-top: $margin-top / 2;
+}
+
+@mixin footer-position() {
+  vertical-align: bottom;
+  margin-bottom: $margin-bottom / 2;
 }
 
 $print-page-headers-footers-style: true !default;
@@ -20,33 +30,43 @@ $print-page-headers-footers-style: true !default;
   @page chapter:left {
     @top {
       @include header-style();
+      @include header-position();
     }
     @top-right {
       @include header-style();
+      @include header-position();
     }
     @top-left {
       @include header-style();
+      @include header-position();
     }
     @top-right-corner {
       @include header-style();
+      @include header-position();
     }
     @top-left-corner {
       @include header-style();
+      @include header-position();
     }
     @bottom {
       @include header-style();
+      @include footer-position();
     }
     @bottom-left {
       @include header-style();
+      @include footer-position();
     }
     @bottom-right {
       @include header-style();
+      @include footer-position();
     }
     @bottom-left-corner {
       @include header-style();
+      @include footer-position();
     }
     @bottom-right-corner {
       @include header-style();
+      @include footer-position();
     }
   }
 
@@ -54,33 +74,43 @@ $print-page-headers-footers-style: true !default;
   @page chapter:right {
     @top {
       @include header-style();
+      @include header-position();
     }
     @top-right {
       @include header-style();
+      @include header-position();
     }
     @top-left {
       @include header-style();
+      @include header-position();
     }
     @top-right-corner {
       @include header-style();
+      @include header-position();
     }
     @top-left-corner {
       @include header-style();
+      @include header-position();
     }
     @bottom {
       @include header-style();
+      @include footer-position();
     }
     @bottom-left {
       @include header-style();
+      @include footer-position();
     }
     @bottom-right {
       @include header-style();
+      @include footer-position();
     }
     @bottom-left-corner {
       @include header-style();
+      @include footer-position();
     }
     @bottom-right-corner {
       @include header-style();
+      @include footer-position();
     }
   }
 
@@ -88,33 +118,43 @@ $print-page-headers-footers-style: true !default;
   @page frontmatter:left {
     @top {
       @include header-style();
+      @include header-position();
     }
     @top-right {
       @include header-style();
+      @include header-position();
     }
     @top-left {
       @include header-style();
+      @include header-position();
     }
     @top-right-corner {
       @include header-style();
+      @include header-position();
     }
     @top-left-corner {
       @include header-style();
+      @include header-position();
     }
     @bottom {
       @include header-style();
+      @include footer-position();
     }
     @bottom-left {
       @include header-style();
+      @include footer-position();
     }
     @bottom-right {
       @include header-style();
+      @include footer-position();
     }
     @bottom-left-corner {
       @include header-style();
+      @include footer-position();
     }
     @bottom-right-corner {
       @include header-style();
+      @include footer-position();
     }
   }
 
@@ -122,33 +162,43 @@ $print-page-headers-footers-style: true !default;
   @page frontmatter:right {
     @top {
       @include header-style();
+      @include header-position();
     }
     @top-right {
       @include header-style();
+      @include header-position();
     }
     @top-left {
       @include header-style();
+      @include header-position();
     }
     @top-right-corner {
       @include header-style();
+      @include header-position();
     }
     @top-left-corner {
       @include header-style();
+      @include header-position();
     }
     @bottom {
       @include header-style();
+      @include footer-position();
     }
     @bottom-left {
       @include header-style();
+      @include footer-position();
     }
     @bottom-right {
       @include header-style();
+      @include footer-position();
     }
     @bottom-left-corner {
       @include header-style();
+      @include footer-position();
     }
     @bottom-right-corner {
       @include header-style();
+      @include footer-position();
     }
   }
 
