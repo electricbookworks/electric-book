@@ -108,7 +108,7 @@ $frontmatter-reference-style: lower-roman; // lower-roman, decimal, see http://w
 //   Set this body title attribute with `header: Your Title` in a file's YAML frontmatter.
 //   If you don't set a page header in YAML, string(page-header) will fallback to the page title.
 // * For the title attribute of the last h1 (increment to h2, h3, h4, h5, h6 as needed): string(h1-title, last)
-//   By default, this uses the teading text, unless you manually set a title attribute for a given heading.
+//   By default, this uses the heading text, unless you manually set a title attribute for a given heading.
 //   In kramdown, use {: title="Your Title Here" } after the heading to set the title manually.
 // * For the last h1 (increment to h2, h3, h4, h5, h6 as needed): string(h1-text, last)
 //   Instead of last (last on page) you can also use first (first on page) or start (string set on previous page).
@@ -129,7 +129,7 @@ $verso-bottom-left-corner: normal;
 $verso-bottom-right-corner: normal;
 
 // Recto (right-hand-page)
-$recto-top: string(h2-title, last);
+$recto-top: string(h2-text, last);
 $recto-top-left: normal;
 $recto-top-right: normal;
 $recto-top-left-corner: normal;
@@ -153,7 +153,7 @@ $verso-bottom-left-corner-frontmatter: normal;
 $verso-bottom-right-corner-frontmatter: normal;
 
 // Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
-$recto-top-frontmatter: string(h2-title, last);
+$recto-top-frontmatter: string(h2-text, last);
 $recto-top-left-frontmatter: normal;
 $recto-top-right-frontmatter: normal;
 $recto-top-left-corner-frontmatter: normal;

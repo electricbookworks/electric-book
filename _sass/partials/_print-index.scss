@@ -10,7 +10,6 @@ $print-index: true !default;
 			list-style-type: none;
 			margin: 0 0 0 ($line-height-default * 1);
 			text-indent: $line-height-default * (-1);
-			column-break-inside: avoid;
 			li {
 				margin: 0 0 0 ($line-height-default / 2);
 			}
