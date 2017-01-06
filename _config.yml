@@ -76,7 +76,7 @@ output: "web"
 # assumes you'll use the same images for all outputs.
 # (We use an uppercase I in Images for compatibility with Sigil, 
 # for epub output, where validation is case-sensitive.)
-image-set: "Images"
+image-set: "images"
 # image-set: "images/epub"
 # image-set: "images/web"
 # image-set: "images/print-pdf"
