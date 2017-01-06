@@ -1,0 +1,2 @@
+# Addon config that sets site.image-set to images/web
+image-set: "images/web"

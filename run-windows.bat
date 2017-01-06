@@ -10,6 +10,8 @@ TITLE Electric Book
 SET process=0
 SET bookfolder=
 SET config=
+SET imageset=
+SET imageconfig=
 SET repeat=
 SET baseurl=
 SET location=
@@ -49,6 +51,29 @@ SET /p process=Enter a number and hit return.
     :: Ask user which folder to process
     SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
     IF "%bookfolder%"=="" SET bookfolder=book
+    :: Ask if we want to use a particular set of images
+    :chooseimageset
+    ECHO.
+    ECHO Do you want to use an output-specific image set? Hit enter for no, or pick a letter for yes:
+    ECHO.
+    ECHO P. Print PDF
+    ECHO E. EPUB
+    ECHO W. Web
+    ECHO S. Screen PDF
+    ECHO.
+    SET /p imageset=
+        IF "%imageset%"=="P" SET imageconfig=_configs/_config.image-set.print-pdf.yml
+        IF "%imageset%"=="p" SET imageconfig=_configs/_config.image-set.print-pdf.yml
+        IF "%imageset%"=="E" SET imageconfig=_configs/_config.image-set.epub.yml
+        IF "%imageset%"=="e" SET imageconfig=_configs/_config.image-set.epub.yml
+        IF "%imageset%"=="W" SET imageconfig=_configs/_config.image-set.web.yml
+        IF "%imageset%"=="w" SET imageconfig=_configs/_config.image-set.web.yml
+        IF "%imageset%"=="S" SET imageconfig=_configs/_config.image-set.screen-pdf.yml
+        IF "%imageset%"=="s" SET imageconfig=_configs/_config.image-set.screen-pdf.yml
+        IF "%imageconfig%"=="" GOTO chooseimageset
+        GOTO otherconfigs
+    ECHO.
+    :otherconfigs
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
@@ -63,7 +88,7 @@ SET /p process=Enter a number and hit return.
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%imageconfig%,%config%"
     :: Navigate into the book's folder in _html output
     CD _html\%bookfolder%\text
     :: Let the user know we're now going to make the PDF
