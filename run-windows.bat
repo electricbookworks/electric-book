@@ -70,7 +70,6 @@ SET /p process=Enter a number and hit return.
         IF "%imageset%"=="w" SET imageconfig=_configs/_config.image-set.web.yml
         IF "%imageset%"=="S" SET imageconfig=_configs/_config.image-set.screen-pdf.yml
         IF "%imageset%"=="s" SET imageconfig=_configs/_config.image-set.screen-pdf.yml
-        IF "%imageconfig%"=="" GOTO chooseimageset
         GOTO otherconfigs
     ECHO.
     :otherconfigs
