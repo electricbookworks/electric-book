@@ -31,6 +31,10 @@ In **Jekyll 3.3.0**, auto-regeneration doesn't work due to [our geeky fascinatio
 
 ## Changelog
 
+### 0.6.3
+
+* Fix image-set bug in Windows batch file script
+
 ### 0.6.2
 
 * Windows batch file script enables image-set switching
