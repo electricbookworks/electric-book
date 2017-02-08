@@ -42,20 +42,6 @@ prose:
   media: "media"
   metadata:
     "":
-      - name: "layout"
-        field:
-          element: "select"
-          label: "Page type"
-          value: "default"
-          options:
-            - name: "Default"
-              value: "default"
-            - name: "Minimal"
-              value: "min"
-      - name: "stylesheet"
-        field:
-          element: "hidden"
-          value: "screen.css"
       - name: "title"
         field:
           element: "text"
