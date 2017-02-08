@@ -100,7 +100,7 @@ Now we'll use all that to output the toc list.
     <li class="toc-entry-title{% if page.url contains item.file %} active{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
         {% if item.file != nil %}<a href="{{ base.url}}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"
            {% if page.url contains item.file %}class="active"{% endif %}>{% endif %}
-            {{ item.label }}
+            <span class="toc-entry-text">{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>
         {% if item.file != nil %}</a>{% endif %}
         {% if item.children != nil %}
             {% include toc start=item.children %}
