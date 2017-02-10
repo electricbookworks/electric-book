@@ -8,14 +8,24 @@ The crumbs-array is created empty in _includes/metadata.
 
 {% if include.breadcrumb-tree %}
     {% for item in include.breadcrumb-tree %}
-        {% capture label %}{{ item.label }}{% endcapture %}
+
+        {% comment %}Put the label and link, if there is a link,
+        in a variable called 'label'{% endcomment %}
+        {% capture label %}
+            {% if item.file %}
+                <a href="{{ item.file }}{% if item.id %}#{{ item.id }}{% endif %}">
+            {% endif %}
+                {{ item.label }}{% if item.file %}</a>{% endif %}
+        {% endcapture %}
+        {% capture label %}{{ label | strip_newlines | strip }}{% endcapture %}
+
         {% assign crumbs-array = crumbs-array | push: label %}
         {% assign children = item.children %}
         {% if item.file == current-file %}
             {% for crumb in include.crumbs-array %}
                 <li>{{ crumb }}</li>
             {% endfor %}
-            <li>{{ item.label }}</li>
+            <li>{{ item.label | strip_newlines | strip }}</li>
         {% else %}
             {% include breadcrumbs breadcrumb-tree=children crumbs-array=crumbs-array %}
         {% endif %}
