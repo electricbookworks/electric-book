@@ -71,8 +71,8 @@ SET /p process=Enter a number and hit return.
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,%config%"
-    :: Navigate into the book's folder in _html output
-    CD _html\%bookfolder%\text\"%subdirectory%"
+    :: Navigate into the book's folder in _site output
+    CD _site\%bookfolder%\text\"%subdirectory%"
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Check if the _output folder exists, or create it if not.
@@ -136,8 +136,8 @@ SET /p process=Enter a number and hit return.
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.image-set.screen-pdf.yml,%config%"
-    :: Navigate into the book's folder in _html output
-    CD _html\%bookfolder%\text\"%subdirectory%"
+    :: Navigate into the book's folder in _site output
+    CD _site\%bookfolder%\text\"%subdirectory%"
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Run prince, showing progress (-v), printing the docs in file-list
@@ -260,8 +260,8 @@ SET /p process=Enter a number and hit return.
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,%config%"
-    :: Navigate into the book's folder in _html output
-    CD _html\%bookfolder%\text\"%subdirectory%"
+    :: Navigate into the book's folder in _site output
+    CD _site\%bookfolder%\text\"%subdirectory%"
     :: Let the user know we're now going to open Sigil
     ECHO Opening Sigil...
     :: Temporarily put Sigil in the PATH, whether x86 or not
@@ -269,7 +269,7 @@ SET /p process=Enter a number and hit return.
     :: and open the cover HTML file in it, to load metadata into Sigil
     START "" sigil.exe "%firstfile%.html"
     :: Open file explorer to make it easy to see the HTML to assemble
-    %SystemRoot%\explorer.exe "%location%_html\%bookfolder%\%subdirectory%"
+    %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\%subdirectory%"
     :: Navigate back to where we began
     CD "%location%"
     :: Tell the user we're done
@@ -324,7 +324,7 @@ SET /p process=Enter a number and hit return.
     :: ...and run Jekyll to build new HTML
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.image-set.%fromformat%.yml,%config%"
     :: Navigate to the HTML we just generated
-    CD _html\%bookfolder%\text
+    CD _site\%bookfolder%\text
     :: What're we doing?
     ECHO Converting %bookfolder% HTML to Word...
     :: Loop through the list of files in file-list
@@ -348,7 +348,7 @@ SET /p process=Enter a number and hit return.
     :: Whassup?
     ECHO Done, opening folder...
     :: Open file explorer to show the docx files.
-    %SystemRoot%\explorer.exe "%location%_html\%bookfolder%\text"
+    %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text"
     :: Navigate back to where we began
     CD "%location%"
     :: Let the user easily run that again

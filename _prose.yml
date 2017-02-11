@@ -18,7 +18,6 @@ prose:
     - /_layouts
     - /_includes
     - /_site
-    - /_html
     - /_sass
     - search.md
     - /*/search.md
