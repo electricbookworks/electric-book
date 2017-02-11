@@ -2,14 +2,14 @@
 Get the current book directory.
 {% endcomment %}
 
-{% capture current-directory %}{{ page.path | replace: "/", " " | truncatewords: 1, "" }}{% endcapture %}
+{% capture book-directory %}{{ page.path | replace: "/", " " | truncatewords: 1, "" }}{% endcapture %}
 
 {% comment %}
 From meta.yml, get only the works from the current book, that is
 where the directory for a work in meta.yml matches the current directory.
 {% endcomment %}
 
-{% assign works = site.data.meta.works | where: "directory", current-directory %}
+{% assign works = site.data.meta.works | where: "directory", book-directory %}
 
 {% comment %}
 Now check which output format we're creating, and capture its toc.
