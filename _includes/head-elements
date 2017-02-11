@@ -7,7 +7,5 @@ Use Liquid logic tags to include only in certain outputs, e.g.
 {% endcomment %}
 
 {% if site.mathjax-enabled == true %}
-<script type="text/javascript"
-   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+{% include mathjax-config %}
 {% endif %}
