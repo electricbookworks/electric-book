@@ -92,6 +92,7 @@ $masthead-border-color: $color-light !default;
 // Website sidebar/navigation
 $nav-bar-text-size: 0.8em !default;
 $nav-bar-item-collapse: false !default; // Does the nav list fully expand, or collapse until mouseover?
+$nav-bar-close: "\00D7" !default; // &times; ×
 $nav-bar-children-prompt: "+" !default;
 $nav-bar-children-prompt-hide: "\2212" !default; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true !default;
