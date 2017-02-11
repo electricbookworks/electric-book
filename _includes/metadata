@@ -23,30 +23,59 @@ It's useful to know how many books are in this series
 {% assign number-of-works = site.data.meta.works | size %}
 
 {% comment %}
-Get the current directory for this book only
+Get the directory for this book only
 {% endcomment %}
 
-{% capture current-directory %}{{ page.path | replace: "/", " " | truncatewords: 1, "" }}{% endcapture %}
+{% capture book-directory %}{{ page.path | replace: "/", " " | truncatewords: 1, "" }}{% endcapture %}
 
 {% comment %}
-Get the current file
+Check that we're in the `text` directory or a subdirectory of `text`
+{% endcomment %}
+{% capture text-directory %}{{ page.path | replace: "/", " " | truncatewords: 2, "" | split: " " | last }}{% endcapture %}
+{% if text-directory == "text" %}
+{% assign is-text-directory = true %}
+{% endif %}
+
+{% comment %}
+Get this file's folder depth
+(The minus 1 avoids counting the file itself)
+{% endcomment %}
+{% assign folder-depth = page.path | split: "/" | size | minus: 1 %}
+
+{% comment %}
+If the folder depth is more than 2, this is a subdirectory of `text`
+{% endcomment %}
+{% if folder-depth > 2 %}
+{% assign is-text-subdirectory = true %}
+{% endif %}
+
+{% comment %}
+If this file is in a text-subdirectory, get its name
+{% endcomment %}
+{% if is-text-subdirectory %}
+{% capture text-subdirectory %}{{ page.path | replace: "/", " " | truncatewords: 3, "" | split: " " | last }}{% endcapture %}
+{% endif %}
+
+{% comment %}
+Get the current file's name
 {% endcomment %}
 
 {% capture current-file %}{{ page.url | remove_first: ".html" | replace: "/", " " | split, " " | last }}{% endcapture %}
 
 {% comment %}
-From meta.yml, get only the values where the directory matches the current directory
+From meta.yml, get only the values where the work.directory matches the current book-directory
 {% endcomment %}
 
-{% assign works = site.data.meta.works | where: "directory", current-directory %}
+{% assign works = site.data.meta.works | where: "directory", book-directory %}
 
 {% comment %}
-Now capture each metadata value as a Liquid tag, to be used in HTML and book content e.g. {{ title }}
+Now capture each metadata value as a Liquid variable, to be used in HTML 
+and book content as a Liquid output tag e.g. {{ title }}
 {% endcomment %}
 
 {% for work in works %}
 
-{% capture directory %}{{ work.directory }}{% endcapture %}
+{% capture book-directory %}{{ work.directory }}{% endcapture %}
 {% capture title %}{{ work.title }}{% endcapture %}
 {% capture subtitle %}{{ work.subtitle }}{% endcapture %}
 {% capture creator %}{{ work.creator }}{% endcapture %}
@@ -94,7 +123,86 @@ Now capture each metadata value as a Liquid tag, to be used in HTML and book con
 {% capture screen-pdf-image %}{{ work.products.screen-pdf.image }}{% endcapture %}
 {% assign screen-pdf-file-list = work.products.screen-pdf.files %}
 
+{% assign translations = work.translations %}
+
 {% endfor %}
+
+{% comment %}
+Look through the translations list. If this file is in a text-subdirectory
+that matches a translation language, set is-translation to true, and change
+the `language` variable, which we captured above, to the translation language.
+{% endcomment %}
+{% for translation in translations %}
+{% if text-subdirectory == translation.language %}
+{% assign is-translation = true %}
+{% capture language %}{{ translation.language }}{% endcapture %}
+{% endif %}
+{% endfor %}
+
+{% comment %}
+If we are in a translation, rewrite book metadata where it's been
+defined in meta.yml for the given translation.
+{% endcomment %}
+
+{% if is-translation == true %}
+
+{% for work in translations %}
+
+{% if work.directory == language %}
+
+{% if work.directory %}{% capture book-directory %}{{ work.directory }}{% endcapture %}{% endif %}
+{% if work.title %}{% capture title %}{{ work.title }}{% endcapture %}{% endif %}
+{% if work.subtitle %}{% capture subtitle %}{{ work.subtitle }}{% endcapture %}{% endif %}
+{% if work.creator %}{% capture creator %}{{ work.creator }}{% endcapture %}{% endif %}
+{% if work.contributor %}{% capture contributor %}{{ work.contributor }}{% endcapture %}{% endif %}
+{% if work.subject %}{% capture subject %}{{ work.subject }}{% endcapture %}{% endif %}
+{% if work.description %}{% capture description %}{{ work.description }}{% endcapture %}{% endif %}
+{% if work.publisher %}{% capture publisher %}{{ work.publisher }}{% endcapture %}{% endif %}
+{% if work.publisher-url %}{% capture publisher-url %}{{ work.publisher-url }}{% endcapture %}{% endif %}
+{% if work.date %}{% capture date %}{{ work.date }}{% endcapture %}{% endif %}
+{% if work.modified %}{% capture modified %}{{ work.modified }}{% endcapture %}{% endif %}
+{% if work.type %}{% capture type %}{{ work.type }}{% endcapture %}{% endif %}
+{% if work.identifier %}{% capture identifier %}{{ work.identifier }}{% endcapture %}{% endif %}
+{% if work.source %}{% capture source %}{{ work.source }}{% endcapture %}{% endif %}
+{% if work.language %}{% capture language %}{{ work.language }}{% endcapture %}{% endif %}
+{% if work.relation %}{% capture relation %}{{ work.relation }}{% endcapture %}{% endif %}
+{% if work.coverage %}{% capture coverage %}{{ work.coverage }}{% endcapture %}{% endif %}
+{% if work.rights %}{% capture rights %}{{ work.rights }}{% endcapture %}{% endif %}
+{% if work.image %}{% capture image %}{{ work.image }}{% endcapture %}{% endif %}
+
+{% if work.products.print-pdf.date %}{% capture print-pdf-date %}{{ work.products.print-pdf.date }}{% endcapture %}{% endif %}
+{% if work.products.print-pdf.format %}{% capture print-pdf-format %}{{ work.products.print-pdf.format }}{% endcapture %}{% endif %}
+{% if work.products.print-pdf.identifier %}{% capture print-pdf-identifier %}{{ work.products.print-pdf.identifier }}{% endcapture %}{% endif %}
+{% if work.products.print-pdf.image %}{% capture print-pdf-image %}{{ work.products.print-pdf.image }}{% endcapture %}{% endif %}
+{% if work.products.print-pdf.files %}{% assign print-pdf-file-list = work.products.print-pdf.files %}{% endif %}
+
+{% if work.products.web.date %}{% capture web-date %}{{ work.products.web.date }}{% endcapture %}{% endif %}
+{% if work.products.web.format %}{% capture web-format %}{{ work.products.web.format }}{% endcapture %}{% endif %}
+{% if work.products.web.identifier %}{% capture web-identifier %}{{ work.products.web.identifier }}{% endcapture %}{% endif %}
+{% if work.products.web.image %}{% capture web-image %}{{ work.products.web.image }}{% endcapture %}{% endif %}
+{% if work.products.web.footer %}{% capture web-footer %}{{ work.products.web.footer }}{% endcapture %}{% endif %}
+{% if work.products.web.start-page %}{% capture web-start-page %}{{ work.products.web.start-page }}{% endcapture %}{% endif %}
+{% if work.products.web.contents-page %}{% capture web-contents-page %}{{ work.products.web.contents-page }}{% endcapture %}{% endif %}
+{% if work.products.web.files %}{% assign web-file-list = work.products.web.files %}{% endif %}
+{% if work.products.web.nav %}{% assign web-nav-tree = work.products.web.nav %}{% endif %}
+
+{% if work.products.epub.date %}{% capture epub-date %}{{ work.products.epub.date }}{% endcapture %}{% endif %}
+{% if work.products.epub.format %}{% capture epub-format %}{{ work.products.epub.format }}{% endcapture %}{% endif %}
+{% if work.products.epub.identifier %}{% capture epub-identifier %}{{ work.products.epub.identifier }}{% endcapture %}{% endif %}
+{% if work.products.epub.image %}{% capture epub-image %}{{ work.products.epub.image }}{% endcapture %}{% endif %}
+{% if work.products.epub.files %}{% assign epub-file-list = work.products.epub.files %}{% endif %}
+
+{% if work.products.screen-pdf.date %}{% capture screen-pdf-date %}{{ work.products.screen-pdf.date }}{% endcapture %}{% endif %}
+{% if work.products.screen-pdf.format %}{% capture screen-pdf-format %}{{ work.products.screen-pdf.format }}{% endcapture %}{% endif %}
+{% if work.products.screen-pdf.identifier %}{% capture screen-pdf-identifier %}{{ work.products.screen-pdf.identifier }}{% endcapture %}{% endif %}
+{% if work.products.screen-pdf.image %}{% capture screen-pdf-image %}{{ work.products.screen-pdf.image }}{% endcapture %}{% endif %}
+{% if work.products.screen-pdf.files %}{% assign screen-pdf-file-list = work.products.screen-pdf.files %}{% endif %}
+
+{% endif %}
+
+{% endfor %}
+
+{% endif %}
 
 {% comment %}
 Check if we're on the series homepage:
@@ -114,7 +222,7 @@ Check if we're on the series homepage:
 Check if we're on the search pages.
 {% endcomment %}
 {% capture series-search-url %}{{ site.baseurl }}/search.html{% endcapture %}
-{% capture book-search-url %}{{ site.baseurl }}/{{ directory }}/text/search.html{% endcapture %}
+{% capture book-search-url %}{{ site.baseurl }}/{{ book-directory }}/text/search.html{% endcapture %}
 {% capture series-search-url-slug %}{{ series-search-url | slugify | remove: "-" }}{% endcapture %}
 {% capture book-search-url-slug %}{{ book-search-url | slugify | remove: "-" }}{% endcapture %}
 
@@ -129,12 +237,12 @@ Check if we're on the search pages.
 {% endif %}
 
 {% comment %}
-On homepage and series-search we are not in a book directory,
-so make the current-directory variable nil. If we don't, 
-then on these pages any links that use {{ current-directory }} will be broken
+On homepage and series-search we are not in a book-directory,
+so make the book-directory variable nil. If we don't, 
+then on these pages any links that use {{ book-directory }} will be broken
 {% endcomment %}
 {% if is-homepage == true or is-series-search == true %}
-{% assign current-directory = nil %}
+{% assign book-directory = nil %}
 {% endif %}
 
 {% comment %}
@@ -142,3 +250,34 @@ Create an empty array for the breadcrumbs include to start with
 (thanks https://talk.jekyllrb.com/t/how-do-you-add-items-to-an-array-in-jekyll/324/4)
 {% endcomment %}
 {% assign crumbs-array = "" | split: "|" %}
+
+{% comment %}
+Get relative paths to other book-asset folders, even if we're in a text-subdirectory
+{% endcomment %}
+
+{% comment %}First, for pages not in a book directory, set the path as
+the first book-directory listed in meta.yml{% endcomment %}
+{% capture path-to-book-directory %}{{ site.data.meta.works.[0].directory }}/{% endcapture %}
+
+{% comment %}Then, for all pages in a text directory, create a relative path to the book-directory{% endcomment %}
+{% if is-text-directory %}
+{% if is-text-subdirectory != true %}
+{% capture path-to-book-directory %}../{% endcapture %}
+{% else %}
+{% capture path-to-book-directory %}
+{% for i in (2..folder-depth) %}
+../
+{% endfor %}
+{% endcapture %}
+{% endif %}
+{% capture path-to-book-directory %}{{ path-to-book-directory | strip_newlines }}{% endcapture %}
+{% endif %}
+
+{% comment %}Then set a path to the root directory.{% endcomment %}
+
+{% capture path-to-root-directory %}
+{% for i in (1..folder-depth) %}
+../
+{% endfor %}
+{% endcapture %}
+{% capture path-to-root-directory %}{{ path-to-root-directory | strip_newlines }}{% endcapture %}
