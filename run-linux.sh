@@ -51,8 +51,8 @@ If not, just hit return."
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML
 			bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,$config"
-			# Navigate into the book's folder in _html output
-			cd _html/$bookfolder/text
+			# Navigate into the book's folder in _site output
+			cd _site/$bookfolder/text
 			# Let the user know we're now going to make the PDF
 			echo Creating PDF...
 			# Run prince, showing progress (-v), printing the docs in file-list
@@ -99,8 +99,8 @@ If not, just hit return."
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML
 			bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,$config"
-			# Navigate into the book's folder in _html output
-			cd _html/$bookfolder/text
+			# Navigate into the book's folder in _site output
+			cd _site/$bookfolder/text
 			# Let the user know we're now going to make the PDF
 			echo Creating PDF...
 			# Run prince, showing progress (-v), printing the docs in file-list
@@ -199,8 +199,8 @@ If not, just hit return."
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML
 			bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$config"
-			# Navigate into the book's folder in _html output
-			cd _html/$bookfolder/text
+			# Navigate into the book's folder in _site output
+			cd _site/$bookfolder/text
 			# Navigate back to where we began.
 			cd $location
 			# Navigate to the _output folder...
@@ -213,7 +213,7 @@ If not, just hit return."
 			# Navigate back to where we began.
 			cd $location
 			# Got into HTML-output folder
-			cd _html/$bookfolder
+			cd _site/$bookfolder
 		    # Open file browser to see epub-ready HTML files
 		    xdg-open .
 		    # Navigate back to where we started

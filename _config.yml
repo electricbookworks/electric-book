@@ -54,10 +54,6 @@ mathjax-enabled: false
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
 # --------------------------------------------
 
-# By default Jekyll puts generated HTML in a _site folder. 
-# For Electric Book purposes, we prefer to call this '_html'
-destination: ./_html
-
 # Output different HTML structures based on intent.
 # You can change these here, or rather override by loading two config files at the command line, e.g.:
 # jekyll build -c _config.yml,_config.epub.yml
