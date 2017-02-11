@@ -65,12 +65,20 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p config=
     ECHO.
+    :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    SET /p mathjax=
     :: Loop back to this point to refresh the build and PDF
     :printpdfrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,%config%"
+    :: Skip PhantomJS if we're not using MathJax.
+    IF "%mathjax%"=="" GOTO printpdfafterphantom
+    :: Run this through phantom for extra magic
+    CALL phantomjs _site\assets\js\render-mathjax.js
+    :printpdfafterphantom
     :: Navigate into the book's folder in _site output
     CD _site\%bookfolder%\text\"%subdirectory%"
     :: Let the user know we're now going to make the PDF
@@ -130,12 +138,20 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p config=
     ECHO.
+    :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    SET /p mathjax=
     :: Loop back to this point to refresh the build and PDF
     :screenpdfrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.image-set.screen-pdf.yml,%config%"
+    :: Skip PhantomJS if we're not using MathJax.
+    IF "%mathjax%"="" GOTO screenpdfafterphantom
+    :: Run this through phantom for extra magic
+    CALL phantomjs _site\assets\js\render-mathjax.js
+    :screenpdfafterphantom
     :: Navigate into the book's folder in _site output
     CD _site\%bookfolder%\text\"%subdirectory%"
     :: Let the user know we're now going to make the PDF
@@ -254,12 +270,20 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p config=
     ECHO.
+    :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    SET /p mathjax=
     :: Loop back to this point to refresh the build again
     :epubrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,%config%"
+    :: Skip PhantomJS if we're not using MathJax.
+    IF "%mathjax%"="" GOTO epubafterphantom
+    :: Run this through phantom for extra magic
+    CALL phantomjs _site\assets\js\render-mathjax.js
+    :epubafterphantom
     :: Navigate into the book's folder in _site output
     CD _site\%bookfolder%\text\"%subdirectory%"
     :: Let the user know we're now going to open Sigil
