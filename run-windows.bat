@@ -67,15 +67,21 @@ SET /p process=Enter a number and hit return.
     ECHO.
     :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
     ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
-    SET /p mathjax=
+    SET /p print-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :printpdfrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
+    :: with MathJax enabled if necessary
+    IF "%print-pdf-mathjax%"=="" GOTO printpdfnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    GOTO printpdfjekylldone
+    :printpdfnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,%config%"
+    :printpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF "%mathjax%"=="" GOTO printpdfafterphantom
+    IF "%print-pdf-mathjax%"=="" GOTO printpdfafterphantom
     :: Run this through phantom for extra magic
     CALL phantomjs _site\assets\js\render-mathjax.js
     :printpdfafterphantom
@@ -140,15 +146,21 @@ SET /p process=Enter a number and hit return.
     ECHO.
     :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
     ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
-    SET /p mathjax=
+    SET /p screen-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :screenpdfrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.image-set.screen-pdf.yml,%config%"
+    :: with MathJax enabled if necessary
+    IF "%screen-pdf-mathjax%"=="" GOTO screenpdfnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    GOTO screenpdfjekylldone
+    :screenpdfnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,%config%"
+    :screenpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF "%mathjax%"="" GOTO screenpdfafterphantom
+    IF "%screen-pdf-mathjax%"="" GOTO screenpdfafterphantom
     :: Run this through phantom for extra magic
     CALL phantomjs _site\assets\js\render-mathjax.js
     :screenpdfafterphantom
@@ -204,6 +216,9 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p baseurl=
     ECHO.
+    :: Ask if MathJax should be enabled.
+    ECHO Do these books use MathJax? If no, hit enter. If yes, enter any key then enter.
+    SET /p webmathjax=
     :: let the user know we're on it!
     ECHO Getting your site ready...
     ECHO You may need to reload the web page once this server is running.
@@ -214,8 +229,13 @@ SET /p process=Enter a number and hit return.
         :: Open the web browser
         :: (This is before jekyll s, because jekyll s pauses the script.)
         START "" "http://127.0.0.1:4000/%baseurl%/"
-        :: Run Jekyll
+        :: Run Jekyll, with MathJax enabled if necessary
+        IF "%webmathjax%"=="" GOTO webnomathjax
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
+        GOTO webjekyllserved
+        :webnomathjax
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,%config%" --baseurl="/%baseurl%"
+        :webjekyllserved
         :: And we're done here
         GOTO websiterepeat
         :: Route 2, for serving without a baseurl
@@ -223,8 +243,13 @@ SET /p process=Enter a number and hit return.
         :: Open the web browser
         :: (This is before jekyll s, because jekyll s pauses the script.)
         START "" "http://127.0.0.1:4000/"
-        :: Run Jekyll
+        :: Run Jekyll, with MathJax enabled if necessary
+        IF "%webmathjax%"=="" GOTO webnomathjax
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
+        GOTO webjekyllserved
+        :webnomathjax
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,%config%" --baseurl=""
+        :webjekyllserved
     :: Let the user rebuild and restart
     :: 
     :: TO DO: This is not yet working. The script ends when you Ctrl-C to stop the website.
@@ -272,15 +297,21 @@ SET /p process=Enter a number and hit return.
     ECHO.
     :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
     ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
-    SET /p mathjax=
+    SET /p epub-mathjax=
     :: Loop back to this point to refresh the build again
     :epubrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
+    :: with MathJax enabled if necessary
+    IF "%epub-mathjax%"=="" GOTO epubnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    GOTO epubjekylldone
+    :epubnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,%config%"
+    :epubjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF "%mathjax%"="" GOTO epubafterphantom
+    IF "%epub-mathjax%"="" GOTO epubafterphantom
     :: Run this through phantom for extra magic
     CALL phantomjs _site\assets\js\render-mathjax.js
     :epubafterphantom
