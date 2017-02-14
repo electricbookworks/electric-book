@@ -206,37 +206,42 @@ If not, just hit return."
 	##################
 	elif [ "$process" = 3 ]
 		then
-		# We're going to let users run this over and over by pressing enter
-		repeat=""
-		while [ "$repeat" = "" ]
-		do
-			echo "Okay, let's make a website..."
-			# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
-			echo -n "
+		echo "Okay, let's make a website..."
+		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
+		echo -n "
 Any extra config files?
 Enter filenames (including any relative path), comma separated, no spaces. E.g.
 _configs/_config.myconfig.yml
 If not, just hit return."
-			read config
-			# Ask the user to set a baseurl if needed
-			echo -n "Do you need a baseurl?
+		read config
+		# Ask the user to set a baseurl if needed
+		echo -n "Do you need a baseurl?
 If yes, enter it with no slashes at the start or end, e.g.
 my/base
 "
-			read baseurl
-			# let the user know we're on it!
-			echo "Getting your site ready...
+		read baseurl
+		# let the user know we're on it!
+		echo "Getting your site ready...
 You may need to reload the web page once this server is running."
-			# Open the web browser, without or, then, with the baseurl
-			# (This is before jekyll s, because jekyll s pauses the script.)
-			if [ "$baseurl" = "" ]
-			then
-				open "http://127.0.0.1:4000/"
-			else
-				open "http://127.0.0.1:4000/$baseurl/"
-			fi
+		# Open the web browser, without or, then, with the baseurl
+		# (This is before jekyll s, because jekyll s pauses the script.)
+		if [ "$baseurl" = "" ]
+		then
+			open "http://127.0.0.1:4000/"
+		else
+			open "http://127.0.0.1:4000/$baseurl/"
+		fi
+		# We're going to let users run this over and over by pressing enter
+		repeat=""
+		while [ "$repeat" = "" ]
+		do
 			# ...and run Jekyll
-			bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,$config" --baseurl="/$baseurl"
+			if [ "$baseurl" = "" ]
+				then
+				bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,$config" --baseurl=""
+			else
+				bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,$config" --baseurl="/$baseurl"
+			fi
 			# Ask the user if they want to rebuild the site
 			# TO DO: Not sure this works because Jekyll owns the terminal and Ctrl+C will kill it entirely?
 			repeat=""
