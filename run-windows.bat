@@ -160,7 +160,7 @@ SET /p process=Enter a number and hit return.
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,%config%"
     :screenpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF "%screen-pdf-mathjax%"="" GOTO screenpdfafterphantom
+    IF "%screen-pdf-mathjax%"=="" GOTO screenpdfafterphantom
     :: Run this through phantom for extra magic
     CALL phantomjs _site\assets\js\render-mathjax.js
     :screenpdfafterphantom
@@ -311,7 +311,7 @@ SET /p process=Enter a number and hit return.
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,%config%"
     :epubjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF "%epub-mathjax%"="" GOTO epubafterphantom
+    IF "%epub-mathjax%"=="" GOTO epubafterphantom
     :: Run this through phantom for extra magic
     CALL phantomjs _site\assets\js\render-mathjax.js
     :epubafterphantom
