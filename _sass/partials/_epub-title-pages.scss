@@ -34,9 +34,6 @@ $epub-title-pages: true !default;
 		}
 		.title-page-publisher {
 			text-indent: 0;
-		//	Now we'll center the block on the page
-			transform: translateX(-50%);
-		    margin-left: 50%;
 		}
 		.title-page-logo {
 			display: block; // In case the class is applied to the image, not the paragraph
