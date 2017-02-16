@@ -99,6 +99,7 @@ $nav-bar-scrollbar: true !default;
 $nav-bar-width: 15em !default;
 $nav-bar-fixed: false !default; // fixed is not fully supported on many mobile browsers
 $nav-bar-label-color: $color-mid !default;
+$nav-bar-label-background-color: $masthead-background-color !default;
 $nav-bar-border-color: $color-light !default;
 $nav-bar-background-color: white !default;
 $nav-bar-search-background-color: white !default;
