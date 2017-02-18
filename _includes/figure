@@ -28,9 +28,9 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
 <div class="figure-images contains-{{ number-of-images }}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}">
     {%for image in images %}
-        {% if include.link %}<a href="{{ include.link }}">{% else %}<a href="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}">{% endif %}
+        {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}">{% else %}{% endif %}
             <img src="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}" alt="{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}" />
-        </a>
+        {% if include.link or site.output == "web" %}</a>{% endif %}
     {% endfor %}
 </div>
 
