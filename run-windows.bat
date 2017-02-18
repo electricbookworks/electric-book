@@ -154,10 +154,10 @@ SET /p process=Enter a number and hit return.
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
     IF "%screen-pdf-mathjax%"=="" GOTO screenpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.image-set.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
     GOTO screenpdfjekylldone
     :screenpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.image-set.screen-pdf.yml,%config%"
     :screenpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
     IF "%screen-pdf-mathjax%"=="" GOTO screenpdfafterphantom
