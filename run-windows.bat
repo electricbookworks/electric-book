@@ -82,8 +82,12 @@ SET /p process=Enter a number and hit return.
     :printpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
     IF "%print-pdf-mathjax%"=="" GOTO printpdfafterphantom
-    :: Run this through phantom for extra magic
-    CALL phantomjs _site\assets\js\render-mathjax.js
+    :: Run this through phantom for extra magic,
+    :: We have to run the PhantomJS script from the folder it's in
+    :: for the directory paths to work.
+    CD _site\assets\js
+    CALL phantomjs render-mathjax.js
+    CD "%location%"
     :printpdfafterphantom
     :: Navigate into the book's folder in _site output
     CD _site\%bookfolder%\text\"%subdirectory%"
@@ -161,8 +165,12 @@ SET /p process=Enter a number and hit return.
     :screenpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
     IF "%screen-pdf-mathjax%"=="" GOTO screenpdfafterphantom
-    :: Run this through phantom for extra magic
-    CALL phantomjs _site\assets\js\render-mathjax.js
+    :: Run this through phantom for extra magic,
+    :: We have to run the PhantomJS script from the folder it's in
+    :: for the directory paths to work.
+    CD _site\assets\js
+    CALL phantomjs render-mathjax.js
+    CD "%location%"
     :screenpdfafterphantom
     :: Navigate into the book's folder in _site output
     CD _site\%bookfolder%\text\"%subdirectory%"
