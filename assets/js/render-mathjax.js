@@ -28,11 +28,11 @@ page.onCallback = function(data) {
       if (data.mathJaxDone === true) {
           console.log('Running removeMathJaxScripts.');
           page.evaluate(removeMathJaxScripts);
-          fs.write('_site/phantom' + urls[pageIndex], page.content, 'w');
-          console.log('Wrote _site/phantom' + urls[pageIndex]);
-          fs.remove('_site' + urls[pageIndex]);
+          fs.write('../../phantom' + urls[pageIndex], page.content, 'w');
+          console.log('Wrote /phantom' + urls[pageIndex]);
+          fs.remove('../..' + urls[pageIndex]);
           console.log('Deleted _site' + urls[pageIndex]);
-          fs.move('_site/phantom' + urls[pageIndex], '_site' + urls[pageIndex]);
+          fs.move('../../phantom' + urls[pageIndex], '../..' + urls[pageIndex]);
           console.log('Moved /phantom' + urls[pageIndex] + ' to _site' + urls[pageIndex]);
           console.log('----------------------------------------');
       }
@@ -42,10 +42,10 @@ page.onCallback = function(data) {
 setInterval(function() {
   if (pageIndex < urls.length) {
     if (!loadInProgress) {
-      page.open('./_site' + urls[pageIndex]);
+      page.open('../..' + urls[pageIndex]);
     }
   } else {
-    fs.removeTree('_site/phantom');
+    fs.removeTree('../../phantom');
     console.log('Removed temporary phantom directory inside _site/.');
     console.log('Done.');
     console.log('----------------------------------------');
@@ -103,6 +103,8 @@ var removeMathJaxScripts = function() {
 };
 console.log('----------------------------------------');
 console.log('Starting phantomjs to grab rendered MathJax.');
-fs.makeDirectory('_site/phantom/');
-console.log('Made temporary phantom directory inside _site/book.');
+if(fs.makeDirectory('../../phantom/'))
+    console.log('Made temporary phantom directory inside _site.');
+else
+    console.log('Could not create temporary phantom directory.');
 console.log('----------------------------------------');
