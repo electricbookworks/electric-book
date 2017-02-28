@@ -102,7 +102,7 @@ SET /p process=Enter a number and hit return.
     :: (For some reason this has to be run with CALL)
     SET print-pdf-filename=%bookfolder%-%subdirectory%
     IF "%subdirectory%"=="" SET print-pdf-filename=%bookfolder%
-    CALL prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf"
+    CALL prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
     :: Navigate back to where we began.
     CD "%location%"
     :: Tell the user we're done
@@ -181,7 +181,7 @@ SET /p process=Enter a number and hit return.
     :: (For some reason this has to be run with CALL)
     SET screen-pdf-filename=%bookfolder%-%subdirectory%
     IF "%subdirectory%"=="" SET screen-pdf-filename=%bookfolder%
-    CALL prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf"
+    CALL prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
     :: Navigate back to where we began.
     CD "%location%"
     :: Tell the user we're done

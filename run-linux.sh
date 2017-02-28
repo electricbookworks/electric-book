@@ -95,7 +95,7 @@ If not, just hit return."
 			fi
 			# Run prince, showing progress (-v), printing the docs in file-list
 			# and saving the resulting PDF to the _output folder
-			prince -v -l file-list -o ../../../_output/$printpdffilename.pdf
+			prince -v -l file-list -o ../../../_output/$printpdffilename.pdf --javascript
 			# Navigate back to where we began.
 			cd $location
 			# Tell the user we're done
@@ -180,7 +180,7 @@ If not, just hit return."
 			fi
 			# Run prince, showing progress (-v), printing the docs in file-list
 			# and saving the resulting PDF to the _output folder
-			prince -v -l file-list -o ../../../_output/$screenpdffilename.pdf
+			prince -v -l file-list -o ../../../_output/$screenpdffilename.pdf --javascript
 			# Navigate back to where we began.
 			cd $location
 			# Tell the user we're done
