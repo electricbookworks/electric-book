@@ -82,8 +82,12 @@ SET /p process=Enter a number and hit return.
     :printpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
     IF "%print-pdf-mathjax%"=="" GOTO printpdfafterphantom
-    :: Run this through phantom for extra magic
-    CALL phantomjs _site\assets\js\render-mathjax.js
+    :: Run this through phantom for extra magic,
+    :: We have to run the PhantomJS script from the folder it's in
+    :: for the directory paths to work.
+    CD _site\assets\js
+    CALL phantomjs render-mathjax.js
+    CD "%location%"
     :printpdfafterphantom
     :: Navigate into the book's folder in _site output
     CD _site\%bookfolder%\text\"%subdirectory%"
@@ -98,7 +102,7 @@ SET /p process=Enter a number and hit return.
     :: (For some reason this has to be run with CALL)
     SET print-pdf-filename=%bookfolder%-%subdirectory%
     IF "%subdirectory%"=="" SET print-pdf-filename=%bookfolder%
-    CALL prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf"
+    CALL prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
     :: Navigate back to where we began.
     CD "%location%"
     :: Tell the user we're done
@@ -161,8 +165,12 @@ SET /p process=Enter a number and hit return.
     :screenpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
     IF "%screen-pdf-mathjax%"=="" GOTO screenpdfafterphantom
-    :: Run this through phantom for extra magic
-    CALL phantomjs _site\assets\js\render-mathjax.js
+    :: Run this through phantom for extra magic,
+    :: We have to run the PhantomJS script from the folder it's in
+    :: for the directory paths to work.
+    CD _site\assets\js
+    CALL phantomjs render-mathjax.js
+    CD "%location%"
     :screenpdfafterphantom
     :: Navigate into the book's folder in _site output
     CD _site\%bookfolder%\text\"%subdirectory%"
@@ -173,7 +181,7 @@ SET /p process=Enter a number and hit return.
     :: (For some reason this has to be run with CALL)
     SET screen-pdf-filename=%bookfolder%-%subdirectory%
     IF "%subdirectory%"=="" SET screen-pdf-filename=%bookfolder%
-    CALL prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf"
+    CALL prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
     :: Navigate back to where we began.
     CD "%location%"
     :: Tell the user we're done
