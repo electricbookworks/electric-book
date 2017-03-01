@@ -25,11 +25,11 @@ $edition-suffix: null !default;
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson", serif !default;
-$font-text-secondary: "Crimson", sans-serif !default;
-$font-display-main: "Crimson", sans-serif !default;
-$font-display-secondary: "Crimson", serif !default;
-$font-code: "Inconsolata", monospace !default;
+$font-text-main: serif !default;
+$font-text-secondary: sans-serif !default;
+$font-display-main: sans-serif !default;
+$font-display-secondary: serif !default;
+$font-code: monospace !default;
 
 // Set font size and line-height in ems or px.
 // These values, especially $line-height-default, are used to compute vertical rhythm

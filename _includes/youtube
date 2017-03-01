@@ -7,7 +7,7 @@
 {% else %}
 
 <div class="video youtube" id="{{ include.id }}">
-    <a href="{{ include.link }}"><img src="../{{ site.image-set }}/{{ include.image }}"></a>
+    <a href="{{ include.link }}"><img src="{{ path-to-book-directory }}{{ site.image-set }}/{{ include.image }}"></a>
     <p class="video-description">
         <a href="{{ include.link }}">{{ include.description }}</a>
     </p>

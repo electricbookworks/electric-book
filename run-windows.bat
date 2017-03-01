@@ -48,31 +48,14 @@ SET /p process=Enter a number and hit return.
     ECHO.
     ECHO Okay, let's make a print-ready PDF.
     ECHO.
+    :: Remember where we are by assigning a variable to the current directory
+    SET location=%~dp0
     :: Ask user which folder to process
     SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
     IF "%bookfolder%"=="" SET bookfolder=book
-    :: Ask if we want to use a particular set of images
-    :chooseimageset
-    ECHO.
-    ECHO Do you want to use an output-specific image set? Hit enter for no, or pick a letter for yes:
-    ECHO.
-    ECHO P. Print PDF
-    ECHO E. EPUB
-    ECHO W. Web
-    ECHO S. Screen PDF
-    ECHO.
-    SET /p imageset=
-        IF "%imageset%"=="P" SET imageconfig=_configs/_config.image-set.print-pdf.yml
-        IF "%imageset%"=="p" SET imageconfig=_configs/_config.image-set.print-pdf.yml
-        IF "%imageset%"=="E" SET imageconfig=_configs/_config.image-set.epub.yml
-        IF "%imageset%"=="e" SET imageconfig=_configs/_config.image-set.epub.yml
-        IF "%imageset%"=="W" SET imageconfig=_configs/_config.image-set.web.yml
-        IF "%imageset%"=="w" SET imageconfig=_configs/_config.image-set.web.yml
-        IF "%imageset%"=="S" SET imageconfig=_configs/_config.image-set.screen-pdf.yml
-        IF "%imageset%"=="s" SET imageconfig=_configs/_config.image-set.screen-pdf.yml
-        GOTO otherconfigs
-    ECHO.
-    :otherconfigs
+    :: Ask if we're outputting the files from a subdirectory
+    SET /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+    :print-pdf-otherconfigs
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
@@ -82,14 +65,32 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p config=
     ECHO.
+    :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    SET /p print-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :printpdfrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%imageconfig%,%config%"
-    :: Navigate into the book's folder in _html output
-    CD _html\%bookfolder%\text
+    :: with MathJax enabled if necessary
+    IF "%print-pdf-mathjax%"=="" GOTO printpdfnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    GOTO printpdfjekylldone
+    :printpdfnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,%config%"
+    :printpdfjekylldone
+    :: Skip PhantomJS if we're not using MathJax.
+    IF "%print-pdf-mathjax%"=="" GOTO printpdfafterphantom
+    :: Run this through phantom for extra magic,
+    :: We have to run the PhantomJS script from the folder it's in
+    :: for the directory paths to work.
+    CD _site\assets\js
+    CALL phantomjs render-mathjax.js
+    CD "%location%"
+    :printpdfafterphantom
+    :: Navigate into the book's folder in _site output
+    CD _site\%bookfolder%\text\"%subdirectory%"
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Check if the _output folder exists, or create it if not.
@@ -99,16 +100,18 @@ SET /p process=Enter a number and hit return.
     :: Run prince, showing progress (-v), printing the docs in file-list
     :: and saving the resulting PDF to the _output folder
     :: (For some reason this has to be run with CALL)
-    CALL prince -v -l file-list -o ..\..\..\_output\%bookfolder%.pdf
+    SET print-pdf-filename=%bookfolder%-%subdirectory%
+    IF "%subdirectory%"=="" SET print-pdf-filename=%bookfolder%
+    CALL prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
     :: Navigate back to where we began.
-    CD ..\..\..
+    CD "%location%"
     :: Tell the user we're done
     ECHO Done! Opening PDF...
     :: Navigate to the _output folder...
     CD _output
     :: and open the PDF we just created 
     :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
-    start %bookfolder%.pdf
+    start %print-pdf-filename%.pdf
     :: Navigate back to where we began.
     CD ..\
     :: Let the user easily refresh the PDF by running jekyll b and prince again
@@ -128,9 +131,14 @@ SET /p process=Enter a number and hit return.
     ECHO.
     ECHO Okay, let's make a screen PDF.
     ECHO.
+    :: Remember where we are by assigning a variable to the current directory
+    SET location=%~dp0
     :: Ask user which folder to process
     SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
     IF "%bookfolder%"=="" SET bookfolder=book
+    :: Ask if we're outputting the files from a subdirectory
+    SET /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+    :screen-pdf-otherconfigs
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
@@ -140,29 +148,49 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p config=
     ECHO.
+    :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    SET /p screen-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :screenpdfrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
-    :: Navigate into the book's folder in _html output
-    CD _html\%bookfolder%\text
+    :: with MathJax enabled if necessary
+    IF "%screen-pdf-mathjax%"=="" GOTO screenpdfnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.image-set.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    GOTO screenpdfjekylldone
+    :screenpdfnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.image-set.screen-pdf.yml,%config%"
+    :screenpdfjekylldone
+    :: Skip PhantomJS if we're not using MathJax.
+    IF "%screen-pdf-mathjax%"=="" GOTO screenpdfafterphantom
+    :: Run this through phantom for extra magic,
+    :: We have to run the PhantomJS script from the folder it's in
+    :: for the directory paths to work.
+    CD _site\assets\js
+    CALL phantomjs render-mathjax.js
+    CD "%location%"
+    :screenpdfafterphantom
+    :: Navigate into the book's folder in _site output
+    CD _site\%bookfolder%\text\"%subdirectory%"
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Run prince, showing progress (-v), printing the docs in file-list
     :: and saving the resulting PDF to the _output folder
     :: (For some reason this has to be run with CALL)
-    CALL prince -v -l file-list -o ..\..\..\_output\%bookfolder%.pdf
+    SET screen-pdf-filename=%bookfolder%-%subdirectory%
+    IF "%subdirectory%"=="" SET screen-pdf-filename=%bookfolder%
+    CALL prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
     :: Navigate back to where we began.
-    CD ..\..\..
+    CD "%location%"
     :: Tell the user we're done
     ECHO Done! Opening PDF...
     :: Navigate to the _output folder...
     CD _output
     :: and open the PDF we just created 
     :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
-    start %bookfolder%.pdf
+    start %screen-pdf-filename%.pdf
     :: Navigate back to where we began.
     CD ..\
     :: Let the user easily refresh the PDF by running jekyll b and prince again
@@ -196,6 +224,9 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p baseurl=
     ECHO.
+    :: Ask if MathJax should be enabled.
+    ECHO Do these books use MathJax? If no, hit enter. If yes, enter any key then enter.
+    SET /p webmathjax=
     :: let the user know we're on it!
     ECHO Getting your site ready...
     ECHO You may need to reload the web page once this server is running.
@@ -206,8 +237,13 @@ SET /p process=Enter a number and hit return.
         :: Open the web browser
         :: (This is before jekyll s, because jekyll s pauses the script.)
         START "" "http://127.0.0.1:4000/%baseurl%/"
-        :: Run Jekyll
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl="/%baseurl%"
+        :: Run Jekyll, with MathJax enabled if necessary
+        IF "%webmathjax%"=="" GOTO webnomathjax
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
+        GOTO webjekyllserved
+        :webnomathjax
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,%config%" --baseurl="/%baseurl%"
+        :webjekyllserved
         :: And we're done here
         GOTO websiterepeat
         :: Route 2, for serving without a baseurl
@@ -215,8 +251,13 @@ SET /p process=Enter a number and hit return.
         :: Open the web browser
         :: (This is before jekyll s, because jekyll s pauses the script.)
         START "" "http://127.0.0.1:4000/"
-        :: Run Jekyll
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
+        :: Run Jekyll, with MathJax enabled if necessary
+        IF "%webmathjax%"=="" GOTO webnomathjax
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
+        GOTO webjekyllserved
+        :webnomathjax
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,%config%" --baseurl=""
+        :webjekyllserved
     :: Let the user rebuild and restart
     :: 
     :: TO DO: This is not yet working. The script ends when you Ctrl-C to stop the website.
@@ -250,6 +291,9 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p firstfile=
     IF "%firstfile%"=="" SET firstfile=0-0-cover
+    :: Ask if we're outputting the files from a subdirectory
+    SET /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+    :epub-otherconfigs
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
@@ -259,14 +303,28 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p config=
     ECHO.
+    :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    SET /p epub-mathjax=
     :: Loop back to this point to refresh the build again
     :epubrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
-    :: Navigate into the book's folder in _html output
-    CD _html\%bookfolder%\text
+    :: with MathJax enabled if necessary
+    IF "%epub-mathjax%"=="" GOTO epubnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    GOTO epubjekylldone
+    :epubnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,%config%"
+    :epubjekylldone
+    :: Skip PhantomJS if we're not using MathJax.
+    IF "%epub-mathjax%"=="" GOTO epubafterphantom
+    :: Run this through phantom for extra magic
+    CALL phantomjs _site\assets\js\render-mathjax.js
+    :epubafterphantom
+    :: Navigate into the book's folder in _site output
+    CD _site\%bookfolder%\text\"%subdirectory%"
     :: Let the user know we're now going to open Sigil
     ECHO Opening Sigil...
     :: Temporarily put Sigil in the PATH, whether x86 or not
@@ -274,7 +332,7 @@ SET /p process=Enter a number and hit return.
     :: and open the cover HTML file in it, to load metadata into Sigil
     START "" sigil.exe "%firstfile%.html"
     :: Open file explorer to make it easy to see the HTML to assemble
-    %SystemRoot%\explorer.exe "%location%_html\%bookfolder%\"
+    %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\%subdirectory%"
     :: Navigate back to where we began
     CD "%location%"
     :: Tell the user we're done
@@ -301,19 +359,18 @@ SET /p process=Enter a number and hit return.
     SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
     IF "%bookfolder%"=="" SET bookfolder=book
     :: Ask user which output type to work from
-    ECHO Which format are we converting? Enter P, S, or E:
-    ECHO P for print-pdf (default)
-    ECHO S for screen-pdf
-    ECHO E for epub
-    SET /p format=
+    ECHO Which format are we converting from? Enter a number or hit enter for the default:
+    ECHO 1. Print PDF (default)
+    ECHO 2. Screen PDF
+    ECHO 3. Web
+    ECHO 4. Epub
+    SET /p fromformat=
     :: Turn that choice into the name of an output format for our config
-    IF "%format%"=="" SET format=print-pdf
-    IF "%format%"=="P" SET format=print-pdf
-    IF "%format%"=="p" SET format=print-pdf
-    IF "%format%"=="S" SET format=screen-pdf
-    IF "%format%"=="s" SET format=screen-pdf
-    IF "%format%"=="E" SET format=epub
-    IF "%format%"=="e" SET format=epub
+    IF "%fromformat%"=="" SET fromformat=print-pdf
+    IF "%fromformat%"=="1" SET fromformat=print-pdf
+    IF "%fromformat%"=="2" SET fromformat=screen-pdf
+    IF "%fromformat%"=="3" SET fromformat=web
+    IF "%fromformat%"=="4" SET fromformat=epub
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
@@ -328,9 +385,9 @@ SET /p process=Enter a number and hit return.
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.%format%.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.image-set.%fromformat%.yml,%config%"
     :: Navigate to the HTML we just generated
-    CD _html\%bookfolder%\text
+    CD _site\%bookfolder%\text
     :: What're we doing?
     ECHO Converting %bookfolder% HTML to Word...
     :: Loop through the list of files in file-list
@@ -354,7 +411,7 @@ SET /p process=Enter a number and hit return.
     :: Whassup?
     ECHO Done, opening folder...
     :: Open file explorer to show the docx files.
-    %SystemRoot%\explorer.exe "%location%_html\%bookfolder%\text"
+    %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text"
     :: Navigate back to where we began
     CD "%location%"
     :: Let the user easily run that again

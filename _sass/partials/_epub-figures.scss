@@ -1,13 +1,7 @@
 $epub-figures: true !default;
 @if $epub-figures {
 
-	// Figures. Note: we use the blockquote element to wrap figures and their captions in valid XHTML. 
-	// This keeps them EPUB2 compatible (unlike the <figure> element, which is not.)
-	// Use the .figure class for the blockquote wrapping an image and a caption. 
-	// Add .fixed, .small and/or .large for layout and size options.
-
-	// To do:
-	// * Add styling for <figure> element as created with figure include
+	// Figures
 
 	.figure {
 		clear: both;
@@ -17,50 +11,79 @@ $epub-figures: true !default;
 		font-weight: inherit;
 		margin: $line-height-default 0;
 		padding: $line-height-default / 2;
-	}
-	.figure p {
-		clear: both;
-		text-align: center;
-		page-break-inside: avoid;
-		page-break-before: avoid;
-		hyphens: none;
-		font-style: italic;
-		em {
-			font-style: normal;
+		p {
+			clear: both;
+			text-align: center;
+			page-break-inside: avoid;
+			page-break-before: avoid;
+			hyphens: none;
+			font-style: italic;
+			em {
+				font-style: normal;
+			}
+			&:last-of-type {
+				margin-bottom: 0;
+			}
 		}
-	}
-	.figure p img, .figure img {
-		padding: ($line-height-default / 2) 0 ($line-height-default) 0;
-		margin: 0 auto;
-		max-width: 100%; 
-		object-fit: scale-down;
-		display: block;
-	}
-	// Captions added as a paragraph following the image inside the blockquote
-	// Note ADE may not support pseudo selectors
-	.figure .caption,
-	.figure p:nth-child(2) {
-		padding: ($line-height-default / 2) 0 0 0;
-		text-align: center;
-		text-indent: 0;
-	}
-	.figure.x-small p img {}
-	.figure.small p img {}
-	.figure.large p img {
-		max-height:inherit;
-	}
-
-	// No media queries here, because older ereaders such as ADE don't support them properly.
-
-	// Thumbnail figures
-	.figure.thumbnail {
-		max-width: 25%;
-		float: right;
-		margin: 0 0 0 ($line-height-default / 2);
-    	padding: 0;
-		img {
+		img, p img {
+			margin: 0 auto;
+			max-width: 100%; 
+			object-fit: scale-down;
+			display: block;
+		}
+		// No media queries here as in web-figures, because older ereaders don't support them properly.
+		.figure-body {
+			.figure-images {
+				text-align: center;
+				margin-bottom: $line-height-default;
+			}
+			.figure-html, .figure-md {
+				margin-bottom: $line-height-default;
+			}
+			.title {}
+			// Descriptions are hidden by default, and used for image alt text
+			.description {
+				display: none;
+			}
+			.caption {
+				margin: 0;
+				text-align: center;
+				text-indent: 0;
+				.figure-reference {
+					font-weight: bold;
+				}
+			}
+		}
+		.figure-source {
+			.source {}
+		}
+		// Paragraphs following the image inside the blockquote
+		// Allow for up to five
+		.caption,
+		p:nth-child(2),
+		p:nth-child(2) + p,
+		p:nth-child(2) + p + p,
+		p:nth-child(2) + p + p + p,
+		p:nth-child(2) + p + p + p + p {
 			padding: 0;
+			text-align: center;
+			text-indent: 0;
+		}
+		&.x-small, &.small, &.large {
+			p img, img {
+				max-height: inherit;
+			}
+		}
+		// No media queries here as in web-figures, because older ereaders don't support them properly.
+		// Thumbnail figures
+		&.thumbnail {
+			max-width: 25%;
+			float: right;
+			margin: 0 0 0 ($line-height-default / 2);
+	    	padding: 0;
+			img {
+				padding: 0;
+			}
 		}
 	}
-
 }

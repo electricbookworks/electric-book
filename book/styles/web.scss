@@ -96,12 +96,14 @@ $masthead-border-color: $color-light;
 // Website sidebar/navigation
 $nav-bar-text-size: 0.8em;
 $nav-bar-item-collapse: false; // Does the nav list fully expand, or collapse until mouseover?
+$nav-bar-close: "\00D7"; // &times; ×
 $nav-bar-children-prompt: "+";
 $nav-bar-children-prompt-hide: "\2212"; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true;
 $nav-bar-width: 15em;
 $nav-bar-fixed: false;
 $nav-bar-label-color: $color-mid;
+$nav-bar-label-background-color: $masthead-background-color;
 $nav-bar-border-color: $color-light;
 $nav-bar-background-color: white;
 $nav-bar-search-background-color: white;

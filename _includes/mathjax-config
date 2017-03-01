@@ -1,0 +1,55 @@
+{% comment %}Mathjax configuration{% endcomment %}
+
+{% if site.mathjax-enabled == true %}
+
+{% if site.output == "print-pdf" or site.output == "screen-pdf" %}
+
+<script id="MathJax"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG">
+</script>
+<script id="MathJaxConfig" type="text/x-mathjax-config" >
+MathJax.Hub.Config({
+    messageStyle: "none",
+    "SVG": {
+        scale: 75,
+        font: "{% if page.mathjax-font %}{{ page.mathjax-font }}{% else %}{{ site.mathjax-font }}{% endif %}",
+        matchFontHeight: false,
+        styles: {
+            ".MathJax [style*=border-top-width]": {
+                "border-top-width": "0.5pt ! important"
+            }
+        }
+    }
+});
+
+{% else %}
+
+<script id="MathJax"
+   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script id="MathJaxConfig" type="text/x-mathjax-config" >
+MathJax.Hub.Config({
+    "HTML-CSS": {
+        availableFonts: [], // force use of webFont
+        webFont: "{% if page.mathjax-font %}{{ page.mathjax-font }}{% else %}{{ site.mathjax-font }}{% endif %}",
+        scale: 90,
+        styles: {
+            ".MathJax [style*=border-top-width]": {
+                "border-top-width": "0.5pt ! important"
+            }
+        }
+    }
+});
+
+{% endif %}
+
+MathJax.Hub.Queue(
+    // fires after MathJax is done
+    function () {
+        if (typeof window.callPhantom === 'function') {
+            window.callPhantom({ mathJaxDone: true});
+        }
+    }
+);
+</script>
+{% endif %}

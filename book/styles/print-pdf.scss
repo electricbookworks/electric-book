@@ -56,10 +56,10 @@ $black-ink: true; // true or rich (true for pure black or rich for rich black)
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson Text", serif;
+$font-text-main: "Crimson", serif;
 $font-text-secondary: "Roboto Condensed", sans-serif;
 $font-display-main: "Roboto Condensed", sans-serif;
-$font-display-secondary: "Crimson Text", serif;
+$font-display-secondary: "Crimson", serif;
 $font-code: "Inconsolata", monospace;
 
 // Finally, we set variables related to text flow.

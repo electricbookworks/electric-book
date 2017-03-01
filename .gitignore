@@ -1,4 +1,8 @@
 _site/
-_html/
 .sass-cache/
 .jekyll-metadata
+
+# we don't .gitignore _output/, because we need that folder
+# for scripts to work, even if it's empty. Instead, there is
+# a .gitignore file in _output that ignores the folder's contents,
+# but, by its presence, keeps the folder in the repo.

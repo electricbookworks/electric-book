@@ -7,7 +7,7 @@ $web-nav-bar: true !default;
         font-family: $font-text-secondary;
         font-size: inherit;
         color: $nav-bar-label-color;
-        background-color: $masthead-background-color;
+        background-color: $nav-bar-label-background-color;
         border-radius: $button-border-radius;
         padding: 0.25em 0.5em;
         margin: 0.25em;
@@ -216,7 +216,7 @@ $web-nav-bar: true !default;
         position: relative;
     }
 
-    [data-toggle-nav] {
+    [data-toggle] {
         position: absolute;
         top: 0;
         right: 0;
@@ -226,22 +226,41 @@ $web-nav-bar: true !default;
         font-size: 1.25em;
         padding: 0 0.5em;
         margin: 0 0 0 -0.5em;
-        left: $nav-bar-width * 0.7; // Keeps item text aligned in complex lists
         height: 1.65em; // This magic number may not always work
         &:focus {
             outline: none;
         }
+        &:hover {
+            cursor: pointer;
+        }
         &:after {
-            content: $nav-bar-children-prompt;
             color: $nav-bar-children-prompt-color;
         }
         &.show-children {
             &:after {
-                content: $nav-bar-children-prompt-hide;
                 color: $nav-bar-children-prompt-color;
             }
         }
     }
+
+    [data-nav-close] {
+        &:after {
+            content: $nav-bar-close;
+        }
+    }
+
+    [data-toggle-nav] {
+        left: $nav-bar-width * 0.7; // Keeps item text aligned in complex lists
+        &:after {
+            content: $nav-bar-children-prompt;
+        }
+        &.show-children {
+            &:after {
+                content: $nav-bar-children-prompt-hide;
+            }
+        }
+    }
+
     // If link does not link to a file, make toggle cover entire link to expand children
     .no-file [data-toggle-nav] {
         margin-left: -($nav-bar-width * 0.7);
