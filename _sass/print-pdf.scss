@@ -45,6 +45,13 @@ $color-links: inherit !default;
 $color-highlight: #ffd54d !default;
 
 // PDF file setup options
+// Options for pdf-profile: PDF/A-1b, PDF/A-3b, PDF/X-1a:2001, PDF/X-1a:2003, PDF/X-3:2002, PDF/X-3:2003, PDF/X-4
+// Options for color profile:
+// - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
+// - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
+// Add other ICC profiles to /assets/profiles
+$pdf-profile: "PDF/X-1a:2001" !default;
+$color-profile: "PSOcoated_v3.icc" !default;
 $black-ink: true !default; // true or rich (true for pure black or rich for rich black)
 
 // We name font variables for two categories:
