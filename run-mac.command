@@ -82,7 +82,7 @@ If not, just hit return."
 				# We have to go to the folder for Phantom to work
 				cd _site/assets/js
 				phantomjs render-mathjax.js
-				cd $location
+				cd "$location"
 			fi
 			# Navigate into the book's folder in _site output
 			cd _site/$bookfolder/text/$printpdfsubdirectory
@@ -99,7 +99,7 @@ If not, just hit return."
 			# and saving the resulting PDF to the _output folder
 			prince -v -l file-list -o ../../../_output/$printpdffilename.pdf --javascript
 			# Navigate back to where we began.
-			cd $location
+			cd "$location"
 			# Tell the user we're done
 			echo Done! Opening PDF...
 			# Navigate to the _output folder...
@@ -167,7 +167,7 @@ If not, just hit return."
 				# We have to go to the folder for Phantom to work
 				cd _site/assets/js
 				phantomjs render-mathjax.js
-				cd $location
+				cd "$location"
 			fi
 			# Navigate into the book's folder in _site output
 			cd _site/$bookfolder/text/$screenpdfsubdirectory
@@ -184,7 +184,7 @@ If not, just hit return."
 			# and saving the resulting PDF to the _output folder
 			prince -v -l file-list -o ../../../_output/$screenpdffilename.pdf --javascript
 			# Navigate back to where we began.
-			cd $location
+			cd "$location"
 			# Tell the user we're done
 			echo Done! Opening PDF...
 			# Navigate to the _output folder...
@@ -314,7 +314,7 @@ If not, just hit return."
 			# (for Linux, this is xdg-open, not open)
 			open .
 			# Navigate back to where we started
-			cd $location
+			cd "$location"
 			# Ask the user if they want to refresh the PDF by running Jekyll and Prince again
 			repeat=""
 			echo "Enter to run again, or any other key and enter to stop."
@@ -421,7 +421,7 @@ If not, just hit return."
 			# (for Linux, this is xdg-open, not open)
 			open .
 			# Navigate back to where we began.
-			cd $location
+			cd "$location"
 			# Ask the user if they want to run that again
 			repeat=""
 			echo "Enter to run again, or any other key and enter to stop."
