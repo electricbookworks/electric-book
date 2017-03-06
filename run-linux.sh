@@ -45,7 +45,7 @@ Enter a number and hit enter. "
 		fi
 		echo "Okay, let's make a print-ready PDF using $bookfolder..."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
-		echo "If you're outputting file in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
+		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read printpdfsubdirectory
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
 		echo -n "
@@ -130,7 +130,7 @@ If not, just hit return."
 		fi
 		echo "Okay, let's make a screen PDF using $bookfolder..."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
-		echo "If you're outputting file in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
+		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read screenpdfsubdirectory
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
 		echo -n "
@@ -264,7 +264,7 @@ You may need to reload the web page once this server is running."
 		fi
 		echo "Okay, let's make epub-ready files using $bookfolder..."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
-		echo "If you're outputting file in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
+		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read epubsubdirectory
 		echo -n "What is the first file in your book? Usually the cover.
 (Don't include the file extension. Hit enter for the default '0-0-cover'.) "
