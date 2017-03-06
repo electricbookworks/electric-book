@@ -45,7 +45,7 @@ Enter a number and hit enter. "
 		fi
 		echo "Okay, let's make a print-ready PDF using $bookfolder..."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
-		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
+		echo "If you're outputting file in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read printpdfsubdirectory
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
 		echo -n "
@@ -80,7 +80,7 @@ If not, just hit return."
 				# We have to go to the folder for Phantom to work
 				cd _site/assets/js
 				phantomjs render-mathjax.js
-				cd $location
+				cd "$location"
 			fi
 			# Navigate into the book's folder in _site output
 			cd _site/$bookfolder/text/$printpdfsubdirectory
@@ -95,9 +95,9 @@ If not, just hit return."
 			fi
 			# Run prince, showing progress (-v), printing the docs in file-list
 			# and saving the resulting PDF to the _output folder
-			prince -v -l file-list -o ../../../_output/$printpdffilename.pdf --javascript
+			prince -v -l file-list -o ../../../_output/$printpdffilename.pdf
 			# Navigate back to where we began.
-			cd $location
+			cd "$location"
 			# Tell the user we're done
 			echo Done! Opening PDF...
 			# Navigate to the _output folder...
@@ -130,7 +130,7 @@ If not, just hit return."
 		fi
 		echo "Okay, let's make a screen PDF using $bookfolder..."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
-		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
+		echo "If you're outputting file in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read screenpdfsubdirectory
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
 		echo -n "
@@ -165,7 +165,7 @@ If not, just hit return."
 				# We have to go to the folder for Phantom to work
 				cd _site/assets/js
 				phantomjs render-mathjax.js
-				cd $location
+				cd "$location"
 			fi
 			# Navigate into the book's folder in _site output
 			cd _site/$bookfolder/text/$screenpdfsubdirectory
@@ -180,9 +180,9 @@ If not, just hit return."
 			fi
 			# Run prince, showing progress (-v), printing the docs in file-list
 			# and saving the resulting PDF to the _output folder
-			prince -v -l file-list -o ../../../_output/$screenpdffilename.pdf --javascript
+			prince -v -l file-list -o ../../../_output/$screenpdffilename.pdf
 			# Navigate back to where we began.
-			cd $location
+			cd "$location"
 			# Tell the user we're done
 			echo Done! Opening PDF...
 			# Navigate to the _output folder...
@@ -264,7 +264,7 @@ You may need to reload the web page once this server is running."
 		fi
 		echo "Okay, let's make epub-ready files using $bookfolder..."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
-		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
+		echo "If you're outputting file in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read epubsubdirectory
 		echo -n "What is the first file in your book? Usually the cover.
 (Don't include the file extension. Hit enter for the default '0-0-cover'.) "
@@ -311,7 +311,7 @@ If not, just hit return."
 			# Open file browser to see epub-ready HTML files
 			xdg-open .
 			# Navigate back to where we started
-			cd $location
+			cd "$location"
 			# Ask the user if they want to refresh the PDF by running Jekyll and Prince again
 			repeat=""
 			echo "Enter to run again, or any other key and enter to stop."
@@ -417,7 +417,7 @@ If not, just hit return."
 			# Open file explorer to show the docx files
 			xdg-open .
 			# Navigate back to where we began.
-			cd $location
+			cd "$location"
 			# Ask the user if they want to run that again
 			repeat=""
 			echo "Enter to run again, or any other key and enter to stop."
