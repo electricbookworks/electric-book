@@ -16,17 +16,17 @@ Adjust HTML based on output format.
 
 {% if site.output == "web" %}
 
-[![Cover]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}]({{ web-start-page }})
+[![{{ title }}]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}]({{ web-start-page }})
 {:.cover}
 
 {% elsif site.output == "epub" %}
 
-![Cover](../Images/{{ image }}){:.cover}
+![{{ title }}](../Images/{{ image }}){:.cover}
 {:.cover}
 
 {% else %}
 
-![Cover]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}
+![{{ title }}]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}
 {:.cover}
 
 {% endif %}
