@@ -99,6 +99,11 @@ exclude:
 keep_files:
 # - css
 
+# Configure HTML compression
+# See https://github.com/penibelst/jekyll-compress-html
+compress_html:
+  blanklines: true
+
 # ----------------------------
 # DO NOT CHANGE THESE SETTINGS
 # ----------------------------
