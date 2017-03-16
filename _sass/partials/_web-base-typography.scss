@@ -73,22 +73,17 @@ $web-base-typography: true !default;
         list-style-type: lower-alpha;
     }
 
-
     // Blockquotes
 
     blockquote {
-        margin: $line-height-default 0 $line-height-default 0;
+        margin: $line-height-default 0;
         padding: 0 $line-height-default;
-    }
-    // Suspect this isn't necessary. To remove after testing.
-    // blockquote p {
-    //  line-height: $line-height-default;
-    // }
-    blockquote p:first-of-type {
-        text-indent: 0;
-    }
-    blockquote p:last-of-type, blockquote ol, blockquote ul {
-        margin: 0 0 $line-height-default 0;
+        p:first-of-type {
+            text-indent: 0;
+        }
+        p:last-child, & ol:last-child, & ul:last-child {
+            margin-bottom: 0;
+        }
     }
 
     // Definition lists
