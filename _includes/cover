@@ -7,6 +7,16 @@
     {% capture image %}cover.jpg{% endcapture %}
 {% endif %}
 
+{% comment %}If this is a default cover image, i.e. assuming cover.jpg
+and it's being used in a translation, add the language code as a path
+to the image of the translated cover. This depends on the user
+saving cover.jpg to images/languagecode/{% endcomment %}
+{% if image == "cover.jpg" %}
+    {% if is-translation %}
+        {% capture image %}{{ language }}/cover.jpg{% endcapture %}
+    {% endif %}
+{% endif %}
+
 {% comment %}
 Adjust HTML based on output format.
 * For web, link the cover to the start page.
