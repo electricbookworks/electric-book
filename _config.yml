@@ -96,6 +96,7 @@ exclude:
 # Can be useful to stop Jekyll overwriting files in _site.
 # E.g. generate CSS once, then exclude above but keep here
 # to make content regeneration faster.
+# The file path is relative to the site.output directory.
 keep_files:
 # - css
 
