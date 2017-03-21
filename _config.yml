@@ -84,6 +84,7 @@ image-set: "images/web"
 # Jekyll will ignore these files and folders. 
 # Useful for temporarily speeding up processing for particular files
 # Once your CSS is stable, exclude `css` here and keep it below under `keep_files`.
+# Include the file extension too. E.g. book/text/01.md
 exclude:
 # - css
 # - book
@@ -96,6 +97,7 @@ exclude:
 # Can be useful to stop Jekyll overwriting files in _site.
 # E.g. generate CSS once, then exclude above but keep here
 # to make content regeneration faster.
+# The file path is relative to the site.output directory.
 keep_files:
 # - css
 
