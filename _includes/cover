@@ -1,0 +1,32 @@
+{% include metadata %}
+
+{% comment %}Let the user specify a different image file{% endcomment %}
+{% if include.image %}
+    {% capture image %}{{ include.image }}{% endcapture %}
+{% else %}
+    {% capture image %}cover.jpg{% endcapture %}
+{% endif %}
+
+{% comment %}
+Adjust HTML based on output format.
+* For web, link the cover to the start page.
+* For epub, use Sigil's file path structure.
+* For other outputs (screen-pdf and print-pdf) use just the image.
+{% endcomment %}
+
+{% if site.output == "web" %}
+
+[![{{ title }}]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}]({{ web-start-page }})
+{:.cover}
+
+{% elsif site.output == "epub" %}
+
+![{{ title }}](../Images/{{ image }}){:.cover}
+{:.cover}
+
+{% else %}
+
+![{{ title }}]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}
+{:.cover}
+
+{% endif %}

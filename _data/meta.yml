@@ -6,7 +6,7 @@ series:
   # The name of the organisation or entity that owns this series
   organisation: "My Organisation"
   # A live web address for the organisation
-  url: "https://example.com/"
+  url: "http://example.com/"
   # The default contact email address
   email: "name@example.com"
   # The name of the series of books in this folder.

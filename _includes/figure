@@ -1,17 +1,82 @@
+{% capture this-figure %}
 {% comment %}
 To do: create HTML5 <figure> option here based on site.output
-when theme stylesheet has definitions. Problem is that Jekyll/kramdown 
-adds paragraph tags around the include.foo arguments. 
 {% endcomment %}
 
-> ![{{ include.description }}](../{{ site.image-set}}/{{ include.image }})
-> {% if include.image-height != nil %}{:.height-{{ include.image-height }}}{% endif %}
->
-> {% if include.reference != nil %}*{{ include.reference }}*{:.figure-reference} {% endif %}{{ include.caption }}
-> {:.caption}
-{:.figure}
+{% include metadata %}
 
-{% if include.source != nil %}
-{{ include.source }}
-{:.source }
+{% comment %}
+Get the list of images, whether included as `image` or `images`
+and remove spaces that might be around commas.
+Put the comma-separated images into an array.
+Then get the total number of images in the array.
+{% endcomment %}
+{% capture image-list %}{{ include.image | remove: " " }}{% if include.image and include.images %},{% endif %}{{ include.images | remove: " " }}{% endcapture %}
+{% assign images = image-list | split: "," %}
+{% assign number-of-images = images | size %}
+
+{% comment %}
+Then create our figure, using multiple images if necessary.
+This uses a blockquote element to be XHTML-1.1 compliant for EPUB2.
+We have to do funky remove: '<p>' | remove: '</p>' | strip_newlines
+because https://github.com/jekyll/jekyll/issues/2248.
+{% endcomment %}
+
+<blockquote class="figure{% if include.class %} {{ include.class }}{% endif %}"{% if include.reference %} id="{{ include.reference | slugify }}"{% endif %}>
+
+<div class="figure-body">
+
+<div class="figure-images contains-{{ number-of-images }}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}">
+    {%for image in images %}
+        {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}">{% else %}{% endif %}
+            <img src="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}" alt="{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}" />
+        {% if include.link or site.output == "web" %}</a>{% endif %}
+    {% endfor %}
+</div>
+
+{% if include.html %}
+<div class="figure-html">
+{{ include.html }}
+</div>
 {% endif %}
+
+{% if include.markdown %}
+<div class="figure-md">
+{{ include.markdown | markdownify }}
+</div>
+{% endif %}
+
+{% if include.title %}
+<p class="title">
+{{ include.title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+</p>
+{% endif %}
+
+{% if include.description %}
+<p class="description">
+{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+</p>
+{% endif %}
+
+{% if include.caption %}
+<p class="caption">
+{% if include.reference %}<span class="figure-reference">{{ include.reference }} </span>{% endif %}
+{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+</p>
+{% endif %}
+
+</div><!--.figure-body-->
+
+{% if include.source %}
+
+<div class="figure-source">
+<p class="source">
+{{ include.source | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+</p>
+</div><!--.figure-source-->
+
+{% endif %}
+
+</blockquote>
+{% endcapture %}
+{{ this-figure | strip_newlines }}

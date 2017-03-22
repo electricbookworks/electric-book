@@ -4,7 +4,11 @@
 
 {% for file in print-pdf-file-list %}
 {% for file-title in file %}
+{% if file-title[0] %}
+{{ file-title[0] }}.html
+{% else %}
 {{ file-title }}.html
+{% endif %}
 {% endfor %}
 {% endfor %}
 
@@ -15,7 +19,11 @@
 
 {% for file in screen-pdf-file-list %}
 {% for file-title in file %}
+{% if file-title[0] %}
+{{ file-title[0] }}.html
+{% else %}
 {{ file-title }}.html
+{% endif %}
 {% endfor %}
 {% endfor %}
 
@@ -26,7 +34,11 @@
 
 {% for file in epub-file-list %}
 {% for file-title in file %}
+{% if file-title[0] %}
+{{ file-title[0] }}.html
+{% else %}
 {{ file-title }}.html
+{% endif %}
 {% endfor %}
 {% endfor %}
 
@@ -37,7 +49,11 @@
 
 {% for file in web-file-list %}
 {% for file-title in file %}
+{% if file-title[0] %}
 {{ file-title[0] }}.html
+{% else %}
+{{ file-title }}.html
+{% endif %}
 {% endfor %}
 {% endfor %}
 

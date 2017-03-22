@@ -10,6 +10,8 @@ $print-pdf-view: true !default;
     	prince-pdf-print-scaling: auto; // auto | none
     	prince-pdf-script: ""; // Insert Javascript between the quotes if needed: http://www.princexml.com/doc/properties/prince-pdf-script/
         prince-pdf-color-options: use-#{$black-ink}-black; //  takes two values, use-true-black (/DeviceGray black in the PDF) and use-rich-black (/DeviceRGB black in PDF)
+        prince-pdf-profile: $pdf-profile;
+        prince-pdf-output-intent: url("../../assets/profiles/#{$color-profile}");
     }
 
     // Make the PDF page labels (numbers in PDF navigation) match the numbers of the book pages
