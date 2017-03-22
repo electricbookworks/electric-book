@@ -4,4 +4,4 @@ title: Search
 
 # Search
 
-{% include search %}
+{% include search.html %}

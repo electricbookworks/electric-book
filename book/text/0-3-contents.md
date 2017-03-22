@@ -5,4 +5,4 @@ style: contents-page
 
 # Contents
 
-{% include toc %}
+{% include toc.html %}

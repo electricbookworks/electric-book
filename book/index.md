@@ -4,4 +4,4 @@
 type: redirect
 ---
 
-{% include redirect target="text" %}
+{% include redirect.html target="text" %}

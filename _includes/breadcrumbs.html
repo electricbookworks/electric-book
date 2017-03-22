@@ -2,7 +2,7 @@
 Works much like nav-list, passing child items to itself
 as new parameters to drill down through web-nav-tree,
 and outputting only list items relevant to the current file.
-Include in content with {% include breadcrumbs breadcrumb-tree=web-nav-tree %}.
+Include in content with {% include breadcrumbs.html breadcrumb-tree=web-nav-tree %}.
 The crumbs-array is created empty in _includes/metadata.
 {% endcomment %}
 
@@ -27,7 +27,7 @@ The crumbs-array is created empty in _includes/metadata.
             {% endfor %}
             <li>{{ item.label | strip_newlines | strip }}</li>
         {% else %}
-            {% include breadcrumbs breadcrumb-tree=children crumbs-array=crumbs-array %}
+            {% include breadcrumbs.html breadcrumb-tree=children crumbs-array=crumbs-array %}
         {% endif %}
     {% endfor %}
 {% else %}
