@@ -12,6 +12,7 @@ Put the comma-separated images into an array.
 Then get the total number of images in the array.
 {% endcomment %}
 {% capture image-list %}{{ include.image | remove: " " }}{% if include.image and include.images %},{% endif %}{{ include.images | remove: " " }}{% endcapture %}
+
 {% assign images = image-list | split: "," %}
 {% assign number-of-images = images | size %}
 
@@ -67,15 +68,15 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
 </div><!--.figure-body-->
 
-<div class="figure-source">
-
 {% if include.source %}
+
+<div class="figure-source">
 <p class="source">
 {{ include.source | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
-{% endif %}
-
 </div><!--.figure-source-->
+
+{% endif %}
 
 </blockquote>
 {% endcapture %}
