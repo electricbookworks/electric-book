@@ -67,15 +67,15 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
 </div><!--.figure-body-->
 
-<div class="figure-source">
-
 {% if include.source %}
+
+<div class="figure-source">
 <p class="source">
 {{ include.source | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
-{% endif %}
-
 </div><!--.figure-source-->
+
+{% endif %}
 
 </blockquote>
 {% endcapture %}
