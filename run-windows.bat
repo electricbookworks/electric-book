@@ -292,7 +292,8 @@ SET /p process=Enter a number and hit return.
     SET /p firstfile=
     IF "%firstfile%"=="" SET firstfile=0-0-cover
     :: Ask if we're outputting the files from a subdirectory
-    SET /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+    ECHO If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+    SET /p subdirectory=
     :epub-otherconfigs
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
@@ -332,7 +333,7 @@ SET /p process=Enter a number and hit return.
     :: and open the cover HTML file in it, to load metadata into Sigil
     START "" sigil.exe "%firstfile%.html"
     :: Open file explorer to make it easy to see the HTML to assemble
-    %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\%subdirectory%"
+    %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text\%subdirectory%"
     :: Navigate back to where we began
     CD "%location%"
     :: Tell the user we're done
