@@ -9,7 +9,7 @@
             {% endif %}
 
             <div class="search">
-                {% include search %}
+                {% include search.html %}
             </div><!--.search-->
 
             <div class="nav-list">
@@ -29,7 +29,7 @@
                         {% for work in site.data.meta.works | sort: "order" %}
                             {% assign home-nav-work-directory = work.directory %}
                             {% assign home-nav-work-tree = work.products.web.nav %}
-                            {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                            {% include nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                         {% endfor %}
 
                     {% else %}
@@ -43,7 +43,7 @@
                                     {{ work.title }}
                                 </a>
                             </li>
-                            {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                            {% include nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                         {% endfor %}
                         </ol>
 
@@ -52,14 +52,14 @@
                 {% else %}
 
                     {% comment %}Fetch recursive navigation{% endcomment %}
-                    {% include nav-list nav-tree=web-nav-tree %}
+                    {% include nav-list.html nav-tree=web-nav-tree %}
 
                 {% endif %}
 
             </div><!--.nav-list-->
 
             <div class="widgets">
-                {% include widgets %}
+                {% include widgets.html %}
             </div><!--.widgets-->
 
         </div><!--#nav-->

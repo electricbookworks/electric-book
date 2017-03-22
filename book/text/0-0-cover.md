@@ -3,4 +3,4 @@ title: Cover
 style: cover
 ---
 
-{% include cover %}
+{% include cover.html %}

@@ -26,7 +26,7 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
                 {{ item.label }}
             </a>
             {% if item.children != nil %}
-              {% include nav-list nav-tree=item.children directory=include.directory %}
+              {% include nav-list.html nav-tree=item.children directory=include.directory %}
             {% endif %}
         </li>
     {% endfor %}
@@ -48,7 +48,7 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
                 {{ item.label }}
             </a>
             {% if item.children != nil %}
-              {% include nav-list nav-tree=item.children %}
+              {% include nav-list.html nav-tree=item.children %}
             {% endif %}
         </li>
     {% endfor %}
