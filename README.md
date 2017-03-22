@@ -13,6 +13,10 @@ A Jekyll template for making books, ebooks and book-like websites.
 
 [Read the guide](http://electricbook.works) for much more. The guide is also an example of the template in action.
 
+### Note on `_includes`
+
+We have a fair number of files in `_includes`. To make them more friendly to use and read, we omit the `.html` file extension. Anything that does have a `.html` file extension is a bit more techie and usually won't require editing.
+
 ## Known bugs on Windows
 
 **Jekyll 3.2.1** does not run on Windows due to [a bug](https://github.com/jekyll/jekyll/issues/5192). Until this is fixed, [a workaround](https://github.com/jekyll/jekyll/issues/5192#issuecomment-237484567):
