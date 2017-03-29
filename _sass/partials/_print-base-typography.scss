@@ -117,24 +117,24 @@ $print-base-typography: true !default;
 		page-break-before:avoid;
 	}
 
-	// Blockquotes
+    // Blockquotes
 
-	blockquote {
-		margin: $line-height-default 0 0 0;
-		padding: 0 $line-height-default;
-	}
-	blockquote p {
-		margin: 0;
-		padding: 0;
-	}
-	blockquote p:first-of-type {
-		text-indent: 0;
-	}
-	blockquote p:last-of-type, blockquote ol, blockquote ul {
-		margin: 0 0 $line-height-default 0;
-	}
+    blockquote {
+        margin: $line-height-default 0;
+        padding: 0 $line-height-default;
+		p {
+			margin: 0;
+			padding: 0;
+		}
+        p:first-of-type {
+            text-indent: 0;
+        }
+        p:last-child, & ol:last-child, & ul:last-child {
+            margin-bottom: 0;
+        }
+    }
 
-	/* Definition lists */
+	// Definition lists
 
 	dl {
 		margin: $line-height-default 0;
