@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.7.0
+
+* Add support for translations as subdirectories of `text`
+* Add MathJax output in PDF
+* Assume/force use of format-specific image-sets
+* Far more powerful `figure` include (and related styling)
+* PDF export now conforms to major standards: X1-a for print-pdf, A-3b for screen-pdf.
+* Add ability to change the PDF profile and colour intent in Sass config.
+* Change Jekyll destination back to `_site_` (no longer non-standard `_html`)
+* More variables available from `include metadata`
+* Breadcrumb trail clickable, when destination files are defined in `meta.yml`'s web nav tree
+* Simpler, better way to [create book-cover files](https://github.com/electricbookworks/electric-book/pull/81)
+* Linux and Mac scripts fixed and updated
+* Javascript in Prince activated by default in scripts
+* HTML compressed with [compress.html](http://jch.penibelst.de/)
+* Minor fixes and improvements (including base typography, nav buttons, TOC layout, default font, Prose config, gitignore, output scripts)
+
 ## 0.6.3
 
 * Fix image-set bug in Windows batch file script
