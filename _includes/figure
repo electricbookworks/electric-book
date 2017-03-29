@@ -27,10 +27,10 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
 <div class="figure-body">
 
-<div class="figure-images contains-{{ number-of-images }}{% endif %}">
+<div class="figure-images contains-{{ number-of-images }}">
     {%for image in images %}
-        {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}">{% else %}{% endif %}
-            <img src="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}" alt="{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}" />
+        {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}">{% endif %}
+            <img src="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}" alt="{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
         {% if include.link or site.output == "web" %}</a>{% endif %}
     {% endfor %}
 </div>
