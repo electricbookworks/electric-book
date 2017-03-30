@@ -47,16 +47,17 @@ nav-source: nav
 # Enable MathJax to render mathematics. MathJax adds a large script to your pages,
 # so this is off (false) by default. Change to true to load MathJax.
 # See http://docs.mathjax.org/en/latest/configuration.html for details.
-# MathJax scripts are linked from the head-elements include.
+# MathJax scripts are loaded by mathjax-config include, where you can also
+# configure MathJax for your series. For MathJax font choices, see
+# http://docs.mathjax.org/en/latest/font-support.html
+# This font can be overridden per page by adding mathjax-font: "" to page frontmatter YAML.
+# To use MathJax in PDF output, you must have PhantomJS installed: http://phantomjs.org
 mathjax-enabled: false
+mathjax-font: "Gyre-Pagella"
 
 # --------------------------------------------
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
 # --------------------------------------------
-
-# By default Jekyll puts generated HTML in a _site folder. 
-# For Electric Book purposes, we prefer to call this '_html'
-destination: ./_html
 
 # Output different HTML structures based on intent.
 # You can change these here, or rather override by loading two config files at the command line, e.g.:
@@ -72,19 +73,18 @@ output: "web"
 # and high-res greyscale for print-pdf.
 # Set your default image set here. This refers to the `images`
 # directory in each book's directory, and then to any 
-# subdirectories you create per set. The default, `images`,
-# assumes you'll use the same images for all outputs.
-# (We use an uppercase I in Images for compatibility with Sigil, 
-# for epub output, where validation is case-sensitive.)
-image-set: "Images"
+# subdirectories you create per set. Default is images/web,
+# so that this works out of the box on GitHub Pages.
+# image-set: "images"
 # image-set: "images/epub"
-# image-set: "images/web"
+image-set: "images/web"
 # image-set: "images/print-pdf"
 # image-set: "images/screen-pdf"
 
 # Jekyll will ignore these files and folders. 
 # Useful for temporarily speeding up processing for particular files
 # Once your CSS is stable, exclude `css` here and keep it below under `keep_files`.
+# Include the file extension too. E.g. book/text/01.md
 exclude:
 # - css
 # - book
@@ -97,8 +97,14 @@ exclude:
 # Can be useful to stop Jekyll overwriting files in _site.
 # E.g. generate CSS once, then exclude above but keep here
 # to make content regeneration faster.
+# The file path is relative to the site.output directory.
 keep_files:
 # - css
+
+# Configure HTML compression
+# See https://github.com/penibelst/jekyll-compress-html
+compress_html:
+  blanklines: true
 
 # ----------------------------
 # DO NOT CHANGE THESE SETTINGS

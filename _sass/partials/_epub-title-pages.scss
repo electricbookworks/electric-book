@@ -3,7 +3,10 @@ $epub-title-pages: true !default;
 
 	// Halftitle-page and title-page
 
-	.title-page, .halftitle-page, .half-title-page {
+	.titlepage, 
+	.title-page, 
+	.halftitle-page, 
+	.half-title-page {
 		margin: $start-depth auto 0 auto;
 		text-align: center;
 		p {
@@ -11,39 +14,41 @@ $epub-title-pages: true !default;
 			hyphens: none;
 			text-align: center;
 		}
-		.title-page-title {
+		.half-title-page-title, 
+		.halftitle-page-title, 
+		.halftitlepage-title, 
+		.title-page-title, 
+		.titlepage-title {
 			font-weight: bold;
 			font-family: $font-display-main;
 			font-size: $font-size-default * $font-size-bigger;
 			line-height: 1;
 			margin: 0;
-			string-set: book-title content();
+			// string-set: book-title content(); // breaks entire CSS file in Adobe Digital Editions
 		}
-		.title-page-subtitle {
+		.title-page-subtitle, 
+		.titlepage-subtitle {
 			font-family: $font-display-main;
 			font-size: $font-size-default * $font-size-bigger;
 			line-height: 1;
 			margin: $line-height-default 0 $line-height-default 0;
-			string-set: book-subtitle content();
+			// string-set: book-subtitle content(); // breaks entire CSS file in Adobe Digital Editions
 		}
-		.title-page-author {
+		.title-page-author, 
+		.titlepage-author {
 			font-size: $font-size-default * $font-size-bigger;
 			line-height: 1;
 			margin: ($line-height-default * 2) 0;
-			string-set: book-author content();
+			// string-set: book-author content(); // breaks entire CSS file in Adobe Digital Editions
 		}
-		.title-page-publisher {
+		.title-page-publisher, 
+		.titlepage-publisher {
 			text-indent: 0;
-		//	Now we'll center the block on the page
-			transform: translateX(-50%);
-		    margin-left: 50%;
 		}
-		.title-page-logo {
+		.title-page-logo, 
+		.titlepage-logo {
 			display: block; // In case the class is applied to the image, not the paragraph
 			max-width: 30%;
-		//	Now we'll center the block on the page
-			transform: translateX(-50%);
-		    margin-left: 50%;
 			img {
 				width: 100%;
 			}

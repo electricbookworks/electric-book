@@ -88,7 +88,7 @@
                         {% for file-title in file %}
                             {% if file-title[1] %}
                                 <li class="nav-page{% if page.url contains file-title[0] %} nav-page-active{% endif %}">
-                                    <a href="{{ site.baseurl }}/{{ directory }}/text/{{ file-title[0] }}.html" title="{{ file-title[1] }}" class="nav-page-link">{{ file-title[1] }}</a>
+                                    <a href="{{ site.baseurl }}/{{ book-directory }}/text/{{ file-title[0] }}.html" title="{{ file-title[1] }}" class="nav-page-link">{{ file-title[1] }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}

@@ -1,0 +1,34 @@
+{% include metadata %}
+
+{% comment %}Assign the default image filename to image{% endcomment %}
+{% assign image = "cover.jpg" %}
+
+{% comment %}Let the user specify a different image file{% endcomment %}
+{% if include.image %}
+    {% capture image %}{{ include.image }}{% endcapture %}
+{% endif %}
+
+{% comment %}If it's being used in a translation, add the language code 
+as a path to the image of the translated cover.{% endcomment %}
+{% if is-translation %}
+    {% capture image %}{{ language }}/{{ image }}{% endcapture %}
+{% endif %}
+
+{% comment %}
+Adjust HTML based on output format.
+* For web, link the cover to the start page.
+* For epub, use Sigil's file path structure.
+* For other outputs (screen-pdf and print-pdf) use just the image.
+{% endcomment %}
+
+{% if site.output == "web" %}
+
+[![{{ title }}]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}]({{ web-start-page }})
+{:.cover}
+
+{% else %}
+
+![{{ title }}]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}
+{:.cover}
+
+{% endif %}

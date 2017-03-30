@@ -18,7 +18,12 @@ $print-toc: true !default;
 		}
 		li {
 			margin: 0;
-			a::after,
+			a {
+				.toc-entry-text {
+					display: inline-block;
+					max-width: 90%;
+				}
+			}
 			a::after { 
 				content: leader(" ") target-counter(attr(href), page);
 			}

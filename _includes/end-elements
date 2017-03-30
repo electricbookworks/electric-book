@@ -23,5 +23,5 @@ This is useful to Prince, which can use title attributes for running heads.
 By default, we only load it for PDF outputs.
 {% endcomment %}
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
-<script src="../../assets/js/heading-titles.js"></script>
+<script src="{{ path-to-root-directory }}assets/js/heading-titles.js"></script>
 {% endif %}

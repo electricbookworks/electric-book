@@ -14,4 +14,16 @@ $print-maths: true !default;
     	font-style: inherit;
     }
 
+    // MathJax
+    // Only use these styles to position maths blocks, 
+    // not to style the maths itself. For dire warnings, see
+    // http://stackoverflow.com/questions/5639827/styling-mathjax/25329062#25329062
+    // MathJax output should be styled in _includes/mathjax-config
+    .MathJax_Display {
+        margin: $line-height-default auto;
+        & + p {
+           text-indent: 0;
+        }
+    }
+
 }

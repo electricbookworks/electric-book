@@ -49,6 +49,13 @@ $color-links: inherit;
 $color-highlight: #ffd54d;
 
 // PDF file setup options
+// Options for pdf-profile: PDF/A-1b, PDF/A-3b, PDF/X-1a:2001, PDF/X-1a:2003, PDF/X-3:2002, PDF/X-3:2003, PDF/X-4
+// Options for color profile:
+// - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
+// - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
+// Add other ICC profiles to /assets/profiles
+$pdf-profile: "PDF/A-3b";
+$color-profile: "sRGB_v4_ICC_preference_displayclass.icc";
 $black-ink: true; // true or rich (true for pure black or rich for rich black)
 
 // We name font variables for two categories:
@@ -56,10 +63,10 @@ $black-ink: true; // true or rich (true for pure black or rich for rich black)
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson Text", serif;
+$font-text-main: "Crimson", serif;
 $font-text-secondary: "Roboto Condensed", sans-serif;
 $font-display-main: "Roboto Condensed", sans-serif;
-$font-display-secondary: "Crimson Text", serif;
+$font-display-secondary: "Crimson", serif;
 $font-code: "Inconsolata", monospace;
 
 // Finally, we set variables related to text flow.
