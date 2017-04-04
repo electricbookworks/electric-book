@@ -5,7 +5,7 @@
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
 
 <script id="MathJax"
-   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG">
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_SVG">
 </script>
 <script id="MathJaxConfig" type="text/x-mathjax-config" >
 MathJax.Hub.Config({
@@ -25,7 +25,7 @@ MathJax.Hub.Config({
 {% else %}
 
 <script id="MathJax"
-   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <script id="MathJaxConfig" type="text/x-mathjax-config" >
 MathJax.Hub.Config({
