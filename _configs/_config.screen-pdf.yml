@@ -1,2 +1,4 @@
-# Addon config that sets output to screen-pdf
+# Set site.output == "screen-pdf"
 output: "screen-pdf"
+# Set site.image-set == "images/screen-pdf"
+image-set: "images/screen-pdf"
