@@ -75,10 +75,10 @@ SET /p process=Enter a number and hit return.
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
     IF "%print-pdf-mathjax%"=="" GOTO printpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
     GOTO printpdfjekylldone
     :printpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.image-set.print-pdf.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
     :printpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
     IF "%print-pdf-mathjax%"=="" GOTO printpdfafterphantom
@@ -158,10 +158,10 @@ SET /p process=Enter a number and hit return.
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
     IF "%screen-pdf-mathjax%"=="" GOTO screenpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.image-set.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
     GOTO screenpdfjekylldone
     :screenpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.image-set.screen-pdf.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
     :screenpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
     IF "%screen-pdf-mathjax%"=="" GOTO screenpdfafterphantom
@@ -239,10 +239,10 @@ SET /p process=Enter a number and hit return.
         START "" "http://127.0.0.1:4000/%baseurl%/"
         :: Run Jekyll, with MathJax enabled if necessary
         IF "%webmathjax%"=="" GOTO webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
         GOTO webjekyllserved
         :webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,%config%" --baseurl="/%baseurl%"
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl="/%baseurl%"
         :webjekyllserved
         :: And we're done here
         GOTO websiterepeat
@@ -253,10 +253,10 @@ SET /p process=Enter a number and hit return.
         START "" "http://127.0.0.1:4000/"
         :: Run Jekyll, with MathJax enabled if necessary
         IF "%webmathjax%"=="" GOTO webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
         GOTO webjekyllserved
         :webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,%config%" --baseurl=""
+        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
         :webjekyllserved
     :: Let the user rebuild and restart
     :: 
@@ -314,10 +314,10 @@ SET /p process=Enter a number and hit return.
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
     IF "%epub-mathjax%"=="" GOTO epubnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,%config%"
     GOTO epubjekylldone
     :epubnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
     :epubjekylldone
     :: Skip PhantomJS if we're not using MathJax.
     IF "%epub-mathjax%"=="" GOTO epubafterphantom
