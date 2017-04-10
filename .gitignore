@@ -1,6 +1,7 @@
 _site/
 .sass-cache/
 .jekyll-metadata
+node_modules
 
 # we don't .gitignore _output/, because we need that folder
 # for scripts to work, even if it's empty. Instead, there is
