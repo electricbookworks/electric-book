@@ -1,4 +1,4 @@
-# Addon config that sets site.output to print-pdf
-# To run from command line:
-# jekyll build -c _config.yml,_config.print-pdf.yml
+# Set site.output == "print-pdf"
 output: "print-pdf"
+# Set site.image-set == "images/print-pdf"
+image-set: "images/print-pdf"
