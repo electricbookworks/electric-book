@@ -12,6 +12,7 @@ $print-page-setup: true !default;
 		marks: $crop-marks;
 		prince-bleed: $bleed;
 		prince-trim: $trim;
+		prince-pdf-page-colorspace: $colorspace;
 	}
 	/* Name our book-part styles as divs. PrinceXML needs the pages named for @page rules. */
 	.cover {
