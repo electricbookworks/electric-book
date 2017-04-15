@@ -19,6 +19,8 @@ prose:
     - /_includes
     - /_site
     - /_sass
+    - /_output
+    - /assets
     - search.md
     - /*/search.md
     - /*/.gitattributes
