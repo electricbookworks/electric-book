@@ -268,9 +268,7 @@ the first book-directory listed in meta.yml{% endcomment %}
         {% capture path-to-book-directory %}../{% endcapture %}
     {% else %}
         {% capture path-to-book-directory %}
-            {% for i in (2..folder-depth) %}
-                ../
-            {% endfor %}
+            {% for i in (2..folder-depth) %}../{% endfor %}
         {% endcapture %}
     {% endif %}
 
@@ -280,8 +278,6 @@ the first book-directory listed in meta.yml{% endcomment %}
 {% comment %}Then set a path to the root directory.{% endcomment %}
 
 {% capture path-to-root-directory %}
-    {% for i in (1..folder-depth) %}
-        ../
-    {% endfor %}
+    {% for i in (1..folder-depth) %}../{% endfor %}
 {% endcapture %}
 {% capture path-to-root-directory %}{{ path-to-root-directory | strip_newlines }}{% endcapture %}
