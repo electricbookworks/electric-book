@@ -9,11 +9,11 @@ $web-epigraphs: true !default;
         }
     }
     
-    p.epigraph {
+    .epigraph {
     	text-indent: 0;
     	padding: 0 ($line-height-default * 2);
     }
-    p.epigraph-source {
+    .epigraph-source {
     	text-indent: 0;
     	padding: 0 ($line-height-default * 2);
         text-align: right;
