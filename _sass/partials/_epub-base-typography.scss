@@ -98,7 +98,6 @@ $epub-base-typography: true !default;
     // Horizontal rules used as text dividers (*** in markdown)
 
     $text-divider: "\2022" !default;
-    $text-divider: "";
 
     hr {
         // Amazon Kindle does not support any creative use of hr styling, including
