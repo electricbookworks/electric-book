@@ -74,6 +74,11 @@ $hyphenate-after: 3; // Minimum letters on new line after hyphen
 $hyphenate-before: 3; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
 
+// Text dividers
+// Some ereaders can display a character as a text divider
+// for horizontal rules created with *** in markdown.
+$text-divider: ""; // Empty leaves space. \2022 is a bullet
+
 // ---------------------------------
 // Set to false to turn partials off
 // ---------------------------------
