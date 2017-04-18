@@ -83,6 +83,10 @@ $hyphenate-after: 3; // Minimum letters on new line after hyphen
 $hyphenate-before: 3; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
 
+// Text dividers
+// For breaks created with *** in markdown.
+$text-divider: ""; // Empty leaves space. \2022 is a bullet
+
 // Footer
 $footer-text-color: $color-text-main;
 $footer-background-color: $color-accent;
