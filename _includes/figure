@@ -27,6 +27,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
 <div class="figure-body">
 
+{% if include.image or include.images %}
 <div class="figure-images contains-{{ number-of-images }}">
     {%for image in images %}
         {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ path-to-book-directory }}/{{ site.image-set }}/{{ image }}">{% endif %}
@@ -34,6 +35,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
         {% if include.link or site.output == "web" %}</a>{% endif %}
     {% endfor %}
 </div>
+{% endif %}
 
 {% if include.html %}
 <div class="figure-html">
