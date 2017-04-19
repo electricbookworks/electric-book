@@ -39,6 +39,7 @@ $trim: 0;
 $crop-marks: none; // crop | none
 
 // Colours
+$colorspace: rgb; // auto | none | rgb | cmyk | gray
 $color-text-main: cmyk(0,0,0,1);
 $color-text-secondary: cmyk(0,0,0,0.8);
 $color-background: white;
