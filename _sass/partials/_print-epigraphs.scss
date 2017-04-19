@@ -6,11 +6,11 @@ $print-epigraphs: true !default;
     .epigraph-page {
     	margin-top: $start-depth;
     }
-    p.epigraph {
+    .epigraph {
     	text-indent: 0;
     	padding: 0 ($line-height-default * 2);
     }
-    p.epigraph-source {
+    .epigraph-source {
     	text-indent: 0;
     	padding: 0 ($line-height-default * 2);
     	page-break-before: avoid;
