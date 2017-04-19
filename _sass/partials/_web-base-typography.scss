@@ -97,15 +97,17 @@ $web-base-typography: true !default;
     }
 
     // Horizontal rules
+    // Using <hr> as a divider (in markdown created with ***)
 
-    // Used in text as dividers (*** in markdown)
+    $text-divider: "" !default;
+    
     hr {
         border: 0;
         font-family: $font-display-main;
         text-align: center;
         margin: $line-height-default 0;
         &:after {
-            content: "\2014";
+            content: $text-divider;
         }
         & + p {
             text-indent: 0;
