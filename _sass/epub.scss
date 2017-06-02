@@ -102,6 +102,7 @@ $epub-bibliographies: true !default; //
 $epub-boxes: true !default; // 
 $epub-buttons: true !default; // 
 $epub-code: true !default; // 
+$epub-dialogue: true !default; // 
 $epub-figures: true !default; // 
 $epub-glossaries: true !default; //
 $epub-highlighter: true !default; //
@@ -155,6 +156,7 @@ $epub-reset-sequences: true !default; //
 @import "partials/epub-boxes"; // 
 @import "partials/epub-buttons"; // 
 @import "partials/epub-code"; // 
+@import "partials/epub-dialogue"; // 
 @import "partials/epub-figures"; // 
 @import "partials/epub-glossaries"; //
 @import "partials/epub-highlighter"; //
