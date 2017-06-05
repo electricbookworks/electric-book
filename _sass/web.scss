@@ -150,6 +150,7 @@ $web-bibliographies: true !default;
 $web-boxes: true !default;
 $web-buttons: true !default;
 $web-code: true !default;
+$web-dialogue: true !default;
 $web-figures: true !default;
 $web-highlighter: true !default;
 $web-glossaries: true !default;
@@ -210,6 +211,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-boxes";
 @import "partials/web-buttons";
 @import "partials/web-code";
+@import "partials/web-dialogue";
 @import "partials/web-figures";
 @import "partials/web-glossaries";
 @import "partials/web-highlighter";

@@ -202,6 +202,7 @@ $print-base-typography: true !default; // Default typography for HTML elements
 $print-buttons: true !default;
 $print-verse: true !default; // Default typography for verse, poetry, lyrics
 $print-bibliographies: true !default;
+$print-dialogue: true !default; // 
 $print-epigraphs: true !default; // 
 $print-dedications: true !default; // 
 $print-glossaries: true !default; // Including .glossary
@@ -260,6 +261,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-bibliographies";
 @import "partials/print-epigraphs"; // 
 @import "partials/print-dedications"; // 
+@import "partials/print-dialogue"; // 
 @import "partials/print-glossaries"; // Including .glossary
 @import "partials/print-highlighter"; //
 @import "partials/print-pullquotes"; // Supports .pullquote
