@@ -6,8 +6,8 @@
 
 {% else %}
 
-<div class="video vimeo" id="{{ include.id }}">
-    <a href="{{ include.link }}"><img src="{{ path-to-book-directory }}{{ site.image-set }}/{{ include.image }}"></a>
+<div class="video vimeo{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}">
+    <a class="video-link" href="{{ include.link }}"><img src="{{ path-to-book-directory }}{{ site.image-set }}/{{ include.image }}"></a>
     <p class="video-description">
         <a href="{{ include.link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
     </p>
