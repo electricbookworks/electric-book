@@ -9,7 +9,7 @@
 <div class="video youtube" id="{{ include.id }}">
     <a href="{{ include.link }}"><img src="{{ path-to-book-directory }}{{ site.image-set }}/{{ include.image }}"></a>
     <p class="video-description">
-        <a href="{{ include.link }}">{{ include.description }}</a>
+        <a href="{{ include.link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
     </p>
 </div>
 
