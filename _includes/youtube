@@ -1,7 +1,18 @@
 {% if site.output == "web" or site.output == "epub3" %}
 
+{% comment %}
+- default
+    - show placeholder image
+- js
+    - listen for in-viewport
+    - switch for div and iframe
+{% endcomment %}
+
 <div class="videowrapper youtube" id="{{ include.id }}">
-    <iframe src="https://www.youtube.com/embed/{{ include.id }}" frameborder="0" allowfullscreen></iframe>
+    <a class="video-link" href="{{ include.link }}"><img src="{{ path-to-book-directory }}{{ site.image-set }}/{{ include.image }}"></a>
+    <p class="video-description">
+        <a href="{{ include.link }}">{{ include.description }}</a>
+    </p>
 </div><!--.videowrapper-->
 
 {% else %}
