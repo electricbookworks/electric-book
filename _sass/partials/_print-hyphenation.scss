@@ -1,4 +1,5 @@
 $print-hyphenation: true !default;
+$hyphenation-custom: add !default;
 @if $print-hyphenation {
 
     // Hyphenation
@@ -16,6 +17,29 @@ $print-hyphenation: true !default;
     p, ul, ol, dl {
         @if $hyphenation-dictionary == "" {}
         @else {
+            prince-hyphenate-patterns: url("#{$hyphenation-dictionary}");
+        }
+    }
+
+    // In addition, if we want a custom dictionary to override all Prince
+    // built-in dictionaries, override its :root style.
+    :root,
+    :lang(da),
+    :lang(de),
+    :lang(en),
+    :lang(en-US),
+    :lang(es),
+    :lang(fi),
+    :lang(fr),
+    :lang(is),
+    :lang(it),
+    :lang(lt),
+    :lang(pl),
+    :lang(pt),
+    :lang(ru),
+    :lang(sl),
+    :lang(sv) {
+        @if $hyphenation-custom == "replace" {
             prince-hyphenate-patterns: url("#{$hyphenation-dictionary}");
         }
     }
