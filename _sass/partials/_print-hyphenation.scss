@@ -40,7 +40,7 @@ $hyphenation-custom: add !default;
     :lang(sl),
     :lang(sv) {
         @if $hyphenation-custom == "replace" {
-            prince-hyphenate-patterns: url("#{$hyphenation-dictionary}");
+            prince-hyphenate-patterns: url("");
         }
     }
 
