@@ -95,15 +95,20 @@
     <meta property="og:description" content="{{ page.description }}" />
     {% endif %}
     {% if page.image %}
-    <meta property="og:image" content="{{ page.image }}" />
+        {% if is-homepage == true or is-series-search == true %}
+            {% comment %}If a page.image is specified on the home page, we still use the series image{% endcomment %}
+            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
+        {% else %}
+            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ page.image }}" />
+        {% endif %}
     {% elsif is-homepage == true or is-series-search == true %}
-    <meta property="og:image" content="{{ site.canonical-url }}/{{ site.image-set }}/{{ series-image }}" />
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
     {% elsif web-image != "" %}
-    <meta property="og:image" content="{{ site.canonical-url }}/{{ book-directory }}/{{ site.image-set }}/{{ web-image }}" />
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ web-image }}" />
     {% elsif image != "" %}
-    <meta property="og:image" content="{{ site.canonical-url }}/{{ book-directory }}/{{ site.image-set }}/{{ image }}" />
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ image }}" />
     {% else %}
-    <meta property="og:image" content="{{ site.canonical-url }}/assets/{{ series-image }}" />
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
     {% endif %}
 
     {% if is-homepage == true or is-series-search == true %}
