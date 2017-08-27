@@ -1,0 +1,38 @@
+{% include metadata %}
+
+{% if include.scheme %}
+    {% capture scheme %}{{ include.scheme }}{% endcapture %}
+{% endif %}
+
+<p class="identifiers">
+    
+    {% if print-pdf-identifier and print-pdf-identifier != "" %}
+        <span class="identifier print-pdf-identifier">{{ scheme }}{% if print-pdf-format %} ({{ print-pdf-format }}){% endif %}: {{ print-pdf-identifier }}
+        </span>
+        <br />
+    {% elsif identifier and identifier != "" %}
+        <span class="identifier">{{ scheme }}: {{ identifier }}
+        </span>
+        <br />
+    {% else %}
+    {% endif %}
+
+    {% if screen-pdf-identifier and screen-pdf-identifier != "" %}
+        <span class="identifier screen-pdf-identifier">{{ scheme }}{% if screen-pdf-format %} ({{ screen-pdf-format }}){% endif %}: {{ screen-pdf-identifier }}
+        </span>
+        <br />
+    {% endif %}
+    
+    {% if epub-identifier and epub-identifier != "" %}
+        <span class="identifier epub-identifier">{{ scheme }}{% if epub-format %} ({{ epub-format }}){% endif %}: {{ epub-identifier }}
+        </span>
+        <br />
+    {% endif %}
+    
+    {% if web-identifier and web-identifier != "" %}
+        <span class="identifier web-identifier">{{ scheme }}{% if web-format %} ({{ web-format }}){% endif %}: {{ web-identifier }}
+        </span>
+        <br />
+    {% endif %}
+
+</p>
