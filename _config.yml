@@ -146,7 +146,3 @@ defaults:
     values:
       layout: "default"
       style: "chapter"
-      stylesheet-print-pdf: "print-pdf.css"
-      stylesheet-screen-pdf: "screen-pdf.css"
-      stylesheet-web: "web.css"
-      stylesheet-epub: "epub.css"
