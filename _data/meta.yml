@@ -64,10 +64,10 @@ works:
         toc: # For each menu item, include at least label and file. Optionally add id (for deep linking) and children.
           - label: "Chapter 1"
             file: "01"
-            id: "hello-world"
+            id: "1-hello-world"
           - label: "Chapter 2"
             file: "02"
-            id: "goodbye-world"
+            id: "2-goodbye-world"
             children: 
               - label: "Example child"
                 file: "02"
