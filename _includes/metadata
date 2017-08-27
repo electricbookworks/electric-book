@@ -62,6 +62,12 @@ Get the current file's name
 
 {% capture current-file %}{{ page.url | remove_first: ".html" | replace: "/", " " | split, " " | last }}{% endcapture %}
 
+{% comment %}Set default stylesheets{% endcomment %}
+{% capture print-pdf-stylesheet %}print-pdf.css{% endcapture %}
+{% capture screen-pdf-stylesheet %}screen-pdf.css{% endcapture %}
+{% capture web-stylesheet %}web.css{% endcapture %}
+{% capture epub-stylesheet %}epub.css{% endcapture %}
+
 {% comment %}
 From meta.yml, get only the values where the work.directory matches the current book-directory
 {% endcomment %}
@@ -220,9 +226,9 @@ override any metadata set for that variant.{% endcomment %}
 {% comment %}First, though, set variant-toc to false as default{% endcomment %}
 {% assign variant-toc = false %}
 
-{% if site.data.settings.variant and site.data.settings.variant != "" %}
+{% if site.data.settings.active-variant and site.data.settings.active-variant != "" %}
 
-    {% capture variant %}{{ site.data.settings.variant }}{% endcapture %}
+    {% capture variant %}{{ site.data.settings.active-variant }}{% endcapture %}
 
     {% for data in variants %}
 
@@ -302,6 +308,15 @@ override any metadata set for that variant.{% endcomment %}
 
         {% endif %}
 
+    {% endfor %}
+
+    {% comment %}Get variant settings from settings{% endcomment %}
+    {% assign variant-settings = site.data.settings.variants | where: "variant", variant %}
+    {% for setting in variant-settings %}
+        {% capture print-pdf-stylesheet %}{{ setting.print-pdf-stylesheet }}{% endcapture %}
+        {% capture screen-pdf-stylesheet %}{{ setting.screen-pdf-stylesheet }}{% endcapture %}
+        {% capture web-stylesheet %}{{ setting.web-stylesheet }}{% endcapture %}
+        {% capture epub-stylesheet %}{{ setting.epub-stylesheet }}{% endcapture %}
     {% endfor %}
 
 {% endif %}
