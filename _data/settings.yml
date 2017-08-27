@@ -1,0 +1,19 @@
+# Electric Book settings
+
+# ----------------------------------------------------------
+# Electric Book Manager settings
+# ----------------------------------------------------------
+electric-book-manager: enable
+electric-book-manager-key: ""
+# ----------------------------------------------------------
+
+# ----------------------------------------------------------
+# Variant settings
+# Set a variant of the work to output.
+# Variant names must be one word, lowercase. Hyphens are allowed.
+# A variant lets you override metadata and can be used in text docs,
+# where `include metadata` has been used, in if statements like
+# {% if variant == "somename" %}Variant text!{% endif %}
+# ----------------------------------------------------------
+# variant: myvariant
+# ----------------------------------------------------------
