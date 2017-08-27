@@ -14,7 +14,6 @@ style: copyright-page
 *{{ title }}*\\
 Text © {{ creator }}
 
-{% unless print-pdf-identifier == "" %}ISBN ({{ print-pdf-format }}): {{ print-pdf-identifier }}{% endunless %}<br />
-{% unless epub-identifier == "" %}ISBN ({{ epub-format }}): {{ epub-identifier }}{% endunless %}
+{% include identifiers scheme="ISBN" %}
 
 {{ rights }}
