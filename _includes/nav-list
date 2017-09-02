@@ -30,17 +30,23 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
             {% endif %}
         </li>
     {% endfor %}
+    {% if output-docs %}
+        <li><a href="{{ site.baseurl }}/docs">Electric Book docs</a></li>
+    {% endif %}
   </ol>
 
 {% elsif page.collection == "docs" %}
 
   <ol>
     {% for page in site.docs %}
+      {% assign docs-filename = page.url | remove: ".html" | split: "/" | last %}
+      {% unless docs-filename == "index" %}
         <li>
             <a href="{{ page.url }}" >
                 {{ page.title }}
             </a>
         </li>
+      {% endunless %}
     {% endfor %}
   </ol>
 
@@ -64,6 +70,9 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
             {% endif %}
         </li>
     {% endfor %}
+    {% if output-docs %}
+        <li><a href="{{ site.baseurl }}/docs">Electric Book docs</a></li>
+    {% endif %}
   </ol>
 
 {% endif %}
