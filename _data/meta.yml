@@ -2,17 +2,18 @@
 # SERIES
 ########
 
+# Replace the values here with your series information.
 series:
   # The name of the organisation or entity that owns this series
-  organisation: "My Organisation"
+  organisation: "Electric Book Works"
   # A live web address for the organisation
-  url: "http://example.com/"
+  url: "http://electricbook.works/"
   # The default contact email address
-  email: "name@example.com"
+  email: "support@electricbook.works"
   # The name of the series of books in this folder.
-  name: "My Series"
+  name: "Electric Book"
   # A one-liner about this series. Useful for Open Graph metadata.
-  description: "A new series of books."
+  description: "Books created with the Electric Book workflow"
   # An image in /assets that stands for the series
   image: "publisher-logo.jpg"
   # For web navigation, the label for links to  the series homepage
@@ -31,13 +32,13 @@ series:
 
 works:
   - directory: "book"
-    title: "The Title"
+    title: "Template title"
     subtitle: ""
     creator: "A. N. Author" # E.g. the author
     contributor: "" # E.g. other contributors
     subject: "Fiction" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
-    description: "This is my awesome book." # E.g. the blurb
-    publisher: "My Brand" # E.g. the publisher, imprint or brand name
+    description: "This is the Electric Book template." # E.g. the blurb
+    publisher: "EBW" # E.g. the publisher, imprint or brand name
     publisher-url: ""
     date: "2015-12-31" # YYYY-MM-DD e.g. publication date
     modified: "2016-06-09" # YYYY-MM-DD e.g. date of last revision
@@ -62,14 +63,14 @@ works:
           - "01"
           - "02"
         toc: # For each menu item, include at least label and file. Optionally add id (for deep linking) and children.
-          - label: "Chapter 1"
+          - label: "Template Chapter 1"
             file: "01"
             id: "1-hello-world"
-          - label: "Chapter 2"
+          - label: "Template Chapter 2"
             file: "02"
             id: "2-goodbye-world"
             children: 
-              - label: "Example child"
+              - label: "Template subsection"
                 file: "02"
                 id: "example-id"
       web:
@@ -77,7 +78,7 @@ works:
         format: "Digital online" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
         image: "cover.jpg"
-        files: # To add a file to web navigation, give a file a value, e.g. 0-4-preface: "Preface"
+        files: # To add a file to web navigation without a nav section below, give a file a value, e.g. 0-4-preface: "Preface"
           - "index": Cover
           - "0-1-titlepage"
           - "0-2-copyright": "Copyright"
@@ -85,7 +86,7 @@ works:
           - "01": "Chapter One"
           - "02": "Chapter Two"
         nav: # For each menu item, include at least label and file. Optionally add id (for deep linking) and children.
-          - label: "Frontmatter"
+          - label: "Template Frontmatter"
             children:
               - label: "Cover"
                 file: "index"
@@ -93,16 +94,16 @@ works:
                 file: "0-1-titlepage"
               - label: "Copyright"
                 file: "0-2-copyright"
-          - label: "Contents"
+          - label: "Template Contents"
             file: "0-3-contents"
-          - label: "Chapter One"
+          - label: "Template Chapter One"
             file: "01"
             id: "1-hello-world"
-          - label: "Chapter Two"
+          - label: "Template Chapter Two"
             file: "02"
             id: "2-goodbye-world"
             children: 
-              - label: "Example child"
+              - label: "Template subsection"
                 file: "02"
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
