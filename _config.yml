@@ -55,6 +55,13 @@ nav-source: nav
 mathjax-enabled: false
 mathjax-font: "Gyre-Pagella"
 
+# Documentation is built into the Electric Book template.
+# These docs build along with your books, so they are available
+# as you work. To turn off the docs, change output to false.
+collections:
+  docs:
+    output: true
+
 # --------------------------------------------
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
 # --------------------------------------------
