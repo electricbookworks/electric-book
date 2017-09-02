@@ -32,6 +32,18 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
     {% endfor %}
   </ol>
 
+{% elsif page.collection == "docs" %}
+
+  <ol>
+    {% for page in site.docs %}
+        <li>
+            <a href="{{ page.url }}" >
+                {{ page.title }}
+            </a>
+        </li>
+    {% endfor %}
+  </ol>
+
 {% else %}
 
   {% capture current-file %}{{ page.url | remove_first: ".html" | replace: "/", " " | split, " " | last }}{% endcapture %}

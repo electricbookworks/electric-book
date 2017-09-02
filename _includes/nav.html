@@ -2,7 +2,7 @@
 
     <div id="nav" class="non-printing">
 
-            {% if is-homepage == true or is-series-search == true %}
+            {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
             <h2>{{ series-name }}</h2>
             {% else %}
             <h2>{{ title }}</h2>
