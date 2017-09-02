@@ -1,0 +1,28 @@
+# Electric Book settings
+
+# Electric Book Manager settings
+# ----------------------------------------------------------
+electric-book-manager: enable
+electric-book-manager-key: ""
+# ----------------------------------------------------------
+
+# Variant settings
+# Set a variant of the work to output.
+# A variant lets you override metadata and stylesheets and can be used,
+# where `include metadata` has been used, in if statements like
+# {% if variant == "somename" %}Variant text!{% endif %}
+# Variant names must be one word, lowercase. Hyphens are allowed.
+# Add variant book metadata to meta.yml, and output settings here.
+# ----------------------------------------------------------
+# Select the active variant:
+# active-variant: myvariant
+# ----------------------------------------------------------
+# Store settings for each variant
+variants:
+  - variant: myvariant
+    print-pdf-stylesheet: "print-pdf-variant.css"
+    screen-pdf-stylesheet: ""
+    web-stylesheet: "web-variant.css"
+    epub-stylesheet: ""
+  - variant: yourvariant
+# ----------------------------------------------------------

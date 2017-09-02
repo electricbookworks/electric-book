@@ -132,3 +132,9 @@ works:
           - "0-3-contents"
           - "01"
           - "02"
+    # variants:
+    #   - variant: myvariant
+    #     identifier: ""
+    #     products:
+    #       print-pdf:
+    #         identifier: ""
