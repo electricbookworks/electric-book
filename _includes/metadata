@@ -406,15 +406,15 @@ the first book-directory listed in meta.yml{% endcomment %}
 {% comment %}Are we outputting the docs?{% endcomment %}
 {% for coll in site.collections %}
   {% if coll.output == true and coll.label == "docs" %}
-    {% capture output-docs %}true{% endcapture %}
+    {% assign output-docs = true %}
     {% break %}
   {% endif %}
 {% endfor %}
 
 {% comment %}Is the template in its new state?
-If docs are outputting, there is only one work,
-and its title is 'Template Title', then yes.{% endcomment %}
-{% if output-docs == "true" and number-of-works < 2 and site.data.meta.works[0].title == "Template title" %}
+Let's check a bunch of things that, in combination, should
+guarantee that the template is in a new state.{% endcomment %}
+{% if output-docs == true and number-of-works == 2 and site.data.meta.works[0].title == "Template" and site.data.meta.works[0].directory == "book" and site.data.meta.works[1].directory == "samples" %}
   {% assign is-new-template = true %}
 {% endif %}
 
