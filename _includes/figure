@@ -82,4 +82,4 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
 </blockquote>
 {% endcapture %}
-{{ this-figure | strip_newlines }}
+{{ this-figure }}
