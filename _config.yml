@@ -100,6 +100,9 @@ exclude:
 - run-windows.bat
 - Gemfile
 - Gemfile.lock
+- README*
+- LICENSE*
+- CHANGELOG*
 
 # Can be useful to stop Jekyll overwriting files in _site.
 # E.g. generate CSS once, then exclude above but keep here
