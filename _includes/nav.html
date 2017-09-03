@@ -43,7 +43,7 @@
                                 {% assign docs-filename = page.url | remove: ".html" | split: "/" | last %}
                                 {% unless docs-filename == "index" %}
                                   <li>
-                                      <a href="{{ page.url }}" >
+                                      <a href="{{ site.baseurl }}{{ page.url }}" >
                                           {{ page.title }}
                                       </a>
                                   </li>
@@ -74,7 +74,7 @@
                         {% assign home-nav-work-directory = work.directory %}
                         {% assign home-nav-work-tree = work.products.web.nav %}
                             <li class="has-children">
-                                <a href="{{ base.url}}/{{ work.directory }}/text/{{ work.products.web.start-page }}.html">
+                                <a href="{{ site.baseurl }}/{{ work.directory }}/text/{{ work.products.web.start-page }}.html">
                                     {{ work.title }}
                                 </a>
                                 {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
