@@ -13,7 +13,7 @@ These docs are a work in progress, and not everything is documented yet. You can
 {% for page in site.docs %}
 {% assign docs-filename = page.url | remove: ".html" | split: "/" | last %}
 {% unless docs-filename == "index" %}
-	<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+	<li><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a></li>
 {% endunless %}
 {% endfor %}
 </ul>
