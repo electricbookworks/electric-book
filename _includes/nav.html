@@ -2,9 +2,9 @@
 
     <div id="nav" class="non-printing">
 
-            {% if is-homepage == true or is-series-search == true %}
+            {% if is-text-directory != true and is-docs-page != true %}
             <h2>{{ series-name }}</h2>
-            {% elsif output-docs == "true" %}
+            {% elsif output-docs == "true" and is-docs-page == true %}
             <h2>Electric Book docs (v{{ site.version }})</h2>
             {% else %}
             <h2>{{ title }}</h2>
@@ -64,7 +64,7 @@
                 {% include widgets %}
             </div><!--.widgets-->
 
-        </div><!--#nav-->
+    </div><!--#nav-->
 
 {% else %}
 

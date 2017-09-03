@@ -13,30 +13,57 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
 
 {% include metadata %}
 
-{% if is-homepage == true or is-series-search == true %}
+{% comment %}If this is not a text directory (i.e. not in a book),
+such as the home page or series search page...{% endcomment %}
+{% if is-text-directory != true and is-docs-page != true %}
 
+  {% comment %}Get a list of all the pages we've output to check against{% endcomment %}
   {% capture page-list %}{{ site.pages | remove: ".html" }}{% endcapture %}
 
+  {% comment %}Create a nav list{% endcomment %}
   <ol>
 
-    {% for item in include.nav-tree | sort: "order" %}
-        <li class="{% unless page-list contains item.file %}no-file{% endunless %}
-        {% if item.children == nil %}no-children{% else %}has-children{% endif %}">
-            <a {% if item.file != nil %}href="{{ site.baseurl }}/{{ include.directory }}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
-                {{ item.label }}
-            </a>
-            {% if item.children != nil %}
-              {% include nav-list nav-tree=item.children directory=include.directory %}
-            {% endif %}
-        </li>
-    {% endfor %}
+  {% comment %}If output docs are on and this is a new template,
+  the nav should only list the docs.{% endcomment %}
+    {% if output-docs and is-new-template %}
+      {% for page in site.docs %}
+        {% assign docs-filename = page.url | remove: ".html" | split: "/" | last %}
+        {% unless docs-filename == "index" %}
+          <li>
+              <a href="{{ page.url }}" >
+                  {{ page.title }}
+              </a>
+          </li>
+        {% endunless %}
+      {% endfor %}
+
+    {% comment %}Otherwise, output the usual nav tree.{% endcomment %}
+    {% else %}
+      {% for item in include.nav-tree | sort: "order" %}
+          <li class="{% unless page-list contains item.file %}no-file{% endunless %}
+          {% if item.children == nil %}no-children{% else %}has-children{% endif %}">
+              <a {% if item.file != nil %}href="{{ site.baseurl }}/{{ include.directory }}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
+                  {{ item.label }}
+              </a>
+              {% if item.children != nil %}
+                {% include nav-list nav-tree=item.children directory=include.directory %}
+              {% endif %}
+          </li>
+      {% endfor %}
+    {% endif %}
+
+    {% comment %}If docs are on (i.e. output set to true in _config.yml),
+    show a link to the docs at the bottom of the nav list.{% endcomment %}
     {% if output-docs %}
         <li><a href="{{ site.baseurl }}/docs">Electric Book docs</a></li>
     {% endif %}
+
   </ol>
 
-{% elsif page.collection == "docs" %}
+{% comment %}If this is one of the docs pages{% endcomment %}
+{% elsif is-docs-page %}
 
+  {% comment %}Create a list of all the docs pages{% endcomment %}
   <ol>
     {% for page in site.docs %}
       {% assign docs-filename = page.url | remove: ".html" | split: "/" | last %}
@@ -50,6 +77,8 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
     {% endfor %}
   </ol>
 
+{% comment %}Otherwise, we're in a text directory (i.e. in a book),
+and we're not on a docs page, create the full book nav.{% endcomment %}
 {% else %}
 
   {% capture current-file %}{{ page.url | remove_first: ".html" | replace: "/", " " | split, " " | last }}{% endcapture %}
@@ -70,6 +99,9 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
             {% endif %}
         </li>
     {% endfor %}
+
+    {% comment %}If docs are on (i.e. output set to true in _config.yml),
+    show a link to the docs at the bottom of the nav list.{% endcomment %}
     {% if output-docs %}
         <li><a href="{{ site.baseurl }}/docs">Electric Book docs</a></li>
     {% endif %}
