@@ -161,10 +161,12 @@ $print-base-typography: true !default;
     }
 
 	// Horizontal rules
-
 	// Using <hr> as a divider (in markdown created with ***)
+
+    $text-divider: "" !default;
+
 	hr {
-	    content: "\2014"; // \2014 is an em dash, for others see https://css-tricks.com/snippets/html/glyphs/
+	    content: $text-divider;
 	    border: 0;
 	    font-family: $font-display-main;
 	    text-align: center;

@@ -236,9 +236,9 @@ You may need to reload the web page once this server is running."
 			# ...and run Jekyll
 			if [ "$baseurl" = "" ]
 				then
-				bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,$config" --baseurl=""
+				bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,$config" --baseurl=""
 			else
-				bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.image-set.web.yml,$config" --baseurl="/$baseurl"
+				bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,$config" --baseurl="/$baseurl"
 			fi
 			# Ask the user if they want to rebuild the site
 			# TO DO: Not sure this works because Jekyll owns the terminal and Ctrl+C will kill it entirely?
@@ -292,9 +292,9 @@ If not, just hit return."
 			# ...and run Jekyll to build new HTML, enabling MathJax if necessary
 			if [ "$epubmathjax" = "" ]
 				then
-				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,$config"
+				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$config"
 			else
-				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.image-set.epub.yml,_configs/_config.mathjax-enabled.yml,$config"
+				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,$config"
 			fi
 			# Navigate to the relevant text folder...
 			if [ "$epubsubdirectory" = "" ]

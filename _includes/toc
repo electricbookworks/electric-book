@@ -1,82 +1,65 @@
 {% comment %}
-Get the current book directory.
+Get the file metadata.
 {% endcomment %}
-
-{% capture book-directory %}{{ page.path | replace: "/", " " | truncatewords: 1, "" }}{% endcapture %}
-
-{% comment %}
-From meta.yml, get only the works from the current book, that is
-where the directory for a work in meta.yml matches the current directory.
-{% endcomment %}
-
-{% assign works = site.data.meta.works | where: "directory", book-directory %}
+{% include metadata %}
 
 {% comment %}
 Now check which output format we're creating, and capture its toc.
-Fall back to print-pdf toc, then web nav list, then print file list.
+Fall back to print-pdf toc, then web nav list.
 {% endcomment %}
 
-{% for work in works %}
-
 {% if site.output == "print-pdf" %}
-    {% if work.products.print-pdf.toc != nil %}
-        {% assign toc = work.products.print-pdf.toc %}
-    {% elsif work.products.web.nav != nil %}
-        {% assign toc = work.products.web.nav %}
+    {% if print-pdf-toc != nil %}
+        {% assign toc = print-pdf-toc %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
     {% else %}
         Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% elsif site.output == "screen-pdf" %}
-    {% if work.products.screen-pdf.toc != nil %}
-        {% assign toc = work.products.screen-pdf.toc %}
-    {% elsif work.products.print-pdf.toc != nil %}
-        {% assign toc = work.products.print-pdf.toc %}
-    {% elsif work.products.web.nav != nil %}
-        {% assign toc = work.products.web.nav %}
+    {% if screen-pdf-toc != nil %}
+        {% assign toc = screen-pdf-toc %}
+    {% elsif print-pdf-toc != nil %}
+        {% assign toc = print-pdf-toc %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
     {% else %}
         Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% elsif site.output == "epub" %}
-    {% if work.products.epub.toc != nil %}
-        {% assign toc = work.products.epub.toc %}
-    {% else %}
-        {% assign toc = work.products.print-pdf.toc %}
-    {% elsif work.products.web.nav != nil %}
-        {% assign toc = work.products.web.nav %}
+    {% if epub-toc != nil %}
+        {% assign toc = epub-toc %}
+    {% elsif print-pdf-toc != nil %}
+        {% assign toc = print-pdf-toc %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
     {% else %}
         Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% elsif site.output == "web" %}
-    {% if work.products.web.toc != nil %}
-        {% assign toc = work.products.web.toc %}
-    {% else %}
-        {% assign toc = work.products.web.nav %}
-    {% else %}
-        {% assign toc = work.products.print-pdf.toc %}
+    {% if web-toc != nil %}
+        {% assign toc = web-toc %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
+    {% elsif print-pdf-toc != nil %}
+        {% assign toc = print-pdf-toc %}
     {% else %}
         Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% else %}
-    {% if work.products.web.nav != nil %}
-        {% assign toc = work.products.web.nav %}
+    {% if web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
+    {% elsif print-pdf-toc != nil %}
+        {% assign toc = print-pdf-toc %}
     {% else %}
         Please define a TOC or web nav in meta.yml.
     {% endif %}
 
 {% endif %}
-
-{% endfor %}
-
-{% comment %}
-Get the current file, so we can check stuff, e.g.:
-when this list is on the page that includes it.
-{% endcomment %}
-
-{% capture current-file %}{{ page.url | remove_first: ".html" | replace: "/", " " | split, " " | last }}{% endcapture %}
 
 {% comment %}
 If the file that called this include didn't specify a start parameter, then
@@ -88,7 +71,7 @@ Otherwise, the toc-branch should be the children called by this include recursiv
 {% assign toc-branch = include.start %}
 
 {% if toc-branch == nil %}
-{% assign toc-branch = toc %}
+    {% assign toc-branch = toc %}
 {% endif %}
 
 {% comment %}
@@ -97,14 +80,41 @@ Now we'll use all that to output the toc list.
 
 <ol class="toc-list {% if toc-branch contains current-file %}active{% endif %}">
 {% for item in toc-branch | sort: "order" %}
-    <li class="toc-entry-title{% if page.url contains item.file %} active{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
-        {% if item.file != nil %}<a href="{{ base.url}}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"
-           {% if page.url contains item.file %}class="active"{% endif %}>{% endif %}
-            <span class="toc-entry-text">{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>
-        {% if item.file != nil %}</a>{% endif %}
-        {% if item.children != nil %}
-            {% include toc start=item.children %}
-        {% endif %}
-    </li>
+
+    {% comment %}Assume we will use every item in the toc-branch{% endcomment %}
+    {% assign include-in-toc = true %}
+
+    {% comment %}If we're outputting a variant, check if a variant toc
+    has been specified. If it has, then it replaced the default toc tree.
+    If we are outputting a variant, and a variant toc is not specified,
+    check which variants, if any, this particular TOC item has specified.
+    Include the item in the TOC only if it is specified in the TOC item's
+    variants list.{% endcomment %}
+    {% if variant and variant-toc == false %}
+        {% assign toc-variants = item.variants | remove: " " | split: "," %}
+        {% for toc-variant in toc-variants %}
+            {% if toc-variant == variant %}
+                {% assign include-in-toc = true %}
+                {% break %}
+            {% else %}
+                {% assign include-in-toc = false %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if include-in-toc == true %}
+
+        <li class="toc-entry-title{% if page.url contains item.file %} active{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
+            {% if item.file != nil %}<a href="{{ base.url}}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"
+               {% if page.url contains item.file %}class="active"{% endif %}>{% endif %}
+                <span class="toc-entry-text">{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>
+            {% if item.file != nil %}</a>{% endif %}
+            {% if item.children != nil %}
+                {% include toc start=item.children %}
+            {% endif %}
+        </li>
+
+    {% endif %}
+
 {% endfor %}
 </ol>

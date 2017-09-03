@@ -55,6 +55,13 @@ nav-source: nav
 mathjax-enabled: false
 mathjax-font: "Gyre-Pagella"
 
+# Documentation is built into the Electric Book template.
+# These docs build along with your books, so they are available
+# as you work. To turn off the docs, change output to false.
+collections:
+  docs:
+    output: true
+
 # --------------------------------------------
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
 # --------------------------------------------
@@ -93,6 +100,9 @@ exclude:
 - run-windows.bat
 - Gemfile
 - Gemfile.lock
+- README*
+- LICENSE*
+- CHANGELOG*
 
 # Can be useful to stop Jekyll overwriting files in _site.
 # E.g. generate CSS once, then exclude above but keep here
@@ -111,7 +121,7 @@ compress_html:
 # ----------------------------
 
 # Version of this Electric Book template
-version: "0.7.0"
+version: "0.8.0"
 
 # Leave this unchanged as http://localhost:4000 unless you really know what you're doing here. This is the URL that Jekyll will run at by default locally.
 url: http://localhost:4000
@@ -146,7 +156,3 @@ defaults:
     values:
       layout: "default"
       style: "chapter"
-      stylesheet-print-pdf: "print-pdf.css"
-      stylesheet-screen-pdf: "screen-pdf.css"
-      stylesheet-web: "web.css"
-      stylesheet-epub: "epub.css"

@@ -1,7 +1,9 @@
 # Prose.io configuration for the EBW Electric Book Workflow.
 # Users with GitHub contributor access can edit your book with http://prose.io. 
-# These settings control what they see. See https://github.com/prose/prose/wiki/Prose-Configuration for more info.
-# (We don't use prose.io live previews with siteurl. they are slower than the default preview and unreliable in multi-site repos.)
+# These settings control what they see.
+# See https://github.com/prose/prose/wiki/Prose-Configuration for more info.
+# (We don't use prose.io live previews with siteurl.
+# They are slower than the default preview and unreliable in multi-site repos.)
 prose:
   ignore:
     - .gitattributes
@@ -18,7 +20,15 @@ prose:
     - /_layouts
     - /_includes
     - /_site
+    - /_html
     - /_sass
+    - /_output
+    - /assets
+    - /node_modules
+    - eslint.json
+    - gulpfile.js
+    - package.json
+    - package-lock.json
     - search.md
     - /*/search.md
     - /*/.gitattributes

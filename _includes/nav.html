@@ -2,28 +2,63 @@
 
     <div id="nav" class="non-printing">
 
-            {% if is-homepage == true or is-series-search == true %}
+            {% comment %}If we're neither in a book or a docs page,
+            show the series name.{% endcomment %}
+            {% if is-text-directory != true and is-docs-page != true %}
             <h2>{{ series-name }}</h2>
+
+            {% comment %}If docs are generating, and we're on a docs page
+            show a docs heading and version number{% endcomment %}
+            {% elsif output-docs == true and is-docs-page == true %}
+            <h2>Electric Book docs (v{{ site.version }})</h2>
+
+            {% comment %}Otherwise show the book title{% endcomment %}
             {% else %}
             <h2>{{ title }}</h2>
             {% endif %}
 
+            {% comment %}Add the search box{% endcomment %}
             <div class="search">
                 {% include search %}
             </div><!--.search-->
 
+            {% comment %}Create the nav list{% endcomment %}
             <div class="nav-list">
 
-                {% comment %}If this is not the homepage, include a link to the homepage.{% endcomment %}
+                {% comment %}If this is not the homepage,
+                include a link to the homepage.{% endcomment %}
                 {% if is-homepage != true %}
                     <ol class="nav-series-home">
                         <li><a href="{{ site.baseurl }}/">{{ series-home-label }}</a></li>
                     </ol>
                 {% endif %}
 
-                {% if is-homepage == true or is-series-search == true %}
+                {% comment %}If docs are on (i.e. output set to true in _config.yml),
+                show the docs nav.{% endcomment %}
+                {% if output-docs %}
+                    <ol class="nav-output-docs">
+                        <li{% unless is-docs-page %} class="has-children"{% endunless %}><a href="{{ site.baseurl }}/docs">Electric Book docs</a>
+                            <ol>
+                                {% for page in site.docs %}
+                                {% assign docs-filename = page.url | remove: ".html" | split: "/" | last %}
+                                {% unless docs-filename == "index" %}
+                                  <li>
+                                      <a href="{{ page.url }}" >
+                                          {{ page.title }}
+                                      </a>
+                                  </li>
+                                {% endunless %}
+                              {% endfor %}
+                            </ol>
+                        </li>
+                    </ol>
+                {% endif %}
 
-                    {% comment %}If there is only one book, don't include its title in home-page- and search nav.{% endcomment %}
+                {% comment %}If this is any non-book, non-docs page,
+                such as the home page or series search...{% endcomment %}
+                {% if is-text-directory != true and is-docs-page != true %}
+
+                    {% comment %}If there is only one book, don't include its title{% endcomment %}
                     {% if number-of-works == 1 %}
 
                         {% for work in site.data.meta.works | sort: "order" %}
@@ -38,12 +73,12 @@
                         {% for work in site.data.meta.works | sort: "order" %}
                         {% assign home-nav-work-directory = work.directory %}
                         {% assign home-nav-work-tree = work.products.web.nav %}
-                            <li>
+                            <li class="has-children">
                                 <a href="{{ base.url}}/{{ work.directory }}/text/{{ work.products.web.start-page }}.html">
                                     {{ work.title }}
                                 </a>
+                                {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                             </li>
-                            {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                         {% endfor %}
                         </ol>
 
@@ -62,17 +97,29 @@
                 {% include widgets %}
             </div><!--.widgets-->
 
-        </div><!--#nav-->
+    </div><!--#nav-->
 
 {% else %}
 
     <div id="nav" class="non-printing">
 
-            {% if is-homepage == true or is-series-search == true %}
+            {% comment %}If we're neither in a book or a docs page{% endcomment %}
+            {% if is-text-directory != true and is-docs-page != true %}
             <h2>{{ series-name }}</h2>
+
+            {% comment %}If docs are generating, and we're on a docs page{% endcomment %}
+            {% elsif output-docs == "true" and is-docs-page == true %}
+            <h2>Electric Book docs (v{{ site.version }})</h2>
+
+            {% comment %}Otherwise use the book title{% endcomment %}
             {% else %}
             <h2>{{ title }}</h2>
             {% endif %}
+
+            {% comment %}Add the search box{% endcomment %}
+            <div class="search">
+                {% include search %}
+            </div><!--.search-->
 
             <div class="nav-list">
                 <ul>

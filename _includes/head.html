@@ -11,7 +11,7 @@
     {% endif %}
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="{{ path-to-book-directory }}Styles/{{ page.stylesheet-epub }}" />
+    <link rel="stylesheet" type="text/css" href="{{ path-to-book-directory }}Styles/{{ epub-stylesheet }}" />
     
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
         <meta name="DC.Title" content="{{ title }}" />
@@ -43,7 +43,7 @@
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="print" href="{{ path-to-book-directory }}styles/{{ page.stylesheet-screen-pdf }}" />
+    <link rel="stylesheet" type="text/css" href="{{ path-to-book-directory }}styles/{{ screen-pdf-stylesheet }}" />
 
     {% include head-elements %}
 
@@ -64,7 +64,7 @@
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="print" href="{{ path-to-book-directory }}styles/{{ page.stylesheet-print-pdf }}" />
+    <link rel="stylesheet" type="text/css" href="{{ path-to-book-directory }}styles/{{ print-pdf-stylesheet }}" />
 
     {% include head-elements %}
 
@@ -91,26 +91,34 @@
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ site.canonical-url}}{{ page.url }}" />
+    {% if page.description %}
+    <meta property="og:description" content="{{ page.description }}" />
+    {% endif %}
     {% if page.image %}
-    <meta property="og:image" content="{{ page.image }}" />
+        {% if is-homepage == true or is-series-search == true %}
+            {% comment %}If a page.image is specified on the home page, we still use the series image{% endcomment %}
+            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
+        {% else %}
+            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ page.image }}" />
+        {% endif %}
     {% elsif is-homepage == true or is-series-search == true %}
-    <meta property="og:image" content="{{ site.canonical-url }}/{{ site.image-set }}/{{ series-image }}" />
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
     {% elsif web-image != "" %}
-    <meta property="og:image" content="{{ site.canonical-url }}/{{ book-directory }}/{{ site.image-set }}/{{ web-image }}" />
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ web-image }}" />
     {% elsif image != "" %}
-    <meta property="og:image" content="{{ site.canonical-url }}/{{ book-directory }}/{{ site.image-set }}/{{ image }}" />
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ image }}" />
     {% else %}
-    <meta property="og:image" content="{{ site.canonical-url }}/assets/{{ series-image }}" />
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
     {% endif %}
 
-    {% if is-homepage == true or is-series-search == true %}
+    {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
     {% for book in site.data.meta.works %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ page.stylesheet-web }}" />
-    <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ page.stylesheet-screen-pdf }}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ web-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ screen-pdf-stylesheet }}" />
     {% endfor %}
     {% else %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ path-to-book-directory }}styles/{{ page.stylesheet-web }}" />
-    <link rel="stylesheet" type="text/css" media="print" href="{{ path-to-book-directory }}styles/{{ page.stylesheet-screen-pdf }}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ path-to-book-directory }}styles/{{ web-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" media="print" href="{{ path-to-book-directory }}styles/{{ screen-pdf-stylesheet }}" />
     {% endif %}
 
     {% include head-elements %}

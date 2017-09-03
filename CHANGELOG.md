@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.8.0
+
+* Allow variant outputs (e.g. variations on `print-pdf` for derivative works)
+* New `identifiers` include lists, e.g. ISBNs, from `meta.yml`
+* New `_data/settings.yml` for Electric Book settings like variants, and
+* for future Electric Book Manager integration
+* Integrate documentation and typography samples (replaces separate docs repo)
+* Output formats now force appropriate image-set
+* Support Vimeo embeds
+* Allow series footer text in addition to book-specific web footers
+* Add `dialogue` styles
+* Shorter, easy `{{ images }}` tag for path to set-sensitive images
+* Update MathJax CDN
+* Better open graph metadata
+* Smarter video includes
+* Completely remove buggy Crimson Text font
+* Custom hyphenation dictionaries work and work better
+* Make hr text dividers work better with ADE and Amazon
+* Use latest Jekyll 3.5.2
+* Various minor fixes and improvements
+
 ## 0.7.0
 
 * Add support for translations as subdirectories of `text`

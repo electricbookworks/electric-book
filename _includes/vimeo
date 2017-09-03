@@ -1,0 +1,15 @@
+{% comment %}
+Behaviour for web:
+- default
+    - show placeholder image
+- js
+    - listen for in-viewport
+    - switch for div and iframe
+{% endcomment %}
+
+<div class="video{% if site.output == "web" or site.output == "epub3" %}wrapper{% endif %} vimeo" id="{{ include.id }}">
+    <a class="video-link" href="{{ include.link }}"><img src="{{ path-to-book-directory }}{{ site.image-set }}/{{ include.image }}"></a>
+    <p class="video-description">
+        <a href="{{ include.link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
+    </p>
+</div><!--.video{% if site.output == "web" or site.output == "epub3" %}wrapper{% endif %}-->

@@ -35,6 +35,7 @@ $trim: 0 !default;
 $crop-marks: none !default; // crop | none
 
 // Colours
+$colorspace: rgb !default; // auto | none | rgb | cmyk | gray
 $color-text-main: cmyk(0,0,0,1) !default;
 $color-text-secondary: cmyk(0,0,0,0.8) !default;
 $color-background: white !default;
@@ -59,10 +60,10 @@ $black-ink: true !default; // true or rich (true for pure black or rich for rich
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson Text", serif !default;
+$font-text-main: "Crimson", serif !default;
 $font-text-secondary: "Roboto Condensed", sans-serif !default;
 $font-display-main: "Roboto Condensed", sans-serif !default;
-$font-display-secondary: "Crimson Text", serif !default;
+$font-display-secondary: "Crimson", serif !default;
 $font-code: "Inconsolata", monospace !default;
 
 // Finally, we set variables related to text flow.
@@ -85,9 +86,14 @@ $button-border-radius: 0.1em !default; // Roundness of button corners.
 // Variables here apply to p, ul, ol, dl
 $hyphenation: auto !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
 $hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic". Overrides PrinceXML built-in hyphenation.
+$hyphenation-custom: add !default; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
 $hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
 $hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 2 !default; // Preferred maximum number of consecutive lines ending with hyphens
+
+// Text dividers
+// For breaks created with *** in markdown.
+$text-divider: "" !default; // Empty leaves space. \2022 is a bullet
 
 // Should chapters start on a right-hand page (recto) or on any page?
 // This setting applies to the frontmatter, dedication-page, epigraph-page and chapter page styles.
@@ -197,6 +203,7 @@ $print-base-typography: true !default; // Default typography for HTML elements
 $print-buttons: true !default;
 $print-verse: true !default; // Default typography for verse, poetry, lyrics
 $print-bibliographies: true !default;
+$print-dialogue: true !default; // 
 $print-epigraphs: true !default; // 
 $print-dedications: true !default; // 
 $print-glossaries: true !default; // Including .glossary
@@ -255,6 +262,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-bibliographies";
 @import "partials/print-epigraphs"; // 
 @import "partials/print-dedications"; // 
+@import "partials/print-dialogue"; // 
 @import "partials/print-glossaries"; // Including .glossary
 @import "partials/print-highlighter"; //
 @import "partials/print-pullquotes"; // Supports .pullquote

@@ -79,6 +79,10 @@ $hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
 $hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1 !default; // Maximum number of consecutive lines ending with hyphens
 
+// Text dividers
+// For breaks created with *** in markdown.
+$text-divider: "" !default; // Empty leaves space. \2022 is a bullet
+
 // Footer
 $footer-text-color: $color-text-main !default;
 $footer-background-color: $color-accent !default;
@@ -146,6 +150,7 @@ $web-bibliographies: true !default;
 $web-boxes: true !default;
 $web-buttons: true !default;
 $web-code: true !default;
+$web-dialogue: true !default;
 $web-figures: true !default;
 $web-highlighter: true !default;
 $web-glossaries: true !default;
@@ -206,6 +211,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-boxes";
 @import "partials/web-buttons";
 @import "partials/web-code";
+@import "partials/web-dialogue";
 @import "partials/web-figures";
 @import "partials/web-glossaries";
 @import "partials/web-highlighter";
