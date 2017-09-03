@@ -15,6 +15,7 @@ Assign series information to variables. This is the same for all books in the se
 {% capture series-image %}{{ site.data.meta.series.image }}{% endcapture %}
 {% capture series-home-label %}{{ site.data.meta.series.home-label }}{% endcapture %}
 {% capture series-nav-label %}{{ site.data.meta.series.nav-label }}{% endcapture %}
+{% capture series-footer %}{{ site.data.meta.series.footer }}{% endcapture %}
 
 {% comment %}
 It's useful to know how many books are in this series
@@ -409,3 +410,15 @@ the first book-directory listed in meta.yml{% endcomment %}
     {% break %}
   {% endif %}
 {% endfor %}
+
+{% comment %}Is the template in its new state?
+If docs are outputting, there is only one work,
+and its title is 'Template Title', then yes.{% endcomment %}
+{% if output-docs == "true" and number-of-works < 2 and site.data.meta.works[0].title == "Template title" %}
+  {% assign is-new-template = true %}
+{% endif %}
+
+{% comment %}Are we on a docs page?{% endcomment %}
+{% if page.collection == "docs" %}
+  {% assign is-docs-page = true %}
+{% endif %}
