@@ -48,7 +48,7 @@
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}" {% if page.header != nil %}title="{{ page.header }}"{% else %}title="{{ page.title }}"{% endif %}>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
 <div id="wrapper">
 
 {% elsif site.output == 'print-pdf' %}
@@ -70,7 +70,7 @@
 
 </head>
 <!--ontouchstart="" onmouseover="" required for iOS devices-->
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}" {% if page.header != nil %}title="{{ page.header }}"{% else %}title="{{ page.title }}"{% endif %} ontouchstart="" onmouseover="">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
 <div id="wrapper">
 
 
@@ -125,7 +125,7 @@
 
 </head>
 <!--ontouchstart="" onmouseover="" required for iOS devices-->
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-series-search == true %} series-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}" ontouchstart="" onmouseover="">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-series-search == true %} series-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
 <div id="wrapper">
 
 {% endif %}
