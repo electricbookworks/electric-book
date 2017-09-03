@@ -21,6 +21,8 @@ series:
   home-label: "Home"
   # For web navigation, the label for the navigation menu
   nav-label: "Contents"
+  # Footer text for the series
+  footer: "Built with the [Electric Book](http://electricbook.works)"
 
 ########
 # TITLES
@@ -108,7 +110,7 @@ works:
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
         contents-page: "0-3-contents" # Your contents-page file, if you have one.
-        footer: "Powered by the <a href='http://electricbook.works'>Electric Book</a>" # Text that appears in the footer of the website. You can include HTML.
+        footer: "" # Text that appears in the footer of this book's pages on the website.
       epub:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
