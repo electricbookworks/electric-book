@@ -11,8 +11,8 @@ Fall back to print-pdf toc, then web nav list.
 {% if site.output == "print-pdf" %}
     {% if print-pdf-toc != nil %}
         {% assign toc = print-pdf-toc %}
-    {% elsif web-nav != nil %}
-        {% assign toc = web-nav %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
     {% else %}
         Please define a TOC or web nav in meta.yml.
     {% endif %}
@@ -22,8 +22,8 @@ Fall back to print-pdf toc, then web nav list.
         {% assign toc = screen-pdf-toc %}
     {% elsif print-pdf-toc != nil %}
         {% assign toc = print-pdf-toc %}
-    {% elsif web-nav != nil %}
-        {% assign toc = web-nav %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
     {% else %}
         Please define a TOC or web nav in meta.yml.
     {% endif %}
@@ -33,8 +33,8 @@ Fall back to print-pdf toc, then web nav list.
         {% assign toc = epub-toc %}
     {% elsif print-pdf-toc != nil %}
         {% assign toc = print-pdf-toc %}
-    {% elsif web-nav != nil %}
-        {% assign toc = web-nav %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
     {% else %}
         Please define a TOC or web nav in meta.yml.
     {% endif %}
@@ -42,8 +42,8 @@ Fall back to print-pdf toc, then web nav list.
 {% elsif site.output == "web" %}
     {% if web-toc != nil %}
         {% assign toc = web-toc %}
-    {% elsif web-nav != nil %}
-        {% assign toc = web-nav %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
     {% elsif print-pdf-toc != nil %}
         {% assign toc = print-pdf-toc %}
     {% else %}
@@ -51,8 +51,8 @@ Fall back to print-pdf toc, then web nav list.
     {% endif %}
 
 {% else %}
-    {% if web-nav != nil %}
-        {% assign toc = web-nav %}
+    {% if web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
     {% elsif print-pdf-toc != nil %}
         {% assign toc = print-pdf-toc %}
     {% else %}
