@@ -15,6 +15,7 @@ Assign series information to variables. This is the same for all books in the se
 {% capture series-image %}{{ site.data.meta.series.image }}{% endcapture %}
 {% capture series-home-label %}{{ site.data.meta.series.home-label }}{% endcapture %}
 {% capture series-nav-label %}{{ site.data.meta.series.nav-label }}{% endcapture %}
+{% capture series-footer %}{{ site.data.meta.series.footer }}{% endcapture %}
 
 {% comment %}
 It's useful to know how many books are in this series
@@ -401,3 +402,23 @@ the first book-directory listed in meta.yml{% endcomment %}
 
 {% comment %}Create a short tag for the path to images.{% endcomment %}
 {% capture images %}{{ path-to-book-directory }}{{ site.image-set }}{% endcapture %}
+
+{% comment %}Are we outputting the docs?{% endcomment %}
+{% for coll in site.collections %}
+  {% if coll.output == true and coll.label == "docs" %}
+    {% assign output-docs = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% comment %}Is the template in its new state?
+Let's check a bunch of things that, in combination, should
+guarantee that the template is in a new state.{% endcomment %}
+{% if output-docs == true and number-of-works == 2 and site.data.meta.works[0].title == "Template" and site.data.meta.works[0].directory == "book" and site.data.meta.works[1].directory == "samples" %}
+  {% assign is-new-template = true %}
+{% endif %}
+
+{% comment %}Are we on a docs page?{% endcomment %}
+{% if page.collection == "docs" %}
+  {% assign is-docs-page = true %}
+{% endif %}

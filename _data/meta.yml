@@ -2,17 +2,18 @@
 # SERIES
 ########
 
+# Replace the values here with your series information.
 series:
   # The name of the organisation or entity that owns this series
-  organisation: "My Organisation"
+  organisation: "Electric Book Works"
   # A live web address for the organisation
-  url: "http://example.com/"
+  url: "http://electricbook.works/"
   # The default contact email address
-  email: "name@example.com"
+  email: "support@electricbook.works"
   # The name of the series of books in this folder.
-  name: "My Series"
+  name: "Electric Book"
   # A one-liner about this series. Useful for Open Graph metadata.
-  description: "A new series of books."
+  description: "Books created with the Electric Book workflow"
   # An image in /assets that stands for the series
   image: "publisher-logo.jpg"
   # For web navigation, the label for links to  the series homepage
@@ -20,6 +21,8 @@ series:
   home-label: "Home"
   # For web navigation, the label for the navigation menu
   nav-label: "Contents"
+  # Footer text for the series
+  footer: "Built with the [Electric Book](http://electricbook.works)"
 
 ########
 # TITLES
@@ -31,13 +34,13 @@ series:
 
 works:
   - directory: "book"
-    title: "The Title"
+    title: "Template"
     subtitle: ""
     creator: "A. N. Author" # E.g. the author
     contributor: "" # E.g. other contributors
     subject: "Fiction" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
-    description: "This is my awesome book." # E.g. the blurb
-    publisher: "My Brand" # E.g. the publisher, imprint or brand name
+    description: "This is the Electric Book template." # E.g. the blurb
+    publisher: "EBW" # E.g. the publisher, imprint or brand name
     publisher-url: ""
     date: "2015-12-31" # YYYY-MM-DD e.g. publication date
     modified: "2016-06-09" # YYYY-MM-DD e.g. date of last revision
@@ -69,7 +72,7 @@ works:
             file: "02"
             id: "2-goodbye-world"
             children: 
-              - label: "Example child"
+              - label: "subsection"
                 file: "02"
                 id: "example-id"
       web:
@@ -77,7 +80,7 @@ works:
         format: "Digital online" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
         image: "cover.jpg"
-        files: # To add a file to web navigation, give a file a value, e.g. 0-4-preface: "Preface"
+        files: # To add a file to web navigation without a nav section below, give a file a value, e.g. 0-4-preface: "Preface"
           - "index": Cover
           - "0-1-titlepage"
           - "0-2-copyright": "Copyright"
@@ -102,12 +105,12 @@ works:
             file: "02"
             id: "2-goodbye-world"
             children: 
-              - label: "Example child"
+              - label: "subsection"
                 file: "02"
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
         contents-page: "0-3-contents" # Your contents-page file, if you have one.
-        footer: "Powered by the <a href='http://electricbook.works'>Electric Book</a>" # Text that appears in the footer of the website. You can include HTML.
+        footer: "" # Text that appears in the footer of this book's pages on the website.
       epub:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
@@ -138,3 +141,305 @@ works:
     #     products:
     #       print-pdf:
     #         identifier: ""
+  - directory: "samples"
+    title: "Samples"
+    subtitle: "Sample content for Electric Book print, epub and web output"
+    creator: "Arthur Attwell" # E.g. the author
+    contributor: "" # E.g. other contributors
+    subject: "Publishing" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
+    description: >
+      This sample content demos Electric Book support for a wide range of book features.
+    publisher: "Electric Book Works" # E.g. the publisher, imprint or brand name
+    publisher-url: ""
+    date: "2016-09-01" # YYYY-MM-DD e.g. publication date
+    modified: "2016-09-23" # YYYY-MM-DD e.g. date of last revision
+    type: "Guide" # e.g. Novel, Poetry, Memoir
+    identifier: "978-1-928313-13-7" # e.g. ISBN or UUID
+    source: "978-1-928313-13-7" # e.g. parent ISBN or ISTC
+    language: "en" # use ISO 639-1, 639-2, or 639-3 codes (in that order of preference)
+    relation: "" # e.g. other edition ISBN
+    coverage: "" # e.g. geographic place or chronological time span
+    rights: "This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use." # e.g. a copyright statement
+    products: # Metadata for each product for this title (only use values that override parent metadata)
+      print-pdf: 
+        date: "2016-09-01" # YYYY-MM-DD e.g. publication or creation date
+        format: "Print" # e.g. Paperback, Digital download, Digital online
+        identifier: "" # e.g. ISBN or UUID
+        files:
+          - "00-01-halftitle-page"
+          - "00-02-previous-publications-page"
+          - "00-03-title-page"
+          - "00-04-copyright-page"
+          - "00-05-contents-page"
+          - "00-06-dedication-page"
+          - "00-07-epigraph-page"
+          - "00-08-frontispiece-page"
+          - "00-09-frontmatter"
+          - "01-00"
+          - "01-01"
+          - "01-02"
+          - "01-03"
+          - "01-04"
+          - "01-05"
+          - "01-06"
+          - "01-07"
+          - "01-08"
+          - "01-09"
+          - "02-00"
+          - "02-01"
+          - "02-02"
+          - "03-00"
+          - "03-01"
+          - "03-02"
+          - "04-00"
+          - "04-01"
+          - "04-02"
+          - "04-03"
+          - "04-04"
+          - "10-00"
+          - "10-01"
+          - "10-02"
+      web:
+        date: "2016-09-01" # YYYY-MM-DD e.g. publication date or last revision
+        format: "Digital online" # e.g. Paperback, Digital download, Digital online
+        identifier: "" # e.g. ISBN or UUID
+        files: # To add a file to web navigation, give a file a value, e.g. 0-4-preface: "Preface"
+          - "index": "Cover"
+          - "00-01-halftitle-page": "Half-title page"
+          - "00-02-previous-publications-page": "Also by the author"
+          - "00-03-title-page": "Title page"
+          - "00-04-copyright-page": "Copyright"
+          - "00-05-contents-page": "Contents"
+          - "00-06-dedication-page": "Dedication"
+          - "00-07-epigraph-page": "Epigraph"
+          - "00-08-frontispiece-page": "Frontispiece"
+          - "00-09-frontmatter": "Other frontmatter"
+          - "01-00": "Text"
+          - "01-01": "Plain text"
+          - "01-02": "Headings"
+          - "01-03": "Quotes"
+          - "01-04": "Lists"
+          - "01-05": "Tables"
+          - "01-06": "Boxes"
+          - "01-07": "Notes"
+          - "01-08": "Dividers"
+          - "01-09": "Poetry"
+          - "02-00": "Images"
+          - "02-01": "Plain images"
+          - "02-02": "Figures"
+          - "03-00": "Code and mathematics"
+          - "03-01": "Code"
+          - "03-02": "Mathematics"
+          - "04-00": "Interactivity"
+          - "04-01": "Links and buttons"
+          - "04-02": "Video"
+          - "04-03": "Audio"
+          - "04-04": "Quizzes"
+          - "10-00": "Indexes"
+          - "10-01": "Traditional index"
+          - "10-02": "Dynamic index"
+        nav:
+          - label: "Frontmatter"
+            file: "index"
+            class: "cover-entry"
+            children:
+              - label: "Half title page"
+                file: "00-01-halftitle-page"
+                class: "frontmatter-entry"
+              - label: "Previous publications"
+                file: "00-02-previous-publications-page"
+                class: "frontmatter-entry"
+              - label: "Title page"
+                file: "00-03-title-page"
+                class: "frontmatter-entry"
+              - label: "Copyright"
+                file: "00-04-copyright-page"
+                class: "frontmatter-entry"
+              - label: "Contents"
+                file: "00-05-contents-page"
+                class: "frontmatter-entry"
+              - label: "Dedication"
+                file: "00-06-dedication-page"
+                class: "frontmatter-entry"
+              - label: "Epigraph"
+                file: "00-07-epigraph-page"
+                class: "frontmatter-entry"
+              - label: "Frontispiece"
+                file: "00-08-frontispiece-page"
+                class: "frontmatter-entry"
+              - label: "Other frontmatter"
+                file: "00-09-frontmatter"
+                class: "frontmatter-entry"
+          - label: "Text"
+            children: 
+              - label: "Plain text"
+                file: "01-01"
+                id: "text"
+              - label: "Headings"
+                file: "01-02"
+                id: "headings"
+              - label: "Quotes"
+                file: "01-03"
+                id: "quotes"
+                children:
+                  - label: "Blockquotes"
+                    file: "01-03"
+                    id: "blockquotes"
+                  - label: "Pullquotes"
+                    file: "01-03"
+                    id: "pullquotes"
+                  - label: "Quote sources"
+                    file: "01-03"
+                    id: "quote-sources"
+              - label: "Lists"
+                file: "01-04"
+                id: "lists"
+                children:
+                  - label: "Simple lists"
+                    file: "01-04"
+                    id: "simple-lists"
+                  - label: "Chapter tables of contents"
+                    file: "01-04"
+                    id: "chapter-contents"
+                  - label: "Bibliographies"
+                    file: "01-04"
+                    id: "bibliographies"
+                  - label: "Definitions and glossaries"
+                    file: "01-04"
+                    id: "definitions-and-glossaries"
+              - label: "Tables"
+                file: "01-05"
+                id: "tables"
+              - label: "Boxes"
+                file: "01-06"
+                id: "boxes"
+              - label: "Notes"
+                file: "01-07"
+                id: "notes"
+              - label: "Dividers"
+                file: "01-08"
+                id: "dividers"
+              - label: "Poetry"
+                file: "01-09"
+                id: "poetry"
+          - label: "Images"
+            children: 
+              - label: "Plain images"
+                file: "02-01"
+                id: "plain-images"
+              - label: "Figures"
+                file: "02-02"
+                id: "figures"
+          - label: "Code and mathematics"
+            children:
+              - label: "Code"
+                file: "03-01"
+                id: "code"
+              - label: "Mathematics"
+                file: "03-02"
+                id: "mathematics"
+          - label: "Interactivity"
+            children: 
+              - label: "Links and buttons"
+                file: "04-01"
+                id: "links-and-buttons"
+              - label: "Video"
+                file: "04-02"
+                id: "video"
+              - label: "Audio"
+                file: "04-03"
+                id: "audio"
+              - label: "Quizzes"
+                file: "04-04"
+                id: "quizzes"
+          - label: "Indexes"
+            children: 
+              - label: "Traditional index"
+                file: "10-01"
+                id: "traditional-index"
+              - label: "Dynamic index"
+                file: "10-02"
+                id: "dynamic-index"
+        start-page: "00-05-contents-page" # At which file should users start reading?
+        contents-page: "00-05-contents-page" # Your contents-page file, if you have one.
+        footer: "" # Text that appears in the footer of the website. You can include HTML.
+      epub:
+        date: "2016-09-01" # YYYY-MM-DD e.g. publication date or last revision
+        format: "Digital download" # e.g. Paperback, Digital download, Digital online
+        identifier: "" # e.g. ISBN or UUID
+        image: "cover.jpg"
+        files:
+          - "00-00-cover"
+          - "00-01-halftitle-page"
+          - "00-02-previous-publications-page"
+          - "00-03-title-page"
+          - "00-04-copyright-page"
+          - "00-05-contents-page"
+          - "00-06-dedication-page"
+          - "00-07-epigraph-page"
+          - "00-08-frontispiece-page"
+          - "00-09-frontmatter"
+          - "01-00"
+          - "01-01"
+          - "01-02"
+          - "01-03"
+          - "01-04"
+          - "01-05"
+          - "01-06"
+          - "01-07"
+          - "01-08"
+          - "01-09"
+          - "02-00"
+          - "02-01"
+          - "02-02"
+          - "03-00"
+          - "03-01"
+          - "03-02"
+          - "04-00"
+          - "04-01"
+          - "04-02"
+          - "04-03"
+          - "04-04"
+          - "10-00"
+          - "10-01"
+          - "10-02"
+      screen-pdf:
+        date: "2016-09-01" # YYYY-MM-DD e.g. publication date or last revision
+        format: "Digital download" # e.g. Paperback, Digital download, Digital online
+        identifier: "" # e.g. ISBN or UUID
+        image: "cover.jpg"
+        files:
+          - "00-00-cover"
+          - "00-01-halftitle-page"
+          - "00-02-previous-publications-page"
+          - "00-03-title-page"
+          - "00-04-copyright-page"
+          - "00-05-contents-page"
+          - "00-06-dedication-page"
+          - "00-07-epigraph-page"
+          - "00-08-frontispiece-page"
+          - "00-09-frontmatter"
+          - "01-00"
+          - "01-01"
+          - "01-02"
+          - "01-03"
+          - "01-04"
+          - "01-05"
+          - "01-06"
+          - "01-07"
+          - "01-08"
+          - "01-09"
+          - "02-00"
+          - "02-01"
+          - "02-02"
+          - "03-00"
+          - "03-01"
+          - "03-02"
+          - "04-00"
+          - "04-01"
+          - "04-02"
+          - "04-03"
+          - "04-04"
+          - "10-00"
+          - "10-01"
+          - "10-02"

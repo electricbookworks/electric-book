@@ -13,10 +13,14 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
 
 {% include metadata %}
 
-{% if is-homepage == true or is-series-search == true %}
+{% comment %}If this is neither a text directory (i.e. in a book) nor a docs page,
+such as the home page or series search page...{% endcomment %}
+{% if is-text-directory != true and is-docs-page != true %}
 
+  {% comment %}Get a list of all the pages we've output to check against{% endcomment %}
   {% capture page-list %}{{ site.pages | remove: ".html" }}{% endcapture %}
 
+  {% comment %}Create a nav list{% endcomment %}
   <ol>
 
     {% for item in include.nav-tree | sort: "order" %}
@@ -30,8 +34,11 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
             {% endif %}
         </li>
     {% endfor %}
+
   </ol>
 
+{% comment %}Otherwise, we're in a text directory (i.e. in a book),
+and we're not on a docs page, create the full book nav.{% endcomment %}
 {% else %}
 
   {% capture current-file %}{{ page.url | remove_first: ".html" | replace: "/", " " | split, " " | last }}{% endcapture %}

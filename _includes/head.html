@@ -111,10 +111,10 @@
     <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
     {% endif %}
 
-    {% if is-homepage == true or is-series-search == true %}
+    {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
     {% for book in site.data.meta.works %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ web-stylesheet }}" />
-    <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ page.stylesheet-screen-pdf }}" />
+    <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ screen-pdf-stylesheet }}" />
     {% endfor %}
     {% else %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ path-to-book-directory }}styles/{{ web-stylesheet }}" />
