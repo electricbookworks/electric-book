@@ -26,3 +26,6 @@ variants:
     epub-stylesheet: ""
   - variant: yourvariant
 # ----------------------------------------------------------
+
+# Epub settings
+embed-fonts: true
