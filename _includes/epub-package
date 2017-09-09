@@ -1,0 +1,304 @@
+{% comment %}If we're outputting an epub, create a package.opf file{% endcomment %}
+{% if site.output == "epub" %}
+
+{% comment %}Map media-types to file extensions.
+See https://idpf.github.io/epub-cmt/v3/.
+We don't yet support media-overlay or dtbook files:
+smil+xml, pls+xml, x-dtbook+xml{% endcomment %}
+{% assign media-type-html = "application/xhtml+xml" %}
+{% assign media-type-xhtml = "application/xhtml+xml" %}
+{% assign media-type-css = "text/css" %}
+{% assign media-type-jpg = "image/jpeg" %}
+{% assign media-type-jpeg = "image/jpeg" %}
+{% assign media-type-gif = "image/gif" %}
+{% assign media-type-png = "image/png" %}
+{% assign media-type-svg = "image/svg+xml" %}
+{% assign media-type-ttf = "application/font-sfnt" %}
+{% assign media-type-otf = "application/font-sfnt" %}
+{% assign media-type-woff = "application/font-woff" %}
+{% assign media-type-woff2 = "font/woff2" %}
+{% assign media-type-mp3 = "audio/mpeg" %}
+{% assign media-type-mp4 = "audio/mp4" %}
+{% assign media-type-ncx = "application/x-dtbncx+xml" %}
+{% assign media-type-txt = "text/plain" %}
+{% comment %}Fallback for unknown media types{% endcomment %}
+{% assign media-type- = "application/octet-stream" %}
+
+{% comment %}Get the book metadata{% endcomment %}
+{% include metadata %}
+
+{% comment %}Create the package{% endcomment %}
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" xml:lang="en" unique-identifier="uid" prefix="cc: http://creativecommons.org/ns#">
+
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+        <dc:title id="title">{{ title }}</dc:title>
+        <meta refines="#title" property="title-type">main</meta>
+        <meta property="dc:title" id="subtitle">{{ subtitle }}</meta>
+        <meta refines="#subtitle" property="title-type">subtitle</meta>
+        <meta property="dc:title" id="series-name">{{ series-name }}</meta>
+        <meta refines="#series-name" property="title-type">collection</meta>
+        <dc:publisher>{{ publisher }}</dc:publisher>
+        <dc:creator>{{ creator }}</dc:creator>
+        <dc:contributor>{{ contributor }}</dc:contributor>
+        <dc:identifier id="uid">{{ epub-identifier }}</dc:identifier>
+        <dc:date>{{ date }}</dc:date>
+        <meta property="dcterms:modified">{% if epub-date %}{{ epub-date }}{% else %}{{ date }}{% endif %}</meta>
+        <dc:language>{{ language }}</dc:language>
+        <dc:description>{{ description }}</dc:description>
+        <dc:relation>{{ relation }}</dc:relation>
+        <dc:source>{{ source }}</dc:source>
+        <dc:subject>{{ subject }}</dc:subject>
+        <dc:rights>{{ rights }}</dc:rights>
+        <dc:coverage>{{ coverage }}</dc:coverage>
+        <dc:format>{{ epub-format }}</dc:format>
+        <dc:type>{{ type }}</dc:type>
+    </metadata>
+
+    <manifest>
+
+        {% comment %}Loop through the epub file list to create items.
+        Any entry in files may be a hash, so first create an array
+        of file names only. We only need the file names for the manifest.{% endcomment %} 
+        {% capture files-only %}
+        {% for file in epub-file-list %}
+        {% if file[0] %}{{ file[0] }}|{% else %}{{ file }}|{% endif %}
+        {% endfor %}
+        {% endcapture %}
+        {% assign files = files-only | strip_newlines | strip | split: "|" %}
+
+        {% comment %}For each file, get a list of properties to add.{% endcomment %}
+        {% for file in files %}
+
+            {% capture properties %}
+                {% if site.mathjax-enabled == true %}scripted {% endif %}
+                {% if file == epub-contents-page %}nav {% endif %}
+            {% endcapture %}
+            {% capture properties %}{{ properties | strip_newlines | strip }}{% endcapture %}
+
+            {% comment %}If the file starts with a number, 
+            create a prefix for when we use it as an id,
+            which can't start with a number.{% endcomment %}
+            {% capture file-first-character %}{{ file | truncate: 1, "" }}{% endcapture %}
+            {% if file-first-character == "0" or
+                  file-first-character == "1" or
+                  file-first-character == "2" or
+                  file-first-character == "3" or
+                  file-first-character == "4" or
+                  file-first-character == "5" or
+                  file-first-character == "6" or
+                  file-first-character == "7" or
+                  file-first-character == "8" or
+                  file-first-character == "9" %}
+                  {% assign file-prefix = "file-" %}
+            {% endif %}
+
+        <item id="{% if file-prefix %}{{ file-prefix }}{% endif %}{{ file | strip }}" 
+              media-type="application/xhtml+xml" 
+              href="text/{{ file | strip }}.html"
+              {% if properties != "" %}properties="{{ properties }}"{% endif %}
+              />
+
+        {% endfor %}
+
+        {% comment %}Add images by looping through static files whose path
+        contains the path to {{ images }} as defined in metadata.{% endcomment %}
+        {% assign image-files = site.static_files | where_exp: "f", "f.path contains images" %}
+
+        {% for file in image-files %}
+
+            {% capture properties %}
+                {% if file.extname == "svg" %}svg {% endif %}
+                {% if file.basename == "cover" %}cover-image {% endif %}
+            {% endcapture %}
+            {% capture properties %}{{ properties | strip_newlines | strip }}{% endcapture %}
+
+        <item id="image-{{ file.basename }}" 
+              media-type="{{ media-type-[file.extname] }}" 
+              href="images/{{ file.name }}"
+              {% if properties %}properties="{{ properties }}"/>{% endif %}
+
+        {% endfor %}
+
+        {% comment %}Same for fonts, if we're embedding fonts{% endcomment %}
+        {% if site.data.settings.embed-fonts == true %}
+
+        {% assign font-files = site.static_files | where_exp: "f", "f.path contains fonts" %}
+
+        {% for file in font-files %}
+
+        <item id="font-{{ file.basename }}" 
+              media-type="{{ media-type-[file.extname] }}" 
+              href="fonts/{{ file.name }}"
+              {% if properties %}properties="{{ properties }}"/>{% endif %}
+
+        {% endfor %}
+        {% endif %}
+
+        {% comment %}If we're using mathjax, add the mathjax-manifest{% endcomment %}
+        {% if site.mathjax-enabled == true %}
+        {% include mathjax-manifest.xml %}
+        {% endif %}
+
+    </manifest>
+
+    <spine>
+
+        {% comment %}Loop through the epub file list to create itemrefs
+        in the order they're in the file-list.{% endcomment %}
+        {% for file in epub-file-list %}
+
+            {% comment %}Get the file name. If the file list entry is a hash,
+            capture the key and the value as variables.{% endcomment %}
+            {% for file-hash in file %}
+                {% if file-hash[0] %}
+                    {% capture epub-file-name %}{{ file-hash[0] }}{% endcapture %}
+                    {% capture epub-file-property %}{{ file-hash[1] }}{% endcapture %}
+                {% else %}
+                    {% capture epub-file-name %}{{ file }}{% endcapture %}
+                {% endif %}
+            {% endfor %}
+
+            {% comment %}If the file starts with a number, 
+            create a prefix for when we use it as an id,
+            which can't start with a number.{% endcomment %}
+            {% capture file-first-character %}{{ epub-file-name | truncate: 1, "" }}{% endcapture %}
+            {% if file-first-character == "0" or
+                  file-first-character == "1" or
+                  file-first-character == "2" or
+                  file-first-character == "3" or
+                  file-first-character == "4" or
+                  file-first-character == "5" or
+                  file-first-character == "6" or
+                  file-first-character == "7" or
+                  file-first-character == "8" or
+                  file-first-character == "9" %}
+                  {% assign file-prefix = "file-" %}
+            {% endif %}
+
+        <itemref idref="{% if file-prefix %}{{ file-prefix }}{% endif %}{{ epub-file-name }}"
+                 {% if epub-file-property contains "auxiliary" %}linear="no"{% endif %}
+        />
+
+        {% endfor %}
+
+    </spine>
+
+    {% comment %}Guide, see http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
+    The guide is deprecated in EPUB3 in favour of the landmarks nav.
+    We don't yet support the landmarks nav. That's to do, and will probably
+    get its values from a new value in the epub toc in meta.yml.{% endcomment %}
+    <guide>
+
+        {% for file in epub-file-list %}
+
+            {% comment %}If the file list entry is a hash, add it to the guide,
+            with the hash value as the value.{% endcomment %} 
+            {% for file-hash in file %}
+
+                {% if file-hash[0] %}
+
+                    {% assign file-hash-name = file-hash[0] %}
+                    {% assign file-reference-type = file-hash[1] | slugify %}
+
+                    {% comment %}Create valid reference type values.{% endcomment %}
+                    {% if file-reference-type == "cover" %}
+                        {% assign reference-type = "cover" %}
+                        {% assign reference-title = "Cover" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "title-page" %}
+                        {% assign reference-type = "title-page" %}
+                        {% assign reference-title = "Title page" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "toc" %}
+                        {% assign reference-type = "toc" %}
+                        {% assign reference-title = "Table of contents" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "index" %}
+                        {% assign reference-type = "index" %}
+                        {% assign reference-title = "Index" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "glossary" %}
+                        {% assign reference-type = "glossary" %}
+                        {% assign reference-title = "Glossary" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "acknowledgements" %}
+                        {% assign reference-type = "acknowledgements" %}
+                        {% assign reference-title = "Acknowledgements" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "bibliography" %}
+                        {% assign reference-type = "bibliography" %}
+                        {% assign reference-title = "Bibliography" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "colophon" %}
+                        {% assign reference-type = "colophon" %}
+                        {% assign reference-title = "Colophon" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "copyright-page" %}
+                        {% assign reference-type = "copyright-page" %}
+                        {% assign reference-title = "Copyright" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "dedication" %}
+                        {% assign reference-type = "dedication" %}
+                        {% assign reference-title = "Dedication" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "epigraph" %}
+                        {% assign reference-type = "epigraph" %}
+                        {% assign reference-title = "Epigraph" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "foreword" %}
+                        {% assign reference-type = "foreword" %}
+                        {% assign reference-title = "Foreword" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "loi" %}
+                        {% assign reference-type = "loi" %}
+                        {% assign reference-title = "List of illustrations" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "lot" %}
+                        {% assign reference-type = "lot" %}
+                        {% assign reference-title = "List of tables" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "notes" %}
+                        {% assign reference-type = "notes" %}
+                        {% assign reference-title = "Notes" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "preface" %}
+                        {% assign reference-type = "preface" %}
+                        {% assign reference-title = "Preface" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "text" %}
+                        {% assign reference-type = "text" %}
+                        {% assign reference-title = "Text" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "start" %}
+                        {% assign reference-type = "text" %}
+                        {% assign reference-title = "Start" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% elsif file-reference-type == "auxiliary" %}
+                        {% assign reference-type = "" %}
+                        {% assign reference-title = "" %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                    {% else %}
+                        {% capture reference-type %}other.{{ file-reference-type }}{% endcapture %}
+                        {% capture file-href %}text/{{ file-hash-name }}{% endcapture %}
+                        {% assign reference-title = "" %}
+                    {% endif %}
+
+                {% if reference-type and reference-type != "" %}
+                <reference type="{{ reference-type }}" 
+                           href="{{ file-href }}"
+                           {% if reference-title and reference-title != "" %}title="{{ reference-title }}"{% endif %}
+                />
+                {% endif %}
+
+                {% endif %}
+
+            {% endfor %}
+
+        {% endfor %}
+
+    </guide>
+
+</package>
+
+{% endif %}
