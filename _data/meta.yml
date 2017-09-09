@@ -117,12 +117,35 @@ works:
         identifier: "" # e.g. ISBN or UUID
         image: "cover.jpg"
         files:
-          - "0-0-cover"
+          - "0-0-cover": "Cover"
           - "0-1-titlepage"
-          - "0-2-copyright"
-          - "0-3-contents"
+          - "0-2-copyright": "copyright-page"
+          - "0-3-contents": "toc"
           - "01"
           - "02"
+        toc: # For each menu item, include at least label and file (epub requires file). Optionally add id (for deep linking) and children.
+          - label: "Frontmatter"
+            file: "0-0-cover"
+            children:
+              - label: "Cover"
+                file: "index"
+              - label: "Title page"
+                file: "0-1-titlepage"
+              - label: "Copyright"
+                file: "0-2-copyright"
+          - label: "Contents"
+            file: "0-3-contents"
+          - label: "Chapter One"
+            file: "01"
+            id: "1-hello-world"
+          - label: "Chapter Two"
+            file: "02"
+            id: "2-goodbye-world"
+            children:
+              - label: "subsection"
+                file: "02"
+                id: "example-id"
+        contents-page: "0-3-contents" # Your contents-page file, required for epub
       screen-pdf:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
