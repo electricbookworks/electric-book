@@ -13,6 +13,17 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="{{ path-to-book-directory }}Styles/{{ epub-stylesheet }}" />
     
+    {% comment %}Metadata defined in page frontmatter overrides
+    series metadata, which is the default from meta.yml.{% endcomment %}
+    {% if page.title %}{% capture title %}{{ page.title }}{% endcapture %}
+    {% if page.language %}{% capture language %}{{ page.language }}{% endcapture %}
+    {% if page.creator %}{% capture creator %}{{ page.creator }}{% endcapture %}
+    {% if page.publisher %}{% capture publisher %}{{ page.publisher }}{% endcapture %}
+    {% if page.date %}{% capture date %}{{ page.date }}{% endcapture %}
+    {% if page.identifier %}{% capture identifier %}{{ page.identifier }}{% endcapture %}
+    {% if page.relation %}{% capture relation %}{{ page.relation }}{% endcapture %}
+    {% if page.description %}{% capture description %}{{ page.description }}{% endcapture %}
+
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
         <meta name="DC.Title" content="{{ title }}" />
         <meta name="DC.Language" content="{{ language }}" />
