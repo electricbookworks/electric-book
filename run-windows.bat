@@ -277,7 +277,7 @@ SET /p process=Enter a number and hit return.
     :epub
     :: Encouraging message
     ECHO.
-    ECHO Okay, let's make epub-ready files.
+    ECHO Okay, let's make an epub.
     ECHO.
     :: Remember where we are by assigning a variable to the current directory
     SET location=%~dp0
@@ -285,12 +285,6 @@ SET /p process=Enter a number and hit return.
     :choosefolder
     SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
     IF "%bookfolder%"=="" SET bookfolder=book
-    ECHO.
-    ECHO What is the first file in your book? Usually the cover.
-    ECHO Just hit return for the default "0-0-cover"
-    ECHO.
-    SET /p firstfile=
-    IF "%firstfile%"=="" SET firstfile=0-0-cover
     :: Ask if we're outputting the files from a subdirectory
     ECHO If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
     SET /p subdirectory=
@@ -304,40 +298,66 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p config=
     ECHO.
-    :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
-    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
-    SET /p epub-mathjax=
     :: Loop back to this point to refresh the build again
     :epubrefresh
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
-    :: with MathJax enabled if necessary
-    IF "%epub-mathjax%"=="" GOTO epubnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,%config%"
-    GOTO epubjekylldone
-    :epubnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
     :epubjekylldone
-    :: Skip PhantomJS if we're not using MathJax.
-    IF "%epub-mathjax%"=="" GOTO epubafterphantom
-    :: Run this through phantom for extra magic
-    CALL phantomjs _site\assets\js\render-mathjax.js
-    :epubafterphantom
-    :: Navigate into the book's folder in _site output
-    CD _site\%bookfolder%\text\"%subdirectory%"
-    :: Let the user know we're now going to open Sigil
-    ECHO Opening Sigil...
-    :: Temporarily put Sigil in the PATH, whether x86 or not
-    PATH=%PATH%;C:\Program Files\Sigil;C:\Program Files (x86)\Sigil
-    :: and open the cover HTML file in it, to load metadata into Sigil
-    START "" sigil.exe "%firstfile%.html"
-    :: Open file explorer to make it easy to see the HTML to assemble
-    %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text\%subdirectory%"
+
+    :: What's next?
+    ECHO Assembling epub...
+
+    :: Copy images, fonts, styles and package.opf to epub.
+    :: The echo preemptively answers xcopy's question whether 
+    :: this is a file or a directory (see https://stackoverflow.com/a/3018371).
+    :: The > nul supresses command-line feedback (pseudo silent mode)
+    CD _site\%bookfolder%
+    if exist "images" xcopy /e /i /q "images" "../epub/%bookfolder%/images" > nul
+    if exist "fonts" xcopy /e /i /q "fonts" "../epub/%bookfolder%/fonts" > nul
+    if exist "styles" xcopy /e /i /q "styles" "../epub/%bookfolder%/styles" > nul
+    echo f | xcopy /e /q "package.opf" "../epub/package.opf" > nul
+
+    :: Copy contents of text or text/subdirectory to epub/text.
+    IF "%subdirectory%"=="" GOTO epubcopynosubdirectory
+    echo d | xcopy /e /i /q "text/%subdirectory%" "../epub/%bookfolder%/text" > nul
+    :epubcopynosubdirectory
+    echo d | xcopy /e /i /q "text" "../epub/%bookfolder%/text" > nul
+
+    :: User feedback...
+    ECHO Compressing epub...
+
+    :: If they exist, remove previous .zip and .epub files that we will replace.
+    if exist "%location%\_output\%bookfolder%.zip" del /q "%location%\_output\%bookfolder%.zip"
+    if exist "%location%\_output\%bookfolder%.epub" del /q "%location%\_output\%bookfolder%.epub"
+
+    :: You must have 7-Zip installed
+    ECHO If you get errors, make sure 7-Zip is installed (http://www.7-zip.org/) and added to your PATH.
+
+    :: Create a new zip file named for the book in _output
+    :: and make sure the mimetype is uncompressed and first in the archive
+    CD ..\epub
+    7z a -tzip -mx0 "%location%/_output/%bookfolder%.zip" mimetype
+
+    :: Now add the rest of the contents of the epub
+    7z a -r -tzip "%location%/_output/%bookfolder%.zip" images/
+    7z a -r -tzip "%location%/_output/%bookfolder%.zip" fonts/
+    7z a -r -tzip "%location%/_output/%bookfolder%.zip" styles/
+    7z a -r -tzip "%location%/_output/%bookfolder%.zip" text/
+    7z a -r -tzip "%location%/_output/%bookfolder%.zip" META-INF/
+    7z a -r -tzip "%location%/_output/%bookfolder%.zip" package.opf
+
+    :: Change file extension .zip to .epub
+    CD %location%\_output
+    ren %bookfolder%.zip %bookfolder%.epub
+
+    :: Open file explorer to make it easy to see the epub
+    rem %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text\%subdirectory%"
     :: Navigate back to where we began
     CD "%location%"
     :: Tell the user we're done
-    ECHO Done! You can now assemble your EPUB in Sigil.
+    ECHO Done!
     :: Let the user easily run that again by running jekyll b and prince again
     SET repeat=
     SET /p repeat=Enter to run again, or any other key and enter to stop. 
