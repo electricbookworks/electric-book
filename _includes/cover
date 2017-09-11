@@ -17,8 +17,7 @@ as a path to the image of the translated cover.{% endcomment %}
 {% comment %}
 Adjust HTML based on output format.
 * For web, link the cover to the start page.
-* For epub, use Sigil's file path structure.
-* For other outputs (screen-pdf and print-pdf) use just the image.
+* For other outputs use just the image.
 {% endcomment %}
 
 {% if site.output == "web" %}
