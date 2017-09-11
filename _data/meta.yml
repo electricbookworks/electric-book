@@ -50,7 +50,7 @@ works:
     language: "en" # use ISO 639-1, 639-2, or 639-3 codes (in that order of preference)
     relation: "" # e.g. other edition ISBN
     coverage: "" # e.g. geographic place or chronological time span
-    rights: "All rights reserved.<br />No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher." # e.g. a copyright statement
+    rights: "All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher." # e.g. a copyright statement
     image: "cover.jpg"
     products: # Metadata for each product for this title (only use values that override parent metadata)
       print-pdf: 
@@ -114,7 +114,7 @@ works:
       epub:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
-        identifier: "" # e.g. ISBN or UUID
+        identifier: "9780000000000" # e.g. ISBN or UUID
         image: "cover.jpg"
         files:
           - "0-0-cover": "Cover"
@@ -128,7 +128,7 @@ works:
             file: "0-0-cover"
             children:
               - label: "Cover"
-                file: "index"
+                file: "0-0-cover"
               - label: "Title page"
                 file: "0-1-titlepage"
               - label: "Copyright"
