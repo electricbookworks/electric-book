@@ -8,3 +8,46 @@ collections:
     output: false
   epub:
     output: true
+exclude:
+  # the usual excludes from _config.yml
+  - run-linux.sh
+  - run-mac.command
+  - run-windows.bat
+  - Gemfile
+  - Gemfile.lock
+  - README*
+  - LICENSE*
+  - CHANGELOG*
+  # exclude files we don't need for epub
+  - /*/styles/print-pdf.scss
+  - /*/styles/screen-pdf.scss
+  - /*/styles/web.scss
+  - /*/file-list
+  - /*/index.md
+  - /*/images/print-pdf
+  - /*/images/screen-pdf
+  - /*/images/web
+# Configure HTML compression. For epub, we need to compress
+# to avoid invalid empty line at start of XML docs.
+# See https://github.com/penibelst/jekyll-compress-html
+compress_html:
+  blanklines: false
+# Map file extensions to media types for the opf
+media-types:
+  html: "application/xhtml+xml"
+  xhtml: "application/xhtml+xml"
+  css: "text/css"
+  jpg: "image/jpeg"
+  jpeg: "image/jpeg"
+  gif: "image/gif"
+  png: "image/png"
+  svg: "image/svg+xml"
+  ttf: "application/font-sfnt"
+  otf: "application/font-sfnt"
+  woff: "application/font-woff"
+  woff2: "font/woff2"
+  mp3: "audio/mpeg"
+  mp4: "audio/mp4"
+  ncx: "application/x-dtbncx+xml"
+  txt: "text/plain"
+  unknown: "application/octet-stream"
