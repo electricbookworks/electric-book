@@ -103,6 +103,7 @@ exclude:
 - README*
 - LICENSE*
 - CHANGELOG*
+- _utils*
 
 # Can be useful to stop Jekyll overwriting files in _site.
 # E.g. generate CSS once, then exclude above but keep here
