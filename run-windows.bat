@@ -325,39 +325,55 @@ SET /p process=Enter a number and hit return.
     :epubcopynosubdirectory
     echo d | xcopy /e /i /q "text" "../epub/%bookfolder%/text" > nul
 
-    :: User feedback...
+    :: Now to compress the epub files
     ECHO Compressing epub...
 
     :: If they exist, remove previous .zip and .epub files that we will replace.
     if exist "%location%\_output\%bookfolder%.zip" del /q "%location%\_output\%bookfolder%.zip"
     if exist "%location%\_output\%bookfolder%.epub" del /q "%location%\_output\%bookfolder%.epub"
 
-    :: You must have 7-Zip installed
-    ECHO If you get errors, make sure 7-Zip is installed (http://www.7-zip.org/) and added to your PATH.
+    :: Go into _site/epub to zip it to _output
+    CD %location%_site/epub
 
-    :: Create a new zip file named for the book in _output
-    :: and make sure the mimetype is uncompressed and first in the archive
-    CD ..\epub
-    7z a -tzip -mx0 "%location%/_output/%bookfolder%.zip" mimetype
-
-    :: Now add the rest of the contents of the epub
-    7z a -r -tzip "%location%/_output/%bookfolder%.zip" images/
-    7z a -r -tzip "%location%/_output/%bookfolder%.zip" fonts/
-    7z a -r -tzip "%location%/_output/%bookfolder%.zip" styles/
-    7z a -r -tzip "%location%/_output/%bookfolder%.zip" text/
-    7z a -r -tzip "%location%/_output/%bookfolder%.zip" META-INF/
-    7z a -r -tzip "%location%/_output/%bookfolder%.zip" package.opf
+    :: Uses Zip 3.0: http://www.info-zip.org/Zip.html
+    :: Temporarily put Zip in the PATH
+    PATH=%PATH%;%location%_utils\zip
+    :: mimetype: create zip, no compression, no extra fields
+    zip --compression-method store -0 -X --quiet "%location%_output/%bookfolder%.zip" mimetype
+    :: everything else: append to the zip with default compression
+    if exist "%bookfolder%/images" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "%bookfolder%/images"
+    if exist "%bookfolder%/fonts" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "%bookfolder%/fonts"
+    if exist "%bookfolder%/styles" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "%bookfolder%/styles"
+    if exist "%bookfolder%/text" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "%bookfolder%/text"
+    if exist META-INF zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" META-INF
+    if exist package.opf zip --quiet "%location%_output/%bookfolder%.zip" package.opf
 
     :: Change file extension .zip to .epub
-    CD %location%\_output
-    ren %bookfolder%.zip %bookfolder%.epub
+    CD %location%_output
+    if exist %bookfolder%.zip ren %bookfolder%.zip %bookfolder%.epub
 
-    :: Open file explorer to make it easy to see the epub
-    rem %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text\%subdirectory%"
+    :: Check if epubcheck is in the PATH, and run it if it is
+    ECHO If EPUBCheck is in your PATH, we'll run validation now.
+
+    :: Use a batch-file trick to get the location of epubcheck
+    :: https://blogs.msdn.microsoft.com/oldnewthing/20120731-00/?p=7003/
+    for /f %%i in ('where epubcheck.jar') do set epubchecklocation=%%i
+    if "%epubchecklocation%"=="" ECHO Couldn't find epubcheck, sorry. GOTO skipepubvalidation
+
+    :: then run it
+    ECHO Found EPUBCheck, running validation...
+    call java -jar %epubchecklocation% %bookfolder%.epub
+
+    :: Skip to here if epubcheck wasn't found in the PATH
+    :skipepubvalidation
+
+    :: Open file explorer to show the epub
+    ECHO Opening folder containing your epub...
+    %SystemRoot%\explorer.exe "%location%_output"
+
     :: Navigate back to where we began
     CD "%location%"
-    :: Tell the user we're done
-    ECHO Done!
+
     :: Let the user easily run that again by running jekyll b and prince again
     SET repeat=
     SET /p repeat=Enter to run again, or any other key and enter to stop. 
