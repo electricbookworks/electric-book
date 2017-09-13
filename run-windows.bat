@@ -353,15 +353,15 @@ SET /p process=Enter a number and hit return.
     if exist %bookfolder%.zip ren %bookfolder%.zip %bookfolder%.epub
 
     :: Check if epubcheck is in the PATH, and run it if it is
-    ECHO If EPUBCheck is in your PATH, we'll run validation now.
+    ECHO If EpubCheck is in your PATH, we'll run validation now.
 
     :: Use a batch-file trick to get the location of epubcheck
     :: https://blogs.msdn.microsoft.com/oldnewthing/20120731-00/?p=7003/
     for /f %%i in ('where epubcheck.jar') do set epubchecklocation=%%i
-    if "%epubchecklocation%"=="" ECHO Couldn't find epubcheck, sorry. GOTO skipepubvalidation
+    if "%epubchecklocation%"=="" ECHO Couldn't find EpubCheck, sorry. GOTO skipepubvalidation
 
     :: then run it
-    ECHO Found EPUBCheck, running validation...
+    ECHO Found EpubCheck, running validation...
     call java -jar %epubchecklocation% %bookfolder%.epub
 
     :: Skip to here if epubcheck wasn't found in the PATH
