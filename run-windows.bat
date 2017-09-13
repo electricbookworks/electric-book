@@ -314,16 +314,16 @@ SET /p process=Enter a number and hit return.
     :: this is a file or a directory (see https://stackoverflow.com/a/3018371).
     :: The > nul supresses command-line feedback (pseudo silent mode)
     CD _site\%bookfolder%
-    if exist "images" xcopy /e /i /q "images" "../epub/images" > nul
-    if exist "fonts" xcopy /e /i /q "fonts" "../epub/fonts" > nul
-    if exist "styles" xcopy /e /i /q "styles" "../epub/styles" > nul
+    if exist "images" xcopy /e /i /q "images" "../epub/%bookfolder%/images" > nul
+    if exist "fonts" xcopy /e /i /q "fonts" "../epub/%bookfolder%/fonts" > nul
+    if exist "styles" xcopy /e /i /q "styles" "../epub/%bookfolder%/styles" > nul
     echo f | xcopy /e /q "package.opf" "../epub/package.opf" > nul
 
     :: Copy contents of text or text/subdirectory to epub/text.
     IF "%subdirectory%"=="" GOTO epubcopynosubdirectory
-    echo d | xcopy /e /i /q "text/%subdirectory%" "../epub/text" > nul
+    echo d | xcopy /e /i /q "text/%subdirectory%" "../epub/%bookfolder%/text" > nul
     :epubcopynosubdirectory
-    echo d | xcopy /e /i /q "text" "../epub/text" > nul
+    echo d | xcopy /e /i /q "text" "../epub/%bookfolder%/text" > nul
 
     :: Now to compress the epub files
     ECHO Compressing epub...
@@ -353,15 +353,15 @@ SET /p process=Enter a number and hit return.
     if exist %bookfolder%.zip ren %bookfolder%.zip %bookfolder%.epub
 
     :: Check if epubcheck is in the PATH, and run it if it is
-    ECHO If EPUBCheck is in your PATH, we'll run validation now.
+    ECHO If EpubCheck is in your PATH, we'll run validation now.
 
     :: Use a batch-file trick to get the location of epubcheck
     :: https://blogs.msdn.microsoft.com/oldnewthing/20120731-00/?p=7003/
     for /f %%i in ('where epubcheck.jar') do set epubchecklocation=%%i
-    if "%epubchecklocation%"=="" ECHO Couldn't find epubcheck, sorry. GOTO skipepubvalidation
+    if "%epubchecklocation%"=="" ECHO Couldn't find EpubCheck, sorry. GOTO skipepubvalidation
 
     :: then run it
-    ECHO Found EPUBCheck, running validation...
+    ECHO Found EpubCheck, running validation...
     call java -jar %epubchecklocation% %bookfolder%.epub
 
     :: Skip to here if epubcheck wasn't found in the PATH

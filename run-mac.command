@@ -24,7 +24,7 @@ Electric Book options
 1. Create a print PDF
 2. Create a screen PDF
 3. Run as a website
-4. Create EPUB-ready files
+4. Create an epub
 5. Export to Word
 6. Install or update dependencies
 7. Exit
@@ -268,13 +268,6 @@ You may need to reload the web page once this server is running."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
 		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read epubsubdirectory
-		echo -n "What is the first file in your book? Usually the cover.
-(Don't include the file extension. Hit enter for the default '0-0-cover'.) "
-		read firstfile
-		if [ "$firstfile" = "" ]
-			then
-			firstfile="0-0-cover"
-		fi
 		# Ask the user to add any extra Jekyll config files, e.g. _config.myconfig.yml
 		echo -n "
 Any extra config files?
@@ -282,34 +275,81 @@ Enter filenames (including any relative path), comma separated, no spaces. E.g.
 _configs/_config.myconfig.yml
 If not, just hit return."
 		read config
-		# Ask whether we're processing MathJax, to know whether to send the HTML via PhantomJS
-		echo "Does this book use MathJax? If no, hit enter. If yes, type any key then enter."
-		read epubmathjax
 		# We're going to let users run this over and over by pressing enter
 		repeat=""
 		while [ "$repeat" = "" ]
 		do
 			# let the user know we're on it!
 			echo "Generating HTML..."
-			# ...and run Jekyll to build new HTML, enabling MathJax if necessary
-			if [ "$epubmathjax" = "" ]
-				then
-				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$config"
+			# ...and run Jekyll to build new HTML
+			bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$config"
+			# Now to aessmble the epub
+			echo "Assembling epub..."
+			# Copy text, images, fonts, styles and package.opf to epub
+			cd _site/"$bookfolder"
+			ls
+			mkdir ../epub/$bookfolder
+			if [ "$epubsubdirectory" = "" ]; then
+				mkdir ../epub/$bookfolder/text && cp -a text/. ../epub/$bookfolder/text/
 			else
-				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,$config"
+				mkdir ../epub/$bookfolder/text && cp -a text/$epubsubdirectory/. ../epub/$bookfolder/text/
 			fi
-			# Navigate to the relevant text folder...
-			if [ "$epubsubdirectory" = "" ]
-				then
-				cd _site/$bookfolder/text
-			else
-				cd _site/$bookfolder/text/$epubsubdirectory
+			if [ -d images ]; then
+				mkdir ../epub/$bookfolder/images && cp -a images/. ../epub/$bookfolder/images/
 			fi
-			# ...and open the first epub file there.
-			# Let the user know we're now going to open Sigil.
-			# NOTE: Sigil is not well supported on Linux, so many users won't have it.
-			echo "Opening Sigil..."
-			sigil "$firstfile.html"
+			if [ -d fonts ]; then
+				mkdir ../epub/$bookfolder/fonts && cp -a fonts/. ../epub/$bookfolder/fonts/
+			fi
+			if [ -d styles ]; then
+				mkdir ../epub/$bookfolder/styles && cp -a styles/. ../epub/$bookfolder/styles/
+			fi
+			if [ -e package.opf ]; then
+				cp package.opf ../epub/package.opf
+			fi
+			# Now to compress the epub files
+			echo "Compressing epub..."
+		    # First, though, if they exist, remove previous .zip and .epub files that we will replace.
+			if [ -e "$location/_output/$bookfolder.zip" ]; then
+				rm "$location/_output/$bookfolder.zip"
+			fi
+			if [ -e "$location/_output/$bookfolder.epub" ]; then
+				rm "$location/_output/$bookfolder.epub"
+			fi
+			# Go into _site/epub to zip it to _output
+			cd ../epub
+			# Add the mimetype first, with no compression and no extra fields (-X)
+			zip --compression-method store -0 -X --quiet "$location/_output/$bookfolder.zip" mimetype
+			if [ -d "$bookfolder"/images ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "$bookfolder/images"
+			fi
+			if [ -d "$bookfolder"/fonts ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "$bookfolder/fonts"
+			fi
+			if [ -d "$bookfolder"/styles ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "$bookfolder/styles"
+			fi
+			if [ -d "$bookfolder"/text ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "$bookfolder/text"
+			fi
+			if [ -d META-INF ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" META-INF
+			fi
+			if [ -e package.opf ]; then
+				zip --quiet "$location/_output/$bookfolder.zip" package.opf
+			fi
+	    	# Change file extension .zip to .epub
+    		cd $location/_output
+    		if [ -e "$bookfolder".zip ]; then
+				mv "$bookfolder".zip "$bookfolder".epub
+			fi
+			# Validation
+			echo "To run validation now, enter the path to the EpubCheck folder on your machine. E.g. /usr/bin/local/epubcheck-4.0.1"
+			echo "Or hit enter to skip EpubCheck validation."
+			echo "(You can get EpubCheck from https://github.com/IDPF/epubcheck/releases)"
+			read pathtoepubcheck
+			if ! [ "$pathtoepubcheck" = "" ]; then
+				java -jar "$pathtoepubcheck"/epubcheck.jar "$bookfolder".epub
+			fi
 			# Open file browser to see epub-ready HTML files
 			# (for Linux, this is xdg-open, not open)
 			open .
