@@ -314,16 +314,16 @@ SET /p process=Enter a number and hit return.
     :: this is a file or a directory (see https://stackoverflow.com/a/3018371).
     :: The > nul supresses command-line feedback (pseudo silent mode)
     CD _site\%bookfolder%
-    if exist "images" xcopy /e /i /q "images" "../epub/%bookfolder%/images" > nul
-    if exist "fonts" xcopy /e /i /q "fonts" "../epub/%bookfolder%/fonts" > nul
-    if exist "styles" xcopy /e /i /q "styles" "../epub/%bookfolder%/styles" > nul
+    if exist "images" xcopy /e /i /q "images" "../epub/images" > nul
+    if exist "fonts" xcopy /e /i /q "fonts" "../epub/fonts" > nul
+    if exist "styles" xcopy /e /i /q "styles" "../epub/styles" > nul
     echo f | xcopy /e /q "package.opf" "../epub/package.opf" > nul
 
     :: Copy contents of text or text/subdirectory to epub/text.
     IF "%subdirectory%"=="" GOTO epubcopynosubdirectory
-    echo d | xcopy /e /i /q "text/%subdirectory%" "../epub/%bookfolder%/text" > nul
+    echo d | xcopy /e /i /q "text/%subdirectory%" "../epub/text" > nul
     :epubcopynosubdirectory
-    echo d | xcopy /e /i /q "text" "../epub/%bookfolder%/text" > nul
+    echo d | xcopy /e /i /q "text" "../epub/text" > nul
 
     :: Now to compress the epub files
     ECHO Compressing epub...
