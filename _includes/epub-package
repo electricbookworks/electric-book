@@ -103,7 +103,7 @@
 
         <item id="{% if file-prefix %}{{ file-prefix }}{% endif %}{{ manifest-epub-file-name | strip }}" 
               media-type="application/xhtml+xml" 
-              href="{{ book-directory }}/text/{{ manifest-epub-file-name | strip }}.html"
+              href="text/{{ manifest-epub-file-name | strip }}.html"
               {% if properties != "" %}properties="{{ properties }}"{% endif %}
               />
 
@@ -112,7 +112,7 @@
         {% comment %}Add the stylesheet{% endcomment %}
         <item id="epub-css" 
               media-type="text/css" 
-              href="{{ book-directory }}/styles/{{ epub-stylesheet }}"
+              href="styles/{{ epub-stylesheet }}"
               />
 
         {% comment %}Add images by looping through static files whose path
@@ -131,34 +131,41 @@
 
             <item id="image-{{ file.basename }}" 
                   media-type="{{ site.media-types[file-extension] }}"
-                  href="{{ book-directory }}/images/epub/{{ file.name }}"
+                  href="images/epub/{{ file.name }}"
                   {% if properties %}properties="{{ properties }}"{% endif %}
                   />
 
         {% endfor %}
 
-        {% comment %}Same for fonts, if we're embedding fonts{% endcomment %}
-        {% if site.data.settings.embed-fonts == true %}
+        {% comment %}Add epub-fonts listed in settings{% endcomment %}
+        {% for font in site.data.settings.epub-fonts %}
 
-            {% assign font-files = site.static_files | where_exp: "f", "f.path contains fonts" %}
+            {% capture file-name %}{{ font | split: "." | first }}{% endcapture %}
+            {% capture file-extension %}{{ font | split: "." | last }}{% endcapture %}
 
-            {% for file in font-files %}
+            <item id="font-{{ file-name }}" 
+                  media-type="{{ site.media-types[file-extension] }}"
+                  href="fonts/{{ font }}"
+                  />
 
-                {% assign file-extension = file.extname | remove: "." %}
+        {% endfor %}
 
-                <item id="font-{{ file.basename }}" 
-                      media-type="{{ site.media-types[file-extension] }}"
-                      href="{{ book-directory }}/fonts/{{ file.name }}"
-                      {% if properties %}properties="{{ properties }}"{% endif %}
+        {% comment %}Add scripts{% endcomment %}
+        {% for file in site.epub %}
+            {% capture file-extension %}{{ file.path | split: "." | last }}{% endcapture %}
+            {% if file-extension == "js" %}
+
+                <item id="script-{{ file.title | slugify }}"
+                      media-type="application/x-javascript"
+                      href="js/{{ file.path | split: "/" | last }}"
                       />
 
-            {% endfor %}
-
-        {% endif %}
+            {% endif %}
+        {% endfor %}
 
         {% comment %}If we're using mathjax, add the mathjax-manifest{% endcomment %}
         {% if site.mathjax-enabled == true %}
-        {% include mathjax-manifest.xml %}
+            {% include mathjax-manifest.xml %}
         {% endif %}
 
     </manifest>
@@ -307,7 +314,7 @@
 
                 {% if reference-type and reference-type != "" %}
                 <reference type="{{ reference-type }}" 
-                           href="{{ book-directory }}/text/{{ file-href }}.html"
+                           href="text/{{ file-href }}.html"
                            {% if reference-title and reference-title != "" %}title="{{ reference-title }}"{% endif %}
                 />
                 {% endif %}
