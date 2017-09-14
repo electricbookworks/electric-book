@@ -51,4 +51,5 @@ media-types:
   mp4: "audio/mp4"
   ncx: "application/x-dtbncx+xml"
   txt: "text/plain"
+  js: "application/x-javascript"
   unknown: "application/octet-stream"
