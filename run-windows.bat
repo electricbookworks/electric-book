@@ -285,10 +285,16 @@ SET /p process=Enter a number and hit return.
     :choosefolder
     SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
     IF "%bookfolder%"=="" SET bookfolder=book
+    ECHO.
     :: Ask if we're outputting the files from a subdirectory
     ECHO If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
     SET /p subdirectory=
     :epub-otherconfigs
+
+    :: Ask whether to include boilerplate mathjax directory
+    echo Include mathjax? Enter y for yes (or enter for no).
+    set /p epubmathax=
+
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
@@ -298,6 +304,11 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p config=
     ECHO.
+
+    :: Ask about validation
+    echo Shall we try to run validation when we're done? Enter y for yes, or just enter for no.
+    set /p epubvalidation=
+
     :: Loop back to this point to refresh the build again
     :epubrefresh
     :: let the user know we're on it!
@@ -314,16 +325,43 @@ SET /p process=Enter a number and hit return.
     :: this is a file or a directory (see https://stackoverflow.com/a/3018371).
     :: The > nul supresses command-line feedback (pseudo silent mode)
     CD _site\%bookfolder%
-    if exist "images" xcopy /e /i /q "images" "../epub/%bookfolder%/images" > nul
-    if exist "fonts" xcopy /e /i /q "fonts" "../epub/%bookfolder%/fonts" > nul
-    if exist "styles" xcopy /e /i /q "styles" "../epub/%bookfolder%/styles" > nul
+    if exist "images" xcopy /e /i /q "images" "../epub/images" > nul
+    if exist "fonts" xcopy /e /i /q "fonts" "../epub/fonts" > nul
+    if exist "styles" xcopy /e /i /q "styles" "../epub/styles" > nul
     echo f | xcopy /e /q "package.opf" "../epub/package.opf" > nul
 
     :: Copy contents of text or text/subdirectory to epub/text.
     IF "%subdirectory%"=="" GOTO epubcopynosubdirectory
-    echo d | xcopy /e /i /q "text/%subdirectory%" "../epub/%bookfolder%/text" > nul
+    echo d | xcopy /e /i /q "text/%subdirectory%" "../epub/text" > nul
     :epubcopynosubdirectory
-    echo d | xcopy /e /i /q "text" "../epub/%bookfolder%/text" > nul
+    echo d | xcopy /e /i /q "text" "../epub/text" > nul
+
+    :: Go into _site/epub to zip it to _output
+    CD %location%_site/epub
+
+    :: If no fonts to be embedded, remove the fonts directory
+    ECHO Checking for fonts to include...
+    set epubfonts=
+    if exist fonts\*.ttf set epubfonts=y
+    if exist fonts\*.otf set epubfonts=y
+    if exist fonts\*.woff set epubfonts=y
+    if exist fonts\*.woff2 set epubfonts=y
+    if "%epubfonts%"=="y" goto keepepubfonts
+    if exist "fonts" @RD /S /Q "fonts"
+    :keepepubfonts
+
+    :: If no scripts to be included, remove the scripts directory
+    ECHO Checking for scripts to include...
+    set epubscripts=
+    if exist js\*.js set epubscripts=y
+    if "%epubscripts%"=="y" goto keepepubscripts
+    if exist "js" @RD /S /Q "js"
+    :keepepubscripts
+
+    :: If no MathJax required, remove boilerplate mathjax directory
+    if "%epubmathax%"=="y" goto mathjaxin
+    @RD /S /Q "mathjax"
+    :mathjaxin
 
     :: Now to compress the epub files
     ECHO Compressing epub...
@@ -332,27 +370,28 @@ SET /p process=Enter a number and hit return.
     if exist "%location%\_output\%bookfolder%.zip" del /q "%location%\_output\%bookfolder%.zip"
     if exist "%location%\_output\%bookfolder%.epub" del /q "%location%\_output\%bookfolder%.epub"
 
-    :: Go into _site/epub to zip it to _output
-    CD %location%_site/epub
-
     :: Uses Zip 3.0: http://www.info-zip.org/Zip.html
     :: Temporarily put Zip in the PATH
     PATH=%PATH%;%location%_utils\zip
     :: mimetype: create zip, no compression, no extra fields
     zip --compression-method store -0 -X --quiet "%location%_output/%bookfolder%.zip" mimetype
     :: everything else: append to the zip with default compression
-    if exist "%bookfolder%/images" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "%bookfolder%/images"
-    if exist "%bookfolder%/fonts" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "%bookfolder%/fonts"
-    if exist "%bookfolder%/styles" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "%bookfolder%/styles"
-    if exist "%bookfolder%/text" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "%bookfolder%/text"
+    if exist "images" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "images"
+    if exist "fonts" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "fonts"
+    if exist "styles" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "styles"
+    if exist "text" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "text"
+    if exist "mathjax" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "mathjax"
+    if exist "js" zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" "js"
     if exist META-INF zip --recurse-paths --quiet "%location%_output/%bookfolder%.zip" META-INF
     if exist package.opf zip --quiet "%location%_output/%bookfolder%.zip" package.opf
 
     :: Change file extension .zip to .epub
     CD %location%_output
     if exist %bookfolder%.zip ren %bookfolder%.zip %bookfolder%.epub
+    ECHO Epub created^^!
 
     :: Check if epubcheck is in the PATH, and run it if it is
+    if "%epubvalidation%"=="" goto skipepubvalidation
     ECHO If EpubCheck is in your PATH, we'll run validation now.
 
     :: Use a batch-file trick to get the location of epubcheck
@@ -365,6 +404,7 @@ SET /p process=Enter a number and hit return.
     call java -jar %epubchecklocation% %bookfolder%.epub
 
     :: Skip to here if epubcheck wasn't found in the PATH
+    :: or the user didn't want validation
     :skipepubvalidation
 
     :: Open file explorer to show the epub

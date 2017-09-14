@@ -268,6 +268,9 @@ You may need to reload the web page once this server is running."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
 		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read epubsubdirectory
+		# Ask whether to keep the boilerplate epub mathjax directory
+		echo Include mathjax? Enter y for yes (or enter for no).
+		read epubmathjax
 		# Ask the user to add any extra Jekyll config files, e.g. _config.myconfig.yml
 		echo -n "
 Any extra config files?
@@ -285,30 +288,59 @@ If not, just hit return."
 			bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$config"
 			# Now to aessmble the epub
 			echo "Assembling epub..."
+			# Check if there are fonts to include
+			echo "Checking for fonts to include..."
+			epubfonts=""
+			countttf=`ls -1 fonts/*.ttf 2>/dev/null | wc -l`
+			if [ $countttf != 0 ]; then 
+				epubfonts="y"
+			fi
+			countotf=`ls -1 fonts/*.otf 2>/dev/null | wc -l`
+			if [ $countotf != 0 ]; then 
+				epubfonts="y"
+			fi
+			countwoff=`ls -1 fonts/*.woff 2>/dev/null | wc -l`
+			if [ $countwoff != 0 ]; then 
+				epubfonts="y"
+			fi
+			countwoff2=`ls -1 fonts/*.woff2 2>/dev/null | wc -l`
+			if [ $countwoff2 != 0 ]; then 
+				epubfonts="y"
+			fi
+			# Check if there are scripts to include
+			echo "Checking for scripts to include..."
+			epubscripts=""
+			countjs=`ls -1 js/*.js 2>/dev/null | wc -l`
+			if [ $countjs != 0 ]; then 
+				epubscripts="y"
+			fi
 			# Copy text, images, fonts, styles and package.opf to epub
 			cd _site/"$bookfolder"
-			ls
-			mkdir ../epub/$bookfolder
 			if [ "$epubsubdirectory" = "" ]; then
-				mkdir ../epub/$bookfolder/text && cp -a text/. ../epub/$bookfolder/text/
+				mkdir ../epub/text && cp -a text/. ../epub/text/
 			else
-				mkdir ../epub/$bookfolder/text && cp -a text/$epubsubdirectory/. ../epub/$bookfolder/text/
+				mkdir ../epub/text && cp -a text/$epubsubdirectory/. ../epub/text/
 			fi
 			if [ -d images ]; then
-				mkdir ../epub/$bookfolder/images && cp -a images/. ../epub/$bookfolder/images/
+				mkdir ../epub/images && cp -a images/. ../epub/images/
 			fi
-			if [ -d fonts ]; then
-				mkdir ../epub/$bookfolder/fonts && cp -a fonts/. ../epub/$bookfolder/fonts/
+			if [ "$epubfonts" = "y" ]; then
+				mkdir ../epub/fonts && cp -a fonts/. ../epub/fonts/
 			fi
 			if [ -d styles ]; then
-				mkdir ../epub/$bookfolder/styles && cp -a styles/. ../epub/$bookfolder/styles/
+				mkdir ../epub/styles && cp -a styles/. ../epub/styles/
+			fi
+			if [ -d mathjax ]; then
+				mkdir ../epub/mathjax && cp -a mathjax/. ../epub/mathjax/
+			fi
+			if [ "$epubscripts" = "y" ]; then
+				mkdir ../epub/js && cp -a js/. ../epub/js/
 			fi
 			if [ -e package.opf ]; then
 				cp package.opf ../epub/package.opf
 			fi
-			# Now to compress the epub files
-			echo "Compressing epub..."
 		    # First, though, if they exist, remove previous .zip and .epub files that we will replace.
+			echo "Removing previous zips or epubs..."
 			if [ -e "$location/_output/$bookfolder.zip" ]; then
 				rm "$location/_output/$bookfolder.zip"
 			fi
@@ -317,19 +349,35 @@ If not, just hit return."
 			fi
 			# Go into _site/epub to zip it to _output
 			cd ../epub
+			# First, though, remove the fonts folder if we dont' want it
+			if [ "$epubfonts" = "" ]; then
+				rm -r fonts
+			fi
+			# And remove the mathjax dir if we don't need it
+			if [ "$epubmathjax" = "" ]; then
+				rm -r mathjax
+			fi
+			# Now to compress the epub files
+			echo "Compressing epub..."
 			# Add the mimetype first, with no compression and no extra fields (-X)
 			zip --compression-method store -0 -X --quiet "$location/_output/$bookfolder.zip" mimetype
-			if [ -d "$bookfolder"/images ]; then
-				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "$bookfolder/images"
+			if [ -d images ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "images"
 			fi
-			if [ -d "$bookfolder"/fonts ]; then
-				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "$bookfolder/fonts"
+			if [ -d fonts ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "fonts"
 			fi
-			if [ -d "$bookfolder"/styles ]; then
-				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "$bookfolder/styles"
+			if [ -d styles ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "styles"
 			fi
-			if [ -d "$bookfolder"/text ]; then
-				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "$bookfolder/text"
+			if [ -d text ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "text"
+			fi
+			if [ -d mathjax ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "mathjax"
+			fi
+			if [ -d js ]; then
+				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" "js"
 			fi
 			if [ -d META-INF ]; then
 				zip --recurse-paths --quiet "$location/_output/$bookfolder.zip" META-INF
@@ -342,12 +390,15 @@ If not, just hit return."
     		if [ -e "$bookfolder".zip ]; then
 				mv "$bookfolder".zip "$bookfolder".epub
 			fi
+			echo "Epub created!"
 			# Validation
 			echo "To run validation now, enter the path to the EpubCheck folder on your machine. E.g. /usr/bin/local/epubcheck-4.0.1"
 			echo "Or hit enter to skip EpubCheck validation."
 			echo "(You can get EpubCheck from https://github.com/IDPF/epubcheck/releases)"
 			read pathtoepubcheck
-			if ! [ "$pathtoepubcheck" = "" ]; then
+			if [ "$pathtoepubcheck" = "" ]; then
+				echo "Okay, skipping EpubCheck. Try http://validator.idpf.org to validate separately."
+			else
 				java -jar "$pathtoepubcheck"/epubcheck.jar "$bookfolder".epub
 			fi
 			# Open file browser to see epub-ready HTML files
