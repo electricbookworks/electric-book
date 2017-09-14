@@ -17,7 +17,8 @@ electric-book-manager-key: ""
 # Select the active variant:
 # active-variant: myvariant
 # ----------------------------------------------------------
-# Store settings for each variant
+# Store settings for each variant.
+# These have no effect unless an active-variant is set above.
 variants:
   - variant: myvariant
     print-pdf-stylesheet: "print-pdf-variant.css"
@@ -27,5 +28,16 @@ variants:
   - variant: yourvariant
 # ----------------------------------------------------------
 
+# ----------------------------------------------------------
 # Epub settings
-embed-fonts: true
+# ----------------------------------------------------------
+# If you're embedding fonts, uncomment and list the font-file names here
+# and put the font files in _epub/fonts, not book/fonts
+
+# epub-fonts:
+  # - Crimson-Roman.otf
+  # - Crimson-Italic.otf
+
+# If you're including Javascript on your pages, set epub-scripts: true
+epub-scripts: false
+# ----------------------------------------------------------
