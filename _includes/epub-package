@@ -79,7 +79,7 @@
             {% endfor %}
 
             {% capture properties %}
-                {% if site.mathjax-enabled == true %}scripted {% endif %}
+                {% if site.mathjax-enabled == true or site.data.settings.epub-scripts == true %}scripted {% endif %}
                 {% if manifest-epub-file-name == epub-contents-page %}nav {% endif %}
             {% endcapture %}
             {% capture properties %}{{ properties | strip_newlines | strip }}{% endcapture %}
