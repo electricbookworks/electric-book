@@ -1,0 +1,199 @@
+---
+# Web styles
+---
+
+// What is this?
+// -------------
+// This is typography for the Electric Book Elements theme (see http://electricbook.works).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
+// 
+// How to use it
+// -------------
+// Edit the default variables below.
+// Comment/uncomment or add font imports below.
+// Add your own custom CSS at the bottom.
+
+// First, let's set character encoding. Don't change this.
+@charset "utf-8";
+
+// -------------
+// Set variables
+// -------------
+
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+$edition-suffix: null;
+
+// Max width of main body area
+$max-width-default: 40em;
+
+// We name font variables for two categories:
+// - 'text' fonts are used for body text and some page features;
+// - 'display' fonts are used for headings and similar short-string features.
+// For each category, we set a main font and a secondary font, allowing up to four fonts.
+// Finally, we set a fifth, monospace font for elements like computer code.
+$font-text-main: "Crimson", serif;
+$font-text-secondary: "Source Sans Pro", sans-serif;
+$font-display-main: "Source Sans Pro", sans-serif;
+$font-display-secondary: "Crimson", serif;
+$font-code: "Inconsolata", monospace;
+
+// Set font size and line-height in ems or px.
+// These values, especially $line-height-default, are used to compute vertical rhythm
+// for many features in this theme. So do not use a unitless value for line-height,
+// and don't use percentages, which will break layouts computed by multiplying this value.
+$font-size-default: 1.2em;
+$line-height-default: 1.5em;
+$font-size-smaller: 0.7; // How much smaller than font-size-default for features like sidenotes and footers?
+$font-size-bigger: 2; // How many times bigger than font-size-default for features like headings and pullquotes?
+
+// Do you want space between paragraphs, rather than a text-indent?
+$spaced-paras: true;
+
+// Buttons
+$button-border-radius: 0.1em; // Roundness of button corners.
+
+// Colours
+$color-text-main: #222222;
+$color-text-secondary: #222222;
+$color-background: white;
+$color-light: #e0e0e0;
+$color-mid: #9c9c9c;
+$color-accent: #000000;
+$color-links: #5f738c;
+$color-buttons: #5f738c;
+$color-buttons-hover: darken( $color-buttons, 20% );
+$color-highlight: #ffd54d;
+
+// Some features rearrange at certain screen sizes.
+// What are your break points for rearrangement?
+$break-point-height: 600px;
+$break-point-width: 600px;
+
+// Set the default start-depth of pages.
+// This is the distance from the top of the page to the first element on the first page.
+$start-depth: $line-height-default * 2;
+
+// Hyphenation
+// Variables here apply to p, ul, ol, dl.
+// Note: Most browsers and ereaders do not support hyphenation rules.
+$hyphenation: auto; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation-dictionary: ""; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
+$hyphenate-after: 3; // Minimum letters on new line after hyphen
+$hyphenate-before: 3; // Minimum letters at end of line before hyphen
+$hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
+
+// Text dividers
+// For breaks created with *** in markdown.
+$text-divider: ""; // Empty leaves space. \2022 is a bullet
+
+// Footer
+$footer-text-color: $color-text-main;
+$footer-background-color: $color-accent;
+$footer-border-color: $color-accent;
+
+// Website masthead
+$masthead-text-color: $color-light;
+$masthead-background-color: $color-accent;
+$masthead-border-color: $color-light;
+
+// Website sidebar/navigation
+$nav-bar-text-size: 0.8em;
+$nav-bar-item-collapse: false; // Does the nav list fully expand, or collapse until mouseover?
+$nav-bar-close: "\00D7"; // &times; ×
+$nav-bar-children-prompt: "+";
+$nav-bar-children-prompt-hide: "\2212"; // \2212 is an actual minus sign
+$nav-bar-scrollbar: true;
+$nav-bar-width: 15em;
+$nav-bar-fixed: false;
+$nav-bar-label-color: $color-mid;
+$nav-bar-label-background-color: $masthead-background-color;
+$nav-bar-border-color: $color-light;
+$nav-bar-background-color: white;
+$nav-bar-search-background-color: white;
+$nav-bar-parent-background-color: white;
+$nav-bar-parent-text-color: black;
+$nav-bar-parent-hover-color: #4f89d2;
+$nav-bar-parent-text-hover-color: white;
+$nav-bar-children-prompt-color: $color-mid;
+$nav-bar-child-background-color: $color-light;
+$nav-bar-child-text-color: black;
+$nav-bar-child-hover-color: #4f89d2;
+$nav-bar-child-text-hover-color: white;
+
+// ---------------------------------
+// Set to false to turn partials off
+// ---------------------------------
+
+// Reset browser CSS as best we can
+$web-css-reset: true;
+
+// Structural HTML components
+$web-wrappers: true;
+
+// Default typography
+$web-base-typography: true;
+
+// Navigation
+$web-masthead: true;
+$web-search: true;
+$web-nav-bar: true;
+$web-footer: true;
+
+// Book parts
+$web-cover: true;
+$web-previous-publications-page: true;
+$web-title-pages: true;
+$web-copyright-page: true;
+$web-dedications: true;
+$web-epigraphs: true;
+$web-toc: true;
+
+// Book-feature classes
+$web-bibliographies: true;
+$web-boxes: true;
+$web-buttons: true;
+$web-code: true;
+$web-dialogue: true;
+$web-figures: true;
+$web-highlighter: true;
+$web-glossaries: true;
+$web-index: true;
+$web-maths: true;
+$web-notes: true;
+$web-openers: true;
+$web-pullquotes: true;
+$web-sources: true;
+$web-tables: true;
+$web-letters: true;
+$web-verse: true;
+$web-video: true;
+
+// Type-control classes
+$web-smallcaps: true;
+$web-fitting: true;  // E.g. tracking and shrinking
+
+// Logic (if this then that)
+$web-reset-sequences: true; // This should stay last in the @import list
+
+// ------------
+// Import fonts
+// ------------
+
+// Add @font-face rules for fonts you specify here.
+// Add the actual font files to `../fonts`
+// For snippets, try https://github.com/arthurattwell/font-faces
+
+// -------------
+// Master theme
+// -------------
+
+// Import master styles
+@import 'web';
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom Sass or CSS here.
+
