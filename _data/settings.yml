@@ -37,7 +37,4 @@ variants:
 # epub-fonts:
   # - Crimson-Roman.otf
   # - Crimson-Italic.otf
-
-# If you're including Javascript on your pages, set epub-scripts: true
-epub-scripts: false
 # ----------------------------------------------------------
