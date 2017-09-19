@@ -12,10 +12,8 @@ style: copyright-page
 {:.non-printing}
 
 *{{ title }}*\\
-Collection © {{ creator }}\\
-Text © The contributors
+Text © {{ creator }}
 
-{% unless print-pdf-identifier == "" %}ISBN ({{ print-pdf-format }}): {{ print-pdf-identifier }}{% endunless %}<br />
-{% unless epub-identifier == "" %}ISBN ({{ epub-format }}): {{ epub-identifier }}{% endunless %}
+{% include identifiers scheme="ISBN" %}
 
 {{ rights }}
