@@ -50,13 +50,13 @@ Also, epub scripts must have a YAML frontmatter block, even if it's empty:
 ---
 ```
 
-This block tells Jekyll that the script exists, which we need for it to be included in the epub's manifest.
+This block tells Jekyll to process the script, which means it knows about it, which our eupb package needs to be able to include in the manifest.
 
 Finally, if you're adding scripts to your pages, set `epub-scripts: true` in `_data/settings.yml`. This flags your pages as `scripted` in the epub manifest, which is required for validation.
 
 ### Linking to scripts for epub
 
-In the finished epub, these scripts will end up in a `js` folder beside `text` (and `styles`, `images` and `fonts`). So all links to scripts that you want to include in epub output should be in `site.output == "epub"` tags and relative to `text`:
+In the finished epub, these scripts will end up in a `js` folder alongside `text`, `styles`, `images` and `fonts`. So all links to scripts that you want to include in epub output should be in `site.output == "epub"` tags and relative to `text`:
 
 {% raw %}
 ```
