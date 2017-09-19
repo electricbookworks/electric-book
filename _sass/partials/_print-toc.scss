@@ -12,6 +12,7 @@ $print-toc: true !default;
 	.page-ref-list {
 		ul, ol {
 			list-style-type: none;
+			text-align: left; // overrides possible justify applied in Sass configs
 			ul, ol {
 				margin-left: $line-height-default;
 			}
