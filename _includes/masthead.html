@@ -1,6 +1,6 @@
 <div class="masthead">
 
-{% if is-text-directory != true %}
+{% if is-book-subdirectory != true %}
     <ul>
         <li class="masthead-series-name"><a href="{{ site.baseurl }}/">{{ series-name | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
 
