@@ -420,6 +420,8 @@ SET /p process=Enter a number and hit return.
 
 
     :: Copy contents of text or text/subdirectory to epub/text.
+    :: We don't want all the files in text, we only want the ones
+    :: in the epub file list.
     :epubCopyText
     echo Copying text...
 
@@ -430,13 +432,18 @@ SET /p process=Enter a number and hit return.
     :epubSubdirectoryText
     rd /s /q "text"
     mkdir "..\epub\%subdirectory%\text"
-    echo d | xcopy /i /q "%subdirectory%\text\*.*" "..\epub\%subdirectory%\text" > nul
+    cd %subdirectory%\text
+    for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\..\epub\%subdirectory%\text\" > nul
+    cd ..
+    cd ..
     echo Text copied.
     goto epubCopyOPF
 
     :: Copy the contents of the original text folder
     :epubOriginalText
-    echo d | xcopy /i /q "text\*.*" "..\epub\text" > nul
+    cd text
+    for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\epub\text\" > nul
+    cd ..
     echo Text copied.
     goto epubCopyOPF
 
