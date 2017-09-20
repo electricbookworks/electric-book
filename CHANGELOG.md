@@ -1,18 +1,13 @@
 # Changelog
 
-## Epub export
-
-## To do
-
-1. File-list: We're only using the epub file-list at the moment for the opf, but we're including all html files in `text` in the epub. This means that if the book includes html files we don't want in the epub (and don't have in the opf) then the epub won't validate, because there will be html files we don't use. Users can manually exclude those from the epub in _config.epub.yml for now, but that's a poor option. Ideally, we want the output script to delete any files NOT in the file-list, or to cherry-pick each file from `book/text/` for the epub text folder.
-2. To document:
-   - `include test-variable`
-   - `include page-info`
-3. Update `run-mac` and `run-linux` to match `run-win` epub output.
-
 ## 0.9.0
 
-Epub export!
+Epub export! To do:
+
+1. To document:
+   - `include test-variable`
+   - `include page-info`
+2. Update `run-mac` and `run-linux` to match `run-win` epub output.
 
 ## 0.8.0
 
