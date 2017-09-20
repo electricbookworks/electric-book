@@ -23,7 +23,6 @@ exclude:
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss
   - /*/styles/web.scss
-  - /*/file-list
   - /*/index.md
   - /*/images/print-pdf
   - /*/images/screen-pdf

@@ -3,7 +3,7 @@
 # Ensure your files are listed in meta.yml for each output format:
 # print-pdf, web, epub, screen-pdf
 # Then you don't have to touch this file.
-type: file-list
+layout: min
 ---
 
 {% include file-list %}
