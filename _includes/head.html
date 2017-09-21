@@ -82,7 +82,6 @@
     {% include head-elements %}
 
 </head>
-<!--ontouchstart="" onmouseover="" required for iOS devices-->
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
 <div id="wrapper">
 
@@ -103,7 +102,7 @@
 
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ site.canonical-url}}{{ page.url }}" />
+    <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
     {% if page.description %}
     <meta property="og:description" content="{{ page.description }}" />
     {% endif %}
@@ -128,19 +127,16 @@
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
     {% for book in site.data.meta.works %}
-        <link rel="stylesheet" type="text/css" media="screen" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ web-stylesheet }}" />
-        <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ screen-pdf-stylesheet }}" />
+        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ web-stylesheet }}" />
         {% break %}
     {% endfor %}
     {% else %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ path-to-styles-directory }}/{{ web-stylesheet }}" />
-    <link rel="stylesheet" type="text/css" media="print" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-styles-directory }}/{{ web-stylesheet }}" />
     {% endif %}
 
     {% include head-elements %}
 
 </head>
-<!--ontouchstart="" onmouseover="" required for iOS devices-->
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-series-search == true %} series-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
 <div id="wrapper">
 
