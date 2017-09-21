@@ -23,6 +23,8 @@ series:
   nav-label: "Contents"
   # Footer text for the series
   footer: "Built with the [Electric Book](http://electricbook.works)"
+  # For web search, the "placeholder" text while the search is running
+  search-placeholder: "Searching..."
 
 ########
 # TITLES
