@@ -18,7 +18,6 @@ exclude:
   - README*
   - LICENSE*
   - CHANGELOG*
-  - _utils*
   # exclude files we don't need for epub
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss
