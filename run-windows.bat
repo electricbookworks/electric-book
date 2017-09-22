@@ -322,10 +322,8 @@ SET /p process=Enter a number and hit return.
 
     :: Ask about validation
     :epubAskAboutValidation
-    echo Shall we try to run EpubCheck when we're done? Enter y for yes, or hit enter for no.
+    echo Shall we try to run EpubCheck when we're done? Hit enter for yes, or any key and enter for no.
     set /p epubValidation=
-    if "%epubValidation%"=="n" set epubValidation=
-    if not "%epubValidation%"=="y" if not "%epubValidation%"=="" goto epubAskAboutValidation
 
     :: Loop back to this point to refresh the build again
     :epubrefresh
@@ -374,7 +372,7 @@ SET /p process=Enter a number and hit return.
 
     :: Copy original styles
     :epubOriginalStyles
-    xcopy /i /q "styles\*.*" "..\epub\styles" > nul
+    xcopy /i /q "styles\*.css" "..\epub\styles" > nul
     :: Done! Move along to moving the text folder
     echo Styles copied.
     goto epubCopyImages
@@ -383,7 +381,7 @@ SET /p process=Enter a number and hit return.
     :epubTranslationStyles
     rd /s /q styles
     mkdir "..\epub\%subdirectory%\styles"
-    if exist "%subdirectory%\styles\*.*" xcopy /i /q "%subdirectory%\styles\*.*" "..\epub\%subdirectory%\styles" > nul
+    if exist "%subdirectory%\styles\*.css" xcopy /i /q "%subdirectory%\styles\*.css" "..\epub\%subdirectory%\styles" > nul
     :: Done! Move along to moving the text folder
     echo Styles copied.
     goto epubCopyImages
@@ -487,7 +485,7 @@ SET /p process=Enter a number and hit return.
     :: into the subdirectory alongside text, images, styles.
     :epubMoveFonts
     echo Checking for fonts...
-    if exist "fonts" if not exist "fonts\*.*" rd /s /q "fonts"
+    if exist "fonts" if not exist "fonts\*.ttf" if not exist "fonts\*.otf" if not exist "fonts\*.woff" if not exist "fonts\*.woff2" rd /s /q "fonts"
     if not "%subdirectory%"=="" if exist "fonts\*.*" move "fonts" "%subdirectory%\fonts"
     echo Fonts checked.
 
@@ -526,7 +524,7 @@ SET /p process=Enter a number and hit return.
 
     :: Zip root folders, if this is not a translation
     if not "%subdirectory%"=="" goto epubZipSubdirectory
-    if exist "images" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images"
+    if exist "images\epub" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images\epub"
     if exist "fonts" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "fonts"
     if exist "styles" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "styles"
     if exist "text" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "text"
@@ -547,20 +545,28 @@ SET /p process=Enter a number and hit return.
 
     :: We're done!
     :epubCreated
-    echo Epub created^^!
+    if exist %epubFileName%.epub echo Epub created^^!
+    if not exist %epubFileName%.epub echo Sorry, something went wrong.
+
 
     :: Check if epubcheck is in the PATH, and run it if it is
-    if "%epubValidation%"=="" goto skipepubValidation
+    if not "%epubValidation%"=="" goto skipepubValidation
     echo If EpubCheck is in your PATH, we'll run validation now.
 
     :: Use a batch-file trick to get the location of epubcheck
     :: https://blogs.msdn.microsoft.com/oldnewthing/20120731-00/?p=7003/
     for /f %%i in ('where epubcheck.jar') do set epubchecklocation=%%i
-    if "%epubchecklocation%"=="" echo Couldn't find EpubCheck, sorry. GOTO skipEpubValidation
+    if "%epubchecklocation%"=="" echo Couldn't find EpubCheck, sorry.
+    if "%epubchecklocation%"=="" goto skipEpubValidation
 
-    :: then run it
+    :: then run it, saving the error stream to a log file
+    :: First, create a timestamp
+    for /f "tokens=2-8 delims=.:/ " %%a in ("%date% %time%") do set timestamp=%%c-%%a-%%bT%%d-%%e-%%f-%%g
+    set epubCheckLogFile=epubcheck-log-%timestamp%
     echo Found EpubCheck, running validation...
-    call java -jar %epubchecklocation% %epubFileName%.epub
+    call java -jar %epubchecklocation% %epubFileName%.epub 2>> %epubCheckLogFile%.txt
+    echo Opening EpubCheck log...
+    start %epubCheckLogFile%.txt
 
     :: Skip to here if epubcheck wasn't found in the PATH
     :: or the user didn't want validation
@@ -573,7 +579,7 @@ SET /p process=Enter a number and hit return.
     :: Navigate back to where we began
     CD "%location%"
 
-    :: Let the user easily run that again by running jekyll b and prince again
+    :: Let the user easily run that again
     SET repeat=
     SET /p repeat=Enter to run again, or any other key and enter to stop. 
     IF "%repeat%"=="" GOTO epubrefresh
