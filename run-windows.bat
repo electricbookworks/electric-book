@@ -25,7 +25,7 @@ ECHO.
 ECHO 1. Create a print PDF
 ECHO 2. Create a screen PDF
 ECHO 3. Run as a website
-ECHO 4. Create EPUB-ready files
+ECHO 4. Create an epub
 ECHO 5. Export to Word
 ECHO 6. Install or update dependencies
 ECHO 7. Exit
