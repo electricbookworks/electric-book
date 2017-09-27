@@ -26,6 +26,10 @@ exclude:
   - /*/images/print-pdf
   - /*/images/screen-pdf
   - /*/images/web
+# We deliberately empty the keep_files list here,
+# so that files we don't want don't end up in the epub
+# but not in the manifest.
+keep_files: []
 # Configure HTML compression. For epub, we need to compress
 # to avoid invalid empty line at start of XML docs.
 # See https://github.com/penibelst/jekyll-compress-html
