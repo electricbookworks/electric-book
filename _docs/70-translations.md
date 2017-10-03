@@ -4,31 +4,48 @@ title: Translations
 
 # Translations
 
-The Electric Book workflow allows for two different approaches to managing translations. A translation can be either
+In the Electric Book workflow, a translation is a subfolder of the original book. Text files go into a subfolder of `/text`, e.g. `/text/fr`. The translation folder's name must be the language code.
 
-1. a subfolder of the main project's `text` folder, named for the language code, or 
-2. a completely separate repository, which starts out as copy of the parent book (or series, for multi-work repos), but from that point on is treated as a new book, overwriting the original files in the repository with the new language. This is technically the same as an adaptation of the book (e.g. a separate edition of a textbook where content is changed for local needs).
+This structure assumes that the translation and its parent will be kept in sync for the most part, the translation always being a faithful reproduction of the parent. 
 
-Option 1 is best if the translation is managed by the central team that also manages the parent edition. It assumes that the translation and its parent will be kept in sync for the most part, the translation always being a faithful reproduction of the parent. 
+## Translations vs adaptations
 
-Option 2 is best for when the translating team works independently, and especially if they want to make content changes that diverge from the parent. For instance, adding a new image or page-design feature, or changing design elements like fonts and colours.
+If the translating team works independently, and especially if they want to make content changes that diverge from the parent, their translation is actually an adaptation. For instance, adding a new image or page-design feature, or changing design elements like fonts and colours.
 
-## Option 1
+An adaptation should be a completely separate repository, which starts out as copy of the parent book (or series, for multi-work repos), but from that point on is treated as a new book, overwriting the original files in the repository with the new language.
 
-To make a translation using Option 1, you need to
+## Setting up a translation
 
-- Add the files in a new folder (usually inside `book/text`).
-- Add a `translations` node to the `meta.yml` with `directory` and `language`. They can optionally include their own work-level metadata such as title.
+To make a translation:
 
-### The files
+- Add a `translations` node to the `meta.yml` with `directory` and `language`. They can optionally include their own work-level metadata such as `title`. Any metadata not added to a translation will be inherited from the original language. See [Metadata](#metadata) below.
+- Add the files in a new folder inside `book/text`, named for the translation language code. (Remember sometimes `book` has been renamed for each book in a series).
 
-All translations live inside the `book` folder (remember sometimes `book` is renamed for each book in a series).
+## Text
 
 The text files of each translation are saved in a subdirectory of `text` named for the language code. So all text files of a French translation live in `book/text/fr`, and all text files of a Xhosa translation in `book/text/xh`.
 
-All translations share the `fonts`, `images` and `styles` folders. So all images from all translations live in `book/images` – images that are themselves translated (e.g. text in the image has been translated) are given different file names to be used in image references in the translated text files. For instance, `figure-1-2.jpg` when translated might be `figure-1-2-fr.jpg` for a French translation.
+All translations share `fonts` and `styles`.
 
-### Metadata
+## Images
+
+By default, translations share the same `images` folders as the original language. This works only if your images contain no text, and all the images are the same in both languages.
+
+If any images are different, then the translated images should also be in a sub-folder of each image set, e.g. `/images/epub/fr`. This is most often the case, because cover images almost always need to be translated, and are therefore different.
+
+When linking to images, remember to always use the `{{ images }}` tag in the path, e.g.:
+
+```
+![Dog chases bus]({{ images }}/dogbus.jpg)
+```
+
+The `{{ images }}` tag is smart enough to know the path to your images, whether you're in a translation or an original language, and whether your images are the same as the original language or in a translated images subfolder.
+
+This means that you can keep the same image filenames for translations, as long as they are in a translation subfolder.
+
+You must also include the `{% include metadata %}` tag once earlier in each markdown file to load the `{{ images }}` tag, along with a range of other useful tags.
+
+## Metadata
 
 Each translation must be added to the `meta.yml` file. All `translations` are a subset of `works`, alongside work-level metadata like `title`. Within `translations`, you list each language. Each language inherits the parent language's metadata unless overridden with its own metadata.
 

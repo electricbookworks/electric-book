@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0
+
+Epub export! To do:
+
+1. Get PDF outputs of translations working in `run-win`.
+2. Document the changes required to the EBM to:
+	1. the output of translations
+	2. epub generation
+3. To document in `_docs` 
+   - `include page-info`
+4. Update `run-mac` and `run-linux` to match `run-win` epub output.
+
 ## 0.8.0
 
 * Allow variant outputs (e.g. variations on `print-pdf` for derivative works)

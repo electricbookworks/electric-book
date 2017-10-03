@@ -78,6 +78,12 @@ Otherwise, the toc-branch should be the children called by this include recursiv
 Now we'll use all that to output the toc list.
 {% endcomment %}
 
+{% comment %}If we're making an epub, and we're starting
+at the top of the toc, put this in a nav element.{% endcomment %}
+{% if site.output == "epub" and toc-branch == epub-toc or toc-branch == print-pdf-toc or toc-branch == web-nav-tree %}
+<nav epub:type="toc" id="toc">
+{% endif %}
+
 <ol class="toc-list {% if toc-branch contains current-file %}active{% endif %}">
 {% for item in toc-branch | sort: "order" %}
 
@@ -118,3 +124,8 @@ Now we'll use all that to output the toc list.
 
 {% endfor %}
 </ol>
+
+{% comment %}If we're making an epub, close the nav element{% endcomment %}
+{% if site.output == "epub" and toc-branch == epub-toc or toc-branch == print-pdf-toc or toc-branch == web-nav-tree %}
+</nav>
+{% endif %}

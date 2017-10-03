@@ -8,6 +8,47 @@ title: Epub output
 * toc
 {:toc}
 
+## Run the script
+
+Run the output script for your OS and choose the epub option.
+
+## Fonts
+
+To embed fonts in an epub:
+
+1. add the font files to `_epub/fonts`;
+2. list the font files in `_data/settings.yml` at `epub-fonts`.
+
+## Javascript
+
+For guidance on adding Javascript to epubs, add the scripts to `_epub/js`. See the Javascript chapter for more detail.
+
+## Validation
+
+If you want the output script to run EpubCheck (recommended), [download it from the IDPF](https://github.com/IDPF/epubcheck/releases).
+
+On Windows, extract the zip file and save the contents somewhere easy to find, like `C:\EpubCheck\`. Then [add that folder to your PATH](http://windowsitpro.com/systems-management/how-can-i-add-new-folder-my-system-path).
+
+On Mac or Linux, extract the zip file and save the contents somewhere sensible like `/usr/local/bin`. The output script will ask for the path to the EpubCheck `.jar` file.
+
+## How epubs are generated
+
+This is technical background on how we generate Electric Book epubs. It's a two-step process.
+
+1. In Jekyll, using an epub config file (`_configs/_config.epub.yml`), we generate:
+
+    1. the books, with each translation in a subfolder. Each book and translation has a `package.opf` file.
+    2. an `epub` folder (as a Jekyll collection) containing a boilerplate `META-INF` folder, `mimetype` file, and `mathjax` folder; and optional `js` and `fonts` folders.
+
+2. In our output script:
+
+	1. We copy the relevant book or translation folders from `_site/book` (or whatever folder `book` has been renamed to) into `_site/epub`. We retain the subdirectory structure of translations, except for the `package.opf`, which goes to the root of `epub`.
+	2. We zip the contents of `epub` to `_output/book.zip` (where `book` may be a renamed book folder), and change the file extension to `.epub`
+
+The output script does a lot of work. It asks the user some questions, it has to check for the existence of files (e.g. `styles` in a translation, which are optional), and it removes the `mathjax` folder from `epub` if mathjax is not included.
+
+<!-- LEGACY
+
 ## Recommended tools
 
 In addition to [Sigil](https://github.com/Sigil-Ebook/Sigil/releases), we recommend installing the following tools:
@@ -206,3 +247,5 @@ To use the plugin:
 
 *	First, in a plain-text/code editor create an `com.apple.ibooks.display-options.xml` file containing only the XML shown above. If necessary, change the five options settings in it. Save the XML file with your source material for the book for future use/reference.
 *	In Sigil, with the epub open, go to Plugins > Edit > AddiBooksXML and find and select the `com.apple.ibooks.display-options.xml` file you just created.
+
+-->

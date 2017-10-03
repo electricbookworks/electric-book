@@ -15,7 +15,7 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
 
 {% comment %}If this is neither a text directory (i.e. in a book) nor a docs page,
 such as the home page or series search page...{% endcomment %}
-{% if is-text-directory != true and is-docs-page != true %}
+{% if is-book-subdirectory != true and is-docs-page != true %}
 
   {% comment %}Get a list of all the pages we've output to check against{% endcomment %}
   {% capture page-list %}{{ site.pages | remove: ".html" }}{% endcapture %}
@@ -25,9 +25,9 @@ such as the home page or series search page...{% endcomment %}
 
     {% for item in include.nav-tree | sort: "order" %}
         <li class="{% unless page-list contains item.file %}no-file{% endunless %}
-        {% if item.children == nil %}no-children{% else %}has-children{% endif %}">
-            <a {% if item.file != nil %}href="{{ site.baseurl }}/{{ include.directory }}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
-                {{ item.label }}
+        {% if item.children == nil %} no-children{% else %} has-children{% endif %}">
+            <a {% if item.file != nil %}href="{{ site.baseurl }}/{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
+                {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
             </a>
             {% if item.children != nil %}
               {% include nav-list nav-tree=item.children directory=include.directory %}
@@ -41,7 +41,6 @@ such as the home page or series search page...{% endcomment %}
 and we're not on a docs page, create the full book nav.{% endcomment %}
 {% else %}
 
-  {% capture current-file %}{{ page.url | remove_first: ".html" | replace: "/", " " | split, " " | last }}{% endcapture %}
   {% capture nav-branch %}{{ include.nav-tree }}{% endcapture %}
   {% capture page-list %}{{ site.pages | remove: ".html" }}{% endcapture %}
 
@@ -49,10 +48,11 @@ and we're not on a docs page, create the full book nav.{% endcomment %}
     {% for item in include.nav-tree | sort: "order" %}
         <li class="{% if page.url contains item.file %}active{% endif %}
         {% unless page-list contains item.file %}no-file{% endunless %}
+        {% if item.link == "none" %}no-link{% endif %}
         {% if item.children == nil %}no-children{% else %}has-children{% endif %}">
-            <a {% if item.file != nil %}href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %}
+            <a {% if item.file != nil and item.link != "none" %}href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %}
                class="{% if page.url contains item.file %}active{% endif %}">
-                {{ item.label }}
+                {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
             </a>
             {% if item.children != nil %}
               {% include nav-list nav-tree=item.children %}

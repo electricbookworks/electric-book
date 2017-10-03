@@ -1,0 +1,199 @@
+{% comment %}
+See all the metadata gathered for a given page.
+{% endcomment %}
+
+{% include metadata %}
+
+|        Description        |           Source           |    Output tag   |    Current result   |  Type  |
+|---------------------------|----------------------------|-----------------|---------------------|--------|
+| The current output format | `site.output` in `_config` | `output-format` | {{ output-format }} | String |
+
+|     Description      |         Source        |       Output tag      |       Current result      |  Type  |
+|----------------------|-----------------------|-----------------------|---------------------------|--------|
+| Series organisation  | Defined in `meta.yml` | `series-organisation` | {{ series-organisation }} | String |
+| Series URL           | Defined in `meta.yml` | `series-url`          | {{ series-url }}          | String |
+| Series email         | Defined in `meta.yml` | `series-email`        | {{ series-email }}        | String |
+| Series name          | Defined in `meta.yml` | `series-name`         | {{ series-name }}         | String |
+| Series description   | Defined in `meta.yml` | `series-description`  | {{ series-description }}  | String |
+| Series image         | Defined in `meta.yml` | `series-image`        | {{ series-image }}        | String |
+
+To move to settings:
+{:.highlighter}
+
+|     Description      |         Source        |       Output tag      |       Current result      |  Type  |
+|----------------------|-----------------------|-----------------------|---------------------------|--------|
+| Series home label    | Defined in `meta.yml` | `series-home-label` | {{ series-home-label }} | String |
+| Series nav label     | Defined in `meta.yml` | `series-home-label` | {{ series-home-label }} | String |
+
+To move to an include (to allow HTML):
+{:.highlighter}
+
+|     Description      |         Source        |       Output tag      |       Current result      |  Type  |
+|----------------------|-----------------------|-----------------------|---------------------------|--------|
+| Series footer | Defined in `meta.yml` | `series-footer` | {{ series-footer }} | String |
+
+|                  Description                  |                                                 Source                                                |      Output tag     |      Current result     |  Type  |
+|-----------------------------------------------|-------------------------------------------------------------------------------------------------------|---------------------|-------------------------|--------|
+| Number of works in project                    | Calculated from `meta.yml`                                                                            | `number-of-works`   | {{ number-of-works }}   | Number |
+| Book directory name                           | Detected from page path, then overriden by value in `meta.yml`. Nil on project home and search pages. | `book-directory`    | {{ book-directory }}    | String |
+| URL as an array of directory names and a file | Extracted from page URL                                                                               | `url-as-array`      | {{ url-as-array }}      | Array  |
+| Number of parts in the URL array              | Calculated from `url-as-array`                                                                        | `url-as-array-size` | {{ url-as-array-size }} | Number |
+| Current directory name                        | Detected from `url-as-array`                                                                          | `current-directory` | {{ current-directory }} | String |
+| Current file name                             | Read from file path, sans file extension                                                              | `current-file`      | {{ current-file }}      | String |
+
+This is critical for translations:
+{:.highlighter}
+
+|                        Description                        |                                Source                               |         Output tag        |                                               Current result                                              |   Type  |
+|-----------------------------------------------------------|---------------------------------------------------------------------|---------------------------|-----------------------------------------------------------------------------------------------------------|---------|
+| Book subdirectory name                                    | Checks what subdirectory of `book` (or renamed equivalent) we're in | `book-subdirectory`       | {{ book-subdirectory }}                                                                                   | String  |
+| Is this a book subdirectory?                              | Checks we're in a subdirectory of the book                          | `is-book-subdirectory`    | {{ is-book-subdirectory }}                                                                                | Boolean |
+| Current folder depth                                      | Calculated from path                                                | `folder-depth`            | {{ folder-depth }}                                                                                        | Number  |
+| Checks if we're in a subsubdirectory (e.g. a translation) | Calculated from `folder-depth`                                      | `is-book-subsubdirectory` | {{ is-book-subsubdirectory }}                                                                             | Boolean |
+| Subsubdirectory's name                                    | Read from page path, *if* a subsubdirectory                         | `book-subsubdirectory`    | {% if is-book-subsubdirectory %}{{ book-subsubdirectory }}{% else %}Not a book subsubdirectory{% endif %} | String  |
+
+
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Available print-pdf stylesheet filename | Hard coded, unless overridden in `settings.yml` in `variants` | `print-pdf-stylesheet` | {{ print-pdf-stylesheet }}    | String |
+| Available screen-pdf stylesheet         | Hard coded, unless overridden in `settings.yml` in `variants` | `screen-pdf-stylesheet` | {{ screen-pdf-stylesheet }}    | String |
+| Available web stylesheet                | Hard coded, unless overridden in `settings.yml` in `variants` | `web-stylesheet` | {{ web-stylesheet }}    | String |
+| Available epub stylesheet               | Hard coded, unless overridden in `settings.yml` in `variants` | `epub-stylesheet` | {{ epub-stylesheet }}    | String |
+| All of this book's metadata             | Defined in `meta.yml`, for this book directory                | `works`                | {% if works != "" %}Defined, but not shown here{% else %}None defined{% endif %} | Array  |
+
+
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Book title                            | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `title`         | {{ title }}                 | String |
+| Book subtitle                         | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `subtitle`      | {{ subtitle }}              | String |
+| Book creator (e.g. author)            | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `creator`       | {{ creator }}               | String |
+| Book contributor(s)                   | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `contributor`   | {{ contributor }}           | String |
+| Book subject                          | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `subject`       | {{ subject }}               | String |
+| Book description                      | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `description`   | {{ description | strip }}   | String |
+| Book publisher                        | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `publisher`     | {{ publisher }}             | String |
+| Book publisher's URL                  | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `publisher-url` | {{ publisher-url }}         | String |
+| Book's date                           | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `date`          | {{ date }}                  | String |
+| Book's modified date                  | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `modified`      | {{ modified }}              | String |
+| Book type                             | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `type`          | {{ type }}                  | String |
+| Book identifier                       | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `identifier`    | {{ identifier }}            | String |
+| Book source                           | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `source`        | {{ source }}                | String |
+| Book language                         | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `language`      | {{ language }}              | String |
+| Book's relation (i.e. a related work) | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `relation`      | {{ relation }}              | String |
+| Book's coverage                       | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `coverage`      | {{ coverage }}              | String |
+| Book rights statement                 | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `rights`        | {{ rights }}                | String |
+| Book's image                          | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `image`         | {{ image }}                 | String |
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Print-PDF-specific date       | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `print-pdf-date`       | {{ print-pdf-date }}                                                                           | String |
+| Print-PDF-specific format     | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `print-pdf-format`     | {{ print-pdf-format }}                                                                         | String |
+| Print-PDF-specific identifier | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `print-pdf-identifier` | {{ print-pdf-identifier }}                                                                     | String |
+| Print-PDF-specific image      | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `print-pdf-image`      | {{ print-pdf-image }}                                                                          | String |
+| Print-PDF-specific file list  | Defined in `meta.yml` as `files` for main book, and overriden there by any `translations` or `variants` | `print-pdf-file-list`  | {% if print-pdf-file-list != "" %}Defined, but not shown here{% else %}None defined{% endif %} | Array  |
+| Print-PDF-specific TOC        | Defined in `meta.yml` as `toc` for main book, and overriden there by any `translations` or `variants`   | `print-pdf-toc`        | {{ print-pdf-toc }}                                                                            | Array  |
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Screen-PDF-specific date       | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `screen-pdf-date`       | {{ screen-pdf-date }}                                                                           | String |
+| Screen-PDF-specific format     | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `screen-pdf-format`     | {{ screen-pdf-format }}                                                                         | String |
+| Screen-PDF-specific identifier | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `screen-pdf-identifier` | {{ screen-pdf-identifier }}                                                                     | String |
+| Screen-PDF-specific image      | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `screen-pdf-image`      | {{ screen-pdf-image }}                                                                          | String |
+| Screen-PDF-specific file list  | Defined in `meta.yml` as `files` for main book, and overriden there by any `translations` or `variants` | `screen-pdf-file-list`  | {% if screen-pdf-file-list != "" %}Defined, but not shown here{% else %}None defined{% endif %} | Array  |
+| Screen-PDF-specific TOC        | Defined in `meta.yml` as `toc` for main book, and overriden there by any `translations` or `variants`   | `screen-pdf-toc`        | {{ screen-pdf-toc }}                                                                            | Array  |
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Web-specific date       | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `web-date`          | {{ web-date }}                                                                           | String |
+| Web-specific format     | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `web-format`        | {{ web-format }}                                                                         | String |
+| Web-specific identifier | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `web-identifier`    | {{ web-identifier }}                                                                     | String |
+| Web-specific image      | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `web-image`         | {{ web-image }}                                                                          | String |
+| Web-specific TOC        | Defined in `meta.yml` as `toc` for main book, and overriden there by any `translations` or `variants`   | `web-toc`           | {{ web-toc }}                                                                            | Array  |
+| Web footer (deprecated) | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `web-footer`        | {{ web-footer }}                                                                         | String |
+| Web start-page          | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `web-start-page`    | {{ web-start-page }}                                                                     | String |
+| Web contents-page       | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`            | `web-contents-page` | {{ web-contents-page }}                                                                  | String |
+| Web-specific file-list  | Defined in `meta.yml` as `files` for main book, and overriden there by any `translations` or `variants` | `web-file-list`     | {% if web-file-list != "" %}Defined, but not shown here{% else %}None defined{% endif %} | Array  |
+| Web-specific navigation | Defined in `meta.yml` as `nav` for main book, and overriden there by any `translations` or `variants`   | `web-nav-tree`      | {% if web-nav-tree %}{% if web-nav-tree != "" %}Defined, but not shown here{% else %}None defined{% endif %}{% else %}None defined{% endif %}                                                                       | Array  |
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Epub-specific date       | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`              | `epub-date`          | {{ epub-date }}                                                                           | String |
+| Epub-specific format     | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`              | `epub-format`        | {{ epub-format }}                                                                         | String |
+| Epub-specific identifier | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`              | `epub-identifier`    | {{ epub-identifier }}                                                                     | String |
+| Epub-specific image      | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`              | `epub-image`         | {{ epub-image }}                                                                          | String |
+| Epub-specific file list  | Defined in `meta.yml` as `files` for main book, and overriden there by any `translations` or `variants`   | `epub-file-list`     | {% if epub-file-list != "" %}Defined, but not shown here{% else %}None defined{% endif %} | Array  |
+| Epub-specific TOC        | Defined in `meta.yml` as `toc` for main book, and overriden there by any `translations` or `variants`     | `epub-toc`           | {{ epub-toc }}                                                                            | Array  |
+| Epub-specific TOC page   | Defined, optionally, in `meta.yml` for main book, and overriden there by any `translations` or `variants` | `epub-contents-page` | {{ epub-contents-page }}                                                                  | Array  |
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Book variants     | Defined in `meta.yml` as a `variants` subtree within a given work     | `variants`     | {% if variants %}{% if variants != "" %}Defined, but not shown here{% else %}None defined{% endif %}{% else %}None defined{% endif %}     | Array |
+| Book translations | Defined in `meta.yml` as a `translations` subtree within a given work | `translations` | {% if translations %}{% if translations != "" %}Defined, but not shown here{% else %}None defined{% endif %}{% else %}None defined{% endif %} | Array |
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Is this a translation                 | Detected by matching the current book-subdirectory with a translation language                                     | `is-translation`        | {{ is-translation }}                                                                                                                                                                                                                   | Boolean |
+| Translation language                  | Language of the current translation defined in a translation subtree in `meta.yml`. Should match `language` above. | `language`              | {{ language }}                                                                                                                                                                                                                         | String  |
+| The active variant, if any            | Active variant enabled in `settings.yml`                                                                           | `variant`               | {% if variant %}{% if variant != "" %}{{ variant }}{% else %}Not defined{% endif %}{% else %}None defined{% endif %}                                                                                                                   | String  |
+| Using variant TOC?                    | Detects whether to use a variant TOC in `_includes/toc`                                                            | `variant-toc`           | {{ variant-toc }}                                                                                                                                                                                                                      | Boolean |
+| Variant settings                      | Defined in `settings.yml`                                                                                          | `variant-settings`      | {% if variant %}{% if variant-settings %}{% if variant-settings != "" %}Defined, but not shown here{% else %}None defined{% endif %}{% else %}None defined{% endif %}{% else %}Settings inactive, because no active variant{% endif %} | Array   |
+| Variant print-pdf stylesheet, if any  | Defined in `settings.yml`; if not set, inherits parent print-pdf-stylesheet                                        | `print-pdf-stylesheet`  | {{ print-pdf-stylesheet }}                                                                                                                                                                                                             | String  |
+| Variant screen-pdf stylesheet, if any | Defined in `settings.yml`; if not set, inherits parent print-pdf-stylesheet                                        | `screen-pdf-stylesheet` | {{ screen-pdf-stylesheet }}                                                                                                                                                                                                            | String  |
+| Variant web stylesheet, if any        | Defined in `settings.yml`; if not set, inherits parent print-pdf-stylesheet                                        | `web-stylesheet`        | {{ web-stylesheet }}                                                                                                                                                                                                                   | String  |
+| Variant epub stylesheet, if any       | Defined in `settings.yml`; if not set, inherits parent print-pdf-stylesheet                                        | `epub-stylesheet`       | {{ epub-stylesheet }}                                                                                                                                                                                                                  | String  |
+
+|                               Description                                |                              Source                             |        Output tag        |        Current result        |   Type  |
+|--------------------------------------------------------------------------|-----------------------------------------------------------------|--------------------------|------------------------------|---------|
+| Slug of the page URL                                                     | Constructed from built-in Jekyll variables, useful as a page ID | `pageurl-slug`           | {{ pageurl-slug }}           | String  |
+| Slug of the base URL only                                                | A built-in Jekyll variable, slugified                           | `baseurl-slug`           | {{ baseurl-slug }}           | String  |
+| Is this the homepage?                                                    | If `pageurl-slug` matches `baseurl-slug`, this is the home page | `is-homepage`            | {{ is-homepage }}            | Boolean |
+| URL of a project-root search page                                        | URL of any potential `search.html` in project root              | `series-search-url`      | {{ series-search-url }}      | String  |
+| URL of a book-directory search page (deprecated, only use series-search) | URL of any potential `search.html` in `book/text`               | `book-search-url`        | {{ book-search-url }}        | String  |
+| Slug of project-root search URL                                          | Slug of above value                                             | `series-search-url-slug` | {{ series-search-url-slug }} | String  |
+| Slug of book/text search URL                                             | Slug of above value                                             | `book-search-url-slug`   | {{ book-search-url-slug }}   | String  |
+| Is this a search page?                                                   | Detects `/search.html` in page path                             | `is-search`              | {{ is-search }}              | Boolean |
+| Is this a project-root search page?                                      | Compares slugs of project search URL and current page URL       | `is-series-search`       | {{ is-series-search }}       | Boolean |
+| Is this a book/text search page?                                         | Compares slugs of book/text search URL and current page URL     | `is-book-search`         | {{ is-book-search }}         | Boolean |
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Breadcrumbs on the page | Populated by the breadcrumbs include; empty if no breadcrumbs on the page | `crumbs-array` | {% if crumbs-array != "" %}Populated, but not shown here{% else %}Not populated{% endif %} | Array
+
+To check during changes to translation folder structure, esp images paths:
+{:.highlighter}
+
+|                              Description                               |                                          Source                                         |               Output tag               |                                                                                Current result                                                                               |   Type  |
+|------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Relative path to the book directory (if homepage, then the first book) | Constructed based on page and folder depth                                              | `path-to-book-directory`               | {{ path-to-book-directory }}                                                                                                                                                | String  |
+| Relative path to the project root directory                            | Constructed based on page and folder depth                                              | `path-to-root-directory`               | {{ path-to-root-directory }}                                                                                                                                                | String  |
+| Path to the relevant folder of image files                             | Constructed from path to book directory, output format's image set, and any translation | `images`                               | {{ images }}                                                                                                                                                                | String  |
+| The potential path to translated images                                | Constructed from variables                                                              | `path-to-translation-images-directory` | {{ path-to-translation-images-directory }}                                                                                                                                  | String  |
+| A list of translated images                                            | Detected from static files in the above potential location                              | `translated-images`                    | {% if is-translation %}{% if translated-images-number > 0 %}Files detected, but not shown here{% else %}No files detected{% endif %}{% else %}Not a translation{% endif %}  | Array   |
+| The number of translated images                                        | Calculated from the `translated-images` list                                            | `translated-images-number`             | {{ translated-images-number }}                                                                                                                                              | Number  |
+| Do translated images exist for this book and output format?            | Detected if `translated-images-number` > 0                                              | `translated-images-exist`              | {{ translated-images-exist }}                                                                                                                                               | Boolean |
+| The potential path to translation styles                               | Constructed from variables                                                              | `path-to-translation-styles-directory` | {{ path-to-translation-stylesheet }}                                                                                                                                        | String  |
+| The translated stylesheet for this output format                       | Detected from processed pages in the above potential location                           | `translation-styles`                   | {% if is-translation %}{% if translation-styles-number > 0 %}Files detected, but not shown here{% else %}No files detected{% endif %}{% else %}Not a translation{% endif %} | Array   |
+| The number of translated styles (should be exactly one)                | Calculated from the `translation-styles` list                                           | `translation-styles-number`            | {{ translation-styles-number }}                                                                                                                                             | Number  |
+| Do translated styles exist for this book and output format?            | Detected if `translation-styles-number` > 0                                             | `translation-styles-exist`             | {{ translation-styles-exist }}                                                                                                                                              | Boolean |
+| The potential path to translated fonts                                 | Constructed from variables                                                              | `path-to-translation-fonts-directory`  | {{ path-to-translation-fonts-directory }}                                                                                                                                   | String  |
+| A list of translated fonts                                             | Detected from static files in the above potential location                              | `translation-fonts`                    | {% if is-translation %}{% if translation-fonts-number > 0 %}Files detected, but not shown here{% else %}No files detected{% endif %}{% else %}Not a translation{% endif %}  | Array   |
+| The number of translated fonts                                         | Calculated from the `translation-fonts` list                                            | `translation-fonts-number`             | {{ translation-fonts-number }}                                                                                                                                              | Number  |
+| Do translated fonts exist for this book and output format?             | Detected if `translation-fonts-number` > 0                                              | `translation-fonts-exist`              | {{ translation-fonts-exist }}                                                                                                                                               | Boolean |
+
+To check/fix for new tranlsations structure:
+{:.highlighter}
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| The path to the book's fonts folder | Constructed from `path-to-book-directory` and `fonts` | `path-to-fonts-directory` | {{ path-to-fonts-directory }} | String
+
+|         Description         |                   Source                  |      Output tag     |      Current result     |   Type  |
+|-----------------------------|-------------------------------------------|---------------------|-------------------------|---------|
+| Are we outputting the docs?               | Detected from `_config` and presence of `docs` collection variables | `output-docs`     | {{ output-docs }}     | Boolean |
+| Is this a brand-new copy of the template? | Checks various variables to see if important things have changed    | `is-new-template` | {{ is-new-template }} | Boolean |
+| Are we on a `docs` page? | Detected from Jekyll page variable | `is-docs-page` | {{ is-docs-page }} | Boolean
+
+|       Description       |              Source              |   Output tag   |   Current result   |   Type  |
+|-------------------------|----------------------------------|----------------|--------------------|---------|
+| Are there epub scripts? | Detected from path to `_epub/js` | `epub-scripts-exist` | {{ epub-scripts-exist }} | Boolean |

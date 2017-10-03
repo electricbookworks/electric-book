@@ -1,7 +1,9 @@
 {% include metadata %}
 {% if site.output == 'epub' %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ language }}">
+<!DOCTYPE html [
+    {% include html-entities.html %}
+]>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="{{ language }}">
 <head>
     <title>
     {% if title %}
@@ -11,8 +13,19 @@
     {% endif %}
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="{{ path-to-book-directory }}Styles/{{ epub-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ epub-stylesheet }}" />
     
+    {% comment %}Metadata defined in page frontmatter overrides
+    series metadata, which is the default from meta.yml.{% endcomment %}
+    {% if page.title %}{% capture title %}{{ page.title }}{% endcapture %}{% endif %}
+    {% if page.language %}{% capture language %}{{ page.language }}{% endcapture %}{% endif %}
+    {% if page.creator %}{% capture creator %}{{ page.creator }}{% endcapture %}{% endif %}
+    {% if page.publisher %}{% capture publisher %}{{ page.publisher }}{% endcapture %}{% endif %}
+    {% if page.date %}{% capture date %}{{ page.date }}{% endcapture %}{% endif %}
+    {% if page.identifier %}{% capture identifier %}{{ page.identifier }}{% endcapture %}{% endif %}
+    {% if page.relation %}{% capture relation %}{{ page.relation }}{% endcapture %}{% endif %}
+    {% if page.description %}{% capture description %}{{ page.description }}{% endcapture %}{% endif %}
+
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
         <meta name="DC.Title" content="{{ title }}" />
         <meta name="DC.Language" content="{{ language }}" />
@@ -21,7 +34,7 @@
         <meta name="DC.Date" content="{{ date }}" />
         <meta name="DC.Identifier" content="{{ epub-identifier }}" />
         <meta name="DC.Relation" content="{{ print-pdf-identifier }}" />
-        <meta name="DC.Description" CONTENT="{{ description }}" />
+        <meta name="DC.Description" content="{{ description }}" />
 
     {% include head-elements %}
 
@@ -43,7 +56,7 @@
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{ path-to-book-directory }}styles/{{ screen-pdf-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
 
     {% include head-elements %}
 
@@ -64,12 +77,11 @@
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{ path-to-book-directory }}styles/{{ print-pdf-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
 
     {% include head-elements %}
 
 </head>
-<!--ontouchstart="" onmouseover="" required for iOS devices-->
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
 <div id="wrapper">
 
@@ -90,7 +102,7 @@
 
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ site.canonical-url}}{{ page.url }}" />
+    <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
     {% if page.description %}
     <meta property="og:description" content="{{ page.description }}" />
     {% endif %}
@@ -111,20 +123,20 @@
     <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
     {% endif %}
 
+    {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
+    Otherwise, load the styles for this book. {% endcomment %}
     {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
     {% for book in site.data.meta.works %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ web-stylesheet }}" />
-    <link rel="stylesheet" type="text/css" media="print" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ screen-pdf-stylesheet }}" />
+        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ web-stylesheet }}" />
+        {% break %}
     {% endfor %}
     {% else %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ path-to-book-directory }}styles/{{ web-stylesheet }}" />
-    <link rel="stylesheet" type="text/css" media="print" href="{{ path-to-book-directory }}styles/{{ screen-pdf-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-styles-directory }}/{{ web-stylesheet }}" />
     {% endif %}
 
     {% include head-elements %}
 
 </head>
-<!--ontouchstart="" onmouseover="" required for iOS devices-->
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-series-search == true %} series-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
 <div id="wrapper">
 

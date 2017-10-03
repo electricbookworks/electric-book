@@ -1,0 +1,256 @@
+---
+# Screen PDF styles
+---
+
+// What is this?
+// -------------
+// This is typography for the Electric Book Elements theme (see http://electricbook.works).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
+// 
+// How to use it
+// -------------
+// Edit the default variables below.
+// Comment/uncomment or add font imports below.
+// Add your own custom CSS at the bottom.
+
+// First, let's set character encoding. Don't change this.
+@charset "utf-8";
+
+// -------------
+// Set variables
+// -------------
+
+// Edition suffix: identifies this edition in page-fitting classes (in _print-fitting.scss).
+// For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
+// A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
+// If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.
+$edition-suffix: null;
+
+// First, we set several variables related to overall page setup.
+$page-width: 210mm;
+$page-height: 297mm;
+$margin-top: 20mm;
+$margin-bottom: 20mm;
+$margin-outside: 20mm;
+$margin-inside: 20mm;
+$bleed: 0;
+$trim: 0;
+$crop-marks: none; // crop | none
+
+// Colours
+$colorspace: rgb; // auto | none | rgb | cmyk | gray
+$color-text-main: cmyk(0,0,0,1);
+$color-text-secondary: cmyk(0,0,0,0.8);
+$color-background: white;
+$color-light: cmyk(0,0,0,0.2);
+$color-mid: cmyk(0,0,0,0.4);
+$color-accent: cmyk(0,0,0,1);
+$color-links: inherit;
+$color-highlight: #ffd54d;
+
+// PDF file setup options
+// Options for pdf-profile: PDF/A-1b, PDF/A-3b, PDF/X-1a:2001, PDF/X-1a:2003, PDF/X-3:2002, PDF/X-3:2003, PDF/X-4
+// Options for color profile:
+// - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
+// - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
+// Add other ICC profiles to /assets/profiles
+$pdf-profile: "PDF/A-3b";
+$color-profile: "sRGB_v4_ICC_preference_displayclass.icc";
+$black-ink: true; // true or rich (true for pure black or rich for rich black)
+
+// We name font variables for two categories:
+// - 'text' fonts are used for body text and some page features;
+// - 'display' fonts are used for headings and similar short-string features.
+// For each category, we set a main font and a secondary font, allowing up to four fonts.
+// Finally, we set a fifth, monospace font for elements like computer code.
+$font-text-main: "Crimson", serif;
+$font-text-secondary: "Roboto Condensed", sans-serif;
+$font-display-main: "Roboto Condensed", sans-serif;
+$font-display-secondary: "Crimson", serif;
+$font-code: "Inconsolata", monospace;
+
+// Finally, we set variables related to text flow.
+$font-size-default: 12pt;
+$line-height-default: 16pt; // Set in points. For consistent baselines, all other line heights and vertical spaces are based on this.
+$font-size-smaller: 0.8; // How much smaller than font-size-default for features like sidenotes and footers?
+$font-size-bigger: 2; // How many times bigger than font-size-default for features like headings and pullquotes? Use whole numbers to preserve baseline grid.
+$text-align: justify; // left or right or inside or outside or justify or center
+$orphans: 1; // Minimum number of lines that must be left at the bottom of the first page
+$widows: 1; // Minimum number of lines that must be left at the top of the second page
+$letter-spacing-text: 0em; // Default letter-spacing for p, ul, ol, dl. Set in ems, e.g. 0.01em for 10/1000s of an em.
+
+// Do you want space between paragraphs, rather than a text-indent?
+$spaced-paras: false;
+
+// Buttons
+$button-border-radius: 0.1em; // Roundness of button corners.
+
+// Hyphenation
+// Variables here apply to p, ul, ol, dl
+$hyphenation: auto; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic". Overrides PrinceXML built-in hyphenation.
+$hyphenation-custom: add !default; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
+$hyphenate-after: 3; // Minimum letters on new line after hyphen
+$hyphenate-before: 3; // Minimum letters at end of line before hyphen
+$hyphenate-lines: 2; // Preferred maximum number of consecutive lines ending with hyphens
+
+// Text dividers
+// For breaks created with *** in markdown.
+$text-divider: ""; // Empty leaves space. \2022 is a bullet
+
+// Should chapters start on a right-hand page (recto) or on any page?
+// This setting applies to the frontmatter, dedication-page, epigraph-page and chapter page styles.
+// (The halftitle-page, title-page and contents-page page styles always start on a recto.)
+$start-on: right; // right or auto or left ()
+
+// Set the default start-depth of pages.
+// This is the distance from the top of the page to the first element on the first page.
+// Set it in multiples of $line-height-default to preserve your baseline grid.
+$start-depth: $line-height-default * 6;
+
+// Style of page numbers on frontmatter pages
+// Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
+$frontmatter-reference-style: lower-roman; // lower-roman, decimal, see http://www.princexml.com/doc/gen-content/#idp54010640
+
+// Set the content of headers and footers.
+//
+// * For no content: normal
+// * For a page number: counter(page)
+// * For the body element's title attribute: string(page-header)
+//   Set this body title attribute with `header: Your Title` in a file's YAML frontmatter.
+//   If you don't set a page header in YAML, string(page-header) will fallback to the page title.
+// * For the title attribute of the last h1 (increment to h2, h3, h4, h5, h6 as needed): string(h1-title, last)
+//   By default, this uses the heading text, unless you manually set a title attribute for a given heading.
+//   In kramdown, use {: title="Your Title Here" } after the heading to set the title manually.
+// * For the last h1 (increment to h2, h3, h4, h5, h6 as needed): string(h1-text, last)
+//   Instead of last (last on page) you can also use first (first on page) or start (string set on previous page).
+// * For a phrase: "Any phrase in quotes"
+// * For an em space: "\2003"
+// * For other special characters, see CSS (ISO) at https://brajeshwar.github.io/entities/
+
+// Verso (left-hand-page)
+$verso-top: string(page-header);
+$verso-top-left: normal;
+$verso-top-right: normal;
+$verso-top-left-corner: normal;
+$verso-top-right-corner: normal;
+$verso-bottom: counter(page);
+$verso-bottom-left: normal;
+$verso-bottom-right: normal;
+$verso-bottom-left-corner: normal;
+$verso-bottom-right-corner: normal;
+
+// Recto (right-hand-page)
+$recto-top: string(h2-text, last);
+$recto-top-left: normal;
+$recto-top-right: normal;
+$recto-top-left-corner: normal;
+$recto-top-right-corner: normal;
+$recto-bottom: counter(page);
+$recto-bottom-left: normal;
+$recto-bottom-right: normal;
+$recto-bottom-left-corner: normal;
+$recto-bottom-right-corner: normal;
+
+// Verso (left-hand-page) for .frontmatter pages (`style: frontmatter`)
+$verso-top-frontmatter: string(page-header);
+$verso-top-left-frontmatter: normal;
+$verso-top-right-frontmatter: normal;
+$verso-top-left-corner-frontmatter: normal;
+$verso-top-right-corner-frontmatter: normal;
+$verso-bottom-frontmatter: counter(page, $frontmatter-reference-style);
+$verso-bottom-left-frontmatter: normal;
+$verso-bottom-right-frontmatter: normal;
+$verso-bottom-left-corner-frontmatter: normal;
+$verso-bottom-right-corner-frontmatter: normal;
+
+// Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
+$recto-top-frontmatter: string(h2-text, last);
+$recto-top-left-frontmatter: normal;
+$recto-top-right-frontmatter: normal;
+$recto-top-left-corner-frontmatter: normal;
+$recto-top-right-corner-frontmatter: normal;
+$recto-bottom-frontmatter: counter(page, $frontmatter-reference-style);
+$recto-bottom-left-frontmatter: normal;
+$recto-bottom-right-frontmatter: normal;
+$recto-bottom-left-corner-frontmatter: normal;
+$recto-bottom-right-corner-frontmatter: normal;
+
+// Special highlights for temporary debugging/viewing:
+// Specify a colour for highlighting; use 'inherit' for none.
+$highlight-tightened: inherit;
+$highlight-loosened: inherit;
+
+// ---------------------------------
+// Set to false to turn partials off
+// ---------------------------------
+
+// ---------------------
+// Reset PrinceXML CSS
+$print-css-reset: true;
+
+// --------------------------------------------
+// Page setup and control, avoid changing these
+$print-pdf-view: true; // Sets the default initial view on PDFs
+$print-page-setup: true; // Sets up the page from your variables
+$print-page-break-tools: true; // Provides classes for semantic page breaks
+$print-hide-non-printing: true; // Hides anything .non-printing
+$print-fitting: true; // Classes for floating, tracking, shrinking, etc.
+$print-hyphenation: true; // Sets hyphenation dictionary
+
+// ---------------------
+// Theme modules
+$print-start-on-recto-or-verso: true; // Starts chapters on a left- or right-hand-page
+$print-page-start-depth: true; // Sets a top margin on opening pages
+$print-base-typography: true; // Default typography for HTML elements
+$print-buttons: true;
+$print-verse: true; // Default typography for verse, poetry, lyrics
+$print-bibliographies: true;
+$print-dialogue: true; // 
+$print-epigraphs: true; // 
+$print-dedications: true; // 
+$print-glossaries: true; // Including .glossary
+$print-highlighter: true;
+$print-pullquotes: true; // Supports .pullquote
+$print-boxes: true; // 
+$print-code: true; // For computer code and preformatted text
+$print-tables: true; // 
+$print-figures: true; // 
+$print-notes: true; // Footnotes, endnotes, sidenotes
+$print-previous-publications-page: true; // The 'also by the author' frontmatter apge
+$print-title-pages: true; // Half-title and title pages
+$print-copyright-page: true; // 
+$print-toc: true; // Tables of contents
+$print-cover: true; // Front-cover image for PDF ebooks
+$print-smallcaps: true; // 
+$print-maths: true; // 
+$print-letters: true; // 
+$print-sources: true; // 
+$print-openers: true; // 
+$print-index: true; // 
+$print-reset-sequences: true; // Resets p indents, margins after other elements. Must be last @import in list.
+$print-page-headers-footers-content: true; // Sets content for headers and footers
+$print-page-headers-footers-style: true; // Sets styling for headers and footers
+
+// ------------
+// Import fonts
+// ------------
+
+// Add @font-face rules for fonts you specify here.
+// Add the actual font files to `../fonts`
+// For snippets, try https://github.com/arthurattwell/font-faces
+
+// -------------
+// Master theme
+// -------------
+
+// Import master styles
+@import 'screen-pdf';
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom Sass or CSS here.
+

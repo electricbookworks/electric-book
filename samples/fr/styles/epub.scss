@@ -1,0 +1,150 @@
+---
+# EPUB styles
+---
+
+// What is this?
+// -------------
+// This is typography for the Electric Book Elements theme (see http://electricbook.works).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
+// 
+// How to use it
+// -------------
+// Edit the default variables below.
+// Comment/uncomment or add font imports below.
+// Add your own custom CSS at the bottom.
+
+// First, let's set character encoding. Don't change this.
+@charset "utf-8";
+
+// -------------
+// Set variables
+// -------------
+
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+$edition-suffix: null;
+
+// We name font variables for two categories:
+// - 'text' fonts are used for body text and some page features;
+// - 'display' fonts are used for headings and similar short-string features.
+// For each category, we set a main font and a secondary font, allowing up to four fonts.
+// Finally, we set a fifth, monospace font for elements like computer code.
+$font-text-main: serif;
+$font-text-secondary: sans-serif;
+$font-display-main: sans-serif;
+$font-display-secondary: serif;
+$font-code: monospace;
+
+// Set font size and line-height in ems or px.
+// These values, especially $line-height-default, are used to compute vertical rhythm
+// for many features in this theme. So do not use a unitless value for line-height,
+// and don't use percentages, which will break layouts computed by multiplying this value.
+$font-size-default: 1.2em;
+$line-height-default: 1.5em;
+$font-size-smaller: 0.8; // How much smaller than font-size-default for features like sidenotes and footers?
+$font-size-bigger: 2; // How many times bigger than font-size-default for features like headings and pullquotes?
+
+// Do you want space between paragraphs, rather than a text-indent?
+$spaced-paras: false;
+
+// Buttons
+$button-border-radius: 0.1em; // Roundness of button corners.
+
+// Colours
+$color-text-main: initial;
+$color-text-secondary: initial;
+$color-background: white;
+$color-light: #e0e0e0;
+$color-mid: #9c9c9c;
+$color-accent: #000000;
+$color-links: #5f738c;
+$color-buttons: #5f738c;
+$color-highlight: #ffd54d;
+
+// Set the default start-depth of pages.
+// This is the distance from the top of the page to the first element on the first page.
+$start-depth: $line-height-default * 2;
+
+// Hyphenation
+// Variables here apply to p, ul, ol, dl.
+// Note: Most browsers and ereaders do not support hyphenation rules.
+$hyphenation: auto; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation-dictionary: ""; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
+$hyphenate-after: 3; // Minimum letters on new line after hyphen
+$hyphenate-before: 3; // Minimum letters at end of line before hyphen
+$hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
+
+// Text dividers
+// Some ereaders can display a character as a text divider
+// for horizontal rules created with *** in markdown.
+$text-divider: ""; // Empty leaves space. \2022 is a bullet
+
+// ---------------------------------
+// Set to false to turn partials off
+// ---------------------------------
+
+// Reset ereader CSS as best we can
+$epub-css-reset: true;
+
+// Structural HTML components
+$epub-wrappers: true; // 
+
+// Default typography
+$epub-base-typography: true; // 
+
+// Book parts
+$epub-cover: true; // 
+$epub-previous-publications-page: true; //
+$epub-title-pages: true; // 
+$epub-copyright-page: true; // 
+$epub-dedications: true; // 
+$epub-epigraphs: true; // 
+$epub-toc: true; // 
+
+// Book-feature classes
+$epub-bibliographies: true; // 
+$epub-boxes: true; // 
+$epub-buttons: true; // 
+$epub-code: true; // 
+$epub-dialogue: true; // 
+$epub-figures: true; // 
+$epub-glossaries: true; //
+$epub-highlighter: true; //
+$epub-index: true; // 
+$epub-maths: true; // 
+$epub-notes: true; // 
+$epub-openers: true; // 
+$epub-pullquotes: true; // 
+$epub-sources: true; // 
+$epub-tables: true; // 
+$epub-letters: true; // 
+$epub-verse: true; // 
+
+// Type-control classes
+$epub-smallcaps: true; // 
+$epub-fitting: true; // 
+
+// Logic (if this then that)
+$epub-reset-sequences: true; // 
+
+// ------------
+// Import fonts
+// ------------
+
+// Add @font-face rules for fonts you specify here.
+// Add the actual font files to `../fonts`
+// For snippets, try https://github.com/arthurattwell/font-faces
+
+// -------------
+// Master theme
+// -------------
+
+// Import master styles
+@import 'epub';
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom Sass or CSS here.
+

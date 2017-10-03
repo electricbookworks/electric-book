@@ -8,7 +8,7 @@ Behaviour for web:
 {% endcomment %}
 
 <div class="video{% if site.output == "web" or site.output == "epub3" %}wrapper{% endif %} vimeo" id="{{ include.id }}">
-    <a class="video-link" href="{{ include.link }}"><img src="{{ path-to-book-directory }}{{ site.image-set }}/{{ include.image }}"></a>
+    <a class="video-link" href="{{ include.link }}"><img src="{{ images }}/{{ include.image }}"></a>
     <p class="video-description">
         <a href="{{ include.link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
     </p>
