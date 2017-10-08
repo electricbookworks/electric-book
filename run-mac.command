@@ -269,7 +269,7 @@ You may need to reload the web page once this server is running."
 		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read epubsubdirectory
 		# Ask whether to keep the boilerplate epub mathjax directory
-		echo Include mathjax? Enter y for yes (or enter for no).
+		echo "Include mathjax? Enter y for yes (or enter for no)."
 		read epubmathjax
 		# Ask the user to add any extra Jekyll config files, e.g. _config.myconfig.yml
 		echo -n "
