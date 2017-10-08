@@ -1,5 +1,6 @@
 ---
 title: Tables
+categories: editing
 ---
 
 # Tables

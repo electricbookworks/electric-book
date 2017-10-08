@@ -1,5 +1,6 @@
 ---
 title: Images
+categories: editing
 ---
 
 # Images

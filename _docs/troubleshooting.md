@@ -1,5 +1,6 @@
 ---
 title: Troubleshooting and tips
+categories: troubleshooting
 ---
 
 # Troubleshooting and tips

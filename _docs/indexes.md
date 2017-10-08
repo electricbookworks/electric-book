@@ -1,5 +1,6 @@
 ---
 title: Indexes
+categories: editing
 ---
 
 # Indexes

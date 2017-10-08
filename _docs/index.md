@@ -9,11 +9,4 @@ These docs explain how to set up the Electric Book template, how to edit book fi
 
 These docs are a work in progress, and not everything is documented yet. You can [contribute on GitHub](https://github.com/electricbookworks/electric-book), or let us know about problems by [logging issues](https://github.com/electricbookworks/electric-book/issues).
 
-<ul>
-{% for page in site.docs %}
-{% assign docs-filename = page.url | remove: ".html" | split: "/" | last %}
-{% unless docs-filename == "index" %}
-	<li><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a></li>
-{% endunless %}
-{% endfor %}
-</ul>
+{% include docs-by-category class="markdown-toc" %}

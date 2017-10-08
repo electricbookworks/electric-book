@@ -1,5 +1,6 @@
 ---
 title: Converting from InDesign
+categories: editing
 ---
 
 # Converting from InDesign

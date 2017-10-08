@@ -1,5 +1,6 @@
 ---
 title: Poetry
+categories: editing
 ---
 
 # Poetry

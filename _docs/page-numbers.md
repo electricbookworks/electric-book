@@ -1,5 +1,6 @@
 ---
 title: Page numbers
+categories: layout
 ---
 
 # Page numbers

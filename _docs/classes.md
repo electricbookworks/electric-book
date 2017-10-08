@@ -1,5 +1,6 @@
 ---
 title: Supported classes
+categories: editing
 ---
 
 # Supported classes

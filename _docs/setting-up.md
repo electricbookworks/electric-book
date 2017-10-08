@@ -1,5 +1,6 @@
 ---
 title: Setting up
+categories: technical
 ---
 
 # Setting up

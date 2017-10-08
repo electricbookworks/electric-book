@@ -1,5 +1,6 @@
 ---
 title: Print output
+categories: output
 ---
 
 # Print output

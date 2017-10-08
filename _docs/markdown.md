@@ -1,5 +1,6 @@
 ---
 title: Markdown
+categories: editing
 ---
 
 # Markdown

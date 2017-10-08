@@ -1,0 +1,61 @@
+{% comment %}Output docs by category.
+First, create an empty array for category names.
+Loop through the docs pages, and add each category to the array.{% endcomment %}
+
+{% assign cat-list = "" | split: "" %}
+
+{% for page in site.docs %}
+
+  {% for cat in page.categories %}
+    {% assign cat-list = cat-list | push: cat | uniq %}
+  {% endfor %}
+
+{% endfor %}
+
+{% comment %}Sort the categories{% endcomment %}
+{% assign cat-list = cat-list | sort %}
+{% comment %}If we're using a Jekyll versino that support Liquid 4{% endcomment %}
+{% assign cat-list = cat-list | sort_natural %}
+
+{% comment %}Now, for each category in that array,
+create a list containing the pages that use it.{% endcomment %}
+
+<ul{% if include.class %} class="{{ include.class }}"{% endif %}>
+
+  {% for cat in cat-list %}
+
+    <li class="has-children"><a>{{ cat | capitalize }}</a>
+      <ul>
+
+        {% assign pages = site.docs | where_exp: "c", "c.categories contains cat" %}
+
+        {% for page in pages %}
+
+          <li>
+            <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+          </li>
+
+        {% endfor %}
+
+      </ul>
+    </li>
+
+  {% endfor %}
+
+  {% comment %}Now add all pages that are not categorised,
+  except the index page, which is already the parent list item.{% endcomment %}
+  {% for page in site.docs %}
+    {% unless page.url contains '/docs/index.html' %}
+
+      {% capture page-categories %}{{ page.categories }}{% endcapture %}
+      {% if page-categories == "" %}
+
+      <li>
+        <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+      </li>
+
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+
+</ul>

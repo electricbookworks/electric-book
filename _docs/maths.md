@@ -1,5 +1,6 @@
 ---
 title: Mathematics
+categories: editing
 ---
 
 # Mathematics

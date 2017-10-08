@@ -1,5 +1,6 @@
 ---
 title: Epub output
+categories: output
 ---
 
 # Epub output
