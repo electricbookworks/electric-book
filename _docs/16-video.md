@@ -1,5 +1,6 @@
 ---
 title: Video
+categories: editing
 ---
 
 # Embedding video

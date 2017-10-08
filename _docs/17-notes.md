@@ -1,5 +1,6 @@
 ---
 title: Footnotes, endnotes and sidenotes
+categories: editing
 ---
 
 # Footnotes, endnotes and sidenotes

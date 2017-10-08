@@ -1,5 +1,6 @@
 ---
 title: Introduction
+categories: setup
 ---
 
 # Introduction

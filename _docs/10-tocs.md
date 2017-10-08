@@ -1,5 +1,6 @@
 ---
 title: Tables of contents
+categories: editing
 ---
 
 # Tables of contents
