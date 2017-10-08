@@ -36,22 +36,11 @@
                 {% comment %}If docs are on (i.e. output set to true in _config.yml),
                 show the docs nav.{% endcomment %}
                 {% if output-docs %}
-                    <ol class="nav-output-docs">
-                        <li{% unless is-docs-page %} class="has-children"{% endunless %}><a href="{{ site.baseurl }}/docs">Electric Book docs</a>
-                            <ol>
-                                {% for page in site.docs %}
-                                {% assign docs-filename = page.url | remove: ".html" | split: "/" | last %}
-                                {% unless docs-filename == "index" %}
-                                  <li>
-                                      <a href="{{ site.baseurl }}{{ page.url }}" >
-                                          {{ page.title }}
-                                      </a>
-                                  </li>
-                                {% endunless %}
-                              {% endfor %}
-                            </ol>
+                    <ul>
+                        <li{% unless is-docs-page %} class="has-children"{% endunless %}><a href="{{ site.baseurl }}/docs">Docs</a>
+                        {% include docs-by-category.html %}
                         </li>
-                    </ol>
+                    </ul>
                 {% endif %}
 
                 {% comment %}If this is any non-book, non-docs page,
