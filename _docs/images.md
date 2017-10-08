@@ -15,6 +15,18 @@ categories: editing
 
 Our template comes with four folders for images, which correspond to output formats: `print-pdf`, `screen-pdf`, `web` and `epub`. Save your images files there. Each folder should contain the same set of images, saved appropriately for each format. For instance, while their file names must be identical, `web` images might be full-colour, 96dpi, and up to 800 pixels wide; while `print-pdf` images might be in greyscale, 300dpi and 2400 pixels wide.
 
+### Automating image conversions
+
+You can automate the conversion of images to various outputs with [gulp](https://gulpjs.com/). You need to have npm installed, and to have run `nom install` in the project root to install the `node_modules`.
+
+Then you only need to put high-res versions of your images in `images/_source` and run `gulp`. Our gulp script will automatically optimise, convert and save your images to the four output folders, including specifying the correct colour profiles and creating multiple image sizes for web output.
+
+By default, `gulp` will convert the images in your `book` folder. To convert the images in a different folder, say `my-potato-book`:
+
+```
+gulp --book my-potato-book
+```
+
 ## Adding images in markdown
 
 We use standard markdown to embed images:
