@@ -27,6 +27,12 @@ By default, `gulp` will convert the images in your `book` folder. To convert the
 gulp --book my-potato-book
 ```
 
+If you're processing image files in a translation subdirectory, specify the language by its code. E.g.:
+
+```
+gulp --language fr
+```
+
 ## Adding images in markdown
 
 We use standard markdown to embed images:
