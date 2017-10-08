@@ -15,7 +15,7 @@ Loop through the docs pages, and add each category to the array.{% endcomment %}
 {% comment %}Now, for each category in that array,
 create a list containing the pages that use it.{% endcomment %}
 
-<ul>
+<ul{% if include.class %} class="{{ include.class }}"{% endif %}>
 
   {% for cat in cat-list %}
 
@@ -37,16 +37,20 @@ create a list containing the pages that use it.{% endcomment %}
 
   {% endfor %}
 
-  {% comment %}Now add all pages that are not categorised{% endcomment %}
+  {% comment %}Now add all pages that are not categorised,
+  except the index page, which is already the parent list item.{% endcomment %}
   {% for page in site.docs %}
-    {% capture page-categories %}{{ page.categories }}{% endcapture %}
-    {% if page-categories == "" %}
+    {% unless page.url contains '/docs/index.html' %}
 
-    <li>
-      <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
-    </li>
+      {% capture page-categories %}{{ page.categories }}{% endcapture %}
+      {% if page-categories == "" %}
 
-    {% endif %}
+      <li>
+        <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+      </li>
+
+      {% endif %}
+    {% endunless %}
   {% endfor %}
 
 </ul>
