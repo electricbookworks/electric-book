@@ -16,14 +16,20 @@ if (args.book) {
     var book = args.book;
 };
 
+// get the language we're processing
+var language = '';
+if (args.language) {
+    var language = '/' + args.language;
+};
+
 // set up paths for later
 var paths = {
     img: {
-        source: book + '/images/_source/',
-        printpdf: book + '/images/print-pdf/',
-        web: book + '/images/web/',
-        screenpdf: book + '/images/screen-pdf/',
-        epub: book + '/images/epub/',
+        source: book + language + '/images/_source/',
+        printpdf: book + language + '/images/print-pdf/',
+        web: book + language + '/images/web/',
+        screenpdf: book + language + '/images/screen-pdf/',
+        epub: book + language + '/images/epub/',
     },
     js: {
         src: [],
