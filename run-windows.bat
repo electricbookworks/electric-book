@@ -303,7 +303,7 @@ SET /p process=Enter a number and hit return.
     :epubwhatsubdirectory
     echo If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
     set /p subdirectory=
-    if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto epubwhatsubdirectory
+    if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto epubwhatsubdirectory
     
     :: Ask whether to include boilerplate mathjax directory
     :epubAskToIncludeMathJax
