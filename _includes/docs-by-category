@@ -12,6 +12,11 @@ Loop through the docs pages, and add each category to the array.{% endcomment %}
 
 {% endfor %}
 
+{% comment %}Sort the categories{% endcomment %}
+{% assign cat-list = cat-list | sort %}
+{% comment %}If we're using a Jekyll versino that support Liquid 4{% endcomment %}
+{% assign cat-list = cat-list | sort_natural %}
+
 {% comment %}Now, for each category in that array,
 create a list containing the pages that use it.{% endcomment %}
 
