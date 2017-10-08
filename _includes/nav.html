@@ -38,7 +38,7 @@
                 {% if output-docs %}
                     <ul>
                         <li{% unless is-docs-page %} class="has-children"{% endunless %}><a href="{{ site.baseurl }}/docs">Docs</a>
-                        {% include docs-by-category.html %}
+                        {% include docs-by-category %}
                         </li>
                     </ul>
                 {% endif %}
