@@ -114,6 +114,7 @@ $web-nav-bar: true !default;
                 li {
                     padding: 0;
                     width: 100%; // Use full width of li area
+                    color: $nav-bar-parent-text-color;
                     a { // Make link fill entire li area
                         display: block;
                         // width: 100%;
