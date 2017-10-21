@@ -27,8 +27,9 @@ ECHO 2. Create a screen PDF
 ECHO 3. Run as a website
 ECHO 4. Create an epub
 ECHO 5. Export to Word
-ECHO 6. Install or update dependencies
-ECHO 7. Exit
+ECHO 6. Convert source images to output formats
+ECHO 7. Install or update dependencies
+ECHO 8. Exit
 ECHO.
 SET /p process=Enter a number and hit return. 
     IF "%process%"=="1" GOTO printpdf
@@ -36,8 +37,9 @@ SET /p process=Enter a number and hit return.
     IF "%process%"=="3" GOTO website
     IF "%process%"=="4" GOTO epub
     IF "%process%"=="5" GOTO word
-    IF "%process%"=="6" GOTO install
-    IF "%process%"=="7" GOTO:EOF
+    IF "%process%"=="6" GOTO convertimages
+    IF "%process%"=="7" GOTO install
+    IF "%process%"=="8" GOTO:EOF
     GOTO choose
 
     :: :: :: :: :: ::
@@ -662,21 +664,53 @@ SET /p process=Enter a number and hit return.
     ECHO.
     GOTO begin
 
+    :: :: :: :: :: :: ::
+    :: CONVERT IMAGES ::
+    :: :: :: :: :: :: ::
+
+    :convertimages
+    :: Encouraging message, and explain
+    echo Let's convert your source images.
+    echo This process will optimise the images in a book's _source folder
+    echo and copy them to the print-pdf, screen-pdf, web and epub image folders.
+    echo You need to have run 'Install or update dependencies' at least once,
+    echo and have GraphicsMagick installed (http://www.graphicsmagick.org).
+    echo.
+    :: Select which book to convert images for
+    :convertimagesselectbook
+    set bookimagestoconvert=
+    echo Which book's images are you converting? Hit enter for the default 'book'.
+    set /p bookimagestoconvert=
+    if "%bookimagestoconvert%"=="" set bookimagestoconvert=book && goto convertimageslanguageselect
+    if not exist "%bookimagestoconvert%\*.*" echo Sorry, %bookimagestoconvert% doesn't exist. Try again. && goto convertimagesselectbook
+    :: Select whether we're converting images for a translation
+    :convertimageslanguageselect
+    echo.
+    echo Are we converting books in a translation? If not, hit enter.
+    echo Otherwise, enter the language code/translation directory name. 
+    set /p convertimageslanguage=
+    if not exist "%bookimagestoconvert%\%convertimageslanguage%\*.*" echo Sorry, %bookimagestoconvert%\%convertimageslanguage% doesn't exist. Try again. && goto convertimageslanguageselect
+    :: Run default gulp task
+    :convertimagescustombook
+    call gulp --book "%bookimagestoconvert%" --language "%convertimageslanguage%"
+    :: Back to the beginning
+    :convertimagescomplete
+    goto begin
+
     :: :: :: :: :: ::
     :: INSTALL     ::
     :: :: :: :: :: ::
 
     :install
     :: Encouraging message
-    ECHO.
-    ECHO We're going to run Bundler to update and install dependencies. 
-    ECHO If Bundler is not already installed, we'll install it first.
-    ECHO If you get a rubygems error about SSL certificate failure, see
-    ECHO http://guides.rubygems.org/ssl-certificate-update/
-    ECHO.
-    ECHO This may take a few minutes.
+    echo Let's install gems and update some dependencies.
     :: Check if Bundler is installed. If not, install it.
     :: (Thanks http://stackoverflow.com/a/4781795/1781075)
+    echo First, we're going to run Bundler to update and install dependencies. 
+    echo If Bundler is not already installed, we'll install it first.
+    echo If you get a rubygems error about SSL certificate failure, see
+    echo http://guides.rubygems.org/ssl-certificate-update/
+    echo This may take a few minutes.
     set FOUND=
     for %%e in (%PATHEXT%) do (
       for %%X in (bundler%%e) do (
@@ -685,17 +719,22 @@ SET /p process=Enter a number and hit return.
         )
       )
     )
-    IF NOT "%FOUND%"=="" goto bundlerinstalled
-    IF "%FOUND%"=="" echo Installing Bundler...
+    if not "%FOUND%"=="" goto bundlerinstalled
+    if "%FOUND%"=="" echo Installing Bundler...
     gem install bundler
     :bundlerinstalled
-    ECHO.
-    ECHO Running Bundler...
-    ECHO.
+    echo Updating Bundler...
     :: Run bundle update
-    CALL bundle update
+    call bundle update
     :: Run bundle install
-    CALL bundle install
+    echo Installing gems with Bundler...
+    call bundle install
+    :: Install node modules
+    echo Next, we're going to install or update Node modules.
+    echo You need to have Node.js installed already (https://nodejs.org).
+    echo Installing Node modules... This may take a few minutes.
+    call npm install
     :: Back to the beginning
-    ECHO.
-    GOTO begin
+    echo Done.
+    echo.
+    goto begin
