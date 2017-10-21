@@ -493,17 +493,17 @@ SET /p process=Enter a number and hit return.
     if not "%subdirectory%"=="" if exist "fonts\*.*" move "fonts" "%subdirectory%\fonts"
     echo Fonts checked.
 
-    :: If no MathJax required, remove boilerplate mathjax directory
-    echo Checking for MathJax to move or remove...
-    if "%epubIncludeMathJax%"=="y" goto epubKeepMathjax
-    rd /s /q "mathjax"
-    echo Unnecessary MathJax removed.
+    :: If MathJax required, fetch boilerplate mathjax directory from /assets/js
+    if "%epubIncludeMathJax%"=="y" goto epubGetMathjax
     goto epubSetFilename
 
-    :epubKeepMathjax
+    :epubGetMathjax
+    echo Copying MathJax to epub...
+    :: Copy mathjax folder from /assets/js to _site/epub
+    xcopy /q /e "../assets/js/mathjax" "" > nul
     :: If this is a translation, move mathjax into the language folder
     if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" move "mathjax" "%subdirectory%\mathjax"
-    echo MathJax moved.
+    if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" echo MathJax moved to translation folder.
 
     :: Set the filename of the epub, sans extension
     :epubSetFilename
