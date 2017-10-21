@@ -300,7 +300,7 @@ works:
           - "10-02": "Dynamic index"
         nav:
           - label: "Français"
-            file: "../fr/index"
+            file: "../fr/text/index"
           - label: "Frontmatter"
             file: "index"
             class: "cover-entry"
@@ -664,7 +664,7 @@ works:
           - "10-02": "Dynamic index"
         nav:
           - label: "Français"
-            file: "../fr/index"
+            file: "../fr/text/index"
           - label: "Frontmatter"
             file: "index"
             class: "cover-entry"
@@ -805,7 +805,7 @@ works:
           web:
             nav:
               - label: "English"
-                file: "../../index"
+                file: "../../text/index"
               - file: "00-00-cover"
                 label: "Couverture"
               - file: "00-03-title-page"
@@ -862,7 +862,7 @@ works:
           app:
             nav:
               - label: "English"
-                file: "../../index"
+                file: "../../text/index"
               - file: "00-00-cover"
                 label: "Couverture"
               - file: "00-03-title-page"
