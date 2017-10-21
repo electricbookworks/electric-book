@@ -8,3 +8,19 @@ collections:
     output: false
 # Remove baseurl
 baseurl: ""
+exclude:
+# Build tools
+- run-linux.sh
+- run-mac.command
+- run-windows.bat
+- Gemfile
+- Gemfile.lock
+- README*
+- LICENSE*
+- CHANGELOG*
+- node_modules
+- eslint.json
+- gulpfile.js
+- package.json
+- package-lock.json
+- CNAME
