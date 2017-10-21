@@ -9,8 +9,10 @@ The Electric Book workflow is a process and a set of tools for making high-quali
 
 With the Electric Book workflow, you store your books in plain text with great version control, and create website versions, ebooks and print editions easily from a single source. At the heart of the workflow is the [Electric Book Jekyll template](https://github.com/electricbookworks/electric-book), which you're looking at now.
 
+{% if output-docs == true %}
 [Read the docs]({{ site.baseurl }}/docs)
 {:.button}
+{% endif %}
 
 For support, mail [support@electricbook.works](mailto:support@electricbook.works). The Electric Book is maintained by [Fire and Lion](http://fireandlion.com), who also provide paid priority support plans for publishers.
 {:#support}
