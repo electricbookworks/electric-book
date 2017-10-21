@@ -1,15 +1,16 @@
 {% comment %}
-Behaviour for web:
 - default
     - show placeholder image
 - js
     - listen for in-viewport
-    - switch for div and iframe
+    - switch for iframe
 {% endcomment %}
 
-<div class="video{% if site.output == "web" or site.output == "epub3" %}wrapper{% endif %} youtube" id="{{ include.id }}">
-    <a class="video-link" href="{{ include.link }}"><img src="{{ images }}/{{ include.image }}"></a>
+<div class="video youtube{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}">
+    <div class="video-wrapper">
+        <a class="video-link" href="{{ include.link }}"><img src="{{ images }}/{{ include.image }}"></a>
+    </div>
     <p class="video-description">
         <a href="{{ include.link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
     </p>
-</div><!--.video{% if site.output == "web" or site.output == "epub3" %}wrapper{% endif %}-->
+</div>
