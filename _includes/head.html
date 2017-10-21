@@ -1,5 +1,50 @@
 {% include metadata %}
-{% if site.output == 'epub' %}
+
+{% if site.output == 'print-pdf' %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<head>
+    <title>
+    {% if title %}
+    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
+
+    {% include head-elements %}
+
+</head>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
+<div id="wrapper">
+
+
+{% elsif site.output == 'screen-pdf' %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<head>
+    <title>
+    {% if title %}
+    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
+
+    {% include head-elements %}
+
+</head>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
+<div id="wrapper">
+
+
+{% elsif site.output == 'epub' %}
 <!DOCTYPE html [
     {% include html-entities.html %}
 ]>
@@ -35,49 +80,6 @@
         <meta name="DC.Identifier" content="{{ epub-identifier }}" />
         <meta name="DC.Relation" content="{{ print-pdf-identifier }}" />
         <meta name="DC.Description" content="{{ description }}" />
-
-    {% include head-elements %}
-
-</head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
-<div id="wrapper">
-
-
-{% elsif site.output == 'screen-pdf' %}
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
-<head>
-    <title>
-    {% if title %}
-    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
-    {% else %}
-    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
-    {% endif %}
-    </title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
-
-    {% include head-elements %}
-
-</head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
-<div id="wrapper">
-
-{% elsif site.output == 'print-pdf' %}
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
-<head>
-    <title>
-    {% if title %}
-    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
-    {% else %}
-    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
-    {% endif %}
-    </title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
 
     {% include head-elements %}
 
