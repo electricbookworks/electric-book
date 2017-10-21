@@ -606,45 +606,28 @@ SET /p process=Enter a number and hit return.
     ECHO.
     SET /p config=
     ECHO.
-    :: Ask the user to set a baseurl if needed
-    ECHO Do you need a baseurl?
-    ECHO If yes, enter it with no slashes at the start or end, e.g.
-    ECHO my/base
-    ECHO.
-    SET /p baseurl=
-    ECHO.
     :: Ask if MathJax should be enabled.
     ECHO Do these books use MathJax? If no, hit enter. If yes, enter any key then enter.
-    SET /p webmathjax=
-    :: let the user know we're on it!
-    ECHO Building your HTML...
-    :: Two routes to go with or without a baseurl
-    IF "%baseurl%"=="" GOTO appbuildwithoutbaseurl
-        :: Route 1, for building with a baseurl
-        :appbuildwithbaseurl
-        :: Run Jekyll, with MathJax enabled if necessary
-        IF "%appmathjax%"=="" GOTO appnomathjax
-        CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
-        GOTO appbuilt
-        :appbuildnomathjax
-        CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%" --baseurl="/%baseurl%"
-        :appbuilt
-        :: And we're done here
-        GOTO appbuildrepeat
-        :: Route 2, for serving without a baseurl
-        :appbuildwithoutbaseurl
-        :: Run Jekyll, with MathJax enabled if necessary
-        IF "%appbuildmathjax%"=="" GOTO appbuildnomathjax
-        CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
-        GOTO appbuilt
-        :appbuildnomathjax
-        CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%" --baseurl=""
-        :appbuilt
-    :: Let the user rebuild and restart
+    SET /p appmathjax=
     :appbuildrepeat
+    :: Run Jekyll, with MathJax enabled if necessary
+    ECHO Building your HTML...
+    IF "%appmathjax%"=="" GOTO appbuildnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    GOTO appbuilt
+    :appbuildnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%"
+    :appbuilt
+    :: Open folder containing HTML
+    ECHO Done, opening folder...
+    :: Open file explorer to show the files.
+    %SystemRoot%\explorer.exe "%location%_site"
+    :appbuilt
+    :: Let the user rebuild and restart
+    :appbuildrepeatselect
     SET repeat=
     SET /p repeat=Enter to rebuild the app HTML, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO app
+    IF "%repeat%"=="" GOTO appbuildrepeat
     ECHO.
     GOTO begin
 
