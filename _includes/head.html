@@ -116,34 +116,11 @@
     {% endcomment %}
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
 
-    <meta property="og:title" content="{{ page.title }}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
-    {% if page.description %}
-    <meta property="og:description" content="{{ page.description }}" />
-    {% endif %}
-    {% if page.image %}
-        {% if is-homepage == true or is-series-search == true %}
-            {% comment %}If a page.image is specified on the home page, we still use the series image{% endcomment %}
-            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
-        {% else %}
-            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ page.image }}" />
-        {% endif %}
-    {% elsif is-homepage == true or is-series-search == true %}
-    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
-    {% elsif app-image != "" %}
-    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ app-image }}" />
-    {% elsif image != "" %}
-    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ image }}" />
-    {% else %}
-    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
-    {% endif %}
-
     {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
     {% for book in site.data.meta.works %}
-        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ app-stylesheet }}" />
+        <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-root-directory }}{{ book.directory }}/styles/{{ app-stylesheet }}" />
         {% break %}
     {% endfor %}
     {% else %}
