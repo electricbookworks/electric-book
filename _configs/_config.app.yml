@@ -1,0 +1,8 @@
+# Set site.output == "app"
+output: "app"
+# Set site.image-set == "images/app"
+image-set: "images/app"
+# Turn off documentation
+collections:
+  docs:
+    output: false
