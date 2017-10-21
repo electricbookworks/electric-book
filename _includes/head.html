@@ -88,6 +88,75 @@
 <div id="wrapper">
 
 
+{% elsif site.output == "app" %}
+<html>
+    <head>
+
+    <title>
+    {% if title %}
+    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+    {% comment %}
+    Customize this policy to fit your own app's needs. For more guidance, see:
+        https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+        * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+        * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+        * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+            * Enable inline JS: add 'unsafe-inline' to default-src
+    {% endcomment %}
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
+    {% if page.description %}
+    <meta property="og:description" content="{{ page.description }}" />
+    {% endif %}
+    {% if page.image %}
+        {% if is-homepage == true or is-series-search == true %}
+            {% comment %}If a page.image is specified on the home page, we still use the series image{% endcomment %}
+            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
+        {% else %}
+            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ page.image }}" />
+        {% endif %}
+    {% elsif is-homepage == true or is-series-search == true %}
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
+    {% elsif app-image != "" %}
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ app-image }}" />
+    {% elsif image != "" %}
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ image }}" />
+    {% else %}
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
+    {% endif %}
+
+    {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
+    Otherwise, load the styles for this book. {% endcomment %}
+    {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
+    {% for book in site.data.meta.works %}
+        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ app-stylesheet }}" />
+        {% break %}
+    {% endfor %}
+    {% else %}
+    <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-styles-directory }}/{{ app-stylesheet }}" />
+    {% endif %}
+
+    {% include head-elements %}
+
+    </head>
+    <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-series-search == true %} series-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
+        <div id="wrapper">
+
+
 {% else %}
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
