@@ -18,21 +18,20 @@ Then get the total number of images in the array.
 
 {% comment %}
 Then create our figure, using multiple images if necessary.
-This uses a blockquote element to be XHTML-1.1 compliant for EPUB2.
 We have to do funky remove: '<p>' | remove: '</p>' | strip_newlines
 because https://github.com/jekyll/jekyll/issues/2248.
 {% endcomment %}
 
-<blockquote class="figure{% if include.class %} {{ include.class }}{% endif %}"{% if include.reference %} id="{{ include.reference | slugify }}"{% endif %}>
+<div class="figure{% if include.class %} {{ include.class }}{% endif %}"{% if include.reference %} id="{{ include.reference | slugify }}"{% endif %}>
 
 <div class="figure-body">
 
 {% if include.image or include.images %}
 <div class="figure-images contains-{{ number-of-images }}">
     {%for image in figure-images %}
-        {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ images }}/{{ image }}">{% endif %}
+        {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" or site.output == "app" %}<a href="{{ images }}/{{ image }}">{% endif %}
             <img src="{{ images }}/{{ image }}" alt="{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
-        {% if include.link or site.output == "web" %}</a>{% endif %}
+        {% if include.link or site.output == "web" or site.output == "app" %}</a>{% endif %}
     {% endfor %}
 </div>
 {% endif %}
@@ -80,6 +79,6 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
 {% endif %}
 
-</blockquote>
+</div>
 {% endcapture %}
 {{ this-figure }}

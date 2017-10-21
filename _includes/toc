@@ -50,6 +50,21 @@ Fall back to print-pdf toc, then web nav list.
         Please define a TOC or web nav in meta.yml.
     {% endif %}
 
+{% elsif site.output == "app" %}
+    {% if app-toc != nil %}
+        {% assign toc = app-toc %}
+    {% elsif app-nav-tree != nil %}
+        {% assign toc = app-nav-tree %}
+    {% elsif web-toc != nil %}
+        {% assign toc = web-toc %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
+    {% elsif print-pdf-toc != nil %}
+        {% assign toc = print-pdf-toc %}
+    {% else %}
+        Please define a TOC or web nav in meta.yml.
+    {% endif %}
+
 {% else %}
     {% if web-nav-tree != nil %}
         {% assign toc = web-nav-tree %}

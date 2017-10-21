@@ -25,6 +25,7 @@ variants:
     screen-pdf-stylesheet: ""
     web-stylesheet: "web-variant.css"
     epub-stylesheet: ""
+    app-stylesheet: ""
   - variant: yourvariant
 # ----------------------------------------------------------
 

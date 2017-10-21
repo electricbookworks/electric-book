@@ -53,6 +53,27 @@ zoom: "Click"
 </script>
 <script type="text/javascript" src="../mathjax/MathJax.js"></script>
 
+{% elsif site.output == "app" %}
+
+<!--See https://www.peterkrautzberger.org/0129/ -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX","input/MathML","output/SVG"],
+  extensions: ["tex2jax.js","mml2jax.js","MathEvents.js"],
+  TeX: {
+extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
+  },
+  MathMenu: {
+showRenderer: false
+  },
+  menuSettings: {
+zoom: "Click"
+  },
+  messageStyle: "none"
+});
+</script>
+<script type="text/javascript" src="{{ path-to-root-directory }}/assets/js/mathjax/MathJax.js"></script>
+
 {% else %}
 
 <script id="MathJax"
