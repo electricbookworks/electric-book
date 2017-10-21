@@ -37,11 +37,24 @@ var paths = {
     }
 };
 
-console.log(paths.img.source);
+// set filetypes to convert, comma separated, no spaces;
+// by default we don't convert svg which throws an error
+var filetypes = 'jpg,jpeg,gif,png';
+
+console.log('Processing images in ' + paths.img.source);
+
+// Copy svg as is to destinations
+gulp.task('images:svg', function () {
+    gulp.src(paths.img.source + '*.svg')
+    .pipe(gulp.dest(paths.img.printpdf))
+    .pipe(gulp.dest(paths.img.screenpdf))
+    .pipe(gulp.dest(paths.img.web))
+    .pipe(gulp.dest(paths.img.epub));
+});
 
 // Take the source images and convert them for print-pdf
 gulp.task('images:printpdf', function () {
-    gulp.src(paths.img.source + '*')
+    gulp.src(paths.img.source + '*.{' + filetypes + '}')
     .pipe(newer(paths.img.printpdf))
     .pipe(gm(function(gmfile) {
         return gmfile.profile('assets/profiles/PSOcoated_v3.icc').colorspace('cmyk');
@@ -51,7 +64,7 @@ gulp.task('images:printpdf', function () {
 
 // Take the source images and optimise and resize them for web and screen-pdf
 gulp.task('images:optimise', function () {
-    gulp.src(paths.img.source + '*')
+    gulp.src(paths.img.source + '*.{' + filetypes + '}')
         .pipe(newer(paths.img.web))
         .pipe(responsive({
         '*': [{
@@ -69,7 +82,7 @@ gulp.task('images:optimise', function () {
 
 // Take the print images and optimise and resize them for epub
 gulp.task('images:epub', function () {
-    gulp.src(paths.img.source + '*')
+    gulp.src(paths.img.source + '*.{' + filetypes + '}')
         .pipe(newer(paths.img.epub))
         .pipe(responsive({
         '*': [{
@@ -86,7 +99,7 @@ gulp.task('images:epub', function () {
 
 // Make small size images for use in srcset in _includes/figure
 gulp.task('images:small', function () {
-    gulp.src(paths.img.source + '*')
+    gulp.src(paths.img.source + '*.{' + filetypes + '}')
         .pipe(newer(paths.img.web))
         .pipe(responsive({
             '*': [{
@@ -104,7 +117,7 @@ gulp.task('images:small', function () {
 
 // Make medium size images for use in srcset in _includes/figure
 gulp.task('images:medium', function () {
-    gulp.src(paths.img.source + '*')
+    gulp.src(paths.img.source + '*.{' + filetypes + '}')
         .pipe(newer(paths.img.web))
         .pipe(responsive({
             '*': [{
@@ -122,7 +135,7 @@ gulp.task('images:medium', function () {
 
 // Make large size images for use in srcset in _includes/figure
 gulp.task('images:large', function () {
-    gulp.src(paths.img.source + '*')
+    gulp.src(paths.img.source + '*.{' + filetypes + '}')
         .pipe(newer(paths.img.web))
         .pipe(responsive({
             '*': [{
@@ -140,7 +153,7 @@ gulp.task('images:large', function () {
 
 // Make extra large images for use in srcset
 gulp.task('images:xlarge', function () {
-    gulp.src(paths.img.source + '*')
+    gulp.src(paths.img.source + '*.{' + filetypes + '}')
         .pipe(newer(paths.img.web))
         .pipe(responsive({
             '*': [{
@@ -181,4 +194,4 @@ gulp.task('watch', function() {
 });
 
 // when running `gulp`, do the image tasks
-gulp.task('default', ['images:printpdf', 'images:optimise', 'images:epub', 'images:small', 'images:medium', 'images:large', 'images:xlarge']);
+gulp.task('default', ['images:svg', 'images:printpdf', 'images:optimise', 'images:epub', 'images:small', 'images:medium', 'images:large', 'images:xlarge']);
