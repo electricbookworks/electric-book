@@ -474,9 +474,14 @@ the first book-directory listed in meta.yml{% endcomment %}
 {% endcapture %}
 {% capture path-to-root-directory %}{{ path-to-root-directory | strip_newlines | strip }}{% endcapture %}
 
-{% comment %}If we're in the root directory, then the path is the baseurl{% endcomment %}
+{% comment %}If we're in the root directory, then the path is the baseurl.
+If we're on the web, we need a trailing slash on the baseurl, to
+be sure we're pointing to the webserver root.{% endcomment %}
 {% if path-to-root-directory == "" %}
 {% capture path-to-root-directory %}{{ site.baseurl }}{% endcapture %}
+    {% if site.output == "web" %}
+        {% capture path-to-root-directory %}{{ site.baseurl }}/{% endcapture %}
+    {% endif %}
 {% endif %}
 
 {% comment %}Create a short tag for the path to images.{% endcomment %}
