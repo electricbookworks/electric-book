@@ -8,14 +8,16 @@ See all the metadata gathered for a given page.
 |---------------------------|----------------------------|-----------------|---------------------|--------|
 | The current output format | `site.output` in `_config` | `output-format` | {{ output-format }} | String |
 
-|     Description      |         Source        |       Output tag      |       Current result      |  Type  |
-|----------------------|-----------------------|-----------------------|---------------------------|--------|
-| Series organisation  | Defined in `meta.yml` | `series-organisation` | {{ series-organisation }} | String |
-| Series URL           | Defined in `meta.yml` | `series-url`          | {{ series-url }}          | String |
-| Series email         | Defined in `meta.yml` | `series-email`        | {{ series-email }}        | String |
-| Series name          | Defined in `meta.yml` | `series-name`         | {{ series-name }}         | String |
-| Series description   | Defined in `meta.yml` | `series-description`  | {{ series-description }}  | String |
-| Series image         | Defined in `meta.yml` | `series-image`        | {{ series-image }}        | String |
+|      Description      |         Source        |       Output tag      |       Current result      |  Type  |
+|-----------------------|-----------------------|-----------------------|---------------------------|--------|
+| Series organisation   | Defined in `meta.yml` | `series-organisation` | {{ series-organisation }} | String |
+| Series URL            | Defined in `meta.yml` | `series-url`          | {{ series-url }}          | String |
+| Series email          | Defined in `meta.yml` | `series-email`        | {{ series-email }}        | String |
+| Series name           | Defined in `meta.yml` | `series-name`         | {{ series-name }}         | String |
+| Series description    | Defined in `meta.yml` | `series-description`  | {{ series-description }}  | String |
+| Series image          | Defined in `meta.yml` | `series-image`        | {{ series-image }}        | String |
+| Series app bundle ID  | Defined in `meta.yml` | `series-app-id`       | {{ series-app-id }}       | String |
+| Series version number | Defined in `meta.yml` | `series-version`      | {{ series-version }}      | String |
 
 |     Description      |         Source        |       Output tag      |       Current result      |  Type  |
 |----------------------|-----------------------|-----------------------|---------------------------|--------|

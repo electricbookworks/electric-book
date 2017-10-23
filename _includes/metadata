@@ -19,6 +19,8 @@ Assign series information to variables. This is the same for all books in the se
 {% capture series-nav-label %}{{ site.data.meta.series.nav-label }}{% endcapture %}
 {% capture series-footer %}{{ site.data.meta.series.footer }}{% endcapture %}
 {% capture series-search-placeholder %}{{ site.data.meta.series.search-placeholder }}{% endcapture %}
+{% capture series-app-id %}{{ site.data.meta.series.app-id }}{% endcapture %}
+{% capture series-version %}{{ site.data.meta.series.version }}{% endcapture %}
 
 {% comment %}
 It's useful to know how many books are in this series

@@ -25,6 +25,11 @@ series:
   footer: "Built with the [Electric Book](http://electricbook.works)"
   # For web search, the "placeholder" text while the search is running
   search-placeholder: "Searching..."
+  # App bundle ID uniqie across all app stores
+  app-id: com.example.myapp
+  # Version. You must change this with each app update
+  version: "1.0.0"
+
 
 ########
 # TITLES
