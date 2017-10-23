@@ -6,6 +6,8 @@ image-set: "images/app"
 collections:
   docs:
     output: false
+  app:
+    output: true
 # Remove baseurl
 baseurl: ""
 exclude:
