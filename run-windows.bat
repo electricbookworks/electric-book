@@ -9,6 +9,7 @@ TITLE Electric Book
 :begin
 SET process=0
 SET bookfolder=
+SET subdirectory=
 SET config=
 SET imageset=
 SET imageconfig=
@@ -26,7 +27,7 @@ ECHO 1. Create a print PDF
 ECHO 2. Create a screen PDF
 ECHO 3. Run as a website
 ECHO 4. Create an epub
-ECHO 5. Create app-ready HTML
+ECHO 5. Create an app
 ECHO 6. Export to Word
 ECHO 7. Convert source images to output formats
 ECHO 8. Install or update dependencies
@@ -101,7 +102,7 @@ SET /p process=Enter a number and hit return.
     CD "%location%"
     :printpdfafterphantom
     :: Navigate into the book's folder in _site output
-    CD _site\%bookfolder%\text\"%subdirectory%"
+    CD _site\%bookfolder%\"%subdirectory%\text"
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Check if the _output folder exists, or create it if not.
@@ -190,7 +191,7 @@ SET /p process=Enter a number and hit return.
     CD "%location%"
     :screenpdfafterphantom
     :: Navigate into the book's folder in _site output
-    CD _site\%bookfolder%\text\"%subdirectory%"
+    CD _site\%bookfolder%\"%subdirectory%\text"
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Run prince, showing progress (-v), printing the docs in file-list
@@ -595,8 +596,12 @@ SET /p process=Enter a number and hit return.
     :: :: :: :: :: ::
 
     :app
+    :: Remember where we are by assigning a variable to the current directory
+    set location=%~dp0
     :: Encouraging message
-    ECHO Okay, let's make app-ready HTML.
+    echo Okay, let's make an Android app. First we'll generate the HTML,
+    echo then we'll build an app. For the build, you need Cordova
+    echo and Android Studio installed.
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
     ECHO.
     ECHO Any extra config files?
@@ -614,15 +619,25 @@ SET /p process=Enter a number and hit return.
     ECHO Building your HTML...
     IF "%appmathjax%"=="" GOTO appbuildnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
-    GOTO appbuilt
+    GOTO apphtmlbuilt
     :appbuildnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%"
-    :appbuilt
-    :: Open folder containing HTML
-    ECHO Done, opening folder...
-    :: Open file explorer to show the files.
-    %SystemRoot%\explorer.exe "%location%_site"
-    :appbuilt
+    :apphtmlbuilt
+    :: Put HTML into app/www by moving (/MOVE) everything (/E) in _site
+    :: excluding (/XD) the app folder itself, into app/www.
+    :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
+    :: Adding /NP will also suppress progress bar.
+    :: (I'd remove the moved folders with /MOVE but that's not working.)
+    echo Copying files to app directory...
+    robocopy "%location%_site" "%location%_site/app/www" /E /XD app /NFL /NDL /NJH /NJS /NC /NS
+    :: Build app with Cordova
+    echo Building your Android app... If you get an error, make sure Cordova and Android Studio are installed.
+    cd _site/app
+    call cordova build android
+    echo Opening folder containing app...
+    %SystemRoot%\explorer.exe "%location%_site/app/platforms/android/build/outputs/apk"
+    :: Building iOS only available on Mac machines
+    rem call cordova build ios
     :: Let the user rebuild and restart
     :appbuildrepeatselect
     SET repeat=
