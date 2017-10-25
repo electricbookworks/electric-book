@@ -159,16 +159,66 @@ and book content as a Liquid output tag e.g. {{ title }}
     {% assign screen-pdf-file-list = work.products.screen-pdf.files %}
     {% assign screen-pdf-toc = work.products.screen-pdf.toc %}
 
-    {% capture app-date %}{{ work.products.app.date }}{% endcapture %}
-    {% capture app-format %}{{ work.products.app.format }}{% endcapture %}
-    {% capture app-identifier %}{{ work.products.app.identifier }}{% endcapture %}
-    {% capture app-image %}{{ work.products.app.image }}{% endcapture %}
-    {% capture app-footer %}{{ work.products.app.footer }}{% endcapture %}
-    {% capture app-start-page %}{{ work.products.app.start-page }}{% endcapture %}
-    {% capture app-contents-page %}{{ work.products.app.contents-page }}{% endcapture %}
-    {% assign app-file-list = work.products.app.files %}
-    {% assign app-nav-tree = work.products.app.nav %}
-    {% assign app-toc = work.products.app.toc %}
+    {% comment %}App metadata inherits web metadata if not specified{% endcomment %}
+    {% if work.products.app.date %}
+        {% capture app-date %}{{ work.products.app.date }}{% endcapture %}
+    {% else %}
+        {% capture app-date %}{{ web-date }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.format %}
+        {% capture app-format %}{{ work.products.app.format }}{% endcapture %}
+    {% else %}
+        {% capture app-format %}{{ web-format }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.identifier %}
+        {% capture app-identifier %}{{ work.products.app.identifier }}{% endcapture %}
+    {% else %}
+        {% capture app-identifier %}{{ web-identifier }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.image %}
+        {% capture app-image %}{{ work.products.app.image }}{% endcapture %}
+    {% else %}
+        {% capture app-image %}{{ web-image }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.footer %}
+        {% capture app-footer %}{{ work.products.app.footer }}{% endcapture %}
+    {% else %}
+        {% capture app-footer %}{{ web-footer }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.start-page %}
+        {% capture app-start-page %}{{ work.products.app.start-page }}{% endcapture %}
+    {% else %}
+        {% capture app-start-page %}{{ web-start-page }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.contents-page %}
+        {% capture app-contents-page %}{{ work.products.app.contents-page }}{% endcapture %}
+    {% else %}
+        {% capture app-contents-page %}{{ web-contents-page }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.files %}
+        {% assign app-file-list = work.products.app.files %}
+    {% else %}
+        {% assign app-file-list = web-file-list %}
+    {% endif %}
+
+    {% if work.products.app.nav %}
+        {% assign app-nav-tree = work.products.app.nav %}
+    {% else %}
+        {% assign app-nav-tree = web-nav-tree %}
+    {% endif %}
+
+    {% if work.products.app.toc %}
+        {% assign app-toc = work.products.app.toc %}
+    {% else %}
+        {% assign app-toc = web-toc %}
+    {% endif %}
 
     {% assign variants = work.variants %}
 
