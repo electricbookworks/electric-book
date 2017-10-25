@@ -1,5 +1,5 @@
-$web-video: true !default;
-@if $web-video {
+$epub-video: true !default;
+@if $epub-video {
 
     // Video
     // Works specifically with our video includes
@@ -56,7 +56,7 @@ $web-video: true !default;
         }
         // Don't indent a paragraph after a video.
         & + p {
-        	text-indent: 0;
+            text-indent: 0;
         }
     }
 
