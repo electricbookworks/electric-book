@@ -78,7 +78,7 @@ SET /p process=Enter a number and hit return.
     SET /p config=
     ECHO.
     :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
-    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    ECHO Does this book use MathJax? If yes, enter y. If no, just hit enter. 
     SET /p print-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :printpdfrefresh
@@ -86,14 +86,14 @@ SET /p process=Enter a number and hit return.
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
-    IF "%print-pdf-mathjax%"=="" GOTO printpdfnomathjax
+    IF NOT "%print-pdf-mathjax%"=="y" GOTO printpdfnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
     GOTO printpdfjekylldone
     :printpdfnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
     :printpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF "%print-pdf-mathjax%"=="" GOTO printpdfafterphantom
+    IF NOT "%print-pdf-mathjax%"=="y" GOTO printpdfafterphantom
     :: Run this through phantom for extra magic,
     :: We have to run the PhantomJS script from the folder it's in
     :: for the directory paths to work.
@@ -167,7 +167,7 @@ SET /p process=Enter a number and hit return.
     SET /p config=
     ECHO.
     :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
-    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    ECHO Does this book use MathJax? If yes, enter y. If no, just hit enter. 
     SET /p screen-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :screenpdfrefresh
@@ -175,14 +175,14 @@ SET /p process=Enter a number and hit return.
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
-    IF "%screen-pdf-mathjax%"=="" GOTO screenpdfnomathjax
+    IF NOT "%screen-pdf-mathjax%"=="y" GOTO screenpdfnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
     GOTO screenpdfjekylldone
     :screenpdfnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
     :screenpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF "%screen-pdf-mathjax%"=="" GOTO screenpdfafterphantom
+    IF NOT "%screen-pdf-mathjax%"=="y" GOTO screenpdfafterphantom
     :: Run this through phantom for extra magic,
     :: We have to run the PhantomJS script from the folder it's in
     :: for the directory paths to work.
