@@ -243,7 +243,7 @@ SET /p process=Enter a number and hit return.
     SET /p baseurl=
     ECHO.
     :: Ask if MathJax should be enabled.
-    ECHO Do these books use MathJax? If no, hit enter. If yes, enter any key then enter.
+    ECHO Do these books use MathJax? If yes, enter y. If no, hit enter.
     SET /p webmathjax=
     :: let the user know we're on it!
     ECHO Getting your site ready...
@@ -256,7 +256,7 @@ SET /p process=Enter a number and hit return.
         :: (This is before jekyll s, because jekyll s pauses the script.)
         START "" "http://127.0.0.1:4000/%baseurl%/"
         :: Run Jekyll, with MathJax enabled if necessary
-        IF "%webmathjax%"=="" GOTO webnomathjax
+        IF NOT "%webmathjax%"=="y" GOTO webnomathjax
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
         GOTO webjekyllserved
         :webnomathjax
@@ -270,7 +270,7 @@ SET /p process=Enter a number and hit return.
         :: (This is before jekyll s, because jekyll s pauses the script.)
         START "" "http://127.0.0.1:4000/"
         :: Run Jekyll, with MathJax enabled if necessary
-        IF "%webmathjax%"=="" GOTO webnomathjax
+        IF NOT "%webmathjax%"=="y" GOTO webnomathjax
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
         GOTO webjekyllserved
         :webnomathjax
@@ -615,12 +615,12 @@ SET /p process=Enter a number and hit return.
     SET /p config=
     ECHO.
     :: Ask if MathJax should be enabled.
-    ECHO Do these books use MathJax? If no, hit enter. If yes, enter any key then enter.
+    ECHO Do these books use MathJax? If yes, enter y. If no, hit enter.
     SET /p appmathjax=
     :appbuildrepeat
     :: Run Jekyll, with MathJax enabled if necessary
     ECHO Building your HTML...
-    IF "%appmathjax%"=="" GOTO appbuildnomathjax
+    IF NOT "%appmathjax%"=="y" GOTO appbuildnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
     GOTO apphtmlbuilt
     :appbuildnomathjax
