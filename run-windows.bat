@@ -634,9 +634,9 @@ SET /p process=Enter a number and hit return.
     echo Copying files to app directory...
     robocopy "%location%_site" "%location%_site/app/www" /E /XD "%location%_site\app" /NFL /NDL /NJH /NJS /NC /NS
     :: Build app with Cordova
+    if not "%appbuildgenerateapp%"=="y" goto appbuildaftercordova
     echo Building your Android app... If you get an error, make sure Cordova and Android Studio are installed.
     cd _site/app
-    if not "%appbuildgenerateapp%"=="y" goto appbuildaftercordova
     call cordova build android
     echo Opening folder containing app...
     %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
