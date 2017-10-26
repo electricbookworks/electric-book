@@ -42,15 +42,22 @@ MathJax.Hub.Config({
   jax: ["input/TeX","input/MathML","output/SVG"],
   extensions: ["tex2jax.js","mml2jax.js","MathEvents.js"],
   TeX: {
-extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
+    extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
   },
   MathMenu: {
-showRenderer: false
+    showRenderer: false
   },
   menuSettings: {
-zoom: "Click"
+    zoom: "Click"
   },
-  messageStyle: "none"
+  messageStyle: "none",
+  SVG: {
+    scale: 90,
+    linebreaks: {
+      automatic: true,
+      width: "container",
+    },
+  },
 });
 </script>
 <script type="text/javascript" src="../mathjax/MathJax.js"></script>
@@ -63,15 +70,22 @@ MathJax.Hub.Config({
   jax: ["input/TeX","input/MathML","output/SVG"],
   extensions: ["tex2jax.js","mml2jax.js","MathEvents.js"],
   TeX: {
-extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
+    extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
   },
   MathMenu: {
-showRenderer: false
+    showRenderer: false
   },
   menuSettings: {
-zoom: "Click"
+    zoom: "Click"
   },
-  messageStyle: "none"
+  messageStyle: "none",
+  SVG: {
+    scale: 90,
+    linebreaks: {
+      automatic: true,
+      width: "container",
+    },
+  },
 });
 </script>
 <script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"></script>
