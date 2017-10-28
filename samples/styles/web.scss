@@ -47,7 +47,7 @@ $line-height-default: 1.5em;
 $font-size-smaller: 0.7; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2; // How many times bigger than font-size-default for features like headings and pullquotes?
 
-// Do you want space between paragraphs, rather than a text-indent?
+// Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: true;
 
 // Buttons

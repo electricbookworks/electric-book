@@ -76,7 +76,7 @@ $orphans: 1 !default; // Minimum number of lines that must be left at the bottom
 $widows: 1 !default; // Minimum number of lines that must be left at the top of the second page
 $letter-spacing-text: 0em !default; // Default letter-spacing for p, ul, ol, dl. Set in ems, e.g. 0.01em for 10/1000s of an em.
 
-// Do you want space between paragraphs, rather than a text-indent?
+// Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
 
 // Buttons

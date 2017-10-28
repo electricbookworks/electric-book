@@ -64,11 +64,13 @@ $black-ink: true; // true or rich (true for pure black or rich for rich black)
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson", serif;
-$font-text-secondary: "Roboto Condensed", sans-serif;
-$font-display-main: "Roboto Condensed", sans-serif;
-$font-display-secondary: "Crimson", serif;
-$font-code: "Inconsolata", monospace;
+// Using prince-no-fallback triggers a warning if any glyphs are not found
+// in the specified font, instead of swithching to another one.
+$font-text-main: "Crimson", prince-no-fallback;
+$font-text-secondary: "Roboto Condensed", prince-no-fallback;
+$font-display-main: "Roboto Condensed", prince-no-fallback;
+$font-display-secondary: "Crimson", prince-no-fallback;
+$font-code: "Inconsolata", prince-no-fallback;
 
 // Finally, we set variables related to text flow.
 $font-size-default: 12pt;
@@ -80,7 +82,7 @@ $orphans: 1; // Minimum number of lines that must be left at the bottom of the f
 $widows: 1; // Minimum number of lines that must be left at the top of the second page
 $letter-spacing-text: 0em; // Default letter-spacing for p, ul, ol, dl. Set in ems, e.g. 0.01em for 10/1000s of an em.
 
-// Do you want space between paragraphs, rather than a text-indent?
+// Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false;
 
 // Buttons
