@@ -2,27 +2,62 @@ $web-video: true !default;
 @if $web-video {
 
     // Video
-    // Works specifically with our `youtube` video include
+    // Works specifically with our video includes
 
-    .videowrapper {
-        float: none;
-        clear: both;
-        width: 100%;
-        position: relative;
-        padding-bottom: 56.25%;
-        padding-top: 25px;
-        height: 0;
-    	margin: 1em 0;
-    }
-    .videowrapper iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-    .videowrapper + p {
-    	text-indent: 0; // Don't indent a paragraph after a video.
+    .video {
+        margin: 0 0 1em 0;
+        position: relative; // positions child element play button correctly
+        img {
+            width: 100%;
+        }
+        .video-link {
+            // Add play button before iframe loads
+            &:before {
+                content: "\25b6";
+                position: absolute;
+                font-size: $font-size-default * 3;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+                color: white;
+                opacity: 0.5;
+            }
+            // If there's no image, e.g. for Vimeo, make a frame placeholder
+            .video-no-image {
+                display: block;
+                height: $line-height-default * 4;
+                width: 80%;
+                border-radius: $button-border-radius;
+                background-color: $color-mid;
+                margin: 0 auto;
+            }
+        }
+        .video-wrapper {
+            // JS will add an iframe here; when it does:
+            &.contains-iframe {
+            float: none;
+            clear: both;
+            width: 100%;
+            // Give the iframe an intrinsic ratio on all screens
+            // Credit to https://alistapart.com/article/creating-intrinsic-ratios-for-video
+            position: relative;
+            padding-bottom: 56.25%;
+            padding-top: 25px;
+            height: 0;
+                iframe {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+        // Don't indent a paragraph after a video.
+        & + p {
+        	text-indent: 0;
+        }
     }
 
 }

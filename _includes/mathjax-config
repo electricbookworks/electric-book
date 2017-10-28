@@ -1,6 +1,9 @@
-{% comment %}Mathjax configuration{% endcomment %}
+{% comment %}
+Mathjax configuration
+Note that configs are different for pdf, epub and web.
+{% endcomment %}
 
-{% if site.mathjax-enabled == true %}
+{% include metadata %}
 
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
 
@@ -21,6 +24,71 @@ MathJax.Hub.Config({
         }
     }
 });
+MathJax.Hub.Queue(
+    // fires after MathJax is done
+    function () {
+        if (typeof window.callPhantom === 'function') {
+            window.callPhantom({ mathJaxDone: true});
+        }
+    }
+);
+</script>
+
+{% elsif site.output == "epub" %}
+
+<!--See https://www.peterkrautzberger.org/0129/ -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX","input/MathML","output/SVG"],
+  extensions: ["tex2jax.js","mml2jax.js","MathEvents.js"],
+  TeX: {
+    extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
+  },
+  MathMenu: {
+    showRenderer: false
+  },
+  menuSettings: {
+    zoom: "Click"
+  },
+  messageStyle: "none",
+  SVG: {
+    scale: 90,
+    linebreaks: {
+      automatic: true,
+      width: "container",
+    },
+  },
+});
+</script>
+<script type="text/javascript" src="../mathjax/MathJax.js"></script>
+
+{% elsif site.output == "app" %}
+
+<!--See https://www.peterkrautzberger.org/0129/ -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX","input/MathML","output/SVG"],
+  extensions: ["tex2jax.js","mml2jax.js","MathEvents.js"],
+  TeX: {
+    extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
+  },
+  MathMenu: {
+    showRenderer: false
+  },
+  menuSettings: {
+    zoom: "Click"
+  },
+  messageStyle: "none",
+  SVG: {
+    scale: 90,
+    linebreaks: {
+      automatic: true,
+      width: "container",
+    },
+  },
+});
+</script>
+<script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"></script>
 
 {% else %}
 
@@ -40,16 +108,6 @@ MathJax.Hub.Config({
         }
     }
 });
-
-{% endif %}
-
-MathJax.Hub.Queue(
-    // fires after MathJax is done
-    function () {
-        if (typeof window.callPhantom === 'function') {
-            window.callPhantom({ mathJaxDone: true});
-        }
-    }
-);
 </script>
+
 {% endif %}

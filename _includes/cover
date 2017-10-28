@@ -8,27 +8,28 @@
     {% capture image %}{{ include.image }}{% endcapture %}
 {% endif %}
 
-{% comment %}If it's being used in a translation, add the language code 
-as a path to the image of the translated cover.{% endcomment %}
-{% if is-translation %}
-    {% capture image %}{{ language }}/{{ image }}{% endcapture %}
-{% endif %}
-
 {% comment %}
 Adjust HTML based on output format.
 * For web, link the cover to the start page.
-* For epub, use Sigil's file path structure.
-* For other outputs (screen-pdf and print-pdf) use just the image.
+* For other outputs use just the image.
 {% endcomment %}
 
 {% if site.output == "web" %}
 
-[![{{ title }}]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}]({{ web-start-page }})
-{:.cover}
+{% assign image-filetype = image | split: "." %}
+{% assign image-without-filetype = image | replace: image-filetype[1], "" | replace: ".", "" %}
+
+<p class="cover"><a href="{{ web-start-page }}"><img src="{{ images }}/{{ image }}"{% if site.output == "web" %} srcset="{{ images }}/{{ image-without-filetype }}-320.{{ image-filetype[1] }} 320w, {{ images }}/{{ image-without-filetype }}-640.{{ image-filetype[1] }} 640w, {{ images }}/{{ image-without-filetype }}-1024.{{ image-filetype[1] }} 1024w, {{ images }}/{{ image-without-filetype }}.{{ image-filetype[1] }} 1280w" sizes="(min-width: 40em) 40em, 100vw" {% endif %}alt="{{ title }}" class="cover"></a></p>
+
+{% elsif site.output == "screen-pdf" %}
+
+{% comment %}Add the cover to the PDF bookmarks without displaying it{% endcomment %}
+<h1 style="position: absolute; z-index: -1">Cover</h1>
+
+<p class="cover"><img src="{{ images }}/{{ image }}" srcset="{{ images }}/{{ image-without-filetype }}-320.{{ image-filetype[1] }} 320w, {{ images }}/{{ image-without-filetype }}-640.{{ image-filetype[1] }} 640w, {{ images }}/{{ image-without-filetype }}-1024.{{ image-filetype[1] }} 1024w, {{ images }}/{{ image-without-filetype }}.{{ image-filetype[1] }} 1280w" sizes="(min-width: 40em) 40em, 100vw" alt="{{ title }}" class="cover"></p>
 
 {% else %}
 
-![{{ title }}]({{ path-to-book-directory }}{{ site.image-set }}/{{ image }}){:.cover}
-{:.cover}
+<p class="cover"><img src="{{ images }}/{{ image }}" alt="{{ title }}" class="cover"></p>
 
 {% endif %}

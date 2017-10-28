@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.9.0
+
+* Various updates to documentation
+* Add epub generation (replaces old epub-ready files for Sigil approach)
+* Epubs now MathJax and JS capable
+* Add app generation (Android in Windows, app-ready HTML for iOS)
+* Add gulpfile to autoprocess images from `_source` into output formats
+* Important change to translations structure (documented)
+* New `page-info` include for checking metadata for a book and given page
+* All categorisation of docs
+* Fix video embeds, and only load iframe JS on click
+* Fixes to typos and tiny bugs
+
 ## 0.8.0
 
 * Allow variant outputs (e.g. variations on `print-pdf` for derivative works)

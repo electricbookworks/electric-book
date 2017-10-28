@@ -40,7 +40,7 @@ $line-height-default: 1.5em !default;
 $font-size-smaller: 0.8 !default; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
 
-// Do you want space between paragraphs, rather than a text-indent?
+// Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
 
 // Buttons
@@ -66,6 +66,7 @@ $start-depth: $line-height-default * 2 !default;
 // Note: Most browsers and ereaders do not support hyphenation rules.
 $hyphenation: auto !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
 $hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
+$hyphenation-custom: add !default; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
 $hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
 $hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1 !default; // Maximum number of consecutive lines ending with hyphens
@@ -115,6 +116,7 @@ $epub-sources: true !default; //
 $epub-tables: true !default; // 
 $epub-letters: true !default; // 
 $epub-verse: true !default; // 
+$epub-video: true !default; // 
 
 // Type-control classes
 $epub-smallcaps: true !default; // 
@@ -169,6 +171,7 @@ $epub-reset-sequences: true !default; //
 @import "partials/epub-tables"; // 
 @import "partials/epub-letters"; // 
 @import "partials/epub-verse"; // 
+@import "partials/epub-video"; //
 
 // Type-control classes
 @import "partials/epub-smallcaps"; // 

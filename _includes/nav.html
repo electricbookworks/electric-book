@@ -4,7 +4,7 @@
 
             {% comment %}If we're neither in a book or a docs page,
             show the series name.{% endcomment %}
-            {% if is-text-directory != true and is-docs-page != true %}
+            {% if is-book-subdirectory != true and is-docs-page != true %}
             <h2>{{ series-name }}</h2>
 
             {% comment %}If docs are generating, and we're on a docs page
@@ -29,41 +29,30 @@
                 include a link to the homepage.{% endcomment %}
                 {% if is-homepage != true %}
                     <ol class="nav-series-home">
-                        <li><a href="{{ site.baseurl }}/">{{ series-home-label }}</a></li>
+                        <li><a href="{{ path-to-root-directory }}index.html">{{ series-home-label }}</a></li>
                     </ol>
                 {% endif %}
 
                 {% comment %}If docs are on (i.e. output set to true in _config.yml),
                 show the docs nav.{% endcomment %}
                 {% if output-docs %}
-                    <ol class="nav-output-docs">
-                        <li{% unless is-docs-page %} class="has-children"{% endunless %}><a href="{{ site.baseurl }}/docs">Electric Book docs</a>
-                            <ol>
-                                {% for page in site.docs %}
-                                {% assign docs-filename = page.url | remove: ".html" | split: "/" | last %}
-                                {% unless docs-filename == "index" %}
-                                  <li>
-                                      <a href="{{ site.baseurl }}{{ page.url }}" >
-                                          {{ page.title }}
-                                      </a>
-                                  </li>
-                                {% endunless %}
-                              {% endfor %}
-                            </ol>
+                    <ul>
+                        <li{% unless is-docs-page %} class="has-children"{% endunless %}><a href="{{ path-to-root-directory }}docs">Docs</a>
+                        {% include docs-by-category %}
                         </li>
-                    </ol>
+                    </ul>
                 {% endif %}
 
                 {% comment %}If this is any non-book, non-docs page,
                 such as the home page or series search...{% endcomment %}
-                {% if is-text-directory != true and is-docs-page != true %}
+                {% if is-book-subdirectory != true and is-docs-page != true %}
 
                     {% comment %}If there is only one book, don't include its title{% endcomment %}
                     {% if number-of-works == 1 %}
 
                         {% for work in site.data.meta.works | sort: "order" %}
                             {% assign home-nav-work-directory = work.directory %}
-                            {% assign home-nav-work-tree = work.products.web.nav %}
+                            {% assign home-nav-work-tree = work.products[site.output].nav %}
                             {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                         {% endfor %}
 
@@ -72,9 +61,9 @@
                         <ol class="nav-book-list">
                         {% for work in site.data.meta.works | sort: "order" %}
                         {% assign home-nav-work-directory = work.directory %}
-                        {% assign home-nav-work-tree = work.products.web.nav %}
+                        {% assign home-nav-work-tree = work.products[site.output].nav %}
                             <li class="has-children">
-                                <a href="{{ site.baseurl }}/{{ work.directory }}/text/{{ work.products.web.start-page }}.html">
+                                <a href="{{ path-to-root-directory }}{{ work.directory }}/text/{{ work.products[site.output].start-page }}.html">
                                     {{ work.title }}
                                 </a>
                                 {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
@@ -87,7 +76,11 @@
                 {% else %}
 
                     {% comment %}Fetch recursive navigation{% endcomment %}
-                    {% include nav-list nav-tree=web-nav-tree %}
+                    {% if site.output == "app" %}
+                        {% include nav-list nav-tree=app-nav-tree %}
+                    {% else %}
+                        {% include nav-list nav-tree=web-nav-tree %}
+                    {% endif %}
 
                 {% endif %}
 
@@ -104,7 +97,7 @@
     <div id="nav" class="non-printing">
 
             {% comment %}If we're neither in a book or a docs page{% endcomment %}
-            {% if is-text-directory != true and is-docs-page != true %}
+            {% if is-book-subdirectory != true and is-docs-page != true %}
             <h2>{{ series-name }}</h2>
 
             {% comment %}If docs are generating, and we're on a docs page{% endcomment %}
@@ -135,7 +128,7 @@
                         {% for file-title in file %}
                             {% if file-title[1] %}
                                 <li class="nav-page{% if page.url contains file-title[0] %} nav-page-active{% endif %}">
-                                    <a href="{{ site.baseurl }}/{{ book-directory }}/text/{{ file-title[0] }}.html" class="nav-page-link">{{ file-title[1] }}</a>
+                                    <a href="{{ path-to-root-directory }}{{ book-directory }}/text/{{ file-title[0] }}.html" class="nav-page-link">{{ file-title[1] }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}

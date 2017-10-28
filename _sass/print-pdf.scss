@@ -76,7 +76,7 @@ $orphans: 1 !default; // Minimum number of lines that must be left at the bottom
 $widows: 1 !default; // Minimum number of lines that must be left at the top of the second page
 $letter-spacing-text: 0em !default; // Default letter-spacing for p, ul, ol, dl. Set in ems, e.g. 0.01em for 10/1000s of an em.
 
-// Do you want space between paragraphs, rather than a text-indent?
+// Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
 
 // Buttons
@@ -219,6 +219,7 @@ $print-title-pages: true !default; // Half-title and title pages
 $print-copyright-page: true !default; // 
 $print-toc: true !default; // Tables of contents
 $print-cover: true !default; // Front-cover image for PDF ebooks
+$print-video: true !default;
 $print-smallcaps: true !default; // 
 $print-maths: true !default; // 
 $print-letters: true !default; // 
@@ -275,6 +276,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-title-pages"; // Half-title and title pages
 @import "partials/print-copyright-page"; // 
 @import "partials/print-toc"; // Tables of contents
+@import "partials/print-video"; //
 @import "partials/print-cover"; // Front-cover image for PDF ebooks
 @import "partials/print-smallcaps"; // 
 @import "partials/print-maths"; // 

@@ -2,3 +2,7 @@
 output: "print-pdf"
 # Set site.image-set == "images/print-pdf"
 image-set: "images/print-pdf"
+# Turn off documentation
+collections:
+  docs:
+    output: false

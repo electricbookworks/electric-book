@@ -19,7 +19,7 @@ $web-toc: true !default;
 		/* TOCs in individual pages, created in kramdown with a placeholder ol/ul followed by {:toc} */
 
 	#content {
-		#markdown-toc {
+		#markdown-toc, .markdown-toc {
 			font-family: $font-text-secondary;
 			list-style-type: none;
 			margin: $line-height-default 0;
