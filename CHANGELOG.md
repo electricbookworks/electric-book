@@ -2,15 +2,16 @@
 
 ## 0.9.0
 
-Epub export! To do:
-
-1. Get PDF outputs of translations working in `run-win`.
-2. Document the changes required to the EBM to:
-	1. the output of translations
-	2. epub generation
-3. To document in `_docs` 
-   - `include page-info`
-4. Update `run-mac` and `run-linux` to match `run-win` epub output.
+* Various updates to documentation
+* Add epub generation (replaces old epub-ready files for Sigil approach)
+* Epubs now MathJax and JS capable
+* Add app generation (Android in Windows, app-ready HTML for iOS)
+* Add gulpfile to autoprocess images from `_source` into output formats
+* Important change to translations structure (documented)
+* New `page-info` include for checking metadata for a book and given page
+* All categorisation of docs
+* Fix video embeds, and only load iframe JS on click
+* Fixes to typos and tiny bugs
 
 ## 0.8.0
 
