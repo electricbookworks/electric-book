@@ -219,6 +219,7 @@ $print-title-pages: true !default; // Half-title and title pages
 $print-copyright-page: true !default; // 
 $print-toc: true !default; // Tables of contents
 $print-cover: true !default; // Front-cover image for PDF ebooks
+$print-video: true !default;
 $print-smallcaps: true !default; // 
 $print-maths: true !default; // 
 $print-letters: true !default; // 
@@ -276,6 +277,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-copyright-page"; // 
 @import "partials/print-toc"; // Tables of contents
 @import "partials/print-cover"; // Front-cover image for PDF ebooks
+@import "partials/print-video"; //
 @import "partials/print-smallcaps"; // 
 @import "partials/print-maths"; // 
 @import "partials/print-letters"; // 

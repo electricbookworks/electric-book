@@ -1,15 +1,35 @@
 {% comment %}
-Behaviour for web:
 - default
     - show placeholder image
 - js
     - listen for in-viewport
-    - switch for div and iframe
+    - switch for iframe
 {% endcomment %}
 
-<div class="video{% if site.output == "web" or site.output == "epub3" %}wrapper{% endif %} youtube" id="{{ include.id }}">
-    <a class="video-link" href="{{ include.link }}"><img src="{{ images }}/{{ include.image }}"></a>
+{% comment %}Create a link to the video{% endcomment %}
+{% assign video-link = include.id | prepend: "http://www.youtube.com/watch?v=" %}
+{% if include.link %}
+    {% assign video-link = include.link %}
+{% endif %}
+
+{% comment %}Get an image for the video from YouTube,
+then let the user override it by setting an image parameter{% endcomment %}
+{% capture video-image %}https://i1.ytimg.com/vi/{{ include.id }}/hqdefault.jpg{% endcapture %}
+{% if include.image %}
+    {% capture video-image %}{{ images }}/{{ include.image }}{% endcapture %}
+{% endif %}
+
+<div class="video youtube{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}">
+    <div class="video-wrapper">
+        <a class="video-link" href="{{ video-link }}">
+            <img src="{{ video-image }}">
+        </a>
+    </div>
+
+    {% if include.description %}
     <p class="video-description">
-        <a href="{{ include.link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
+        <a href="{{ video-link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
     </p>
-</div><!--.video{% if site.output == "web" or site.output == "epub3" %}wrapper{% endif %}-->
+    {% endif %}
+
+</div>

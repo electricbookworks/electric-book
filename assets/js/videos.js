@@ -1,12 +1,14 @@
 "use strict";
 
+console.log('Starting video JS');
+
 var ebwVideoInit = function() {
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
         'querySelector' in document &&
         !!Array.prototype.forEach &&
         'classList' in Element.prototype &&
         'addEventListener' in window &&
-        document.querySelectorAll('.videowrapper');
+        document.querySelectorAll('.video');
 }
 
 var ebwVideoHosts = {
@@ -41,19 +43,27 @@ var videoShow = function() {
     if (!ebwVideoInit()) return;
 
     // get all the videos
-    var videos = document.querySelectorAll('.videowrapper');
+    var videos = document.querySelectorAll('.video');
+    console.log('Videos: ' + videos);
 
     videos.forEach(function(currentVideo){
         // make the iframe
         var videoHost = ebwGetVideoHost(currentVideo);
         var videoId = currentVideo.id;
+        var videoWrapper = currentVideo.querySelector('.video-wrapper');
         var iframe = ebwVideoMakeIframe(videoHost, videoId);
 
+
+        console.log('currentVideo: ' + currentVideo);
+        console.log('videoHost: ' + videoHost);
+        console.log('currentVideo ID: ' + videoId);
+
         currentVideo.addEventListener("click", function(ev){
+            videoWrapper.classList.add('contains-iframe');
             ev.preventDefault();
             // replace the link with the generated iframe
-            currentVideo.innerHTML = '';
-            currentVideo.appendChild(iframe);
+            videoWrapper.innerHTML = '';
+            videoWrapper.appendChild(iframe);
         });
     });
 }

@@ -1,0 +1,38 @@
+# Set site.output == "app"
+output: "app"
+# Set site.image-set == "images/app"
+image-set: "images/app"
+# Turn off documentation
+collections:
+  docs:
+    output: false
+  app:
+    output: true
+# Remove baseurl
+baseurl: ""
+exclude:
+# Build tools
+- run-linux.sh
+- run-mac.command
+- run-windows.bat
+- Gemfile
+- Gemfile.lock
+- README*
+- LICENSE*
+- CHANGELOG*
+- node_modules
+- eslint.json
+- gulpfile.js
+- package.json
+- package-lock.json
+- CNAME
+# Things we don't need for an app
+- assets/profiles
+- /*/images/print-pdf
+- /*/images/screen-pdf
+- /*/images/web
+- /*/images/epub
+- /*/styles/print-pdf*
+- /*/styles/screen-pdf*
+- /*/styles/web*
+- /*/styles/epub*

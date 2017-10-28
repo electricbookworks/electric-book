@@ -10,10 +10,10 @@ These scripts provide client-side search. See:
 http://elasticlunr.com/
 https://markjs.io/
 {% endcomment %}
-{% if site.output == "web" %}
-<script src="{{ site.baseurl }}/assets/js/bundle.js"></script>
+{% if site.output == "web" or site.output == "app" %}
+<script src="{{ path-to-root-directory }}assets/js/bundle.js"></script>
     {% if is-series-search or is-book-search %}
-    <script src="{{ site.baseurl }}/assets/js/bundle-search.js"></script>
+    <script src="{{ path-to-root-directory }}assets/js/bundle-search.js"></script>
     {% endif %}
 {% endif %}
 

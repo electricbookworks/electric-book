@@ -26,7 +26,7 @@ such as the home page or series search page...{% endcomment %}
     {% for item in include.nav-tree | sort: "order" %}
         <li class="{% unless page-list contains item.file %}no-file{% endunless %}
         {% if item.children == nil %} no-children{% else %} has-children{% endif %}">
-            <a {% if item.file != nil %}href="{{ site.baseurl }}/{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
+            <a {% if item.file != nil %}href="{{ path-to-root-directory }}{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
                 {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
             </a>
             {% if item.children != nil %}

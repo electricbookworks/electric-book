@@ -50,6 +50,21 @@ Fall back to print-pdf toc, then web nav list.
         Please define a TOC or web nav in meta.yml.
     {% endif %}
 
+{% elsif site.output == "app" %}
+    {% if app-toc != nil %}
+        {% assign toc = app-toc %}
+    {% elsif app-nav-tree != nil %}
+        {% assign toc = app-nav-tree %}
+    {% elsif web-toc != nil %}
+        {% assign toc = web-toc %}
+    {% elsif web-nav-tree != nil %}
+        {% assign toc = web-nav-tree %}
+    {% elsif print-pdf-toc != nil %}
+        {% assign toc = print-pdf-toc %}
+    {% else %}
+        Please define a TOC or web nav in meta.yml.
+    {% endif %}
+
 {% else %}
     {% if web-nav-tree != nil %}
         {% assign toc = web-nav-tree %}
@@ -111,7 +126,7 @@ at the top of the toc, put this in a nav element.{% endcomment %}
     {% if include-in-toc == true %}
 
         <li class="toc-entry-title{% if page.url contains item.file %} active{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
-            {% if item.file != nil %}<a href="{{ base.url}}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"
+            {% if item.file != nil %}<a href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"
                {% if page.url contains item.file %}class="active"{% endif %}>{% endif %}
                 <span class="toc-entry-text">{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>
             {% if item.file != nil %}</a>{% endif %}

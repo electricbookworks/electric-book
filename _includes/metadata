@@ -19,6 +19,8 @@ Assign series information to variables. This is the same for all books in the se
 {% capture series-nav-label %}{{ site.data.meta.series.nav-label }}{% endcapture %}
 {% capture series-footer %}{{ site.data.meta.series.footer }}{% endcapture %}
 {% capture series-search-placeholder %}{{ site.data.meta.series.search-placeholder }}{% endcapture %}
+{% capture series-app-id %}{{ site.data.meta.series.app-id }}{% endcapture %}
+{% capture series-version %}{{ site.data.meta.series.version }}{% endcapture %}
 
 {% comment %}
 It's useful to know how many books are in this series
@@ -89,6 +91,7 @@ If this file is in a book-subsubdirectory, get its name
 {% capture screen-pdf-stylesheet %}screen-pdf.css{% endcapture %}
 {% capture web-stylesheet %}web.css{% endcapture %}
 {% capture epub-stylesheet %}epub.css{% endcapture %}
+{% capture app-stylesheet %}app.css{% endcapture %}
 
 {% comment %}
 From meta.yml, get only the values where the work.directory matches the current book-directory
@@ -155,6 +158,67 @@ and book content as a Liquid output tag e.g. {{ title }}
     {% capture screen-pdf-image %}{{ work.products.screen-pdf.image }}{% endcapture %}
     {% assign screen-pdf-file-list = work.products.screen-pdf.files %}
     {% assign screen-pdf-toc = work.products.screen-pdf.toc %}
+
+    {% comment %}App metadata inherits web metadata if not specified{% endcomment %}
+    {% if work.products.app.date %}
+        {% capture app-date %}{{ work.products.app.date }}{% endcapture %}
+    {% else %}
+        {% capture app-date %}{{ web-date }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.format %}
+        {% capture app-format %}{{ work.products.app.format }}{% endcapture %}
+    {% else %}
+        {% capture app-format %}{{ web-format }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.identifier %}
+        {% capture app-identifier %}{{ work.products.app.identifier }}{% endcapture %}
+    {% else %}
+        {% capture app-identifier %}{{ web-identifier }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.image %}
+        {% capture app-image %}{{ work.products.app.image }}{% endcapture %}
+    {% else %}
+        {% capture app-image %}{{ web-image }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.footer %}
+        {% capture app-footer %}{{ work.products.app.footer }}{% endcapture %}
+    {% else %}
+        {% capture app-footer %}{{ web-footer }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.start-page %}
+        {% capture app-start-page %}{{ work.products.app.start-page }}{% endcapture %}
+    {% else %}
+        {% capture app-start-page %}{{ web-start-page }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.contents-page %}
+        {% capture app-contents-page %}{{ work.products.app.contents-page }}{% endcapture %}
+    {% else %}
+        {% capture app-contents-page %}{{ web-contents-page }}{% endcapture %}
+    {% endif %}
+
+    {% if work.products.app.files %}
+        {% assign app-file-list = work.products.app.files %}
+    {% else %}
+        {% assign app-file-list = web-file-list %}
+    {% endif %}
+
+    {% if work.products.app.nav %}
+        {% assign app-nav-tree = work.products.app.nav %}
+    {% else %}
+        {% assign app-nav-tree = web-nav-tree %}
+    {% endif %}
+
+    {% if work.products.app.toc %}
+        {% assign app-toc = work.products.app.toc %}
+    {% else %}
+        {% assign app-toc = web-toc %}
+    {% endif %}
 
     {% assign variants = work.variants %}
 
@@ -237,6 +301,17 @@ defined in meta.yml for the given translation.
             {% if work.products.screen-pdf.image %}{% capture screen-pdf-image %}{{ work.products.screen-pdf.image }}{% endcapture %}{% endif %}
             {% if work.products.screen-pdf.files %}{% assign screen-pdf-file-list = work.products.screen-pdf.files %}{% endif %}
             {% if work.products.screen-pdf.toc %}{% assign screen-pdf-toc = work.products.screen-pdf.toc %}{% endif %}
+
+            {% if work.products.app.date %}{% capture app-date %}{{ work.products.app.date }}{% endcapture %}{% endif %}
+            {% if work.products.app.format %}{% capture app-format %}{{ work.products.app.format }}{% endcapture %}{% endif %}
+            {% if work.products.app.identifier %}{% capture app-identifier %}{{ work.products.app.identifier }}{% endcapture %}{% endif %}
+            {% if work.products.app.image %}{% capture app-image %}{{ work.products.app.image }}{% endcapture %}{% endif %}
+            {% if work.products.app.footer %}{% capture app-footer %}{{ work.products.app.footer }}{% endcapture %}{% endif %}
+            {% if work.products.app.start-page %}{% capture app-start-page %}{{ work.products.app.start-page }}{% endcapture %}{% endif %}
+            {% if work.products.app.contents-page %}{% capture app-contents-page %}{{ work.products.app.contents-page }}{% endcapture %}{% endif %}
+            {% if work.products.app.files %}{% assign app-file-list = work.products.app.files %}{% endif %}
+            {% if work.products.app.nav %}{% assign app-nav-tree = work.products.app.nav %}{% endif %}
+            {% if work.products.app.toc %}{% assign app-toc = work.products.app.toc %}{% endif %}
 
             {% if work.variants %}
                 {% assign variants = work.variants %}
@@ -335,6 +410,22 @@ override any metadata set for that variant.{% endcomment %}
                 {% endif %}
               {% endif %}
 
+              {% if data.products.app.date %}{% capture app-date %}{{ data.products.app.date }}{% endcapture %}{% endif %}
+              {% if data.products.app.format %}{% capture app-format %}{{ data.products.app.format }}{% endcapture %}{% endif %}
+              {% if data.products.app.identifier %}{% capture app-identifier %}{{ data.products.app.identifier }}{% endcapture %}{% endif %}
+              {% if data.products.app.image %}{% capture app-image %}{{ data.products.app.image }}{% endcapture %}{% endif %}
+              {% if data.products.app.footer %}{% capture app-footer %}{{ data.products.app.footer }}{% endcapture %}{% endif %}
+              {% if data.products.app.start-page %}{% capture app-start-page %}{{ data.products.app.start-page }}{% endcapture %}{% endif %}
+              {% if data.products.app.contents-page %}{% capture app-contents-page %}{{ data.products.app.contents-page }}{% endcapture %}{% endif %}
+              {% if data.products.app.files %}{% assign app-file-list = data.products.app.files %}{% endif %}
+              {% if data.products.app.nav %}{% assign app-nav-tree = data.products.app.nav %}{% endif %}
+              {% if data.products.app.toc %}
+                {% assign app-toc = data.products.app.toc %}
+                {% if site.output == "app" %}
+                  {% assign variant-toc = true %}
+                {% endif %}
+              {% endif %}
+
         {% endif %}
 
     {% endfor %}
@@ -346,6 +437,7 @@ override any metadata set for that variant.{% endcomment %}
         {% capture screen-pdf-stylesheet %}{{ setting.screen-pdf-stylesheet }}{% endcapture %}
         {% capture web-stylesheet %}{{ setting.web-stylesheet }}{% endcapture %}
         {% capture epub-stylesheet %}{{ setting.epub-stylesheet }}{% endcapture %}
+        {% capture app-stylesheet %}{{ setting.app-stylesheet }}{% endcapture %}
     {% endfor %}
 
 {% endif %}
@@ -434,9 +526,14 @@ the first book-directory listed in meta.yml{% endcomment %}
 {% endcapture %}
 {% capture path-to-root-directory %}{{ path-to-root-directory | strip_newlines | strip }}{% endcapture %}
 
-{% comment %}If we're in the root directory, then the path is the baseurl{% endcomment %}
+{% comment %}If we're in the root directory, then the path is the baseurl.
+If we're on the web, we need a trailing slash on the baseurl, to
+be sure we're pointing to the webserver root.{% endcomment %}
 {% if path-to-root-directory == "" %}
 {% capture path-to-root-directory %}{{ site.baseurl }}{% endcapture %}
+    {% if site.output == "web" %}
+        {% capture path-to-root-directory %}{{ site.baseurl }}/{% endcapture %}
+    {% endif %}
 {% endif %}
 
 {% comment %}Create a short tag for the path to images.{% endcomment %}
@@ -470,6 +567,8 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
         {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ screen-pdf-stylesheet }}{% endcapture %}
     {% elsif site.output == "epub" %}
         {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ epub-stylesheet }}{% endcapture %}
+    {% elsif site.output == "app" %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ app-stylesheet }}{% endcapture %}
     {% else %}
         {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ web-stylesheet }}{% endcapture %}
     {% endif %}

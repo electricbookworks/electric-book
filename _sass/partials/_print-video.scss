@@ -1,0 +1,24 @@
+$print-video: true !default;
+@if $print-video {
+
+    // Video
+    // Works specifically with our video includes
+
+    .video {
+        margin: 1em 0;
+        position: relative; // positions child element play button correctly
+        img {
+            width: 100%;
+            padding: 0 $line-height-default;
+        }
+        .video-link {
+            // If there's no image, e.g. for Vimeo
+            .video-no-image {}
+        }
+        // Don't indent a paragraph after a video.
+        & + p {
+            text-indent: 0;
+        }
+    }
+
+}

@@ -45,13 +45,15 @@ var index = elasticlunr(function () {
 
 // add data to a store, since elasticlunr only returns (0-based indexed) `ref`
 var store = [
-  {% for page in site.docs %}
-    {
-      'title': {% if page.title and page.title != "" %}{{ page.title | jsonify}}{% else %}{{ page.url | replace: "/"," " | jsonify}}{% endif %},
-      'excerpt': {{ page.content | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify}},
-      'url': {{ page.url | jsonify}}
-    },
-  {% endfor %}
+  {% if output-docs == "true" %}
+    {% for page in site.docs %}
+      {
+        'title': {% if page.title and page.title != "" %}{{ page.title | jsonify}}{% else %}{{ page.url | replace: "/"," " | jsonify}}{% endif %},
+        'excerpt': {{ page.content | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify}},
+        'url': {{ page.url | replace_first: "/", "" | jsonify }}
+      },
+    {% endfor %}
+  {% endif %}
   {% for page in site.pages %}
     {% unless
     page.url contains ".css" or
@@ -66,7 +68,7 @@ var store = [
     %}{
       'title': {% if page.title and page.title != "" %}{{ page.title | jsonify}}{% else %}{{ page.url | replace: "/"," " | jsonify}}{% endif %},
       'excerpt': {{ page.content | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify}},
-      'url': {{ page.url | jsonify}}
+      'url': {{ page.url | replace_first: "/", "" | jsonify }}
     }{% unless forloop.last %},{% endunless %}
     {% endunless %}
   {% endfor %}

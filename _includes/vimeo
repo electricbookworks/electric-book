@@ -1,15 +1,35 @@
 {% comment %}
-Behaviour for web:
 - default
     - show placeholder image
 - js
     - listen for in-viewport
-    - switch for div and iframe
+    - switch for iframe
 {% endcomment %}
 
-<div class="video{% if site.output == "web" or site.output == "epub3" %}wrapper{% endif %} vimeo" id="{{ include.id }}">
-    <a class="video-link" href="{{ include.link }}"><img src="{{ images }}/{{ include.image }}"></a>
+{% comment %}Create a link to the video{% endcomment %}
+{% assign video-link = include.id | prepend: "http://www.vimeo.com/" %}
+{% if include.link %}
+    {% assign video-link = include.link %}
+{% endif %}
+
+{% comment %}Unlike YouTube, it's not simple to get a Vimeo thumbnail.
+So an image must be specified to get a placeholder image.{% endcomment %}
+
+<div class="video vimeo{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}">
+    <div class="video-wrapper">
+        <a class="video-link" href="{{ video-link }}">
+            {% if include.image %}
+                <img src="{{ images }}/{{ include.image }}">
+            {% else %}
+                <span class="video-no-image"></span>
+            {% endif %}
+        </a>
+    </div>
+
+    {% if include.description %}
     <p class="video-description">
-        <a href="{{ include.link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
+        <a href="{{ video-link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
     </p>
-</div><!--.video{% if site.output == "web" or site.output == "epub3" %}wrapper{% endif %}-->
+    {% endif %}
+
+</div>

@@ -9,6 +9,7 @@ TITLE Electric Book
 :begin
 SET process=0
 SET bookfolder=
+SET subdirectory=
 SET config=
 SET imageset=
 SET imageconfig=
@@ -26,20 +27,22 @@ ECHO 1. Create a print PDF
 ECHO 2. Create a screen PDF
 ECHO 3. Run as a website
 ECHO 4. Create an epub
-ECHO 5. Export to Word
-ECHO 6. Convert source images to output formats
-ECHO 7. Install or update dependencies
-ECHO 8. Exit
+ECHO 5. Create an app
+ECHO 6. Export to Word
+ECHO 7. Convert source images to output formats
+ECHO 8. Install or update dependencies
+ECHO 9. Exit
 ECHO.
 SET /p process=Enter a number and hit return. 
     IF "%process%"=="1" GOTO printpdf
     IF "%process%"=="2" GOTO screenpdf
     IF "%process%"=="3" GOTO website
     IF "%process%"=="4" GOTO epub
-    IF "%process%"=="5" GOTO word
-    IF "%process%"=="6" GOTO convertimages
-    IF "%process%"=="7" GOTO install
-    IF "%process%"=="8" GOTO:EOF
+    IF "%process%"=="5" GOTO app
+    IF "%process%"=="6" GOTO word
+    IF "%process%"=="7" GOTO convertimages
+    IF "%process%"=="8" GOTO install
+    IF "%process%"=="9" GOTO:EOF
     GOTO choose
 
     :: :: :: :: :: ::
@@ -75,7 +78,7 @@ SET /p process=Enter a number and hit return.
     SET /p config=
     ECHO.
     :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
-    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    ECHO Does this book use MathJax? If yes, enter y. If no, just hit enter. 
     SET /p print-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :printpdfrefresh
@@ -83,14 +86,14 @@ SET /p process=Enter a number and hit return.
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
-    IF "%print-pdf-mathjax%"=="" GOTO printpdfnomathjax
+    IF NOT "%print-pdf-mathjax%"=="y" GOTO printpdfnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
     GOTO printpdfjekylldone
     :printpdfnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
     :printpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF "%print-pdf-mathjax%"=="" GOTO printpdfafterphantom
+    IF NOT "%print-pdf-mathjax%"=="y" GOTO printpdfafterphantom
     :: Run this through phantom for extra magic,
     :: We have to run the PhantomJS script from the folder it's in
     :: for the directory paths to work.
@@ -99,7 +102,7 @@ SET /p process=Enter a number and hit return.
     CD "%location%"
     :printpdfafterphantom
     :: Navigate into the book's folder in _site output
-    CD _site\%bookfolder%\text\"%subdirectory%"
+    CD _site\%bookfolder%\"%subdirectory%\text"
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Check if the _output folder exists, or create it if not.
@@ -164,7 +167,7 @@ SET /p process=Enter a number and hit return.
     SET /p config=
     ECHO.
     :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
-    ECHO Does this book use MathJax? If no, hit enter. If yes, hit any key then enter.
+    ECHO Does this book use MathJax? If yes, enter y. If no, just hit enter. 
     SET /p screen-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :screenpdfrefresh
@@ -172,14 +175,14 @@ SET /p process=Enter a number and hit return.
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
-    IF "%screen-pdf-mathjax%"=="" GOTO screenpdfnomathjax
+    IF NOT "%screen-pdf-mathjax%"=="y" GOTO screenpdfnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
     GOTO screenpdfjekylldone
     :screenpdfnomathjax
     CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
     :screenpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF "%screen-pdf-mathjax%"=="" GOTO screenpdfafterphantom
+    IF NOT "%screen-pdf-mathjax%"=="y" GOTO screenpdfafterphantom
     :: Run this through phantom for extra magic,
     :: We have to run the PhantomJS script from the folder it's in
     :: for the directory paths to work.
@@ -188,7 +191,7 @@ SET /p process=Enter a number and hit return.
     CD "%location%"
     :screenpdfafterphantom
     :: Navigate into the book's folder in _site output
-    CD _site\%bookfolder%\text\"%subdirectory%"
+    CD _site\%bookfolder%\"%subdirectory%\text"
     :: Let the user know we're now going to make the PDF
     ECHO Creating PDF...
     :: Run prince, showing progress (-v), printing the docs in file-list
@@ -240,7 +243,7 @@ SET /p process=Enter a number and hit return.
     SET /p baseurl=
     ECHO.
     :: Ask if MathJax should be enabled.
-    ECHO Do these books use MathJax? If no, hit enter. If yes, enter any key then enter.
+    ECHO Do these books use MathJax? If yes, enter y. If no, hit enter.
     SET /p webmathjax=
     :: let the user know we're on it!
     ECHO Getting your site ready...
@@ -253,7 +256,7 @@ SET /p process=Enter a number and hit return.
         :: (This is before jekyll s, because jekyll s pauses the script.)
         START "" "http://127.0.0.1:4000/%baseurl%/"
         :: Run Jekyll, with MathJax enabled if necessary
-        IF "%webmathjax%"=="" GOTO webnomathjax
+        IF NOT "%webmathjax%"=="y" GOTO webnomathjax
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
         GOTO webjekyllserved
         :webnomathjax
@@ -267,7 +270,7 @@ SET /p process=Enter a number and hit return.
         :: (This is before jekyll s, because jekyll s pauses the script.)
         START "" "http://127.0.0.1:4000/"
         :: Run Jekyll, with MathJax enabled if necessary
-        IF "%webmathjax%"=="" GOTO webnomathjax
+        IF NOT "%webmathjax%"=="y" GOTO webnomathjax
         CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
         GOTO webjekyllserved
         :webnomathjax
@@ -491,17 +494,17 @@ SET /p process=Enter a number and hit return.
     if not "%subdirectory%"=="" if exist "fonts\*.*" move "fonts" "%subdirectory%\fonts"
     echo Fonts checked.
 
-    :: If no MathJax required, remove boilerplate mathjax directory
-    echo Checking for MathJax to move or remove...
-    if "%epubIncludeMathJax%"=="y" goto epubKeepMathjax
-    rd /s /q "mathjax"
-    echo Unnecessary MathJax removed.
+    :: If MathJax required, fetch boilerplate mathjax directory from /assets/js
+    if "%epubIncludeMathJax%"=="y" goto epubGetMathjax
     goto epubSetFilename
 
-    :epubKeepMathjax
+    :epubGetMathjax
+    echo Copying MathJax to epub...
+    :: Copy mathjax folder from /assets/js to _site/epub
+    xcopy /q /e "../assets/js/mathjax" "" > nul
     :: If this is a translation, move mathjax into the language folder
     if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" move "mathjax" "%subdirectory%\mathjax"
-    echo MathJax moved.
+    if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" echo MathJax moved to translation folder.
 
     :: Set the filename of the epub, sans extension
     :epubSetFilename
@@ -586,6 +589,69 @@ SET /p process=Enter a number and hit return.
     SET /p repeat=Enter to run again, or any other key and enter to stop. 
     IF "%repeat%"=="" GOTO epubrefresh
         GOTO begin
+
+
+    :: :: :: :: :: ::
+    :: APP         ::
+    :: :: :: :: :: ::
+
+    :app
+    :: Remember where we are by assigning a variable to the current directory
+    set location=%~dp0
+    :: Encouraging message
+    echo Okay, let's make an Android app. First we'll generate the HTML,
+    echo then we'll build an app. For the build, you need Cordova
+    echo and Android Studio installed.
+    echo.
+    echo Shall we build the app, or just generate the HTML? Enter y to build the app, if not hit enter. 
+    set /p appbuildgenerateapp=
+    :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+    ECHO.
+    ECHO Any extra config files?
+    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
+    ECHO _configs/_config.myconfig.yml
+    ECHO If not, just hit return.
+    ECHO.
+    SET /p config=
+    ECHO.
+    :: Ask if MathJax should be enabled.
+    ECHO Do these books use MathJax? If yes, enter y. If no, hit enter.
+    SET /p appmathjax=
+    :appbuildrepeat
+    :: Run Jekyll, with MathJax enabled if necessary
+    ECHO Building your HTML...
+    IF NOT "%appmathjax%"=="y" GOTO appbuildnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    GOTO apphtmlbuilt
+    :appbuildnomathjax
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%"
+    :apphtmlbuilt
+    :: Put HTML into app/www by moving (/MOVE) everything (/E) in _site
+    :: excluding (/XD) the app folder itself, into app/www.
+    :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
+    :: Adding /NP will also suppress progress bar.
+    :: (I'd remove the moved folders with /MOVE but that's not working.)
+    echo Copying files to app directory...
+    robocopy "%location%_site" "%location%_site/app/www" /E /XD "%location%_site\app" /NFL /NDL /NJH /NJS /NC /NS
+    :: Build app with Cordova
+    if not "%appbuildgenerateapp%"=="y" goto appbuildaftercordova
+    echo Building your Android app... If you get an error, make sure Cordova and Android Studio are installed.
+    cd _site/app
+    call cordova build android
+    echo Opening folder containing app...
+    %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
+    :appbuildaftercordova
+    cd "%location%"
+    :: Building iOS only available on Mac machines
+    rem call cordova build ios
+    :: Let the user rebuild and restart
+    :appbuildrepeatselect
+    SET repeat=
+    SET /p repeat=Enter to rebuild the app HTML, or any other key and enter to stop. 
+    IF "%repeat%"=="" GOTO appbuildrepeat
+    ECHO.
+    GOTO begin
+
 
     :: :: :: :: :: ::
     :: WORD EXPORT ::

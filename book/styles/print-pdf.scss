@@ -89,8 +89,8 @@ $button-border-radius: 0.1em; // Roundness of button corners.
 // Hyphenation
 // Variables here apply to p, ul, ol, dl
 $hyphenation: auto; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
-$hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic". Overrides PrinceXML built-in hyphenation.
-$hyphenation-custom: add !default; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
+$hyphenation-dictionary: ""; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic". Overrides PrinceXML built-in hyphenation.
+$hyphenation-custom: add; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
 $hyphenate-after: 3; // Minimum letters on new line after hyphen
 $hyphenate-before: 3; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 2; // Preferred maximum number of consecutive lines ending with hyphens
@@ -223,6 +223,7 @@ $print-title-pages: true; // Half-title and title pages
 $print-copyright-page: true; // 
 $print-toc: true; // Tables of contents
 $print-cover: true; // Front-cover image for PDF ebooks
+$print-video: true;
 $print-smallcaps: true; // 
 $print-maths: true; // 
 $print-letters: true; // 

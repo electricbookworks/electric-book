@@ -1,5 +1,50 @@
 {% include metadata %}
-{% if site.output == 'epub' %}
+
+{% if site.output == 'print-pdf' %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<head>
+    <title>
+    {% if title %}
+    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
+
+    {% include head-elements %}
+
+</head>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
+<div id="wrapper">
+
+
+{% elsif site.output == 'screen-pdf' %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<head>
+    <title>
+    {% if title %}
+    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% else %}
+    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% endif %}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
+
+    {% include head-elements %}
+
+</head>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
+<div id="wrapper">
+
+
+{% elsif site.output == 'epub' %}
 <!DOCTYPE html [
     {% include html-entities.html %}
 ]>
@@ -43,10 +88,10 @@
 <div id="wrapper">
 
 
-{% elsif site.output == 'screen-pdf' %}
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
-<head>
+{% elsif site.output == "app" %}
+<html>
+    <head>
+
     <title>
     {% if title %}
     {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
@@ -54,36 +99,39 @@
     {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
     {% endif %}
     </title>
+
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
-    {% include head-elements %}
+    {% comment %}
+    Customize this policy to fit your own app's needs. For more guidance, see:
+        https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+        * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+        * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+        * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+            * Enable inline JS: add 'unsafe-inline' to default-src
+    {% endcomment %}
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https://fonts.googleapis.com https://www.youtube.com http://player.vimeo.com; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;{% if site.mathjax-enabled == true %} script-src 'self' 'unsafe-inline' 'unsafe-eval';{% endif %}">
 
-</head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
-<div id="wrapper">
-
-{% elsif site.output == 'print-pdf' %}
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
-<head>
-    <title>
-    {% if title %}
-    {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
+    {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
+    Otherwise, load the styles for this book. {% endcomment %}
+    {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
+    {% for book in site.data.meta.works %}
+        <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-root-directory }}{{ book.directory }}/styles/{{ app-stylesheet }}" />
+        {% break %}
+    {% endfor %}
     {% else %}
-    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-styles-directory }}/{{ app-stylesheet }}" />
     {% endif %}
-    </title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
 
     {% include head-elements %}
 
-</head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
-<div id="wrapper">
+    </head>
+    <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-series-search == true %} series-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
+        <div id="wrapper">
 
 
 {% else %}

@@ -19,7 +19,7 @@ function displaySearchResults(results, store) {
     for (var i = 0; i < results.length; i++) {
       var item = store[results[i].ref];
       appendString += '<li>';
-      appendString += '<h3><a href="{{ site.baseurl }}' + item.url + '?query=' + searchTerm + '">' + item.title + ' </a></h3>';
+      appendString += '<h3><a href="' + item.url + '?query=' + searchTerm + '">' + item.title + ' </a></h3>';
       appendString += '<p>' + item.excerpt + '</p>';
       appendString += '</li>';
     }
