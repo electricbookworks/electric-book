@@ -62,7 +62,7 @@ gulp.task('images:printpdf', function () {
     gulp.src(paths.img.source + '*.{' + filetypes + '}')
     .pipe(newer(paths.img.printpdf))
     .pipe(gm(function(gmfile) {
-        return gmfile.profile('assets/profiles/PSOcoated_v3.icc').colorspace('cmyk');
+        return gmfile.profile('_tools/profiles/PSOcoated_v3.icc').colorspace('cmyk');
     }))
     .pipe(gulp.dest(paths.img.printpdf));
 });
@@ -81,7 +81,7 @@ gulp.task('images:optimise', function () {
         }]
     }))
     .pipe(gm(function(gmfile) {
-        return gmfile.profile('assets/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+        return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
     }))
     .pipe(gulp.dest(paths.img.screenpdf))
     .pipe(gulp.dest(paths.img.web))
@@ -103,7 +103,7 @@ gulp.task('images:small', function () {
             }]
         }))
         .pipe(gm(function(gmfile) {
-            return gmfile.profile('assets/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+            return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
         }))
         .pipe(gulp.dest(paths.img.web));
 });
@@ -122,7 +122,7 @@ gulp.task('images:medium', function () {
             }]
         }))
         .pipe(gm(function(gmfile) {
-            return gmfile.profile('assets/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+            return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
         }))
         .pipe(gulp.dest(paths.img.web));
 });
@@ -141,7 +141,7 @@ gulp.task('images:large', function () {
                 }]
             }))
         .pipe(gm(function(gmfile) {
-            return gmfile.profile('assets/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+            return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
         }))
         .pipe(gulp.dest(paths.img.web));
 });
@@ -160,7 +160,7 @@ gulp.task('images:xlarge', function () {
                 }]
             }))
         .pipe(gm(function(gmfile) {
-            return gmfile.profile('assets/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+            return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
         }))
         .pipe(gulp.dest(paths.img.web));
 });
