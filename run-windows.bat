@@ -18,6 +18,10 @@ SET baseurl=
 SET location=
 SET firstfile=
 set epubIncludeMathJax=
+set print-pdf-mathjax=
+set screen-pdf-mathjax=
+set webmathjax=
+set appmathjax=
 
 :: Ask what we're going to be doing.
 ECHO Electric Book options
