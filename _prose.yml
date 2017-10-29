@@ -59,6 +59,7 @@ prose:
     - /*/*/images
     - /*/*/fonts
     - /*/*/package.opf
+    - /*/*/*/file-list
   media: "media"
   metadata:
     "":
