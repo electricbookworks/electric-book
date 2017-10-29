@@ -50,7 +50,7 @@ $color-highlight: #ffd54d !default;
 // Options for color profile:
 // - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
 // - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
-// Add other ICC profiles to /assets/profiles
+// Add other ICC profiles to /_tools/profiles
 $pdf-profile: "PDF/A-3b" !default;
 $color-profile: "sRGB_v4_ICC_preference_displayclass.icc" !default;
 $black-ink: true !default; // true or rich (true for pure black or rich for rich black)
