@@ -3,9 +3,9 @@
     <div id="footer">
         <div class="footer-content">
 
-            {% if series-footer and series-footer != "" %}
+            {% if project-footer and project-footer != "" %}
                 <p>
-                    {{ series-footer | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+                    {{ project-footer | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
                 </p>
             {% endif %}
 

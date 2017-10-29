@@ -8,7 +8,7 @@
     {% if title %}
     {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
     {% else %}
-    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {{ project-name }}{% if page.title %}: {{ page.title }}{% endif %}
     {% endif %}
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -18,7 +18,7 @@
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}>
 <div id="wrapper">
 
 
@@ -30,7 +30,7 @@
     {% if title %}
     {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
     {% else %}
-    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {{ project-name }}{% if page.title %}: {{ page.title }}{% endif %}
     {% endif %}
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -40,7 +40,7 @@
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %} data-title="{{ page.title }}"{% if page.header %} data-header="{{ page.header }}{% endif %}">
 <div id="wrapper">
 
 
@@ -54,14 +54,14 @@
     {% if title %}
     {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
     {% else %}
-    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {{ project-name }}{% if page.title %}: {{ page.title }}{% endif %}
     {% endif %}
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ epub-stylesheet }}" />
     
     {% comment %}Metadata defined in page frontmatter overrides
-    series metadata, which is the default from meta.yml.{% endcomment %}
+    project metadata, which is the default from meta.yml.{% endcomment %}
     {% if page.title %}{% capture title %}{{ page.title }}{% endcapture %}{% endif %}
     {% if page.language %}{% capture language %}{{ page.language }}{% endcapture %}{% endif %}
     {% if page.creator %}{% capture creator %}{{ page.creator }}{% endcapture %}{% endif %}
@@ -96,7 +96,7 @@
     {% if title %}
     {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
     {% else %}
-    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {{ project-name }}{% if page.title %}: {{ page.title }}{% endif %}
     {% endif %}
     </title>
 
@@ -118,7 +118,7 @@
 
     {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
     Otherwise, load the styles for this book. {% endcomment %}
-    {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
+    {% if is-homepage == true or is-project-search == true or page.collection == "docs" %}
     {% for book in site.data.meta.works %}
         <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-root-directory }}{{ book.directory }}/styles/{{ app-stylesheet }}" />
         {% break %}
@@ -130,7 +130,7 @@
     {% include head-elements %}
 
     </head>
-    <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-series-search == true %} series-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
+    <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
         <div id="wrapper">
 
 
@@ -142,7 +142,7 @@
     {% if title %}
     {{ title }}{% if page.title %}: {{ page.title }}{% endif %}
     {% else %}
-    {{ series-name }}{% if page.title %}: {{ page.title }}{% endif %}
+    {{ project-name }}{% if page.title %}: {{ page.title }}{% endif %}
     {% endif %}
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -155,25 +155,25 @@
     <meta property="og:description" content="{{ page.description }}" />
     {% endif %}
     {% if page.image %}
-        {% if is-homepage == true or is-series-search == true %}
-            {% comment %}If a page.image is specified on the home page, we still use the series image{% endcomment %}
-            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
+        {% if is-homepage == true or is-project-search == true %}
+            {% comment %}If a page.image is specified on the home page, we still use the project image{% endcomment %}
+            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
         {% else %}
             <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ page.image }}" />
         {% endif %}
-    {% elsif is-homepage == true or is-series-search == true %}
-    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
+    {% elsif is-homepage == true or is-project-search == true %}
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
     {% elsif web-image != "" %}
     <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ web-image }}" />
     {% elsif image != "" %}
     <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ image }}" />
     {% else %}
-    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ series-image }}" />
+    <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
     {% endif %}
 
     {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
     Otherwise, load the styles for this book. {% endcomment %}
-    {% if is-homepage == true or is-series-search == true or page.collection == "docs" %}
+    {% if is-homepage == true or is-project-search == true or page.collection == "docs" %}
     {% for book in site.data.meta.works %}
         <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ web-stylesheet }}" />
         {% break %}
@@ -185,7 +185,7 @@
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-series-search == true %} series-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
 <div id="wrapper">
 
 {% endif %}

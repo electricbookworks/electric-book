@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0
+
+* Keep build tools in `_tools`
+* Change term `series` to broader `project`
+* Embed fonts and prevent risk of reflow from PDF font fallbacks
+* Fix page-header functionality for running heads
+* Hide technical files from non-tech editors prose.io and EBM
+
 ## 0.9.0
 
 * Various updates to documentation

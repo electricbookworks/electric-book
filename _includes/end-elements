@@ -12,7 +12,7 @@ https://markjs.io/
 {% endcomment %}
 {% if site.output == "web" or site.output == "app" %}
 <script src="{{ path-to-root-directory }}assets/js/bundle.js"></script>
-    {% if is-series-search or is-book-search %}
+    {% if is-project-search or is-book-search %}
     <script src="{{ path-to-root-directory }}assets/js/bundle-search.js"></script>
     {% endif %}
 {% endif %}

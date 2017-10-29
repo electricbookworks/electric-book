@@ -13,14 +13,14 @@ This structure assumes that the translation and its parent will be kept in sync 
 
 If the translating team works independently, and especially if they want to make content changes that diverge from the parent, their translation is actually an adaptation. For instance, adding a new image or page-design feature, or changing design elements like fonts and colours.
 
-An adaptation should be a completely separate repository, which starts out as copy of the parent book (or series, for multi-work repos), but from that point on is treated as a new book, overwriting the original files in the repository with the new language.
+An adaptation should be a completely separate repository, which starts out as copy of the parent project, but from that point on is treated as a new project, overwriting the original files in the repository with the new language.
 
 ## Setting up a translation
 
 To make a translation:
 
 - Add a `translations` node to the `meta.yml` with `directory` and `language`. They can optionally include their own work-level metadata such as `title`. Any metadata not added to a translation will be inherited from the original language. See [Metadata](#metadata) below.
-- Add the files in a new folder inside `book/text`, named for the translation language code. (Remember sometimes `book` has been renamed for each book in a series).
+- Add the files in a new folder inside `book/text`, named for the translation language code. (Remember sometimes `book` has been renamed for each book in a project).
 
 ## Text
 

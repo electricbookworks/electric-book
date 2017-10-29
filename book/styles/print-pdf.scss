@@ -54,7 +54,7 @@ $color-highlight: #ffd54d;
 // Options for color profile:
 // - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
 // - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
-// Add other ICC profiles to /assets/profiles
+// Add other ICC profiles to /_tools/profiles
 $pdf-profile: "PDF/X-1a:2001";
 $color-profile: "PSOcoated_v3.icc";
 $black-ink: true; // true or rich (true for pure black or rich for rich black)
@@ -64,13 +64,14 @@ $black-ink: true; // true or rich (true for pure black or rich for rich black)
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-// Using prince-no-fallback triggers a warning if any glyphs are not found
-// in the specified font, instead of swithching to another one.
+// Using prince-no-fallback triggers a warning and aborts PDF creation
+// if any glyphs are not found in the specified font, instead of switching to another one.
+// This is recommended for books where perfect reproduction among users is important.
 $font-text-main: "Crimson", prince-no-fallback;
 $font-text-secondary: "Roboto Condensed", prince-no-fallback;
 $font-display-main: "Roboto Condensed", prince-no-fallback;
 $font-display-secondary: "Crimson", prince-no-fallback;
-$font-code: "Inconsolata", prince-no-fallback;
+$font-code: "Ubuntu Mono", prince-no-fallback;
 
 // Finally, we set variables related to text flow.
 $font-size-default: 11pt;
@@ -192,6 +193,10 @@ $highlight-loosened: inherit;
 // Reset PrinceXML CSS
 $print-css-reset: true;
 
+// ---------------------------
+// Add default font-face rules
+$print-font-faces: true;
+
 // --------------------------------------------
 // Page setup and control, avoid changing these
 $print-pdf-view: true; // Sets the default initial view on PDFs
@@ -241,8 +246,10 @@ $print-page-headers-footers-style: true; // Sets styling for headers and footers
 // ------------
 
 // Add @font-face rules for fonts you specify here.
-// Add the actual font files to `../fonts`
-// For snippets, try https://github.com/arthurattwell/font-faces
+// Add the actual font files to `../fonts` or `../../assets/fonts`.
+// For snippets, try https://github.com/arthurattwell/font-faces.
+// By default, a print-font-faces partial will include rules
+// for Crimson, Source Sans Pro, and Ubuntu Mono.
 
 // -------------
 // Master theme

@@ -4,12 +4,13 @@ $print-page-headers-footers-content: true !default;
   // This partial sets page header and footer content.
   // It sets separate content for .frontmatter and .chapter pages.
 
-  // Assign a string to the body title attribute.
-  // In markdown, this is set with header: in a file's YAML frontmatter.
+  // Assign a string to the body data-title attribute.
+  // In markdown, this is set with header: in a file's YAML frontmatter,
+  // and falls back to the page title.
 
   body {
     string-set:
-      page-header attr(title);
+      page-header attr(data-header);
   }
 
   // Assign strings to use in headers and footers for each level of heading (h1-h6),
@@ -18,7 +19,7 @@ $print-page-headers-footers-content: true !default;
   // h1 also sets the string for h2, in case there is no h2 on the page yet.
   //
   // Note string-set lets us define multiple values, which can be used as fallbacks.
-  // Unlike CSS overrides, the first string is not overriden by later strings.
+  // Like font-family settings, later strings are fallbacks for earlier strings.
   h1 { 
     string-set: 
       h1-text content(),

@@ -1,27 +1,27 @@
-########
-# SERIES
-########
+#########
+# PROJECT
+#########
 
-# Replace the values here with your series information.
-series:
-  # The name of the organisation or entity that owns this series
+# Replace the values here with your project` information.
+project:
+  # The name of the organisation or entity that owns this project
   organisation: "Electric Book Works"
   # A live web address for the organisation
   url: "http://electricbook.works/"
   # The default contact email address
   email: "support@electricbook.works"
-  # The name of the series of books in this folder.
+  # The name of the project of books in this folder.
   name: "Electric Book"
-  # A one-liner about this series. Useful for Open Graph metadata.
+  # A one-liner about this project. Useful for Open Graph metadata.
   description: "Books created with the Electric Book workflow"
-  # An image in /assets that stands for the series
+  # An image in /assets that stands for the project
   image: "publisher-logo.jpg"
-  # For web navigation, the label for links to  the series homepage
+  # For web navigation, the label for links to the project homepage
   # For English sites, you can leave this as "Home".
   home-label: "Home"
   # For web navigation, the label for the navigation menu
   nav-label: "Contents"
-  # Footer text for the series
+  # Footer text for the project
   footer: "Built with the [Electric Book](http://electricbook.works)"
   # For web search, the "placeholder" text while the search is running
   search-placeholder: "Searching..."

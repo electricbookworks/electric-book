@@ -18,6 +18,10 @@ SET baseurl=
 SET location=
 SET firstfile=
 set epubIncludeMathJax=
+set print-pdf-mathjax=
+set screen-pdf-mathjax=
+set webmathjax=
+set appmathjax=
 
 :: Ask what we're going to be doing.
 ECHO Electric Book options
@@ -522,7 +526,7 @@ SET /p process=Enter a number and hit return.
     echo Compressing files...
     :: Uses Zip 3.0: http://www.info-zip.org/Zip.html
     :: Temporarily put Zip in the PATH
-    PATH=%PATH%;%location%_utils\zip
+    PATH=%PATH%;%location%_tools\zip
     :: mimetype: create zip, no compression, no extra fields
     zip --compression-method store -0 -X --quiet "%location%_output/%epubFileName%.zip" mimetype
     :: everything else: append to the zip with default compression

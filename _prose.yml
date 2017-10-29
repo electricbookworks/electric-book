@@ -16,13 +16,18 @@ prose:
     - _prose.yml
     - Gemfile
     - Gemfile.lock
+    - CNAME
+    - /_app
+    - /_docs
+    - /_epub
     - /_configs
-    - /_layouts
-    - /_includes
-    - /_site
     - /_html
-    - /_sass
+    - /_includes
+    - /_layouts
     - /_output
+    - /_sass
+    - /_site
+    - /_tools
     - /assets
     - /node_modules
     - eslint.json
@@ -48,6 +53,13 @@ prose:
     - /*/run-mac.command
     - /*/run-windows.bat
     - /*/*/file-list
+    - /*/images
+    - /*/fonts
+    - /*/package.opf
+    - /*/*/images
+    - /*/*/fonts
+    - /*/*/package.opf
+    - /*/*/*/file-list
   media: "media"
   metadata:
     "":

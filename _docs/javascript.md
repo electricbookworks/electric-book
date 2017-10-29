@@ -13,7 +13,7 @@ To add them just before the `</body>` tag, add `<script>` tags to `_includes/end
 
 You can also link to remote scripts here, without the need to place the actual scripts in the `js` folder.
 
-Keep in mind that anything you add to `head-elements` will be added to all books in the series folder, and to all their formats.
+Keep in mind that anything you add to `head-elements` will be added to all books in the project folder, and to all their formats.
 
 ## Limiting scripts by book or format
 

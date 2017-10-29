@@ -14,7 +14,7 @@ https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-j
 {% include metadata %}
 
 {% comment %}If this is neither a text directory (i.e. in a book) nor a docs page,
-such as the home page or series search page...{% endcomment %}
+such as the home page or project search page...{% endcomment %}
 {% if is-book-subdirectory != true and is-docs-page != true %}
 
   {% comment %}Get a list of all the pages we've output to check against{% endcomment %}

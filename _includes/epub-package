@@ -19,9 +19,9 @@
         <dc:title id="subtitle">{{ subtitle }}</dc:title>
         <meta refines="#subtitle" property="title-type">subtitle</meta>
     {% endif %}
-    {% if series-name and series-name != "" %}
-        <dc:title id="series-name">{{ series-name }}</dc:title>
-        <meta refines="#series-name" property="title-type">collection</meta>
+    {% if project-name and project-name != "" %}
+        <dc:title id="project-name">{{ project-name }}</dc:title>
+        <meta refines="#project-name" property="title-type">collection</meta>
     {% endif %}
     {% if publisher and publisher != "" %}
         <dc:publisher>{{ publisher }}</dc:publisher>
