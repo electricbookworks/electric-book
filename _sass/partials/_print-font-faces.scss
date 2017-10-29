@@ -1,0 +1,127 @@
+$print-font-faces: true !default;
+@if $print-font-faces {
+
+    // Crimson https://github.com/skosch/Crimson
+    @font-face {
+        font-family: "Crimson";
+        src: url(../../assets/fonts/Crimson-Roman.otf);
+    }
+    @font-face {
+        font-family: "Crimson";
+        src: url(../../assets/fonts/Crimson-Italic.otf);
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson";
+        src: url(../../assets/fonts/Crimson-Bold.otf);
+        font-weight: bold;
+    }
+    @font-face {
+        font-family: "Crimson";
+        src: url(../../assets/fonts/Crimson-BoldItalic.otf);
+        font-weight: bold;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson";
+        src: url(../../assets/fonts/Crimson-Semibold.otf);
+        font-weight: 600;
+    }
+    @font-face {
+        font-family: "Crimson";
+        src: url(../../assets/fonts/Crimson-SemiboldItalic.otf);
+        font-weight: 600;
+        font-style: italic;
+    }
+
+    // Source Sans Pro https://www.google.com/fonts/specimen/Source+Sans+Pro
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-Black.ttf);
+        font-weight: 900;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-BlackItalic.ttf);
+        font-weight: 900;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-Bold.ttf);
+        font-weight: 700;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-BoldItalic.ttf);
+        font-weight: 700;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-ExtraLight.ttf);
+        font-weight: 200;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-ExtraLightItalic.ttf);
+        font-weight: 200;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-Italic.ttf);
+        font-weight: 400;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-Light.ttf);
+        font-weight: 300;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-LightItalic.ttf);
+        font-weight: 300;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-Regular.ttf);
+        font-weight: 400;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-Semibold.ttf);
+        font-weight: 600;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(../../assets/fonts/SourceSansPro-SemiboldItalic.ttf);
+        font-weight: 600;
+        font-style: italic;
+    }
+
+    // Ubuntu Mono http://font.ubuntu.com/
+    @font-face {
+        font-family: "Ubuntu Mono";
+        src: url(../../assets/fonts/UbuntuMono-R.ttf);
+    }
+    @font-face {
+        font-family: "Ubuntu Mono";
+        src: url(../../assets/fonts/UbuntuMono-I.ttf);
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Ubuntu Mono";
+        src: url(../../assets/fonts/UbuntuMono-B.ttf);
+        font-weight: bold;
+    }
+    @font-face {
+        font-family: "Ubuntu Mono";
+        src: url(../../assets/fonts/UbuntuMono-BI.ttf);
+        font-weight: bold;
+        font-style: italic;
+    }
+
+}
