@@ -5,13 +5,13 @@ layout: min
 {% include metadata %}
 
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="{{ series-app-id }}" version="{{ series-version }}" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>{{ series-name }}</name>
+<widget id="{{ project-app-id }}" version="{{ project-version }}" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>{{ project-name }}</name>
     <description>
-        {{ series-description }}
+        {{ project-description }}
     </description>
     <author email="team@fireandlion.com" href="https://fireandlion.com/">
-        {{ series-organisation }}
+        {{ project-organisation }}
     </author>
     <content src="index.html" />
     <icon src="res/icon.png" />

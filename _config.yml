@@ -5,7 +5,7 @@
 # UPDATE THESE SETTINGS ON SETUP
 # ------------------------------
 
-# The primary language used in this series. You can set the language for each book individually below at 'defaults'. 
+# The primary language used in this project. You can set the language for each book individually below at 'defaults'. 
 # To understand what language tags to use, read: http://www.w3.org/International/articles/language-tags/ 
 # For the registry of tags: http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry 
 # Useful lookup tool: http://r12a.github.io/apps/subtags/
@@ -48,7 +48,7 @@ nav-source: nav
 # so this is off (false) by default. Change to true to load MathJax.
 # See http://docs.mathjax.org/en/latest/configuration.html for details.
 # MathJax scripts are loaded by mathjax-config include, where you can also
-# configure MathJax for your series. For MathJax font choices, see
+# configure MathJax for your project. For MathJax font choices, see
 # http://docs.mathjax.org/en/latest/font-support.html
 # This font can be overridden per page by adding mathjax-font: "" to page frontmatter YAML.
 # To use MathJax in PDF output, you must have PhantomJS installed: http://phantomjs.org
@@ -58,6 +58,8 @@ mathjax-font: "Gyre-Pagella"
 # Documentation is built into the Electric Book template.
 # These docs build along with your books, so they are available
 # as you work. To turn off the docs, change output to false.
+# The app and epub collections are off by default, and
+# turned on by those formats' _config files.
 collections:
   docs:
     output: true
@@ -161,7 +163,7 @@ sass:
 # Store only site configurations here, and book metadata (title, author, ISBNs) in _data/meta.yml
 defaults: 
   -
-    scope: # Sets default page frontmatter for all files in this series (an empty string "" for path means all files).
+    scope: # Sets default page frontmatter for all files in this project (an empty string "" for path means all files).
       path: ""
     values:
       layout: "default"

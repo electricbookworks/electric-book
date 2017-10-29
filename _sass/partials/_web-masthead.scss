@@ -25,9 +25,9 @@ $web-masthead: true !default;
             li {
                 display: inline-block;
                 margin: 0 0.25em 0 0;
-                // The divider between series and book title
+                // The divider between project and book title
                 // Should not show if there is only one work,
-                // and therefore no series title in masthead.
+                // and therefore no project title in masthead.
                 &:after {
                     content: "\2044"; // 2044 is a fraction slash
                     color: $masthead-text-color;
@@ -44,7 +44,7 @@ $web-masthead: true !default;
                     &:nth-of-type(2):before {
                         content: normal;
                     }
-                    &.masthead-series-name {
+                    &.masthead-project-name {
                         display: none;
                     }
                 }
@@ -52,16 +52,16 @@ $web-masthead: true !default;
         }
 
         // Possible future styles for these classes.
-        .masthead-series-name {}
+        .masthead-project-name {}
         .masthead-book-title {}
 
     } // .masthead
 
     // ...unless it's the home page, and we're on a small screen,
-    // in which case do show the series name.
+    // in which case do show the project name.
     @media only screen
     and (max-width: $max-width-default) {
-        body.home .masthead li.masthead-series-name {
+        body.home .masthead li.masthead-project-name {
             display: inline-block !important;
         }
     }

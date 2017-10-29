@@ -5,7 +5,7 @@ See https://formspree.io for how to initialise.
 
 {% include metadata %}
 
-<form action="https://formspree.io/{{ series-email }}"
+<form action="https://formspree.io/{{ project-email }}"
       method="POST">
     <input type="text" name="name" placeholder="Name">
     <input type="email" name="_replyto" placeholder="Email address">
