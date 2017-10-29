@@ -4,6 +4,8 @@
 
 * Keep build tools in `_tools`
 * Change term `series` to broader `project`
+* Embed fonts and prevent risk of reflow from PDF font fallbacks
+* Fix page-header functionality for running heads
 
 ## 0.9.0
 
