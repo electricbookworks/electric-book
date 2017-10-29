@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.0
+
+* Keep build tools in `_tools`
+
 ## 0.9.0
 
 * Various updates to documentation
