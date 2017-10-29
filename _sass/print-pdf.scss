@@ -60,11 +60,14 @@ $black-ink: true !default; // true or rich (true for pure black or rich for rich
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson", serif !default;
-$font-text-secondary: "Roboto Condensed", sans-serif !default;
-$font-display-main: "Roboto Condensed", sans-serif !default;
-$font-display-secondary: "Crimson", serif !default;
-$font-code: "Inconsolata", monospace !default;
+// Using prince-no-fallback triggers a warning and aborts PDF creation
+// if any glyphs are not found in the specified font, instead of switching to another one.
+// This is recommended for books where perfect reproduction among users is important.
+$font-text-main: "Crimson", prince-no-fallback !default;
+$font-text-secondary: "Source Sans Pro", prince-no-fallback !default;
+$font-display-main: "Source Sans Pro", prince-no-fallback !default;
+$font-display-secondary: "Crimson", prince-no-fallback !default;
+$font-code: "Ubuntu Mono", prince-no-fallback !default;
 
 // Finally, we set variables related to text flow.
 $font-size-default: 11pt !default;
@@ -186,6 +189,10 @@ $highlight-loosened: inherit !default;
 // Reset PrinceXML CSS
 $print-css-reset: true !default;
 
+// ---------------------------
+// Add default font-face rules
+$print-font-faces: true !default;
+
 // --------------------------------------------
 // Page setup and control, avoid changing these
 $print-pdf-view: true !default; // Sets the default initial view on PDFs
@@ -234,7 +241,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
-// Import fonts from book-specific CSS.
+// Default font-face rules added by print-font-faces partial below.
 
 // ---------------------
 // Import theme partials
@@ -243,6 +250,10 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 // ---------------------
 // Reset PrinceXML CSS
 @import "partials/print-css-reset";
+
+// ---------------------
+// Add font-face rules
+@import "partials/print-font-faces";
 
 // --------------------------------------------
 // Page setup and control, avoid changing these

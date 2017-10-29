@@ -133,8 +133,9 @@ $epub-reset-sequences: true; //
 // Import fonts
 // ------------
 
-// Add @font-face rules for fonts you specify here.
-// Add the actual font files to `../fonts`
+// If you're embedding epub fonts, add @font-face rules
+// for fonts you specify here.
+// Add the actual font files to `_epub/fonts`.
 // For snippets, try https://github.com/arthurattwell/font-faces
 
 // -------------
