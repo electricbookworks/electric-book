@@ -18,7 +18,7 @@
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}>
 <div id="wrapper">
 
 
@@ -40,7 +40,7 @@
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %} data-title="{{ page.title }}"{% if page.header %} data-header="{{ page.header }}{% endif %}">
 <div id="wrapper">
 
 
