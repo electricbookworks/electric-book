@@ -1,7 +1,7 @@
 {% comment %}
 The search form.
 Include this file in HTML with {% include search %}.
-Searches all books in the series.
+Searches all books in the project.
 {% endcomment %}
 
 {% include metadata %}

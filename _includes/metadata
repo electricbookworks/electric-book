@@ -1,29 +1,31 @@
 {% comment %}
-Loop through meta.yml and return this book's metadata as a series of Liquid variables
-that we can use on the page as output variables, e.g. {{ title }} for the current book's title.
+Loop through meta.yml and return this book's metadata
+as a set of Liquid variables that we can use on pages
+as output tags, e.g. {{ title }} for the current
+book's title.
 {% endcomment %}
 
 {% capture output-format %}{{ site.output }}{% endcapture %}
 
 {% comment %}
-Assign series information to variables. This is the same for all books in the series.
+Assign project information to variables. This is the same for all books in the project.
 {% endcomment %}
 
-{% capture series-organisation %}{{ site.data.meta.series.organisation }}{% endcapture %}
-{% capture series-url %}{{ site.data.meta.series.url }}{% endcapture %}
-{% capture series-email %}{{ site.data.meta.series.email }}{% endcapture %}
-{% capture series-name %}{{ site.data.meta.series.name }}{% endcapture %}
-{% capture series-description %}{{ site.data.meta.series.description }}{% endcapture %}
-{% capture series-image %}{{ site.data.meta.series.image }}{% endcapture %}
-{% capture series-home-label %}{{ site.data.meta.series.home-label }}{% endcapture %}
-{% capture series-nav-label %}{{ site.data.meta.series.nav-label }}{% endcapture %}
-{% capture series-footer %}{{ site.data.meta.series.footer }}{% endcapture %}
-{% capture series-search-placeholder %}{{ site.data.meta.series.search-placeholder }}{% endcapture %}
-{% capture series-app-id %}{{ site.data.meta.series.app-id }}{% endcapture %}
-{% capture series-version %}{{ site.data.meta.series.version }}{% endcapture %}
+{% capture project-organisation %}{{ site.data.meta.project.organisation }}{% endcapture %}
+{% capture project-url %}{{ site.data.meta.project.url }}{% endcapture %}
+{% capture project-email %}{{ site.data.meta.project.email }}{% endcapture %}
+{% capture project-name %}{{ site.data.meta.project.name }}{% endcapture %}
+{% capture project-description %}{{ site.data.meta.project.description }}{% endcapture %}
+{% capture project-image %}{{ site.data.meta.project.image }}{% endcapture %}
+{% capture project-home-label %}{{ site.data.meta.project.home-label }}{% endcapture %}
+{% capture project-nav-label %}{{ site.data.meta.project.nav-label }}{% endcapture %}
+{% capture project-footer %}{{ site.data.meta.project.footer }}{% endcapture %}
+{% capture project-search-placeholder %}{{ site.data.meta.project.search-placeholder }}{% endcapture %}
+{% capture project-app-id %}{{ site.data.meta.project.app-id }}{% endcapture %}
+{% capture project-version %}{{ site.data.meta.project.version }}{% endcapture %}
 
 {% comment %}
-It's useful to know how many books are in this series
+It's useful to know how many books are in this project
 {% endcomment %}
 
 {% assign number-of-works = site.data.meta.works | size %}
@@ -443,11 +445,11 @@ override any metadata set for that variant.{% endcomment %}
 {% endif %}
 
 {% comment %}
-Check if we're on the series homepage:
+Check if we're on the project homepage:
 * Get a slugified version of the page URL, without hyphens, to compare to
   a slugified version of the baseurl. We slugify to remove slashes, which
   may differ between the two.
-* Then we can compare them to test if we're on the series home page.
+* Then we can compare them to test if we're on the project home page.
 * If we are, they will match. Hopefully.
 {% endcomment %}
 {% capture pageurl-slug %}{{ site.baseurl | slugify | remove: "-" }}{{ page.url | slugify | remove: "-" }}{% endcapture %}
@@ -461,11 +463,11 @@ Check if we're on the series homepage:
 {% comment %}
 Check if we're on the search pages.
 {% endcomment %}
-{% capture series-search-url %}{{ site.baseurl }}/search.html{% endcapture %}
+{% capture project-search-url %}{{ site.baseurl }}/search.html{% endcapture %}
 {% unless is-homepage %}
     {% capture book-search-url %}{{ site.baseurl }}/{{ book-directory }}/text/search.html{% endcapture %}
 {% endunless %}
-{% capture series-search-url-slug %}{{ series-search-url | slugify | remove: "-" }}{% endcapture %}
+{% capture project-search-url-slug %}{{ project-search-url | slugify | remove: "-" }}{% endcapture %}
 {% capture book-search-url-slug %}{{ book-search-url | slugify | remove: "-" }}{% endcapture %}
 
 {% assign is-search = false %}
@@ -473,9 +475,9 @@ Check if we're on the search pages.
     {% assign is-search = true %}
 {% endif %}
 
-{% assign is-series-search = false %}
-{% if pageurl-slug == series-search-url-slug %}
-    {% assign is-series-search = true %}
+{% assign is-project-search = false %}
+{% if pageurl-slug == project-search-url-slug %}
+    {% assign is-project-search = true %}
 {% endif %}
 
 {% assign is-book-search = false %}
@@ -484,11 +486,11 @@ Check if we're on the search pages.
 {% endif %}
 
 {% comment %}
-On homepage and series-search we are not in a book-directory,
+On homepage and project-search we are not in a book-directory,
 so make the book-directory variable nil. If we don't,
 then on these pages any links that use {{ book-directory }} will be broken
 {% endcomment %}
-{% if is-homepage == true or is-series-search == true %}
+{% if is-homepage == true or is-project-search == true %}
     {% assign book-directory = nil %}
 {% endif %}
 

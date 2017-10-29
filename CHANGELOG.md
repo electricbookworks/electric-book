@@ -3,6 +3,7 @@
 ## 0.10.0
 
 * Keep build tools in `_tools`
+* Change term `series` to broader `project`
 
 ## 0.9.0
 

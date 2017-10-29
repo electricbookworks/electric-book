@@ -35,25 +35,22 @@ To use the workflow on your own machine, you must have the following software in
 
 ## Folder (repo) structure
 
-A workflow folder (often tracked in Git as a repo) usually contains a series of related books. Its folders and files follow the [standard Jekyll structure](http://jekyllrb.com/docs/structure/). We then put each book's content in its own folder. In the template, the first book folder is simply called `book`.
-
-> Pro tip: You could also store several series in one repo, each series with its own set of Jekyll files, and a single `_prose.yml` configuration in the root folder for all series subfolders. This is only useful if you don't need a live staging site or previews with GitHub Pages, since each Jekyll setup must be in its own repo for GitHub Pages to work out of the box.
-{:.box}
+A workflow folder (often tracked in Git as a repo) usually contains a set of related books. Its folders and files follow the [standard Jekyll structure](http://jekyllrb.com/docs/structure/). We then put each book's content in its own folder. In the template, the first book folder is simply called `book`.
 
 ## Using the template
 
-The Electric Book repo (folder) is ready to use for a series of one or more books. In short, to get up and running, see the [Quick Start guide](0-9-quick-start.html).
+The Electric Book repo (folder) is ready to use for a set of one or more books. In short, to get up and running, see the [Quick Start guide](0-9-quick-start.html).
 
-Now, let's get into some more detail about how it all works. There are several folders and files in the series template repo:
+Now, let's get into some more detail about how it all works. There are several folders and files in the Electric Book template, including:
 
 *   `_config.yml`: a file for setting configuration options for Jekyll, which will compile your book for output. There are several other smaller config files you can ignore. They are for changing specific config settings on output.
 *   `_prose.yml`: configuration settings for using [prose.io](http://prose.io) for online book editing (generally, you won't have to edit this file).
-*   `book`: a folder for a book's content, stored here in a series of markdown files
+*   `book`: a folder for a book's content, stored in markdown files
 *   `_data`: a folder for information about your books (aka metadata).
 *   `_includes`: snippets of HTML for Jekyll (you won't have to open this folder).
 *   `_site`: where Jekyll will generate the HTML versions of your books.
 *   `_output`: the folder where our output scripts will save your PDFs.
-*   `index.md`: the home page of your series when served as a website.
+*   `index.md`: the home page of your project when served as a website.
 *   various `.bat`, `.command` and `.sh` scripts for quickly generating books in different formats on various operating systems.
 
 Let's explain some of these in more detail.
@@ -69,15 +66,15 @@ That gem provides the basic design of your books. A theme is a collection of fil
 
 The process of setting up a new book is covered briefly in our [quick-start section](0-9-quick-start.html#quick-new-book-setup). Here is more detail.
 
-To create a new book in a new series:
+To create a new book in a new project:
 
-1. The repo (or series folder) can hold one book or many, like a series of books that share similar metadata or features (e.g. they're all by the same author). Make a copy of the folder and, if you like, rename it for your series. E.g. `my-sci-fi`.
+1. The repo (or project folder) can hold one book or many, like a series of books that share similar metadata or features (e.g. they're all by the same author). Make a copy of the folder and, if you like, rename it for your project. E.g. `my-sci-fi`.
 1. Inside `my-sci-fi`, open and edit these three files:
     *   `_config.yml`: Edit the values there for your Jekyll setup. The comments will guide you.
     *   `index.md`: Replace our template text with your own. Usually, a link to each book is useful, e.g. `[Space Potatoes](space-potatoes)`.
-    *   `README.md`: Replace our template text with any notes your collaborators might need to know about your series. (The README file is usually only read in the context of editing the files in your folder/repo.)
+    *   `README.md`: Replace our template text with any notes your collaborators might need to know about your project. (The README file is usually only read in the context of editing the files in your folder/repo.)
 1.  Optionally, rename the `book` folder with a one-word, lowercase version of your book's title (e.g. `space-potatoes`). Use only lowercase letters and no spaces. If you're creating more than one book, make a folder for each book.
-1.	In `_data`, edit the `meta.yml` file, filling in your series info and info about at least your first book.
+1.	In `_data`, edit the `meta.yml` file, filling in your project info and info about at least your first book.
 1.  Inside a book's `text` folder, add a markdown file for each piece of your book, e.g. one file per chapter. Our template contains files we consider minimum requirements for most books: a cover, a title page, a copyright page, a contents page, and a chapter.
 1.  Inside each book's folder, store images in the `images` folder. Add a `cover.jpg` image of your book's front cover there, too.
 1. In each book's `styles` folder, edit the values in `print-pdf.scss`, `screen-pdf.scss`, `web.scss` and `epub.scss`.
@@ -183,6 +180,6 @@ Name each book's markdown files in perfectly alphabetical order. We recommend us
 
 Alongside the content files in a book's folder is an `images` folder, for images that belong to that book only.
 
-A book's folder should only ever need to contain markdown files and images. If you're embedding other kinds of media you could add folders for that alongside `images`. We don't recommend sharing images or media between books, in case you want to move a book from one series to another later. (So, for example, copy the publisher logo into each book's `images` folder separately.)
+A book's folder should only ever need to contain markdown files and images. If you're embedding other kinds of media you could add folders for that alongside `images`. We don't recommend sharing images or media between books, in case you want to move a book from one project to another later. (So, for example, copy the publisher logo into each book's `images` folder separately.)
 
-If your series home page requires images, you will need to create an `images` folder for that in the main series folder.
+If your project home page requires images, keep those in `/assets/images`, so that you can link to them from any page.

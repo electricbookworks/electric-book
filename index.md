@@ -18,13 +18,13 @@ With the Electric Book workflow, you store your books in plain text with great v
 For support, mail [support@electricbook.works](mailto:support@electricbook.works). The Electric Book is maintained by [Fire and Lion](http://fireandlion.com), who also provide paid priority support plans for publishers.
 {:#support}
 
-<!-- Remove these comment tags to activate a series home page for your book project
+<!-- Remove these comment tags to activate a project home page for your book project
 
 {% include metadata %}
 
-# {{ series-name }}
+# {{ project-name }}
 
-{{ series-description }}
+{{ project-description }}
 
 {% for book in site.data.meta.works %}
 *[{{ book.title }}]({{ book.directory }}/text/{{ book.products.web.start-page }}.html)*
