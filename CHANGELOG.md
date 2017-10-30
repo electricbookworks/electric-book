@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.10.1
+
+* Fix print font defaults
+* Match EBM colours
+
 ## 0.10.0
 
 * Keep build tools in `_tools`

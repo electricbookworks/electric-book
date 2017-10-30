@@ -55,9 +55,9 @@ $color-text-secondary: #222222 !default;
 $color-background: white !default;
 $color-light: #e0e0e0 !default;
 $color-mid: #9c9c9c !default;
-$color-accent: #000000 !default;
+$color-accent: #009E7F !default;
 $color-links: #5f738c !default;
-$color-buttons: #5f738c !default;
+$color-buttons: $color-accent !default;
 $color-buttons-hover: darken( $color-buttons, 20% ) !default;
 $color-highlight: #ffd54d !default;
 
@@ -102,20 +102,20 @@ $nav-bar-children-prompt: "+" !default;
 $nav-bar-children-prompt-hide: "\2212" !default; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true !default;
 $nav-bar-width: 15em !default;
-$nav-bar-fixed: false !default; // fixed is not fully supported on many mobile browsers
-$nav-bar-label-color: $color-mid !default;
+$nav-bar-fixed: true !default; // fixed is not fully supported on many mobile browsers
+$nav-bar-label-color: $color-light !default;
 $nav-bar-label-background-color: $masthead-background-color !default;
 $nav-bar-border-color: $color-light !default;
 $nav-bar-background-color: white !default;
 $nav-bar-search-background-color: white !default;
 $nav-bar-parent-background-color: white !default;
 $nav-bar-parent-text-color: black !default;
-$nav-bar-parent-hover-color: #4f89d2 !default;
+$nav-bar-parent-hover-color: $color-accent !default;
 $nav-bar-parent-text-hover-color: white !default;
 $nav-bar-children-prompt-color: $color-mid !default;
 $nav-bar-child-background-color: $color-light !default;
 $nav-bar-child-text-color: black !default;
-$nav-bar-child-hover-color: #4f89d2 !default;
+$nav-bar-child-hover-color: $color-accent !default;
 $nav-bar-child-text-hover-color: white !default;
 
 // ---------------------------------
