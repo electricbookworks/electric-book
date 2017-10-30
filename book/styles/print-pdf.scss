@@ -68,8 +68,8 @@ $black-ink: true; // true or rich (true for pure black or rich for rich black)
 // if any glyphs are not found in the specified font, instead of switching to another one.
 // This is recommended for books where perfect reproduction among users is important.
 $font-text-main: "Crimson", prince-no-fallback;
-$font-text-secondary: "Roboto Condensed", prince-no-fallback;
-$font-display-main: "Roboto Condensed", prince-no-fallback;
+$font-text-secondary: "Source Sans Pro", prince-no-fallback;
+$font-display-main: "Source Sans Pro", prince-no-fallback;
 $font-display-secondary: "Crimson", prince-no-fallback;
 $font-code: "Ubuntu Mono", prince-no-fallback;
 
