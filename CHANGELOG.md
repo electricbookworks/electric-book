@@ -1,9 +1,14 @@
 # Changelog
 
-## 0.10.1
+## 0.10.1 (in progress)
 
 * Fix print font defaults
 * Match EBM colours
+* Markdownify breadcrumbs
+* Update Source Sans Pro
+* Add Sass variables to make headers and footers easier to style
+* Improved docs
+* 
 
 ## 0.10.0
 
