@@ -13,8 +13,11 @@ $print-start-on-recto-or-verso: true !default;
     .epigraph-page, 
     .contents-page, 
     .part-page,
-    .chapter { 
-    	page-break-before: right;
+    .chapter,
+    .page-1,
+    // Need to make this very specific to override .chapter setting below
+    .chapter.page-1 { 
+        page-break-before: right;
     }
 
     // But they can be overriden by the $start-on variable
@@ -25,7 +28,7 @@ $print-start-on-recto-or-verso: true !default;
     .part-page,
     .chapter 
     { 
-    	page-break-before: $start-on;
+        page-break-before: $start-on;
     }
 
     // Also see:
