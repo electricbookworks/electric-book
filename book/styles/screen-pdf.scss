@@ -180,6 +180,20 @@ $recto-bottom-right-frontmatter: normal;
 $recto-bottom-left-corner-frontmatter: normal;
 $recto-bottom-right-corner-frontmatter: normal;
 
+// Set styles for headers and footers
+$header-font: $font-text-secondary;
+$footer-font: $font-text-secondary;
+$header-font-size: $font-size-default * $font-size-smaller;
+$footer-font-size: $font-size-default * $font-size-smaller;
+$header-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
+$footer-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
+$header-letter-spacing: 0.1em;
+$header-letter-spacing: 0.1em;
+$header-space-from-top: $margin-top / 2;
+$footer-space-from-bottom: $margin-bottom / 2;
+$header-text-align: center;
+$footer-text-align: center;
+
 // Special highlights for temporary debugging/viewing:
 // Specify a colour for highlighting; use 'inherit' for none.
 $highlight-tightened: inherit;

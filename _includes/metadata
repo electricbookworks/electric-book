@@ -532,6 +532,7 @@ the first book-directory listed in meta.yml{% endcomment %}
 If we're on the web, we need a trailing slash on the baseurl, to
 be sure we're pointing to the webserver root.{% endcomment %}
 {% if path-to-root-directory == "" %}
+{% assign is-root-directory = true %}
 {% capture path-to-root-directory %}{{ site.baseurl }}{% endcapture %}
     {% if site.output == "web" %}
         {% capture path-to-root-directory %}{{ site.baseurl }}/{% endcapture %}

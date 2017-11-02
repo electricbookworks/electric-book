@@ -1,19 +1,28 @@
 // Mixins, which cannot be inside Sass control directives (the @if section below).
 @mixin header-style() {
-  font-family: $font-text-secondary;
-  font-size: $font-size-default * $font-size-smaller;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-family: $header-font;
+  font-size: $header-font-size;
+  text-transform: $header-case;
+  letter-spacing: $header-letter-spacing;
 }
 
 @mixin header-position() {
   vertical-align: top;
-  margin-top: $margin-top / 2;
+  margin-top: $header-space-from-top;
+  text-align: $header-text-align;
+}
+
+@mixin footer-style() {
+  font-family: $footer-font;
+  font-size: $footer-font-size;
+  text-transform: $footer-case;
+  letter-spacing: $footer-letter-spacing;
 }
 
 @mixin footer-position() {
   vertical-align: bottom;
-  margin-bottom: $margin-bottom / 2;
+  margin-bottom: $footer-space-from-bottom;
+  text-align: $footer-text-align;
 }
 
 $print-page-headers-footers-style: true !default;

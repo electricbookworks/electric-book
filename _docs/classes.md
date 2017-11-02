@@ -36,6 +36,7 @@ Use these classes in your markdown to create specific formatting effects.
 | Hide from print | `.non-printing` | Block or inline | Hides the element from print output. Useful for things like clickable buttons, which are only intended for screens, not paper. | No
 | Keep together | `.keep-together` | Block | Prevents an element from breaking across pages. (E.g. you want to keep a short list on the same page.) | No
 | Keep with next | `.keep-with-next` | Block | Prevents a page break between this element and the next one. | No
+| Letter | `.letter` | Block | Formats a blockquote as a letter, by spacing the paragraphs in it. | No
 | Logo image | `.logo` | Block | Used for making images small, especially for small logos in text like on acknowledgements pages. | No
 | Page break after | `.page-break-after` | Block | Creates a page break after the element. | No
 | Page break after, end of book | `.page-break-after-right` | Block | When applied to the very last element in the book, ensures a blank verso for an even-numbered page extent. | No
