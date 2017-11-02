@@ -17,7 +17,7 @@ The crumbs-array is created empty in _includes/metadata.
             {% endif %}
                 {{ item.label }}{% if item.file %}</a>{% endif %}
         {% endcapture %}
-        {% capture label %}{{ label | strip_newlines | strip }}{% endcapture %}
+        {% capture label %}{{ label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines | strip }}{% endcapture %}
 
         {% assign crumbs-array = crumbs-array | push: label %}
         {% assign children = item.children %}
@@ -25,7 +25,7 @@ The crumbs-array is created empty in _includes/metadata.
             {% for crumb in include.crumbs-array %}
                 <li>{{ crumb }}</li>
             {% endfor %}
-            <li>{{ item.label | strip_newlines | strip }}</li>
+            <li>{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines | strip }}</li>
         {% else %}
             {% include breadcrumbs breadcrumb-tree=children crumbs-array=crumbs-array %}
         {% endif %}
