@@ -22,10 +22,12 @@ exclude:
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss
   - /*/styles/web.scss
+  - /*/styles/app.scss
   - /*/index.md
   - /*/images/print-pdf
   - /*/images/screen-pdf
   - /*/images/web
+  - /*/images/app
 # We deliberately empty the keep_files list here,
 # so that files we don't want don't end up in the epub
 # but not in the manifest.

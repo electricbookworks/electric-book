@@ -285,8 +285,12 @@ If not, just hit return."
 			# let the user know we're on it!
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML
-			bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$config"
-			# Now to aessmble the epub
+			if [ $epubmathjax = "y" ]; then
+				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,$config"
+			else
+				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$config"
+			fi
+			# Now to assemble the epub
 			echo "Assembling epub..."
 			# Check if there are fonts to include
 			echo "Checking for fonts to include..."
@@ -314,12 +318,14 @@ If not, just hit return."
 			if [ $countjs != 0 ]; then 
 				epubscripts="y"
 			fi
-			# Copy text, images, fonts, styles and package.opf to epub
+			# Copy text (files in file-list only), images, fonts, styles and package.opf to epub
 			cd _site/"$bookfolder"
 			if [ "$epubsubdirectory" = "" ]; then
-				mkdir ../epub/text && cp -a text/. ../epub/text/
+				mkdir ../epub/text && cd text && cp `cat file-list` ../../epub/text/
+				cd ..
 			else
-				mkdir ../epub/text && cp -a text/$epubsubdirectory/. ../epub/text/
+				mkdir ../epub/text && cd $epubsubdirectory/text && cp `cat file-list` ../../../epub/text/
+				cd .. && cd ..
 			fi
 			if [ -d images ]; then
 				mkdir ../epub/images && cp -a images/. ../epub/images/
@@ -330,8 +336,8 @@ If not, just hit return."
 			if [ -d styles ]; then
 				mkdir ../epub/styles && cp -a styles/. ../epub/styles/
 			fi
-			if [ -d mathjax ]; then
-				mkdir ../epub/mathjax && cp -a mathjax/. ../epub/mathjax/
+			if [ "$epubmathjax" = "y" ]; then
+				mkdir ../epub/mathjax && cp -a ../assets/js/mathjax/. ../epub/mathjax/
 			fi
 			if [ "$epubscripts" = "y" ]; then
 				mkdir ../epub/js && cp -a js/. ../epub/js/
@@ -401,7 +407,7 @@ If not, just hit return."
 			else
 				java -jar "$pathtoepubcheck"/epubcheck.jar "$bookfolder".epub
 			fi
-			# Open file browser to see epub-ready HTML files
+			# Open file browser to see epub
 			# (for Linux, this is xdg-open, not open)
 			open .
 			# Navigate back to where we started
