@@ -54,7 +54,7 @@ $color-highlight: #ffd54d;
 // Options for color profile:
 // - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
 // - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
-// Add other ICC profiles to /assets/profiles
+// Add other ICC profiles to /_tools/profiles
 $pdf-profile: "PDF/A-3b";
 $color-profile: "sRGB_v4_ICC_preference_displayclass.icc";
 $black-ink: true; // true or rich (true for pure black or rich for rich black)
@@ -64,11 +64,14 @@ $black-ink: true; // true or rich (true for pure black or rich for rich black)
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson", serif;
-$font-text-secondary: "Roboto Condensed", sans-serif;
-$font-display-main: "Roboto Condensed", sans-serif;
-$font-display-secondary: "Crimson", serif;
-$font-code: "Inconsolata", monospace;
+// Using prince-no-fallback triggers a warning and aborts PDF creation
+// if any glyphs are not found in the specified font, instead of switching to another one.
+// This is recommended for books where perfect reproduction among users is important.
+$font-text-main: "Crimson", prince-no-fallback;
+$font-text-secondary: "Source Sans Pro", prince-no-fallback;
+$font-display-main: "Source Sans Pro", prince-no-fallback;
+$font-display-secondary: "Crimson", prince-no-fallback;
+$font-code: "Ubuntu Mono", prince-no-fallback;
 
 // Finally, we set variables related to text flow.
 $font-size-default: 12pt;
@@ -80,7 +83,7 @@ $orphans: 1; // Minimum number of lines that must be left at the bottom of the f
 $widows: 1; // Minimum number of lines that must be left at the top of the second page
 $letter-spacing-text: 0em; // Default letter-spacing for p, ul, ol, dl. Set in ems, e.g. 0.01em for 10/1000s of an em.
 
-// Do you want space between paragraphs, rather than a text-indent?
+// Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false;
 
 // Buttons
@@ -89,8 +92,8 @@ $button-border-radius: 0.1em; // Roundness of button corners.
 // Hyphenation
 // Variables here apply to p, ul, ol, dl
 $hyphenation: auto; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
-$hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic". Overrides PrinceXML built-in hyphenation.
-$hyphenation-custom: add !default; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
+$hyphenation-dictionary: ""; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic". Overrides PrinceXML built-in hyphenation.
+$hyphenation-custom: add; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
 $hyphenate-after: 3; // Minimum letters on new line after hyphen
 $hyphenate-before: 3; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 2; // Preferred maximum number of consecutive lines ending with hyphens
@@ -177,6 +180,20 @@ $recto-bottom-right-frontmatter: normal;
 $recto-bottom-left-corner-frontmatter: normal;
 $recto-bottom-right-corner-frontmatter: normal;
 
+// Set styles for headers and footers
+$header-font: $font-text-secondary;
+$footer-font: $font-text-secondary;
+$header-font-size: $font-size-default * $font-size-smaller;
+$footer-font-size: $font-size-default * $font-size-smaller;
+$header-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
+$footer-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
+$header-letter-spacing: 0.1em;
+$header-letter-spacing: 0.1em;
+$header-space-from-top: $margin-top / 2;
+$footer-space-from-bottom: $margin-bottom / 2;
+$header-text-align: center;
+$footer-text-align: center;
+
 // Special highlights for temporary debugging/viewing:
 // Specify a colour for highlighting; use 'inherit' for none.
 $highlight-tightened: inherit;
@@ -189,6 +206,10 @@ $highlight-loosened: inherit;
 // ---------------------
 // Reset PrinceXML CSS
 $print-css-reset: true;
+
+// ---------------------------
+// Add default font-face rules
+$print-font-faces: true;
 
 // --------------------------------------------
 // Page setup and control, avoid changing these
@@ -223,6 +244,7 @@ $print-title-pages: true; // Half-title and title pages
 $print-copyright-page: true; // 
 $print-toc: true; // Tables of contents
 $print-cover: true; // Front-cover image for PDF ebooks
+$print-video: true;
 $print-smallcaps: true; // 
 $print-maths: true; // 
 $print-letters: true; // 
@@ -238,8 +260,10 @@ $print-page-headers-footers-style: true; // Sets styling for headers and footers
 // ------------
 
 // Add @font-face rules for fonts you specify here.
-// Add the actual font files to `../fonts`
-// For snippets, try https://github.com/arthurattwell/font-faces
+// Add the actual font files to `../fonts` or `../../assets/fonts`.
+// For snippets, try https://github.com/arthurattwell/font-faces.
+// By default, a print-font-faces partial will include rules
+// for Crimson, Source Sans Pro, and Ubuntu Mono.
 
 // -------------
 // Master theme
