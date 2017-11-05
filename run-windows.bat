@@ -446,7 +446,7 @@ SET /p process=Enter a number and hit return.
     echo Text copied.
     goto epubCopyOPF
 
-    :: Copy the contents of the original text folder
+    :: Copy the files in file-list from the original text folder
     :epubOriginalText
     cd text
     for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\epub\text\" > nul
