@@ -33,9 +33,9 @@ x  Exit
 
 Enter a number and hit enter. "
 	read process
-	##################
-	# PRINT PDF      #
-	##################
+	#############
+	# PRINT PDF #
+	#############
 	if [ "$process" = "1" ]
 		then
 		# Remember the current folder
@@ -117,9 +117,9 @@ Enter a number and hit enter. "
 		done
 		# Head back to the Electric Book options
 		process=0
-	##################
-	# SCREEN PDF     #
-	##################
+	##############
+	# SCREEN PDF #
+	##############
 	elif [ "$process" = 2 ]
 		then
 		# Remember the current folder
@@ -201,9 +201,9 @@ Enter a number and hit enter. "
 		done
 		# Head back to the Electric Book options
 		process=0
-	##################
-	# WEBSITE        #
-	##################
+	###########
+	# WEBSITE #
+	###########
 	elif [ "$process" = 3 ]
 		then
 		echo "Okay, let's make a website..."
@@ -248,9 +248,9 @@ You may need to reload the web page once this server is running."
 		done
 		# Head back to the Electric Book options
 		process=0
-	##################
-	# EPUB           #
-	##################
+	########
+	# EPUB #
+	########
 	elif [ "$process" = 4 ]
 		then
 		# Remember the current folder
@@ -342,7 +342,7 @@ You may need to reload the web page once this server is running."
 			if [ -e package.opf ]; then
 				cp package.opf ../epub/package.opf
 			fi
-		    # First, though, if they exist, remove previous .zip and .epub files that we will replace.
+			# First, though, if they exist, remove previous .zip and .epub files that we will replace.
 			echo "Removing previous zips or epubs..."
 			if [ -e "$location/_output/$bookfolder.zip" ]; then
 				rm "$location/_output/$bookfolder.zip"
@@ -388,9 +388,9 @@ You may need to reload the web page once this server is running."
 			if [ -e package.opf ]; then
 				zip --quiet "$location/_output/$bookfolder.zip" package.opf
 			fi
-	    	# Change file extension .zip to .epub
-    		cd $location/_output
-    		if [ -e "$bookfolder".zip ]; then
+			# Change file extension .zip to .epub
+			cd $location/_output
+			if [ -e "$bookfolder".zip ]; then
 				mv "$bookfolder".zip "$bookfolder".epub
 			fi
 			echo "Epub created!"
@@ -425,7 +425,7 @@ You may need to reload the web page once this server is running."
 		location=$(pwd)
 		# Encouraging message
 		# (Building iOS not available on Linux, only newish Macs)
-    	echo "Okay, let's make apps. First we'll generate the HTML, then we'll build Android and iOS apps."
+		echo "Okay, let's make apps. First we'll generate the HTML, then we'll build Android and iOS apps."
 		echo "For the build, you need to have installed:"
 		echo "- Cordova"
 		echo "- Android Studio for the Android app"
@@ -435,8 +435,8 @@ You may need to reload the web page once this server is running."
 		echo "'i' to build only the iOs app,"
 		echo "'ai' to build both Android and iOS apps, or"
 		echo "'n' or just hit enter to skip building finished apps. "
-    	appbuildgenerateapp=""
-    	read appbuildgenerateapp
+		appbuildgenerateapp=""
+		read appbuildgenerateapp
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
 		echo "Any extra config files?"
 		echo "Enter filenames (including any relative path), comma separated, no spaces. E.g."
@@ -460,52 +460,52 @@ You may need to reload the web page once this server is running."
 			else
 				bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,$config"
 			fi
-	    	# Put HTML into _site/app/www by moving everything in _site
-	    	# excluding the _site/app folder itself, into _site/app/www.
-	    	# (rsync lets us exclude, where cp does not)
-	    	# Suppress the console output.
-		    echo "Copying files to app directory..."
-		    mkdir _site/app/www
-		    rsync -r _site/. _site/app/www --exclude="/app"
-		    # Build the apps if required
-		    if [ "$appbuildgenerateapp" = "a" ]
-		    	then
-		    	echo "Building Android app..."
-		    	cd _site/app
-		    	cordova build android
-		    	cd .. && cd ..
-		    	echo "Done. Opening folder containing Android app..."
-		    	# (On Linux, this will be xdg-open, not open.)
-		    	open _site/app/platforms/android/build/outputs/apk/
-		    # Building iOS not available on Linux, only newish Macs
-		    elif [ "$appbuildgenerateapp" = "i" ]
-		    	then
-		    	echo "Building iOS app..."
-		    	cd _site/app
-		    	cordova build ios
-		    	cd .. && cd ..
-		    	echo "Done. Opening folder containing iOS app..."
-		    	# (On Linux, this will be xdg-open, not open.)
-		    	open _site/app/platforms/ios/build/outputs/
-		    elif [ "$appbuildgenerateapp" = "ai" ]
-		    	then
-		    	echo "Building Android app first, then iOS app."
-		    	echo "Building Android app..."
-		    	cordova build android
-		    	echo "Done. Opening folder containing Android app..."
-		    	# (On Linux, this will be xdg-open, not open.)
-		    	open _site/app/platforms/android/build/outputs/apk/
-		    	echo "Building iOS app..."
-		    	cordova build ios
-		    	echo "Done. Opening folder containing iOS app..."
-		    	# (On Linux, this will be xdg-open, not open.)
-		    	open _site/app/platforms/ios/build/outputs/
-		    elif [ "$appbuildgenerateapp" = "" ] || [ "$appbuildgenerateapp" = "n" ]
-		    	then
-		    	echo "Skipping building apps. Opening app-ready files..."
-		    	# (On Linux, this will be xdg-open, not open.)
-		    	open _site
-		    fi
+			# Put HTML into _site/app/www by moving everything in _site
+			# excluding the _site/app folder itself, into _site/app/www.
+			# (rsync lets us exclude, where cp does not)
+			# Suppress the console output.
+			echo "Copying files to app directory..."
+			mkdir _site/app/www
+			rsync -r _site/. _site/app/www --exclude="/app"
+			# Build the apps if required
+			if [ "$appbuildgenerateapp" = "a" ]
+				then
+				echo "Building Android app..."
+				cd _site/app
+				cordova build android
+				cd .. && cd ..
+				echo "Done. Opening folder containing Android app..."
+				# (On Linux, this will be xdg-open, not open.)
+				open _site/app/platforms/android/build/outputs/apk/
+			# Building iOS not available on Linux, only newish Macs
+			elif [ "$appbuildgenerateapp" = "i" ]
+				then
+				echo "Building iOS app..."
+				cd _site/app
+				cordova build ios
+				cd .. && cd ..
+				echo "Done. Opening folder containing iOS app..."
+				# (On Linux, this will be xdg-open, not open.)
+				open _site/app/platforms/ios/build/outputs/
+			elif [ "$appbuildgenerateapp" = "ai" ]
+				then
+				echo "Building Android app first, then iOS app."
+				echo "Building Android app..."
+				cordova build android
+				echo "Done. Opening folder containing Android app..."
+				# (On Linux, this will be xdg-open, not open.)
+				open _site/app/platforms/android/build/outputs/apk/
+				echo "Building iOS app..."
+				cordova build ios
+				echo "Done. Opening folder containing iOS app..."
+				# (On Linux, this will be xdg-open, not open.)
+				open _site/app/platforms/ios/build/outputs/
+			elif [ "$appbuildgenerateapp" = "" ] || [ "$appbuildgenerateapp" = "n" ]
+				then
+				echo "Skipping building apps. Opening app-ready files..."
+				# (On Linux, this will be xdg-open, not open.)
+				open _site
+			fi
 			# Ask the user if they want to rebuild
 			repeat=""
 			echo "Enter to run again, or any other key and enter to stop."
@@ -617,9 +617,9 @@ You may need to reload the web page once this server is running."
 		done
 		# Head back to the Electric Book options
 		process=0
-	##################
-	# INSTALL        #
-	##################
+	###########
+	# INSTALL #
+	###########
 	elif [ "$process" = 8 ]
 		then
 		echo "Running Bundler to update and install dependencies."
@@ -632,8 +632,8 @@ You may need to reload the web page once this server is running."
 		bundler install
 		# Head back to the Electric Book options
 		process=0
-	##################
-	# EXIT           #
-	##################
+	########
+	# EXIT #
+	########
 	fi
 done
