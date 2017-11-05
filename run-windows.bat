@@ -27,15 +27,15 @@ set appmathjax=
 ECHO Electric Book options
 ECHO ---------------------
 ECHO.
-ECHO 1. Create a print PDF
-ECHO 2. Create a screen PDF
-ECHO 3. Run as a website
-ECHO 4. Create an epub
-ECHO 5. Create an app
-ECHO 6. Export to Word
-ECHO 7. Convert source images to output formats
-ECHO 8. Install or update dependencies
-ECHO 9. Exit
+ECHO 1  Create a print PDF
+ECHO 2  Create a screen PDF
+ECHO 3  Run as a website
+ECHO 4  Create an epub
+ECHO 5  Create an app
+ECHO 6  Export to Word
+ECHO 7  Convert source images to output formats
+ECHO 8  Install or update dependencies
+ECHO x  Exit
 ECHO.
 SET /p process=Enter a number and hit return. 
     IF "%process%"=="1" GOTO printpdf
@@ -46,7 +46,7 @@ SET /p process=Enter a number and hit return.
     IF "%process%"=="6" GOTO word
     IF "%process%"=="7" GOTO convertimages
     IF "%process%"=="8" GOTO install
-    IF "%process%"=="9" GOTO:EOF
+    IF "%process%"=="x" GOTO:EOF
     GOTO choose
 
     :: :: :: :: :: ::
@@ -646,8 +646,6 @@ SET /p process=Enter a number and hit return.
     %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
     :appbuildaftercordova
     cd "%location%"
-    :: Building iOS only available on Mac machines
-    rem call cordova build ios
     :: Let the user rebuild and restart
     :appbuildrepeatselect
     SET repeat=
