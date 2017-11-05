@@ -21,13 +21,15 @@ while [ "$process" = "0" ]
 Electric Book options
 ---------------------
 
-1. Create a print PDF
-2. Create a screen PDF
-3. Run as a website
-4. Create an epub
-5. Export to Word
-6. Install or update dependencies
-7. Exit
+1  Create a print PDF
+2  Create a screen PDF
+3  Run as a website
+4  Create an epub
+5  Create an app
+6  Export to Word
+7  Convert source images to output formats (coming soon)
+8  Install or update dependencies
+x  Exit
 
 Enter a number and hit enter. "
 	read process
@@ -419,10 +421,109 @@ If not, just hit return."
 		done
 		# Head back to the Electric Book options
 		process=0
+	###############
+	# CREATE APPS #
+	###############
+	elif [ "$process" = 5 ]
+		then
+		# Remember the current folder
+		location=$(pwd)
+		# Encouraging message
+		# (Building iOS not available on Linux, only newish Macs)
+    	echo -n "
+Okay, let's make apps. First we'll generate the HTML, then we'll build Android and iOS apps.
+For the build, you need to have installed:
+- Cordova
+- Android Studio for the Android app
+- XCode for the iOS app.
+Shall we build the apps, or just generate the HTML? Enter:
+'a' to build only the Android app,
+'i' to build only the iOs app,
+'ai' to build both Android and iOS apps, or
+'n' or just hit enter to skip building finished apps. "
+    appbuildgenerateapp=""
+    read appbuildgenerateapp
+		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
+		echo -n "
+Any extra config files?
+Enter filenames (including any relative path), comma separated, no spaces. E.g.
+_configs/_config.myconfig.yml
+If not, just hit return."
+		read appconfig
+		# Ask whether we're enabling and including MathJax
+		echo "Do these books use MathJax? If yes, enter y. If no, hit enter."
+		read appmathjax
+		# We're going to let users run this over and over by pressing enter
+		repeat=""
+		while [ "$repeat" = "" ]
+		do
+			# let the user know we're on it!
+			echo "Generating HTML..."
+			# ...and run Jekyll to build new HTML
+			# with MathJax enabled if necessary
+			if [ "$appmathjax" = "" ]
+				then
+				bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,$config"
+			else
+				bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,$config"
+			fi
+	    	# Put HTML into _site/app/www by moving everything in _site
+	    	# excluding the _site/app folder itself, into _site/app/www.
+	    	# (rsync lets us exclude, where cp does not)
+	    	# Suppress the console output.
+		    echo "Copying files to app directory..."
+		    mkdir _site/app/www
+		    rsync -r _site/. _site/app/www --exclude="/app"
+		    # Build the apps if required
+		    if [ "$appbuildgenerateapp" = "a" ]
+		    	then
+		    	echo "Building Android app..."
+		    	cd _site/app
+		    	cordova build android
+		    	cd .. && cd ..
+		    	echo "Done. Opening folder containing Android app..."
+		    	# (On Linux, this will be xdg-open, not open.)
+		    	open _site/app/platforms/android/build/outputs/apk/
+		    # Building iOS not available on Linux, only newish Macs
+		    elif [ "$appbuildgenerateapp" = "i" ]
+		    	then
+		    	echo "Building iOS app..."
+		    	cd _site/app
+		    	cordova build ios
+		    	cd .. && cd ..
+		    	echo "Done. Opening folder containing iOS app..."
+		    	# (On Linux, this will be xdg-open, not open.)
+		    	open _site/app/platforms/ios/build/outputs/
+		    elif [ "$appbuildgenerateapp" = "ai" ]
+		    	then
+		    	echo "Building Android app first, then iOS app."
+		    	echo "Building Android app..."
+		    	cordova build android
+		    	echo "Done. Opening folder containing Android app..."
+		    	# (On Linux, this will be xdg-open, not open.)
+		    	open _site/app/platforms/android/build/outputs/apk/
+		    	echo "Building iOS app..."
+		    	cordova build ios
+		    	echo "Done. Opening folder containing iOS app..."
+		    	# (On Linux, this will be xdg-open, not open.)
+		    	open _site/app/platforms/ios/build/outputs/
+		    elif [ "$appbuildgenerateapp" = "" ] || [ "$appbuildgenerateapp" = "n" ]
+		    	then
+		    	echo "Skipping building apps. Opening app-ready files..."
+		    	# (On Linux, this will be xdg-open, not open.)
+		    	open _site
+		    fi
+			# Ask the user if they want to rebuild
+			repeat=""
+			echo "Enter to run again, or any other key and enter to stop."
+			read repeat
+		done
+		# Head back to the Electric Book options
+		process=0
 	##################
 	# EXPORT TO WORD #
 	##################
-	elif [ "$process" = 5 ]
+	elif [ "$process" = 6 ]
 		then
 		echo "Okay, let's export to Word. You must have Pandoc installed for this to work."
 		# Remember current location
@@ -529,7 +630,7 @@ If not, just hit return."
 	##################
 	# INSTALL        #
 	##################
-	elif [ "$process" = 6 ]
+	elif [ "$process" = 8 ]
 		then
 		echo "Running Bundler to update and install dependencies.
 If Bundler is not already installed, exit and run
