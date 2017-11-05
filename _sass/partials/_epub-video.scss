@@ -14,7 +14,7 @@ $epub-video: true !default;
             // Add play button before iframe loads
             &:before {
                 content: "\25b6";
-                position: absolute;
+                // position: absolute; // not supported in epub yet
                 font-size: $font-size-default * 3;
                 top: 50%;
                 left: 50%;
@@ -46,7 +46,7 @@ $epub-video: true !default;
             padding-top: 25px;
             height: 0;
                 iframe {
-                    position: absolute;
+                    // position: absolute; // not supported in epub yet
                     top: 0;
                     left: 0;
                     width: 100%;
