@@ -10,6 +10,8 @@
 * Improved docs
 * Fix epub output in OSX, Linux
 * Add app output to OSX, Linux
+* Fix Word output on OSX, Linux
+* Minor bug and code-readability fixes
 * 
 
 ## 0.10.0
