@@ -27,7 +27,7 @@ Electric Book options
 4  Create an epub
 5  Create an app
 6  Export to Word
-7  Convert source images to output formats (coming soon)
+7  Convert source images to output formats
 8  Install or update dependencies
 x  Exit
 
@@ -615,19 +615,81 @@ You may need to reload the web page once this server is running."
 		done
 		# Head back to the Electric Book options
 		process=0
+	##################
+	# PROCESS IMAGES #
+	##################
+	elif [ "$process" = 7 ]
+		then
+	    echo "Let's convert your source images."
+	    echo "This process will optimise the images in a book's _source folder"
+	    echo "and copy them to the print-pdf, screen-pdf, web and epub image folders."
+	    echo "You need to have run 'Install or update dependencies' at least once,"
+	    echo "and have GraphicsMagick installed (http://www.graphicsmagick.org, or try"
+	    echo "brew install graphicsmagick"
+
+    	# Select which book to convert images for
+    	echo "Which book's images are you converting? Hit enter for the default 'book'."
+	    bookimagestoconvert=""
+	    read bookimagestoconvert
+	    if [ "$bookimagestoconvert" = "" ]
+	    	then
+	    	bookimagestoconvert="book"
+	    fi
+	    while [ ! -d $bookimagestoconvert ]
+	    do
+	    	echo "Sorry, there is no $bookimagestoconvert folder. Please try again."
+	    	read bookimagestoconvert
+	    done
+
+	    # Select whether we're converting images for a translation
+	    echo "Are we converting books in a translation? If not, hit enter."
+    	echo "Otherwise, enter the language code/translation directory name. "
+	    read convertimageslanguage
+
+	    # Only proceed if no language is set or the language folder exists
+	    while [[ ! -d "$bookimagestoconvert/$convertimageslanguage" && "$convertimageslanguage" != "" ]]
+	    do
+	    	echo "Sorry, there is no $bookimagestoconvert/$convertimageslanguage folder. Please try again."
+	    	read convertimageslanguage
+	    done
+
+		# We're going to let users run this over and over by pressing enter
+		repeat=""
+		while [ "$repeat" = "" ]
+		do
+		    # Run default gulp task
+		    gulp --book "$bookimagestoconvert" --language "$convertimageslanguage"
+
+			# Ask the user if they want to run that again
+			repeat=""
+			echo "Enter to run again, or any other key and enter to stop."
+			read repeat
+		done
+		# Head back to the Electric Book options
+		process=0
+
 	###########
 	# INSTALL #
 	###########
 	elif [ "$process" = 8 ]
 		then
-		echo "Running Bundler to update and install dependencies."
+		echo "Running Bundler to update and install dependencies..."
 		echo "If Bundler is not already installed, exit and run"
 		echo "gem install bundler"
 		echo "from the command line."
+
 		# Update gems
 		bundle update
+
 		# Install gems
-		bundler install
+		bundle install
+
+        # Install node modules
+        echo "Next, we're going to install or update Node modules."
+        echo "You need to have Node.js installed already (https://nodejs.org)."
+        echo "Installing Node modules... This may take a few minutes."
+        npm install
+
 		# Head back to the Electric Book options
 		process=0
 	########
