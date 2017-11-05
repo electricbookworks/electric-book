@@ -50,11 +50,10 @@ Enter a number and hit enter. "
 		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read printpdfsubdirectory
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
-		echo -n "
-Any extra config files?
-Enter filenames (including any relative path), comma separated, no spaces. E.g.
-_configs/_config.myconfig.yml
-If not, just hit return."
+		echo "Any extra config files?"
+		echo "Enter filenames (including any relative path), comma separated, no spaces. E.g."
+		echo "_configs/_config.myconfig.yml"
+		echo "If not, just hit return."
 		read config
 		# Ask whether we're processing MathJax, to know whether to send the HTML via PhantomJS
 		echo "Does this book use MathJax? If no, hit enter. If yes, type any key then enter."
@@ -135,11 +134,10 @@ If not, just hit return."
 		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read screenpdfsubdirectory
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
-		echo -n "
-Any extra config files?
-Enter filenames (including any relative path), comma separated, no spaces. E.g.
-_configs/_config.myconfig.yml
-If not, just hit return."
+		echo "Any extra config files?"
+		echo "Enter filenames (including any relative path), comma separated, no spaces. E.g."
+		echo "_configs/_config.myconfig.yml"
+		echo "If not, just hit return."
 		read config
 		# Ask whether we're processing MathJax, to know whether to send the HTML via PhantomJS
 		echo "Does this book use MathJax? If no, hit enter. If yes, type any key then enter."
@@ -208,17 +206,15 @@ If not, just hit return."
 		then
 		echo "Okay, let's make a website..."
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
-		echo -n "
-Any extra config files?
-Enter filenames (including any relative path), comma separated, no spaces. E.g.
-_configs/_config.myconfig.yml
-If not, just hit return."
+		echo "Any extra config files?"
+		echo "Enter filenames (including any relative path), comma separated, no spaces. E.g."
+		echo "_configs/_config.myconfig.yml"
+		echo "If not, just hit return."
 		read config
 		# Ask the user to set a baseurl if needed
-		echo -n "Do you need a baseurl?
-If yes, enter it with no slashes at the start or end, e.g.
-my/base
-"
+		echo "Do you need a baseurl?"
+		echo "If yes, enter it with no slashes at the start or end, e.g."
+		echo "my/base"
 		read baseurl
 		# let the user know we're on it!
 		echo "Getting your site ready...
@@ -272,11 +268,10 @@ You may need to reload the web page once this server is running."
 		echo "Include mathjax? Enter y for yes (or enter for no)."
 		read epubmathjax
 		# Ask the user to add any extra Jekyll config files, e.g. _config.myconfig.yml
-		echo -n "
-Any extra config files?
-Enter filenames (including any relative path), comma separated, no spaces. E.g.
-_configs/_config.myconfig.yml
-If not, just hit return."
+		echo "Any extra config files?"
+		echo "Enter filenames (including any relative path), comma separated, no spaces. E.g."
+		echo "_configs/_config.myconfig.yml"
+		echo "If not, just hit return."
 		read config
 		# We're going to let users run this over and over by pressing enter
 		repeat=""
@@ -442,11 +437,10 @@ Shall we build the apps, or just generate the HTML? Enter:
     appbuildgenerateapp=""
     read appbuildgenerateapp
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
-		echo -n "
-Any extra config files?
-Enter filenames (including any relative path), comma separated, no spaces. E.g.
-_configs/_config.myconfig.yml
-If not, just hit return."
+		echo "Any extra config files?"
+		echo "Enter filenames (including any relative path), comma separated, no spaces. E.g."
+		echo "_configs/_config.myconfig.yml"
+		echo "If not, just hit return."
 		read appconfig
 		# Ask whether we're enabling and including MathJax
 		echo "Do these books use MathJax? If yes, enter y. If no, hit enter."
@@ -536,13 +530,11 @@ If not, just hit return."
 		echo "Okay, let's make Word files for $bookfolder..."
 		# Ask user which output format to work from
 		echo "Which format are we converting from? Enter a number or hit enter for the default 'print-pdf'. "
-		echo -n "
-1. Print PDF (default)
-2. Screen PDF
-3. Web
-4. Epub
-
-Enter a number and/or hit enter. "
+		echo "1. Print PDF (default)"
+		echo "2. Screen PDF"
+		echo "3. Web"
+		echo "4. Epub"
+		echo "Enter a number and/or hit enter. "
 		read fromformat
 		# Turn that choice into a variable named for the format
 		wordformatchoice=""
@@ -573,11 +565,10 @@ Enter a number and/or hit enter. "
 			fi
 		done
 		# Ask the user to add any extra Jekyll config files, e.g. _config.myconfig.yml
-		echo -n "
-Any extra config files?
-Enter filenames (including any relative path), comma separated, no spaces. E.g.
-_configs/_config.myconfig.yml
-If not, just hit return."
+		echo "Any extra config files?"
+		echo "Enter filenames (including any relative path), comma separated, no spaces. E.g."
+		echo "_configs/_config.myconfig.yml"
+		echo "If not, just hit return."
 		read config
 		# We're going to let users run this over and over by pressing enter
 		repeat=""
@@ -630,10 +621,10 @@ If not, just hit return."
 	##################
 	elif [ "$process" = 8 ]
 		then
-		echo "Running Bundler to update and install dependencies.
-If Bundler is not already installed, exit and run
-gem install bundler
-from the command line."
+		echo "Running Bundler to update and install dependencies."
+		echo "If Bundler is not already installed, exit and run"
+		echo "gem install bundler"
+		echo "from the command line."
 		# Update gems
 		bundle update
 		# Install gems
