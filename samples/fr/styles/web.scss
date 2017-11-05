@@ -36,7 +36,7 @@ $font-text-main: "Crimson", serif;
 $font-text-secondary: "Source Sans Pro", sans-serif;
 $font-display-main: "Source Sans Pro", sans-serif;
 $font-display-secondary: "Crimson", serif;
-$font-code: "Inconsolata", monospace;
+$font-code: "Ubuntu Mono", monospace;
 
 // Set font size and line-height in ems or px.
 // These values, especially $line-height-default, are used to compute vertical rhythm
@@ -47,7 +47,7 @@ $line-height-default: 1.5em;
 $font-size-smaller: 0.7; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2; // How many times bigger than font-size-default for features like headings and pullquotes?
 
-// Do you want space between paragraphs, rather than a text-indent?
+// Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: true;
 
 // Buttons
@@ -59,9 +59,9 @@ $color-text-secondary: #222222;
 $color-background: white;
 $color-light: #e0e0e0;
 $color-mid: #9c9c9c;
-$color-accent: #000000;
+$color-accent: #009E7F;
 $color-links: #5f738c;
-$color-buttons: #5f738c;
+$color-buttons: $color-accent;
 $color-buttons-hover: darken( $color-buttons, 20% );
 $color-highlight: #ffd54d;
 
@@ -79,6 +79,7 @@ $start-depth: $line-height-default * 2;
 // Note: Most browsers and ereaders do not support hyphenation rules.
 $hyphenation: auto; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
 $hyphenation-dictionary: ""; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
+$hyphenation-custom: add; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
 $hyphenate-after: 3; // Minimum letters on new line after hyphen
 $hyphenate-before: 3; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
@@ -105,20 +106,20 @@ $nav-bar-children-prompt: "+";
 $nav-bar-children-prompt-hide: "\2212"; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true;
 $nav-bar-width: 15em;
-$nav-bar-fixed: false;
-$nav-bar-label-color: $color-mid;
+$nav-bar-fixed: true;
+$nav-bar-label-color: $color-light;
 $nav-bar-label-background-color: $masthead-background-color;
 $nav-bar-border-color: $color-light;
 $nav-bar-background-color: white;
 $nav-bar-search-background-color: white;
 $nav-bar-parent-background-color: white;
 $nav-bar-parent-text-color: black;
-$nav-bar-parent-hover-color: #4f89d2;
+$nav-bar-parent-hover-color: $color-accent;
 $nav-bar-parent-text-hover-color: white;
 $nav-bar-children-prompt-color: $color-mid;
 $nav-bar-child-background-color: $color-light;
 $nav-bar-child-text-color: black;
-$nav-bar-child-hover-color: #4f89d2;
+$nav-bar-child-hover-color: $color-accent;
 $nav-bar-child-text-hover-color: white;
 
 // ---------------------------------

@@ -26,7 +26,17 @@ Adjust HTML based on output format.
 {% comment %}Add the cover to the PDF bookmarks without displaying it{% endcomment %}
 <h1 style="position: absolute; z-index: -1">Cover</h1>
 
-<p class="cover"><img src="{{ images }}/{{ image }}" srcset="{{ images }}/{{ image-without-filetype }}-320.{{ image-filetype[1] }} 320w, {{ images }}/{{ image-without-filetype }}-640.{{ image-filetype[1] }} 640w, {{ images }}/{{ image-without-filetype }}-1024.{{ image-filetype[1] }} 1024w, {{ images }}/{{ image-without-filetype }}.{{ image-filetype[1] }} 1280w" sizes="(min-width: 40em) 40em, 100vw" alt="{{ title }}" class="cover"></p>
+<p class="cover">
+	<img src="{{ images }}/{{ image }}" class="cover">
+</p>
+
+{% elsif site.output == "app" %}
+
+<p class="cover">
+	<a href="{{ app-start-page }}{% unless app-start-page contains ".html" %}.html{% endunless %}">
+		<img src="{{ images }}/{{ image }}" alt="{{ title }}" class="cover">
+	</a>
+</p>
 
 {% else %}
 

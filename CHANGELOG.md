@@ -9,6 +9,7 @@
 * Add Sass variables to make headers and footers easier to style
 * Improved docs
 * Fix epub output in OSX, Linux
+* Add app output to OSX, Linux
 * 
 
 ## 0.10.0
