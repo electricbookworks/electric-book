@@ -581,20 +581,18 @@ You may need to reload the web page once this server is running."
 			cd _site/$bookfolder/text
 			# Update user
 			echo "Converting $bookfolder HTML to Word..."
+			# Before looping through file-list, remove blank lines.
+			# Why .bak? see https://stackoverflow.com/a/14570580/1781075
+			sed -i.bak '/^[[:space:]]*$/d' file-list
+			rm file-list.bak
 			# Loop through the list of files in file-list
 			# and convert them each from .html to .docx.
-			# We end up with the same filenames,
-			# with .docx extensions appended.
-# [Two loop methods to try here. This one:]
 			while read -r file
 			do
 				pandoc "$file" -f html -t docx -s -o $file.docx
 			done < file-list
-# [And this one:]
-#			for file in file-list
-#			do
-#				pandoc "$file" -f html -t docx -s -o $file.docx
-#			done
+			# We end up with the same filenames,
+			# with .docx extensions appended.
 			# Now we fix those file extensions
 			echo "Fixing file extensions..."
 			for file in *.html.docx
@@ -602,7 +600,7 @@ You may need to reload the web page once this server is running."
 				mv "${file}" "${file/.html.docx/.docx}"
 			done
 			# Tell the user we're done
-			echo Done! Opening file explorer...
+			echo "Done! Opening file explorer..."
 			# Open file explorer to show the docx files
 			# (for OSX, this is open, not xdg-open)
 			xdg-open .
