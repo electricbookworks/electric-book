@@ -1,22 +1,22 @@
 :: Don't show these commands to the user
-@ECHO off
+@echo off
 :: Keep variables local, and expand at execution time not parse time
-SETLOCAL enabledelayedexpansion
+setlocal enabledelayedexpansion
 :: Set the title of the window
-TITLE Electric Book
+title Electric Book
 
 :: Start and reset a bunch of variables
 :begin
-SET process=0
-SET bookfolder=
-SET subdirectory=
-SET config=
-SET imageset=
-SET imageconfig=
-SET repeat=
-SET baseurl=
-SET location=
-SET firstfile=
+set process=0
+set bookfolder=
+set subdirectory=
+set config=
+set imageset=
+set imageconfig=
+set repeat=
+set baseurl=
+set location=
+set firstfile=
 set epubIncludeMathJax=
 set print-pdf-mathjax=
 set screen-pdf-mathjax=
@@ -24,30 +24,30 @@ set webmathjax=
 set appmathjax=
 
 :: Ask what we're going to be doing.
-ECHO Electric Book options
-ECHO ---------------------
-ECHO.
-ECHO 1  Create a print PDF
-ECHO 2  Create a screen PDF
-ECHO 3  Run as a website
-ECHO 4  Create an epub
-ECHO 5  Create an app
-ECHO 6  Export to Word
-ECHO 7  Convert source images to output formats
-ECHO 8  Install or update dependencies
-ECHO x  Exit
-ECHO.
-SET /p process=Enter a number and hit return. 
-    IF "%process%"=="1" GOTO printpdf
-    IF "%process%"=="2" GOTO screenpdf
-    IF "%process%"=="3" GOTO website
-    IF "%process%"=="4" GOTO epub
-    IF "%process%"=="5" GOTO app
-    IF "%process%"=="6" GOTO word
-    IF "%process%"=="7" GOTO convertimages
-    IF "%process%"=="8" GOTO install
-    IF "%process%"=="x" GOTO:EOF
-    GOTO choose
+echo Electric Book options
+echo ---------------------
+echo.
+echo 1  Create a print PDF
+echo 2  Create a screen PDF
+echo 3  Run as a website
+echo 4  Create an epub
+echo 5  Create an app
+echo 6  Export to Word
+echo 7  Convert source images to output formats
+echo 8  Install or update dependencies
+echo x  Exit
+echo.
+set /p process=Enter a number and hit return. 
+    if "%process%"=="1" goto printpdf
+    if "%process%"=="2" goto screenpdf
+    if "%process%"=="3" goto website
+    if "%process%"=="4" goto epub
+    if "%process%"=="5" goto app
+    if "%process%"=="6" goto word
+    if "%process%"=="7" goto convertimages
+    if "%process%"=="8" goto install
+    if "%process%"=="x" goto:EOF
+    goto choose
 
     :: :: :: :: :: ::
     :: PRINT PDF   ::
@@ -55,87 +55,87 @@ SET /p process=Enter a number and hit return.
 
     :printpdf
     :: Encouraging message
-    ECHO.
-    ECHO Okay, let's make a print-ready PDF.
-    ECHO.
+    echo.
+    echo Okay, let's make a print-ready PDF.
+    echo.
     :: Remember where we are by assigning a variable to the current directory
-    SET location=%~dp0
+    set location=%~dp0
     :: Ask user which folder to process
     :printpdfchoosefolder
-    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-    IF "%bookfolder%"=="" SET bookfolder=book
+    set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+    if "%bookfolder%"=="" set bookfolder=book
     if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto printpdfchoosefolder
     echo.
     :: Ask if we're outputting the files from a subdirectory
     :printpdfwhatsubdirectory
-    SET /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+    set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
     if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto printpdfwhatsubdirectory
     echo.
     :print-pdf-otherconfigs
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
+    echo.
+    echo Any extra config files?
+    echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+    echo _configs/_config.myconfig.yml
+    echo If not, just hit return.
+    echo.
+    set /p config=
+    echo.
     :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
-    ECHO Does this book use MathJax? If yes, enter y. If no, just hit enter. 
-    SET /p print-pdf-mathjax=
+    echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
+    set /p print-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :printpdfrefresh
     :: let the user know we're on it!
-    ECHO Generating HTML...
+    echo Generating HTML...
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
-    IF NOT "%print-pdf-mathjax%"=="y" GOTO printpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
-    GOTO printpdfjekylldone
+    if not "%print-pdf-mathjax%"=="y" goto printpdfnomathjax
+    call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    goto printpdfjekylldone
     :printpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
+    call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
     :printpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF NOT "%print-pdf-mathjax%"=="y" GOTO printpdfafterphantom
+    if not "%print-pdf-mathjax%"=="y" goto printpdfafterphantom
     :: Run this through phantom for extra magic,
     :: We have to run the PhantomJS script from the folder it's in
     :: for the directory paths to work.
-    CD _site\assets\js
-    CALL phantomjs render-mathjax.js
-    CD "%location%"
+    cd _site\assets\js
+    call phantomjs render-mathjax.js
+    cd "%location%"
     :printpdfafterphantom
     :: Navigate into the book's folder in _site output
-    CD _site\%bookfolder%\"%subdirectory%\text"
+    cd _site\%bookfolder%\"%subdirectory%\text"
     :: Let the user know we're now going to make the PDF
-    ECHO Creating PDF...
+    echo Creating PDF...
     :: Check if the _output folder exists, or create it if not.
     :: (this check is currently not working in some setups, disabling it)
-    rem IF not exist ..\..\..\_output\NUL
-    rem MKDIR ..\..\..\_output
+    rem if not exist ..\..\..\_output\nul
+    rem mkdir ..\..\..\_output
     :: Run prince, showing progress (-v), printing the docs in file-list
     :: and saving the resulting PDF to the _output folder
-    :: (For some reason this has to be run with CALL)
-    SET print-pdf-filename=%bookfolder%-%subdirectory%
-    IF "%subdirectory%"=="" SET print-pdf-filename=%bookfolder%
-    CALL prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
+    :: (For some reason this has to be run with call)
+    set print-pdf-filename=%bookfolder%-%subdirectory%
+    if "%subdirectory%"=="" set print-pdf-filename=%bookfolder%
+    call prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
     :: Navigate back to where we began.
-    CD "%location%"
+    cd "%location%"
     :: Tell the user we're done
-    ECHO Done! Opening PDF...
+    echo Done! Opening PDF...
     :: Navigate to the _output folder...
-    CD _output
+    cd _output
     :: and open the PDF we just created 
     :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
     start %print-pdf-filename%.pdf
     :: Navigate back to where we began.
-    CD ..\
+    cd ..\
     :: Let the user easily refresh the PDF by running jekyll b and prince again
-    SET repeat=
-    SET /p repeat=Enter to run again, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO printpdfrefresh
-    ECHO.
-    GOTO begin
+    set repeat=
+    set /p repeat=Enter to run again, or any other key and enter to stop. 
+    if "%repeat%"=="" goto printpdfrefresh
+    echo.
+    goto begin
 
 
     :: :: :: :: :: ::
@@ -144,83 +144,83 @@ SET /p process=Enter a number and hit return.
 
     :screenpdf
     :: Encouraging message
-    ECHO.
-    ECHO Okay, let's make a screen PDF.
-    ECHO.
+    echo.
+    echo Okay, let's make a screen PDF.
+    echo.
     :: Remember where we are by assigning a variable to the current directory
-    SET location=%~dp0
+    set location=%~dp0
     :: Ask user which folder to process
     :screenpdfchoosefolder
-    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-    IF "%bookfolder%"=="" SET bookfolder=book
+    set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+    if "%bookfolder%"=="" set bookfolder=book
     if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto screenpdfchoosefolder
     echo.
     :: Ask if we're outputting the files from a subdirectory
     :screenpdfwhatsubdirectory
-    SET /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+    set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
     if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto screenpdfwhatsubdirectory
     echo.
     :screen-pdf-otherconfigs
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
+    echo.
+    echo Any extra config files?
+    echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+    echo _configs/_config.myconfig.yml
+    echo If not, just hit return.
+    echo.
+    set /p config=
+    echo.
     :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
-    ECHO Does this book use MathJax? If yes, enter y. If no, just hit enter. 
-    SET /p screen-pdf-mathjax=
+    echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
+    set /p screen-pdf-mathjax=
     :: Loop back to this point to refresh the build and PDF
     :screenpdfrefresh
     :: let the user know we're on it!
-    ECHO Generating HTML...
+    echo Generating HTML...
     :: ...and run Jekyll to build new HTML
     :: with MathJax enabled if necessary
-    IF NOT "%screen-pdf-mathjax%"=="y" GOTO screenpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
-    GOTO screenpdfjekylldone
+    if not "%screen-pdf-mathjax%"=="y" goto screenpdfnomathjax
+    call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    goto screenpdfjekylldone
     :screenpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
+    call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
     :screenpdfjekylldone
     :: Skip PhantomJS if we're not using MathJax.
-    IF NOT "%screen-pdf-mathjax%"=="y" GOTO screenpdfafterphantom
+    if not "%screen-pdf-mathjax%"=="y" goto screenpdfafterphantom
     :: Run this through phantom for extra magic,
     :: We have to run the PhantomJS script from the folder it's in
     :: for the directory paths to work.
-    CD _site\assets\js
-    CALL phantomjs render-mathjax.js
-    CD "%location%"
+    cd _site\assets\js
+    call phantomjs render-mathjax.js
+    cd "%location%"
     :screenpdfafterphantom
     :: Navigate into the book's folder in _site output
-    CD _site\%bookfolder%\"%subdirectory%\text"
+    cd _site\%bookfolder%\"%subdirectory%\text"
     :: Let the user know we're now going to make the PDF
-    ECHO Creating PDF...
+    echo Creating PDF...
     :: Run prince, showing progress (-v), printing the docs in file-list
     :: and saving the resulting PDF to the _output folder
-    :: (For some reason this has to be run with CALL)
-    SET screen-pdf-filename=%bookfolder%-%subdirectory%
-    IF "%subdirectory%"=="" SET screen-pdf-filename=%bookfolder%
-    CALL prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
+    :: (For some reason this has to be run with call)
+    set screen-pdf-filename=%bookfolder%-%subdirectory%
+    if "%subdirectory%"=="" set screen-pdf-filename=%bookfolder%
+    call prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
     :: Navigate back to where we began.
-    CD "%location%"
+    cd "%location%"
     :: Tell the user we're done
-    ECHO Done! Opening PDF...
+    echo Done! Opening PDF...
     :: Navigate to the _output folder...
-    CD _output
+    cd _output
     :: and open the PDF we just created 
     :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
     start %screen-pdf-filename%.pdf
     :: Navigate back to where we began.
-    CD ..\
+    cd ..\
     :: Let the user easily refresh the PDF by running jekyll b and prince again
-    SET repeat=
-    SET /p repeat=Enter to run again, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO screenpdfrefresh
-    ECHO.
-    GOTO begin
+    set repeat=
+    set /p repeat=Enter to run again, or any other key and enter to stop. 
+    if "%repeat%"=="" goto screenpdfrefresh
+    echo.
+    goto begin
 
 
     :: :: :: :: :: ::
@@ -229,67 +229,67 @@ SET /p process=Enter a number and hit return.
 
     :website
     :: Encouraging message
-    ECHO Okay, let's make a website.
+    echo Okay, let's make a website.
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
+    echo.
+    echo Any extra config files?
+    echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+    echo _configs/_config.myconfig.yml
+    echo If not, just hit return.
+    echo.
+    set /p config=
+    echo.
     :: Ask the user to set a baseurl if needed
-    ECHO Do you need a baseurl?
-    ECHO If yes, enter it with no slashes at the start or end, e.g.
-    ECHO my/base
-    ECHO.
-    SET /p baseurl=
-    ECHO.
+    echo Do you need a baseurl?
+    echo If yes, enter it with no slashes at the start or end, e.g.
+    echo my/base
+    echo.
+    set /p baseurl=
+    echo.
     :: Ask if MathJax should be enabled.
-    ECHO Do these books use MathJax? If yes, enter y. If no, hit enter.
-    SET /p webmathjax=
+    echo Do these books use MathJax? If yes, enter y. If no, hit enter.
+    set /p webmathjax=
     :: let the user know we're on it!
-    ECHO Getting your site ready...
-    ECHO You may need to reload the web page once this server is running.
+    echo Getting your site ready...
+    echo You may need to reload the web page once this server is running.
     :: Two routes to go with or without a baseurl
-    IF "%baseurl%"=="" GOTO servewithoutbaseurl
+    if "%baseurl%"=="" goto servewithoutbaseurl
         :: Route 1, for serving with a baseurl
         :servewithbaseurl
         :: Open the web browser
         :: (This is before jekyll s, because jekyll s pauses the script.)
-        START "" "http://127.0.0.1:4000/%baseurl%/"
+        start "" "http://127.0.0.1:4000/%baseurl%/"
         :: Run Jekyll, with MathJax enabled if necessary
-        IF NOT "%webmathjax%"=="y" GOTO webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
-        GOTO webjekyllserved
+        if not "%webmathjax%"=="y" goto webnomathjax
+        call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
+        goto webjekyllserved
         :webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl="/%baseurl%"
+        call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl="/%baseurl%"
         :webjekyllserved
         :: And we're done here
-        GOTO websiterepeat
+        goto websiterepeat
         :: Route 2, for serving without a baseurl
         :servewithoutbaseurl
         :: Open the web browser
         :: (This is before jekyll s, because jekyll s pauses the script.)
-        START "" "http://127.0.0.1:4000/"
+        start "" "http://127.0.0.1:4000/"
         :: Run Jekyll, with MathJax enabled if necessary
-        IF NOT "%webmathjax%"=="y" GOTO webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
-        GOTO webjekyllserved
+        if not "%webmathjax%"=="y" goto webnomathjax
+        call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
+        goto webjekyllserved
         :webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
+        call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
         :webjekyllserved
     :: Let the user rebuild and restart
     :: 
     :: TO DO: This is not yet working. The script ends when you Ctrl-C to stop the website.
     :: 
     :websiterepeat
-    SET repeat=
-    SET /p repeat=Enter to restart the website process, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO website
-    ECHO.
-    GOTO begin
+    set repeat=
+    set /p repeat=Enter to restart the website process, or any other key and enter to stop. 
+    if "%repeat%"=="" goto website
+    echo.
+    goto begin
 
 
     :: :: :: :: :: ::
@@ -305,7 +305,7 @@ SET /p process=Enter a number and hit return.
     :: Ask user which folder to process
     :epubchoosefolder
     set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-    if "%bookfolder%"=="" SET bookfolder=book
+    if "%bookfolder%"=="" set bookfolder=book
     if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto epubchoosefolder
     
     :: Ask if we're outputting the files from a subdirectory
@@ -433,7 +433,7 @@ SET /p process=Enter a number and hit return.
     echo Copying text...
 
     :: If this isn't a translation, skip ahead to epubCopyNoSubdirectory 
-    if "%subdirectory%"=="" GOTO epubOriginalText
+    if "%subdirectory%"=="" goto epubOriginalText
 
     :: Copy the contents of the subdirectory
     :epubSubdirectoryText
@@ -478,7 +478,7 @@ SET /p process=Enter a number and hit return.
 
 
     :: Go into _site/epub to move some more files and then zip to _output
-    CD %location%_site/epub
+    cd %location%_site/epub
 
     :: If there is a js folder, and it has no contents, delete it.
     :: Otherwise, if this is a translation, move the js folder
@@ -526,7 +526,7 @@ SET /p process=Enter a number and hit return.
     echo Compressing files...
     :: Uses Zip 3.0: http://www.info-zip.org/Zip.html
     :: Temporarily put Zip in the PATH
-    PATH=%PATH%;%location%_tools\zip
+    path=%PATH%;%location%_tools\zip
     :: mimetype: create zip, no compression, no extra fields
     zip --compression-method store -0 -X --quiet "%location%_output/%epubFileName%.zip" mimetype
     :: everything else: append to the zip with default compression
@@ -586,13 +586,13 @@ SET /p process=Enter a number and hit return.
     %SystemRoot%\explorer.exe "%location%_output"
 
     :: Navigate back to where we began
-    CD "%location%"
+    cd "%location%"
 
     :: Let the user easily run that again
-    SET repeat=
-    SET /p repeat=Enter to run again, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO epubrefresh
-        GOTO begin
+    set repeat=
+    set /p repeat=Enter to run again, or any other key and enter to stop. 
+    if "%repeat%"=="" goto epubrefresh
+        goto begin
 
 
     :: :: :: :: :: ::
@@ -610,27 +610,27 @@ SET /p process=Enter a number and hit return.
     echo Shall we build the app, or just generate the HTML? Enter y to build the app, if not hit enter. 
     set /p appbuildgenerateapp=
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
+    echo.
+    echo Any extra config files?
+    echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+    echo _configs/_config.myconfig.yml
+    echo If not, just hit return.
+    echo.
+    set /p config=
+    echo.
     :: Ask if MathJax should be enabled.
-    ECHO Do these books use MathJax? If yes, enter y. If no, hit enter.
-    SET /p appmathjax=
+    echo Do these books use MathJax? If yes, enter y. If no, hit enter.
+    set /p appmathjax=
     :appbuildrepeat
     :: Run Jekyll, with MathJax enabled if necessary
-    ECHO Building your HTML...
-    IF NOT "%appmathjax%"=="y" GOTO appbuildnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
-    GOTO apphtmlbuilt
+    echo Building your HTML...
+    if not "%appmathjax%"=="y" goto appbuildnomathjax
+    call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
+    goto apphtmlbuilt
     :appbuildnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%"
+    call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%"
     :apphtmlbuilt
-    :: Put HTML into app/www by moving (/MOVE) everything (/E) in _site
+    :: Put HTML into app/www by moving everything (/E) in _site
     :: excluding (/XD) the app folder itself, into app/www.
     :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
     :: Adding /NP will also suppress progress bar.
@@ -648,11 +648,11 @@ SET /p process=Enter a number and hit return.
     cd "%location%"
     :: Let the user rebuild and restart
     :appbuildrepeatselect
-    SET repeat=
-    SET /p repeat=Enter to rebuild the app HTML, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO appbuildrepeat
-    ECHO.
-    GOTO begin
+    set repeat=
+    set /p repeat=Enter to rebuild the app HTML, or any other key and enter to stop. 
+    if "%repeat%"=="" goto appbuildrepeat
+    echo.
+    goto begin
 
 
     :: :: :: :: :: ::
@@ -661,76 +661,76 @@ SET /p process=Enter a number and hit return.
 
     :word
     :: Encouraging message
-    ECHO.
-    ECHO Okay, let's export to Word.
-    ECHO.
+    echo.
+    echo Okay, let's export to Word.
+    echo.
     :: Remember where we are by assigning a variable to the current directory
-    SET location=%~dp0
+    set location=%~dp0
     :: Ask user which folder to process
-    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-    IF "%bookfolder%"=="" SET bookfolder=book
+    set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+    if "%bookfolder%"=="" set bookfolder=book
     :: Ask user which output type to work from
-    ECHO Which format are we converting from? Enter a number or hit enter for the default:
-    ECHO 1. Print PDF (default)
-    ECHO 2. Screen PDF
-    ECHO 3. Web
-    ECHO 4. Epub
-    SET /p fromformat=
+    echo Which format are we converting from? Enter a number or hit enter for the default:
+    echo 1. Print PDF (default)
+    echo 2. Screen PDF
+    echo 3. Web
+    echo 4. Epub
+    set /p fromformat=
     :: Turn that choice into the name of an output format for our config
-    IF "%fromformat%"=="" SET fromformat=print-pdf
-    IF "%fromformat%"=="1" SET fromformat=print-pdf
-    IF "%fromformat%"=="2" SET fromformat=screen-pdf
-    IF "%fromformat%"=="3" SET fromformat=web
-    IF "%fromformat%"=="4" SET fromformat=epub
+    if "%fromformat%"=="" set fromformat=print-pdf
+    if "%fromformat%"=="1" set fromformat=print-pdf
+    if "%fromformat%"=="2" set fromformat=screen-pdf
+    if "%fromformat%"=="3" set fromformat=web
+    if "%fromformat%"=="4" set fromformat=epub
     :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
+    echo.
+    echo Any extra config files?
+    echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+    echo _configs/_config.myconfig.yml
+    echo If not, just hit return.
+    echo.
+    set /p config=
+    echo.
     :: Loop back to this point to refresh the build again
     :wordrefresh
     :: let the user know we're on it!
-    ECHO Generating HTML...
+    echo Generating HTML...
     :: ...and run Jekyll to build new HTML
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.image-set.%fromformat%.yml,%config%"
+    call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.image-set.%fromformat%.yml,%config%"
     :: Navigate to the HTML we just generated
-    CD _site\%bookfolder%\text
+    cd _site\%bookfolder%\text
     :: What're we doing?
-    ECHO Converting %bookfolder% HTML to Word...
+    echo Converting %bookfolder% HTML to Word...
     :: Loop through the list of files in file-list
     :: and convert them each from .html to .docx.
     :: We end up with the same filenames, 
     :: with .docx extensions appended.
-    FOR /F "tokens=*" %%F IN (file-list) DO (
+    for /F "tokens=*" %%F in (file-list) do (
         pandoc %%F -f html -t docx -s -o %%F.docx
         )
     :: What are we doing next?
-    ECHO Fixing file extensions...
+    echo Fixing file extensions...
     :: What are we finding and replacing?
-    SET find=.html
-    SET replace=
+    set find=.html
+    set replace=
     :: Loop through all .docx files and remove the .html
     :: from those filenames pandoc created.
-    FOR %%# in (.\*.docx) DO (
-        Set "File=%%~nx#"
-        Ren "%%#" "!File:%find%=%replace%!"
+    for %%# in (.\*.docx) do (
+        set "File=%%~nx#"
+        ren "%%#" "!File:%find%=%replace%!"
     )
     :: Whassup?
-    ECHO Done, opening folder...
+    echo Done, opening folder...
     :: Open file explorer to show the docx files.
     %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text"
     :: Navigate back to where we began
-    CD "%location%"
+    cd "%location%"
     :: Let the user easily run that again
-    SET repeat=
-    SET /p repeat=Enter to try again, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO word
-    ECHO.
-    GOTO begin
+    set repeat=
+    set /p repeat=Enter to try again, or any other key and enter to stop. 
+    if "%repeat%"=="" goto word
+    echo.
+    goto begin
 
     :: :: :: :: :: :: ::
     :: CONVERT IMAGES ::
@@ -779,16 +779,16 @@ SET /p process=Enter a number and hit return.
     echo If you get a rubygems error about SSL certificate failure, see
     echo http://guides.rubygems.org/ssl-certificate-update/
     echo This may take a few minutes.
-    set FOUND=
-    for %%e in (%PATHEXT%) do (
+    set found=
+    for %%e in (%pathext%) do (
       for %%X in (bundler%%e) do (
-        if not defined FOUND (
-          set FOUND=%%~$PATH:X
+        if not defined found (
+          set found=%%~$PATH:X
         )
       )
     )
-    if not "%FOUND%"=="" goto bundlerinstalled
-    if "%FOUND%"=="" echo Installing Bundler...
+    if not "%found%"=="" goto bundlerinstalled
+    if "%found%"=="" echo Installing Bundler...
     gem install bundler
     :bundlerinstalled
     echo Updating Bundler...
