@@ -13,14 +13,27 @@ The crumbs-array is created empty in _includes/metadata.
         in a variable called 'label'{% endcomment %}
         {% capture label %}
             {% if item.file %}
-                <a href="{{ item.file }}{% if item.id %}#{{ item.id }}{% endif %}">
+                <a href="{{ item.file }}{% unless item.file contains ".html" %}.html{% endunless %}{% if item.id %}#{{ item.id }}{% endif %}">
             {% endif %}
-                {{ item.label }}{% if item.file %}</a>{% endif %}
+                {{ item.label | strip | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}{% if item.file %}</a>{% endif %}
         {% endcapture %}
-        {% capture label %}{{ label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines | strip }}{% endcapture %}
+        {% capture label %}{{ label | strip_newlines }}{% endcapture %}
 
+        {% comment %}Add that label to the crumbs-array,
+        which we'll pass to this include shortly.{% endcomment %}
         {% assign crumbs-array = crumbs-array | push: label %}
+        
+        {% comment %}Assign this item's child nodes to the children array,
+        which we'll pass to this include again shortly.{% endcomment %}
         {% assign children = item.children %}
+
+        {% comment %}If, while traversing the breadcrumb-tree,
+        we find the file we're generating now, output list items
+        for each crumb we've collected in the crumbs-array,
+        and finally a list item for the current file.
+        Otherwise, just include this include again, and pass to it
+        the children of the item and the crumbs-array we've gathered
+        along the way.{% endcomment %}
         {% if item.file == current-file %}
             {% for crumb in include.crumbs-array %}
                 <li>{{ crumb }}</li>

@@ -14,8 +14,8 @@
 
 {% comment %}Get an image for the video from YouTube,
 then let the user override it by setting an image parameter.
-Epub shouldn't use remote-resources, so don't fetch image for epub.{% endcomment %}
-{% unless site.output == "epub" %}
+Epubs and apps aren't online, so don't fetch an image automatically.{% endcomment %}
+{% unless site.output == "epub" or site.output == "app" %}
     {% capture video-image %}https://i1.ytimg.com/vi/{{ include.id }}/hqdefault.jpg{% endcapture %}
 {% endunless %}
 {% if include.image %}
