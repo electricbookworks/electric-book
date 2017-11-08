@@ -4,6 +4,7 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     colorator (1.1.0)
+    ffi (1.9.18)
     ffi (1.9.18-x64-mingw32)
     forwardable-extended (2.6.0)
     jekyll (3.5.2)
@@ -40,14 +41,13 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    wdm (0.1.1)
 
 PLATFORMS
+  ruby
   x64-mingw32
 
 DEPENDENCIES
   jekyll (~> 3.5.2)
-  wdm (>= 0.1.0)
 
 BUNDLED WITH
    1.14.6

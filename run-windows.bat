@@ -1,22 +1,22 @@
 :: Don't show these commands to the user
-@ECHO off
+@echo off
 :: Keep variables local, and expand at execution time not parse time
-SETLOCAL enabledelayedexpansion
+setlocal enabledelayedexpansion
 :: Set the title of the window
-TITLE Electric Book
+title Electric Book
 
 :: Start and reset a bunch of variables
 :begin
-SET process=0
-SET bookfolder=
-SET subdirectory=
-SET config=
-SET imageset=
-SET imageconfig=
-SET repeat=
-SET baseurl=
-SET location=
-SET firstfile=
+set process=0
+set bookfolder=
+set subdirectory=
+set config=
+set imageset=
+set imageconfig=
+set repeat=
+set baseurl=
+set location=
+set firstfile=
 set epubIncludeMathJax=
 set print-pdf-mathjax=
 set screen-pdf-mathjax=
@@ -24,118 +24,143 @@ set webmathjax=
 set appmathjax=
 
 :: Ask what we're going to be doing.
-ECHO Electric Book options
-ECHO ---------------------
-ECHO.
-ECHO 1. Create a print PDF
-ECHO 2. Create a screen PDF
-ECHO 3. Run as a website
-ECHO 4. Create an epub
-ECHO 5. Create an app
-ECHO 6. Export to Word
-ECHO 7. Convert source images to output formats
-ECHO 8. Install or update dependencies
-ECHO 9. Exit
-ECHO.
-SET /p process=Enter a number and hit return. 
-    IF "%process%"=="1" GOTO printpdf
-    IF "%process%"=="2" GOTO screenpdf
-    IF "%process%"=="3" GOTO website
-    IF "%process%"=="4" GOTO epub
-    IF "%process%"=="5" GOTO app
-    IF "%process%"=="6" GOTO word
-    IF "%process%"=="7" GOTO convertimages
-    IF "%process%"=="8" GOTO install
-    IF "%process%"=="9" GOTO:EOF
-    GOTO choose
+echo Electric Book options
+echo ---------------------
+echo.
+echo 1  Create a print PDF
+echo 2  Create a screen PDF
+echo 3  Run as a website
+echo 4  Create an epub
+echo 5  Create an app
+echo 6  Export to Word
+echo 7  Convert source images to output formats
+echo 8  Install or update dependencies
+echo x  Exit
+echo.
+set /p process=Enter a number and hit return. 
+    if "%process%"=="1" goto printpdf
+    if "%process%"=="2" goto screenpdf
+    if "%process%"=="3" goto website
+    if "%process%"=="4" goto epub
+    if "%process%"=="5" goto app
+    if "%process%"=="6" goto word
+    if "%process%"=="7" goto convertimages
+    if "%process%"=="8" goto install
+    if "%process%"=="x" goto:EOF
+    goto choose
 
     :: :: :: :: :: ::
     :: PRINT PDF   ::
     :: :: :: :: :: ::
 
     :printpdf
-    :: Encouraging message
-    ECHO.
-    ECHO Okay, let's make a print-ready PDF.
-    ECHO.
-    :: Remember where we are by assigning a variable to the current directory
-    SET location=%~dp0
-    :: Ask user which folder to process
-    :printpdfchoosefolder
-    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-    IF "%bookfolder%"=="" SET bookfolder=book
-    if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto printpdfchoosefolder
-    echo.
-    :: Ask if we're outputting the files from a subdirectory
-    :printpdfwhatsubdirectory
-    SET /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
-    if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto printpdfwhatsubdirectory
-    echo.
-    :print-pdf-otherconfigs
-    :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
-    :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
-    ECHO Does this book use MathJax? If yes, enter y. If no, just hit enter. 
-    SET /p print-pdf-mathjax=
-    :: Loop back to this point to refresh the build and PDF
-    :printpdfrefresh
-    :: let the user know we're on it!
-    ECHO Generating HTML...
-    :: ...and run Jekyll to build new HTML
-    :: with MathJax enabled if necessary
-    IF NOT "%print-pdf-mathjax%"=="y" GOTO printpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
-    GOTO printpdfjekylldone
-    :printpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
-    :printpdfjekylldone
-    :: Skip PhantomJS if we're not using MathJax.
-    IF NOT "%print-pdf-mathjax%"=="y" GOTO printpdfafterphantom
-    :: Run this through phantom for extra magic,
-    :: We have to run the PhantomJS script from the folder it's in
-    :: for the directory paths to work.
-    CD _site\assets\js
-    CALL phantomjs render-mathjax.js
-    CD "%location%"
-    :printpdfafterphantom
-    :: Navigate into the book's folder in _site output
-    CD _site\%bookfolder%\"%subdirectory%\text"
-    :: Let the user know we're now going to make the PDF
-    ECHO Creating PDF...
-    :: Check if the _output folder exists, or create it if not.
-    :: (this check is currently not working in some setups, disabling it)
-    rem IF not exist ..\..\..\_output\NUL
-    rem MKDIR ..\..\..\_output
-    :: Run prince, showing progress (-v), printing the docs in file-list
-    :: and saving the resulting PDF to the _output folder
-    :: (For some reason this has to be run with CALL)
-    SET print-pdf-filename=%bookfolder%-%subdirectory%
-    IF "%subdirectory%"=="" SET print-pdf-filename=%bookfolder%
-    CALL prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
-    :: Navigate back to where we began.
-    CD "%location%"
-    :: Tell the user we're done
-    ECHO Done! Opening PDF...
-    :: Navigate to the _output folder...
-    CD _output
-    :: and open the PDF we just created 
-    :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
-    start %print-pdf-filename%.pdf
-    :: Navigate back to where we began.
-    CD ..\
-    :: Let the user easily refresh the PDF by running jekyll b and prince again
-    SET repeat=
-    SET /p repeat=Enter to run again, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO printpdfrefresh
-    ECHO.
-    GOTO begin
+
+        :: Encouraging message
+        echo.
+        echo Okay, let's make a print-ready PDF.
+        echo.
+
+        :: Remember where we are by assigning a variable to the current directory
+        set location=%~dp0
+
+        :: Ask user which folder to process
+        :printpdfchoosefolder
+            set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+            if "%bookfolder%"=="" set bookfolder=book
+            if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto printpdfchoosefolder
+            echo.
+
+        :: Ask if we're outputting the files from a subdirectory
+        :printpdfwhatsubdirectory
+            set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto printpdfwhatsubdirectory
+            echo.
+
+        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+        :print-pdf-otherconfigs
+            echo.
+            echo Any extra config files?
+            echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+            echo _configs/_config.myconfig.yml
+            echo If not, just hit return.
+            echo.
+            set /p config=
+            echo.
+
+        :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+            echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
+            set /p print-pdf-mathjax=
+
+        :: Loop back to this point to refresh the build and PDF
+        :printpdfrefresh
+
+            :: let the user know we're on it!
+            echo Generating HTML...
+
+            :: ...and run Jekyll to build new HTML
+            :: with MathJax enabled if necessary
+            if not "%print-pdf-mathjax%"=="y" goto printpdfnomathjax
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            goto printpdfjekylldone
+
+            :: Build Jekyll without MathJax
+            :printpdfnomathjax
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
+
+            :printpdfjekylldone
+
+            :: Skip PhantomJS if we're not using MathJax.
+            if not "%print-pdf-mathjax%"=="y" goto printpdfafterphantom
+
+            :: Run this through phantom for extra magic,
+            :: We have to run the PhantomJS script from the folder it's in
+            :: for the directory paths to work.
+            cd _site\assets\js
+            call phantomjs render-mathjax.js
+            cd "%location%"
+
+            :printpdfafterphantom
+
+            :: Navigate into the book's folder in _site output
+            cd _site\%bookfolder%\"%subdirectory%\text"
+
+            :: Let the user know we're now going to make the PDF
+            echo Creating PDF...
+
+            :: Check if the _output folder exists, or create it if not.
+            :: (this check is currently not working in some setups, disabling it)
+            rem if not exist ..\..\..\_output\nul
+            rem mkdir ..\..\..\_output
+
+            :: Run prince, showing progress (-v), printing the docs in file-list
+            :: and saving the resulting PDF to the _output folder
+            :: (For some reason this has to be run with call)
+            set print-pdf-filename=%bookfolder%-%subdirectory%
+            if "%subdirectory%"=="" set print-pdf-filename=%bookfolder%
+            call prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
+
+            :: Navigate back to where we began.
+            cd "%location%"
+
+            :: Tell the user we're done
+            echo Done! Opening PDF...
+
+            :: Navigate to the _output folder...
+            cd _output
+
+            :: and open the PDF we just created 
+            :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
+            start %print-pdf-filename%.pdf
+
+            :: Navigate back to where we began.
+            cd ..\
+
+        :: Let the user easily refresh the PDF by running jekyll b and prince again
+        set repeat=
+        set /p repeat=Enter to run again, or any other key and enter to stop. 
+        if "%repeat%"=="" goto printpdfrefresh
+        echo.
+        goto begin
 
 
     :: :: :: :: :: ::
@@ -143,84 +168,105 @@ SET /p process=Enter a number and hit return.
     :: :: :: :: :: ::
 
     :screenpdf
-    :: Encouraging message
-    ECHO.
-    ECHO Okay, let's make a screen PDF.
-    ECHO.
-    :: Remember where we are by assigning a variable to the current directory
-    SET location=%~dp0
-    :: Ask user which folder to process
-    :screenpdfchoosefolder
-    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-    IF "%bookfolder%"=="" SET bookfolder=book
-    if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto screenpdfchoosefolder
-    echo.
-    :: Ask if we're outputting the files from a subdirectory
-    :screenpdfwhatsubdirectory
-    SET /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
-    if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto screenpdfwhatsubdirectory
-    echo.
-    :screen-pdf-otherconfigs
-    :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
-    :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
-    ECHO Does this book use MathJax? If yes, enter y. If no, just hit enter. 
-    SET /p screen-pdf-mathjax=
-    :: Loop back to this point to refresh the build and PDF
-    :screenpdfrefresh
-    :: let the user know we're on it!
-    ECHO Generating HTML...
-    :: ...and run Jekyll to build new HTML
-    :: with MathJax enabled if necessary
-    IF NOT "%screen-pdf-mathjax%"=="y" GOTO screenpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
-    GOTO screenpdfjekylldone
-    :screenpdfnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
-    :screenpdfjekylldone
-    :: Skip PhantomJS if we're not using MathJax.
-    IF NOT "%screen-pdf-mathjax%"=="y" GOTO screenpdfafterphantom
-    :: Run this through phantom for extra magic,
-    :: We have to run the PhantomJS script from the folder it's in
-    :: for the directory paths to work.
-    CD _site\assets\js
-    CALL phantomjs render-mathjax.js
-    CD "%location%"
-    :screenpdfafterphantom
-    :: Navigate into the book's folder in _site output
-    CD _site\%bookfolder%\"%subdirectory%\text"
-    :: Let the user know we're now going to make the PDF
-    ECHO Creating PDF...
-    :: Run prince, showing progress (-v), printing the docs in file-list
-    :: and saving the resulting PDF to the _output folder
-    :: (For some reason this has to be run with CALL)
-    SET screen-pdf-filename=%bookfolder%-%subdirectory%
-    IF "%subdirectory%"=="" SET screen-pdf-filename=%bookfolder%
-    CALL prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
-    :: Navigate back to where we began.
-    CD "%location%"
-    :: Tell the user we're done
-    ECHO Done! Opening PDF...
-    :: Navigate to the _output folder...
-    CD _output
-    :: and open the PDF we just created 
-    :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
-    start %screen-pdf-filename%.pdf
-    :: Navigate back to where we began.
-    CD ..\
-    :: Let the user easily refresh the PDF by running jekyll b and prince again
-    SET repeat=
-    SET /p repeat=Enter to run again, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO screenpdfrefresh
-    ECHO.
-    GOTO begin
+
+        :: Encouraging message
+        echo.
+        echo Okay, let's make a screen PDF.
+        echo.
+
+        :: Remember where we are by assigning a variable to the current directory
+        set location=%~dp0
+
+        :: Ask user which folder to process
+        :screenpdfchoosefolder
+            set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+            if "%bookfolder%"=="" set bookfolder=book
+            if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto screenpdfchoosefolder
+            echo.
+
+        :: Ask if we're outputting the files from a subdirectory
+        :screenpdfwhatsubdirectory
+            set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto screenpdfwhatsubdirectory
+            echo.
+
+        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+        :screen-pdf-otherconfigs
+            echo.
+            echo Any extra config files?
+            echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+            echo _configs/_config.myconfig.yml
+            echo If not, just hit return.
+            echo.
+            set /p config=
+            echo.
+
+        :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+        echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
+        set /p screen-pdf-mathjax=
+
+        :: Loop back to this point to refresh the build and PDF
+        :screenpdfrefresh
+
+            :: let the user know we're on it!
+            echo Generating HTML...
+
+            :: ...and run Jekyll to build new HTML
+            :: with MathJax enabled if necessary
+            if not "%screen-pdf-mathjax%"=="y" goto screenpdfnomathjax
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            goto screenpdfjekylldone
+            :screenpdfnomathjax
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
+            :screenpdfjekylldone
+
+            :: Skip PhantomJS if we're not using MathJax.
+            if not "%screen-pdf-mathjax%"=="y" goto screenpdfafterphantom
+
+            :: Run this through phantom for extra magic,
+            :: We have to run the PhantomJS script from the folder it's in
+            :: for the directory paths to work.
+            cd _site\assets\js
+            call phantomjs render-mathjax.js
+            cd "%location%"
+
+            :screenpdfafterphantom
+
+            :: Navigate into the book's folder in _site output
+            cd _site\%bookfolder%\"%subdirectory%\text"
+
+            :: Let the user know we're now going to make the PDF
+            echo Creating PDF...
+
+            :: Run prince, showing progress (-v), printing the docs in file-list
+            :: and saving the resulting PDF to the _output folder
+            :: (For some reason this has to be run with call)
+            set screen-pdf-filename=%bookfolder%-%subdirectory%
+            if "%subdirectory%"=="" set screen-pdf-filename=%bookfolder%
+            call prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
+
+            :: Navigate back to where we began.
+            cd "%location%"
+
+            :: Tell the user we're done
+            echo Done! Opening PDF...
+
+            :: Navigate to the _output folder...
+            cd _output
+
+            :: and open the PDF we just created 
+            :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
+            start %screen-pdf-filename%.pdf
+
+            :: Navigate back to where we began.
+            cd ..\
+
+        :: Let the user easily refresh the PDF by running jekyll b and prince again
+        set repeat=
+        set /p repeat=Enter to run again, or any other key and enter to stop. 
+        if "%repeat%"=="" goto screenpdfrefresh
+        echo.
+        goto begin
 
 
     :: :: :: :: :: ::
@@ -228,68 +274,86 @@ SET /p process=Enter a number and hit return.
     :: :: :: :: :: ::
 
     :website
-    :: Encouraging message
-    ECHO Okay, let's make a website.
-    :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
-    :: Ask the user to set a baseurl if needed
-    ECHO Do you need a baseurl?
-    ECHO If yes, enter it with no slashes at the start or end, e.g.
-    ECHO my/base
-    ECHO.
-    SET /p baseurl=
-    ECHO.
-    :: Ask if MathJax should be enabled.
-    ECHO Do these books use MathJax? If yes, enter y. If no, hit enter.
-    SET /p webmathjax=
-    :: let the user know we're on it!
-    ECHO Getting your site ready...
-    ECHO You may need to reload the web page once this server is running.
-    :: Two routes to go with or without a baseurl
-    IF "%baseurl%"=="" GOTO servewithoutbaseurl
-        :: Route 1, for serving with a baseurl
-        :servewithbaseurl
-        :: Open the web browser
-        :: (This is before jekyll s, because jekyll s pauses the script.)
-        START "" "http://127.0.0.1:4000/%baseurl%/"
-        :: Run Jekyll, with MathJax enabled if necessary
-        IF NOT "%webmathjax%"=="y" GOTO webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
-        GOTO webjekyllserved
-        :webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl="/%baseurl%"
-        :webjekyllserved
-        :: And we're done here
-        GOTO websiterepeat
-        :: Route 2, for serving without a baseurl
-        :servewithoutbaseurl
-        :: Open the web browser
-        :: (This is before jekyll s, because jekyll s pauses the script.)
-        START "" "http://127.0.0.1:4000/"
-        :: Run Jekyll, with MathJax enabled if necessary
-        IF NOT "%webmathjax%"=="y" GOTO webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
-        GOTO webjekyllserved
-        :webnomathjax
-        CALL bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
-        :webjekyllserved
-    :: Let the user rebuild and restart
-    :: 
-    :: TO DO: This is not yet working. The script ends when you Ctrl-C to stop the website.
-    :: 
-    :websiterepeat
-    SET repeat=
-    SET /p repeat=Enter to restart the website process, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO website
-    ECHO.
-    GOTO begin
+
+        :: Encouraging message
+        echo Okay, let's make a website.
+
+        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+        echo.
+        echo Any extra config files?
+        echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+        echo _configs/_config.myconfig.yml
+        echo If not, just hit return.
+        echo.
+        set /p config=
+        echo.
+
+        :: Ask the user to set a baseurl if needed
+        echo Do you need a baseurl?
+        echo If yes, enter it with no slashes at the start or end, e.g.
+        echo my/base
+        echo.
+        set /p baseurl=
+        echo.
+
+        :: Ask if MathJax should be enabled.
+        echo Do these books use MathJax? If yes, enter y. If no, hit enter.
+        set /p webmathjax=
+
+        :: let the user know we're on it!
+        :webreadytoserve
+        echo Getting your site ready...
+        echo You may need to reload the web page once this server is running.
+
+        :: Two routes to go: with or without a baseurl
+        if "%baseurl%"=="" goto servewithoutbaseurl
+
+            :: Route 1, for serving with a baseurl
+            :servewithbaseurl
+
+                :: Open the web browser
+                :: (This is before jekyll s, because jekyll s pauses the script.)
+                start "" "http://127.0.0.1:4000/%baseurl%/"
+
+                :: Run Jekyll, with MathJax enabled if necessary
+                if not "%webmathjax%"=="y" goto webnomathjax
+                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl="/%baseurl%"
+                goto webjekyllservedwithbaseurl
+
+                :webnomathjax
+                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl="/%baseurl%"
+
+                :webjekyllservedwithbaseurl
+
+                :: And we're done here
+                goto websiterepeat
+
+            :: Route 2, for serving without a baseurl
+            :servewithoutbaseurl
+
+                :: Open the web browser
+                :: (This is before jekyll s, because jekyll s pauses the script.)
+                start "" "http://127.0.0.1:4000/"
+
+                :: Run Jekyll, with MathJax enabled if necessary
+                if not "%webmathjax%"=="y" goto webnomathjax
+                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
+                goto webjekyllservednobaseurl
+                :webnomathjax
+                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
+
+                :webjekyllservednobaseurl
+
+        :: Let the user rebuild and restart
+        :: 
+        :: TO DO: This is not yet working. The script ends when you Ctrl-C to stop the website.
+        :: 
+        :websiterepeat
+            set repeat=
+            set /p repeat=Enter to restart the website process, or any other key and enter to stop. 
+            if "%repeat%"=="" goto webreadytoserve
+            echo.
+            goto begin
 
 
     :: :: :: :: :: ::
@@ -297,302 +361,302 @@ SET /p process=Enter a number and hit return.
     :: :: :: :: :: ::
 
     :epub
-    :: Encouraging message
-    echo Okay, let's make an epub.
-    :: Remember where we are by assigning a variable to the current directory
-    set location=%~dp0
-    
-    :: Ask user which folder to process
-    :epubchoosefolder
-    set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-    if "%bookfolder%"=="" SET bookfolder=book
-    if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto epubchoosefolder
-    
-    :: Ask if we're outputting the files from a subdirectory
-    :epubwhatsubdirectory
-    echo If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
-    set /p subdirectory=
-    if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto epubwhatsubdirectory
-    
-    :: Ask whether to include boilerplate mathjax directory
-    :epubAskToIncludeMathJax
-    echo Include mathjax? Enter y for yes (or hit enter for no).
-    set /p epubIncludeMathJax=
-    if "%epubIncludeMathJax%"=="n" set epubIncludeMathJax=
-    if not "%epubIncludeMathJax%"=="y" if not "%epubIncludeMathJax%"=="" goto epubAskToIncludeMathJax
 
-    :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    :epubAskForConfigFiles
-    echo Any extra config files?
-    echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    echo _configs/_config.myconfig.yml
-    echo If not, just hit return.
-    set /p config=
+        :: Encouraging message
+        echo Okay, let's make an epub.
+        :: Remember where we are by assigning a variable to the current directory
+        set location=%~dp0
+        
+        :: Ask user which folder to process
+        :epubchoosefolder
+            set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+            if "%bookfolder%"=="" set bookfolder=book
+            if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto epubchoosefolder
+        
+        :: Ask if we're outputting the files from a subdirectory
+        :epubwhatsubdirectory
+            echo If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+            set /p subdirectory=
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto epubwhatsubdirectory
+        
+        :: Ask whether to include boilerplate mathjax directory
+        :epubAskToIncludeMathJax
+            echo Include mathjax? Enter y for yes (or hit enter for no).
+            set /p epubIncludeMathJax=
+            if "%epubIncludeMathJax%"=="n" set epubIncludeMathJax=
+            if not "%epubIncludeMathJax%"=="y" if not "%epubIncludeMathJax%"=="" goto epubAskToIncludeMathJax
 
-    :: Ask about validation
-    :epubAskAboutValidation
-    echo Shall we try to run EpubCheck when we're done? Hit enter for yes, or any key and enter for no.
-    set /p epubValidation=
+        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+        :epubAskForConfigFiles
+            echo Any extra config files?
+            echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+            echo _configs/_config.myconfig.yml
+            echo If not, just hit return.
+            set /p config=
 
-    :: Loop back to this point to refresh the build again
-    :epubrefresh
+        :: Ask about validation
+        :epubAskAboutValidation
+            echo Shall we try to run EpubCheck when we're done? Hit enter for yes, or any key and enter for no.
+            set /p epubValidation=
 
-    :: let the user know we're on it!
-    if "%subdirectory%"=="" goto epubGeneratingHTMLNoSubdirectory
-    if not "%subdirectory%"=="" goto epubGeneratingHTMLWithSubdirectory
+        :: Loop back to this point to refresh the build again
+        :epubrefresh
 
-    :epubGeneratingHTMLNoSubdirectory
-    echo Generating HTML for %bookfolder%.epub...
-    goto epubJekyllBuild
+        :: let the user know we're on it!
+        if "%subdirectory%"=="" goto epubGeneratingHTMLNoSubdirectory
+        if not "%subdirectory%"=="" goto epubGeneratingHTMLWithSubdirectory
 
-    :epubGeneratingHTMLWithSubdirectory
-    echo Generating HTML for %bookfolder%-%subdirectory%.epub...
-    goto epubJekyllBuild
+        :epubGeneratingHTMLNoSubdirectory
+            echo Generating HTML for %bookfolder%.epub...
+            goto epubJekyllBuild
 
-    :: ...and run Jekyll to build new HTML
-    :epubJekyllBuild
-    call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
-    echo HTML generated.
-    :epubJekyllDone
+        :epubGeneratingHTMLWithSubdirectory
+            echo Generating HTML for %bookfolder%-%subdirectory%.epub...
+            goto epubJekyllBuild
 
-    :: What's next?
-    echo Assembling epub...
+        :: ...and run Jekyll to build new HTML
+        :epubJekyllBuild
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
+            echo HTML generated.
+            :epubJekyllDone
 
-
-    :: Copy styles, images, text and package.opf to epub folder.
-    :: The echo f preemptively answers xcopy's question whether 
-    :: this is a file (see https://stackoverflow.com/a/3018371).
-    :: The > nul supresses command-line feedback (pseudo silent mode)
-    cd _site\%bookfolder%
+        :: What's next?
+        echo Assembling epub...
 
 
-    :: Test copying options
-    :epubCopyStyles
-    echo Copying styles...
-    :: --------------------------
-    :: If original language output: copy only files in fonts/epub
-    if "%subdirectory%"=="" if not exist %subdirectory%\styles\*.* goto epubOriginalStyles
-    :: Translation output, but no translated-styles subdirectory for that translation:
-    :: copy the original styles files only
-    if not "%subdirectory%"=="" if not exist %subdirectory%\styles\*.* goto epubOriginalStyles
-    :: Translation output, and an styles subdir for that translation exists:
-    :: create folder structure, and copy only the styles in that translation folder
-    if not "%subdirectory%"=="" if exist %subdirectory%\styles\*.* goto epubTranslationStyles
-
-    :: Copy original styles
-    :epubOriginalStyles
-    xcopy /i /q "styles\*.css" "..\epub\styles" > nul
-    :: Done! Move along to moving the text folder
-    echo Styles copied.
-    goto epubCopyImages
-    
-    :: Copy translated styles, after deleting original styles
-    :epubTranslationStyles
-    rd /s /q styles
-    mkdir "..\epub\%subdirectory%\styles"
-    if exist "%subdirectory%\styles\*.css" xcopy /i /q "%subdirectory%\styles\*.css" "..\epub\%subdirectory%\styles" > nul
-    :: Done! Move along to moving the text folder
-    echo Styles copied.
-    goto epubCopyImages
+        :: Copy styles, images, text and package.opf to epub folder.
+        :: The echo f preemptively answers xcopy's question whether 
+        :: this is a file (see https://stackoverflow.com/a/3018371).
+        :: The > nul supresses command-line feedback (pseudo silent mode)
+        cd _site\%bookfolder%
 
 
-    :: Test copying options
-    :epubCopyImages
-    echo Copying images...
-    :: --------------------------
-    :: If original language output: copy only files in images/epub
-    if "%subdirectory%"=="" if not exist %subdirectory%\images\*.* goto epubOriginalImages
-    :: Translation output, but no translated-images subdirectory for that translation:
-    :: copy the original images files only
-    if not "%subdirectory%"=="" if not exist %subdirectory%\images\*.* goto epubOriginalImages
-    :: Translation output, and an images subdir for that translation exists:
-    :: create folder structure, and copy only the images in that translation folder
-    if not "%subdirectory%"=="" if exist %subdirectory%\images\*.* goto epubTranslationImages
+        :: Test copying options
+        :epubCopyStyles
+            echo Copying styles...
+            :: --------------------------
+            :: If original language output: copy only files in fonts/epub
+            if "%subdirectory%"=="" if not exist %subdirectory%\styles\*.* goto epubOriginalStyles
+            :: Translation output, but no translated-styles subdirectory for that translation:
+            :: copy the original styles files only
+            if not "%subdirectory%"=="" if not exist %subdirectory%\styles\*.* goto epubOriginalStyles
+            :: Translation output, and an styles subdir for that translation exists:
+            :: create folder structure, and copy only the styles in that translation folder
+            if not "%subdirectory%"=="" if exist %subdirectory%\styles\*.* goto epubTranslationStyles
 
-    :: Copy original images
-    :epubOriginalImages
-    xcopy /i /q "images\epub\*.*" "..\epub\images\epub" > nul
-    :: Done! Move along to moving the text folder
-    echo Images copied.
-    goto epubCopyText
-    
-    :: Copy translated images, after deleting original images
-    :epubTranslationImages
-    rd /s /q images
-    mkdir "..\epub\%subdirectory%\images\epub"
-    xcopy /i /q "%subdirectory%\images\epub\*.*" "..\epub\%subdirectory%\images\epub" > nul
-    :: Done! Move along to moving the text folder
-    echo Images copied.
-    goto epubCopyText
-
-
-    :: Copy contents of text or text/subdirectory to epub/text.
-    :: We don't want all the files in text, we only want the ones
-    :: in the epub file list.
-    :epubCopyText
-    echo Copying text...
-
-    :: If this isn't a translation, skip ahead to epubCopyNoSubdirectory 
-    if "%subdirectory%"=="" GOTO epubOriginalText
-
-    :: Copy the contents of the subdirectory
-    :epubSubdirectoryText
-    rd /s /q "text"
-    mkdir "..\epub\%subdirectory%\text"
-    cd %subdirectory%\text
-    for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\..\epub\%subdirectory%\text\" > nul
-    cd ..
-    cd ..
-    echo Text copied.
-    goto epubCopyOPF
-
-    :: Copy the contents of the original text folder
-    :epubOriginalText
-    cd text
-    for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\epub\text\" > nul
-    cd ..
-    echo Text copied.
-    goto epubCopyOPF
+        :: Copy original styles
+        :epubOriginalStyles
+            xcopy /i /q "styles\*.css" "..\epub\styles" > nul
+            :: Done! Move along to moving the text folder
+            echo Styles copied.
+            goto epubCopyImages
+        
+        :: Copy translated styles, after deleting original styles
+        :epubTranslationStyles
+            rd /s /q styles
+            mkdir "..\epub\%subdirectory%\styles"
+            if exist "%subdirectory%\styles\*.css" xcopy /i /q "%subdirectory%\styles\*.css" "..\epub\%subdirectory%\styles" > nul
+            :: Done! Move along to moving the text folder
+            echo Styles copied.
+            goto epubCopyImages
 
 
-    :: Get the right package.opf for the translation we're creating
-    :epubCopyOPF
-    echo Copying package file...
-    if "%subdirectory%"=="" goto epubOriginalOPF
-    if not "%subdirectory%"=="" goto epubSubdirectoryOPF
+        :: Test copying options
+        :epubCopyImages
+            echo Copying images...
+            :: --------------------------
+            :: If original language output: copy only files in images/epub
+            if "%subdirectory%"=="" if not exist %subdirectory%\images\*.* goto epubOriginalImages
+            :: Translation output, but no translated-images subdirectory for that translation:
+            :: copy the original images files only
+            if not "%subdirectory%"=="" if not exist %subdirectory%\images\*.* goto epubOriginalImages
+            :: Translation output, and an images subdir for that translation exists:
+            :: create folder structure, and copy only the images in that translation folder
+            if not "%subdirectory%"=="" if exist %subdirectory%\images\*.* goto epubTranslationImages
 
-    :: If original language, use the package.opf in the root
-    :epubOriginalOPF
-    echo f | xcopy /e /q "package.opf" "../epub" > nul
-    echo Package file copied.
-    goto epubOPFDone
-
-    :: If translation language, use the package.opf in the subdirectory
-    :: This will overwrite the original language OPF file
-    :epubSubdirectoryOPF
-    echo f | xcopy /e /q "%subdirectory%\package.opf" "../epub" > nul
-    echo Package file copied.
-    goto epubOPFDone
-
-    :epubOPFDone
-
-
-    :: Go into _site/epub to move some more files and then zip to _output
-    CD %location%_site/epub
-
-    :: If there is a js folder, and it has no contents, delete it.
-    :: Otherwise, if this is a translation, move the js folder
-    :: into the subdirectory alongside text, images, styles.
-    :epubMoveJS
-    echo Checking for Javascript...
-    if exist "js" if not exist "js\*.*" rd /s /q "js"
-    if not "%subdirectory%"=="" if exist "js\*.*" move "js" "%subdirectory%\js"
-    echo Javascript checked.
-
-    :: If there is a fonts folder, and it has no contents, delete it.
-    :: Otherwise, if this is a translation, move the fonts folder
-    :: into the subdirectory alongside text, images, styles.
-    :epubMoveFonts
-    echo Checking for fonts...
-    if exist "fonts" if not exist "fonts\*.ttf" if not exist "fonts\*.otf" if not exist "fonts\*.woff" if not exist "fonts\*.woff2" rd /s /q "fonts"
-    if not "%subdirectory%"=="" if exist "fonts\*.*" move "fonts" "%subdirectory%\fonts"
-    echo Fonts checked.
-
-    :: If MathJax required, fetch boilerplate mathjax directory from /assets/js
-    if "%epubIncludeMathJax%"=="y" goto epubGetMathjax
-    goto epubSetFilename
-
-    :epubGetMathjax
-    echo Copying MathJax to epub...
-    :: Copy mathjax folder from /assets/js to _site/epub
-    xcopy /q /e "../assets/js/mathjax" "" > nul
-    :: If this is a translation, move mathjax into the language folder
-    if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" move "mathjax" "%subdirectory%\mathjax"
-    if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" echo MathJax moved to translation folder.
-
-    :: Set the filename of the epub, sans extension
-    :epubSetFilename
-    if "%subdirectory%"=="" set epubFileName=%bookfolder%
-    if not "%subdirectory%"=="" set epubFileName=%bookfolder%-%subdirectory%
-
-    :: If they exist, remove previous .zip and .epub files that we will replace.
-    echo Removing any previous %epubFileName%.zip and %epubFileName%.epub files...
-    if exist "%location%\_output\%epubFileName%.zip" del /q "%location%\_output\%epubFileName%.zip"
-    if exist "%location%\_output\%epubFileName%.epub" del /q "%location%\_output\%epubFileName%.epub"
-    echo Removed any previous zip and epub files.
-
-    :: Now to zip the epub files. Important: mimetype first.
-    :epubCompressing
-    echo Compressing files...
-    :: Uses Zip 3.0: http://www.info-zip.org/Zip.html
-    :: Temporarily put Zip in the PATH
-    PATH=%PATH%;%location%_tools\zip
-    :: mimetype: create zip, no compression, no extra fields
-    zip --compression-method store -0 -X --quiet "%location%_output/%epubFileName%.zip" mimetype
-    :: everything else: append to the zip with default compression
-
-    :: Zip root folders, if this is not a translation
-    if not "%subdirectory%"=="" goto epubZipSubdirectory
-    if exist "images\epub" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images\epub"
-    if exist "fonts" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "fonts"
-    if exist "styles" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "styles"
-    if exist "text" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "text"
-    if exist "mathjax" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "mathjax"
-    if exist "js" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "js"
-
-    :: And if it is a translation, just move the language subdirectory
-    :epubZipSubdirectory
-    if not "%subdirectory%"=="" if exist "%subdirectory%" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "%subdirectory%"
-
-    :: Now add these admin files to the zip
-    if exist META-INF zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" META-INF
-    if exist package.opf zip --quiet "%location%_output/%epubFileName%.zip" package.opf
-
-    :: Change file extension .zip to .epub
-    cd %location%_output
-    if exist %epubFileName%.zip ren %epubFileName%.zip %epubFileName%.epub
-
-    :: We're done!
-    :epubCreated
-    if exist %epubFileName%.epub echo Epub created^^!
-    if not exist %epubFileName%.epub echo Sorry, something went wrong.
+        :: Copy original images
+        :epubOriginalImages
+            xcopy /i /q "images\epub\*.*" "..\epub\images\epub" > nul
+            :: Done! Move along to moving the text folder
+            echo Images copied.
+            goto epubCopyText
+        
+        :: Copy translated images, after deleting original images
+        :epubTranslationImages
+            rd /s /q images
+            mkdir "..\epub\%subdirectory%\images\epub"
+            xcopy /i /q "%subdirectory%\images\epub\*.*" "..\epub\%subdirectory%\images\epub" > nul
+            :: Done! Move along to moving the text folder
+            echo Images copied.
+            goto epubCopyText
 
 
-    :: Check if epubcheck is in the PATH, and run it if it is
-    if not "%epubValidation%"=="" goto skipepubValidation
-    echo If EpubCheck is in your PATH, we'll run validation now.
+        :: Copy contents of text or text/subdirectory to epub/text.
+        :: We don't want all the files in text, we only want the ones
+        :: in the epub file list.
+        :epubCopyText
+            echo Copying text...
 
-    :: Use a batch-file trick to get the location of epubcheck
-    :: https://blogs.msdn.microsoft.com/oldnewthing/20120731-00/?p=7003/
-    for /f %%i in ('where epubcheck.jar') do set epubchecklocation=%%i
-    if "%epubchecklocation%"=="" echo Couldn't find EpubCheck, sorry.
-    if "%epubchecklocation%"=="" goto skipEpubValidation
+        :: If this isn't a translation, skip ahead to epubCopyNoSubdirectory 
+        if "%subdirectory%"=="" goto epubOriginalText
 
-    :: then run it, saving the error stream to a log file
-    :: First, create a timestamp
-    for /f "tokens=2-8 delims=.:/ " %%a in ("%date% %time%") do set timestamp=%%c-%%a-%%bT%%d-%%e-%%f-%%g
-    set epubCheckLogFile=epubcheck-log-%timestamp%
-    echo Found EpubCheck, running validation...
-    call java -jar %epubchecklocation% %epubFileName%.epub 2>> %epubCheckLogFile%.txt
-    echo Opening EpubCheck log...
-    start %epubCheckLogFile%.txt
+        :: Copy the contents of the subdirectory
+        :epubSubdirectoryText
+            rd /s /q "text"
+            mkdir "..\epub\%subdirectory%\text"
+            cd %subdirectory%\text
+            for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\..\epub\%subdirectory%\text\" > nul
+            cd ..
+            cd ..
+            echo Text copied.
+            goto epubCopyOPF
 
-    :: Skip to here if epubcheck wasn't found in the PATH
-    :: or the user didn't want validation
-    :skipEpubValidation
+        :: Copy the files in file-list from the original text folder
+        :epubOriginalText
+            cd text
+            for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\epub\text\" > nul
+            cd ..
+            echo Text copied.
+            goto epubCopyOPF
 
-    :: Open file explorer to show the epub
-    echo Opening folder containing your epub...
-    %SystemRoot%\explorer.exe "%location%_output"
 
-    :: Navigate back to where we began
-    CD "%location%"
+        :: Get the right package.opf for the translation we're creating
+        :epubCopyOPF
+            echo Copying package file...
+            if "%subdirectory%"=="" goto epubOriginalOPF
+            if not "%subdirectory%"=="" goto epubSubdirectoryOPF
 
-    :: Let the user easily run that again
-    SET repeat=
-    SET /p repeat=Enter to run again, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO epubrefresh
-        GOTO begin
+        :: If original language, use the package.opf in the root
+        :epubOriginalOPF
+            echo f | xcopy /e /q "package.opf" "../epub" > nul
+            echo Package file copied.
+            goto epubOPFDone
+
+        :: If translation language, use the package.opf in the subdirectory
+        :: This will overwrite the original language OPF file
+        :epubSubdirectoryOPF
+            echo f | xcopy /e /q "%subdirectory%\package.opf" "../epub" > nul
+            echo Package file copied.
+            goto epubOPFDone
+
+        :epubOPFDone
+
+
+        :: Go into _site/epub to move some more files and then zip to _output
+        cd %location%_site/epub
+
+        :: If there is a js folder, and it has no contents, delete it.
+        :: Otherwise, if this is a translation, move the js folder
+        :: into the subdirectory alongside text, images, styles.
+        :epubMoveJS
+            echo Checking for Javascript...
+            if exist "js" if not exist "js\*.*" rd /s /q "js"
+            if not "%subdirectory%"=="" if exist "js\*.*" move "js" "%subdirectory%\js"
+            echo Javascript checked.
+
+        :: If there is a fonts folder, and it has no contents, delete it.
+        :: Otherwise, if this is a translation, move the fonts folder
+        :: into the subdirectory alongside text, images, styles.
+        :epubMoveFonts
+            echo Checking for fonts...
+            if exist "fonts" if not exist "fonts\*.ttf" if not exist "fonts\*.otf" if not exist "fonts\*.woff" if not exist "fonts\*.woff2" rd /s /q "fonts"
+            if not "%subdirectory%"=="" if exist "fonts\*.*" move "fonts" "%subdirectory%\fonts"
+            echo Fonts checked.
+
+        :: If MathJax required, fetch boilerplate mathjax directory from /assets/js
+        if "%epubIncludeMathJax%"=="y" goto epubGetMathjax
+        goto epubSetFilename
+
+        :epubGetMathjax
+            echo Copying MathJax to epub...
+            :: Copy mathjax folder from /assets/js to _site/epub
+            xcopy /q /e "../assets/js/mathjax" "" > nul
+            :: If this is a translation, move mathjax into the language folder
+            if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" move "mathjax" "%subdirectory%\mathjax"
+            if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" echo MathJax moved to translation folder.
+
+        :: Set the filename of the epub, sans extension
+        :epubSetFilename
+            if "%subdirectory%"=="" set epubFileName=%bookfolder%
+            if not "%subdirectory%"=="" set epubFileName=%bookfolder%-%subdirectory%
+
+        :: If they exist, remove previous .zip and .epub files that we will replace.
+        echo Removing any previous %epubFileName%.zip and %epubFileName%.epub files...
+        if exist "%location%\_output\%epubFileName%.zip" del /q "%location%\_output\%epubFileName%.zip"
+        if exist "%location%\_output\%epubFileName%.epub" del /q "%location%\_output\%epubFileName%.epub"
+        echo Removed any previous zip and epub files.
+
+        :: Now to zip the epub files. Important: mimetype first.
+        :epubCompressing
+            echo Compressing files...
+            :: Uses Zip 3.0: http://www.info-zip.org/Zip.html
+            :: Temporarily put Zip in the PATH
+            path=%PATH%;%location%_tools\zip
+            :: mimetype: create zip, no compression, no extra fields
+            zip --compression-method store -0 -X --quiet "%location%_output/%epubFileName%.zip" mimetype
+            :: everything else: append to the zip with default compression
+
+            :: Zip root folders, if this is not a translation
+            if not "%subdirectory%"=="" goto epubZipSubdirectory
+            if exist "images\epub" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images\epub"
+            if exist "fonts" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "fonts"
+            if exist "styles" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "styles"
+            if exist "text" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "text"
+            if exist "mathjax" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "mathjax"
+            if exist "js" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "js"
+
+        :: And if it is a translation, just move the language subdirectory
+        :epubZipSubdirectory
+            if not "%subdirectory%"=="" if exist "%subdirectory%" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "%subdirectory%"
+
+            :: Now add these admin files to the zip
+            if exist META-INF zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" META-INF
+            if exist package.opf zip --quiet "%location%_output/%epubFileName%.zip" package.opf
+
+            :: Change file extension .zip to .epub
+            cd %location%_output
+            if exist %epubFileName%.zip ren %epubFileName%.zip %epubFileName%.epub
+
+        :: We're done!
+        :epubCreated
+            if exist %epubFileName%.epub echo Epub created^^!
+            if not exist %epubFileName%.epub echo Sorry, something went wrong.
+
+        :: Check if epubcheck is in the PATH, and run it if it is
+            if not "%epubValidation%"=="" goto skipepubValidation
+            echo If EpubCheck is in your PATH, we'll run validation now.
+
+            :: Use a batch-file trick to get the location of epubcheck
+            :: https://blogs.msdn.microsoft.com/oldnewthing/20120731-00/?p=7003/
+            for /f %%i in ('where epubcheck.jar') do set epubchecklocation=%%i
+            if "%epubchecklocation%"=="" echo Couldn't find EpubCheck, sorry.
+            if "%epubchecklocation%"=="" goto skipEpubValidation
+
+            :: then run it, saving the error stream to a log file
+            :: First, create a timestamp
+            for /f "tokens=2-8 delims=.:/ " %%a in ("%date% %time%") do set timestamp=%%c-%%a-%%bT%%d-%%e-%%f-%%g
+            set epubCheckLogFile=epubcheck-log-%timestamp%
+            echo Found EpubCheck, running validation...
+            call java -jar %epubchecklocation% %epubFileName%.epub 2>> %epubCheckLogFile%.txt
+            echo Opening EpubCheck log...
+            start %epubCheckLogFile%.txt
+
+        :: Skip to here if epubcheck wasn't found in the PATH
+        :: or the user didn't want validation
+        :skipEpubValidation
+
+        :: Open file explorer to show the epub
+        echo Opening folder containing your epub...
+        %SystemRoot%\explorer.exe "%location%_output"
+
+        :: Navigate back to where we began
+        cd "%location%"
+
+        :: Let the user easily run that again
+        set repeat=
+        set /p repeat=Enter to run again, or any other key and enter to stop. 
+        if "%repeat%"=="" goto epubrefresh
+        goto begin
 
 
     :: :: :: :: :: ::
@@ -600,61 +664,67 @@ SET /p process=Enter a number and hit return.
     :: :: :: :: :: ::
 
     :app
-    :: Remember where we are by assigning a variable to the current directory
-    set location=%~dp0
-    :: Encouraging message
-    echo Okay, let's make an Android app. First we'll generate the HTML,
-    echo then we'll build an app. For the build, you need Cordova
-    echo and Android Studio installed.
-    echo.
-    echo Shall we build the app, or just generate the HTML? Enter y to build the app, if not hit enter. 
-    set /p appbuildgenerateapp=
-    :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
-    :: Ask if MathJax should be enabled.
-    ECHO Do these books use MathJax? If yes, enter y. If no, hit enter.
-    SET /p appmathjax=
-    :appbuildrepeat
-    :: Run Jekyll, with MathJax enabled if necessary
-    ECHO Building your HTML...
-    IF NOT "%appmathjax%"=="y" GOTO appbuildnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
-    GOTO apphtmlbuilt
-    :appbuildnomathjax
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%"
-    :apphtmlbuilt
-    :: Put HTML into app/www by moving (/MOVE) everything (/E) in _site
-    :: excluding (/XD) the app folder itself, into app/www.
-    :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
-    :: Adding /NP will also suppress progress bar.
-    :: (I'd remove the moved folders with /MOVE but that's not working.)
-    echo Copying files to app directory...
-    robocopy "%location%_site" "%location%_site/app/www" /E /XD "%location%_site\app" /NFL /NDL /NJH /NJS /NC /NS
-    :: Build app with Cordova
-    if not "%appbuildgenerateapp%"=="y" goto appbuildaftercordova
-    echo Building your Android app... If you get an error, make sure Cordova and Android Studio are installed.
-    cd _site/app
-    call cordova build android
-    echo Opening folder containing app...
-    %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
-    :appbuildaftercordova
-    cd "%location%"
-    :: Building iOS only available on Mac machines
-    rem call cordova build ios
-    :: Let the user rebuild and restart
-    :appbuildrepeatselect
-    SET repeat=
-    SET /p repeat=Enter to rebuild the app HTML, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO appbuildrepeat
-    ECHO.
-    GOTO begin
+
+        :: Remember where we are by assigning a variable to the current directory
+        set location=%~dp0
+
+        :: Encouraging message
+        echo Okay, let's make an Android app. First we'll generate the HTML,
+        echo then we'll build an app. For the build, you need Cordova
+        echo and Android Studio installed.
+        echo.
+        echo Shall we build the app, or just generate the HTML? Enter y to build the app, if not hit enter. 
+        set /p appbuildgenerateapp=
+
+        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+        echo.
+        echo Any extra config files?
+        echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+        echo _configs/_config.myconfig.yml
+        echo If not, just hit return.
+        echo.
+        set /p config=
+        echo.
+
+        :: Ask if MathJax should be enabled.
+        echo Do these books use MathJax? If yes, enter y. If no, hit enter.
+        set /p appmathjax=
+
+        :: Run Jekyll, with MathJax enabled if necessary
+        :appbuildrepeat
+            echo Building your HTML...
+            if not "%appmathjax%"=="y" goto appbuildnomathjax
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            goto apphtmlbuilt
+            :appbuildnomathjax
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%"
+            :apphtmlbuilt
+
+            :: Put HTML into app/www by moving everything (/E) in _site
+            :: excluding (/XD) the app folder itself, into app/www.
+            :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
+            :: Adding /NP will also suppress progress bar.
+            :: (I'd remove the moved folders with /MOVE but that's not working.)
+            echo Copying files to app directory...
+            robocopy "%location%_site" "%location%_site/app/www" /E /XD "%location%_site\app" /NFL /NDL /NJH /NJS /NC /NS
+
+            :: Build app with Cordova
+            if not "%appbuildgenerateapp%"=="y" goto appbuildaftercordova
+            echo Building your Android app... If you get an error, make sure Cordova and Android Studio are installed.
+            cd _site/app
+            call cordova build android
+            echo Opening folder containing app...
+            %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
+            :appbuildaftercordova
+            cd "%location%"
+
+        :: Let the user rebuild and restart
+        :appbuildrepeatselect
+            set repeat=
+            set /p repeat=Enter to rebuild the app HTML, or any other key and enter to stop. 
+            if "%repeat%"=="" goto appbuildrepeat
+            echo.
+            goto begin
 
 
     :: :: :: :: :: ::
@@ -662,149 +732,179 @@ SET /p process=Enter a number and hit return.
     :: :: :: :: :: ::
 
     :word
-    :: Encouraging message
-    ECHO.
-    ECHO Okay, let's export to Word.
-    ECHO.
-    :: Remember where we are by assigning a variable to the current directory
-    SET location=%~dp0
-    :: Ask user which folder to process
-    SET /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-    IF "%bookfolder%"=="" SET bookfolder=book
-    :: Ask user which output type to work from
-    ECHO Which format are we converting from? Enter a number or hit enter for the default:
-    ECHO 1. Print PDF (default)
-    ECHO 2. Screen PDF
-    ECHO 3. Web
-    ECHO 4. Epub
-    SET /p fromformat=
-    :: Turn that choice into the name of an output format for our config
-    IF "%fromformat%"=="" SET fromformat=print-pdf
-    IF "%fromformat%"=="1" SET fromformat=print-pdf
-    IF "%fromformat%"=="2" SET fromformat=screen-pdf
-    IF "%fromformat%"=="3" SET fromformat=web
-    IF "%fromformat%"=="4" SET fromformat=epub
-    :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
-    ECHO.
-    ECHO Any extra config files?
-    ECHO Enter filenames (including any relative path), comma separated, no spaces. E.g.
-    ECHO _configs/_config.myconfig.yml
-    ECHO If not, just hit return.
-    ECHO.
-    SET /p config=
-    ECHO.
-    :: Loop back to this point to refresh the build again
-    :wordrefresh
-    :: let the user know we're on it!
-    ECHO Generating HTML...
-    :: ...and run Jekyll to build new HTML
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,%config%"
-    :: Navigate to the HTML we just generated
-    CD _site\%bookfolder%\text
-    :: What're we doing?
-    ECHO Converting %bookfolder% HTML to Word...
-    :: Loop through the list of files in file-list
-    :: and convert them each from .html to .docx.
-    :: We end up with the same filenames, 
-    :: with .docx extensions appended.
-    FOR /F "tokens=*" %%F IN (file-list) DO (
-        pandoc %%F -f html -t docx -s -o %%F.docx
-        )
-    :: What are we doing next?
-    ECHO Fixing file extensions...
-    :: What are we finding and replacing?
-    SET find=.html
-    SET replace=
-    :: Loop through all .docx files and remove the .html
-    :: from those filenames pandoc created.
-    FOR %%# in (.\*.docx) DO (
-        Set "File=%%~nx#"
-        Ren "%%#" "!File:%find%=%replace%!"
-    )
-    :: Whassup?
-    ECHO Done, opening folder...
-    :: Open file explorer to show the docx files.
-    %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text"
-    :: Navigate back to where we began
-    CD "%location%"
-    :: Let the user easily run that again
-    SET repeat=
-    SET /p repeat=Enter to try again, or any other key and enter to stop. 
-    IF "%repeat%"=="" GOTO word
-    ECHO.
-    GOTO begin
+
+        :: Encouraging message
+        echo.
+        echo Okay, let's export to Word.
+        echo.
+
+        :: Remember where we are by assigning a variable to the current directory
+        set location=%~dp0
+
+        :: Ask user which folder to process
+        set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+        if "%bookfolder%"=="" set bookfolder=book
+
+        :: Ask user which output type to work from
+        echo Which format are we converting from? Enter a number or hit enter for the default:
+        echo 1. Print PDF (default)
+        echo 2. Screen PDF
+        echo 3. Web
+        echo 4. Epub
+        set /p fromformat=
+
+        :: Turn that choice into the name of an output format for our config
+        if "%fromformat%"=="" set fromformat=print-pdf
+        if "%fromformat%"=="1" set fromformat=print-pdf
+        if "%fromformat%"=="2" set fromformat=screen-pdf
+        if "%fromformat%"=="3" set fromformat=web
+        if "%fromformat%"=="4" set fromformat=epub
+
+        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+        echo.
+        echo Any extra config files?
+        echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+        echo _configs/_config.myconfig.yml
+        echo If not, just hit return.
+        echo.
+        set /p config=
+        echo.
+
+        :: Loop back to this point to refresh the build again
+        :wordrefresh
+
+            :: let the user know we're on it!
+            echo Generating HTML...
+
+            :: ...and run Jekyll to build new HTML
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.image-set.%fromformat%.yml,%config%"
+
+            :: Navigate to the HTML we just generated
+            cd _site\%bookfolder%\text
+
+            :: What're we doing?
+            echo Converting %bookfolder% HTML to Word...
+
+            :: Loop through the list of files in file-list
+            :: and convert them each from .html to .docx.
+            :: We end up with the same filenames, 
+            :: with .docx extensions appended.
+            for /F "tokens=*" %%F in (file-list) do (
+                pandoc %%F -f html -t docx -s -o %%F.docx
+                )
+
+            :: User feedback
+            echo Fixing file extensions...
+
+            :: We're going to find .html file extensions and replace them with nothing
+            set find=.html
+            set replace=
+
+            :: Loop through all .docx files and remove the .html
+            :: from those filenames pandoc created.
+            for %%# in (.\*.docx) do (
+                set "File=%%~nx#"
+                ren "%%#" "!File:%find%=%replace%!"
+            )
+
+            :: User feedback
+            echo Done, opening folder...
+
+            :: Open file explorer to show the docx files.
+            %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text"
+
+            :: Navigate back to where we began
+            cd "%location%"
+
+        :: Let the user easily run that again
+        set repeat=
+        set /p repeat=Enter to try again, or any other key and enter to stop. 
+        if "%repeat%"=="" goto word
+        echo.
+        goto begin
 
     :: :: :: :: :: :: ::
     :: CONVERT IMAGES ::
     :: :: :: :: :: :: ::
 
     :convertimages
-    :: Encouraging message, and explain
-    echo Let's convert your source images.
-    echo This process will optimise the images in a book's _source folder
-    echo and copy them to the print-pdf, screen-pdf, web and epub image folders.
-    echo You need to have run 'Install or update dependencies' at least once,
-    echo and have GraphicsMagick installed (http://www.graphicsmagick.org).
-    echo.
-    :: Select which book to convert images for
-    :convertimagesselectbook
-    set bookimagestoconvert=
-    echo Which book's images are you converting? Hit enter for the default 'book'.
-    set /p bookimagestoconvert=
-    if "%bookimagestoconvert%"=="" set bookimagestoconvert=book && goto convertimageslanguageselect
-    if not exist "%bookimagestoconvert%\*.*" echo Sorry, %bookimagestoconvert% doesn't exist. Try again. && goto convertimagesselectbook
-    :: Select whether we're converting images for a translation
-    :convertimageslanguageselect
-    echo.
-    echo Are we converting books in a translation? If not, hit enter.
-    echo Otherwise, enter the language code/translation directory name. 
-    set /p convertimageslanguage=
-    if not exist "%bookimagestoconvert%\%convertimageslanguage%\*.*" echo Sorry, %bookimagestoconvert%\%convertimageslanguage% doesn't exist. Try again. && goto convertimageslanguageselect
-    :: Run default gulp task
-    :convertimagescustombook
-    call gulp --book "%bookimagestoconvert%" --language "%convertimageslanguage%"
-    :: Back to the beginning
-    :convertimagescomplete
-    goto begin
+
+        :: Encouraging message, and explain
+        echo Let's convert your source images.
+        echo This process will optimise the images in a book's _source folder
+        echo and copy them to the print-pdf, screen-pdf, web and epub image folders.
+        echo You need to have run 'Install or update dependencies' at least once,
+        echo and have GraphicsMagick installed (http://www.graphicsmagick.org).
+        echo.
+
+        :: Select which book to convert images for
+        :convertimagesselectbook
+            set bookimagestoconvert=
+            echo Which book's images are you converting? Hit enter for the default 'book'.
+            set /p bookimagestoconvert=
+            if "%bookimagestoconvert%"=="" set bookimagestoconvert=book && goto convertimageslanguageselect
+            if not exist "%bookimagestoconvert%\*.*" echo Sorry, %bookimagestoconvert% doesn't exist. Try again. && goto convertimagesselectbook
+
+        :: Select whether we're converting images for a translation
+        :convertimageslanguageselect
+            echo.
+            echo Are we converting books in a translation? If not, hit enter.
+            echo Otherwise, enter the language code/translation directory name. 
+            set /p convertimageslanguage=
+            if not exist "%bookimagestoconvert%\%convertimageslanguage%\*.*" echo Sorry, %bookimagestoconvert%\%convertimageslanguage% doesn't exist. Try again. && goto convertimageslanguageselect
+
+        :: Run default gulp task
+        :convertimagescustombook
+            call gulp --book "%bookimagestoconvert%" --language "%convertimageslanguage%"
+
+        :: Back to the beginning
+        :convertimagescomplete
+            goto begin
 
     :: :: :: :: :: ::
     :: INSTALL     ::
     :: :: :: :: :: ::
 
     :install
-    :: Encouraging message
-    echo Let's install gems and update some dependencies.
-    :: Check if Bundler is installed. If not, install it.
-    :: (Thanks http://stackoverflow.com/a/4781795/1781075)
-    echo First, we're going to run Bundler to update and install dependencies. 
-    echo If Bundler is not already installed, we'll install it first.
-    echo If you get a rubygems error about SSL certificate failure, see
-    echo http://guides.rubygems.org/ssl-certificate-update/
-    echo This may take a few minutes.
-    set FOUND=
-    for %%e in (%PATHEXT%) do (
-      for %%X in (bundler%%e) do (
-        if not defined FOUND (
-          set FOUND=%%~$PATH:X
+
+        :: Encouraging message
+        echo Let's install gems and update some dependencies.
+
+        :: Check if Bundler is installed. If not, install it.
+        :: (Thanks http://stackoverflow.com/a/4781795/1781075)
+        echo First, we're going to run Bundler to update and install dependencies. 
+        echo If Bundler is not already installed, we'll install it first.
+        echo If you get a rubygems error about SSL certificate failure, see
+        echo http://guides.rubygems.org/ssl-certificate-update/
+        echo This may take a few minutes.
+        set found=
+        for %%e in (%pathext%) do (
+          for %%X in (bundler%%e) do (
+            if not defined found (
+              set found=%%~$PATH:X
+            )
+          )
         )
-      )
-    )
-    if not "%FOUND%"=="" goto bundlerinstalled
-    if "%FOUND%"=="" echo Installing Bundler...
-    gem install bundler
-    :bundlerinstalled
-    echo Updating Bundler...
-    :: Run bundle update
-    call bundle update
-    :: Run bundle install
-    echo Installing gems with Bundler...
-    call bundle install
-    :: Install node modules
-    echo Next, we're going to install or update Node modules.
-    echo You need to have Node.js installed already (https://nodejs.org).
-    echo Installing Node modules... This may take a few minutes.
-    call npm install
-    :: Back to the beginning
-    echo Done.
-    echo.
-    goto begin
+        if not "%found%"=="" goto bundlerinstalled
+        if "%found%"=="" echo Installing Bundler...
+        gem install bundler
+        :bundlerinstalled
+
+        :: Run bundle update
+        echo Updating Bundler...
+        call bundle update
+
+        :: Run bundle install
+        echo Installing gems with Bundler...
+        call bundle install
+
+        :: Install node modules
+        echo Next, we're going to install or update Node modules.
+        echo You need to have Node.js installed already (https://nodejs.org).
+        echo Installing Node modules... This may take a few minutes.
+        call npm install
+
+        :: Back to the beginning
+        echo Done.
+        echo.
+        goto begin

@@ -55,9 +55,9 @@ $color-text-secondary: #222222 !default;
 $color-background: white !default;
 $color-light: #e0e0e0 !default;
 $color-mid: #9c9c9c !default;
-$color-accent: #000000 !default;
+$color-accent: #009E7F !default;
 $color-links: #5f738c !default;
-$color-buttons: #5f738c !default;
+$color-buttons: $color-accent !default;
 $color-buttons-hover: darken( $color-buttons, 20% ) !default;
 $color-highlight: #ffd54d !default;
 

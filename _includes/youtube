@@ -13,8 +13,11 @@
 {% endif %}
 
 {% comment %}Get an image for the video from YouTube,
-then let the user override it by setting an image parameter{% endcomment %}
-{% capture video-image %}https://i1.ytimg.com/vi/{{ include.id }}/hqdefault.jpg{% endcapture %}
+then let the user override it by setting an image parameter.
+Epubs and apps aren't online, so don't fetch an image automatically.{% endcomment %}
+{% unless site.output == "epub" or site.output == "app" %}
+    {% capture video-image %}https://i1.ytimg.com/vi/{{ include.id }}/hqdefault.jpg{% endcapture %}
+{% endunless %}
 {% if include.image %}
     {% capture video-image %}{{ images }}/{{ include.image }}{% endcapture %}
 {% endif %}
@@ -22,7 +25,11 @@ then let the user override it by setting an image parameter{% endcomment %}
 <div class="video youtube{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}">
     <div class="video-wrapper">
         <a class="video-link" href="{{ video-link }}">
-            <img src="{{ video-image }}">
+            {% if video-image %}
+                <img src="{{ video-image }}">
+            {% else %}
+                <span class="video-no-image"></span>
+            {% endif %}
         </a>
     </div>
 

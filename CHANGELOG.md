@@ -8,7 +8,11 @@
 * Update Source Sans Pro
 * Add Sass variables to make headers and footers easier to style
 * Improved docs
-* Bug fixes
+* Fix epub output in OSX, Linux
+* Add app output to OSX, Linux
+* Fix Word output on OSX, Linux
+* Add image-processing with `gulp` to unix scripts
+* Minor bug and code-readability fixes
 * 
 
 ## 0.10.0
