@@ -785,13 +785,24 @@ set /p process=Enter a number and hit return.
             :: What're we doing?
             echo Converting %bookfolder% HTML to Word...
 
-            :: Loop through the list of files in file-list
+            :: We'll temporarily use a pandoc-specific file-list
+            :: Remove previous file-list-pandoc if any
+            if exist file-list-pandoc del file-list-pandoc
+
+            :: Remove empty lines from file-list by selecting
+            :: only the lines with '.html' in them. I.e. our files.
+            findstr /r /c:".html" file-list > file-list-pandoc
+
+            :: Loop through the list of files in file-list-pandoc
             :: and convert them each from .html to .docx.
             :: We end up with the same filenames, 
             :: with .docx extensions appended.
             for /F "tokens=*" %%F in (file-list) do (
                 pandoc %%F -f html -t docx -s -o %%F.docx
                 )
+
+            :: And then remove the temporary file we created
+            del file-list-pandoc
 
             :: User feedback
             echo Fixing file extensions...
