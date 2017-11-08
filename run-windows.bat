@@ -698,7 +698,7 @@ SET /p process=Enter a number and hit return.
     :: let the user know we're on it!
     ECHO Generating HTML...
     :: ...and run Jekyll to build new HTML
-    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.image-set.%fromformat%.yml,%config%"
+    CALL bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,%config%"
     :: Navigate to the HTML we just generated
     CD _site\%bookfolder%\text
     :: What're we doing?
