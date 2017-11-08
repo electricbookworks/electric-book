@@ -8,6 +8,7 @@
 * Update Source Sans Pro
 * Add Sass variables to make headers and footers easier to style
 * Improved docs
+* Bug fixes
 * 
 
 ## 0.10.0
