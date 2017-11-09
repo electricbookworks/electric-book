@@ -12,13 +12,13 @@ var gulp = require('gulp'),
 
 // get the book we're processing
 var book = 'book';
-if (args.book) {
+if (args.book && args.book.trim != '') {
     var book = args.book;
 };
 
 // get the language we're processing
 var language = '';
-if (args.language) {
+if (args.language && args.language.trim != '') {
     var language = '/' + args.language;
 };
 

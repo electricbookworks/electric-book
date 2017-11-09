@@ -853,8 +853,8 @@ set /p process=Enter a number and hit return.
             set bookimagestoconvert=
             echo Which book's images are you converting? Hit enter for the default 'book'.
             set /p bookimagestoconvert=
-            if "%bookimagestoconvert%"=="" set bookimagestoconvert=book && goto convertimageslanguageselect
-            if not exist "%bookimagestoconvert%\*.*" echo Sorry, %bookimagestoconvert% doesn't exist. Try again. && goto convertimagesselectbook
+            if "%bookimagestoconvert%"=="" set "bookimagestoconvert=book" && goto convertimageslanguageselect
+            if not exist "%bookimagestoconvert%" echo Sorry, %bookimagestoconvert% doesn't exist. Try again. && goto convertimagesselectbook
 
         :: Select whether we're converting images for a translation
         :convertimageslanguageselect
@@ -862,11 +862,14 @@ set /p process=Enter a number and hit return.
             echo Are we converting books in a translation? If not, hit enter.
             echo Otherwise, enter the language code/translation directory name. 
             set /p convertimageslanguage=
-            if not exist "%bookimagestoconvert%\%convertimageslanguage%\*.*" echo Sorry, %bookimagestoconvert%\%convertimageslanguage% doesn't exist. Try again. && goto convertimageslanguageselect
+            if "%convertimageslanguage%"=="" goto convertimagescustombook
+            if not exist "%bookimagestoconvert%\%convertimageslanguage%" echo Sorry, %bookimagestoconvert%\%convertimageslanguage% doesn't exist. Try again. && goto convertimageslanguageselect
 
         :: Run default gulp task
         :convertimagescustombook
+            echo Converting images...
             call gulp --book "%bookimagestoconvert%" --language "%convertimageslanguage%"
+            echo Done^!
 
         :: Back to the beginning
         :convertimagescomplete
