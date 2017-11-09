@@ -482,6 +482,13 @@ You may need to reload the web page once this server is running."
 				then
 				echo "Building iOS app..."
 				cd _site/app
+				# Refresh the ios platform
+				# e.g. https://stackoverflow.com/a/44051927/1781075
+				echo "Refreshing 'ios' platform..."
+				cordova plugin save
+				cordova platform rm ios
+				cordova platform add ios
+				# Now we build the app
 				cordova build ios
 				cd .. && cd ..
 				echo "Done. Opening folder containing iOS app..."
