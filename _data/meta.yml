@@ -123,6 +123,8 @@ works:
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
         identifier: "9780000000000" # e.g. ISBN or UUID
         image: "cover.jpg"
+        start-page: "0-3-contents"
+        contents-page: "0-3-contents"
         files: # add a value to any file to set any of the guide types listed in http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
           - "0-0-cover": "cover"
           - "0-1-titlepage"
@@ -435,7 +437,9 @@ works:
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
         identifier: "9780000000000" # e.g. ISBN or UUID
         image: "cover.jpg"
-        files:
+        start-page: "00-05-contents-page"
+        contents-page: "00-05-contents-page"
+        files: # add a value to any file to set any of the guide types listed in http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
           - "00-00-cover": "cover"
           - "00-01-halftitle-page"
           - "00-02-previous-publications-page"
