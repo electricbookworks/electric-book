@@ -130,7 +130,6 @@
         {% for file in image-files %}
 
             {% capture properties %}
-                {% if file.extname == ".svg" %}svg {% endif %}
                 {% if file.basename == "cover" %}cover-image {% endif %}
             {% endcapture %}
             {% capture properties %}{{ properties | strip_newlines | strip }}{% endcapture %}
