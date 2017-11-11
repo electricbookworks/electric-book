@@ -12,6 +12,7 @@
 * Add app output to OSX, Linux
 * Fix Word output on OSX, Linux
 * Add image-processing with `gulp` to unix scripts
+* Add minification and cleanup of SVGs on image processing
 * Minor bug and code-readability fixes
 * 
 
