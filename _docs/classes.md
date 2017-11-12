@@ -34,6 +34,7 @@ Use these classes in your markdown to create specific formatting effects.
 | Frontmatter references | `.frontmatter-reference` | Inline | Tag links in the Table of Contents whose page numbers must match yout frontmatter reference style set in CSS. | No
 | Glossary | `.glossary` | Block | Use this after the last entry in a series of definition lists to define the entire list of definitions as a glossary. | No
 | Hide from print | `.non-printing` | Block or inline | Hides the element from print output. Useful for things like clickable buttons, which are only intended for screens, not paper. | No
+| Image with caption | `.image-with-caption` | Block | Used for paragraphs that start with an inline image, and turns the text in the paragraph into a caption. Makes simple images with captions quick and easy. | No
 | Keep together | `.keep-together` | Block | Prevents an element from breaking across pages. (E.g. you want to keep a short list on the same page.) | No
 | Keep with next | `.keep-with-next` | Block | Prevents a page break between this element and the next one. | No
 | Letter | `.letter` | Block | Formats a blockquote as a letter, by spacing the paragraphs in it. | No
