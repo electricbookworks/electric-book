@@ -9,7 +9,7 @@ $web-notes: true !default;
 	.footnotes {
 	  margin: ($line-height-default * 2) 0 0 0;
 	  padding: $line-height-default 0;
-	  border-top: 1px solid $color-light;
+	  border-top: $rule-thickness solid $color-light;
 	  color: $color-mid;
 	}
 	.footnotes p {
@@ -25,7 +25,7 @@ $web-notes: true !default;
 		min-width: 5em;
 		margin: 0 -12em ($line-height-default / 2) 2em;
 		padding: $line-height-default / 2;
-		border-top: 1px solid $color-light;
+		border-top: $rule-thickness solid $color-light;
 		text-indent: 0;
 		font-size: $font-size-default * $font-size-smaller;
 		line-height: $line-height-default * $font-size-smaller;

@@ -105,7 +105,7 @@ $epub-base-typography: true !default;
         // `content:`, `border: 0` or `border: none`. We don't use background-image 
         // because of problems linking to the image after export from here.
         // Kindle output ignores rgba. So this is the least-bad solution.
-        border: 1px solid rgba(255,255,255,0);
+        border: $rule-thickness solid rgba(255,255,255,0);
         margin: $line-height-default 0; // Adds space, esp. important for Kindle
         text-align: center; // Necessary for aligning :after content
         // Note: Amazon Kindle will ignore this :after content setting
@@ -154,7 +154,7 @@ $epub-base-typography: true !default;
         font-family: $font-text-secondary;
         font-size: inherit;
         color: inherit;
-        border: 1px solid $color-mid;
+        border: $rule-thickness solid $color-mid;
         display: block;
         margin: $line-height-default 0;
         width: 100%;
