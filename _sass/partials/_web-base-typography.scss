@@ -56,15 +56,15 @@ $web-base-typography: true !default;
 
     // Lists
 
-    ol {
-        list-style: decimal;
+    ol, ul {
         list-style-position: outside;
-        margin: 0 0 $line-height-default 1em;
+        margin: 0 0 $line-height-default $line-height-default;
+    }
+    ol {
+        list-style-type: decimal;
     }
     ul {
         list-style-type: disc;
-        list-style-position: outside;
-        margin: 0 0 $line-height-default 1em;
     }
     ul ul, ol ol, blockquote ul ul, blockquote ol ol {
         margin-bottom: 0;

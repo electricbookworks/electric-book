@@ -13,8 +13,8 @@ $web-previous-publications-page: true !default;
                 text-align: center;
                 hyphens: none;
             }
-            h1, h2 {
-                font-size: $font-size-default * 1.25;
+            h2, h3, h4, h5, h6 {
+                font-size: $font-size-default;
             }
         }
     }
