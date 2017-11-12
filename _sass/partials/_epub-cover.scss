@@ -17,7 +17,7 @@ $epub-cover: true !default;
 	img.cover {
 		max-height: 100%;
 		max-width: 100%;
-		border: 1px solid $color-light;
+		border: $rule-thickness solid $color-light;
 	}
 
 }

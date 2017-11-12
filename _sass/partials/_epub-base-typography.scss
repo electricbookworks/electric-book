@@ -18,6 +18,7 @@ $epub-base-typography: true !default;
         line-height: $line-height-default;
         page-break-after: avoid;
         margin: $line-height-default 0 0 0;
+        text-align: left; // some epub readers justify headings unless we set this
     }
     h1 {
         font-family: $font-display-main;
@@ -54,15 +55,15 @@ $epub-base-typography: true !default;
 
     // Lists
 
-    ol {
-        list-style: decimal;
+    ol, ul {
         list-style-position: outside;
-        margin: 0 0 $line-height-default 1em;
+        margin: 0 0 $line-height-default $line-height-default;
+    }
+    ol {
+        list-style-type: decimal;
     }
     ul {
         list-style-type: disc;
-        list-style-position: outside;
-        margin: 0 0 $line-height-default 1em;
     }
     ul ul, ol ol, blockquote ul ul, blockquote ol ol {
         margin-bottom: 0;
@@ -104,7 +105,7 @@ $epub-base-typography: true !default;
         // `content:`, `border: 0` or `border: none`. We don't use background-image 
         // because of problems linking to the image after export from here.
         // Kindle output ignores rgba. So this is the least-bad solution.
-        border: 1px solid rgba(255,255,255,0);
+        border: $rule-thickness solid rgba(255,255,255,0);
         margin: $line-height-default 0; // Adds space, esp. important for Kindle
         text-align: center; // Necessary for aligning :after content
         // Note: Amazon Kindle will ignore this :after content setting
@@ -153,7 +154,7 @@ $epub-base-typography: true !default;
         font-family: $font-text-secondary;
         font-size: inherit;
         color: inherit;
-        border: 1px solid $color-mid;
+        border: $rule-thickness solid $color-mid;
         display: block;
         margin: $line-height-default 0;
         width: 100%;

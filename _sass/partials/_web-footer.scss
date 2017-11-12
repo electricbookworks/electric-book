@@ -9,7 +9,7 @@ $web-footer: true !default;
 		bottom: 0;
 		background-color: $footer-background-color;
 		font-family: $font-text-secondary;
-		border-top: 1px solid $footer-border-color;
+		border-top: $rule-thickness solid $footer-border-color;
 		margin: ($line-height-default * 2) 0 0 0;
 		padding: $line-height-default / 2;
 		width: 100%; // Prevents floating when preceding elements float or flex
