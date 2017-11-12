@@ -416,7 +416,8 @@ set /p process=Enter a number and hit return.
 
         :: ...and run Jekyll to build new HTML
         :epubJekyllBuild
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
+            if "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            if not "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
             echo HTML generated.
             :epubJekyllDone
 
@@ -570,7 +571,9 @@ set /p process=Enter a number and hit return.
         :epubGetMathjax
             echo Copying MathJax to epub...
             :: Copy mathjax folder from /assets/js to _site/epub
-            xcopy /q /e "../assets/js/mathjax" "" > nul
+            :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
+            :: Adding /NP will also suppress progress bar.
+            robocopy "%location%_site/assets/js/mathjax" "%location%_site/epub/mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
             :: If this is a translation, move mathjax into the language folder
             if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" move "mathjax" "%subdirectory%\mathjax"
             if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" echo MathJax moved to translation folder.
