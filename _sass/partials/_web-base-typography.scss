@@ -150,7 +150,7 @@ $web-base-typography: true !default;
         font-family: $font-text-secondary;
         font-size: inherit;
         color: inherit;
-        border: 1px solid $color-mid;
+        border: $rule-thickness solid $color-mid;
         display: block;
         margin: $line-height-default 0;
         width: 100%;

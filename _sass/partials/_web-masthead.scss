@@ -6,7 +6,7 @@ $web-masthead: true !default;
     .masthead {
         font-family: $font-text-secondary;
         background-color: $masthead-background-color;
-        border-bottom: 1px solid $masthead-border-color;
+        border-bottom: $rule-thickness solid $masthead-border-color;
         width: 100%;
         text-align: center;
         color: $masthead-text-color;

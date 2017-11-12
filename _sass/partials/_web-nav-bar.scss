@@ -57,7 +57,7 @@ $web-nav-bar: true !default;
         height: 100%;
         overflow-x: hidden; // Hides horizontal scrollbar
         background-color: $nav-bar-background-color;
-        border-top: 1px solid $nav-bar-border-color;
+        border-top: $rule-thickness solid $nav-bar-border-color;
         padding-right: 17px; // Hides scroll bar
 
         .js-nav-open & {
@@ -67,7 +67,7 @@ $web-nav-bar: true !default;
         .js-nav & {
             width: $nav-bar-width;
             border-top: none;
-            border-right: 1px solid $nav-bar-border-color;
+            border-right: $rule-thickness solid $nav-bar-border-color;
             position: absolute;
             top: 0;
             left: 0;

@@ -8,7 +8,7 @@ $epub-boxes: true !default;
 		color: inherit;
 		font-weight: inherit;
 		font-size: inherit;
-		border: 1px solid $color-light;
+		border: $rule-thickness solid $color-light;
 		margin: $line-height-default 0;
 		padding: ($line-height-default / 2);
 		& p:last-of-type {
