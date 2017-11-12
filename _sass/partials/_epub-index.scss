@@ -26,9 +26,14 @@ $epub-index: true !default;
                 text-decoration: none;
             }
         }
-        .duplicate {
-            display: none;
-        }
+    }
+    // We don't nest .duplicate under this ol/ul, because if we do
+    // then Kindlegen says we're hiding too much and errors out,
+    // even if we're not actually using the class. It seems Kindlegen
+    // freaks out just because we might use the class on 10000+
+    // characters, which is its display: none limit.
+    .duplicate {
+        display: none;
     }
 
 }
