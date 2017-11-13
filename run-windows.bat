@@ -679,6 +679,11 @@ set /p process=Enter a number and hit return.
         echo Shall we build the app, or just generate the HTML? Enter y to build the app, if not hit enter. 
         set /p appbuildgenerateapp=
 
+        :: Are we building a release?
+        echo Are you creating an app for release, or just for testing?
+        echo Enter y for a release, otherwise just hit enter.
+        set /p apprelease=
+
         :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
         echo.
         echo Any extra config files?
@@ -715,7 +720,13 @@ set /p process=Enter a number and hit return.
             if not "%appbuildgenerateapp%"=="y" goto appbuildaftercordova
             echo Building your Android app... If you get an error, make sure Cordova and Android Studio are installed.
             cd _site/app
-            call cordova build android
+
+            if "%apprelease%"=="y" (
+                call cordova build android --release
+            ) else (
+                call cordova build android
+            )
+
             echo Opening folder containing app...
             %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
             :appbuildaftercordova

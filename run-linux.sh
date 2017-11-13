@@ -435,6 +435,11 @@ You may need to reload the web page once this server is running."
 		echo "'n' or just hit enter to skip building finished apps. "
 		appbuildgenerateapp=""
 		read appbuildgenerateapp
+		# Are we building a release?
+		echo "Are you creating an app for release, or just for testing?"
+		echo "Enter y for a release, otherwise just hit enter."
+		apprelease=
+		read apprelease
 		# Ask the user to add any extra Jekyll config files, e.g. _config.pdf-ebook.yml
 		echo "Any extra config files?"
 		echo "Enter filenames (including any relative path), comma separated, no spaces. E.g."
@@ -470,7 +475,12 @@ You may need to reload the web page once this server is running."
 				then
 				echo "Building Android app..."
 				cd _site/app
-				cordova build android
+				if [ "$apprelease" = "y" ]
+					then
+						cordova build android --release
+					else
+						cordova build android
+				fi
 				cd .. && cd ..
 				echo "Done. Opening folder containing Android app..."
 				# (On OSX, this will be open, not xdg-open.)
@@ -480,24 +490,39 @@ You may need to reload the web page once this server is running."
 				then
 				echo "Building iOS app..."
 				cd _site/app
-				cordova build ios
+				if [ "$apprelease" = "y" ]
+					then
+						cordova build ios --release
+					else
+						cordova build ios
+				fi
 				cd .. && cd ..
 				echo "Done. Opening folder containing iOS app..."
 				# (On OSX, this will be open, not xdg-open.)
-				xdg-open _site/app/platforms/ios/build/outputs/
+				xdg-open _site/app/platforms/ios/build/emulator/
 			elif [ "$appbuildgenerateapp" = "ai" ]
 				then
 				echo "Building Android app first, then iOS app."
 				echo "Building Android app..."
-				cordova build android
+				if [ "$apprelease" = "y" ]
+					then
+						cordova build android --release
+					else
+						cordova build android
+				fi
 				echo "Done. Opening folder containing Android app..."
 				# (On OSX, this will be open, not xdg-open.)
 				xdg-open _site/app/platforms/android/build/outputs/apk/
 				echo "Building iOS app..."
-				cordova build ios
+				if [ "$apprelease" = "y" ]
+					then
+						cordova build ios --release
+					else
+						cordova build ios
+				fi
 				echo "Done. Opening folder containing iOS app..."
 				# (On OSX, this will be open, not xdg-open.)
-				xdg-open _site/app/platforms/ios/build/outputs/
+				xdg-open _site/app/platforms/ios/build/emulator/
 			elif [ "$appbuildgenerateapp" = "" ] || [ "$appbuildgenerateapp" = "n" ]
 				then
 				echo "Skipping building apps. Opening app-ready files..."
