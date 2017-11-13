@@ -1,0 +1,22 @@
+---
+# Jekyll builds this file, filling data from _data/secrets.yml,
+# which should look like this (but without the hashes):
+# app-path-to-keystore: "path/to/keystore"
+# app-keystore-password: "passwordhere"
+# app-key-alias: "keyaliashere"
+# app-key-password: "keypasswordhere"
+# Never share or commit _data/secrets.yml to your repository!
+# See https://developer.android.com/studio/publish/app-signing.html
+layout: min
+---
+{
+    "android": {
+        "release": {
+            "keystore": "{{ site.data.secrets.app-path-to-keystore }}",
+            "storePassword": "{{ site.data.secrets.app-keystore-password }}",
+            "alias": "{{ site.data.secrets.app-key-alias }}",
+            "password": "{{ site.data.secrets.app-key-password }}",            
+            "keystoreType": ""
+        }
+    }
+}
