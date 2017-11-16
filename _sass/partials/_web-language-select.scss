@@ -1,0 +1,40 @@
+$web-language-select: true !default;
+@if $web-language-select {
+
+    // Language selector
+
+    .language-select {
+        position: fixed;
+        top: 0.4em; // half an em less 0.1em top padding
+        right: 1em;
+        z-index: 100;
+        padding: 0.1em 0.25em; // allow space for when we hover
+        text-align: right;
+        color: $language-select-text-color;
+        &:before {
+            content: $language-select-label;
+        }
+        .language-select-list {
+            list-style-type: none;
+            padding: 0; // override default masthead padding
+            li {
+                display: block; // overrides masthead ul styles
+                a {
+                    color: $language-select-links-color;
+                }
+            }
+        }
+        // Hide the list till hover on parent
+        .language-select-list {
+            display: none;
+        }
+        &:hover {
+            background-color: $language-select-background-color;
+            border-radius: $button-border-radius;
+            .language-select-list {
+                display: inline;
+            }
+        }
+    }
+
+}
