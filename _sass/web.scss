@@ -121,6 +121,12 @@ $nav-bar-child-text-color: black !default;
 $nav-bar-child-hover-color: $color-accent !default;
 $nav-bar-child-text-hover-color: white !default;
 
+// Language selector
+$language-select-label: "\1F310" !default; // "\1F310" is a globe with meridians
+$language-select-text-color: $color-text-secondary !default;
+$language-select-links-color: $color-links !default;
+$language-select-background-color: $color-background !default;
+
 // ---------------------------------
 // Set to false to turn partials off
 // ---------------------------------

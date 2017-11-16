@@ -5,13 +5,14 @@ $web-language-select: true !default;
 
     .language-select {
         position: fixed;
-        top: 0.5em;
+        top: 0.4em; // half an em less 0.1em top padding
         right: 1em;
         z-index: 100;
         padding: 0.1em 0.25em; // allow space for when we hover
         text-align: right;
+        color: $language-select-text-color;
         &:before {
-            content: "🌐";
+            content: $language-select-label;
         }
         .language-select-list {
             list-style-type: none;
@@ -19,7 +20,7 @@ $web-language-select: true !default;
             li {
                 display: block; // overrides masthead ul styles
                 a {
-                    color: $color-links;
+                    color: $language-select-links-color;
                 }
             }
         }
@@ -28,7 +29,7 @@ $web-language-select: true !default;
             display: none;
         }
         &:hover {
-            background-color: $color-background;
+            background-color: $language-select-background-color;
             border-radius: $button-border-radius;
             .language-select-list {
                 display: inline;

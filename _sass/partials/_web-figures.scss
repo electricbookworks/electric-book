@@ -110,8 +110,8 @@ $web-figures: true !default;
 	    img {
 	        display: block;
 	        margin: $line-height-default auto;
-	        height: 80%; // allows space for caption
 	        max-height: 80vh;
+	        max-width: 100%;
 	    }
 	}
 
