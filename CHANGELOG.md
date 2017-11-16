@@ -15,6 +15,7 @@
 * Add minification and cleanup of SVGs on image processing
 * Add variable for default rule thickness
 * Add `.image-with-caption` class
+* Add language-selector menu for when translations exist
 * Minor bug and code-readability fixes
 
 ## 0.10.0
