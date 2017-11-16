@@ -123,6 +123,7 @@ and book content as a Liquid output tag e.g. {{ title }}
     {% capture identifier %}{{ work.identifier }}{% endcapture %}
     {% capture source %}{{ work.source }}{% endcapture %}
     {% capture language %}{{ work.language }}{% endcapture %}
+    {% capture parent-language %}{{ work.language }}{% endcapture %}
     {% capture relation %}{{ work.relation }}{% endcapture %}
     {% capture coverage %}{{ work.coverage }}{% endcapture %}
     {% capture rights %}{{ work.rights }}{% endcapture %}

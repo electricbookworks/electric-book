@@ -1,0 +1,62 @@
+{% comment %} Adds a clickable list of translations for a file,
+by reading the file list of each translation. {% endcomment %}
+
+{% include metadata %}
+
+{% comment %} Check if there are any translated files at all. {% endcomment %}
+{% for translation in translations %}
+    {% if translation.products.web.files %}
+        {% assign translated-files-exist = true %}
+    {% endif %}
+{% endfor %}
+
+{% if translated-files-exist %}
+
+    <div class="language-select">
+
+        <ul class="language-select-list">
+
+            {% comment %} For each translation of this work, look through the file list.
+            If the same file as this one exists in the translation file list, link to it.
+            Don't add the link if we're on the same language as the translation. {% endcomment %}
+            {% for translation in translations %}
+
+                {% for file in translation.products.web.files %}
+
+                    {% if file == current-file %}
+
+                        {% unless translation.language == language %}
+
+                            <li class="language-select-language language-select-{{ translation.language }}">
+                                <a href="{{ path-to-book-directory }}{{ translation.language }}/text/{{ file }}.html">
+                                   {{ site.data.language-codes[translation.language] }}
+                               </a>
+                            </li>
+
+                        {% endunless %}
+
+                        {% comment %} If this is a translated page, add a link to the parent language. {% endcomment %}
+                        {% if is-translation %}
+
+                            {% unless parent-language-link-added %}
+                                <li class="language-select-language language-select-{{ parent-language }}">
+                                    <a href="{{ path-to-book-directory }}text/{{ file }}.html">
+                                        {{ site.data.language-codes[parent-language] }}
+                                    </a>
+                                </li>
+                            {% endunless %}
+                            {% assign parent-language-link-added = true %}
+
+                        {% endif %}
+
+                    {% endif %}
+
+                {% endfor %}
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+{% endif %}
