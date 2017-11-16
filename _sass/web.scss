@@ -139,6 +139,7 @@ $web-masthead: true !default;
 $web-search: true !default;
 $web-nav-bar: true !default;
 $web-footer: true !default;
+$web-language-select: true !default;
 
 // Book parts
 $web-cover: true !default;
@@ -200,6 +201,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-nav-bar";
 @import "partials/web-search";
 @import "partials/web-footer";
+@import "partials/web-language-select";
 
 // Book parts
 @import "partials/web-cover";
