@@ -1,39 +1,69 @@
 {% comment %} Adds a clickable list of translations for a file,
-by reading the file list of each translation. {% endcomment %}
+by checking for the existence of translated files, and also
+reading the file list of each translation. To appear in the selector,
+each translated file must both exist and be included in the
+translation's file list in meta.yml.{% endcomment %}
 
 {% include metadata %}
 
-{% comment %} Check if there are any translated files at all. {% endcomment %}
+{% comment %} Do two checks for the existence of translations. {% endcomment %}
 {% for translation in translations %}
-    {% if translation.products.web.files %}
-        {% assign translated-files-exist = true %}
-    {% endif %}
+
+    {% comment %} Check if any translations of this file are listed in meta.yml. {% endcomment %}
+    {% for file in translation.products.web.files %}
+        {% if file == current-file %}
+            {% assign translated-files-listed = true %}
+        {% endif %}
+    {% endfor %}
+
+    {% comment %} Check if any translations of this file actually exist. {% endcomment %}
+    {% capture translated-file-with-path %}{{ book-directory }}/{{ translation.language }}/text/{{ current-file }}.md{% endcapture %}
+    {% for page in site.pages %}
+        {% if page.path == translated-file-with-path %}
+            {% assign translated-files-exist = true %}
+        {% endif %}
+    {% endfor %}
+
 {% endfor %}
 
-{% if translated-files-exist %}
+{% if translated-files-listed and translated-files-exist %}
 
     <div class="language-select">
 
         <ul class="language-select-list">
 
-            {% comment %} For each translation of this work, look through the file list.
-            If the same file as this one exists in the translation file list, link to it.
-            Don't add the link if we're on the same language as the translation. {% endcomment %}
             {% for translation in translations %}
 
+                {% comment %} For each translation of this work, look through the file list.
+                If the same file as this one exists in the translation file list, link to it.
+                Don't add the link if we're on the same language as the translation. {% endcomment %}
                 {% for file in translation.products.web.files %}
+
+                {% comment %} Check if a translation of this file in this language actually exists. {% endcomment %}
+                {% capture this-translated-file-with-path %}{{ book-directory }}/{{ translation.language }}/text/{{ file }}.md{% endcapture %}
+                {% comment %} Reset variable. {% endcomment %}
+                {% assign this-translated-file-exists = false %}
+                {% for page in site.pages %}
+                    {% if page.path == this-translated-file-with-path %}
+                        {% assign this-translated-file-exists = true %}
+                    {% endif %}
+                {% endfor %}
 
                     {% if file == current-file %}
 
-                        {% unless translation.language == language %}
+                        {% if this-translated-file-exists == true %}
 
-                            <li class="language-select-language language-select-{{ translation.language }}">
-                                <a href="{{ path-to-book-directory }}{{ translation.language }}/text/{{ file }}.html">
-                                   {{ site.data.language-codes[translation.language] }}
-                               </a>
-                            </li>
+                            {% unless translation.language == language %}
 
-                        {% endunless %}
+                                <li class="language-select-language language-select-{{ translation.language }}">
+                                    <a href="{{ path-to-book-directory }}{{ translation.language }}/text/{{ file }}.html">
+                                       {{ site.data.language-codes[translation.language] }}
+                                   </a>
+                                </li>
+
+                            {% endunless %}
+
+                        {% endif %}
 
                         {% comment %} If this is a translated page, add a link to the parent language. {% endcomment %}
                         {% if is-translation %}
