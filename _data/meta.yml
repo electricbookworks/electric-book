@@ -37,7 +37,8 @@ project:
 
 ## Metadata follows [Dublin Core](https://en.wikipedia.org/wiki/Dublin_Core#DCMI_Metadata_Terms)
 ## Custom fields added to standard DC terms: subtitle, publisher URL
-## When listing files, exlude file extensions, and surround them in quotes especially if they contain only numbers.
+## When listing files, exlude file extensions, and surround them in quotes
+## especially if they contain only numbers.
 
 works:
   - directory: "book"
@@ -282,7 +283,7 @@ works:
           - "00-08-frontispiece-page"
           - "00-09-frontmatter"
           - "01-00"
-          - "01-01"
+          - "01-01": "Chapter 1"
           - "01-02"
           - "01-03"
           - "01-04"
