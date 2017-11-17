@@ -53,6 +53,9 @@ $spaced-paras: true;
 // Buttons
 $button-border-radius: 0.1em; // Roundness of button corners.
 
+// Rules, lines
+$rule-thickness: 1px;
+
 // Colours
 $color-text-main: #222222;
 $color-text-secondary: #222222;
@@ -122,6 +125,12 @@ $nav-bar-child-text-color: black;
 $nav-bar-child-hover-color: $color-accent;
 $nav-bar-child-text-hover-color: white;
 
+// Language selector
+$language-select-icon-color: $color-light;
+$language-select-text-color: $color-mid;
+$language-select-links-color: $color-links;
+$language-select-background-color: $color-background;
+
 // ---------------------------------
 // Set to false to turn partials off
 // ---------------------------------
@@ -140,6 +149,7 @@ $web-masthead: true;
 $web-search: true;
 $web-nav-bar: true;
 $web-footer: true;
+$web-language-select: true;
 
 // Book parts
 $web-cover: true;

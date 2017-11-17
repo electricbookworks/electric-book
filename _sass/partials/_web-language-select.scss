@@ -5,15 +5,12 @@ $web-language-select: true !default;
 
     .language-select {
         position: fixed;
-        top: 0.4em; // half an em less 0.1em top padding
+        top: 0.5em;
         right: 1em;
         z-index: 100;
         padding: 0.1em 0.25em; // allow space for when we hover
         text-align: right;
         color: $language-select-text-color;
-        &:before {
-            content: $language-select-label;
-        }
         .language-select-list {
             list-style-type: none;
             padding: 0; // override default masthead padding
@@ -34,6 +31,15 @@ $web-language-select: true !default;
             .language-select-list {
                 display: inline;
             }
+        }
+    }
+
+    // Globe icon (_includes/globe-icon)
+    svg.language-select-globe {
+        width: 1em;
+        height: 1em;
+        path {
+            fill: $language-select-icon-color;
         }
     }
 
