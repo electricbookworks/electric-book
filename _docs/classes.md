@@ -13,51 +13,51 @@ Use these classes in your markdown to create specific formatting effects.
 
 | Feature | Workflow class | Block or inline |  Explanation | Supports edition suffix
 | --- | --- | --- | --- | ---
-| Bibliography list | `.bibliography` | Block | Styles a list as a bibliography, for instance at the end of an academic book. | No
-| Box | `.box` | Block | Puts the element in a box, to set it off from the rest of the text. | No
-| Chapter number | `.chapter-number` | Block | Used for a chapter number before a chapter heading. (See the tip at [Bold in the chapter on Markdown](03-markdown.html#bold) for another way to handle chapter numbers. | No
-| Dedication | `.dedication` | Block | A dedication, for instance at the start of a book or chapter | No
-| Epigraph source | `.epigraph-source` | Block | The person to whom the epigraph is attributed. | No
-| Epigraph | `.epigraph` | Block | An epigraph at the start of a book or chapter. | No
-| Figure | `.figure` | Block | A figure is an image with a caption. Read about how to manage them properly [in our workflow guide](https://github.com/electricbookworks/electric-book-workflow#adding-images-in-markdown). | No
+| Bibliography list | `.bibliography` | Block | Styles a list as a bibliography, for instance at the end of an academic book. To apply this class, place `{:.bibliography}` directly under the block of text you would like to target.| No
+| Box | `.box` | Block | Puts the element in a box, to set it off from the rest of the text. To apply this class, place `{:.box}` directly under the block of text you would like to target.| No
+| Chapter number | `.chapter-number` | Block | Used for a chapter number before a chapter heading. (See the tip at [Bold in the chapter on Markdown](http://electricbook.works/docs/markdown.html#bold) for another way to handle chapter numbers.) To apply this class, place `{:.chapter-number}` under the chapter number. | No
+| Dedication | `.dedication` | Block | A dedication, for instance at the start of a book or chapter. To apply this class, place `{:.dedication}` directly under the block of text that you'd liek to target. | No
+| Epigraph source | `.epigraph-source` | Block | The person to whom the epigraph is attributed. To apply this class, place `{:.epigraph-source}` dircetly under the source of the epigraph. | No
+| Epigraph | `.epigraph` | Block | An epigraph at the start of a book or chapter. To apply this class, place `{:.epigraph}` under the epigraph you'd like to target.| No
+| Figure | `.figure` | Block | A figure is an image with a caption. In essence, apply a `{:.figure}` class below the figure include. Read about how to manage them properly [in our workflow guide](http://electricbook.works/docs/images.html#figures). | No
 | Figure: extra small | `.x-small` | Block | Add to the `.figure` tag, e.g. `{:.figure .x-small}`.  | No
 | Figure: fixed position | `.fixed` | Block | Add to the `.figure` tag, e.g. `{:.figure .fixed}`. For figures that must keep their position in the text flow, and must not float to the top of the page. | No
-| Figure: large | `.large` | Block | Add to the `.figure` tag, e.g. `{:.figure .large}`.  | No
-| Figure: medium | `.medium` | Block | Add to the `.figure` tag, e.g. `{:.figure .medium}`.  | No
-| Figure: small | `.small` | Block | Add to the `.figure` tag, e.g. `{:.figure .small}`.  | No
-| Figure height | `.height-1` to `.height-50` | Block | Sets the height of an element to a multiple of the default line height. Use in figures, on line after image (the `<p>` containing the `<img>`), to maintain baseline grid. | Yes
-| First paragraph | `.first`| Block | For any paragraph that starts a new set of paragraphs, flush left and with a gap above it. | No
-| Float to top | `.float-top` | Block | Floats the element to the top of its page. Useful for boxes. Applies to print output only. | Yes
-| Float to bottom | `.float-bottom` | Block | Floats the element to the bottom of its page. Useful for boxes. Applies to print output only. | Yes
-| Footnote | `.sidenote .bottom` | Block or inline | When you add `.bottom` to `.sidenote`, the note appears at the foot of the page in print output. It remains on the side on screens. (Also see the chapter ['Footnotes, endnotes and sidenotes'](17-notes.html#footnotes-endnotes-and-sidenotes).) | No
-| Fraction | `.fractions` | Block or inline | If your font supports it, converts characters like `1/2` into fraction characters. | No
-| Frontmatter references | `.frontmatter-reference` | Inline | Tag links in the Table of Contents whose page numbers must match yout frontmatter reference style set in CSS. | No
-| Glossary | `.glossary` | Block | Use this after the last entry in a series of definition lists to define the entire list of definitions as a glossary. | No
-| Hide from print | `.non-printing` | Block or inline | Hides the element from print output. Useful for things like clickable buttons, which are only intended for screens, not paper. | No
-| Image with caption | `.image-with-caption` | Block | Used for paragraphs that start with an inline image, and turns the text in the paragraph into a caption. Makes simple images with captions quick and easy. | No
-| Keep together | `.keep-together` | Block | Prevents an element from breaking across pages. (E.g. you want to keep a short list on the same page.) | No
-| Keep with next | `.keep-with-next` | Block | Prevents a page break between this element and the next one. | No
-| Letter | `.letter` | Block | Formats a blockquote as a letter, by spacing the paragraphs in it. | No
-| Logo image | `.logo` | Block | Used for making images small, especially for small logos in text like on acknowledgements pages. | No
-| Page break after | `.page-break-after` | Block | Creates a page break after the element. | No
-| Page break after, end of book | `.page-break-after-right` | Block | When applied to the very last element in the book, ensures a blank verso for an even-numbered page extent. | No
-| Page break before | `.page-break-before` | Block | Starts its element on a new page. | No
-| Page break: allow | `.allow-break` | Block | Allows an element to break over a page where the default styles would normally prevent that. Apply the class to the parent element. | No
-| Page numbering restart | `.page-1` | Block | Restarts page numbering from 1. Can be added to the first block element on a page, or to the YAML header, in addition to the main style, e.g. `style: halftitle-page page-1` or `style: chapter page-1`. Recommended for any document that starts a book interior (e.g. title page), to retain correct pagination when creating a PDF ebook with a front cover | No
+| Figure: large | `.large` | Block | Add to the `.figure` tag, e.g. `{:.figure .large}`.  This restricts the maximum height of the image to a large height. Note that the `.large` class makes the figure fixed, because figures automatically reflow, this prevents the large figure from flowing towards the end of a book, which larger figures tend to do.| No
+| Figure: medium | `.medium` | Block | Add to the `.figure` tag, e.g. `{:.figure .medium}`. This restricts the maximum height of the image to a medium height. | No
+| Figure: small | `.small` | Block | Add to the `.figure` tag, e.g. `{:.figure .small}`. This restricts the maximum height of the image to a small height. | No
+| Figure height | `.height-1` to `.height-50` | Block | Sets the height of an element to a multiple of the default line height. Use in figures, on line after image, add it to the figure tag like this `{:.figure .height-12}` for an image whose height should be 12 lines. | Yes
+| First paragraph | `.first`| Block | For any paragraph that starts a new set of paragraphs, which should be flush left and with a gap above it. Apply `{:.first}` under the first paragraph if it isn't defaulting to the first paragraph style.| No
+| Float to top | `.float-top` | Block | Floats the element to the top of its page. Useful for boxes. Applies to print output only. Apply `{:.float-top}` under the element which you'd like to float to the top. Or add it to an existing class like `{:.box .float-top}`. | Yes
+| Float to bottom | `.float-bottom` | Block | Floats the element to the bottom of its page. Useful for boxes. Applies to print output only. Apply `{:.float-bottom}` under the element which you'd like to float to the top. Or add it to an existing class like `{:.box .float-bottom}`. | Yes
+| Footnote | `.sidenote .bottom` | Block or inline | When you add `.bottom` to `.sidenote`, the note appears at the foot of the page in print output. It remains on the side on screens. (Also see the chapter ['Footnotes, endnotes and sidenotes'](http://electricbook.works/docs/notes.html).) | No
+| Fraction | `.fractions` | Block or inline | If your font supports it, converts characters like `1/2` into fraction characters. Apply `{:.fractions}` next to the fraction, or below it if it is alone on a line.| No
+| Frontmatter references | `.frontmatter-reference` | Inline | Tag links in the Table of Contents whose page numbers must match yout frontmatter reference style set in CSS. You apply this class differently depending on how your Table of Contents is generated: in the new template, we create the Table of Contents through the meta.yml file, in the `toc:` section of the meta, add `class: "frontmatter-reference"` below the label you need to target.| No
+| Glossary | `.glossary` | Block | Use this after the last entry in a series of definition lists to define the entire list of definitions as a glossary, by applying `{:.glossary}` below the block of glossary definitions. | No
+| Hide from print | `.non-printing` | Block or inline | Hides the element from print output. Useful for things like clickable buttons, which are only intended for screens, not paper. Apply `{:.non-printing}` below or next to the element. | No
+| Image with caption | `.image-with-caption` | Block | Used for paragraphs that start with an inline image, and turns the text in the paragraph into a caption. Makes simple images with captions quick and easy. Apply `{:.image-with-caption}` directly after the paragraph which contains an inline image. | No
+| Keep together | `.keep-together` | Block | Prevents an element from breaking across pages. (E.g. you want to keep a short list on the same page.) Apply `{:.keep-together}` to the end of the entire element. | No
+| Keep with next | `.keep-with-next` | Block | Prevents a page break between this element and the next one. Apply `{:.keep-with-next}` below the first element, to make sure it stays with the following element. | No
+| Letter | `.letter` | Block | Formats a blockquote as a letter, by spacing the paragraphs in it. Add `>` to the beginning of each line of the letter, to create a blockquote, then apply `{:.letter}` directly below the entire blockquote. | No
+| Logo image | `.logo` | Block | Used for making images small, especially for small logos in text like on acknowledgements pages. Add this class to the `{:.figure class}`. | No
+| Page break after | `.page-break-after` | Block | Creates a page break after the element. Place `{:.page-break-after}` dircetly below the element preceeding your desired page break. | No
+| Page break after, end of book | `.page-break-after-right` | Block | When applied to the very last element in the book, ensures a blank verso for an even-numbered page extent. Apply `{:.page-break-after-right}` to the last element.| No
+| Page break before | `.page-break-before` | Block | Starts its element on a new page. Apply `{:.page-break-before}` after the element that should come after the page break. | No
+| Page break: allow | `.allow-break` | Block | Allows an element to break over a page where the default styles would normally prevent that (for example a list migth not break over a page). Apply the class to the parent element, for example place `{:.allow-break}` directly below the entire list. | No
+| Page numbering restart | `.page-1` | Block | Restarts page numbering from 1. Can be added to the first block element on a page by using `{:.page-1}` after the first element, or to the YAML header, in addition to the main style, e.g. `style: halftitle-page page-1` or `style: chapter page-1`. Recommended for any document that starts a book interior (e.g. title page), to retain correct pagination when creating a PDF ebook with a front cover | No
 | Poetry | `.verse` | Block | Designing poetry is tricky and important. Read about how to manage this [in our workflow guide](https://github.com/electricbookworks/electric-book-workflow#poetry). | No
-| Pull quote | `.pullquote` | Block | Displays a paragraph as a pull quote. | No
-| Sidenote | `.sidenote` | Block or inline | A sidenote appears in a sidebar to the right of the text. | No
-| Small caps (lowercase only) | `.smallcaps` | Block or inline | If your font supports proper small-caps glyphs. Only affects the lowercase letters. Add `.italics` or `.bold` if needed to italicise or bold. | No
-| Small caps throughout | `.allsmallcaps` | Block or inline | If your font supports proper small-caps glyphs, all characters are small caps.  Add `.italics` or `.bold` if needed to italicise or bold. | No
-| Source after a quotation | `.source` | Block | The name and/or title of the source for a preceding quotation. | No
+| Pull quote | `.pullquote` | Block | Displays a paragraph as a pull quote. Apply `{:.pullquote}` directly below the block of text. | No
+| Sidenote | `.sidenote` | Block or inline | A sidenote appears in a sidebar to the right of the text. Apply `{:.sidenote}` below the blcok of text.| No
+| Small caps (lowercase only) | `.smallcaps` | Block or inline | If your font supports proper small-caps glyphs. Only affects the lowercase letters. Apply `{:.smallcaps}` to the text element inline or directly below the block of text. Add `.italics` or `.bold` if needed to italicise or bold. | No
+| Small caps throughout | `.allsmallcaps` | Block or inline | If your font supports proper small-caps glyphs, all characters are small caps. Apply `{:.allsmallcaps}` directly after the element inline or directly below the block of text. Add `.italics` or `.bold` if needed to italicise or bold. | No
+| Source after a quotation | `.source` | Block | The name and/or title of the source for a preceding quotation. Apply `{:.source}` below the block of source text.| No
 | Table caption | `.table-caption` | Block | Add `{:.table-caption}` in the line immediately after a table caption. Table captions must always appear above tables, not after them. | No
 | Title page: author | `.title-page-author` | Block | The book's author(s) on the title page. | No
-| Title page: logo | `.title-page-logo` | Block | A logo, as an image, on the title page. | No
-| Title page: subtitle | `.title-page-subtitle` | Block | The book's subtitle on the title page. | No
-| Title page: title | `.title-page-title` | Block | The book's title on the title page. | No
-| Tracking: tighten | `.tighten-1` to `.tighten-50` | Block or inline | Each increment tightens the space between letters by 0.001em (1/1000 of a em). *Affects print output only.* | Yes
-| Tracking: loosen | `.loosen-1` to `.loosen-50` | Block or inline | Each increment loosens the space between letters by 0.001em (1/1000 of a em). *Affects print output only.* | Yes
-| Valediction | `.valediction` | Block | Used for the sign-off at the end of a letter, preface or foreword. | No
+| Title page: logo | `.title-page-logo` | Block | A logo, as an image, on the title page. Apply `{:.title-page-logo}` below the figure include.| No
+| Title page: subtitle | `.title-page-subtitle` | Block | The book's subtitle on the title page. Apply `{:.title-page-subtitle}` directly below the element. | No
+| Title page: title | `.title-page-title` | Block | The book's title on the title page. Apply `{:.title-page-title}` directly below the element.| No
+| Tracking: tighten | `.tighten-1` to `.tighten-50` | Block or inline | Each increment tightens the space between letters by 0.001em (1/1000 of a em). Apply `{:.tighten-5}` dircetly after an element to reduce the space by 3/1000 of an em. *Affects print output only.* | Yes
+| Tracking: loosen | `.loosen-1` to `.loosen-50` | Block or inline | Each increment loosens the space between letters by 0.001em (1/1000 of a em). Apply `{:.loosen-5}` dircetly after an element to increase the space by 3/1000 of an em. *Affects print output only.* | Yes
+| Valediction | `.valediction` | Block | Used for the sign-off at the end of a letter, preface or foreword. Apply `{:.valediction}` directly after the sign-off element.| No
 
 ## Reserved classes
 
