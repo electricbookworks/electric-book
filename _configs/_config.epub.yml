@@ -18,6 +18,11 @@ exclude:
   - README*
   - LICENSE*
   - CHANGELOG*
+  - node_modules
+  - eslint.json
+  - gulpfile.js
+  - package.json
+  - package-lock.json
   # exclude files we don't need for epub
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss

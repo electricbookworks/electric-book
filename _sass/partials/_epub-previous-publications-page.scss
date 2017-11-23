@@ -5,15 +5,16 @@ $epub-previous-publications-page: true !default;
 
     .previous-publications-page {
         margin: $start-depth auto 0 auto;
-        text-align: center;
+        * {
+            text-align: center; // because many epub readers try to justify text by default
+        }
         p {
             text-indent: 0;
             margin-bottom: $line-height-default / 2;
-            text-align: center;
             hyphens: none;
         }
-        h1, h2 {
-            font-size: $font-size-default * 1.25;
+        h2, h3, h4, h5, h6 {
+            font-size: $font-size-default;
         }
     }
 

@@ -8,12 +8,15 @@
 * Update Source Sans Pro
 * Add Sass variables to make headers and footers easier to style
 * Improved docs
-* Fix epub output in OSX, Linux
+* Fix epub output in OSX, Linux, and [various epub bugs and improvements](https://github.com/electricbookworks/electric-book/pull/199)
 * Add app output to OSX, Linux
 * Fix Word output on OSX, Linux
 * Add image-processing with `gulp` to unix scripts
+* Add minification and cleanup of SVGs on image processing
+* Add variable for default rule thickness
+* Add `.image-with-caption` class
+* Add language-selector menu for when translations exist
 * Minor bug and code-readability fixes
-* 
 
 ## 0.10.0
 

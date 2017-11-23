@@ -14,13 +14,14 @@ $web-tables: true !default;
 		font-weight: bold;
 	}
 	th, td {
-		border: 1px solid $color-light;
+		border: $rule-thickness solid $color-light;
 		padding: $line-height-default / 2;
-		& p,
-		& ol,
-		& ul {
+		p, ol, ul {
 			margin: 0;
 			padding: 0;
+		}
+		ol, ul {
+			list-style-position: inside;
 		}
 	}
 	.table-row-stub {

@@ -416,7 +416,8 @@ set /p process=Enter a number and hit return.
 
         :: ...and run Jekyll to build new HTML
         :epubJekyllBuild
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
+            if "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            if not "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
             echo HTML generated.
             :epubJekyllDone
 
@@ -570,7 +571,9 @@ set /p process=Enter a number and hit return.
         :epubGetMathjax
             echo Copying MathJax to epub...
             :: Copy mathjax folder from /assets/js to _site/epub
-            xcopy /q /e "../assets/js/mathjax" "" > nul
+            :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
+            :: Adding /NP will also suppress progress bar.
+            robocopy "%location%_site/assets/js/mathjax" "%location%_site/epub/mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
             :: If this is a translation, move mathjax into the language folder
             if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" move "mathjax" "%subdirectory%\mathjax"
             if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" echo MathJax moved to translation folder.
@@ -676,6 +679,11 @@ set /p process=Enter a number and hit return.
         echo Shall we build the app, or just generate the HTML? Enter y to build the app, if not hit enter. 
         set /p appbuildgenerateapp=
 
+        :: Are we building a release?
+        echo Are you creating an app for release, or just for testing?
+        echo Enter y for a release, otherwise just hit enter.
+        set /p apprelease=
+
         :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
         echo.
         echo Any extra config files?
@@ -712,7 +720,13 @@ set /p process=Enter a number and hit return.
             if not "%appbuildgenerateapp%"=="y" goto appbuildaftercordova
             echo Building your Android app... If you get an error, make sure Cordova and Android Studio are installed.
             cd _site/app
-            call cordova build android
+
+            if "%apprelease%"=="y" (
+                call cordova build android --release
+            ) else (
+                call cordova build android
+            )
+
             echo Opening folder containing app...
             %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
             :appbuildaftercordova
@@ -777,7 +791,7 @@ set /p process=Enter a number and hit return.
             echo Generating HTML...
 
             :: ...and run Jekyll to build new HTML
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.image-set.%fromformat%.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,%config%"
 
             :: Navigate to the HTML we just generated
             cd _site\%bookfolder%\text
@@ -785,13 +799,24 @@ set /p process=Enter a number and hit return.
             :: What're we doing?
             echo Converting %bookfolder% HTML to Word...
 
-            :: Loop through the list of files in file-list
+            :: We'll temporarily use a pandoc-specific file-list
+            :: Remove previous file-list-pandoc if any
+            if exist file-list-pandoc del file-list-pandoc
+
+            :: Remove empty lines from file-list by selecting
+            :: only the lines with '.html' in them. I.e. our files.
+            findstr /r /c:".html" file-list > file-list-pandoc
+
+            :: Loop through the list of files in file-list-pandoc
             :: and convert them each from .html to .docx.
             :: We end up with the same filenames, 
             :: with .docx extensions appended.
             for /F "tokens=*" %%F in (file-list) do (
                 pandoc %%F -f html -t docx -s -o %%F.docx
                 )
+
+            :: And then remove the temporary file we created
+            del file-list-pandoc
 
             :: User feedback
             echo Fixing file extensions...
@@ -842,8 +867,8 @@ set /p process=Enter a number and hit return.
             set bookimagestoconvert=
             echo Which book's images are you converting? Hit enter for the default 'book'.
             set /p bookimagestoconvert=
-            if "%bookimagestoconvert%"=="" set bookimagestoconvert=book && goto convertimageslanguageselect
-            if not exist "%bookimagestoconvert%\*.*" echo Sorry, %bookimagestoconvert% doesn't exist. Try again. && goto convertimagesselectbook
+            if "%bookimagestoconvert%"=="" set "bookimagestoconvert=book" && goto convertimageslanguageselect
+            if not exist "%bookimagestoconvert%" echo Sorry, %bookimagestoconvert% doesn't exist. Try again. && goto convertimagesselectbook
 
         :: Select whether we're converting images for a translation
         :convertimageslanguageselect
@@ -851,11 +876,14 @@ set /p process=Enter a number and hit return.
             echo Are we converting books in a translation? If not, hit enter.
             echo Otherwise, enter the language code/translation directory name. 
             set /p convertimageslanguage=
-            if not exist "%bookimagestoconvert%\%convertimageslanguage%\*.*" echo Sorry, %bookimagestoconvert%\%convertimageslanguage% doesn't exist. Try again. && goto convertimageslanguageselect
+            if "%convertimageslanguage%"=="" goto convertimagescustombook
+            if not exist "%bookimagestoconvert%\%convertimageslanguage%" echo Sorry, %bookimagestoconvert%\%convertimageslanguage% doesn't exist. Try again. && goto convertimageslanguageselect
 
         :: Run default gulp task
         :convertimagescustombook
+            echo Converting images...
             call gulp --book "%bookimagestoconvert%" --language "%convertimageslanguage%"
+            echo Done^!
 
         :: Back to the beginning
         :convertimagescomplete

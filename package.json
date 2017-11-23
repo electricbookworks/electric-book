@@ -25,6 +25,7 @@
     "gulp-uglify": "^2.1.2",
     "gulp-watch": "^4.3.11",
     "gulp-gm": "^0.0.8",
+    "gulp-svgmin": "^1.2.4",
     "yargs": "^9.0.1",
     "cordova-android": "^6.2.3",
     "cordova-ios": "^4.4.0",

@@ -101,4 +101,18 @@ $web-figures: true !default;
 			}
 		}
 	}
+
+	// Paragraphs that start with an image
+	.image-with-caption {
+	    font-size: $font-size-default * $font-size-smaller;
+	    margin: $line-height-default 0;
+	    text-align: center;
+	    img {
+	        display: block;
+	        margin: $line-height-default auto;
+	        max-height: 80vh;
+	        max-width: 100%;
+	    }
+	}
+
 }

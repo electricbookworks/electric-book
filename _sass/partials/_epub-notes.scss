@@ -7,7 +7,7 @@ $epub-notes: true !default;
 	// Footnotes section
 	.footnotes {
 	  margin: ($line-height-default * 2) 0 0 0;
-	  border-top: 1px solid $color-light;
+	  border-top: $rule-thickness solid $color-light;
 	}
 	.footnotes p {
 		text-indent: 0;
@@ -20,7 +20,7 @@ $epub-notes: true !default;
 		float: right;
 		min-width: 5em;
 		padding: $line-height-default / 2;
-		border-top: 1px solid $color-light;
+		border-top: $rule-thickness solid $color-light;
 		text-indent: 0;
 		font-size: $font-size-default * $font-size-smaller;
 		line-height: $line-height-default * $font-size-smaller;

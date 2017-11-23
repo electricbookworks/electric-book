@@ -85,6 +85,9 @@ $spaced-paras: false !default;
 // Buttons
 $button-border-radius: 0.1em !default; // Roundness of button corners.
 
+// Rules, lines
+$rule-thickness: 0.5pt !default;
+
 // Hyphenation
 // Variables here apply to p, ul, ol, dl
 $hyphenation: auto !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)

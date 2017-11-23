@@ -8,17 +8,18 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     newer = require('gulp-newer'),
     gm = require('gulp-gm'),
+    svgmin = require('gulp-svgmin'),
     args = require('yargs').argv;
 
 // get the book we're processing
 var book = 'book';
-if (args.book) {
+if (args.book && args.book.trim != '') {
     var book = args.book;
 };
 
 // get the language we're processing
 var language = '';
-if (args.language) {
+if (args.language && args.language.trim != '') {
     var language = '/' + args.language;
 };
 
@@ -45,10 +46,11 @@ var paths = {
 var filetypes = 'jpg,jpeg,gif,png';
 
 
-// Copy svg as is to destinations
+// Minify and clean SVGs and copy to destinations
 gulp.task('images:svg', function () {
     console.log('Processing SVG images from ' + paths.img.source);
     gulp.src(paths.img.source + '*.svg')
+    .pipe(svgmin())
     .pipe(gulp.dest(paths.img.printpdf))
     .pipe(gulp.dest(paths.img.screenpdf))
     .pipe(gulp.dest(paths.img.web))

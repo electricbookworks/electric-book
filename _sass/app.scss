@@ -49,6 +49,9 @@ $spaced-paras: true !default;
 // Buttons
 $button-border-radius: 0.1em !default; // Roundness of button corners.
 
+// Rules, lines
+$rule-thickness: 1px !default;
+
 // Colours
 $color-text-main: #222222 !default;
 $color-text-secondary: #222222 !default;
@@ -118,6 +121,12 @@ $nav-bar-child-text-color: black !default;
 $nav-bar-child-hover-color: $color-accent !default;
 $nav-bar-child-text-hover-color: white !default;
 
+// Language selector
+$language-select-icon-color: $color-light !default;
+$language-select-text-color: $color-text-secondary !default;
+$language-select-links-color: $color-links !default;
+$language-select-background-color: $color-background !default;
+
 // ---------------------------------
 // Set to false to turn partials off
 // ---------------------------------
@@ -136,6 +145,7 @@ $web-masthead: true !default;
 $web-search: true !default;
 $web-nav-bar: true !default;
 $web-footer: true !default;
+$web-language-select: true !default;
 
 // Book parts
 $web-cover: true !default;
@@ -197,6 +207,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-nav-bar";
 @import "partials/web-search";
 @import "partials/web-footer";
+@import "partials/web-language-select";
 
 // Book parts
 @import "partials/web-cover";
