@@ -39,3 +39,11 @@ variants:
   # - Crimson-Roman.otf
   # - Crimson-Italic.otf
 # ----------------------------------------------------------
+
+# ----------------------------------------------------------
+# App settings
+# ----------------------------------------------------------
+# If your book is huge and you need to store images
+# in an expansion file, edit these settings.
+google-play-expansion-file-enabled: false
+google-play-public-api-key: ""
