@@ -47,10 +47,20 @@ var filetypes = 'jpg,jpeg,gif,png';
 
 
 // Minify and clean SVGs and copy to destinations
+// For EpubCheck-safe SVGs, we remove data- attributes
+// and don't strip defaults like <style "type=text/css">
 gulp.task('images:svg', function () {
     console.log('Processing SVG images from ' + paths.img.source);
     gulp.src(paths.img.source + '*.svg')
-    .pipe(svgmin())
+    .pipe(svgmin({
+       plugins: [{
+            removeAttrs: { attrs: 'data.*' }
+        }, {
+            removeUnknownsAndDefaults: {
+                defaultAttrs: false
+            }
+        }],
+    }))
     .pipe(gulp.dest(paths.img.printpdf))
     .pipe(gulp.dest(paths.img.screenpdf))
     .pipe(gulp.dest(paths.img.web))
