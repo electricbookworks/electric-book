@@ -94,7 +94,7 @@ $rule-thickness: 0.5pt;
 
 // Hyphenation
 // Variables here apply to p, ul, ol, dl
-$hyphenation: auto; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation: manual; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
 $hyphenation-dictionary: ""; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic". Overrides PrinceXML built-in hyphenation.
 $hyphenation-custom: add; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
 $hyphenate-after: 3; // Minimum letters on new line after hyphen
