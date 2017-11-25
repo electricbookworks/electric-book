@@ -7,8 +7,7 @@
 
     // let newer browsers use js-powered menu
     if('querySelector' in document &&
-       'addEventListener' in window &&
-       document.documentElement.classList) {
+       'addEventListener' in window) {
 
       // set js nav class
       document.documentElement.classList.add('js-nav');
@@ -21,16 +20,21 @@
       menu.classList.add("visuallyhidden");
 
       // add a close button
-      var closeButton = '<button data-toggle data-nav-close><span class="visuallyhidden">Close menu</span></button>';
+      var closeButton = '<button data-toggle data-nav-close>';
+          closeButton += '<span class="visuallyhidden">Close menu</span>';
+          closeButton += '</button>';
       menu.insertAdjacentHTML('afterBegin', closeButton);
-      var closeButtonInDOM = document.querySelector('[data-nav-close]');
 
       // hide the children and add the button for toggling
-      var subMenus = document.querySelectorAll('#nav .has-children, #nav .has-children');
-      var showChildrenButton = '<button data-toggle data-toggle-nav><span class="visuallyhidden">Toggle children</span></button>';
+      var subMenus = document
+                    .querySelectorAll('#nav .has-children, #nav .has-children');
+      var showChildrenButton = '<button data-toggle data-toggle-nav>';
+          showChildrenButton += '<span class="visuallyhidden">Toggle</span>'
+          showChildrenButton += '</button>';
       for (var i = 0; i < subMenus.length; i++) {
         subMenus[i].querySelector('ol, ul').classList.add('visuallyhidden');
-        subMenus[i].querySelector('a').insertAdjacentHTML('afterend', showChildrenButton);
+        subMenus[i].querySelector('a')
+                   .insertAdjacentHTML('afterend', showChildrenButton);
       }
 
       // show the menu when we click the link
@@ -40,29 +44,45 @@
         document.documentElement.classList.toggle('js-nav-open');
       }, true);
 
-      var hideMenu = function() {
+      var ebHideMenu = function() {
           menu.classList.add("visuallyhidden");
           document.documentElement.classList.remove('js-nav-open');
       }
 
       // listen for clicks inside the menu
       menu.addEventListener("click", function(ev) {
-        if (ev.srcElement.parentNode.classList.contains("active")
-            && ev.srcElement.tagName === "A") {
-            // if it's an on-page anchor, hide the menu
-            hideMenu();
-        } else if (ev.srcElement.hasAttribute("data-nav-close")) {
-            // hide the menu when we click the button
+        var clickedElement = ev.target || ev.srcElement;
+
+        // hide the menu when we click the button
+        if (clickedElement.hasAttribute("data-nav-close")) {
             ev.preventDefault();
-            hideMenu();
-        } else  if (ev.srcElement.hasAttribute("data-toggle-nav")) {
-            // show the children when we click a .has-children
-            ev.preventDefault();
-            ev.srcElement.classList.toggle('show-children');
-            ev.srcElement.nextElementSibling.classList.toggle('visuallyhidden');
+            ebHideMenu();
+            return;
         }
 
-        });
+        // show the children when we click a .has-children
+        if (clickedElement.hasAttribute("data-toggle-nav")) {
+            ev.preventDefault();
+            clickedElement.classList.toggle('show-children');
+            clickedElement.nextElementSibling.classList.toggle('visuallyhidden');
+            return;
+        }
+
+        // if it's an anchor with an href (an in-page link)
+        if (clickedElement.tagName === "A" && clickedElement.getAttribute('href')) {
+            ebHideMenu();
+            return;
+        }
+
+        // if it's an anchor without an href (a nav-only link)
+        if (clickedElement.tagName === "A") {
+            clickedElement.nextElementSibling.classList.toggle('show-children');
+            clickedElement.nextElementSibling.nextElementSibling.classList.toggle('visuallyhidden');
+            return;
+        }
+
+
+      });
 
     }
 
