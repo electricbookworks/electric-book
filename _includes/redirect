@@ -13,7 +13,7 @@ Thanks to http://insider.zone/tools/client-side-url-redirect-generator/
     var url = "{{ include.target }}";
     if(typeof IE_fix != "undefined") // IE8 and lower fix to pass the http referer
     {
-        document.write("redirecting..."); // Don't remove this line or appendChild() will fail because it is called before document.onload to make the redirect as fast as possible. Nobody will see this text, it is only a tech fix.
+        document.write("Redirecting..."); // Don't remove this line or appendChild() will fail because it is called before document.onload to make the redirect as fast as possible. Nobody will see this text, it is only a tech fix.
         var referLink = document.createElement("a");
         referLink.href = url;
         document.body.appendChild(referLink);
