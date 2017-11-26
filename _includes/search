@@ -8,5 +8,5 @@ Searches all books in the project.
 
 <form class="search" action="{{ path-to-root-directory }}search.html" method="get">
   <label for="search-box"></label>
-  <input type="text" id="search-box" class="search-box" name="query" placeholder="Search">
+  <input type="text" id="search-box" class="search-box" name="query" placeholder="{{ locale.search.placeholder }}">
 </form>

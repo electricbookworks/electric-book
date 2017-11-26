@@ -73,7 +73,7 @@ translation's file list in meta.yml.{% endcomment %}
 
                                 <li class="language-select-language language-select-{{ translation.language }}">
                                     <a href="{{ path-to-book-directory }}{{ translation.language }}/text/{{ filename }}.html">
-                                       {{ site.data.language-codes[translation.language] }}
+                                       {{ site.data.locales[translation.language].local-name }}
                                    </a>
                                 </li>
 
@@ -87,7 +87,7 @@ translation's file list in meta.yml.{% endcomment %}
                             {% unless parent-language-link-added %}
                                 <li class="language-select-language language-select-{{ parent-language }}">
                                     <a href="{{ path-to-book-directory }}text/{{ filename }}.html">
-                                        {{ site.data.language-codes[parent-language] }}
+                                        {{ site.data.locales[parent-language].local-name }}
                                     </a>
                                 </li>
                             {% endunless %}
