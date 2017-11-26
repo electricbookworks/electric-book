@@ -2,6 +2,7 @@
 
 ## 0.10.1 (in progress)
 
+* Localisation: text snippets can now be set in `locales.yml`
 * Fix print font defaults
 * Match EBM colours
 * Markdownify breadcrumbs
