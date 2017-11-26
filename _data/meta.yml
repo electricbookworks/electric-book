@@ -16,15 +16,10 @@ project:
   description: "Books created with the Electric Book workflow"
   # An image in /assets that stands for the project
   image: "publisher-logo.jpg"
-  # For web navigation, the label for links to the project homepage
-  # For English sites, you can leave this as "Home".
-  home-label: "Home"
-  # For web navigation, the label for the navigation menu
-  nav-label: "Contents"
-  # Footer text for the project
-  footer: "Built with the [Electric Book](http://electricbook.works)"
-  # For web search, the "placeholder" text while the search is running
-  search-placeholder: "Searching..."
+  # Credit line, by default in the footer, overidden in locales.yml
+  credit: "Built with the [Electric Book](http://electricbook.works)"
+  # Primary language code for this project as a whole
+  language: "en"
   # App bundle ID unique across all app stores
   app-id: com.example.myapp
   # Version. You must change this with each app update
@@ -118,7 +113,6 @@ works:
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
         contents-page: "0-3-contents" # Your contents-page file, if you have one.
-        footer: "" # Text that appears in the footer of this book's pages on the website.
       epub:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
@@ -202,7 +196,6 @@ works:
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
         contents-page: "0-3-contents" # Your contents-page file, if you have one.
-        footer: "" # Text that appears in the footer of this book's pages on the website.
     # variants:
     #   - variant: myvariant
     #     identifier: ""
@@ -428,9 +421,10 @@ works:
               - label: "Dynamic index"
                 file: "10-02"
                 id: "dynamic-index"
+          - label: "Contact"
+            file: "contact"
         start-page: "00-05-contents-page" # At which file should users start reading?
         contents-page: "00-05-contents-page" # Your contents-page file, if you have one.
-        footer: "" # Text that appears in the footer of the website. You can include HTML.
       epub:
         date: "2016-09-01" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
@@ -794,7 +788,6 @@ works:
                 id: "dynamic-index"
         start-page: "00-05-contents-page" # At which file should users start reading?
         contents-page: "00-05-contents-page" # Your contents-page file, if you have one.
-        footer: "" # Text that appears in the footer of the website. You can include HTML.
     translations: # Inside translations, include the same structure as in 'works'. Include only items that override the parent work's equivalents.
       - directory: "fr"
         language: "fr"
@@ -818,6 +811,7 @@ works:
               - "01-01"
               - "02-00"
               - "02-01"
+              - "contact"
             nav:
               - file: "00-00-cover"
                 label: "Couverture"
@@ -835,6 +829,8 @@ works:
                 children:
                   - file: "02-01"
                     label: "Images simples"
+              - label: "Contact"
+                file: "contact"
           screen-pdf:
             files:
               - "00-00-cover"

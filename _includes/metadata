@@ -9,6 +9,7 @@ book's title.
 
 {% comment %}
 Assign project information to variables. This is the same for all books in the project.
+These values can be overridden in _data/locales.yml for translations.
 {% endcomment %}
 
 {% capture project-organisation %}{{ site.data.meta.project.organisation }}{% endcapture %}
@@ -17,12 +18,14 @@ Assign project information to variables. This is the same for all books in the p
 {% capture project-name %}{{ site.data.meta.project.name }}{% endcapture %}
 {% capture project-description %}{{ site.data.meta.project.description }}{% endcapture %}
 {% capture project-image %}{{ site.data.meta.project.image }}{% endcapture %}
-{% capture project-home-label %}{{ site.data.meta.project.home-label }}{% endcapture %}
-{% capture project-nav-label %}{{ site.data.meta.project.nav-label }}{% endcapture %}
-{% capture project-footer %}{{ site.data.meta.project.footer }}{% endcapture %}
-{% capture project-search-placeholder %}{{ site.data.meta.project.search-placeholder }}{% endcapture %}
+{% capture project-credit %}{{ site.data.meta.project.credit }}{% endcapture %}
+{% capture project-language %}{{ site.data.meta.project.language }}{% endcapture %}
 {% capture project-app-id %}{{ site.data.meta.project.app-id }}{% endcapture %}
 {% capture project-version %}{{ site.data.meta.project.version }}{% endcapture %}
+
+{% comment %}Also use project language as default, fallback language,
+which will be overridden below if we're on book pages.{% endcomment %}
+{% capture language %}{{ site.data.meta.project.language }}{% endcapture %}
 
 {% comment %}
 It's useful to know how many books are in this project
@@ -140,7 +143,6 @@ and book content as a Liquid output tag e.g. {{ title }}
     {% capture web-format %}{{ work.products.web.format }}{% endcapture %}
     {% capture web-identifier %}{{ work.products.web.identifier }}{% endcapture %}
     {% capture web-image %}{{ work.products.web.image }}{% endcapture %}
-    {% capture web-footer %}{{ work.products.web.footer }}{% endcapture %}
     {% capture web-start-page %}{{ work.products.web.start-page }}{% endcapture %}
     {% capture web-contents-page %}{{ work.products.web.contents-page }}{% endcapture %}
     {% assign web-file-list = work.products.web.files %}
@@ -185,12 +187,6 @@ and book content as a Liquid output tag e.g. {{ title }}
         {% capture app-image %}{{ work.products.app.image }}{% endcapture %}
     {% else %}
         {% capture app-image %}{{ web-image }}{% endcapture %}
-    {% endif %}
-
-    {% if work.products.app.footer %}
-        {% capture app-footer %}{{ work.products.app.footer }}{% endcapture %}
-    {% else %}
-        {% capture app-footer %}{{ web-footer }}{% endcapture %}
     {% endif %}
 
     {% if work.products.app.start-page %}
@@ -283,7 +279,6 @@ defined in meta.yml for the given translation.
             {% if work.products.web.format %}{% capture web-format %}{{ work.products.web.format }}{% endcapture %}{% endif %}
             {% if work.products.web.identifier %}{% capture web-identifier %}{{ work.products.web.identifier }}{% endcapture %}{% endif %}
             {% if work.products.web.image %}{% capture web-image %}{{ work.products.web.image }}{% endcapture %}{% endif %}
-            {% if work.products.web.footer %}{% capture web-footer %}{{ work.products.web.footer }}{% endcapture %}{% endif %}
             {% if work.products.web.start-page %}{% capture web-start-page %}{{ work.products.web.start-page }}{% endcapture %}{% endif %}
             {% if work.products.web.contents-page %}{% capture web-contents-page %}{{ work.products.web.contents-page }}{% endcapture %}{% endif %}
             {% if work.products.web.files %}{% assign web-file-list = work.products.web.files %}{% endif %}
@@ -309,7 +304,6 @@ defined in meta.yml for the given translation.
             {% if work.products.app.format %}{% capture app-format %}{{ work.products.app.format }}{% endcapture %}{% endif %}
             {% if work.products.app.identifier %}{% capture app-identifier %}{{ work.products.app.identifier }}{% endcapture %}{% endif %}
             {% if work.products.app.image %}{% capture app-image %}{{ work.products.app.image }}{% endcapture %}{% endif %}
-            {% if work.products.app.footer %}{% capture app-footer %}{{ work.products.app.footer }}{% endcapture %}{% endif %}
             {% if work.products.app.start-page %}{% capture app-start-page %}{{ work.products.app.start-page }}{% endcapture %}{% endif %}
             {% if work.products.app.contents-page %}{% capture app-contents-page %}{{ work.products.app.contents-page }}{% endcapture %}{% endif %}
             {% if work.products.app.files %}{% assign app-file-list = work.products.app.files %}{% endif %}
@@ -376,7 +370,6 @@ override any metadata set for that variant.{% endcomment %}
               {% if data.products.web.format %}{% capture web-format %}{{ data.products.web.format }}{% endcapture %}{% endif %}
               {% if data.products.web.identifier %}{% capture web-identifier %}{{ data.products.web.identifier }}{% endcapture %}{% endif %}
               {% if data.products.web.image %}{% capture web-image %}{{ data.products.web.image }}{% endcapture %}{% endif %}
-              {% if data.products.web.footer %}{% capture web-footer %}{{ data.products.web.footer }}{% endcapture %}{% endif %}
               {% if data.products.web.start-page %}{% capture web-start-page %}{{ data.products.web.start-page }}{% endcapture %}{% endif %}
               {% if data.products.web.contents-page %}{% capture web-contents-page %}{{ data.products.web.contents-page }}{% endcapture %}{% endif %}
               {% if data.products.web.files %}{% assign web-file-list = data.products.web.files %}{% endif %}
@@ -417,7 +410,6 @@ override any metadata set for that variant.{% endcomment %}
               {% if data.products.app.format %}{% capture app-format %}{{ data.products.app.format }}{% endcapture %}{% endif %}
               {% if data.products.app.identifier %}{% capture app-identifier %}{{ data.products.app.identifier }}{% endcapture %}{% endif %}
               {% if data.products.app.image %}{% capture app-image %}{{ data.products.app.image }}{% endcapture %}{% endif %}
-              {% if data.products.app.footer %}{% capture app-footer %}{{ data.products.app.footer }}{% endcapture %}{% endif %}
               {% if data.products.app.start-page %}{% capture app-start-page %}{{ data.products.app.start-page }}{% endcapture %}{% endif %}
               {% if data.products.app.contents-page %}{% capture app-contents-page %}{{ data.products.app.contents-page }}{% endcapture %}{% endif %}
               {% if data.products.app.files %}{% assign app-file-list = data.products.app.files %}{% endif %}
@@ -646,3 +638,47 @@ processed as documents by Jekyll, and aren't accessible that way.{% endcomment %
   {% endif %}
   {% break %}
 {% endfor %}
+
+{% comment %} Localisation {% endcomment %}
+
+{% if translations %}
+
+    {% comment %} Get an array of all languages listed
+    as translations in meta.yml {% endcomment %}
+    {% assign languages = language | split: "," %}
+    {% for translation in translations %}
+        {% assign languages = languages | push: translation.language | uniq %}
+    {% endfor %}
+
+{% endif %}
+
+{% comment %} Get the locales {% endcomment %}
+{% assign locales = site.data.locales %}
+
+{% comment %} Put this page's particular language
+in a locale variable {% endcomment %}
+{% assign locale = locales[language] %}
+
+{% comment %} Override project metadata with locale translations,
+or parent-language overrides, if they exist. {% endcomment %}
+{% if locale.project.organisation and locale.project.organisation != "" %}
+    {% capture project-organisation %}{{ locale.project.organisation }}{% endcapture %}
+{% endif %}
+{% if locale.project.url and locale.project.url != "" %}
+    {% capture project-url %}{{ locale.project.url }}{% endcapture %}
+{% endif %}
+{% if locale.project.email and locale.project.email != "" %}
+    {% capture project-email %}{{ locale.project.email }}{% endcapture %}
+{% endif %}
+{% if locale.project.name and locale.project.name != "" %}
+    {% capture project-name %}{{ locale.project.name }}{% endcapture %}
+{% endif %}
+{% if locale.project.description and locale.project.description != "" %}
+    {% capture project-description %}{{ locale.project.description }}{% endcapture %}
+{% endif %}
+{% if locale.project.image and locale.project.image != "" %}
+    {% capture project-image %}{{ locale.project.image }}{% endcapture %}
+{% endif %}
+{% if locale.project.credit and locale.project.credit != "" %}
+    {% capture project-credit %}{{ locale.project.credit }}{% endcapture %}
+{% endif %}
