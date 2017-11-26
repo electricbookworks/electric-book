@@ -3,17 +3,9 @@
     <div id="footer">
         <div class="footer-content">
 
-            {% if project-footer and project-footer != "" %}
-                <p>
-                    {{ project-footer | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
-                </p>
-            {% endif %}
-
-            {% if web-footer and web-footer != "" %}
-                <p>
-                    {{ web-footer | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
-                </p>
-            {% endif %}
+            <p>
+                {{ project-credit | strip | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+            </p>
 
         </div><!--.footer-content-->
     </div><!--#footer-->
