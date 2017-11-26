@@ -86,3 +86,7 @@ Here is an example of the translation section of the `meta.yml` file that includ
         language: fr
         title: Title in French
 ```
+
+## Localisation
+
+The translate things like the navigation button and contact form, edit `_data/locales.yml`.
