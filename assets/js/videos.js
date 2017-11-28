@@ -1,7 +1,5 @@
 "use strict";
 
-console.log('Starting video JS');
-
 var ebwVideoInit = function() {
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
         'querySelector' in document &&
@@ -44,7 +42,6 @@ var videoShow = function() {
 
     // get all the videos
     var videos = document.querySelectorAll('.video');
-    console.log('Videos: ' + videos);
 
     videos.forEach(function(currentVideo){
         // make the iframe
