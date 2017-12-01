@@ -17,7 +17,7 @@ Our template comes with four folders for images, which correspond to output form
 
 ### Automating image conversions
 
-You can automate the conversion of images to various outputs with [gulp](https://gulpjs.com/). You need to have npm installed, and to have run `nom install` in the project root to install the `node_modules`.
+You can automate the conversion of images to various outputs with [gulp](https://gulpjs.com/). You need to have npm installed, and to have run `npm install` in the project root to install the `node_modules`.
 
 Then you only need to put high-res versions of your images in `images/_source` and run `gulp`. Our gulp script will automatically optimise, convert and save your images to the four output folders, including specifying the correct colour profiles and creating multiple image sizes for web output.
 
@@ -43,20 +43,22 @@ We use standard markdown to embed images:
 
 Let's break that down:
 
-* the exclamation mark and square and round brackets make up the masic markdown image syntax: `![Description](filename)`. The description is especially important for screen-readers used by the visually impaired.
+* the exclamation mark and square and round brackets make up the basic markdown image syntax: `![Description](filename)`. The description is especially important for screen-readers used by the visually impaired.
 * `../` means 'go up, out of the `text` folder'
 * `{{ site.image-set }}/` means 'go into the folder containing our preferred set of images' (as defined in `_config.yml`). The default image-set folder is `images`.
 * finally, the image file name.
 
 ### Images in translations
 
-If you are creating a [translation](70-translations.html#translations) in a subdirectory of `text`, and your images are in the parent book folder, you need to change the path to the images slightly. You have two options:
+If you are creating a [translation](http://electricbook.works/docs/translations.html) in a subdirectory of `text`, and your images are in the parent book folder, you need to change the path to the images slightly. You have two options:
 
 1. Use the `{{ path-to-book-directory }}` metadata tag. At the top of your markdown file, add `{% include metadata %}`, so that you can use metadata variables in that file. Then instead of any `../`s, you use the tag: `{{ path-to-book-directory }}{{ site.image-set }}/filename.jpg`.
 
-   Even if you're not in a translation folder, it's good practice to always use the `{{ path-to-book-directory }}` tag for maximum portability, if you don't mind having the `{% include metadata %}` tag at the top of your files.
+   Even if you're not in a translation folder, it's good practice to always use the `{{ path-to-book-directory }}` tag for maximum portability, if you don't mind having the `{% include metadata %}` tag at the top of your files. Ultimately this image include will look like this: `![A description of the image]({{ path-to-book-directory }}{{ site.image-set }}/filename.jpg)`
 
-1. Add another `../` for each directory level. So if your translation text is in `book/text/fr`, you need to come up three levels before going into `book/images`. So your path is `../../{{ site.image-set }}/filename.jpg`.
+1. Add another `../` for each directory level. So if your translation text is in `book/text/fr`, anf your images are in the `book` folder, you need to come up two levels before going into `book/images`. So your path is `../../{{ site.image-set }}/filename.jpg`.
+   
+   Ultimately, your image include will be `![A description of the image](../../{{ site.image-set }}/filename.jpg)`.
 
 
 ## Figures
@@ -83,12 +85,16 @@ Every line (except the `{:.figure}` class tag at the end) starts with a `>` and 
 The first line is the image reference. As noted above, it consists of:
 
 *	an exclamation mark telling markdown that we're placing an image
-*	the `alt` attribute in square brackets
+*	the `alt` attribute in square brackets <!---
+why do you call this an `alt` attribute? Should we not just describe it as the image's description?
+-->
 *	the path to the image file.
 
 The third line is the figure caption, followed by the kramdown tag `{:.figure}`, which lets our stylesheets format the `blockquote` as a figure. (For instance, preventing a page break between the image and the caption in print.)
 
-This will display like this.
+This will display like this. <!---
+the image below is not displaying on web and is not in this repo. Should I create an images folder within the docs folder and put the image within it and change the image path?
+-->
 
 {% endraw %}
 
@@ -134,13 +140,15 @@ In the tag for each figure, we can define the following information:
 * a title (can be used to title descriptive text)
 * a description (hidden by default and used at `alt` text on the image; can be displayed and used with custom CSS)
 * a source (appears below the figure)
-* a [class](#classes) (for styling the layout of a given figure).
+* a [class](http://electricbook.works/docs/classes.html) (for styling the layout of a given figure). <!---
+the id link that was here doesn't go anywhere. I've replaced it.
+-->
 
-The template uses that information differently depending on the output format. For instance, on the web and in the epub, the description is the text that screen-readers will read aloud to blind users who can't see an image, and we don't need to display it in print.
+The template uses that information differently depending on the output format. For instance, on the web and in the epub, the description is the text that screen-readers will read aloud to visually-impaired users who can't see an image, and we don't need to display it in print.
 
 A caption and a description are similar, but not the same. A caption usually provides information about the figure, while a description describes its appearance.
 
-We define these things in the tag using 'parameters'. For instance, we set the `image` parameter by writing `image='mydog.jpg'`. Here is a `figure` include with each parameter set. You can copy this and set the value in each parameter. Nothing is mandatory, so you only need to include the parameters that your figure needs defined.
+We define these things in the tag using 'parameters'. For instance, we set the `image` parameter by writing `image='mydog.jpg'`. Below is a `figure` include with each parameter set. You can copy this and set the value in each parameter. Nothing is mandatory, so you only need to include the parameters that your figure needs defined.
 
 Here is a full example:
 
@@ -183,7 +191,9 @@ To always use a specific image file for any given image, irrespective of the `im
 
 {% endraw %}
 
-If you're using `{% include figure %}` to add your figures, you don't need to specify any path or `site.image-set`. The figure include does that for you.
+If you're using `{% include figure %}` to add your figures, you don't need to specify any path or `site.image-set`. The figure include does that for you. <!---
+the liquid figure include in this line isn't displaying on my web version or EBW's.
+-->
 
 ## Image placement
 
@@ -223,7 +233,9 @@ The more accurate way: use a class tag to specify the exact height of the image 
 
 ## Preparing images
 
-*   We recommend consistently using JPG – large versions in the `print-pdf` images folder and web-optimised versions in `screen-pdf`, `web` and `epub`. For some books we use SVG so that they scale beautifully but also remain small in file-size for web use; but EPUB2 does not support SVG.
+*   We recommend consistently using JPG – large versions in the `print-pdf` images folder and web-optimised versions in `screen-pdf`, `web` and `epub`. For some books we use SVG so that they scale beautifully but also remain small in file-size for web use; but EPUB2 does not support SVG.<!---
+I think we need to update this info?
+-->
 *   Ensure that raster images, or raster/bitmap elements in SVG, are high-res enough for printing (e.g. 300dpi at full size).
 
 ### Using SVG images

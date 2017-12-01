@@ -46,9 +46,11 @@ Remember that search-and-replace is rarely flawless, so proceed with caution. Fo
 
 However, many (human) editors often mark the spaces on either side of a word as italic, probably because clicking and dragging with a mouse can be inaccurate, and because double-clicking a word often highlights the word as well as the space after it. This means that when we automate 'search for italics and wrap with `*`', we end up wrapping the space into the markdown as well. Also, sometimes spaces in the manuscript are italic, even though the words on either side of the space are not (this is probably caused by editing or pasting phrases that were once italic). In Word and InDesign, you'd never spot those italic spaces by eye. But in the markdown, you end up with this:
 
-`I went to* *the shops.`
+`I went to* *the shops.` <!---
+the id link that was here doesn't go anywhere. I've replaced it.
+-->
 
-Markdown reads that is meaning that there is an actual asterisk after 'to', and italics start from 'the' and continue (at least) to the end of the paragraph:
+Markdown reads that as meaning that there is an actual asterisk after 'to', and italics start from 'the' and continue (at least) to the end of the paragraph:
 
 I went to* *the shops.*
 
