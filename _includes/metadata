@@ -231,7 +231,7 @@ that matches a translation language, set is-translation to true, and change
 the `language` variable, which we captured above, to the translation language.
 {% endcomment %}
 {% for translation in translations %}
-    {% if book-subdirectory == translation.language %}
+    {% if book-subdirectory == translation.directory %}
         {% assign is-translation = true %}
         {% capture language %}{{ translation.language }}{% endcapture %}
     {% endif %}
@@ -538,7 +538,7 @@ be sure we're pointing to the webserver root.{% endcomment %}
 {% comment %}If this is a translation, and a language subfolder of images exists,
 the {{ images }} path should include the language subdirectory.{% endcomment %}
 {% if is-translation %}
-    {% capture path-to-translation-images-directory %}/{{ book-directory }}/{{ language }}/images/{{ site.output }}/{% endcapture %}
+    {% capture path-to-translation-images-directory %}/{{ book-directory }}/{{ book-subdirectory }}/images/{{ site.output }}/{% endcapture %}
     {% assign translated-images = site.static_files | where_exp: "file", "file.path contains path-to-translation-images-directory" %}
     {% assign translated-images-number = translated-images | size %}
 
@@ -548,7 +548,7 @@ the {{ images }} path should include the language subdirectory.{% endcomment %}
     {% endif %}
 
     {% if translated-images-exist == true %}
-        {% capture images %}{{ path-to-book-directory }}{{ language }}/{{ site.image-set }}{% endcapture %}
+        {% capture images %}{{ path-to-book-directory }}{{ book-subdirectory }}/{{ site.image-set }}{% endcapture %}
     {% endif %}
 {% endif %}
 
@@ -566,15 +566,15 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
 
 {% if is-translation %}
     {% if site.output == "print-pdf" %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ print-pdf-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ print-pdf-stylesheet }}{% endcapture %}
     {% elsif site.output == "screen-pdf" %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ screen-pdf-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ screen-pdf-stylesheet }}{% endcapture %}
     {% elsif site.output == "epub" %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ epub-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ epub-stylesheet }}{% endcapture %}
     {% elsif site.output == "app" %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ app-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ app-stylesheet }}{% endcapture %}
     {% else %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ web-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ web-stylesheet }}{% endcapture %}
     {% endif %}
     {% assign translation-styles = site.pages | where_exp: "file", "file.url contains path-to-translation-stylesheet" %}
     {% assign translation-styles-number = translation-styles | size %}
@@ -585,7 +585,7 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
     {% endif %}
 
     {% if translation-styles-exist == true %}
-        {% capture path-to-styles-directory %}{{ path-to-book-directory }}{{ language }}/styles{% endcapture %}
+        {% capture path-to-styles-directory %}{{ path-to-book-directory }}{{ book-subdirectory }}/styles{% endcapture %}
     {% endif %}
 {% endif %}
 
@@ -593,7 +593,7 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
 {% capture path-to-fonts-directory %}{{ path-to-book-directory }}fonts{% endcapture %}
 
 {% if is-translation %}
-    {% capture path-to-translation-fonts-directory %}/{{ book-directory }}/{{ language }}/fonts{% endcapture %}
+    {% capture path-to-translation-fonts-directory %}/{{ book-directory }}/{{ book-subdirectory }}/fonts{% endcapture %}
     {% assign translation-fonts = site.static_files | where_exp: "file", "file.path contains path-to-translation-fonts-directory" %}
     {% assign translation-fonts-number = translation-fonts | size %}
 
@@ -603,7 +603,7 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
     {% endif %}
 
     {% if translation-fonts-exist == true %}
-        {% capture path-to-fonts-directory %}{{ path-to-book-directory }}{{ language }}/fonts{% endcapture %}
+        {% capture path-to-fonts-directory %}{{ path-to-book-directory }}{{ book-subdirectory }}/fonts{% endcapture %}
     {% endif %}
 {% endif %}
 
@@ -644,8 +644,8 @@ processed as documents by Jekyll, and aren't accessible that way.{% endcomment %
 {% if translations %}
 
     {% comment %} Get an array of all languages listed
-    as translations in meta.yml {% endcomment %}
-    {% assign languages = language | split: "," %}
+    as translations in meta.yml, plus the parent language {% endcomment %}
+    {% assign languages = parent-language | split: "," %}
     {% for translation in translations %}
         {% assign languages = languages | push: translation.language | uniq %}
     {% endfor %}

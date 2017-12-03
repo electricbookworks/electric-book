@@ -19,6 +19,10 @@ $web-language-select: true !default;
                 a {
                     color: $language-select-links-color;
                 }
+                // override inherited styles from masthead ul li:after
+                &:after {
+                    content: normal;
+                }
             }
         }
         // Hide the list till hover on parent
