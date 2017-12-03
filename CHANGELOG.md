@@ -19,6 +19,7 @@
 * Add language-selector menu for when translations exist
 * Improve `gulpfile` SVG optimisation for epubs
 * Set hyphenation to manual by default
+* Allow translation directories and language codes to differ
 * Bug fixes and code-readability improvements
 
 ## 0.10.0
