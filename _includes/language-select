@@ -22,7 +22,7 @@ translation's file list in meta.yml.{% endcomment %}
     {% endfor %}
 
     {% comment %} Check if any translations of this file actually exist. {% endcomment %}
-    {% capture translated-file-with-path %}{{ book-directory }}/{{ translation.language }}/text/{{ current-file }}.md{% endcapture %}
+    {% capture translated-file-with-path %}{{ book-directory }}/{{ translation.directory }}/text/{{ current-file }}.md{% endcapture %}
     {% for page in site.pages %}
         {% if page.path == translated-file-with-path %}
             {% assign translated-files-exist = true %}
@@ -52,7 +52,7 @@ translation's file list in meta.yml.{% endcomment %}
                         {% else %}
                             {% capture filename %}{{ item }}{% endcapture %}
                         {% endif %}
-                        {% capture this-translated-file-with-path %}{{ book-directory }}/{{ translation.language }}/text/{{ filename }}.md{% endcapture %}
+                        {% capture this-translated-file-with-path %}{{ book-directory }}/{{ translation.directory }}/text/{{ filename }}.md{% endcapture %}
                     {% endfor %}
 
                     {% comment %} Reset variable. {% endcomment %}
@@ -72,7 +72,7 @@ translation's file list in meta.yml.{% endcomment %}
                             {% unless translation.language == language %}
 
                                 <li class="language-select-language language-select-{{ translation.language }}">
-                                    <a href="{{ path-to-book-directory }}{{ translation.language }}/text/{{ filename }}.html">
+                                    <a href="{{ path-to-book-directory }}{{ translation.directory }}/text/{{ filename }}.html">
                                        {{ site.data.locales[translation.language].local-name }}
                                    </a>
                                 </li>
