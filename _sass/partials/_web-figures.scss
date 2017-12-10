@@ -17,10 +17,7 @@ $web-figures: true !default;
 			page-break-inside: avoid;
 			page-break-before: avoid;
 			hyphens: none;
-			font-style: italic;
-			em {
-				font-style: normal;
-			}
+			font-size: $font-size-default * $font-size-smaller;
 			&:last-of-type {
 				margin-bottom: 0;
 			}
@@ -95,7 +92,7 @@ $web-figures: true !default;
 			max-width: 25%;
 			float: right;
 			margin: 0 0 0 ($line-height-default / 2);
-	    	padding: 0;
+			padding: 0;
 			img {
 				padding: 0;
 			}
@@ -104,15 +101,18 @@ $web-figures: true !default;
 
 	// Paragraphs that start with an image
 	.image-with-caption {
-	    font-size: $font-size-default * $font-size-smaller;
-	    margin: $line-height-default 0;
-	    text-align: center;
-	    img {
-	        display: block;
-	        margin: $line-height-default auto;
-	        max-height: 80vh;
-	        max-width: 100%;
-	    }
+		font-size: $font-size-default * $font-size-smaller;
+		margin: $line-height-default 0;
+		text-align: center;
+		img {
+			display: block;
+			margin: $line-height-default auto;
+			max-height: 80vh;
+			max-width: 100%;
+		}
+		& + p {
+			text-indent: 0;
+		}
 	}
 
 }
