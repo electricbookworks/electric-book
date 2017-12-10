@@ -20,6 +20,7 @@
 * Improve `gulpfile` SVG optimisation for epubs
 * Set hyphenation to manual by default
 * Allow translation directories and language codes to differ
+* Don't store Cordova `plugins` and `platforms` folders in source control
 * Bug fixes and code-readability improvements
 
 ## 0.10.0
