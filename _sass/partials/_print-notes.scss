@@ -63,6 +63,16 @@ $print-notes: true !default;
 		h6 + & + & + & + p {
 			text-indent: 0;
 		}
+		// Unless we're spacing paras, put back the indent
+		// on paras that follow sidenotes that follow paras.
+		p + & + p {
+			text-indent: $line-height-default;
+		}
+		@if $spaced-paras {
+	        p + & + p {
+	            text-indent: 0;
+	        }
+	    }
 	}
 	// Sidenotes that appear at the bottom of the page, aka footer notes.
 	.bottom {
