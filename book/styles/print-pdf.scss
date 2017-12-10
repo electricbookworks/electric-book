@@ -42,7 +42,7 @@ $crop-marks: crop; // crop | none
 $colorspace: cmyk; // auto | none | rgb | cmyk | gray
 $color-text-main: cmyk(0,0,0,1);
 $color-text-secondary: cmyk(0,0,0,0.8);
-$color-background: white;
+$color-background: transparent;
 $color-light: cmyk(0,0,0,0.2);
 $color-mid: cmyk(0,0,0,0.4);
 $color-accent: cmyk(0,0,0,1);

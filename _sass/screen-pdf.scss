@@ -38,7 +38,7 @@ $crop-marks: none !default; // crop | none
 $colorspace: rgb !default; // auto | none | rgb | cmyk | gray
 $color-text-main: cmyk(0,0,0,1) !default;
 $color-text-secondary: cmyk(0,0,0,0.8) !default;
-$color-background: white !default;
+$color-background: transparent !default;
 $color-light: cmyk(0,0,0,0.2) !default;
 $color-mid: cmyk(0,0,0,0.4) !default;
 $color-accent: cmyk(0,0,0,1) !default;
