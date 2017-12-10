@@ -791,6 +791,8 @@ works:
     translations: # Inside translations, include the same structure as in 'works'. Include only items that override the parent work's equivalents.
       - directory: "fr"
         language: "fr"
+        title: "Échantillons"
+        subtitle: "Exemples de contenu pour le livre électrique"
         products:
           print-pdf:
             files:
