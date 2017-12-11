@@ -8,6 +8,10 @@ $epub-tables: true !default;
 		margin: $line-height-default 0;
 		font-size: $font-size-default * $font-size-smaller;
 		width: 100%;
+		// Scroll if necessary (e.g. narrow screens)
+		// Most epub readers will ignore this.
+		display: block; // required for overflow-x: auto to work
+		overflow-x: auto;
 	}
 	thead, th, .table-subhead {
 		page-break-after: avoid;
