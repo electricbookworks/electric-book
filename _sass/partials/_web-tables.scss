@@ -9,8 +9,10 @@ $web-tables: true !default;
 		font-size: $font-size-default * $font-size-smaller;
 		width: 100%;
 		// Scroll if necessary (e.g. narrow screens)
-		display: block; // required for overflow-x: auto to work
-		overflow-x: auto;
+		@media (max-width: $break-point-width) {
+			display: block; // required for overflow-x: auto to work
+			overflow-x: auto;
+		}
 	}
 	thead, th, .table-subhead {
 		page-break-after: avoid;
