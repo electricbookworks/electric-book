@@ -34,7 +34,8 @@ echo 4  Create an epub
 echo 5  Create an app
 echo 6  Export to Word
 echo 7  Convert source images to output formats
-echo 8  Install or update dependencies
+echo 8  Refresh search index
+echo 9  Install or update dependencies
 echo x  Exit
 echo.
 set /p process=Enter a number and hit return. 
@@ -45,7 +46,8 @@ set /p process=Enter a number and hit return.
     if "%process%"=="5" goto app
     if "%process%"=="6" goto word
     if "%process%"=="7" goto convertimages
-    if "%process%"=="8" goto install
+    if "%process%"=="8" goto refreshSearchIndex
+    if "%process%"=="9" goto install
     if "%process%"=="x" goto:EOF
     goto choose
 
@@ -887,6 +889,53 @@ set /p process=Enter a number and hit return.
 
         :: Back to the beginning
         :convertimagescomplete
+            goto begin
+
+    :: :: :: :: :: :: ::
+    :: REFRESH SEARCH ::
+    :: :: :: :: :: :: ::
+
+    :refreshSearchIndex
+
+        : Save where we are
+        set location=%~dp0
+
+        :: Encouraging message
+        echo Let's refresh the search index.
+        echo We'll index the files in your web or app file lists defined in meta.yml
+        echo You need to have PhantomJS installed for this to work.
+
+        :: Check if refreshing web or app index
+        echo To refresh the website search index, press enter.
+        echo To refresh to app search index, type a and press enter.
+        set /p searchIndexToRefresh=
+
+        :: Generate HTML with Jekyll
+        echo Generating HTML with Jekyll...
+        if "%searchIndexToRefresh%"=="a" goto buildForAppSearchIndex
+
+        :buildForWebSearchIndex
+
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml"
+            goto refreshSearchIndexRenderWithPhantom
+
+        ;buildForAppSearchIndex
+
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml"
+            goto refreshSearchIndexRenderWithPhantom
+
+        :: Run phantomjs script from scripts directory
+        :refreshSearchIndexRenderWithPhantom
+
+            echo Generating index with PhantomJS...
+            cd _site/assets/js
+            phantomjs render-search-index.js
+            cd %location%
+
+        :: Done
+        :refreshSearchIndexDone
+
+            echo Index refreshed.
             goto begin
 
     :: :: :: :: :: ::

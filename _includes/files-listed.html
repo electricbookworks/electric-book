@@ -1,0 +1,93 @@
+{% comment %} This include creates:
+1. {{ list-of-files }}: A list of all URLs of files in an output format's files list in meta.
+2. {{ array-of-files }}: A Liquid array of those URLs.
+
+It should respect active variants: if there is an active variant
+(as set in _data/settings), it should only include files listed
+for that variant and its translations. But this has not been properly tested yet.
+
+This include is primarily for use in creating search stores and indexes. {% endcomment %}
+
+{% capture list-of-files %}
+
+    {% comment %} Loop through all the works {% endcomment %}
+    {% for work in site.data.meta.works %}
+
+        {% comment %} If a variant is active, we want only variant files {% endcomment %}
+        {% if site.data.settings.active-variant and site.data.settings.active-variant != "" %}
+
+            {% for variant in work.variants %}
+                {% if variant.variant == site.data.settings.active-variant %}
+                    {% for file in variant.products[site.output].files %}
+                        {% for file-title in file %}
+                            {% if file-title[0] %}
+                                /{{ work.directory }}/text/{{ file-title[0] }}.html,
+                            {% else %}
+                                /{{ work.directory }}/text/{{ file-title }}.html,
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+
+            {% comment %} We also need the files in the variant's translations {% endcomment %}
+            {% for variant in work.variants %}
+
+                {% if variant.variant == site.data.settings.active-variant %}
+
+                    {% for translation in variant.translations %}
+
+                        {% for file in translation.products[site.output].files %}
+                            {% for file-title in file %}
+                                {% if file-title[0] %}
+                                    /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title[0] }}'.html,
+                                {% else %}
+                                    /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title }}.html,
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endfor %}
+
+        {% comment %} Otherwise, get the normal, non-variant file lists {% endcomment %}
+        {% else %}
+
+            {% for file in work.products[site.output].files %}
+                {% for file-title in file %}
+                    {% if file-title[0] %}
+                        /{{ work.directory }}/text/{{ file-title[0] }}.html,
+                    {% else %}
+                        /{{ work.directory }}/text/{{ file-title }}.html,
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+            {% for translation in work.translations %}
+
+                {% for file in translation.products[site.output].files %}
+                    {% for file-title in file %}
+                        {% if file-title[0] %}
+                            /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title[0] }}.html,
+                        {% else %}
+                            /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title }}.html,
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endfor %}
+
+{% endcapture %}
+
+{% comment %} Clean up space in the list {% endcomment %}
+{% capture list-of-files %}{{ list-of-files | strip_newlines | replace: " ", "" }}{% endcapture %}
+
+{% comment %} Put the list in an array {% endcomment %}
+{% assign array-of-files = list-of-files | replace: "'", "" | split: "," %}
