@@ -902,6 +902,7 @@ set /p process=Enter a number and hit return.
 
         :: Encouraging message
         echo Let's refresh the search index.
+        echo We'll index the files in your web or app file lists defined in meta.yml
         echo You need to have PhantomJS installed for this to work.
 
         :: Check if refreshing web or app index
@@ -909,7 +910,8 @@ set /p process=Enter a number and hit return.
         echo To refresh to app search index, type a and press enter.
         set /p searchIndexToRefresh=
 
-        :: Build jekyll
+        :: Generate HTML with Jekyll
+        echo Generating HTML with Jekyll...
         if "%searchIndexToRefresh%"=="a" goto buildForAppSearchIndex
 
         :buildForWebSearchIndex
