@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.11.0 (in progress)
+## 0.11.1 (in progress)
+
+To do:
+
+* Localise pages in root directory, including home and search-result pages.
+
+## 0.11.0
 
 * [Localisation](https://github.com/electricbookworks/electric-book/pull/209): text snippets can now be set in `locales.yml`
 * [Better search indexing](https://github.com/electricbookworks/electric-book/pull/215)
