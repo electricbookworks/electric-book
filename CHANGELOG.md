@@ -2,7 +2,8 @@
 
 ## 0.11.0 (in progress)
 
-* Localisation: text snippets can now be set in `locales.yml`
+* [Localisation](https://github.com/electricbookworks/electric-book/pull/209): text snippets can now be set in `locales.yml`
+* [Better search indexing](https://github.com/electricbookworks/electric-book/pull/215)
 * Fix print font defaults
 * Match EBM colours
 * Markdownify breadcrumbs
