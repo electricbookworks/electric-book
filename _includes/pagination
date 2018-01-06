@@ -1,0 +1,155 @@
+Pagination...
+
+{% include metadata %}
+
+{% comment %} Get the starting nav tree to paginate by... {% endcomment %}
+{% if site.output == "app" %}
+    {% assign tree-to-paginate = app-nav-tree %}
+{% else %}
+    {% assign tree-to-paginate = web-nav-tree %}
+{% endif %}
+
+{% comment %} ... but use a specific tree if specified by the include tag,
+e.g. if this include has called itself for a page's children. {% endcomment %}
+{% if include.tree-to-paginate %}
+    {% assign tree-to-paginate = include.tree-to-paginate %}
+{% endif %}
+
+{% comment %} Capture the current filename here
+(don't use the current-file we get from metadata, because
+that changes when we pass this include to itself for children.
+Keep the page we're on in a page-to-paginate variable,
+to pass to this include for children. {% endcomment %}
+{% if include.page-to-paginate %}
+    {% capture page-to-paginate %}{{ include.page-to-paginate }}{% endcapture %}
+{% else %}
+    {% if page.url contains ".html" %}
+        {% capture page-to-paginate %}{{ page.url | split: "/" | last | replace: ".html", "" }}{% endcapture %}
+    {% else %}
+        {% comment %} File is an index.html file, which Jekyll
+        stores as a folder path only. {% endcomment %}
+        {% capture page-to-paginate %}index{% endcapture %}
+    {% endif %}
+{% endif %}
+
+{% comment %} Loop through the nav. When you find the file we're on,
+assign a match, and assign index numbers to its position
+in the nav tree using Liquid's index and index0.
+If no match, and the page in nav has children,
+pass the children to this include. {% endcomment %}
+{% assign pagination-match = false %}
+{% for page in tree-to-paginate %}
+    {% if page.file == page-to-paginate %}
+        {% assign pagination-match = true %}
+        {% assign page-index0 = forloop.index0 %}
+        {% assign page-index1 = forloop.index %}
+        {% break %}
+    {% elsif pagination-match != true and page.children %}
+{% comment %} Don't indent the include tag: avoids
+including it as a markdown code block {% endcomment %}
+{% include pagination tree-to-paginate=page.children page-to-paginate=page-to-paginate %}
+    {% endif %}
+{% endfor %}
+
+{% comment %} If we have a match, loop through the nav again.
+This time, we're looking for pages with indexes
+before and after the index we stored above. {% endcomment %}
+{% if pagination-match == true %}
+    {% for page in tree-to-paginate %}
+        {% if page-index0 == forloop.index0 %}
+            {% assign this-page = page %}
+        {% endif %}
+        {% if page-index0 == forloop.index %}
+            {% assign prev-page = page %}
+        {% endif %}
+        {% if page-index1 == forloop.index0 %}
+            {% assign next-page = page %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% comment %} Now create a div for each pagination item,
+if there is a file to link to. {% endcomment %}
+
+{% if prev-page.file and prev-page.file != "" %}
+<div class="pagination-previous">
+    <a href="{{prev-page.file}}.html{% if prev-page.id and prev-page.id != "" %}#{{ prev-page.id }}{% endif %}">prev: {{ prev-page.label }}</a>
+</div>
+{% endif %}
+
+{% if this-page.file and this-page.file != "" %}
+<div class="pagination-this">
+    <a href="{{this-page.file}}.html{% if this-page.id and this-page.id != "" %}#{{ this-page.id }}{% endif %}">this: {{ this-page.label }}</a>
+</div>
+{% endif %}
+
+{% if next-page.file and next-page.file != "" %}
+<div class="pagination-next">
+    <a href="{{next-page.file}}.html{% if next-page.id and next-page.id != "" %}#{{ next-page.id }}{% endif %}">next: {{ next-page.label }}</a>
+</div>
+{% endif %}
+
+
+{% comment %}
+
+The code above isn't working properly. I think the looping is faulty,
+though I haven't figured it out yet. Meanwhile, here is a sketch of
+another approach we might take: flatten arrays to create one big array 
+of all pages in nav in order.
+
+
+// get the page-to-paginate
+...
+
+// use the main nav-tree unless a tree is passed by the include
+...
+
+// if a flattenednavinprogress exists, use it, otherwise create a new one
+if include.flattenednavinprogress
+    assign flattenednavinprogress = include.flattenednavinprogress
+else
+    {% assign flattenednavinprogress = "" | split: ',' %}
+fi
+
+// add all nested pages, in order, to the same, flat array,
+// passing this include to itself recursively until we're done
+// with all the children
+for page in tree
+    flattenednavinprogress | push: page
+    if children
+        include pagination tree=page.children flattenednavinprogress=flattenednavinprogress
+    if forloop.last
+        include pagination tree=page.children flattenednavinprogress=flattenednavinprogress
+        assign flattenednavfinal = flattenednavinprogress
+
+// ^^ can we be sure that that forloop.last will fire at the right time,
+// and not before the last item's children have been added to the array?
+// or should we just assign flattenednavfinal after endfor? But if we do,
+// won't it assign after every loop through the children?
+// perhaps we should check the array for page-to-paginate, and if it exists
+// pass this one more time (to get the next item in the array) before assigning
+// flattenednavfinal?
+
+
+// once we're done, get indexes
+if flattenednavfinal
+    for page in flattenednavfinal
+        if page.file == page-to-paginate
+            {% assign page-index0 = forloop.index0 %}
+            {% assign page-index1 = forloop.index %}
+            {% break %} -- not sure I need this
+
+// now compare indexes to get next/previous
+if flattenednavfinal
+    for page in flattenednavfinal
+        {% if page-index0 == forloop.index0 %}
+            {% assign this-page = page %}
+        {% endif %}
+        {% if page-index0 == forloop.index %}
+            {% assign prev-page = page %}
+        {% endif %}
+        {% if page-index1 == forloop.index0 %}
+            {% assign next-page = page %}
+        {% endif %}
+
+{% endcomment %}
