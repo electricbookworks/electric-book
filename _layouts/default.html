@@ -18,6 +18,15 @@ layout: compress
 {% include start-content.html %}
 {{ content }}
 {% include close-content.html %}
+
+{% if site.output == "web" and site.data.settings.web-pagination == true %}
+{% include pagination %}
+{% endif %}
+
+{% if site.output == "app" and site.data.settings.app-pagination == true %}
+{% include pagination %}
+{% endif %}
+
 {% include nav.html %}
 {% include footer.html %}
 {% include close-body.html %}
