@@ -13,14 +13,22 @@
 
 {% else %}
 
+    {% if site.output == "app" %}
+    {% capture masthead-contents-page %}{{ app-contents-page }}{% endcapture %}
+    {% assign breadcrumb-nav-tree = app-nav-tree %}
+    {% else %}
+    {% capture masthead-contents-page %}{{ web-contents-page }}{% endcapture %}
+    {% assign breadcrumb-nav-tree = web-nav-tree %}
+    {% endif %}
+
     <ul>
         {%if number-of-works == 1 %}
             <li class="masthead-book-title"><a href="{{ path-to-root-directory }}index.html">{{ title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
-            {% include breadcrumbs breadcrumb-tree=web-nav-tree %}
+            {% include breadcrumbs breadcrumb-tree=breadcrumb-nav-tree %}
         {% else %}
             <li class="masthead-project-name"><a href="{{ path-to-root-directory }}index.html">{{ project-name | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
-            <li class="masthead-book-title"><a href="{{ web-contents-page }}{% unless web-contents-page contains '.html' %}.html{% endunless %}">{{ title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
-            {% include breadcrumbs breadcrumb-tree=web-nav-tree %}
+            <li class="masthead-book-title"><a href="{{ masthead-contents-page }}{% unless masthead-contents-page contains '.html' %}.html{% endunless %}">{{ title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
+            {% include breadcrumbs breadcrumb-tree=breadcrumb-nav-tree %}
         {% endif %}
     </ul>
 
