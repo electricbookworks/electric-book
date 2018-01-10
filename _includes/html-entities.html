@@ -1,7 +1,16 @@
 {% comment %}This file inserts a range of HTML entities into a DOCTYPE declaration,
-necessary to make HTML that contains HTMl entities valid in EPUB3.
+sometimes necessary to make HTML that contains HTMl entities valid in EPUB3.
 The list is taken from https://www.w3.org/TR/html4/sgml/entities.html
-Does it bulk up our epub files? Yes :( Does it make our lives easier? Yes :){% endcomment %}
+It is usually not necessary to use this: kramdown should by default convert all
+entities into unicode characters (if you're using Ruby 1.9 or later).
+So only use this include if you're getting undeclared-entity errors in EpubCheck.
+To use it, edit _includes/head.html to change the epub-output's
+<!DOCTYPE html>
+to
+<!DOCTYPE html [
+    {% include html-entities.html %}
+]>
+{% endcomment %}
 <!ENTITY nbsp   "&#160;">
 <!ENTITY iexcl  "&#161;">
 <!ENTITY cent   "&#162;">

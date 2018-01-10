@@ -38,7 +38,7 @@ $crop-marks: crop !default; // crop | none
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
 $color-text-main: cmyk(0,0,0,1) !default;
 $color-text-secondary: cmyk(0,0,0,0.8) !default;
-$color-background: white !default;
+$color-background: transparent !default;
 $color-light: cmyk(0,0,0,0.2) !default;
 $color-mid: cmyk(0,0,0,0.4) !default;
 $color-accent: cmyk(0,0,0,1) !default;
@@ -90,7 +90,7 @@ $rule-thickness: 0.5pt !default;
 
 // Hyphenation
 // Variables here apply to p, ul, ol, dl
-$hyphenation: auto !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation: manual !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
 $hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic". Overrides PrinceXML built-in hyphenation.
 $hyphenation-custom: add !default; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
 $hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
@@ -184,10 +184,12 @@ $header-font: $font-text-secondary !default;
 $footer-font: $font-text-secondary !default;
 $header-font-size: $font-size-default * $font-size-smaller !default;
 $footer-font-size: $font-size-default * $font-size-smaller !default;
+$header-font-weight: normal !default;
+$footer-font-weight: normal !default;
 $header-case: uppercase !default; // none|capitalize|uppercase|lowercase|initial|inherit;
 $footer-case: uppercase !default; // none|capitalize|uppercase|lowercase|initial|inherit;
 $header-letter-spacing: 0.1em !default;
-$header-letter-spacing: 0.1em !default;
+$footer-letter-spacing: 0.1em !default;
 $header-space-from-top: $margin-top / 2 !default;
 $footer-space-from-bottom: $margin-bottom / 2 !default;
 $header-text-align: center !default;

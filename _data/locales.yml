@@ -1,0 +1,619 @@
+# Localise your project here by adding translations
+# for phrases in the languages you're using. Some are
+# already defined for English and French.
+
+# ab:
+#   iso-name: "Abkhaz"
+#   local-name: ""
+# aa:
+#   iso-name: "Afar"
+#   local-name: ""
+# af:
+#   iso-name: "Afrikaans"
+#   local-name: ""
+# ak:
+#   iso-name: "Akan"
+#   local-name: ""
+# sq:
+#   iso-name: "Albanian"
+#   local-name: ""
+# am:
+#   iso-name: "Amharic"
+#   local-name: ""
+# ar:
+#   iso-name: "Arabic"
+#   local-name: ""
+# an:
+#   iso-name: "Aragonese"
+#   local-name: ""
+# hy:
+#   iso-name: "Armenian"
+#   local-name: ""
+# as:
+#   iso-name: "Assamese"
+#   local-name: ""
+# av:
+#   iso-name: "Avaric"
+#   local-name: ""
+# ae:
+#   iso-name: "Avestan"
+#   local-name: ""
+# ay:
+#   iso-name: "Aymara"
+#   local-name: ""
+# az:
+#   iso-name: "Azerbaijani"
+#   local-name: ""
+# bm:
+#   iso-name: "Bambara"
+#   local-name: ""
+# ba:
+#   iso-name: "Bashkir"
+#   local-name: ""
+# eu:
+#   iso-name: "Basque"
+#   local-name: ""
+# be:
+#   iso-name: "Belarusian"
+#   local-name: ""
+# bn:
+#   iso-name: "Bengali, Bangla"
+#   local-name: ""
+# bh:
+#   iso-name: "Bihari"
+#   local-name: ""
+# bi:
+#   iso-name: "Bislama"
+#   local-name: ""
+# bs:
+#   iso-name: "Bosnian"
+#   local-name: ""
+# br:
+#   iso-name: "Breton"
+#   local-name: ""
+# bg:
+#   iso-name: "Bulgarian"
+#   local-name: ""
+# my:
+#   iso-name: "Burmese"
+#   local-name: ""
+# ca:
+#   iso-name: "Catalan"
+#   local-name: ""
+# ch:
+#   iso-name: "Chamorro"
+#   local-name: ""
+# ce:
+#   iso-name: "Chechen"
+#   local-name: ""
+# ny:
+#   iso-name: "Chichewa, Chewa, Nyanja"
+#   local-name: ""
+# zh:
+#   iso-name: "Chinese"
+#   local-name: ""
+# cv:
+#   iso-name: "Chuvash"
+#   local-name: ""
+# kw:
+#   iso-name: "Cornish"
+#   local-name: ""
+# co:
+#   iso-name: "Corsican"
+#   local-name: ""
+# cr:
+#   iso-name: "Cree"
+#   local-name: ""
+# hr:
+#   iso-name: "Croatian"
+#   local-name: ""
+# cs:
+#   iso-name: "Czech"
+#   local-name: ""
+# da:
+#   iso-name: "Danish"
+#   local-name: ""
+# dv:
+#   iso-name: "Divehi, Dhivehi, Maldivian"
+#   local-name: ""
+# nl:
+#   iso-name: "Dutch"
+#   local-name: ""
+# dz:
+#   iso-name: "Dzongkha"
+#   local-name: ""
+en:
+  iso-name: "English"
+  local-name: "English"
+  project:
+    # Project items are set for the parent language
+    # in meta.yml and can be overridden here.
+    organisation: ""
+    url: ""
+    email: ""
+    name: ""
+    description: ""
+    image: ""
+    credit: ""
+  nav:
+    home: "Home"
+    menu: "Contents"
+    next: "Next"
+    previous: "Previous"
+  input:
+    submit: "Submit"
+    send: "Send"
+  search:
+    placeholder: "Search"
+  contact:
+    placeholder:
+      name: "Name"
+      email: "Email address"
+      message: "Message"
+# eo:
+#   iso-name: "Esperanto"
+#   local-name: ""
+# et:
+#   iso-name: "Estonian"
+#   local-name: ""
+# ee:
+#   iso-name: "Ewe"
+#   local-name: ""
+# fo:
+#   iso-name: "Faroese"
+#   local-name: ""
+# fj:
+#   iso-name: "Fijian"
+#   local-name: ""
+# fi:
+#   iso-name: "Finnish"
+#   local-name: ""
+fr:
+  iso-name: "French"
+  local-name: "Français"
+  project:
+    organisation: ""
+    url: ""
+    email: ""
+    name: ""
+    description: "Livres créés avec le flux de travail Electric Book"
+    image: ""
+    credit: "Construit avec [l'Electric Book](http://electricbook.works)"
+  nav:
+    home: "Accueil"
+    menu: "Table des matières"
+    next: "Suivant"
+    previous: "Précédent"
+  input:
+    submit: "Soumettre"
+    send: "Envoyer"
+  search:
+    placeholder: "Recherche"
+  contact:
+    placeholder:
+      name: "Nom"
+      email: "L’adresse e-mail"
+      message: "Message"
+# ff:
+#   iso-name: "Fula, Fulah, Pulaar, Pular"
+#   local-name: ""
+# gl:
+#   iso-name: "Galician"
+#   local-name: ""
+# ka:
+#   iso-name: "Georgian"
+#   local-name: ""
+# de:
+#   iso-name: "German"
+#   local-name: ""
+# el:
+#   iso-name: "Greek (modern)"
+#   local-name: ""
+# gn:
+#   iso-name: "Guaraní"
+#   local-name: ""
+# gu:
+#   iso-name: "Gujarati"
+#   local-name: ""
+# ht:
+#   iso-name: "Haitian, Haitian Creole"
+#   local-name: ""
+# ha:
+#   iso-name: "Hausa"
+#   local-name: ""
+# he:
+#   iso-name: "Hebrew (modern)"
+#   local-name: ""
+# hz:
+#   iso-name: "Herero"
+#   local-name: ""
+# hi:
+#   iso-name: "Hindi"
+#   local-name: ""
+# ho:
+#   iso-name: "Hiri Motu"
+#   local-name: ""
+# hu:
+#   iso-name: "Hungarian"
+#   local-name: ""
+# ia:
+#   iso-name: "Interlingua"
+#   local-name: ""
+# id:
+#   iso-name: "Indonesian"
+#   local-name: ""
+# ie:
+#   iso-name: "Interlingue"
+#   local-name: ""
+# ga:
+#   iso-name: "Irish"
+#   local-name: ""
+# ig:
+#   iso-name: "Igbo"
+#   local-name: ""
+# ik:
+#   iso-name: "Inupiaq"
+#   local-name: ""
+# io:
+#   iso-name: "Ido"
+#   local-name: ""
+# is:
+#   iso-name: "Icelandic"
+#   local-name: ""
+# it:
+#   iso-name: "Italian"
+#   local-name: ""
+# iu:
+#   iso-name: "Inuktitut"
+#   local-name: ""
+# ja:
+#   iso-name: "Japanese"
+#   local-name: ""
+# jv:
+#   iso-name: "Javanese"
+#   local-name: ""
+# kl:
+#   iso-name: "Kalaallisut, Greenlandic"
+#   local-name: ""
+# kn:
+#   iso-name: "Kannada"
+#   local-name: ""
+# kr:
+#   iso-name: "Kanuri"
+#   local-name: ""
+# ks:
+#   iso-name: "Kashmiri"
+#   local-name: ""
+# kk:
+#   iso-name: "Kazakh"
+#   local-name: ""
+# km:
+#   iso-name: "Khmer"
+#   local-name: ""
+# ki:
+#   iso-name: "Kikuyu, Gikuyu"
+#   local-name: ""
+# rw:
+#   iso-name: "Kinyarwanda"
+#   local-name: ""
+# ky:
+#   iso-name: "Kyrgyz"
+#   local-name: ""
+# kv:
+#   iso-name: "Komi"
+#   local-name: ""
+# kg:
+#   iso-name: "Kongo"
+#   local-name: ""
+# ko:
+#   iso-name: "Korean"
+#   local-name: ""
+# ku:
+#   iso-name: "Kurdish"
+#   local-name: ""
+# kj:
+#   iso-name: "Kwanyama, Kuanyama"
+#   local-name: ""
+# la:
+#   iso-name: "Latin"
+#   local-name: ""
+# lb:
+#   iso-name: "Luxembourgish, Letzeburgesch"
+#   local-name: ""
+# lg:
+#   iso-name: "Ganda"
+#   local-name: ""
+# li:
+#   iso-name: "Limburgish, Limburgan, Limburger"
+#   local-name: ""
+# ln:
+#   iso-name: "Lingala"
+#   local-name: ""
+# lo:
+#   iso-name: "Lao"
+#   local-name: ""
+# lt:
+#   iso-name: "Lithuanian"
+#   local-name: ""
+# lu:
+#   iso-name: "Luba-Katanga"
+#   local-name: ""
+# lv:
+#   iso-name: "Latvian"
+#   local-name: ""
+# gv:
+#   iso-name: "Manx"
+#   local-name: ""
+# mk:
+#   iso-name: "Macedonian"
+#   local-name: ""
+# mg:
+#   iso-name: "Malagasy"
+#   local-name: ""
+# ms:
+#   iso-name: "Malay"
+#   local-name: ""
+# ml:
+#   iso-name: "Malayalam"
+#   local-name: ""
+# mt:
+#   iso-name: "Maltese"
+#   local-name: ""
+# mi:
+#   iso-name: "Māori"
+#   local-name: ""
+# mr:
+#   iso-name: "Marathi (Marāṭhī)"
+#   local-name: ""
+# mh:
+#   iso-name: "Marshallese"
+#   local-name: ""
+# mn:
+#   iso-name: "Mongolian"
+#   local-name: ""
+# na:
+#   iso-name: "Nauruan"
+#   local-name: ""
+# nv:
+#   iso-name: "Navajo, Navaho"
+#   local-name: ""
+# nd:
+#   iso-name: "Northern Ndebele"
+#   local-name: ""
+# ne:
+#   iso-name: "Nepali"
+#   local-name: ""
+# ng:
+#   iso-name: "Ndonga"
+#   local-name: ""
+# nb:
+#   iso-name: "Norwegian Bokmål"
+#   local-name: ""
+# nn:
+#   iso-name: "Norwegian Nynorsk"
+#   local-name: ""
+# no:
+#   iso-name: "Norwegian"
+#   local-name: ""
+# ii:
+#   iso-name: "Nuosu"
+#   local-name: ""
+# nr:
+#   iso-name: "Southern Ndebele"
+#   local-name: ""
+# oc:
+#   iso-name: "Occitan"
+#   local-name: ""
+# oj:
+#   iso-name: "Ojibwe, Ojibwa"
+#   local-name: ""
+# cu:
+#   iso-name: "Old Church Slavonic, Church Slavonic, Old Bulgarian"
+#   local-name: ""
+# om:
+#   iso-name: "Oromo"
+#   local-name: ""
+# or:
+#   iso-name: "Oriya"
+#   local-name: ""
+# os:
+#   iso-name: "Ossetian, Ossetic"
+#   local-name: ""
+# pa:
+#   iso-name: "Panjabi, Punjabi"
+#   local-name: ""
+# pi:
+#   iso-name: "Pāli"
+#   local-name: ""
+# fa:
+#   iso-name: "Persian (Farsi)"
+#   local-name: ""
+# pl:
+#   iso-name: "Polish"
+#   local-name: ""
+# ps:
+#   iso-name: "Pashto, Pushto"
+#   local-name: ""
+# pt:
+#   iso-name: "Portuguese"
+#   local-name: ""
+# qu:
+#   iso-name: "Quechua"
+#   local-name: ""
+# rm:
+#   iso-name: "Romansh"
+#   local-name: ""
+# rn:
+#   iso-name: "Kirundi"
+#   local-name: ""
+# ro:
+#   iso-name: "Romanian"
+#   local-name: ""
+# ru:
+#   iso-name: "Russian"
+#   local-name: ""
+# sa:
+#   iso-name: "Sanskrit (Saṁskṛta)"
+#   local-name: ""
+# sc:
+#   iso-name: "Sardinian"
+#   local-name: ""
+# sd:
+#   iso-name: "Sindhi"
+#   local-name: ""
+# se:
+#   iso-name: "Northern Sami"
+#   local-name: ""
+# sm:
+#   iso-name: "Samoan"
+#   local-name: ""
+# sg:
+#   iso-name: "Sango"
+#   local-name: ""
+# sr:
+#   iso-name: "Serbian"
+#   local-name: ""
+# gd:
+#   iso-name: "Scottish Gaelic, Gaelic"
+#   local-name: ""
+# sn:
+#   iso-name: "Shona"
+#   local-name: ""
+# si:
+#   iso-name: "Sinhala, Sinhalese"
+#   local-name: ""
+# sk:
+#   iso-name: "Slovak"
+#   local-name: ""
+# sl:
+#   iso-name: "Slovene"
+#   local-name: ""
+# so:
+#   iso-name: "Somali"
+#   local-name: ""
+# st:
+#   iso-name: "Southern Sotho"
+#   local-name: ""
+# es:
+#   iso-name: "Spanish"
+#   local-name: "Español"
+# su:
+#   iso-name: "Sundanese"
+#   local-name: ""
+# sw:
+#   iso-name: "Swahili"
+#   local-name: ""
+# ss:
+#   iso-name: "Swati"
+#   local-name: ""
+# sv:
+#   iso-name: "Swedish"
+#   local-name: ""
+# ta:
+#   iso-name: "Tamil"
+#   local-name: ""
+# te:
+#   iso-name: "Telugu"
+#   local-name: ""
+# tg:
+#   iso-name: "Tajik"
+#   local-name: ""
+# th:
+#   iso-name: "Thai"
+#   local-name: ""
+# ti:
+#   iso-name: "Tigrinya"
+#   local-name: ""
+# bo:
+#   iso-name: "Tibetan Standard, Tibetan, Central"
+#   local-name: ""
+# tk:
+#   iso-name: "Turkmen"
+#   local-name: ""
+# tl:
+#   iso-name: "Tagalog"
+#   local-name: ""
+# tn:
+#   iso-name: "Tswana"
+#   local-name: ""
+# to:
+#   iso-name: "Tonga (Tonga Islands)"
+#   local-name: ""
+# tr:
+#   iso-name: "Turkish"
+#   local-name: ""
+# ts:
+#   iso-name: "Tsonga"
+#   local-name: ""
+# tt:
+#   iso-name: "Tatar"
+#   local-name: ""
+# tw:
+#   iso-name: "Twi"
+#   local-name: ""
+# ty:
+#   iso-name: "Tahitian"
+#   local-name: ""
+# ug:
+#   iso-name: "Uyghur"
+#   local-name: ""
+# uk:
+#   iso-name: "Ukrainian"
+#   local-name: ""
+# ur:
+#   iso-name: "Urdu"
+#   local-name: ""
+# uz:
+#   iso-name: "Uzbek"
+#   local-name: ""
+# ve:
+#   iso-name: "Venda"
+#   local-name: ""
+# vi:
+#   iso-name: "Vietnamese"
+#   local-name: ""
+# vo:
+#   iso-name: "Volapük"
+#   local-name: ""
+# wa:
+#   iso-name: "Walloon"
+#   local-name: ""
+# cy:
+#   iso-name: "Welsh"
+#   local-name: ""
+# wo:
+#   iso-name: "Wolof"
+#   local-name: ""
+# fy:
+#   iso-name: "Western Frisian"
+#   local-name: ""
+# xh:
+#   iso-name: "Xhosa"
+#   local-name: ""
+# yi:
+#   iso-name: "Yiddish"
+#   local-name: ""
+# yo:
+#   iso-name: "Yoruba"
+#   local-name: ""
+# za:
+#   iso-name: "Zhuang, Chuang"
+#   local-name: ""
+# zu:
+#   iso-name: "Zulu"
+#   local-name: ""
+# nso:
+#   iso-name: "Sepedi/Nothern Sotho"
+#   local-name: ""
+# tuv:
+#   iso-name: "Turkana"
+#   local-name: ""
+# lwg:
+#   iso-name: "Wanga"
+#   local-name: ""
+# nuj:
+#   iso-name: "Nyole"
+#   local-name: ""
+# lgg:
+#   iso-name: "Lugbara"
+#   local-name: ""

@@ -32,4 +32,17 @@ layout: min
     <engine name="android" spec="~6.2.3" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <engine name="ios" spec="~4.4.0" />
+
+    {% comment %} Let expansion file paths dodge whitelist-plugin restrictions {% endcomment %}
+    {% if site.data.settings.google-play-expansion-file-enabled == true %}
+    <allow-intent href="*" />
+    <access origin="*" />
+    <access origin="content:///*" />
+    <access origin="cdvfile:///*" />
+    <plugin name="com.flyingsoftgames.xapkreader" spec="https://github.com/agamemnus/cordova-plugin-xapkreader.git#cordova-6.5.0">
+        <variable name="XAPK_PUBLIC_KEY" value="{{ site.data.settings.google-play-public-api-key }}" />
+        <variable name="XAPK_EXPANSION_AUTHORITY" value="{{ project-app-id }}.expansion" />
+    </plugin>
+    {% endif %}
+
 </widget>

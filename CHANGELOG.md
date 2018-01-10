@@ -1,7 +1,15 @@
 # Changelog
 
-## 0.10.1 (in progress)
+## 0.11.1 (in progress)
 
+To do:
+
+* Localise pages in root directory, including home and search-result pages.
+
+## 0.11.0
+
+* [Localisation](https://github.com/electricbookworks/electric-book/pull/209): text snippets can now be set in `locales.yml`
+* [Better search indexing](https://github.com/electricbookworks/electric-book/pull/215)
 * Fix print font defaults
 * Match EBM colours
 * Markdownify breadcrumbs
@@ -16,7 +24,11 @@
 * Add variable for default rule thickness
 * Add `.image-with-caption` class
 * Add language-selector menu for when translations exist
-* Minor bug and code-readability fixes
+* Improve `gulpfile` SVG optimisation for epubs
+* Set hyphenation to manual by default
+* Allow translation directories and language codes to differ
+* Don't store Cordova `plugins` and `platforms` folders in source control
+* Bug fixes and code-readability improvements
 
 ## 0.10.0
 

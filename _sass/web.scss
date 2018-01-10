@@ -76,7 +76,7 @@ $start-depth: $line-height-default * 2 !default;
 // Hyphenation
 // Variables here apply to p, ul, ol, dl.
 // Note: Most browsers and ereaders do not support hyphenation rules.
-$hyphenation: auto !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation: manual !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
 $hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
 $hyphenation-custom: add !default; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
 $hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
@@ -108,6 +108,7 @@ $nav-bar-width: 15em !default;
 $nav-bar-fixed: true !default; // fixed is not fully supported on many mobile browsers
 $nav-bar-label-color: $color-light !default;
 $nav-bar-label-background-color: $masthead-background-color !default;
+$nav-bar-label-border-color: transparent !default;
 $nav-bar-border-color: $color-light !default;
 $nav-bar-background-color: white !default;
 $nav-bar-search-background-color: white !default;

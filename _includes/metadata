@@ -9,6 +9,7 @@ book's title.
 
 {% comment %}
 Assign project information to variables. This is the same for all books in the project.
+These values can be overridden in _data/locales.yml for translations.
 {% endcomment %}
 
 {% capture project-organisation %}{{ site.data.meta.project.organisation }}{% endcapture %}
@@ -17,12 +18,14 @@ Assign project information to variables. This is the same for all books in the p
 {% capture project-name %}{{ site.data.meta.project.name }}{% endcapture %}
 {% capture project-description %}{{ site.data.meta.project.description }}{% endcapture %}
 {% capture project-image %}{{ site.data.meta.project.image }}{% endcapture %}
-{% capture project-home-label %}{{ site.data.meta.project.home-label }}{% endcapture %}
-{% capture project-nav-label %}{{ site.data.meta.project.nav-label }}{% endcapture %}
-{% capture project-footer %}{{ site.data.meta.project.footer }}{% endcapture %}
-{% capture project-search-placeholder %}{{ site.data.meta.project.search-placeholder }}{% endcapture %}
+{% capture project-credit %}{{ site.data.meta.project.credit }}{% endcapture %}
+{% capture project-language %}{{ site.data.meta.project.language }}{% endcapture %}
 {% capture project-app-id %}{{ site.data.meta.project.app-id }}{% endcapture %}
 {% capture project-version %}{{ site.data.meta.project.version }}{% endcapture %}
+
+{% comment %}Also use project language as default, fallback language,
+which will be overridden below if we're on book pages.{% endcomment %}
+{% capture language %}{{ site.data.meta.project.language }}{% endcapture %}
 
 {% comment %}
 It's useful to know how many books are in this project
@@ -140,7 +143,6 @@ and book content as a Liquid output tag e.g. {{ title }}
     {% capture web-format %}{{ work.products.web.format }}{% endcapture %}
     {% capture web-identifier %}{{ work.products.web.identifier }}{% endcapture %}
     {% capture web-image %}{{ work.products.web.image }}{% endcapture %}
-    {% capture web-footer %}{{ work.products.web.footer }}{% endcapture %}
     {% capture web-start-page %}{{ work.products.web.start-page }}{% endcapture %}
     {% capture web-contents-page %}{{ work.products.web.contents-page }}{% endcapture %}
     {% assign web-file-list = work.products.web.files %}
@@ -187,12 +189,6 @@ and book content as a Liquid output tag e.g. {{ title }}
         {% capture app-image %}{{ web-image }}{% endcapture %}
     {% endif %}
 
-    {% if work.products.app.footer %}
-        {% capture app-footer %}{{ work.products.app.footer }}{% endcapture %}
-    {% else %}
-        {% capture app-footer %}{{ web-footer }}{% endcapture %}
-    {% endif %}
-
     {% if work.products.app.start-page %}
         {% capture app-start-page %}{{ work.products.app.start-page }}{% endcapture %}
     {% else %}
@@ -235,7 +231,7 @@ that matches a translation language, set is-translation to true, and change
 the `language` variable, which we captured above, to the translation language.
 {% endcomment %}
 {% for translation in translations %}
-    {% if book-subdirectory == translation.language %}
+    {% if book-subdirectory == translation.directory %}
         {% assign is-translation = true %}
         {% capture language %}{{ translation.language }}{% endcapture %}
     {% endif %}
@@ -283,7 +279,6 @@ defined in meta.yml for the given translation.
             {% if work.products.web.format %}{% capture web-format %}{{ work.products.web.format }}{% endcapture %}{% endif %}
             {% if work.products.web.identifier %}{% capture web-identifier %}{{ work.products.web.identifier }}{% endcapture %}{% endif %}
             {% if work.products.web.image %}{% capture web-image %}{{ work.products.web.image }}{% endcapture %}{% endif %}
-            {% if work.products.web.footer %}{% capture web-footer %}{{ work.products.web.footer }}{% endcapture %}{% endif %}
             {% if work.products.web.start-page %}{% capture web-start-page %}{{ work.products.web.start-page }}{% endcapture %}{% endif %}
             {% if work.products.web.contents-page %}{% capture web-contents-page %}{{ work.products.web.contents-page }}{% endcapture %}{% endif %}
             {% if work.products.web.files %}{% assign web-file-list = work.products.web.files %}{% endif %}
@@ -309,7 +304,6 @@ defined in meta.yml for the given translation.
             {% if work.products.app.format %}{% capture app-format %}{{ work.products.app.format }}{% endcapture %}{% endif %}
             {% if work.products.app.identifier %}{% capture app-identifier %}{{ work.products.app.identifier }}{% endcapture %}{% endif %}
             {% if work.products.app.image %}{% capture app-image %}{{ work.products.app.image }}{% endcapture %}{% endif %}
-            {% if work.products.app.footer %}{% capture app-footer %}{{ work.products.app.footer }}{% endcapture %}{% endif %}
             {% if work.products.app.start-page %}{% capture app-start-page %}{{ work.products.app.start-page }}{% endcapture %}{% endif %}
             {% if work.products.app.contents-page %}{% capture app-contents-page %}{{ work.products.app.contents-page }}{% endcapture %}{% endif %}
             {% if work.products.app.files %}{% assign app-file-list = work.products.app.files %}{% endif %}
@@ -376,7 +370,6 @@ override any metadata set for that variant.{% endcomment %}
               {% if data.products.web.format %}{% capture web-format %}{{ data.products.web.format }}{% endcapture %}{% endif %}
               {% if data.products.web.identifier %}{% capture web-identifier %}{{ data.products.web.identifier }}{% endcapture %}{% endif %}
               {% if data.products.web.image %}{% capture web-image %}{{ data.products.web.image }}{% endcapture %}{% endif %}
-              {% if data.products.web.footer %}{% capture web-footer %}{{ data.products.web.footer }}{% endcapture %}{% endif %}
               {% if data.products.web.start-page %}{% capture web-start-page %}{{ data.products.web.start-page }}{% endcapture %}{% endif %}
               {% if data.products.web.contents-page %}{% capture web-contents-page %}{{ data.products.web.contents-page }}{% endcapture %}{% endif %}
               {% if data.products.web.files %}{% assign web-file-list = data.products.web.files %}{% endif %}
@@ -417,7 +410,6 @@ override any metadata set for that variant.{% endcomment %}
               {% if data.products.app.format %}{% capture app-format %}{{ data.products.app.format }}{% endcapture %}{% endif %}
               {% if data.products.app.identifier %}{% capture app-identifier %}{{ data.products.app.identifier }}{% endcapture %}{% endif %}
               {% if data.products.app.image %}{% capture app-image %}{{ data.products.app.image }}{% endcapture %}{% endif %}
-              {% if data.products.app.footer %}{% capture app-footer %}{{ data.products.app.footer }}{% endcapture %}{% endif %}
               {% if data.products.app.start-page %}{% capture app-start-page %}{{ data.products.app.start-page }}{% endcapture %}{% endif %}
               {% if data.products.app.contents-page %}{% capture app-contents-page %}{{ data.products.app.contents-page }}{% endcapture %}{% endif %}
               {% if data.products.app.files %}{% assign app-file-list = data.products.app.files %}{% endif %}
@@ -546,7 +538,7 @@ be sure we're pointing to the webserver root.{% endcomment %}
 {% comment %}If this is a translation, and a language subfolder of images exists,
 the {{ images }} path should include the language subdirectory.{% endcomment %}
 {% if is-translation %}
-    {% capture path-to-translation-images-directory %}/{{ book-directory }}/{{ language }}/images/{{ site.output }}/{% endcapture %}
+    {% capture path-to-translation-images-directory %}/{{ book-directory }}/{{ book-subdirectory }}/images/{{ site.output }}/{% endcapture %}
     {% assign translated-images = site.static_files | where_exp: "file", "file.path contains path-to-translation-images-directory" %}
     {% assign translated-images-number = translated-images | size %}
 
@@ -556,8 +548,16 @@ the {{ images }} path should include the language subdirectory.{% endcomment %}
     {% endif %}
 
     {% if translated-images-exist == true %}
-        {% capture images %}{{ path-to-book-directory }}{{ language }}/{{ site.image-set }}{% endcapture %}
+        {% capture images %}{{ path-to-book-directory }}{{ book-subdirectory }}/{{ site.image-set }}{% endcapture %}
     {% endif %}
+{% endif %}
+
+{% comment %}If using a Google Play expansion file for images,
+and this is an app output, rewrite the images path accordingly{% endcomment %}
+{% assign google-play-expansion-file-enabled = false %}
+{% if site.data.settings.google-play-expansion-file-enabled == true and site.output == "app" %}
+    {% assign google-play-expansion-file-enabled = true %}
+    {% capture images %}content://{{ project-app-id }}.expansion{% endcapture %}
 {% endif %}
 
 {% comment %}Create a tag for the path to stylesheets.
@@ -566,15 +566,15 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
 
 {% if is-translation %}
     {% if site.output == "print-pdf" %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ print-pdf-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ print-pdf-stylesheet }}{% endcapture %}
     {% elsif site.output == "screen-pdf" %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ screen-pdf-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ screen-pdf-stylesheet }}{% endcapture %}
     {% elsif site.output == "epub" %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ epub-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ epub-stylesheet }}{% endcapture %}
     {% elsif site.output == "app" %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ app-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ app-stylesheet }}{% endcapture %}
     {% else %}
-        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ language }}/styles/{{ web-stylesheet }}{% endcapture %}
+        {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ web-stylesheet }}{% endcapture %}
     {% endif %}
     {% assign translation-styles = site.pages | where_exp: "file", "file.url contains path-to-translation-stylesheet" %}
     {% assign translation-styles-number = translation-styles | size %}
@@ -585,7 +585,7 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
     {% endif %}
 
     {% if translation-styles-exist == true %}
-        {% capture path-to-styles-directory %}{{ path-to-book-directory }}{{ language }}/styles{% endcapture %}
+        {% capture path-to-styles-directory %}{{ path-to-book-directory }}{{ book-subdirectory }}/styles{% endcapture %}
     {% endif %}
 {% endif %}
 
@@ -593,7 +593,7 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
 {% capture path-to-fonts-directory %}{{ path-to-book-directory }}fonts{% endcapture %}
 
 {% if is-translation %}
-    {% capture path-to-translation-fonts-directory %}/{{ book-directory }}/{{ language }}/fonts{% endcapture %}
+    {% capture path-to-translation-fonts-directory %}/{{ book-directory }}/{{ book-subdirectory }}/fonts{% endcapture %}
     {% assign translation-fonts = site.static_files | where_exp: "file", "file.path contains path-to-translation-fonts-directory" %}
     {% assign translation-fonts-number = translation-fonts | size %}
 
@@ -603,7 +603,7 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
     {% endif %}
 
     {% if translation-fonts-exist == true %}
-        {% capture path-to-fonts-directory %}{{ path-to-book-directory }}{{ language }}/fonts{% endcapture %}
+        {% capture path-to-fonts-directory %}{{ path-to-book-directory }}{{ book-subdirectory }}/fonts{% endcapture %}
     {% endif %}
 {% endif %}
 
@@ -638,3 +638,47 @@ processed as documents by Jekyll, and aren't accessible that way.{% endcomment %
   {% endif %}
   {% break %}
 {% endfor %}
+
+{% comment %} Localisation {% endcomment %}
+
+{% if translations %}
+
+    {% comment %} Get an array of all languages listed
+    as translations in meta.yml, plus the parent language {% endcomment %}
+    {% assign languages = parent-language | split: "," %}
+    {% for translation in translations %}
+        {% assign languages = languages | push: translation.language | uniq %}
+    {% endfor %}
+
+{% endif %}
+
+{% comment %} Get the locales {% endcomment %}
+{% assign locales = site.data.locales %}
+
+{% comment %} Put this page's particular language
+in a locale variable {% endcomment %}
+{% assign locale = locales[language] %}
+
+{% comment %} Override project metadata with locale translations,
+or parent-language overrides, if they exist. {% endcomment %}
+{% if locale.project.organisation and locale.project.organisation != "" %}
+    {% capture project-organisation %}{{ locale.project.organisation }}{% endcapture %}
+{% endif %}
+{% if locale.project.url and locale.project.url != "" %}
+    {% capture project-url %}{{ locale.project.url }}{% endcapture %}
+{% endif %}
+{% if locale.project.email and locale.project.email != "" %}
+    {% capture project-email %}{{ locale.project.email }}{% endcapture %}
+{% endif %}
+{% if locale.project.name and locale.project.name != "" %}
+    {% capture project-name %}{{ locale.project.name }}{% endcapture %}
+{% endif %}
+{% if locale.project.description and locale.project.description != "" %}
+    {% capture project-description %}{{ locale.project.description }}{% endcapture %}
+{% endif %}
+{% if locale.project.image and locale.project.image != "" %}
+    {% capture project-image %}{{ locale.project.image }}{% endcapture %}
+{% endif %}
+{% if locale.project.credit and locale.project.credit != "" %}
+    {% capture project-credit %}{{ locale.project.credit }}{% endcapture %}
+{% endif %}

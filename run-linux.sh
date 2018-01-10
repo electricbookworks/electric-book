@@ -26,7 +26,8 @@ Electric Book options
 5  Create an app
 6  Export to Word
 7  Convert source images to output formats
-8  Install or update dependencies
+8  Refresh search index
+9  Install or update dependencies
 x  Exit
 
 Enter a number and hit enter. "
@@ -691,10 +692,46 @@ You may need to reload the web page once this server is running."
 		# Head back to the Electric Book options
 		process=0
 
+	########################
+	# REFRESH SEARCH INDEX #
+	########################
+	elif [ "$process" = 8 ]
+		then
+		echo "Let's refresh the search index."
+		echo "We'll index the files in your web or app file lists defined in meta.yml"
+		echo "You need to have PhantomJS installed for this to work."
+
+		# Check if refreshing web or app index
+		echo "To refresh the website search index, press enter."
+		echo "To refresh to app search index, type a and press enter."
+		searchIndexToRefresh=""
+		read searchIndexToRefresh
+
+		# Generate HTML with Jekyll
+		echo "Generating HTML with Jekyll..."
+		if [ "$searchIndexToRefresh" = "a" ]
+			then
+			bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml"
+		else
+			bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml"
+		fi
+
+		# Run PhantomJS script from scripts directory
+		echo "Generating index with PhantomJS..."
+		cd _site/assets/js
+		phantomjs render-search-index.js
+		cd "$location"
+
+		# Done
+		echo "Index refreshed."
+
+		# Head back to the Electric Book options
+		process=0
+
 	###########
 	# INSTALL #
 	###########
-	elif [ "$process" = 8 ]
+	elif [ "$process" = 9 ]
 		then
 		echo "Running Bundler to update and install dependencies."
 		echo "If Bundler is not already installed, exit and run"

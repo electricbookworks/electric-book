@@ -6,15 +6,17 @@ Use Liquid logic tags to include only in certain outputs, e.g.
 {% endcomment %}
 
 {% comment %}
-These scripts provide client-side search. See:
-http://elasticlunr.com/
-https://markjs.io/
+Add a bundle of JS and site search.
 {% endcomment %}
 {% if site.output == "web" or site.output == "app" %}
 <script src="{{ path-to-root-directory }}assets/js/bundle.js"></script>
+
     {% if is-project-search or is-book-search %}
-    <script src="{{ path-to-root-directory }}assets/js/bundle-search.js"></script>
+    <script src="{{ path-to-root-directory }}assets/js/search-engine.js"></script>
+    <script src="{{ path-to-root-directory }}assets/js/search-index.js"></script>
+    <script src="{{ path-to-root-directory }}assets/js/search-results.js"></script>
     {% endif %}
+
 {% endif %}
 
 {% comment %}

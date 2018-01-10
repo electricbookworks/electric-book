@@ -2,6 +2,7 @@
 @mixin header-style() {
   font-family: $header-font;
   font-size: $header-font-size;
+  font-weight: $header-font-weight;
   text-transform: $header-case;
   letter-spacing: $header-letter-spacing;
 }
@@ -15,6 +16,7 @@
 @mixin footer-style() {
   font-family: $footer-font;
   font-size: $footer-font-size;
+  font-weight: $footer-font-weight;
   text-transform: $footer-case;
   letter-spacing: $footer-letter-spacing;
 }
@@ -58,23 +60,23 @@ $print-page-headers-footers-style: true !default;
       @include header-position();
     }
     @bottom {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-left {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-right {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-left-corner {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-right-corner {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
   }
@@ -102,23 +104,23 @@ $print-page-headers-footers-style: true !default;
       @include header-position();
     }
     @bottom {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-left {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-right {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-left-corner {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-right-corner {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
   }
@@ -146,23 +148,23 @@ $print-page-headers-footers-style: true !default;
       @include header-position();
     }
     @bottom {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-left {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-right {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-left-corner {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-right-corner {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
   }
@@ -190,23 +192,23 @@ $print-page-headers-footers-style: true !default;
       @include header-position();
     }
     @bottom {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-left {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-right {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-left-corner {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
     @bottom-right-corner {
-      @include header-style();
+      @include footer-style();
       @include footer-position();
     }
   }

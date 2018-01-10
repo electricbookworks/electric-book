@@ -8,6 +8,7 @@ $web-nav-bar: true !default;
         font-size: inherit;
         color: $nav-bar-label-color;
         background-color: $nav-bar-label-background-color;
+        border: $rule-thickness solid $nav-bar-label-border-color;
         border-radius: $button-border-radius;
         padding: 0.25em 0.5em;
         margin: 0.25em;
