@@ -639,7 +639,7 @@ set /p process=Enter a number and hit return.
 
             :: then run it, saving the error stream to a log file
             :: First, create a timestamp
-            for /f "tokens=2-8 delims=.:/ " %%a in ("%date% %time%") do set timestamp=%%c-%%a-%%bT%%d-%%e-%%f-%%g
+            for /f "tokens=2-8 delims=.:/, " %%a in ("%date% %time%") do set timestamp=%%c-%%a-%%bT%%d-%%e-%%f
             set epubCheckLogFile=epubcheck-log-%timestamp%
             echo Found EpubCheck at %epubchecklocation%, running validation...
             call java -jar %epubchecklocation% %epubFileName%.epub 2>> %epubCheckLogFile%.txt
