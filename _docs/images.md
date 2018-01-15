@@ -17,7 +17,7 @@ Our template comes with four folders for images, which correspond to output form
 
 ### Automating image conversions
 
-You can automate the conversion of images to various outputs with [gulp](https://gulpjs.com/). You need to have npm installed, and to have run `nom install` in the project root to install the `node_modules`.
+You can automate the conversion of images to various outputs with [gulp](https://gulpjs.com/). You need to have npm installed, and to have run `npm install` in the project root to install the `node_modules`.
 
 Then you only need to put high-res versions of your images in `images/_source` and run `gulp`. Our gulp script will automatically optimise, convert and save your images to the four output folders, including specifying the correct colour profiles and creating multiple image sizes for web output.
 
