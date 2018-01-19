@@ -5,7 +5,7 @@ categories: editing
 
 # Supported classes
 
-Our Classic theme includes styling for a range of classes. You can apply these to elements in markdown.
+Our template includes styling for a range of classes by default. You can apply these to elements in markdown.
 
 ## Formatting
 
@@ -19,7 +19,7 @@ Use these classes in your markdown to create specific formatting effects.
 | Dedication | `.dedication` | Block | A dedication, for instance at the start of a book or chapter. To apply this class, place `{:.dedication}` directly under the block of text that you'd like to target. | No
 | Epigraph source | `.epigraph-source` | Block | The person to whom the epigraph is attributed. To apply this class, place `{:.epigraph-source}` dircetly under the source of the epigraph. | No
 | Epigraph | `.epigraph` | Block | An epigraph at the start of a book or chapter. To apply this class, place `{:.epigraph}` under the epigraph you'd like to target.| No
-| Figure | `.figure` | Block | A figure is an image with a caption. Add {:.figure} immediately below a blockquote containing an image and a separate paragraph of text to make it behave as a figure. Read about other options for adding figures [in our workflow guide](http://electricbook.works/docs/images.html#figures). | No
+| Figure | `.figure` | Block | A figure is an image with a caption. Add `{:.figure}` immediately below a blockquote containing an image and a separate paragraph of text to make it behave as a figure. Read about other options for adding figures [in our workflow guide](http://electricbook.works/docs/images.html#figures). | No
 | Figure: extra small | `.x-small` | Block | Add to the `.figure` tag, e.g. `{:.figure .x-small}`.  | No
 | Figure: fixed position | `.fixed` | Block | Add to the `.figure` tag, e.g. `{:.figure .fixed}`. For figures that must keep their position in the text flow, and must not float to the top of the page. | No
 | Figure: large | `.large` | Block | Add to the `.figure` tag, e.g. `{:.figure .large}`.  This restricts the maximum height of the image to a large height. Note that the `.large` class makes the figure fixed. By default,  figures automatically reflow, so this prevents the large figure from appearing at the end of the page, which larger figures tend to do.| No
