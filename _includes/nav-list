@@ -25,7 +25,7 @@ such as the home page or project search page...{% endcomment %}
 
     {% for item in include.nav-tree | sort: "order" %}
         <li class="{% unless page-list contains item.file %}no-file{% endunless %}
-        {% if item.children == nil %} no-children{% else %} has-children{% endif %}">
+        {% if item.children == nil %} no-children{% else %} has-children{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
             <a {% if item.file != nil %}href="{{ path-to-root-directory }}{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
                 {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
             </a>
@@ -49,7 +49,8 @@ and we're not on a docs page, create the full book nav.{% endcomment %}
         <li class="{% if page.url contains item.file %}active{% endif %}
         {% unless page-list contains item.file %}no-file{% endunless %}
         {% if item.link == "none" %}no-link{% endif %}
-        {% if item.children == nil %}no-children{% else %}has-children{% endif %}">
+        {% if item.children == nil %}no-children{% else %}has-children{% endif %}
+        {% if item.class != nil %}{{ item.class }}{% endif %}">
             <a {% if item.file != nil and item.link != "none" %}href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %}
                class="{% if page.url contains item.file %}active{% endif %}">
                 {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
