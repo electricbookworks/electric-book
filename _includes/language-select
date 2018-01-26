@@ -35,7 +35,7 @@ translation's file list in meta.yml.{% endcomment %}
 
     <div class="language-select">
 
-        {% include globe-icon %}
+        {% include language-select-icon %}
 
         <ul class="language-select-list">
 
