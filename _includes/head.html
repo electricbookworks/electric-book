@@ -2,7 +2,7 @@
 
 {% if site.output == 'print-pdf' %}
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
     {% if title %}
@@ -24,7 +24,7 @@
 
 {% elsif site.output == 'screen-pdf' %}
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
     {% if title %}
@@ -46,7 +46,7 @@
 
 {% elsif site.output == 'epub' %}
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="{{ language }}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
     {% if title %}
@@ -87,7 +87,7 @@
 
 
 {% elsif site.output == "app" %}
-<html>
+<html{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
     <head>
 
     <title>
@@ -134,7 +134,7 @@
 
 {% else %}
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
     {% if title %}

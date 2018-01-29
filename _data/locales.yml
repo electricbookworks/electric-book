@@ -1,6 +1,7 @@
 # Localise your project here by adding translations
 # for phrases in the languages you're using. Some are
 # already defined for English and French.
+# For right-to-left languages, add direction: "rtl".
 
 # ab:
 #   iso-name: "Abkhaz"
