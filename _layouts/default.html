@@ -19,11 +19,10 @@ layout: compress
 {{ content }}
 {% include close-content.html %}
 
-{% if site.output == "web" and site.data.settings.web-pagination == true %}
+{% if site.output == "web" and site.data.settings.web.pagination == true %}
 {% include pagination %}
 {% endif %}
-
-{% if site.output == "app" and site.data.settings.app-pagination == true %}
+{% if site.output == "app" and site.data.settings.app.pagination == true %}
 {% include pagination %}
 {% endif %}
 
