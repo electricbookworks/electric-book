@@ -1,5 +1,5 @@
 ---
-title: Title page
+title: Half-title page
 style: halftitle-page
 ---
 
