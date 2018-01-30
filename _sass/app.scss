@@ -176,6 +176,7 @@ $web-tables: true !default;
 $web-letters: true !default;
 $web-verse: true !default;
 $web-video: true !default;
+$web-pagination: true !default;
 
 // Type-control classes
 $web-smallcaps: true !default;
@@ -238,6 +239,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-letters";
 @import "partials/web-verse";
 @import "partials/web-video";
+@import "partials/web-pagination";
 
 // Type-control classes
 @import "partials/web-smallcaps";
