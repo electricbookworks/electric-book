@@ -31,7 +31,12 @@ variants:
 # Web settings
 # ----------------------------------------------------------
 # Turn pagination (next/previous) on or off
-web-pagination: true
+web:
+  pagination: true
+  # Choose 'direction' for 'Next/Previous' pagination,
+  # or 'titles' to show page titles at pagination,
+  # or 'arrows' to use only arrows.
+  pagination-type: "arrows"
 
 # ----------------------------------------------------------
 # Epub settings
@@ -46,7 +51,12 @@ web-pagination: true
 # App settings
 # ----------------------------------------------------------
 # Turn pagination (next/previous) on or off
-app-pagination: true
+app:
+  pagination: true
+  # Choose 'direction' for 'Next/Previous' pagination,
+  # or 'titles' to show page titles at pagination,
+  # or 'arrows' to use only arrows.
+  pagination-type: "arrows"
 # If your book is huge and you need to store images
 # in an expansion file, edit these settings.
 google-play-expansion-file-enabled: false
