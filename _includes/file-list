@@ -1,75 +1,19 @@
+{% capture file-list-output %}
+
+{% comment %} Include metadata and output the file list.
+ Capture that output, then print it to the page,
+ stripping out white space. {% endcomment %}
+
 {% include metadata %}
 
-{% if site.output == 'print-pdf' %}
+{{ file-list }}
 
-{% for file in print-pdf-file-list %}
-{% for file-title in file %}
-{% if file-title[0] %}
-{{ file-title[0] }}.html
-{% else %}
-{{ file-title }}.html
-{% endif %}
-{% endfor %}
-{% endfor %}
+{% endcapture %}
 
-{% endif %}
+{{ file-list-output | strip | replace: "
 
+", "
+" | replace: "
 
-{% if site.output == 'screen-pdf' %}
-
-{% for file in screen-pdf-file-list %}
-{% for file-title in file %}
-{% if file-title[0] %}
-{{ file-title[0] }}.html
-{% else %}
-{{ file-title }}.html
-{% endif %}
-{% endfor %}
-{% endfor %}
-
-{% endif %}
-
-
-{% if site.output == 'epub' %}
-
-{% for file in epub-file-list %}
-{% for file-title in file %}
-{% if file-title[0] %}
-{{ file-title[0] }}.html
-{% else %}
-{{ file-title }}.html
-{% endif %}
-{% endfor %}
-{% endfor %}
-
-{% endif %}
-
-
-{% if site.output == 'app' %}
-
-{% for file in app-file-list %}
-{% for file-title in file %}
-{% if file-title[0] %}
-{{ file-title[0] }}.html
-{% else %}
-{{ file-title }}.html
-{% endif %}
-{% endfor %}
-{% endfor %}
-
-{% endif %}
-
-
-{% if site.output == 'web' %}
-
-{% for file in web-file-list %}
-{% for file-title in file %}
-{% if file-title[0] %}
-{{ file-title[0] }}.html
-{% else %}
-{{ file-title }}.html
-{% endif %}
-{% endfor %}
-{% endfor %}
-
-{% endif %}
+", "
+" }}
