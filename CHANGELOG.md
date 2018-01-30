@@ -2,6 +2,8 @@
 
 ## 0.11.1 (in progress)
 
+* [Add pagination](https://github.com/electricbookworks/electric-book/pull/225) (next/previous lnks) to web and app outputs.
+* [Allow RTL text direction to be set per language in `locales`](https://github.com/electricbookworks/electric-book/pull/224).
 * [Fix issue](https://github.com/electricbookworks/electric-book/pull/222) that caused invalid epubs in EpubCheck 3.
 * Use [clearer language-select icon](https://github.com/electricbookworks/electric-book/pull/223).
 * [Fix issue](388ca1e81cf47f69817dee530dc5846aeb59cc32) where app output used web nav for breadcrumbs.
