@@ -6,7 +6,7 @@ $web-pagination: true !default;
     .pagination {
         font-family: $font-text-secondary;
         padding: $line-height-default;
-        width: $max-width-default / 2;
+        max-width: $max-width-default / 2;
         margin: auto;
         .pagination-previous {
             float: left;
