@@ -1,0 +1,25 @@
+$web-pagination: true !default;
+@if $web-pagination {
+
+    // Pagination (next and previous pages)
+
+    .pagination {
+        font-family: $font-text-secondary;
+        padding: $line-height-default;
+        max-width: $max-width-default / 2;
+        margin: auto;
+        .pagination-previous {
+            float: left;
+            a {
+                padding: 0 1em;                
+            }
+        }
+        .pagination-next {
+            float: right;
+            a {
+                padding: 0 1em;                
+            }
+        }
+    }
+
+}

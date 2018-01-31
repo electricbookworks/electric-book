@@ -48,7 +48,7 @@ However, many (human) editors often mark the spaces on either side of a word as 
 
 `I went to* *the shops.`
 
-Markdown reads that is meaning that there is an actual asterisk after 'to', and italics start from 'the' and continue (at least) to the end of the paragraph:
+Markdown reads that as meaning that there is an actual asterisk after 'to', and italics start from 'the' and continue (at least) to the end of the paragraph:
 
 I went to* *the shops.*
 

@@ -267,7 +267,7 @@ In addition to boxes, our default stylesheets include lots of other classes for 
 > When you apply an attribute tag to an inline element, it appears immediately at the end of a span (a span is any contiguous series of inline characters inside a block element). Spans in kramdown can be marked off with asterisks as if they are italics: mark off the text you're tagging with asterisks (`*`), as you would italics, and put your tag immediately after the closing `*`, on the same line. E.g. `*Make this small-caps.*{:.smallcaps}`. The Classic theme will then apply the correct styling to the span, instead of the default italic. 
 {:.box}
 
-To see all the classes that our Classic theme supports, see the [Supported classes](05-classes.html#supported-classes) section.
+To see all the classes that our template supports by default, see the [Supported classes](classes.html#supported-classes) section.
 
 ## Editing reflowable text
 

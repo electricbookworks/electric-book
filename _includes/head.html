@@ -2,7 +2,7 @@
 
 {% if site.output == 'print-pdf' %}
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
     {% if title %}
@@ -24,7 +24,7 @@
 
 {% elsif site.output == 'screen-pdf' %}
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
     {% if title %}
@@ -46,7 +46,7 @@
 
 {% elsif site.output == 'epub' %}
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="{{ language }}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
     {% if title %}
@@ -55,7 +55,7 @@
     {{ project-name }}{% if page.title %}: {{ page.title }}{% endif %}
     {% endif %}
     </title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ epub-stylesheet }}" />
     
     {% comment %}Metadata defined in page frontmatter overrides
@@ -87,7 +87,7 @@
 
 
 {% elsif site.output == "app" %}
-<html>
+<html{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
     <head>
 
     <title>
@@ -134,7 +134,7 @@
 
 {% else %}
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
     {% if title %}

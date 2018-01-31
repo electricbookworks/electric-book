@@ -39,9 +39,7 @@ $web-language-select: true !default;
     }
 
     // Globe icon (_includes/globe-icon)
-    svg.language-select-globe {
-        width: 1em;
-        height: 1em;
+    svg.language-select-icon {
         path {
             fill: $language-select-icon-color;
         }

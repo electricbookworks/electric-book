@@ -207,7 +207,7 @@ If Previewer cannot convert the epub, we've found that adding it to [Calibre](ht
 
 ## EPUB3 conversion
 
-To convert an EPUB2 to EPUB3 in Sigil, use [Kevin Hendricks' EPUB-itizer plugin](https://github.com/kevinhendricks/ePub3-itizer).
+To convert an EPUB2 to EPUB3 in Sigil, use [Kevin Hendricks' EPUB3-itizer plugin](https://github.com/kevinhendricks/ePub3-itizer).
 
 Note that EPUB3 prefers all files to have `.xhtml` filename extensions, while Jekyll uses `.html`. So, before you run the EPUB3-itizer:
 

@@ -2,9 +2,15 @@
 
 ## 0.11.1 (in progress)
 
-To do:
-
-* Localise pages in root directory, including home and search-result pages.
+* [Add pagination](https://github.com/electricbookworks/electric-book/pull/225) (next/previous lnks) to web and app outputs.
+* [Allow RTL text direction to be set per language in `locales`](https://github.com/electricbookworks/electric-book/pull/224).
+* [Fix issue](https://github.com/electricbookworks/electric-book/pull/222) that caused invalid epubs in EpubCheck 3.
+* Use [clearer language-select icon](https://github.com/electricbookworks/electric-book/pull/223).
+* [Fix issue](388ca1e81cf47f69817dee530dc5846aeb59cc32) where app output used web nav for breadcrumbs.
+* [Remove clumsy doctype entities](7d5bb49ac9a537a201947bd99b0068e43ea439f1) in epub output.
+* Updates to docs.
+* [Fix issue](bd5d23422583c939985c8835f485b80f2a1cab0f) with timestamps on some Windows mahcines.
+* Various minor fixes and improvements.
 
 ## 0.11.0
 
