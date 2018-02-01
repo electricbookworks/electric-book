@@ -108,7 +108,10 @@ $epub-base-typography: true !default;
         border: $rule-thickness solid rgba(255,255,255,0);
         margin: $line-height-default 0; // Adds space, esp. important for Kindle
         text-align: center; // Necessary for aligning :after content
-        // Note: Amazon Kindle will ignore this :after content setting
+        // Note: Amazon Kindle will ignore this :after content setting.
+        // An hr in Amazon can be hidden by setting hr { margin-left: -200%; }
+        // in a Kindle media query. See below for example code.
+        // We don't do that here because it is a case-by-case hack.
         &:after {
             content: $text-divider;
         }
@@ -117,6 +120,16 @@ $epub-base-typography: true !default;
         }
     }
 
+    // Queries that target Kindle devices
+    // @media amzn-kf8 {
+    //     hr {
+    //         margin-left: -200%;
+    //     }
+    // }
+    // @media amzn-mobi7 {
+    //     hr {
+    //         margin-left: -200%;
+    //     }
 
     // Superscripts and subscripts
 
