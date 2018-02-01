@@ -52,7 +52,7 @@ epub:
 # To hide the 'on the page' nav in epub, set this to 'true'.
 # Then you can put {% include toc %} anywhere in your epub
 # to generate a hidden nav element.
-  hide-nav: true
+  hide-nav: false
 }
 
 # ----------------------------------------------------------
