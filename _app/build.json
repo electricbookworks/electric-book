@@ -23,9 +23,7 @@ layout: min
             "password": "{{ site.data.secrets.android.app-key-password }}",            
             "keystoreType": ""
         }
-    }
-}
-{
+    },
     "ios": {
         "debug": {
             "codeSignIdentity": "iPhone Developer",
