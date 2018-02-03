@@ -54,7 +54,7 @@ create a list containing the pages that use it.{% endcomment %}
             {% for page in pages %}
 
                 <li>
-                    <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }} ({{ page.order }}) ({{cat}})</a>
+                    <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
                 </li>
 
             {% endfor %}
