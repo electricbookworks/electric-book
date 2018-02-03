@@ -6,15 +6,16 @@ Loop through the docs pages, and add each category to the array.{% endcomment %}
 
 {% for page in site.docs %}
 
-  {% for cat in page.categories %}
-    {% assign cat-list = cat-list | push: cat | uniq %}
-  {% endfor %}
+    {% for cat in page.categories %}
+        {% assign cat-list = cat-list | push: cat | uniq %}
+    {% endfor %}
 
 {% endfor %}
 
 {% comment %}Sort the categories{% endcomment %}
 {% assign cat-list = cat-list | sort %}
-{% comment %}If we're using a Jekyll versino that support Liquid 4{% endcomment %}
+
+{% comment %}If we're using a Jekyll version that supports Liquid 4{% endcomment %}
 {% assign cat-list = cat-list | sort_natural %}
 
 {% comment %}Now, for each category in that array,
@@ -22,40 +23,46 @@ create a list containing the pages that use it.{% endcomment %}
 
 <ul{% if include.class %} class="{{ include.class }}"{% endif %}>
 
-  {% for cat in cat-list %}
+    {% for cat in cat-list %}
 
-    <li class="has-children"><a>{{ cat | capitalize }}</a>
-      <ul>
+        <li class="has-children"><a>{{ cat | capitalize }}</a>
 
-        {% assign pages = site.docs | where_exp: "c", "c.categories contains cat" %}
+            <ul>
 
-        {% for page in pages %}
+            {% assign pages = site.docs | where_exp: "c", "c.categories contains cat" %}
 
-          <li>
-            <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
-          </li>
+            {% for page in pages %}
 
-        {% endfor %}
+                <li>
+                    <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+                </li>
 
-      </ul>
-    </li>
+            {% endfor %}
 
-  {% endfor %}
+            </ul>
 
-  {% comment %}Now add all pages that are not categorised,
-  except the index page, which is already the parent list item.{% endcomment %}
-  {% for page in site.docs %}
-    {% unless page.url contains '/docs/index.html' %}
+        </li>
 
-      {% capture page-categories %}{{ page.categories }}{% endcapture %}
-      {% if page-categories == "" %}
+    {% endfor %}
 
-      <li>
-        <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
-      </li>
+    {% comment %}Now add all pages that are not categorised,
+    except the index page, which is already the parent list item.{% endcomment %}
+    {% for page in site.docs %}
 
-      {% endif %}
-    {% endunless %}
-  {% endfor %}
+        {% unless page.url contains '/docs/index.html' %}
+
+            {% capture page-categories %}{{ page.categories }}{% endcapture %}
+
+            {% if page-categories == "" %}
+
+            <li>
+                <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+            </li>
+
+            {% endif %}
+
+        {% endunless %}
+
+    {% endfor %}
 
 </ul>
