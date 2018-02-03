@@ -1,6 +1,7 @@
 ---
 title: Footnotes, endnotes and sidenotes
 categories: editing
+order: 6
 ---
 
 # Footnotes, endnotes and sidenotes

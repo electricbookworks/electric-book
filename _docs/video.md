@@ -1,6 +1,7 @@
 ---
 title: Video
 categories: editing
+order: 10
 ---
 
 # Embedding video

@@ -1,6 +1,7 @@
 ---
 title: Mathematics
 categories: editing
+order: 7
 ---
 
 # Mathematics

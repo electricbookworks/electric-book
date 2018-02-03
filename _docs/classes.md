@@ -1,9 +1,10 @@
 ---
-title: Supported classes
+title: Content tags (classes)
 categories: editing
+order: 2
 ---
 
-# Supported classes
+# Content tags (classes)
 
 Our template includes styling for a range of classes by default. You can apply these to elements in markdown.
 

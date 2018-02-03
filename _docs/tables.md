@@ -1,6 +1,7 @@
 ---
 title: Tables
 categories: editing
+order: 3
 ---
 
 # Tables

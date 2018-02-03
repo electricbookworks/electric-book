@@ -1,6 +1,7 @@
 ---
-title: Introduction
-categories: setup
+title: About the EBW
+categories: about
+order: 1
 ---
 
 # Introduction

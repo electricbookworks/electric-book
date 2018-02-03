@@ -1,6 +1,6 @@
 ---
 title: Using Javascript
-categories: technical
+categories: advanced
 ---
 
 # Using Javascript

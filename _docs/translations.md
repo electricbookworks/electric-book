@@ -1,6 +1,7 @@
 ---
 title: Translations
-categories: editing
+categories: setup
+order: 2
 ---
 
 # Translations

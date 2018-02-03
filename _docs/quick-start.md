@@ -1,6 +1,7 @@
 ---
 title: Quick start
 categories: setup
+order: 0
 ---
 
 # Quick new-book setup

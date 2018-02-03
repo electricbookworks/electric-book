@@ -1,6 +1,7 @@
 ---
 title: Tables of contents
 categories: editing
+order: 4
 ---
 
 # Tables of contents
