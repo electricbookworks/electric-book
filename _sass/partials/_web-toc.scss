@@ -25,9 +25,9 @@ $web-toc: true !default;
 			margin: $line-height-default 0;
 			li {
 				margin: 0;
-			}
-			li li {
-				margin-left: $line-height-default;
+				ol, ul {
+					margin-bottom: $line-height-default;
+				}
 			}
 		} // #markdown-toc
 	} // #content
