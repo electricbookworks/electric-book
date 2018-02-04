@@ -6,6 +6,10 @@ order: 4
 
 # Tables of contents
 {:.no_toc}
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 We create tables of contents (and contents navigation bars for the web) in the `_data/meta.yml` file of the Electric Book template. The data in the `meta.yml` file is written in a syntax called yaml, which is very strict (e.g. a slight error in indentation can prevent your whole book from building), but once you get the hang of it, adding your book's information for output will be easy enough. You can test whether your yaml is valid by pasting it into the box on [yamllint.com](http://www.yamllint.com/) and clicking ‘Go’. The yamllint validator will tell you whether it is valid or not, and will tell you on which lines errors appear with relative accuracy. 
 

@@ -5,6 +5,10 @@ order: 2
 ---
 
 # Content tags (classes)
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 Our template includes styling for a range of classes by default. You can apply these to elements in markdown.
 

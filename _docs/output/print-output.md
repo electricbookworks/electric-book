@@ -6,7 +6,7 @@ categories: output
 # Print output
 {:.no_toc}
 
-* toc
+* Page contents
 {:toc}
 
 ## Introduction

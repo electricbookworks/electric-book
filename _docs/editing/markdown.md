@@ -5,9 +5,9 @@ order: 1
 ---
 
 # Markdown
-{:.no_toc title="Markdown"}
+{:.no_toc}
 
-* toc
+* Page contents
 {:toc}
 
 This guide explains how to edit text for the workflow. On its own, it's also a handy guide to markdown in general.

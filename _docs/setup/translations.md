@@ -5,6 +5,10 @@ order: 2
 ---
 
 # Translations
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 In the Electric Book workflow, a translation is a subfolder of the original book. Text files go into a subfolder of `/text`, e.g. `/text/fr`. We recommend naming the translation folder with the language code, but that's not required.
 

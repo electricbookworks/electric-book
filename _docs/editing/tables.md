@@ -5,6 +5,10 @@ order: 3
 ---
 
 # Tables
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 Kramdown (and most markdown variants) can only handle very simple tables. For these you can create the Markdown layout manually. See [the chapter on markdown](03-markdown.html#simple-tables) for guidance on formatting simple tables.
 
