@@ -1,5 +1,8 @@
 {% comment %}Output docs by category.{% endcomment %}
 
+{% comment %}Get current page.{% endcomment %}
+{% assign current-page-url = page.url %}
+
 {% comment %}Create an empty array to write categories to.{% endcomment %}
 {% assign cat-list = "" | split: "" %}
 
@@ -38,13 +41,21 @@ Otherwise, generate a category list from the docs.{% endcomment %}
 {% comment %}Now, for each category in that array,
 create a list containing the pages that use it.{% endcomment %}
 
+{% comment %}Did the include tag specify a title?
+If not, use category names.{% endcomment %}
+
 <ul{% if include.class %} class="{{ include.class }}"{% endif %}>
 
     {% for cat in cat-list %}
 
         {% comment %}Capitalise the first letter of the category name,
         in case of lowercase category names in YAML frontmatter.{% endcomment %}
-        <li class="has-children">{{ cat | slice: 0 | capitalize }}{{ cat | slice: 1, cat.size }}
+        <li class="has-children">
+            {% if include.title %}
+                <span class="docs-list-title">{{ include.title }}</span>
+            {% else %}
+                <span class="docs-list-title">{{ cat | slice: 0 | capitalize }}{{ cat | slice: 1, cat.size }}</span>
+            {% endif %}
 
             <ul>
 
@@ -53,9 +64,14 @@ create a list containing the pages that use it.{% endcomment %}
 
             {% for page in pages %}
 
-                <li>
-                    <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
-                </li>
+                {% comment %}Don't list the current page.{% endcomment %}
+                {% unless current-page-url == page.url %}
+
+                    <li>
+                        <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+                    </li>
+
+                {% endunless %}
 
             {% endfor %}
 
