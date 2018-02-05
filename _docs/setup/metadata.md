@@ -33,5 +33,4 @@ products:
 
 In YAML, indentation *must* be accurate and *must* be created with spaces, not tabs. If a YAML file contains errors in indentation (or other syntax), your project will not output anything at all.
 
-There are many [subtle rules](http://yaml.org/spec/1.2/spec.html) for structuring YAML, but if you just follow the existing structure in `meta.yml` carefully, you'll be fine.
-
+There are many subtle rules for structuring YAML, but if you just follow the existing structure in `meta.yml` carefully, you'll be fine. [Here is a good tutorial](https://learn.getgrav.org/advanced/yaml) on YAML, if you want to know more.
