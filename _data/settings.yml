@@ -4,7 +4,6 @@
 # ----------------------------------------------------------
 electric-book-manager: enable
 electric-book-manager-key: ""
-# ----------------------------------------------------------
 
 # Variant settings
 # Set a variant of the work to output.
@@ -27,22 +26,44 @@ variants:
     epub-stylesheet: ""
     app-stylesheet: ""
   - variant: yourvariant
+
 # ----------------------------------------------------------
+# Web settings
+# ----------------------------------------------------------
+# Turn pagination (next/previous) on or off
+web:
+  pagination: true
+  # Choose 'direction' for 'Next/Previous' pagination,
+  # or 'titles' to show page titles at pagination,
+  # or 'arrows' to use only arrows.
+  pagination-type: "arrows"
 
 # ----------------------------------------------------------
 # Epub settings
 # ----------------------------------------------------------
+epub:
 # If you're embedding fonts, uncomment and list the font-file names here
 # and put the font files in _epub/fonts, not book/fonts
-
-# epub-fonts:
-  # - Crimson-Roman.otf
-  # - Crimson-Italic.otf
-# ----------------------------------------------------------
+#   fonts:
+#     - Crimson-Roman.otf
+#     - Crimson-Italic.otf
+# Every EPUB3 must have a nav element, like a TOC,
+# but you are allowed to hide it from view.
+# To hide the 'on the page' nav in epub, set this to 'true'.
+# Then you can put {% include toc %} anywhere in your epub
+# to generate a hidden nav element.
+  hide-nav: false
 
 # ----------------------------------------------------------
 # App settings
 # ----------------------------------------------------------
+# Turn pagination (next/previous) on or off
+app:
+  pagination: true
+  # Choose 'direction' for 'Next/Previous' pagination,
+  # or 'titles' to show page titles at pagination,
+  # or 'arrows' to use only arrows.
+  pagination-type: "arrows"
 # If your book is huge and you need to store images
 # in an expansion file, edit these settings.
 google-play-expansion-file-enabled: false

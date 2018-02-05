@@ -40,9 +40,17 @@ We'll rewrite this later if we're in a translation
 
 {% capture book-directory %}{{ page.path | replace: "/", " " | truncatewords: 1, "" }}{% endcapture %}
 
-{% comment %}Get the current directory name.
-First, remove any file extensions, then create at array of what's left{% endcomment %}
-{% assign url-as-array = page.url | split: "." %}
+{% comment %}Get the current directory name.{% endcomment %}
+
+{% comment %} If the page is an index.html page, we need to add 'index',
+because Jekyll's page.url for index.html is / {% endcomment %}
+{% if page.url contains ".html" %}
+    {% capture page-url %}{{ page.url }}{% endcapture %}
+{% else %}
+    {% capture page-url %}{{ page.url }}index.html{% endcapture %}
+{% endif %}
+{% comment %}Remove any file extensions, then create an array of what's left{% endcomment %}
+{% assign url-as-array = page-url | split: "." %}
 {% assign url-as-array = url-as-array | first | remove_first: "/" | split: "/" %}
 {% assign url-as-array-size = url-as-array | size %}
 
@@ -436,6 +444,22 @@ override any metadata set for that variant.{% endcomment %}
     {% endfor %}
 
 {% endif %}
+
+{% comment %} Generate a file-list for the current output. {% endcomment %}
+{% capture file-list-name %}{{ site.output }}-file-list{% endcapture %}
+
+{% comment %} Don't indent. We don't want indents in file lists. {% endcomment %}
+{% capture file-list %}
+{% for file in [file-list-name] %}
+{% for file-title in file %}
+{% if file-title[0] %}
+{{ file-title[0] }}.html
+{% else %}
+{{ file-title }}.html
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endcapture %}
 
 {% comment %}
 Check if we're on the project homepage:
