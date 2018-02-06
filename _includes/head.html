@@ -55,7 +55,10 @@
     {{ project-name }}{% if page.title %}: {{ page.title }}{% endif %}
     {% endif %}
     </title>
-    <meta charset="utf-8"/>
+
+    {% comment %}This full meta tag is necessary for Kindle's character encoding to work.{% endcomment %}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ epub-stylesheet }}" />
     
     {% comment %}Metadata defined in page frontmatter overrides

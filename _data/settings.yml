@@ -41,11 +41,18 @@ web:
 # ----------------------------------------------------------
 # Epub settings
 # ----------------------------------------------------------
+epub:
 # If you're embedding fonts, uncomment and list the font-file names here
 # and put the font files in _epub/fonts, not book/fonts
-# epub-fonts:
-  # - Crimson-Roman.otf
-  # - Crimson-Italic.otf
+#   fonts:
+#     - Crimson-Roman.otf
+#     - Crimson-Italic.otf
+# Every EPUB3 must have a nav element, like a TOC,
+# but you are allowed to hide it from view.
+# To hide the 'on the page' nav in epub, set this to 'true'.
+# Then you can put {% include toc %} anywhere in your epub
+# to generate a hidden nav element.
+  hide-nav: false
 
 # ----------------------------------------------------------
 # App settings

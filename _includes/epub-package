@@ -144,8 +144,8 @@
 
         {% endfor %}
 
-        {% comment %}Add epub-fonts listed in settings.{% endcomment %}
-        {% for font in site.data.settings.epub-fonts %}
+        {% comment %}Add epub fonts listed in settings.{% endcomment %}
+        {% for font in site.data.settings.epub.fonts %}
 
             {% capture file-name %}{{ font | split: "." | first }}{% endcapture %}
             {% capture file-extension %}{{ font | split: "." | last }}{% endcapture %}
