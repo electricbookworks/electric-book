@@ -28,6 +28,7 @@ layout: min
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <preference name="EnableViewportScale" value="true"/>
     </platform>
     <engine name="android" spec="~6.2.3" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
