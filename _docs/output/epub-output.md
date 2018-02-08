@@ -6,7 +6,7 @@ categories: output
 # Epub output
 {:.no_toc}
 
-* toc
+* Page contents
 {:toc}
 
 ## Run the script

@@ -1,6 +1,7 @@
 ---
 title: Images
 categories: editing
+order: 5
 ---
 
 # Images
@@ -223,7 +224,7 @@ The more accurate way: use a class tag to specify the exact height of the image 
 If you choose to use SVG:
 
 *   Embed images placed in SVG images, don't just link them.
-*   Create a JPG version of every SVG image with the same file name (e.g. `bear.svg` and `bear.jpg`). You'll need the JPG fallback for EPUB. (We recommend JPG over GIF or PNG as a general default. One reason is that transparency seems like a good idea until your end-user switches their e-reader to 'night mode', and your black line-art disappears into the background.)
+*   Create a JPG version of every SVG image with the same file name (e.g. `bear.svg` and `bear.jpg`). You'll need the JPG fallback for EPUB. (We recommend JPG over GIF or PNG as a general default. One reason is that transparency seems like a good idea until your end-user switches their e-reader to 'night mode', and your black line-art disappears into the background. Also, if you're creating a print edition, PNG cannot work with CMYK color spaces.)
 
 Here's our most common workflow for converting images to SVG:
 

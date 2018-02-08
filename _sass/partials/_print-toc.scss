@@ -49,12 +49,15 @@ $print-toc: true !default;
 		font-family: $font-text-secondary;
 		list-style-type: none;
 		margin: $line-height-default 0;
-		li {
-			margin: 0;
-		}
-		li li {
-			margin-left: $line-height-default;
-		}
+			li {
+				margin: 0;
+				ol, ul {
+					margin-bottom: $line-height-default;
+					li {
+						margin-left: $line-height-default;
+					}
+				}
+			}
 		a::after {
 			content: leader(" ") target-counter(attr(href), page);
 		}

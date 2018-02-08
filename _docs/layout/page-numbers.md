@@ -1,9 +1,14 @@
 ---
 title: Page numbers
 categories: layout
+order: 2
 ---
 
 # Page numbers
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 In print output in the Classic theme, the YAML header's `style` setting determines how the pages are numbered:
 

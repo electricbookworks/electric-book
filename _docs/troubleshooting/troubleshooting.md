@@ -6,7 +6,7 @@ categories: troubleshooting
 # Troubleshooting and tips
 {:.no_toc}
 
-* toc
+* Page contents
 {:toc}
 
 ## Markdown

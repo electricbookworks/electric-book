@@ -1,9 +1,13 @@
 ---
 title: Using Javascript
-categories: technical
+categories: advanced
 ---
 
 # Using Javascript
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 Unless there's a good reason to put them elsewhere, scripts should live in `assets/js`.
 

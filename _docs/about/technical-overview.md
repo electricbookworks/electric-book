@@ -1,6 +1,7 @@
 ---
-title: Setting up
-categories: technical
+title: Technical overview
+categories: about
+order: 2
 ---
 
 # Setting up

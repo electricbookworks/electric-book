@@ -1,12 +1,13 @@
 ---
 title: Poetry
 categories: editing
+order: 8
 ---
 
 # Poetry
 {:.no_toc}
 
-* toc
+* Page contents
 {:toc}
 
 ## Basic poetry markdown

@@ -1,9 +1,14 @@
 ---
 title: Footnotes, endnotes and sidenotes
 categories: editing
+order: 6
 ---
 
 # Footnotes, endnotes and sidenotes
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 Our default theme provides three options for notes.
 

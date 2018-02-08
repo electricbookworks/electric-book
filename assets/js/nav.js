@@ -33,7 +33,7 @@
           showChildrenButton += '</button>';
       for (var i = 0; i < subMenus.length; i++) {
         subMenus[i].querySelector('ol, ul').classList.add('visuallyhidden');
-        subMenus[i].querySelector('a')
+        subMenus[i].querySelector('a, .docs-list-title')
                    .insertAdjacentHTML('afterend', showChildrenButton);
       }
 
