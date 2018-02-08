@@ -1,6 +1,7 @@
 ---
 title: Page numbers
 categories: layout
+order: 2
 ---
 
 # Page numbers

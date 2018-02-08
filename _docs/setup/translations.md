@@ -1,7 +1,7 @@
 ---
 title: Translations
 categories: setup
-order: 2
+order: 4
 ---
 
 # Translations
