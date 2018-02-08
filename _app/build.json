@@ -10,6 +10,8 @@
 #   development-team-id: "YOURTEAMID"
 #   package-type: "development"
 # See https://cordova.apache.org/docs/en/latest/guide/platforms/ios/ for details.
+# In secrets.yml, change ios package-type above to match the provisioning profile
+# that you are currently building with. Usual options are development, ad-hoc, app-store
 # Never share or commit _data/secrets.yml to your repository!
 # See https://developer.android.com/studio/publish/app-signing.html
 layout: min
@@ -38,7 +40,7 @@ layout: min
         "release": {
             "codeSignIdentity": "iPhone Developer",
             "developmentTeam": "{{ site.data.secrets.ios.development-team-id }}",
-            "packageType": "app-store",
+            "packageType": "{{ site.data.secrets.ios.package-type }}",
             "buildFlag": [
                 "EMBEDDED_CONTENT_CONTAINS_SWIFT = YES",
                 "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES=NO",
