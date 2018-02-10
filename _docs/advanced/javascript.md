@@ -9,7 +9,7 @@ categories: advanced
 * Page contents
 {:toc}
 
-Unless there's a good reason to put them elsewhere, scripts should live in `assets/js`.
+Unless there's a good reason to put them elsewhere, scripts should live in `assets/js`. In addition, scripts for epub output should be in `_epub/js`, [as described below](#adding-scripts-to-epubs).
 
 To add them to your `<head>` elements, add `<script>` tags to `_includes/head-elements`. 
 
@@ -55,7 +55,7 @@ Also, epub scripts must have a YAML frontmatter block, even if it's empty:
 ---
 ```
 
-This block tells Jekyll to process the script, which means it knows about it, which our eupb package needs to be able to include in the manifest.
+This block tells Jekyll to process the script, which means it knows about it, which the epub packager needs in order to include it in the epub manifest.
 
 Finally, if you're adding scripts to your pages, set `epub-scripts: true` in `_data/settings.yml`. This flags your pages as `scripted` in the epub manifest, which is required for validation.
 
