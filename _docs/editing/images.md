@@ -276,3 +276,90 @@ Add the front-cover image to the book's `images` folder. Ensure colour settings 
 *	`cover-large.jpg`: 2000px high
 
 The first is mandatory. The thumbnail and large images are for your convenience. For instance, when uploading a book to Amazon Kindle, you must provide a cover image this large.
+
+## Images over a double-page-spread
+
+There is no easy way to put images over a double-page spread, but there is a way to hack it.
+
+Of course, images across a DPS are not an ebook or web issue (if an ereader or browser shows 'pages' as a DPS, we have no control over it anyway). They are only a print issue. The problem is that PrinceXML does not provide a mechanism for placing images (or any element) across a spread. 
+
+In short, what we do is:
+
+1. Place the image twice, each in a `div` (as HTML) or `blockquote` (possible with markdown) element.
+2. Using PrinceXML's `next` modifier for floats, we float the div or blockquote elements on the first and second pages of the DPS respectively.
+3. Inside each div or blockquote, we position the image so that, on the left, only the left half of the image shows; and on the right, only the right half of the image shows.
+
+This all depends on placing your image reference in a way that the first blockquote–image falls on a left-hand page.
+
+Here's a step-by-step guide using example code:
+
+1. The image itself must be in the right aspect ratio. This method cannot (yet) resize or crop your image for you with CSS. In this example here, the image must be 270×120 (landscape), including an allowance for 5mm bleed.
+2. In the markdown text file, place the image twice, each inside a blockquote, and tag the first instance `{:.dps-left}` and the second `{:.dps-right}`.
+   
+   ``` markdown
+   > ![1](images/lion.tif)
+   {:.dps-left}
+   
+   > ![1](images/lion.tif)
+   {:.dps-right}
+   ```
+
+3. Hide the second instance of the image in any web, app or epub CSS:
+   
+   ``` CSS
+   /* Hide second instance of images intended for DPS in print */
+   .dps-right { 
+     display: none;
+   }
+   ```
+
+4. In print CSS, use this. Follow the comments to modify sizes to suit your page size and layout:
+   
+   ``` CSS
+   /* DPS images */
+   
+   blockquote.dps-left {
+   float: top;
+   margin: -20mm 0 10mm -5mm; /* Here you're aiming to start the image in the page bleed top left */
+   width: 135mm; /* Page width plus one side's bleed, e.g. 130mm wide plus 5mm bleed */
+   height: 120mm; /* Exact height of the image */
+   text-align: left;
+   }
+   blockquote.dps-right {
+   float: top next;
+   margin: -20mm 0 10mm -5mm; /* Here you're aiming to place the image in the page bleed top right */
+   width: 135mm; /* Page width plus one side's bleed, e.g. 130mm wide plus 5mm bleed */
+   height: 120mm; /* Exact height of the image */
+   text-align: right;
+   }
+   blockquote.dps-left p img {
+   width: 270mm; /* This must be exactly double the width above */
+   max-height: 120mm; /* This must be the same as the height above */
+   position: absolute;
+   left: -5mm;
+   }
+   blockquote.dps-right p img {
+   width: 270mm; /* Ditto */
+   max-height: 120mm; /* Ditto */
+   position: absolute;
+   right: -5mm;
+   }
+   ```
+
+That's all based on these page settings. Yours may differ, affecting your margins, heights and widths accordingly:
+
+``` CSS
+@page {
+    size: 130mm 200mm;
+    margin-top: 15mm;
+    margin-bottom: 20mm;
+    margin-outside: 0;
+    margin-inside: 0;
+    prince-bleed: 5mm;
+    prince-trim: 5mm;
+}
+```
+
+We've done very little testing with this so far. YMMV.
+
+There is another example [here](https://github.com/electricbookworks/electric-book/issues/164).
