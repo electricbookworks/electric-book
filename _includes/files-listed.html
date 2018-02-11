@@ -84,6 +84,20 @@ This include is primarily for use in creating search stores and indexes. {% endc
 
     {% endfor %}
 
+    {% comment %}Are we outputting the docs?{% endcomment %}
+    {% for coll in site.collections %}
+      {% if coll.output == true and coll.label == "docs" %}
+        {% assign output-docs = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    {% if output-docs == true %}
+        {% for doc in site.docs  %}
+            {{ doc.url }},
+        {% endfor %}
+    {% endif %}
+
 {% endcapture %}
 
 {% comment %} Clean up space in the list {% endcomment %}
