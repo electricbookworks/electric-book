@@ -35,7 +35,7 @@ index.addDoc({
 });
 index.addDoc({
     id: 7,
-    title: "Samples: Title page",
+    title: "Samples: Half-title page",
     content: "Samples"
 });
 index.addDoc({
