@@ -13,6 +13,9 @@ Before you can output your books you must make sure the `meta.yml` file contains
 
 The Electric Book template uses the data in `meta.yml` to populate and build navigation, tables of content, the parts of each book, translations, ISBNs and more.
 
+**Tip**: You can see the `metadata` generated for any given page by using the `page-info` include on it. Simply add this tag to any page to include an output a summary of its metadata: {% raw %}`{% include page-info %}`{% endraw %}.
+{:.box}
+
 ## YAML syntax
 
 The `meta.yml` file is written in a syntax called YAML. At its simplest, YAML is just a list of values like this:
