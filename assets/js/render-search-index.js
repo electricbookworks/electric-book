@@ -3,8 +3,6 @@
 # Then the output script passes this to phantomjs,
 # which generates the search index as search-index.js.
 layout: null
-
-# to do: index the docs, aligning id with store, where they must also be added
 ---
 
 {% comment %} Get the URLs to include in the index {% endcomment %}

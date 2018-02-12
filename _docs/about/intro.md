@@ -1,10 +1,14 @@
 ---
-title: Introduction
-categories: setup
+title: About the EBW
+categories: about
+order: 1
 ---
 
 # Introduction
-{:.no_toc title="Introduction" .page-1}
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 At [Electric Book Works](http://electricbookworks.com), we'd been producing books with InDesign for years. InDesign is awesome, but it makes publishing simultaneously to print and digital formats a real pain. No matter how we set things up, we always ended up with separate master files: one for print, one for the ebook, and one for the website. And keeping those in sync over time was almost impossible.
 

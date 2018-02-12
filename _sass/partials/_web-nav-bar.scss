@@ -26,6 +26,7 @@ $web-nav-bar: true !default;
     @if $nav-bar-fixed {
         [href="#nav"] {
             position: fixed;
+            z-index: 1; // less than .js-nav #nav
         }
     }
 
@@ -78,6 +79,7 @@ $web-nav-bar: true !default;
         @if $nav-bar-fixed {
             .js-nav & {
                 position: fixed;
+                z-index: 2; // greater than [href="#nav"]
             }
         }
 

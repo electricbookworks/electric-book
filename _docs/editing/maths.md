@@ -1,9 +1,14 @@
 ---
 title: Mathematics
 categories: editing
+order: 7
 ---
 
 # Mathematics
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 To enable LaTeX syntax for maths:
 

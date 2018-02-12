@@ -1,9 +1,14 @@
 ---
 title: Video
 categories: editing
+order: 10
 ---
 
 # Embedding video
+{:.no_toc}
+
+* Page contents
+{:toc}
 
 You can include any iframe in markdown to embed a video. We've created a simple way to embed YouTube videos and have them look consistent across your web version.
 

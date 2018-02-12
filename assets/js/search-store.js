@@ -1,6 +1,10 @@
 {% comment %} Generates a store that we can point an elasticlunr
 0-based index reference at for search results. {% endcomment %}
 
+{% comment %} Get page metadata, mainly to detect
+whether output-docs == true. {% endcomment %}
+{% include metadata %}
+
 {% comment %} Get the array-of-files to include in the index {% endcomment %}
 {% include files-listed.html %}
 
@@ -31,7 +35,7 @@ var store = [
         {% endfor %}
     {% endfor %}
 
-        {% if output-docs == "true" %}
+        {% if output-docs == true %}
             {% for page in site.docs %}
                 {
                     'title': {% if page.title and page.title != "" %}{{ page.title | jsonify }}{% else %}{{ page.url | replace: "/"," " | jsonify }}{% endif %},

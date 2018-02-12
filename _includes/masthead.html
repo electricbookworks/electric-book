@@ -5,7 +5,7 @@
         <li class="masthead-project-name"><a href="{{ path-to-root-directory }}index.html">{{ project-name | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
 
         {% if is-docs-page %}
-        <li class="masthead-docs-index"><a href="{{ path-to-root-directory }}/docs/">Docs</a></li>
+        <li class="masthead-docs-index"><a href="{{ path-to-root-directory }}docs/">Docs</a></li>
         <li class="masthead-docs-page">{{ page.title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</li>
         {% endif %}
 

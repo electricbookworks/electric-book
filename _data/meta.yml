@@ -121,11 +121,11 @@ works:
         start-page: "0-3-contents"
         contents-page: "0-3-contents"
         files: # add a value to any file to set any of the guide types listed in http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
-          - "0-0-cover"
-          - "0-1-titlepage"
-          - "0-2-copyright"
-          - "0-3-contents"
-          - "01"
+          - "0-0-cover": "cover"
+          - "0-1-titlepage": "title-page"
+          - "0-2-copyright": "copyright-page"
+          - "0-3-contents": "toc"
+          - "01": "text"
           - "02"
         toc: # For each menu item, include at least label and file (epub requires file). Optionally add id (for deep linking) and children.
           - label: "Frontmatter"
