@@ -40,7 +40,7 @@ A workflow folder (often tracked in Git as a repo) usually contains a set of rel
 
 ## Using the template
 
-The Electric Book repo (folder) is ready to use for a set of one or more books. In short, to get up and running, see the [Quick Start guide](0-9-quick-start.html).
+The Electric Book repo (folder) is ready to use for a set of one or more books. In short, to get up and running, see the [Quick Start guide](setup/quick-start.html).
 
 Now, let's get into some more detail about how it all works. There are several folders and files in the Electric Book template, including:
 
