@@ -110,6 +110,16 @@ exclude:
 - package.json
 - package-lock.json
 - CNAME
+# Formats we're not building here
+- /assets/profiles
+- /*/images/print-pdf
+- /*/images/screen-pdf
+- /*/images/epub
+- /*/images/app
+- /*/styles/print-pdf*
+- /*/styles/screen-pdf*
+- /*/styles/epub*
+- /*/styles/app*
 # Books
 # - book
 # - samples
