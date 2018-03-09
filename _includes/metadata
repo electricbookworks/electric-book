@@ -5,6 +5,11 @@ as output tags, e.g. {{ title }} for the current
 book's title.
 {% endcomment %}
 
+{% assign build = "development" %}
+{% if site.build and site.build != "" %}
+    {% assign build = site.build %}
+{% endif %}
+
 {% capture output-format %}{{ site.output }}{% endcapture %}
 
 {% comment %}
@@ -30,8 +35,14 @@ which will be overridden below if we're on book pages.{% endcomment %}
 {% comment %}
 It's useful to know how many books are in this project
 {% endcomment %}
-
 {% assign number-of-works = site.data.meta.works | size %}
+
+{% comment %}Get an array of the book directories.
+Useful for checking whether we're in a real book directory.{% endcomment %}
+{% assign book-directory-array = "" | split: "|" %}
+{% for work in site.data.meta.works %}
+    {% assign book-directory-array = book-directory-array | push: work.directory %}
+{% endfor %}
 
 {% comment %}
 Get the directory for this book only
@@ -39,6 +50,16 @@ We'll rewrite this later if we're in a translation
 {% endcomment %}
 
 {% capture book-directory %}{{ page.path | replace: "/", " " | truncatewords: 1, "" }}{% endcapture %}
+
+{% comment %}Are we really in a listed book directory, or a directory
+in the root that isn't really a listed book?{% endcomment %}
+{% for directory in book-directory-array %}
+    {% if book-directory == directory %}
+        {% assign is-book-directory = true %}
+    {% else %}
+        {% assign is-book-directory = false %}
+    {% endif %}
+{% endfor %}
 
 {% comment %}Get the current directory name.{% endcomment %}
 
@@ -70,15 +91,6 @@ Get the current file's name
 {% endif %}
 
 {% comment %}
-Check whether we're in a subdirectory of `text`
-{% endcomment %}
-{% capture book-subdirectory %}{{ page.path | replace: "/", " " | truncatewords: 2, "" | split: " " | last }}{% endcapture %}
-{% assign is-book-subdirectory = false %}
-{% if page.path contains book-directory and page.path contains book-subdirectory and page.path contains "/text/" and page.path contains current-file %}
-    {% assign is-book-subdirectory = true %}
-{% endif %}
-
-{% comment %}
 Get this file's folder depth
 (The minus 1 avoids counting the file itself)
 {% endcomment %}
@@ -90,6 +102,19 @@ If the folder depth is more than 2, this is a subdirectory of `text`
 {% assign is-book-subsubdirectory = false %}
 {% if folder-depth > 2 %}
     {% assign is-book-subsubdirectory = true %}
+{% endif %}
+
+{% comment %}
+Check whether we're in a subdirectory of `text`
+{% endcomment %}
+{% capture book-subdirectory %}{{ page.path | replace: "/", " " | truncatewords: 2, "" | split: " " | last }}{% endcapture %}
+{% comment %}Discard that if it's a filename, like search.md.{% endcomment %}
+{% if book-subdirectory contains "." %}
+    {% capture book-subdirectory %}{% endcapture %}
+{% endif %}
+{% assign is-book-subdirectory = false %}
+{% if book-directory-array contains book-directory and page.path contains book-directory and page.path contains book-subdirectory and page.path contains "/text/" and page.path contains current-file %}
+    {% assign is-book-subdirectory = true %}
 {% endif %}
 
 {% comment %}
@@ -573,6 +598,37 @@ the {{ images }} path should include the language subdirectory.{% endcomment %}
 
     {% if translated-images-exist == true %}
         {% capture images %}{{ path-to-book-directory }}{{ book-subdirectory }}/{{ site.image-set }}{% endcapture %}
+    {% endif %}
+{% endif %}
+
+{% comment %}For PDF and web outputs, check if we are using external-media,
+and if we are, get the relevant path as `external-media`, defaulting to
+remote-media for web and local-media for PDF.{% endcomment %}
+{% if site.output == "print-pdf" or site.output == "screen-pdf" %}
+    {% if site.data.settings.local-media.[build] and site.data.settings.local-media.[build] != "" %}
+        {% capture external-media %}{% unless site.data.settings.local-media.[build] contains "http" %}{{ path-to-root-directory }}{% endunless %}{{ site.data.settings.local-media.[build] }}{% endcapture %}
+    {% elsif site.data.settings.remote-media.[build] and site.data.settings.remote-media.[build] != "" %}
+        {% capture external-media %}{{ site.data.settings.remote-media.[build] }}{% endcapture %}
+    {% endif %}
+{% endif %}
+{% if site.output == "web" %}
+    {% if site.data.settings.remote-media.[build] and site.data.settings.remote-media.[build] != "" %}
+        {% capture external-media %}{{ site.data.settings.remote-media.[build] }}{% endcapture %}
+    {% elsif site.data.settings.local-media.[build] and site.data.settings.local-media.[build] != "" %}
+        {% capture external-media %}{% unless site.data.settings.local-media.[build] contains "http" %}{{ path-to-root-directory }}{% endunless %}{{ site.data.settings.local-media.[build] }}{% endcapture %}
+    {% endif %}
+{% endif %}
+
+{% comment %}If we're using external media, set `images` accordingly.{% endcomment %}
+{% if external-media and external-media != "" %}
+    {% capture images %}{{ external-media }}/{{ book-directory }}/{{ site.image-set }}{% endcapture %}
+    {% if is-translation %}
+        {% capture images %}{{ external-media }}/{{ book-directory }}/{{ book-subdirectory }}/{{ site.image-set }}{% endcapture %}
+    {% endif %}
+    {% comment %}If we are not in a book directory, use the images
+    from the first book in the project.{% endcomment %}
+    {% if is-root-directory == true %}
+        {% capture images %}{{ external-media }}/{{ site.data.meta.works.[0].directory }}/{{ site.image-set }}{% endcapture %}
     {% endif %}
 {% endif %}
 
