@@ -34,6 +34,8 @@ At the remote-media domain, the paths to media should match the paths to that me
 
 For example, if a project called `superpotatoes` contains two books, `mondial` and `fabula`, the remote-media URL might be `http://media.superpotatoes.com`. And on that media server, web images would be stored in `http://media.superpotatoes.com/mondial/images/web` and `http://media.superpotatoes.com/fabula/images/web`.
 
+Images inserted by CSS (e.g. `background-image` files) cannot be in external media, because their paths are fixed in CSS. So do not move these to the external media location.
+
 ## Epub and app output
 
 External media does not work for app or epub output. For apps with enough images to warrant external media, it's recommended that you use a separate Cordova-based repo for your app, into the `www` folder of which which you simply copy-paste your app-ready HTML.
