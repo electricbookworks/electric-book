@@ -9,10 +9,11 @@
 * [Fix issue](388ca1e81cf47f69817dee530dc5846aeb59cc32) where app output used web nav for breadcrumbs.
 * [Remove clumsy doctype entities](7d5bb49ac9a537a201947bd99b0068e43ea439f1) in epub output.
 * Updates to docs.
-* [Fix issue](bd5d23422583c939985c8835f485b80f2a1cab0f) with timestamps on some Windows mahcines.
+* [Fix issue](bd5d23422583c939985c8835f485b80f2a1cab0f) with timestamps on some Windows machines.
 * [Improve docs](https://github.com/electricbookworks/electric-book/pull/229), especially guidance on `meta.yml`.
-* [Improvements to iOS app output](https://github.com/electricbookworks/electric-book/pull/230)
-* [Replace buggy version of Crimson Roman](https://github.com/electricbookworks/electric-book/commit/84ac35be8d7681fefdeeafe86eecff08c8083933)
+* [Improvements to iOS app output](https://github.com/electricbookworks/electric-book/pull/230).
+* [Replace buggy version of Crimson Roman](https://github.com/electricbookworks/electric-book/commit/84ac35be8d7681fefdeeafe86eecff08c8083933).
+* [Allow images to be stored externally](https://github.com/electricbookworks/electric-book/pull/240).
 * Various minor fixes and improvements.
 
 ## 0.11.0
