@@ -68,3 +68,16 @@ app:
 # in an expansion file, edit these settings.
 google-play-expansion-file-enabled: false
 google-play-public-api-key: ""
+
+# ----------------------------------------------------------
+# External media settings
+# ----------------------------------------------------------
+# If a large number of images makes your project too big,
+# you can store your images in a separate location.
+# See the docs for more information.
+remote-media:
+  development: ""
+  live: ""
+local-media:
+  development: ""
+  live: ""
