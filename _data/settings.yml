@@ -45,7 +45,7 @@ web:
   # Masthead
   # ----------------------------------------------------------
   # What kind of header do you want in the masthead? Options:
-  # site-name, book-title, page-title, breadcrumbs
+  # project-name, book-title, page-title, breadcrumbs
   # If not set, book-title is default.
   # Note that breadcrumbs slows your Jekyll build significantly.
   masthead:

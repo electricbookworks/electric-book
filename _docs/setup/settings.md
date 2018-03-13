@@ -27,10 +27,10 @@ See [Variants](variants.html).
 
 These settings control the content of your masthead in web and app outputs. You can have different settings for web and app output. Your masthead can display:
 
-- only the site name (setting: `site-name`)
-- the site name and book title (setting: `book-title`)
-- the site name, book title, and page title (setting: `page-title`)
-- full breadcrumbs that include the site name, and all book titles and page titles that apply to that page as defined in the `nav` in `_data/meta.yml` (setting: `breadcrumbs`).
+- only the project name (setting: `project-name`)
+- the project name and book title (setting: `book-title`)
+- the project name, book title, and page title (setting: `page-title`)
+- full breadcrumbs that include the project name, book title, all labels listed in `nav` in `_data/meta.yml`, and the page title (setting: `breadcrumbs`).
 
 For example:
 
