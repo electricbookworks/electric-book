@@ -11,8 +11,6 @@ Credit to Christian Specht for the inspiration:
 https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-jekyll/
 {% endcomment %}
 
-{% include metadata %}
-
 {% comment %}If this is neither a text directory (i.e. in a book) nor a docs page,
 such as the home page or project search page...{% endcomment %}
 {% if is-book-subdirectory != true and is-docs-page != true %}

@@ -4,7 +4,11 @@ Include this file in HTML with {% include search %}.
 Searches all books in the project.
 {% endcomment %}
 
-{% include metadata %}
+{% comment %}If metadata has already been included (e.g. in nav.html),
+don't include it again to avoid unnecessary looping.{% endcomment %}
+{% unless include.metadata-available == true  %}
+	{% include metadata %}
+{% endunless %}
 
 <form class="search" action="{{ path-to-root-directory }}search.html" method="get">
   <label for="search-box"></label>

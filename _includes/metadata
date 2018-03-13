@@ -635,7 +635,7 @@ remote-media for web and local-media for PDF.{% endcomment %}
 {% comment %}If using a Google Play expansion file for images,
 and this is an app output, rewrite the images path accordingly{% endcomment %}
 {% assign google-play-expansion-file-enabled = false %}
-{% if site.data.settings.google-play-expansion-file-enabled == true and site.output == "app" %}
+{% if site.data.settings.app.google-play-expansion-file-enabled == true and site.output == "app" %}
     {% assign google-play-expansion-file-enabled = true %}
     {% capture images %}content://{{ project-app-id }}.expansion{% endcapture %}
 {% endif %}
