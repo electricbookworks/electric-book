@@ -178,10 +178,11 @@ gulp.task('images:xlarge', function () {
 });
 
 // minify JS files to make them smaller
+// using the drop_console option to remove console logging
 gulp.task('js', function() {
     console.log('Minifying Javascript');
     gulp.src(paths.js.src)
-    .pipe(uglify())
+    .pipe(uglify({ compress: { drop_console: true } }))
     .pipe(rename({ suffix:'.min' }))
     .pipe(gulp.dest(paths.js.dest));
 });
