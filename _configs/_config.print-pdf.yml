@@ -6,3 +6,33 @@ image-set: "images/print-pdf"
 collections:
   docs:
     output: false
+exclude:
+  # The usual excludes from _config.yml
+  - run-linux.sh
+  - run-mac.command
+  - run-windows.bat
+  - Gemfile
+  - Gemfile.lock
+  - README*
+  - LICENSE*
+  - CHANGELOG*
+  - node_modules
+  - eslint.json
+  - gulpfile.js
+  - package.json
+  - package-lock.json
+  - CNAME
+  # Exclude files we don't need for print-pdf
+  - /*/package.opf
+  - /*/styles/screen-pdf.scss
+  - /*/styles/web.scss
+  - /*/styles/epub.scss
+  - /*/styles/app.scss
+  - /*/index.md
+  - /*/images/screen-pdf
+  - /*/images/web
+  - /*/images/epub
+  - /*/images/app
+# Populate the keep_files list for temporary faster builds
+# or to keep previously generated files for other formats.
+keep_files: []
