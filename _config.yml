@@ -110,8 +110,9 @@ exclude:
 - package.json
 - package-lock.json
 - CNAME
-# Formats we're not building here
+# Files for formats we're not building here
 - /assets/profiles
+- /*/package.opf
 - /*/images/print-pdf
 - /*/images/screen-pdf
 - /*/images/epub
