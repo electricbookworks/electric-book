@@ -58,7 +58,7 @@ MathJax.Hub.Config({
   },
 });
 </script>
-<script type="text/javascript" src="../mathjax/MathJax.js"></script>
+<script type="text/javascript" src="{{ path-to-book-directory }}mathjax/MathJax.js"></script>
 
 {% elsif site.output == "app" %}
 
