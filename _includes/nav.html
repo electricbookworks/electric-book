@@ -17,9 +17,10 @@
             <h2>{{ title }}</h2>
             {% endif %}
 
-            {% comment %}Add the search box{% endcomment %}
+            {% comment %}Add the search box. Specify that the metadata include
+            is already loaded for includes in _default.html.{% endcomment %}
             <div class="search">
-                {% include search %}
+                {% include search metadata-available=true %}
             </div><!--.search-->
 
             {% comment %}Create the nav list{% endcomment %}
@@ -109,9 +110,10 @@
             <h2>{{ title }}</h2>
             {% endif %}
 
-            {% comment %}Add the search box{% endcomment %}
+            {% comment %}Add the search box. Specify that the metadata include
+            is already loaded for includes in _default.html.{% endcomment %}
             <div class="search">
-                {% include search %}
+                {% include search metadata-available=true %}
             </div><!--.search-->
 
             <div class="nav-list">
