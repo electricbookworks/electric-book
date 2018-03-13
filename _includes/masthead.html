@@ -1,14 +1,8 @@
 <div class="masthead">
 
-{% if is-book-subdirectory != true %}
+{% if is-book-directory != true %}
     <ul>
-        <li class="masthead-project-name"><a href="{{ path-to-root-directory }}index.html">{{ project-name | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
-
-        {% if is-docs-page %}
-        <li class="masthead-docs-index"><a href="{{ path-to-root-directory }}docs/">Docs</a></li>
-        <li class="masthead-docs-page">{{ page.title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</li>
-        {% endif %}
-
+        <li class="masthead-series-name"><a href="{{ path-to-root-directory }}index.html">{{ series-name }}</a></li>
     </ul>
 
 {% else %}
@@ -21,16 +15,49 @@
     {% assign breadcrumb-nav-tree = web-nav-tree %}
     {% endif %}
 
-    <ul>
-        {%if number-of-works == 1 %}
-            <li class="masthead-book-title"><a href="{{ path-to-root-directory }}index.html">{{ title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
-            {% include breadcrumbs breadcrumb-tree=breadcrumb-nav-tree %}
-        {% else %}
-            <li class="masthead-project-name"><a href="{{ path-to-root-directory }}index.html">{{ project-name | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
-            <li class="masthead-book-title"><a href="{{ masthead-contents-page }}{% unless masthead-contents-page contains '.html' %}.html{% endunless %}">{{ title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a></li>
-            {% include breadcrumbs breadcrumb-tree=breadcrumb-nav-tree %}
-        {% endif %}
-    </ul>
+    {% if site.data.settings.[build].masthead.content == "breadcrumbs" %}
+
+        <ul>
+            {%if number-of-works == 1 %}
+                <li class="masthead-book-title"><a href="{{ path-to-root-directory }}index.html">{{ title }}</a></li>
+                {% include breadcrumbs breadcrumb-tree=breadcrumb-nav-tree %}
+            {% else %}
+                <li class="masthead-series-name"><a href="{{ path-to-root-directory }}index.html">{{ series-name }}</a></li>
+                <li class="masthead-book-title"><a href="{{ masthead-contents-page }}{% unless masthead-contents-page contains '.html' %}.html{% endunless %}">{{ title }}</a></li>
+                {% include breadcrumbs breadcrumb-tree=breadcrumb-nav-tree %}
+            {% endif %}
+        </ul>
+
+    {% elsif site.data.settings.[build].masthead.content == "site-name" %}
+
+        <ul>
+            <li class="masthead-series-name"><a href="{{ path-to-root-directory }}index.html">{{ series-name }}</a></li>
+        </ul>
+
+    {% elsif site.data.settings.[build].masthead.content == "page-title" %}
+
+        <ul>
+            {%if number-of-works == 1 %}
+                <li class="masthead-book-title"><a href="{{ path-to-root-directory }}index.html">{{ title }}</a></li>
+            {% else %}
+                <li class="masthead-series-name"><a href="{{ path-to-root-directory }}index.html">{{ series-name }}</a></li>
+                <li class="masthead-book-title"><a href="{{ masthead-contents-page }}{% unless masthead-contents-page contains '.html' %}.html{% endunless %}">{{ title }}</a></li>
+                <li class="masthead-page-title">{{ page.title }}</li>
+            {% endif %}
+        </ul>
+
+    {% else site.data.settings.[build].masthead.content == "book-title" %}
+
+        <ul>
+            {%if number-of-works == 1 %}
+                <li class="masthead-book-title"><a href="{{ path-to-root-directory }}index.html">{{ title }}</a></li>
+            {% else %}
+                <li class="masthead-series-name"><a href="{{ path-to-root-directory }}index.html">{{ series-name }}</a></li>
+                <li class="masthead-book-title"><a href="{{ masthead-contents-page }}{% unless masthead-contents-page contains '.html' %}.html{% endunless %}">{{ title }}</a></li>
+            {% endif %}
+        </ul>
+
+    {% endif %}
 
     {% include language-select %}
 
