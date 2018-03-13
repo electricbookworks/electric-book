@@ -576,9 +576,6 @@ set /p process=Enter a number and hit return.
             :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
             :: Adding /NP will also suppress progress bar.
             robocopy "%location%_site/assets/js/mathjax" "%location%_site/epub/mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
-            :: If this is a translation, move mathjax into the language folder
-            if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" move "mathjax" "%subdirectory%\mathjax"
-            if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" echo MathJax moved to translation folder.
 
         :: Set the filename of the epub, sans extension
         :epubSetFilename
@@ -601,19 +598,25 @@ set /p process=Enter a number and hit return.
             zip --compression-method store -0 -X --quiet "%location%_output/%epubFileName%.zip" mimetype
             :: everything else: append to the zip with default compression
 
-            :: Zip root folders, if this is not a translation
-            if not "%subdirectory%"=="" goto epubZipSubdirectory
+            :: Zip root folders
             if exist "images\epub" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images\epub"
             if exist "fonts" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "fonts"
             if exist "styles" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "styles"
-            if exist "text" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "text"
             if exist "mathjax" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "mathjax"
             if exist "js" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "js"
 
-        :: And if it is a translation, just move the language subdirectory
-        :epubZipSubdirectory
-            if not "%subdirectory%"=="" if exist "%subdirectory%" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "%subdirectory%"
+            :: Zip text file if this is not a translation
+            if not "%subdirectory%"=="" goto epubZipSubdirectory
+            if exist "text" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "text"
+            goto epubAddPackageFiles
 
+            :: And if it is a translation, move the language's text subdirectory
+            :epubZipSubdirectory
+                if not "%subdirectory%"=="" if exist "%subdirectory%" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "%subdirectory%"
+                goto epubAddPackageFiles
+
+        :: Add the META-INF and package.opf
+        :epubAddPackageFiles
             :: Now add these admin files to the zip
             if exist META-INF zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" META-INF
             if exist package.opf zip --quiet "%location%_output/%epubFileName%.zip" package.opf
