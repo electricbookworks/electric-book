@@ -46,7 +46,7 @@ To limit a script to a given output format, use `site.output`:
 
 ## Adding scripts to epubs
 
-Scripts in epub are special. While web and PDF scripts should be in `/assets/js`, all scripts to be used in your epub should be in `_epub/js`. This is because you must not have any scripts in your epub that you aren't using, or it won't validate. By keeping epub scripts separate, this is easier to manage.
+Scripts in epub are special. While web and PDF scripts should be in `/assets/js`, all scripts to be used in your epub should be in `_epub/js`. This is because you must not have any scripts in your epub that you aren't using, or it won't validate. By keeping epub scripts separate, only your epub scripts will end up in the epub package.
 
 Also, epub scripts must have a YAML frontmatter block, even if it's empty:
 
@@ -61,12 +61,14 @@ Finally, if you're adding scripts to your pages, set `epub-scripts: true` in `_d
 
 ### Linking to scripts for epub
 
-In the finished epub, these scripts will end up in a `js` folder alongside `text`, `styles`, `images` and `fonts`. So all links to scripts that you want to include in epub output should be in `site.output == "epub"` tags and relative to `text`:
+In the finished epub, these scripts will end up in a `js` folder alongside `text`, `styles`, `images` and `fonts`. So all links to scripts that you want to include in epub output should be in `site.output == "epub"` tags.
+
+To ensure that links to scripts work from both parent-language and translation-language files, use the {% raw %}`{{ path-to-book-directory }}`{% endraw %} tag in the path to the epub scripts:
 
 {% raw %}
 ```
 {% if site.output == "epub" %}
-<script src="../js/foo.js"></script>
+<script src="{{ path-to-book-directory }}js/foo.js"></script>
 {% endif %}
 ```
 {% endraw %}
