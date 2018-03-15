@@ -102,7 +102,7 @@ Enter a number and hit enter. "
 			echo Creating PDF...
 			# Run prince, showing progress (-v), printing the docs in file-list
 			# and saving the resulting PDF to the _output folder
-			prince -v -l file-list -o $location/_output/$printpdffilename.pdf --javascript
+			prince -v -l file-list -o "$location"/_output/$printpdffilename.pdf --javascript
 			# Navigate back to where we began.
 			cd "$location"
 			# Tell the user we're done
@@ -191,7 +191,7 @@ Enter a number and hit enter. "
 			echo Creating PDF...
 			# Run prince, showing progress (-v), printing the docs in file-list
 			# and saving the resulting PDF to the _output folder
-			prince -v -l file-list -o $location/_output/$screenpdffilename.pdf --javascript
+			prince -v -l file-list -o "$location"/_output/$screenpdffilename.pdf --javascript
 			# Navigate back to where we began.
 			cd "$location"
 			# Tell the user we're done
@@ -332,57 +332,77 @@ You may need to reload the web page once this server is running."
 				epubscripts="y"
 			fi
 			# Copy text (files in file-list only), images, fonts, styles and package.opf to epub
-			cd _site/"$bookfolder"
+			cd "$location"/_site/"$bookfolder"
+			# If not a translation...
 			if [ "$epubsubdirectory" = "" ]; then
-				echo "Copying text files..."
-				mkdir $location/_site/epub/text && cd $location/_site/$bookfolder/text && cp `cat file-list` $location/_site/epub/text/
+				echo "Copying files to epub folder..."
+				mkdir "$location"/_site/epub/text && cd "$location"/_site/$bookfolder/text && cp `cat file-list` "$location"/_site/epub/text/
 				cd "$location"
+				if [ -d "$location"/_site/$bookfolder/images ]; then
+					echo "Copying images..."
+					mkdir "$location"/_site/epub/images && cp -a "$location"/_site/$bookfolder/images/. "$location"/_site/epub/images/
+				fi
+				if [ "$epubfonts" = "y" ]; then
+					echo "Copying fonts..."
+					mkdir "$location"/_site/epub/fonts && cp -a "$location"/_site/$bookfolder/fonts/. "$location"/_site/epub/fonts/
+				fi
+				if [ -d "$location"/_site/$bookfolder/styles ]; then
+					echo "Copying styles..."
+					mkdir "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
+				fi
+				if [ -e "$location"/_site/$bookfolder/package.opf ]; then
+					echo "Copying package.opf..."
+					cp "$location"/_site/$bookfolder/package.opf "$location"/_site/epub/package.opf
+				fi
+			# If a translation...
 			else
-				echo "Copying all translation files..."
-				mkdir $location/_site/epub/$epubsubdirectory
-				mkdir $location/_site/epub/$epubsubdirectory/text && cd $location/_site/$bookfolder/$epubsubdirectory/text && cp `cat file-list` $location/_site/epub/$epubsubdirectory/text/
-				if [ -e $location/_site/$bookfolder/$epubsubdirectory/images/. ]; then
-					mkdir $location/_site/epub/$epubsubdirectory/images && cd $location/_site/$bookfolder/$epubsubdirectory/images && cp -a $location/_site/$bookfolder/$epubsubdirectory/images/. $location/_site/epub/$epubsubdirectory/images/
+				echo "Copying translation files to epub folder..."
+
+				# Copy text folder
+				mkdir "$location"/_site/epub/$epubsubdirectory
+				mkdir "$location"/_site/epub/$epubsubdirectory/text
+				cd "$location"/_site/$bookfolder/$epubsubdirectory/text
+				cp `cat file-list` "$location"/_site/epub/$epubsubdirectory/text/
+
+				# Copy translation images if they exist, otherwise
+				# copy the parent-language images.
+				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/images/. ]; then
+					mkdir "$location"/_site/epub/$epubsubdirectory/images && cd "$location"/_site/$bookfolder/$epubsubdirectory/images && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/images/. "$location"/_site/epub/$epubsubdirectory/images/
+				else
+					mkdir "$location"/_site/epub/images && cp -a "$location"/_site/$bookfolder/images/. "$location"/_site/epub/images/
 				fi
-				if [ -e $location/_site/$bookfolder/$epubsubdirectory/styles/. ]; then
-					mkdir $location/_site/epub/$epubsubdirectory/styles && cd $location/_site/$bookfolder/$epubsubdirectory/styles && cp -a $location/_site/$bookfolder/$epubsubdirectory/styles/. $location/_site/epub/$epubsubdirectory/styles/
+				# Copy translation styles if they exist, otherwise
+				# copy the parent-language styles.
+				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/styles/. ]; then
+					mkdir "$location"/_site/epub/$epubsubdirectory/styles && cd "$location"/_site/$bookfolder/$epubsubdirectory/styles && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/styles/. "$location"/_site/epub/$epubsubdirectory/styles/
+				else
+					mkdir "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
 				fi
-				if [ -e $location/_site/$bookfolder/$epubsubdirectory/fonts/. ]; then
-					mkdir $location/_site/epub/$epubsubdirectory/fonts && cd $location/_site/$bookfolder/$epubsubdirectory/fonts && cp -a $location/_site/$bookfolder/$epubsubdirectory/fonts/. $location/_site/epub/$epubsubdirectory/fonts/
+				# Copy translation fonts if they exist, otherwise
+				# copy the parent-language fonts.
+				if [ "$epubfonts" = "y" ]; then
+					if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/fonts/. ]; then
+						mkdir "$location"/_site/epub/$epubsubdirectory/fonts && cd "$location"/_site/$bookfolder/$epubsubdirectory/fonts && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/fonts/. "$location"/_site/epub/$epubsubdirectory/fonts/
+					else
+						mkdir "$location"/_site/epub/fonts && cp -a "$location"/_site/$bookfolder/fonts/. "$location"/_site/epub/fonts/
+					fi
+				fi
+				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/package.opf ]; then
+					echo "Copying translation package.opf..."
+					cp "$location"/_site/$bookfolder/$epubsubdirectory/package.opf "$location"/_site/epub/package.opf
 				fi
 				cd "$location"
 			fi
-			if [ -d $location/_site/$bookfolder/images ]; then
-				echo "Copying images..."
-				mkdir $location/_site/epub/images && cp -a $location/_site/$bookfolder/images/. $location/_site/epub/images/
-			fi
-			if [ "$epubfonts" = "y" ]; then
-				echo "Copying fonts..."
-				mkdir $location/_site/epub/fonts && cp -a $location/_site/$bookfolder/fonts/. $location/_site/epub/fonts/
-			fi
-			if [ -d $location/_site/$bookfolder/styles ]; then
-				echo "Copying styles..."
-				mkdir $location/_site/epub/styles && cp -a $location/_site/$bookfolder/styles/. $location/_site/epub/styles/
-			fi
+			# Copy mathjax and other scripts
 			if [ "$epubmathjax" = "y" ]; then
 				echo "Copying MathJax..."
-				mkdir $location/_site/epub/mathjax && cp -a $location/_site/assets/js/mathjax/. $location/_site/epub/mathjax/
+				mkdir "$location"/_site/epub/mathjax && cp -a "$location"/_site/assets/js/mathjax/. "$location"/_site/epub/mathjax/
 			fi
 			if [ "$epubscripts" = "y" ]; then
 				echo "Copying Javascript..."
-				mkdir $location/_site/epub/js && cp -a $location/_site/js/. $location/_site/epub/js/
+				mkdir "$location"/_site/epub/js && cp -a "$location"/_site/js/. "$location"/_site/epub/js/
 			fi
-			if [ "$epubsubdirectory" = "" ]; then
-				if [ -e $location/_site/$bookfolder/package.opf ]; then
-					echo "Copying package.opf..."
-					cp $location/_site/$bookfolder/package.opf $location/_site/epub/package.opf
-				fi
-			else
-				if [ -e $location/_site/$bookfolder/$epubsubdirectory/package.opf ]; then
-					echo "Copying translation package.opf..."
-					cp $location/_site/$bookfolder/$epubsubdirectory/package.opf $location/_site/epub/package.opf
-				fi
-			fi
+			# Now to create a compressed epub.
 			# First, though, if they exist, remove previous .zip and .epub files that we will replace.
 			echo "Removing previous zips or epubs..."
 			if [ -e "$location/_output/$epubfilename.zip" ]; then
@@ -392,7 +412,7 @@ You may need to reload the web page once this server is running."
 				rm "$location/_output/$epubfilename.epub"
 			fi
 			# Go into _site/epub to zip it to _output
-			cd $location/_site/epub
+			cd "$location"/_site/epub
 			# First, though, remove the fonts folder if we don't want it
 			if [ "$epubfonts" = "" ]; then
 				rm -r fonts
@@ -483,7 +503,7 @@ You may need to reload the web page once this server is running."
 				zip --quiet "$location/_output/$epubfilename.zip" package.opf
 			fi
 			# Change file extension .zip to .epub
-			cd $location/_output
+			cd "$location"/_output
 			if [ -e "$epubfilename".zip ]; then
 				mv "$epubfilename".zip "$epubfilename".epub
 			fi
