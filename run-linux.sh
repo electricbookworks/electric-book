@@ -234,8 +234,10 @@ You may need to reload the web page once this server is running."
 		# (This is before jekyll s, because jekyll s pauses the script.)
 		if [ "$baseurl" = "" ]
 		then
+			# (for OSX, this is open, not xdg-open)
 			xdg-open "http://127.0.0.1:4000/"
 		else
+			# (for OSX, this is open, not xdg-open)
 			xdg-open "http://127.0.0.1:4000/$baseurl/"
 		fi
 		# We're going to let users run this over and over by pressing enter
@@ -606,6 +608,13 @@ You may need to reload the web page once this server is running."
 				then
 				echo "Building iOS app..."
 				cd _site/app
+				# Refresh the ios platform
+				# e.g. https://stackoverflow.com/a/44051927/1781075
+				echo "Refreshing 'ios' platform..."
+				cordova plugin save
+				cordova platform rm ios
+				cordova platform add ios
+				# Now we build the app
 				if [ "$apprelease" = "y" ]
 					then
 						cordova build ios --release
@@ -848,14 +857,19 @@ You may need to reload the web page once this server is running."
 	###########
 	elif [ "$process" = 9 ]
 		then
-		echo "Running Bundler to update and install dependencies."
+		echo "Running Bundler to update and install dependencies..."
 		echo "If Bundler is not already installed, exit and run"
 		echo "gem install bundler"
 		echo "from the command line."
 		# Update gems
 		bundle update
 		# Install gems
-		bundler install
+		bundle install
+        # Install node modules
+        echo "Next, we're going to install or update Node modules."
+        echo "You need to have Node.js installed already (https://nodejs.org)."
+        echo "Installing Node modules... This may take a few minutes."
+        npm install
 		# Head back to the Electric Book options
 		process=0
 	########
