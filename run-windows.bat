@@ -398,13 +398,14 @@ set /p process=Enter a number and hit return.
 
         :: Ask about validation
         :epubAskAboutValidation
+            set epubValidation=
             echo Shall we try to run EpubCheck when we're done? Hit enter for yes, or any key and enter for no.
             set /p epubValidation=
 
         :: Loop back to this point to refresh the build again
         :epubrefresh
 
-        :: let the user know we're on it!
+        :: Let the user know we're on it!
         if "%subdirectory%"=="" goto epubGeneratingHTMLNoSubdirectory
         if not "%subdirectory%"=="" goto epubGeneratingHTMLWithSubdirectory
 
@@ -549,12 +550,11 @@ set /p process=Enter a number and hit return.
         cd %location%_site/epub
 
         :: If there is a js folder, and it has no contents, delete it.
-        :: Otherwise, if this is a translation, move the js folder
-        :: into the subdirectory alongside text, images, styles.
+        :: Otherwise, copy the js folder into the epub folder.
+        :: (JS lives in the root directory even in translations.)
         :epubMoveJS
             echo Checking for Javascript...
             if exist "js" if not exist "js\*.*" rd /s /q "js"
-            if not "%subdirectory%"=="" if exist "js\*.*" move "js" "%subdirectory%\js"
             echo Javascript checked.
 
         :: If there is a fonts folder, and it has no contents, delete it.
@@ -567,6 +567,7 @@ set /p process=Enter a number and hit return.
             echo Fonts checked.
 
         :: If MathJax required, fetch boilerplate mathjax directory from /assets/js
+        :: (MathJax lives in the root directory even in translations.)
         if "%epubIncludeMathJax%"=="y" goto epubGetMathjax
         goto epubSetFilename
 
@@ -577,7 +578,7 @@ set /p process=Enter a number and hit return.
             :: Adding /NP will also suppress progress bar.
             robocopy "%location%_site/assets/js/mathjax" "%location%_site/epub/mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
 
-        :: Set the filename of the epub, sans extension
+        :: Set the filename of the epub, sans file extension
         :epubSetFilename
             if "%subdirectory%"=="" set epubFileName=%bookfolder%
             if not "%subdirectory%"=="" set epubFileName=%bookfolder%-%subdirectory%
@@ -587,6 +588,18 @@ set /p process=Enter a number and hit return.
         if exist "%location%\_output\%epubFileName%.zip" del /q "%location%\_output\%epubFileName%.zip"
         if exist "%location%\_output\%epubFileName%.epub" del /q "%location%\_output\%epubFileName%.epub"
         echo Removed any previous zip and epub files.
+
+        :: Remove any empty folders
+        :: (Thanks https://superuser.com/a/972366/491948)
+        :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
+        :: Adding /NP will also suppress progress bar.
+        :epubRemoveEmptyFolders
+            echo Removing empty folders...
+            :: Step out of the folder temporarily to avoid robocopy error messages
+            cd %location%
+            robocopy %location%/_site/epub/ %location%/_site/epub /s /move /NFL /NDL /NJH /NJS /NC /NS /NP
+            :: Now step back into the folder before continuing
+            cd %location%/_site/epub
 
         :: Now to zip the epub files. Important: mimetype first.
         :epubCompressing
