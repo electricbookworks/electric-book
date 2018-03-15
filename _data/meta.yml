@@ -75,7 +75,7 @@ works:
             file: "02"
             id: "2-goodbye-world"
             children: 
-              - label: "subsection"
+              - label: "Subsection"
                 file: "02"
                 id: "example-id"
       web:
@@ -108,7 +108,7 @@ works:
             file: "02"
             id: "2-goodbye-world"
             children: 
-              - label: "subsection"
+              - label: "Subsection"
                 file: "02"
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
@@ -146,7 +146,7 @@ works:
             file: "02"
             id: "2-goodbye-world"
             children:
-              - label: "subsection"
+              - label: "Subsection"
                 file: "02"
                 id: "example-id"
       screen-pdf:
@@ -191,7 +191,7 @@ works:
             file: "02"
             id: "2-goodbye-world"
             children: 
-              - label: "subsection"
+              - label: "Subsection"
                 file: "02"
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
@@ -803,6 +803,7 @@ works:
               - "01-01"
               - "02-00"
               - "02-01"
+              - "03-02"
           web:
             files: # Required for translations to activate language-selector
               - "00-00-cover"
@@ -813,6 +814,7 @@ works:
               - "01-01"
               - "02-00"
               - "02-01"
+              - "03-02"
               - "contact"
             nav:
               - file: "00-00-cover"
@@ -831,6 +833,8 @@ works:
                 children:
                   - file: "02-01"
                     label: "Images simples"
+              - label: "Mathématiques"
+                file: "03-02"
               - label: "Contact"
                 file: "contact"
           screen-pdf:
@@ -843,6 +847,7 @@ works:
               - "01-01"
               - "02-00"
               - "02-01"
+              - "03-02"
           epub:
             files: # add a value to any file to set any of the guide types listed in http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
               - "00-00-cover": "cover"
@@ -853,6 +858,7 @@ works:
               - "01-01"
               - "02-00"
               - "02-01"
+              - "03-02"
             toc:
               - file: "00-00-cover"
                 label: "Couverture"
@@ -870,6 +876,8 @@ works:
                 children:
                   - file: "02-01"
                     label: "Images simples"
+              - label: "Mathématiques"
+                file: "03-02"
           app:
             nav:
               - file: "00-00-cover"
@@ -888,3 +896,5 @@ works:
                 children:
                   - file: "02-01"
                     label: "Images simples"
+              - label: "Mathématiques"
+                file: "03-02"
