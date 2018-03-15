@@ -108,7 +108,7 @@ works:
             file: "02"
             id: "2-goodbye-world"
             children: 
-              - label: "subsection"
+              - label: "Subsection"
                 file: "02"
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
@@ -146,7 +146,7 @@ works:
             file: "02"
             id: "2-goodbye-world"
             children:
-              - label: "subsection"
+              - label: "Subsection"
                 file: "02"
                 id: "example-id"
       screen-pdf:
@@ -191,7 +191,7 @@ works:
             file: "02"
             id: "2-goodbye-world"
             children: 
-              - label: "subsection"
+              - label: "Subsection"
                 file: "02"
                 id: "example-id"
         start-page: "0-3-contents" # At which file should users start reading?
