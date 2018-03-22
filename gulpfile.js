@@ -20,7 +20,7 @@ if (args.book && args.book.trim != '') {
 
 // reminder
 if (book == 'book') {
-    console.log('If processing images for a book that\s not in the /book directory, use the --book argument, e.g. gulp --book potatoes');
+    console.log('If processing images for a book that\'s not in the /book directory, use the --book argument, e.g. gulp --book potatoes');
 }
 
 // get the language we're processing
