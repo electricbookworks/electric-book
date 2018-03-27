@@ -12,7 +12,7 @@ order: 2
 
 You can automate the conversion of images to various outputs. Then you only need to put high-res versions of your images in `images/_source` and run the automatic conversion to populate the images for all output formats.
 
-This will automatically optimise, convert and save your images to the output folders, including specifying the correct colour profiles and creating multiple image sizes for web output.
+This will automatically optimise, convert and save your images to the output folders, including specifying the correct [colour profiles](../layout/colour-profiles.html) and creating multiple image sizes for web output.
 
 > Note: To do this on your computer, you need to have npm installed, and to have run `npm install` in the project root to install the `node_modules`. This can be done easily by running the 'Update and install dependencies' option in the `run-` output script for your operating system.
 {:.box}

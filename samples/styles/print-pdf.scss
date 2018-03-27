@@ -54,9 +54,10 @@ $color-highlight: #ffd54d;
 // Options for color profile:
 // - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
 // - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
+// - Provided by digitaldistributors.co.za: Grey_Fogra39L.icc, Grey_Fogra52L.icc
 // Add other ICC profiles to /_tools/profiles
 $pdf-profile: "PDF/X-1a:2001";
-$color-profile: "PSOcoated_v3.icc";
+$color-profile: "PSOuncoated_v3_FOGRA52.icc";
 $black-ink: true; // true or rich (true for pure black or rich for rich black)
 
 // We name font variables for two categories:
