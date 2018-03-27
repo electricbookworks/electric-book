@@ -54,6 +54,7 @@ $color-highlight: #ffd54d;
 // Options for color profile:
 // - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
 // - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
+// - Provided by digitaldistributors.co.za: Grey_Fogra39L.icc, Grey_Fogra52L.icc
 // Add other ICC profiles to /_tools/profiles
 $pdf-profile: "PDF/A-3b";
 $color-profile: "sRGB_v4_ICC_preference_displayclass.icc";
