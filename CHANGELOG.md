@@ -15,6 +15,7 @@
 * [Replace buggy version of Crimson Roman](https://github.com/electricbookworks/electric-book/commit/84ac35be8d7681fefdeeafe86eecff08c8083933).
 * [Allow images to be stored externally](https://github.com/electricbookworks/electric-book/pull/240).
 * [Fix epub output of translations](https://github.com/electricbookworks/electric-book/pull/242).
+* [Add greyscale colour profiles](https://github.com/electricbookworks/electric-book/pull/244).
 * Various minor fixes and improvements.
 
 ## 0.11.0
