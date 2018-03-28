@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.11.1 (in progress)
+## 0.11.2 (in progress)
+
+Forthcoming.
+
+## 0.11.1
 
 * [Add pagination](https://github.com/electricbookworks/electric-book/pull/225) (next/previous lnks) to web and app outputs.
 * [Allow RTL text direction to be set per language in `locales`](https://github.com/electricbookworks/electric-book/pull/224).
