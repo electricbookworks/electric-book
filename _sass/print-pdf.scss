@@ -255,6 +255,7 @@ $print-index: true !default; //
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true !default; // Sets content for headers and footers
 $print-page-headers-footers-style: true !default; // Sets styling for headers and footers
+$print-page-setup-lightning-source: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
@@ -317,3 +318,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
 @import "partials/print-page-headers-footers-content"; // Sets content for headers and footers
 @import "partials/print-page-headers-footers-style"; // Sets styling for headers and footers
+
+// ---------------------
+// Add Lightning Source setup
+@import "partials/print-page-setup-lightning-source" // Removes crop marks and sets 3mm trim for Lightning Source
