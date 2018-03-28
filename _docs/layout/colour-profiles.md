@@ -12,7 +12,7 @@ Just as different people see colours differently, different machines display or 
 We use colour profiles in two places:
 
 1. When [converting images](../images/image-conversions.html).
-2. When [generating PDFs](../print-output.html).
+2. When [generating PDFs](../pdf-output.html).
 
 The template provides a number of profiles for different uses. They are in `_tools/profiles`, where you can add your own profiles, too.
 

@@ -1,6 +1,7 @@
 ---
-title: Print output
+title: PDF output
 categories: output
+order: 2
 ---
 
 # Print output
@@ -13,9 +14,11 @@ categories: output
 
 We use [PrinceXML](http://princexml.com/) to turn Jekyll's HTML into beautiful, print-ready book files. We haven't found anything as good as Prince, so we reckon it's worth its price tag. And you can use the trial version to get your print output perfect before committing to the price. So our CSS files for print are designed specifically for Prince.
 
+You can output print PDFs for sending to high-end printers, or screen PDFs, for digital distribution and reading on screen.
+
 ## Quick output
 
-Run the template's `-pdf` script for your operating system. For these to work, you must already have Jekyll and Prince installed and working.
+Run the template's `run-` output script for your operating system, and follow the prompts. For these to work, you must already have Jekyll and Prince installed and working.
 
 * On Windows, run `run-windows.bat` by double-clicking it from your file explorer.
 * On Linux, run `run-linux.sh`. You may have to run it from a terminal, and first enter `chmod +x run-linux.sh` to give it permissions, then `./run-linux.sh`.
