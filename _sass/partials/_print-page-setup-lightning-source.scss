@@ -1,0 +1,33 @@
+$print-page-setup-lightning-source: false !default;
+@if $print-page-setup-lightning-source {
+
+    /* Page setup for Lightning Source colour pages
+     * --------------------------------------------
+     *
+     * Removes bleed on inside edges
+     * Adjusts trim accordingly
+     * Removes crop marks as required by LS
+     * Uses the @left and @right margin boxes to obscure elements (e.g. full-bleed images)
+     * that otherwise bleed into the margin area.
+     */
+
+    @page:left { 
+        prince-bleed: 3mm 0 3mm 3mm !important;
+        prince-trim: 0 3mm 0 0 !important;
+        marks: none !important;
+        @right {
+            background-color: white;
+            content: " ";
+        }
+    }
+    @page:right { 
+        prince-bleed: 3mm 3mm 3mm 0 !important;
+        prince-trim: 0 0 0 3mm !important;
+        marks: none !important;
+        @left {
+            background-color: white;
+            content: " ";
+        }
+    }
+
+}
