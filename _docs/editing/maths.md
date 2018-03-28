@@ -1,7 +1,7 @@
 ---
 title: Mathematics
 categories: editing
-order: 7
+order: 8
 ---
 
 # Mathematics
