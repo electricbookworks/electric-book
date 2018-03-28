@@ -16,6 +16,7 @@
 * [Allow images to be stored externally](https://github.com/electricbookworks/electric-book/pull/240).
 * [Fix epub output of translations](https://github.com/electricbookworks/electric-book/pull/242).
 * [Add greyscale colour profiles](https://github.com/electricbookworks/electric-book/pull/244).
+* [Add ability to output Lightning Source PDFs](https://github.com/electricbookworks/electric-book/pull/245).
 * Various minor fixes and improvements.
 
 ## 0.11.0
