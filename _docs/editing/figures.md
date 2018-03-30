@@ -57,7 +57,9 @@ Figures are much more powerful if you use the `figure` include. The `figure` inc
 
 To include a figure this way, start with this simple tag:
 
+{% raw %}
 `{% include figure %}`
+{% endraw %}
 
 Then, inside that tag after the word `figure`, you add extra info, depending what you need it to include.
 
@@ -82,6 +84,7 @@ We define these things in the tag using 'parameters'. For instance, we set the `
 
 Here is a full example:
 
+{% raw %}
 ```
 {% include figure
    images="mydog.jpg, yourdog.jpg"
@@ -96,6 +99,7 @@ Here is a full example:
    class="featured"
 %}
 ```
+{% endraw %}
 
 Note the double quotes. If the text you're adding to a parameter contains quotes, you'd use single quotes in the text – or vice versa. Do not mix single and double quotes, or the software won't know where the parameter ends. If you must use, say, double quotes inside the quotes around a parameter, use the actual unicode glyphs for curly quotes, `“` and `”`. For instance, all of these are okay:
 
