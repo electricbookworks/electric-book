@@ -104,3 +104,16 @@ caption="Blake's illustration for 'The Tyger'."
 caption='Blake's illustration for "The Tyger".'
 caption="Blake's illustration for “The Tyger”."
 ```
+
+### Rotating figures
+
+If you need to rotate a large figure on the page, add the `rotate` class. E.g.
+
+```
+{% include figure
+   html="<table>...</table>"
+   reference="Figure 1.1"
+   caption="A really huge table."
+   class="rotate"
+%}
+```
