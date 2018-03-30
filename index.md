@@ -5,7 +5,7 @@ style: home
 
 # The Electric Book workflow
 
-The Electric Book workflow is a process and tool set for making high-quality PDF, epub, website and app versions of books from a single content source. It's designed for professional book production, and lets team members collaborate on projects remotely.
+The Electric Book workflow is a set of processes and tools for making high-quality PDF, epub, website and app versions of books from a single content source. It's designed for professional book production, and lets team members collaborate on projects remotely.
 
 At its heart is the [Electric Book Jekyll template](https://github.com/electricbookworks/electric-book), which you're looking at now. This template includes an [almost blank book](book) to work into, a book of [sample features and typography](samples), and [documentation](docs).
 

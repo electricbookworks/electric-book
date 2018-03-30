@@ -1,7 +1,7 @@
 ---
 title: Indexes
 categories: editing
-order: 9
+order: 10
 ---
 
 # Indexes

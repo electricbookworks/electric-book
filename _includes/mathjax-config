@@ -3,8 +3,6 @@ Mathjax configuration
 Note that configs are different for pdf, epub and web.
 {% endcomment %}
 
-{% include metadata %}
-
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
 
 <script id="MathJax"
@@ -60,7 +58,7 @@ MathJax.Hub.Config({
   },
 });
 </script>
-<script type="text/javascript" src="../mathjax/MathJax.js"></script>
+<script type="text/javascript" src="{{ path-to-book-directory }}mathjax/MathJax.js"></script>
 
 {% elsif site.output == "app" %}
 
