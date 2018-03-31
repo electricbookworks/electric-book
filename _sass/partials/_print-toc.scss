@@ -31,7 +31,7 @@ $print-toc: true !default;
 			a.frontmatter-reference::after {
 				content: leader(" ") target-counter(attr(href), page, $frontmatter-reference-style);
 			}
-			&.frontmatter-entry {
+			&.frontmatter-entry, &.frontmatter-reference {
 				a::after {
 					content: leader(" ") target-counter(attr(href), page, $frontmatter-reference-style);
 				}
