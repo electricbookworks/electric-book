@@ -5,6 +5,10 @@ order: 4
 ---
 
 # External media
+{:.no_toc}
+
+* toc
+{:toc}
 
 If a large number of images makes your project too big, you can store your images in a separate repo and serve them on a separate server for PDF and web output.
 
