@@ -101,6 +101,24 @@ Here is an example of the translation section of the `meta.yml` file that includ
         title: Title in French
 ```
 
+### Epub-specific languages
+
+In some situations, you might want the language set in your epub's Dublin Core OPF metadata (`dc:language`) to be different to the language of the translation. For instance, Kindlegen will not convert epubs in languages it does not recognise. In this situation, you might need to set the epub's Dublin Core language tag to, say, English, even though your epub's content files are still in, say, Asanti Twi.
+
+To set this, add a `language` to the `epub` section of your translation:
+
+```
+works:
+  - directory: "potatoes"
+    ...
+    translations:
+      - directory: "twi"
+        language: "twi"
+        products:
+          epub:
+            language: "en"
+```
+
 ## Localisation
 
 The translate things like the navigation button and contact form, edit `_data/locales.yml`.

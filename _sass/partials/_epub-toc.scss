@@ -32,4 +32,9 @@ $epub-toc: true !default;
 		} // #markdown-toc
 	} // #content
 
+	// Hide hidden nav element
+	nav[hidden] {
+		display: none;
+	}
+
 }

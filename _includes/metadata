@@ -189,6 +189,7 @@ and book content as a Liquid output tag e.g. {{ title }}
     {% assign epub-file-list = work.products.epub.files %}
     {% assign epub-toc = work.products.epub.toc %}
     {% capture epub-contents-page %}{{ work.products.epub.contents-page }}{% endcapture %}
+    {% capture epub-language %}{{ work.products.epub.language }}{% endcapture %}
 
     {% capture screen-pdf-date %}{{ work.products.screen-pdf.date }}{% endcapture %}
     {% capture screen-pdf-format %}{{ work.products.screen-pdf.format }}{% endcapture %}
@@ -325,6 +326,7 @@ defined in meta.yml for the given translation.
             {% if work.products.epub.files %}{% assign epub-file-list = work.products.epub.files %}{% endif %}
             {% if work.products.epub.toc %}{% assign epub-toc = work.products.epub.toc %}{% endif %}
             {% if work.products.epub.contents-page %}{% capture epub-contents-page %}{{ work.products.epub.contents-page }}{% endcapture %}{% endif %}
+            {% if work.products.epub.language %}{% capture epub-language %}{{ work.products.epub.language }}{% endcapture %}{% endif %}
 
             {% if work.products.screen-pdf.date %}{% capture screen-pdf-date %}{{ work.products.screen-pdf.date }}{% endcapture %}{% endif %}
             {% if work.products.screen-pdf.format %}{% capture screen-pdf-format %}{{ work.products.screen-pdf.format }}{% endcapture %}{% endif %}
@@ -420,6 +422,7 @@ override any metadata set for that variant.{% endcomment %}
               {% if data.products.epub.image %}{% capture epub-image %}{{ data.products.epub.image }}{% endcapture %}{% endif %}
               {% if data.products.epub.files %}{% assign epub-file-list = data.products.epub.files %}{% endif %}
               {% if data.products.epub.contents-page %}{% capture epub-contents-page %}{{ work.products.epub.contents-page }}{% endcapture %}{% endif %}
+              {% if data.products.epub.language %}{% capture epub-language %}{{ work.products.epub.language }}{% endcapture %}{% endif %}
               {% if data.products.epub.toc %}
                 {% assign epub-toc = data.products.epub.toc %}
                 {% if site.output == "epub" %}
