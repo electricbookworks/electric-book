@@ -3,6 +3,7 @@
 ## 0.11.2 (in progress)
 
 * [Better docs on output formats and setting up GitHub Pages](https://github.com/electricbookworks/electric-book/commit/70ac2b10f6a929fccca137630253f3880c154633).
+* [Add ability to override epub-specific language](https://github.com/electricbookworks/electric-book/pull/248).
 
 ## 0.11.1
 
