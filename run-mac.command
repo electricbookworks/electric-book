@@ -774,6 +774,7 @@ You may need to reload the web page once this server is running."
 	    echo "This process will optimise the images in a book's _source folder"
 	    echo "and copy them to the print-pdf, screen-pdf, web and epub image folders."
 	    echo "You need to have run 'Install or update dependencies' at least once,"
+	    echo "have Gulp installed globally (https://gulpjs.com/),"
 	    echo "and have GraphicsMagick installed (http://www.graphicsmagick.org, or try"
 	    echo "brew install graphicsmagick"
 
