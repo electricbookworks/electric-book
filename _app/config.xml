@@ -5,7 +5,7 @@ layout: min
 {% include metadata %}
 
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="{{ project-app-id }}" version="{{ project-version }}" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="{{ project-app-id }}" version="{{ project-version }}" windows-packageVersion="{{ series-version }}.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" defaultlocale="{{ project-language }}">
     <name>{{ project-name }}</name>
     <description>
         {{ project-description }}
@@ -14,7 +14,6 @@ layout: min
         {{ project-organisation }}
     </author>
     <content src="index.html" />
-    <icon src="res/icon.png" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -23,12 +22,19 @@ layout: min
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <platform name="android">
+        <icon src="res/icon.png" />
         <allow-intent href="market:*" />
     </platform>
     <platform name="ios">
+        <icon src="res/icon.png" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="EnableViewportScale" value="true"/>
+    </platform>
+    <platform name="windows">
+        <icon src="res/icon.png" />
+        <preference name="windows-target-version" value="10.0" />
+        <preference name="WindowsStoreIdentityName" value="{{ site.data.secrets.windows.package-identity-name }}" />
     </platform>
     <engine name="android" spec="~6.2.3" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
