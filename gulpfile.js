@@ -71,7 +71,9 @@ gulp.task('images:svg', function () {
                 defaultAttrs: false
             }
         }],
-    }))
+    }).on('error', function(e){
+            console.log(e);
+         }))
     .pipe(gulp.dest(paths.img.printpdf))
     .pipe(gulp.dest(paths.img.screenpdf))
     .pipe(gulp.dest(paths.img.web))
@@ -87,7 +89,9 @@ gulp.task('images:printpdf', function () {
         .pipe(newer(paths.img.printpdf))
         .pipe(gm(function(gmfile) {
             return gmfile.profile('_tools/profiles/PSOcoated_v3.icc').colorspace('cmyk');
-        }))
+        }).on('error', function(e){
+            console.log(e);
+            }))
         .pipe(gulp.dest(paths.img.printpdf));
     } else {
         console.log('Colour profile _tools/profiles/PSOcoated_v3.icc not found. Exiting.');
@@ -108,10 +112,14 @@ gulp.task('images:optimise', function () {
                 quality: 90,
                 upscale: false,
             }]
-        }))
+        }).on('error', function(e){
+            console.log(e);
+            }))
         .pipe(gm(function(gmfile) {
             return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-        }))
+        }).on('error', function(e){
+            console.log(e);
+            }))
         .pipe(gulp.dest(paths.img.screenpdf))
         .pipe(gulp.dest(paths.img.web))
         .pipe(gulp.dest(paths.img.epub))
@@ -135,10 +143,14 @@ gulp.task('images:small', function () {
                     upscale: false,
                     suffix: '-320',
                 }]
-            }))
+            }).on('error', function(e){
+                console.log(e);
+                }))
             .pipe(gm(function(gmfile) {
                 return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-            }))
+            }).on('error', function(e){
+                console.log(e);
+                }))
             .pipe(gulp.dest(paths.img.web));
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
@@ -159,10 +171,14 @@ gulp.task('images:medium', function () {
                     upscale: false,
                     suffix: '-640',
                 }]
-            }))
+            }).on('error', function(e){
+                console.log(e);
+                }))
             .pipe(gm(function(gmfile) {
                 return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-            }))
+            }).on('error', function(e){
+                console.log(e);
+                }))
             .pipe(gulp.dest(paths.img.web));
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
@@ -183,10 +199,14 @@ gulp.task('images:large', function () {
                     upscale: false,
                     suffix: '-1024',
                     }]
-                }))
+                }).on('error', function(e){
+                    console.log(e);
+                    }))
             .pipe(gm(function(gmfile) {
                 return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-            }))
+            }).on('error', function(e){
+                console.log(e);
+                }))
             .pipe(gulp.dest(paths.img.web));
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
@@ -207,10 +227,14 @@ gulp.task('images:xlarge', function () {
                     upscale: false,
                     suffix: '-2048',
                     }]
-                }))
+                }).on('error', function(e){
+                    console.log(e);
+                    }))
             .pipe(gm(function(gmfile) {
                 return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-            }))
+            }).on('error', function(e){
+                console.log(e);
+                }))
             .pipe(gulp.dest(paths.img.web));
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
@@ -223,7 +247,9 @@ gulp.task('images:xlarge', function () {
 gulp.task('js', function() {
     console.log('Minifying Javascript');
     gulp.src(paths.js.src)
-    .pipe(uglify({ compress: { drop_console: true } }))
+    .pipe(uglify({ compress: { drop_console: true } }).on('error', function(e){
+        console.log(e);
+        }))
     .pipe(rename({ suffix:'.min' }))
     .pipe(gulp.dest(paths.js.dest));
 });
