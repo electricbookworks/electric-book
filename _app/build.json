@@ -1,6 +1,7 @@
 ---
 # Jekyll builds this file, filling data from _data/secrets.yml,
 # which should look like this (but without the hashes):
+#
 # android:
 #   app-path-to-keystore: "path/to/keystore"
 #   app-keystore-password: "passwordhere"
@@ -9,11 +10,22 @@
 # ios:
 #   development-team-id: "YOURTEAMID"
 #   package-type: "development"
-# See https://cordova.apache.org/docs/en/latest/guide/platforms/ios/ for details.
-# In secrets.yml, change ios package-type above to match the provisioning profile
-# that you are currently building with. Usual options are development, ad-hoc, app-store
+# windows:
+#   package-certificate-key-file: "c:\\path\\to\\certificate\\key.pfx"
+#   package-thumbprint: "package-thumbprint"
+#   package-identity-name: "PublisherName.PackageName"
+#   publisher-id: "CN=FakeCorp.com, L=Redmond, S=Washington, C=US"
+#
+# About Android:
+# - See https://developer.android.com/studio/publish/app-signing.html
+# About iOS:
+# - See https://cordova.apache.org/docs/en/latest/guide/platforms/ios/ for details.
+# - In secrets.yml, change ios package-type above to match the provisioning profile that
+#   you are currently building with. Usual options are development, ad-hoc, and app-store.
+# About Windows:
+# - The publisher-id here must match the Subject Name of your certificate.
+#
 # Never share or commit _data/secrets.yml to your repository!
-# See https://developer.android.com/studio/publish/app-signing.html
 layout: min
 ---
 {
@@ -46,6 +58,16 @@ layout: min
                 "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES=NO",
                 "LD_RUNPATH_SEARCH_PATHS = \"@executable_path/Frameworks\""
             ]
+        }
+    },
+    "windows": {
+        "debug": {
+            "packageCertificateKeyFile": "{{ site.data.secrets.windows.package-certificate-key-file }}"
+        },
+        "release": {
+            "packageCertificateKeyFile": "{{ site.data.secrets.windows.package-certificate-key-file }}",
+            "packageThumbprint": "{{ site.data.secrets.windows.package-thumbprint }}",
+            "publisherId": "{{ site.data.secrets.windows.publisher-id }}"
         }
     }
 }
