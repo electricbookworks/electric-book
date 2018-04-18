@@ -3,6 +3,7 @@
 ## 0.11.2 (in progress)
 
 * [Add content accordion for web and app outputs](https://github.com/electricbookworks/electric-book/pull/250).
+* [Add ability to include multiple-choice questions](https://github.com/electricbookworks/electric-book/pull/251).
 * [Better docs on output formats and setting up GitHub Pages](https://github.com/electricbookworks/electric-book/commit/70ac2b10f6a929fccca137630253f3880c154633).
 * [Add ability to override epub-specific language](https://github.com/electricbookworks/electric-book/pull/248).
 * [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/ea42c5050375cbd9e30ec2c8f7c47b7e5ecf45b7...master).
