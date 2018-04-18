@@ -151,6 +151,11 @@ en:
       name: "Name"
       email: "Email address"
       message: "Message"
+  questions:
+    check-answers-button: "Check my answers"
+    feedback-correct: "Correct!"
+    feedback-incorrect: "Incorrect"
+    feedback-unfinished: "You haven't selected all the correct answers."
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -195,6 +200,11 @@ fr:
       name: "Nom"
       email: "L’adresse e-mail"
       message: "Message"
+  questions:
+    check-answers-button: "Vérifier mes réponses"
+    feedback-correct: "Correct!"
+    feedback-incorrect: "Incorrect"
+    feedback-unfinished: "Vous n'avez pas sélectionné toutes les bonnes réponses."
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""

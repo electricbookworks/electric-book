@@ -1,0 +1,79 @@
+{% capture random %}
+{% comment %}This include generates a random string.
+Save it to _includes. Then use {% include random %} 
+to get an 8-character string of numbers and letters.
+
+Optionally:
+
+* Specify the length of string you want. E.g. 
+  {% include random length=16 %} or
+  {% include random length="16" %}
+* Specify a character type as any of "numbers", "letters",
+  vowels", "consonants", "symbols" or "characters". E.g.
+  {% include random type="numbers" %} or 
+  {% include random type="numbers, symbols" %}
+* If you use "characters", you define which ones. E.g.
+  {% include random type="characters" characters="foobar" %} or
+  {% include random type="characters" characters="a,b,c,1,2,3" %}
+
+Because we capture and return the random string without <p>
+or newlines, this can be used inline in markdown.{% endcomment %}
+
+{% comment %}Set the length of the string.{% endcomment %}
+{% if include.length %}
+    {% assign length = include.length %}
+{% else %}
+    {% assign length = 8 %}
+{% endif %}
+
+{% comment %}Create arrays of possible characters.
+We avoid symbols that might clash with markdown syntax, 
+such as $, since $$ triggers MathJax script tags.
+Users can define their own characters, too.{% endcomment %}
+{% assign numbers = "1,2,3,4,5,6,7,8,9,0" | split: "," %}
+{% assign vowels = "a,e,i,o,u" | split: "," %}
+{% assign consonants = "b,c,d,f,g,h,j,k,l,m,n,p,q,r,s,t,v,w,x,y,z" | split: "," %}
+{% assign symbols = "~,!,@,#,%,&,(,)" | split: "," %}
+{% assign characters = include.characters | remove: " " | remove: "," | split: "" %}
+
+{% comment %}And combine vowels and consonants into one 'letters' array.{% endcomment %}
+{% assign letters = vowels %}
+{% for consonant in consonants %}
+    {% assign letters = letters | push: consonant %}
+{% endfor %}
+
+{% comment %}Add array names to the array of default types.{% endcomment %}
+{% assign default-types = "numbers,vowels,consonants,letters,characters" | split: "," %}
+
+{% comment %}If any types were defined in the include tag,
+use only those. Otherwise use all possible types.{% endcomment %}
+{% if include.type %}
+    {% assign types = include.type | remove: " " | split: "," %}
+{% else %}
+    {% assign types = default-types %}
+{% endif %}
+
+{% comment %}Create an array from the first type,
+then add the values of any other types.{% endcomment %}
+{% for type in types %}
+    {% if forloop.first == true %}
+        {% assign chars = [type] %}
+    {% endif %}
+    {% if forloop.first == false %}
+        {% for char in [type] %}
+            {% assign chars = chars | push: char %}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% comment %}Remove duplicates from the chars array. E.g.
+if we have both letters and vowels or consonants.{% endcomment %}
+{% assign chars = chars | uniq %}
+
+{% comment %}Create a random string by sampling that array
+as often as the string-length limit.{% endcomment %}
+{% for char in (1..length) %}
+{{ chars | sample }}
+{% endfor %}
+
+{% endcapture %}{{ random | remove: '<p>' | remove: '</p>' | strip_newlines }}

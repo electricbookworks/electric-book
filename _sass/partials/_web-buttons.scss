@@ -3,6 +3,10 @@ $web-buttons: true !default;
 
 	// Buttons
 
+	button {
+		font-size: initial; // override browsers that shrink button font sizes
+	}
+
 	// Applied to inline elements
 	a.button,
 	em.button,

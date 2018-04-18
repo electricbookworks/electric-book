@@ -120,6 +120,7 @@ $epub-tables: true !default; //
 $epub-letters: true !default; // 
 $epub-verse: true !default; // 
 $epub-video: true !default; // 
+$epub-multiple-choice-questions: true !default;
 
 // Type-control classes
 $epub-smallcaps: true !default; // 
@@ -175,6 +176,7 @@ $epub-reset-sequences: true !default; //
 @import "partials/epub-letters"; // 
 @import "partials/epub-verse"; // 
 @import "partials/epub-video"; //
+@import "partials/epub-mcqs"; //
 
 // Type-control classes
 @import "partials/epub-smallcaps"; // 
