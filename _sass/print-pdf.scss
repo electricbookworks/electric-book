@@ -252,6 +252,7 @@ $print-letters: true !default; //
 $print-sources: true !default; // 
 $print-openers: true !default; // 
 $print-index: true !default; // 
+$print-multiple-choice-questions: true !default;
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true !default; // Sets content for headers and footers
 $print-page-headers-footers-style: true !default; // Sets styling for headers and footers
@@ -315,6 +316,7 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 @import "partials/print-sources"; // 
 @import "partials/print-openers"; // 
 @import "partials/print-index"; // 
+@import "partials/print-mcqs"; //
 @import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
 @import "partials/print-page-headers-footers-content"; // Sets content for headers and footers
 @import "partials/print-page-headers-footers-style"; // Sets styling for headers and footers

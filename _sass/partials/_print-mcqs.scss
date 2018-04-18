@@ -1,0 +1,126 @@
+$print-multiple-choice-questions: true !default;
+@if $print-multiple-choice-questions {
+
+    // Multiple-choice questions
+
+    $main-text-width: $page-width - $margin-inside - $margin-outside;
+
+    .question {
+        box-sizing: border-box; // to include padding in the width
+        font-family: $font-text-secondary;
+        page-break-inside: avoid;
+        padding: ($line-height-default / 2);
+        margin: $line-height-default 0;
+        // Add some space around images when they're placed with markdown,
+        // rather than in figure includes.
+        p img:only-child {
+            box-sizing: border-box;
+            border: ($line-height-default / 2) solid white; // adds white space, same as other figures in boxes
+            max-width: $main-text-width - $line-height-default;
+        }
+        ul {
+            // Check boxes for unordered lists in MCQs
+            &.mcq-options {
+                li {
+                    list-style: none;
+                    &:before {
+                        content: "\2009";
+                        float: left;
+                        display: inline-block;
+                        border: 0.75pt solid $color-text-main;
+                        width: $font-size-default / 2;
+                        height: $font-size-default / 2;
+                        margin-left: -$line-height-default;
+                        margin-top: $line-height-default / 4;
+                    }
+                }
+            }
+        }
+        table {
+            width: $main-text-width - $line-height-default;
+        }
+        .figure {
+            width: $main-text-width - ($line-height-default * 2);
+            float: none;
+            margin-top: $line-height-default;
+            img {
+                border: ($line-height-default / 2) solid white; // adds artwork space around images with none
+                margin-bottom: 0; // overrides default, which adds $line-height-default
+            }
+            .figure-body {
+                width: 100%; // avoid inheriting explicit width from main .figure
+            }
+            .figure-images {
+                img {
+                    max-width: $main-text-width - ($line-height-default * 2); // width subtracted for mcq padding and white border around image
+                }
+                &.contains-2, &.contains-4, &.contains-8, &.contains-10 {
+                    text-align: justify;
+                    text-align-last: justify;
+                    img {
+                        max-width: ($main-text-width / 2) - ($line-height-default * 2);
+                        padding: 0;
+                        border: 1mm solid white;
+                    }
+                }
+            }
+            &.figure-no-source {
+                // If a figure has no source, caption or reference, then any description
+                // which is hidden, is the last child. In that case, we need no space
+                // below figure-images.
+                &.figure-no-caption {
+                    .figure-images:nth-last-child(2) {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            // Less space between two figures in one MCQ
+            & + .figure {
+                margin-top: -($line-height-default / 2)!important;
+            }
+            // Not sure why we need this given float: none, but it seems necessary
+            // to stop text that follows the figure from wrapping/overlapping it.
+            &:after {
+                content: " ";
+                display: block;
+                clear: both;
+            }
+            & + p {
+                text-indent: 0;
+            }
+        }
+        // We don't show the answers in PDF.
+        .mcq-answers, .mcq-feedback {
+            display: none;
+        }
+        // Add space before paragraphs that follow .mcq, and no indent
+        & + p,
+        & + .box + p,
+        & + .sidenote + p,
+        & + .footnote-detail + p    {
+            margin-top: $line-height-default;
+            text-indent: 0;
+        }
+        // Because of the hidden mcq-answers/mcq-feedback, we can't add bottom padding
+        // with :last-child. So in these elements, we control spacing with
+        // margin-top rather than the usual margin-bottom. We do have to
+        // nuke this with !important :( This may change in future.
+        p, ul, ol, blockquote {
+            margin-bottom: 0 !important;
+            margin-top: $line-height-default !important;
+        }
+        // Except the element after the first heading, which has no margin-top
+        h1:first-child + *,
+        h2:first-child + *,
+        h3:first-child + *,
+        h4:first-child + *,
+        h5:first-child + *,
+        h6:first-child + * {
+            margin-top: 0 !important;
+        }
+        &.page-break-before {
+            margin-top: 0;
+        }
+    }
+
+}
