@@ -260,7 +260,7 @@ var ebMCQsWordPressUserId = function() {
     var cookie = document.cookie.split('; ');
 
     var WordPressUserIdCookie = cookie.find(function(el) {
-        // if it starts with coreproject_sess, it's our WP one
+        // if it starts with our wordpressCookieName in options above, it's our WP one
         return el.indexOf(cookieName) === 0;
     });
 
