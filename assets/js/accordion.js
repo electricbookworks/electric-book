@@ -7,9 +7,9 @@ console.log('Debugging accordions.js');
 // 
 // 1. Use CSS selectors to list the headings that will
 //    define each accordion section, e.g. '#content h2'
-var accordionHeads = '#content h3'
+var accordionHeads = '#content h2'
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content h3:first-of-type'
+var defaultAccordionHead = '#content h2:first-of-type'
 // --------------------------------------------------------------
 
 function ebAccordionInit() {
@@ -22,7 +22,13 @@ function ebAccordionInit() {
 function ebAccordionSetUpSections(collapserButtons) {
 
     if (!document.querySelector(accordionHeads)) return;
-    document.querySelector(defaultAccordionHead).id = 'defaultAccordionSection';
+
+    // Give the default accordion section an id, if it's set
+    if (defaultAccordionHead != '') {
+        if (document.querySelector(defaultAccordionHead)) {
+            document.querySelector(defaultAccordionHead).id = 'defaultAccordionSection';
+        }
+    }
 
     // add role="tablist" to the parent of the role="tab"s
     var content = document.querySelector('#content');
