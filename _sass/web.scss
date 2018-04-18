@@ -147,6 +147,7 @@ $web-search: true !default;
 $web-nav-bar: true !default;
 $web-footer: true !default;
 $web-language-select: true !default;
+$web-accordion: true !default;
 
 // Book parts
 $web-cover: true !default;
@@ -210,6 +211,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-search";
 @import "partials/web-footer";
 @import "partials/web-language-select";
+@import "partials/web-accordion";
 
 // Book parts
 @import "partials/web-cover";

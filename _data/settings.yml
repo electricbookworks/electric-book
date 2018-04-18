@@ -50,6 +50,13 @@ web:
   # Note that breadcrumbs slows your Jekyll build significantly.
   masthead:
     content: breadcrumbs
+  # ----------------------------------------------------------
+  # Content accordion
+  # ----------------------------------------------------------
+  # Do you want to collapse content sections in chapters on a
+  # particular heading level? Default h2, set in accordion.js.
+  # Set this to true to enable, or false to disable.
+  accordion: false
 
 # ----------------------------------------------------------
 # Epub settings
@@ -94,6 +101,13 @@ app:
   # Note that breadcrumbs slows your Jekyll build significantly.
   masthead:
     content: breadcrumbs
+  # ----------------------------------------------------------
+  # Content accordion
+  # ----------------------------------------------------------
+  # Do you want to collapse content sections in chapters on a
+  # particular heading level? Default h2, set in accordion.js.
+  # Set this to true to enable, or false to disable.
+  accordion: false
   # ----------------------------------------------------------
   # Expansion file
   # ----------------------------------------------------------
