@@ -123,3 +123,5 @@ If you need to rotate a large figure on the page, add the `rotate` class. E.g.
 %}
 ```
 {% endraw %}
+
+Rotation only affects PDF output.
