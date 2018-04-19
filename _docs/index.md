@@ -14,6 +14,6 @@ If you are using the Electric Book Manager, you may also need the [Electric Book
 These docs are a work in progress, and not everything is documented yet. You can [contribute on GitHub](https://github.com/electricbookworks/electric-book), or let us know about problems by [logging issues](https://github.com/electricbookworks/electric-book/issues).
 
 {% include docs-by-category
-    class="markdown-toc"
+    class="markdown-toc markdown-toc-wide"
     categories="about, setup, editing, images, layout, output, advanced, troubleshooting"
 %}

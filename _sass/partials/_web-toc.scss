@@ -22,11 +22,25 @@ $web-toc: true !default;
 		#markdown-toc, .markdown-toc {
 			font-family: $font-text-secondary;
 			list-style-type: none;
-			margin: $line-height-default 0;
+			border: $rule-thickness solid $color-mid;
+			padding: $line-height-default / 2;
+			display: inline-block;
+			max-width: 50%;
+			float: left;
+			margin: 0 $line-height-default $line-height-default 0;	
 			li {
 				margin: 0;
 				ol, ul {
 					margin-bottom: 0;
+				}
+			}
+			&.markdown-toc-wide {
+				box-sizing: border-box;
+				float: none;
+				width: 100%;
+				max-width: none;
+				@media (min-width: $break-point-width) {
+					columns: 2;
 				}
 			}
 		} // #markdown-toc
