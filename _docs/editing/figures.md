@@ -113,6 +113,7 @@ caption="Blake's illustration for “The Tyger”."
 
 If you need to rotate a large figure on the page, add the `rotate` class. E.g.
 
+{% raw %}
 ```
 {% include figure
    html="<table>...</table>"
@@ -121,3 +122,4 @@ If you need to rotate a large figure on the page, add the `rotate` class. E.g.
    class="rotate"
 %}
 ```
+{% endraw %}
