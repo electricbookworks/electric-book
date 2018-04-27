@@ -79,6 +79,12 @@ epub:
   # Then you can put {% include toc %} anywhere in your epub
   # to generate a hidden nav element.
   hide-nav: false
+  # Settings that affect OPF metadata
+  meta:
+    # Turn project name in epub OPF metadata on/off
+    project-name: false
+    # Override the language in epub OPF metadata (use a subtag, e.g. en)
+    language: ""
 
 # ----------------------------------------------------------
 # App settings

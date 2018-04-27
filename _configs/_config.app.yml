@@ -28,6 +28,8 @@ exclude:
 - CNAME
 # Things we don't need for an app
 - assets/profiles
+- /*/package.opf
+- /*/toc.ncx
 - /*/images/print-pdf
 - /*/images/screen-pdf
 - /*/images/web

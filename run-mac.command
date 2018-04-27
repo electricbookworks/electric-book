@@ -335,7 +335,7 @@ You may need to reload the web page once this server is running."
 			if [ $countjs != 0 ]; then 
 				epubscripts="y"
 			fi
-			# Copy text (files in file-list only), images, fonts, styles and package.opf to epub
+			# Copy text (files in file-list only), images, fonts, styles, package.opf and toc.ncx to epub
 			cd "$location"/_site/"$bookfolder"
 			# If not a translation...
 			if [ "$epubsubdirectory" = "" ]; then
@@ -357,6 +357,10 @@ You may need to reload the web page once this server is running."
 				if [ -e "$location"/_site/$bookfolder/package.opf ]; then
 					echo "Copying package.opf..."
 					cp "$location"/_site/$bookfolder/package.opf "$location"/_site/epub/package.opf
+				fi
+				if [ -e "$location"/_site/$bookfolder/toc.ncx ]; then
+					echo "Copying toc.ncx..."
+					cp "$location"/_site/$bookfolder/toc.ncx "$location"/_site/epub/toc.ncx
 				fi
 			# If a translation...
 			else
@@ -394,6 +398,10 @@ You may need to reload the web page once this server is running."
 				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/package.opf ]; then
 					echo "Copying translation package.opf..."
 					cp "$location"/_site/$bookfolder/$epubsubdirectory/package.opf "$location"/_site/epub/package.opf
+				fi
+				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/toc.ncx ]; then
+					echo "Copying translation toc.ncx..."
+					cp "$location"/_site/$bookfolder/$epubsubdirectory/toc.ncx "$location"/_site/epub/toc.ncx
 				fi
 				cd "$location"
 			fi
@@ -505,6 +513,9 @@ You may need to reload the web page once this server is running."
 			fi
 			if [ -e package.opf ]; then
 				zip --quiet "$location/_output/$epubfilename.zip" package.opf
+			fi
+			if [ -e toc.ncx ]; then
+				zip --quiet "$location/_output/$epubfilename.zip" toc.ncx
 			fi
 			# Change file extension .zip to .epub
 			cd "$location"/_output
