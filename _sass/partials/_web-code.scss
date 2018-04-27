@@ -19,6 +19,7 @@ $web-code: true !default;
         border-radius: 0.2em;
         margin: $line-height-default 0;
         padding: $line-height-default / 2;
+        clear: both;
         code {
             padding: 0;
         }
