@@ -52,6 +52,7 @@ eslint.json,
 /*/styles/app*,
 /*/text/file-list,
 /*/package.opf,
+/*/toc.ncx,
 # -----------------------------------
 # Exclude web images only if you keep_files them below
 # -----------------------------------

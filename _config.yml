@@ -113,6 +113,7 @@ exclude:
 # Files for formats we're not building here
 - /assets/profiles
 - /*/package.opf
+- /*/toc.ncx
 - /*/images/print-pdf
 - /*/images/screen-pdf
 - /*/images/epub

@@ -24,6 +24,7 @@ exclude:
   - CNAME
   # Exclude files we don't need for screen-pdf
   - /*/package.opf
+  - /*/toc.ncx
   - /*/styles/print-pdf.scss
   - /*/styles/web.scss
   - /*/styles/epub.scss
