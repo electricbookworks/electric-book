@@ -127,4 +127,11 @@ $web-multiple-choice-questions: true !default;
         }
     }
 
+    // This is reserved for later use, currently hiddden.
+    // Eventually, this will be a way to log into the site
+    // that manages user authorisation.
+    #nav .wordpress-link {
+        display: none;
+    }
+
 }
