@@ -7,6 +7,7 @@
 * [Better docs on output formats and setting up GitHub Pages](https://github.com/electricbookworks/electric-book/commit/70ac2b10f6a929fccca137630253f3880c154633).
 * [Add ability to override epub-specific language](https://github.com/electricbookworks/electric-book/pull/248).
 * [Add toc.ncx for backwards-compatible epubs](https://github.com/electricbookworks/electric-book/pull/255).
+* [Add `image` include for responsive image tags](https://github.com/electricbookworks/electric-book/pull/256).
 * [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/ea42c5050375cbd9e30ec2c8f7c47b7e5ecf45b7...master).
 
 ## 0.11.1
