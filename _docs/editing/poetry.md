@@ -49,7 +49,7 @@ The `2` in `{:.indent-2}` refers to the number of em spaces to indent by. Our CS
 
 But wait, there's more! Best practice for poetry layout is that – in print – a poem should be centered on its longest line. That is *not* centering the lines of poetry, but placing the left-justified poem in the horizontal middle of the page. Put another way, the poem should be indented till its longest line is centered on the page.
 
-To achieve this, put the entire poem, including its title, in a blockquote, by adding `> ` to the start of each line. Tag the whole blockquote as {:.verse}, too. Finally, decide how wide you want the poem to be in multiple of 10 per cent. That is, if you reckon this poem's longest line reaches across 90 per cent of the page, use `.width-90`.
+To achieve this, put the entire poem, including its title, in a blockquote, by adding `> ` to the start of each line. Tag the whole blockquote as {:.verse}, too. Finally, decide how wide you want the poem to be as a percentage of the page. That is, if you reckon this poem's longest line reaches across 90 per cent of the page, use `.width-90`.
 
 ~~~
 > -	### To One Who Has Been Long in City Pent
