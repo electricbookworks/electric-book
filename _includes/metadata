@@ -5,6 +5,11 @@ as output tags, e.g. {{ title }} for the current
 book's title.
 {% endcomment %}
 
+{% comment %}Don't do all this work if metadata
+is already loaded on this page.{% endcomment %}
+{% if metadata-loaded %}
+{% else %}
+
 {% assign build = "development" %}
 {% if site.build and site.build != "" %}
     {% assign build = site.build %}
@@ -765,3 +770,7 @@ or parent-language overrides, if they exist. {% endcomment %}
 {% if locale.project.credit and locale.project.credit != "" %}
     {% capture project-credit %}{{ locale.project.credit }}{% endcapture %}
 {% endif %}
+
+{% comment %}End of entire metadata load.{% endcomment %}
+{% endif %}
+{% assign metadata-loaded = true %}
