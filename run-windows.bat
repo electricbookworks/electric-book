@@ -428,7 +428,7 @@ set /p process=Enter a number and hit return.
         echo Assembling epub...
 
 
-        :: Copy styles, images, text and package.opf to epub folder.
+        :: Copy styles, images, text, package.opf and toc.ncx to epub folder.
         :: The echo f preemptively answers xcopy's question whether 
         :: this is a file (see https://stackoverflow.com/a/3018371).
         :: The > nul supresses command-line feedback (pseudo silent mode)
@@ -546,6 +546,27 @@ set /p process=Enter a number and hit return.
         :epubOPFDone
 
 
+        :: Get the right toc.ncx for the translation we're creating
+        :epubCopyNCX
+            echo Copying NCX file...
+            if "%subdirectory%"=="" goto epubOriginalNCX
+            if not "%subdirectory%"=="" goto epubSubdirectoryNCX
+
+        :: If original language, use the package.opf in the root
+        :epubOriginalNCX
+            echo f | xcopy /e /q "toc.ncx" "../epub" > nul
+            echo NCX copied.
+            goto epubNCXDone
+
+        :: If translation language, use the toc.ncx in the subdirectory
+        :: This will overwrite the original language NCX file
+        :epubSubdirectoryNCX
+            echo f | xcopy /e /q "%subdirectory%\toc.ncx" "../epub" > nul
+            echo NCX copied.
+            goto epubNCXDone
+
+        :epubNCXDone
+
         :: Go into _site/epub to move some more files and then zip to _output
         cd %location%_site/epub
 
@@ -628,11 +649,12 @@ set /p process=Enter a number and hit return.
                 if not "%subdirectory%"=="" if exist "%subdirectory%" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "%subdirectory%"
                 goto epubAddPackageFiles
 
-        :: Add the META-INF and package.opf
+        :: Add the META-INF, package.opf and toc.ncx
         :epubAddPackageFiles
             :: Now add these admin files to the zip
             if exist META-INF zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" META-INF
             if exist package.opf zip --quiet "%location%_output/%epubFileName%.zip" package.opf
+            if exist toc.ncx zip --quiet "%location%_output/%epubFileName%.zip" toc.ncx
 
             :: Change file extension .zip to .epub
             cd %location%_output
