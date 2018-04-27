@@ -14,7 +14,7 @@ order: 5
 
 ## Adding images in markdown
 
-We use standard markdown to embed images:
+You can use standard markdown to embed images:
 
 ~~~
 ![A description of the image](../{{ site.image-set }}/filename.svg)
@@ -26,6 +26,26 @@ Let's break that down:
 * `../` means 'go up, out of the `text` folder'
 * `{{ site.image-set }}/` means 'go into the folder containing our preferred set of images' (as defined in `_config.yml`). The default image-set folder is `images`.
 * finally, the image file name.
+
+### Responsive images
+
+To add an image, you can use standard [kramdown syntax](https://kramdown.gettalong.org/quickref.html#links-and-images), as described above, but then you'll be missing a key feature of this template: your user's browser won't fetch the size of image best suited to their device.
+
+Instead, to get responsive images, use this image tag:
+
+```
+{% include image file="foobar.jpg" %}
+```
+
+where `foobar.jpg` is the original filename of the image.
+
+If necessary, you can add `class`, `id` and/or `alt` attributes to the image, too:
+
+```
+{% include image file="foobar.jpg" class="example" alt="An example image." id="anyuniqueid" %}
+```
+
+(You can also use `src="foobar.jpg"` instead of `file="foobar.jpg"`, if you're used to standard HTML `img` syntax, which uses `src`.)
 
 ### Images in translations
 
