@@ -88,7 +88,6 @@ $web-multiple-choice-questions: true !default;
         }
         .mcq-partially-correct {
             .mcq-feedback {
-                background-color: $color-light;
                 &:before {
                     content: "Good so far but you haven't selected all the correct answers.";
                 }
@@ -96,7 +95,6 @@ $web-multiple-choice-questions: true !default;
         }
         .mcq-correct {
             .mcq-feedback {
-                background-color: white;
                 &:before {
                     content: "Correct!";
                 }
