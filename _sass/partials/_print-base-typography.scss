@@ -57,10 +57,9 @@ $print-base-typography: true !default;
 	}
 	p {
 		margin: 0;
-		text-indent: $line-height-default;
-	}
-	p:first-of-type {
-		text-indent: 0;
+		& + p {
+			text-indent: $line-height-default;
+		}
 	}
 	a {
 		text-decoration: none;
@@ -186,7 +185,7 @@ $print-base-typography: true !default;
     // An option to change the default text-indented paragraphs
     // and close-up lists etc. to have space-between instead.
     @if $spaced-paras {
-        p {
+        p, p + p {
             margin-bottom: $line-height-default;
             text-indent: 0;
         }
