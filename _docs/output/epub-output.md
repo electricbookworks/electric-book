@@ -12,6 +12,12 @@ order: 3
 
 You can create an epub by running the output script for your OS and choosing the epub option. Before that will work, though, your project must be prepared correctly.
 
+## Package files
+
+The template comes with `package.opf` and `toc.ncx` files in the `book` and `samples` folders. For epub output, every book you create should have at least the `package.opf` file in its directory. The `toc.ncx` is for backwards compatibility with older epub readers, and so some vendors require it.
+
+If you're creatnig translations, you also need these files in the translation directory (e.g. at `great-expectations/fr/package.opf`). There is an example in the template's `samples` book directory.
+
 ## Metadata and settings
 
 Your epub will build correctly only if you have provided sufficient, accurate information about it in `_data/meta.yml`. You may also need to adjust some epub settings in `_data/settings.yml`.
