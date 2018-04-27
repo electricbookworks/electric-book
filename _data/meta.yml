@@ -303,7 +303,6 @@ works:
           - "10-02"
         nav:
           - label: "Frontmatter"
-            file: "index"
             class: "cover-entry"
             children:
               - label: "Half title page"

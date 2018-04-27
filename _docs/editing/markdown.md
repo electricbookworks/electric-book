@@ -22,7 +22,7 @@ HTML is a computer language. It's a way for us to mark up or tag text, so that a
 
 In HTML, each piece of content (e.g. a paragraph) starts and ends with a tag that a computer can recognise. Tags are always in elbow brackets, like this paragraph tag: `<p>`. 
 
-~~~
+~~~ html
 <p>
 This text is tagged in HTML as a paragraph.
 </p>
@@ -58,7 +58,7 @@ This is easy: a paragraph is a line of text separated from any other text by emp
 
 You can even have line breaks in a paragraph, and markdown will just ignore them (or, rather, replace them with spaces). That is, markdown is looking for an empty line before it ends a paragraph.
 
-~~~
+~~~ md
 This is a paragraph.
 
 This is another
@@ -76,7 +76,7 @@ paragraph.
 
 You can use up to six levels of heading, from level one to level six. To make a heading, just put one or more hash signs, `#`, and a space, before the heading. For a first-level heading, use one hash sign; for a second-level heading, use two; and so on. Like with paragraphs, separate the heading from everything else with an empty line space.
 
-~~~
+~~~ md
 ## This is a second-level heading
 
 This is a paragraph.
@@ -97,7 +97,7 @@ Tip: If you use bold in a first-level heading (e.g. `# **Chapter 1** Lost at Sea
 
 There are two kinds of lists: bulleted and numbered. For a bulleted list, start each line with a `*` and a tab. For a numbered list, start each line with a number, a full stop and a tab (you can use any number, because the software will always create an HTML list that starts with 1; but it's best to use 1 or the actual numbers you intend, just to make things neat). Markdown:
 
-~~~
+~~~ md
 1.	Apples
 2.	Oranges
 3.	Pears
@@ -121,7 +121,7 @@ Result:
 
 You can create simple tables in markdown. You can make them really neat, or you can make them really efficient. Markdown:
 
-~~~
+~~~ md
 | Fruit   | Quantity |
 |---------|----------|
 | Apples  | 2        |
@@ -158,7 +158,7 @@ To make more complex tables with merged or individually styled cells, you have t
 
 Remember how old email programs put a `>` at the start of each line when you hit 'Reply'? Ah, `>` means blockquote. Start each line with `>` and a space to make text a blockquote. Markdown:
 
-~~~
+~~~ md
 > This is text in a blockquote.
 ~~~
 
@@ -177,7 +177,7 @@ If you want your final HTML to include a clickable link:
 
 Markdown:
 
-~~~
+~~~ md
 To learn more, [click here](http://google.com).
 ~~~
 
@@ -189,7 +189,7 @@ To learn more, [click here](http://google.com).
 
 To place an image, you include a line telling the computer where to find the image file. This looks like a hyperlink, but with a `!` at the start of the line. Inside the square brackets, you include a brief description of the image (this is useful to screen readers for the visually impaired).
 
-~~~
+~~~ md
 ![A dog chasing a bus.](images/dogbus.jpg)
 ~~~
 
@@ -216,7 +216,7 @@ See the [Notes](17-notes.html#footnotes-endnotes-and-sidenotes) chapter for more
 
 A definition list is a list of definitions, not surprisingly. Think of a dictionary. A definition list comprises one or more entries, and each entry has a headword and a definition. Even if you're not editing a dictionary, you might need to create a short glossary or define a word or two at some point. To create a definition entry in markdown, put the headword on its own line, and the definition on the next, after a colon and a tab. Markdown:
 
-~~~
+~~~ md
 Editor
 :	Someone who spends more time learning new tricks than making money.
 ~~~
@@ -228,13 +228,39 @@ Editor
 
 To create a whole list of definition entries, just put one of these after the other, with a line space between them.
 
+### Code
+
+Code can be inline, `like this`, or block:
+
+```
+like this
+```
+
+To create inline code, put back ticks around it: `\``. To create a block of code, put three back ticks on a line before and after the code block, like this:
+
+~~~ md
+```
+code here
+```
+~~~
+
+To get code highlighting on a code block, add the name of the language after the first line of back ticks:
+
+~~~ md
+``` css
+p { font-size: 1em; }
+```
+~~~
+
+You can also use three tildes `~~~` instead of back ticks for code blocks.
+
 ## Using class tags
 
 We're going to get a bit more advanced now. Get some tea.
 
 As we mentioned earlier, sometimes we have to tell our software what *kind* of paragraph or list or blockquote we want. These *kinds* of text are called *classes*. To give something a class, we add a kramdown tag in curly braces, with a colon, and a dot before the class name. Markdown:
 
-~~~
+~~~ md
 This paragraph should be in a box.
 {:.box}
 ~~~
