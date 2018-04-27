@@ -12,14 +12,14 @@
         <dc:title id="title">{{ title }}</dc:title>
         <meta refines="#title" property="title-type">main</meta>
         <dc:identifier id="uid">{{ epub-identifier }}</dc:identifier>
-        <dc:language>{% if epub-language and epub-language != "" %}{{ epub-language }}{% else %}{{ language }}{% endif %}</dc:language>
+        <dc:language>{% if site.data.settings.epub.meta.language and site.data.settings.epub.meta.language != "" %}{{ site.data.settings.epub.meta.language }}{% elsif epub-language and epub-language != "" %}{{ epub-language }}{% else %}{{ language }}{% endif %}</dc:language>
         <meta property="dcterms:modified">{{ site.time | date_to_xmlschema | truncate: 19, "" }}Z</meta>
 
     {% if subtitle and subtitle != "" %}
         <dc:title id="subtitle">{{ subtitle }}</dc:title>
         <meta refines="#subtitle" property="title-type">subtitle</meta>
     {% endif %}
-    {% if project-name and project-name != "" %}
+    {% if project-name and project-name != "" and site.data.settings.epub.meta.project-name != false %}
         <dc:title id="project-name">{{ project-name }}</dc:title>
         <meta refines="#project-name" property="title-type">collection</meta>
     {% endif %}
@@ -175,9 +175,15 @@
             {% include mathjax-manifest.xml %}
         {% endif %}
 
+        {% comment %}If a toc.ncx exists, add it{% endcomment %}
+        {% assign ncx-check = site.pages | where_exp: "file", "file.path contains '/toc.ncx'" %}
+        {% if ncx-check.size > 0 %}
+            <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+        {% endif %}
+
     </manifest>
 
-    <spine>
+    <spine{% if ncx-check.size > 0 %} toc="ncx"{% endif %}>
 
         {% comment %}Loop through the epub file list to create itemrefs
         in the order they're in the file-list.{% endcomment %}
