@@ -4,7 +4,7 @@ title: "Headings"
 
 ## Headings
 
-This chapter shows a variety of headings, from third- to sixth-level headings. For first-level headings, see the main part headings in this book, e.g. ['Text'](01-00.html#text){:.cross-reference}. For second-level headings, see the secondary chapter headings like 'Headings' above this paragraph.
+This chapter shows a variety of headings, from third- to sixth-level headings. For first-level headings, see the main part headings in this book, e.g. ['Text'](01-00-text.html#text){:.cross-reference}. For second-level headings, see the secondary chapter headings like 'Headings' above this paragraph.
 
 In the next few pages, we'll include:
 

@@ -40,6 +40,7 @@ Your epub will build correctly only if you have provided sufficient, accurate in
 	{% endraw %}
 
 6. If your epub must not include a *visible* table of contents in its pages (e.g. for a novel with no chapter headings), you can hide it visually by setting `hide-nav: true` in the `epub` section of `settings.yml`.
+7. If you're using a `toc.ncx` file for backwards compatibility with old ereaders, you cannot have two items in nav pointing to the same target. That is, with the same `file` and `id` in the `nav` or `toc` parts of `meta.yml`. You can add an `id` pointing to, say, a heading in the document to differentiate one target in the same file from another.
 
 ## Fonts
 
