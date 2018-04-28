@@ -70,7 +70,18 @@ as the include calls itself for each list of children.
             <navLabel>
                 <text>{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</text>
             </navLabel>
-            <content src="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}" />
+
+            {% comment %}If the item has no file to link to, use its first child's file,
+            because NCS requires a valid src in <content>.{% endcomment %}
+            <content
+                {% if item.file and item.file != "" %}
+                    src="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
+                {% else %}
+
+                    {% assign children-with-file = item.children | where_exp: "item", "item.file" %}
+
+                    src="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ children-with-file[0].file }}.html"
+                {% endif %} />
 
             {% comment %}If there are child items, run this include again here,
             using the children as the starting point{% endcomment %}
