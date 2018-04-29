@@ -11,7 +11,7 @@ whether output-docs == true. {% endcomment %}
 {% comment %} Add data to a store, which we need as search results,
 because since elasticlunr only returns (0-based indexed) `ref`.
 Only show excerpts if they do not include Liquid tags.
-Also, Jekyll sets page.url form index.html pages as the path
+Also, Jekyll sets page.url for index.html pages as the path
 to the folder, not the file. So we check for that. {% endcomment %}
 var store = [
     {% for url-from-array in array-of-files %}
