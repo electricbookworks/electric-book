@@ -622,6 +622,13 @@ set /p process=Enter a number and hit return.
             :: Now step back into the folder before continuing
             cd %location%/_site/epub
 
+        :: Let our PhantomJS script rename .html to .xhtml
+        :epubRenameHtmlXhtml
+            echo Renaming .html to .xhtml...
+            cd %location%/_site/assets/js
+            phantomjs render-html-xhtml.js
+            cd %location%/_site/epub
+
         :: Now to zip the epub files. Important: mimetype first.
         :epubCompressing
             echo Compressing files...
