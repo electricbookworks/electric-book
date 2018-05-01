@@ -772,5 +772,5 @@ or parent-language overrides, if they exist. {% endcomment %}
 {% endif %}
 
 {% comment %}End of entire metadata load.{% endcomment %}
-{% endif %}
 {% assign metadata-loaded = true %}
+{% endif %}
