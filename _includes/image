@@ -32,4 +32,4 @@ https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% en
     {% if include.id %} id="{{ include.id }}"{% endif %}
     {% if include.alt %} alt="{{ include.alt }}"{% endif %} />
 
-{% endcapture %}{{ image-tag | strip_newlines }}
+{% endcapture %}{{ image-tag | strip_newlines | strip }}
