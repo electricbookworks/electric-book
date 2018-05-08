@@ -125,3 +125,7 @@ If you need to rotate a large figure on the page, add the `rotate` class. E.g.
 {% endraw %}
 
 Rotation only affects PDF output.
+
+### Figure width
+
+If you need to make a figure narrower than the full text area, add a `width-x` class, where `x` is the width you want in percent. E.g. `width-50` will create a half-width image.
