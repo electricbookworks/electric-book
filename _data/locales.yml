@@ -156,6 +156,8 @@ en:
     feedback-correct: "Correct!"
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "You haven't selected all the correct answers."
+  cross-references:
+    page: "page"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -205,6 +207,8 @@ fr:
     feedback-correct: "Correct!"
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "Vous n'avez pas sélectionné toutes les bonnes réponses."
+  cross-references:
+    page: "page"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
