@@ -12,12 +12,12 @@
 
     {% if print-pdf-identifier and print-pdf-identifier != "" %}
         <span class="identifier print-pdf-identifier">
-            <span class="identifier-scheme">{{ scheme }}</span>{% if print-pdf-format and print-pdf-format != "" %}<span class="identifier-format">{{ print-pdf-format }}</span>{% endif %}<span class="identifier-id">{{ print-pdf-identifier }}</span>
+            <span class="identifier-scheme">{{ scheme }}</span>{% if print-pdf-format and print-pdf-format != "" %} (<span class="identifier-format">{{ print-pdf-format }}</span>){% endif %}: <span class="identifier-id">{{ print-pdf-identifier }}</span>
         </span>
         <br />
     {% elsif identifier and identifier != "" %}
         <span class="identifier">
-            <span class="identifier-scheme">{{ scheme }}</span><span class="identifier-id">{{ identifier }}</span>
+            <span class="identifier-scheme">{{ scheme }}</span>: <span class="identifier-id">{{ identifier }}</span>
         </span>
         <br />
     {% else %}
@@ -25,21 +25,21 @@
 
     {% if screen-pdf-identifier and screen-pdf-identifier != "" %}
         <span class="identifier screen-pdf-identifier">
-            <span class="identifier-scheme">{{ scheme }}</span>{% if screen-pdf-format and screen-pdf-format != "" %}<span class="identifier-format">{{ screen-pdf-format }}</span>{% endif %}<span class="identifier-id">{{ screen-pdf-identifier }}</span>
+            <span class="identifier-scheme">{{ scheme }}</span>{% if screen-pdf-format and screen-pdf-format != "" %} (<span class="identifier-format">{{ screen-pdf-format }}</span>){% endif %}: <span class="identifier-id">{{ screen-pdf-identifier }}</span>
         </span>
         <br />
     {% endif %}
     
     {% if epub-identifier and epub-identifier != "" %}
         <span class="identifier epub-identifier">
-            <span class="identifier-scheme">{{ scheme }}</span>{% if epub-format and epub-format != "" %}<span class="identifier-format">{{ epub-format }}</span>{% endif %}<span class="identifier-id">{{ epub-identifier }}</span>
+            <span class="identifier-scheme">{{ scheme }}</span>{% if epub-format and epub-format != "" %} (<span class="identifier-format">{{ epub-format }}</span>){% endif %}: <span class="identifier-id">{{ epub-identifier }}</span>
         </span>
         <br />
     {% endif %}
     
     {% if web-identifier and web-identifier != "" %}
         <span class="identifier web-identifier">
-            <span class="identifier-scheme">{{ scheme }}</span>{% if web-format and web-format != "" %}<span class="identifier-format">{{ web-format }}</span>{% endif %}<span class="identifier-id">{{ web-identifier }}</span>
+            <span class="identifier-scheme">{{ scheme }}</span>{% if web-format and web-format != "" %} (<span class="identifier-format">{{ web-format }}</span>){% endif %}: <span class="identifier-id">{{ web-identifier }}</span>
         </span>
         <br />
     {% endif %}

@@ -14,19 +14,8 @@ $epub-copyright-page: true !default;
         }
         .identifiers {
             .identifier-scheme {}
-            .identifier-format {
-                &:before {
-                    content: " (";
-                }
-                &:after {
-                    content: ")";
-                }
-            }
-            .identifier-id {
-                &:before {
-                    content: ": ";
-                }
-            }
+            .identifier-format {}
+            .identifier-id {}
         }
     }
 
