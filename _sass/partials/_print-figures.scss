@@ -5,13 +5,13 @@ $print-figures: true !default;
 
 	.figure {
 		clear: both;
-		float: bottom; // By default all figures float to the bottoms of their pages
+		float: bottom; // By default all figures float to the bottoms of their pages. See margins.
+		margin: $line-height-default 0 0 0;
 		page-break-inside: avoid;
 		background-color: inherit;
 		font-size: inherit;
 		font-weight: inherit;
 		color: inherit;
-		margin: 0 0 $line-height-default 0;
 		padding: 0;
 		width: 100%;
 		box-sizing: border-box;
@@ -76,6 +76,16 @@ $print-figures: true !default;
 				padding: 0;
 			}
 		}
+
+		// Allow user to set figure width as a percentage
+		@for $i from 1 through 100 {
+			&.width-#{$i} {
+				width: $i * 1%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+
 	}
 
 	// Experimental. Effectively overrides 'unless-fit' to reduce ugly instances
