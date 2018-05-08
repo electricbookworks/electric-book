@@ -44,6 +44,8 @@ In addition, also in your book's `print-pdf.scss` file, make sure your PDF profi
 $pdf-profile: "PDF/X-1a:2001"
 ```
 
+Also see the section on [colour profiles](../layout/colour-profiles).
+
 ## Refining print layout
 
 You will doubtless want to refine your print layout by editing your markdown and adding custom CSS to the `print.scss` file for your book.
