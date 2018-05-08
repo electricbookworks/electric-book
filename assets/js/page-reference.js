@@ -1,3 +1,19 @@
+---
+# Jekyll will process this to localise it.
+# So do not minify this file.
+layout: null
+---
+
+{% include metadata %}
+
+{% capture pageWords %}
+{
+{% for language in locales %}
+{{ language[0] }}: "{{language[1].cross-references.page}}"{% unless forloop.last %},{% endunless %}
+{% endfor %}
+}
+{% endcapture %}
+
 // Page cross-reference in print
 // Use with css:
 // content: prince-script(pagereference);
@@ -6,6 +22,11 @@
 // content: " (page " target-counter(attr(href), page) ")";
 // or, if we're on the page we're targeting
 // content: normal;
+
+// Get the locale word for page for this HTML document's language
+var pageWords = {{ pageWords | strip_newlines | strip }};
+var pageLanguage = document.documentElement.lang;
+var pageWord = pageWords[pageLanguage];
 
 function addPageReferenceFunc() {
 
@@ -17,8 +38,8 @@ function addPageReferenceFunc() {
         // if the target is on this page, return blank
         if (currentPage === targetPage) return '';
 
-        // otherwise show a space and the page number in pararentheses
-        return '\u00A0' + '(page ' + targetPage +')';
+        // otherwise show a space and the page number in parentheses
+        return '\u00A0' + '(' + pageWord + ' ' + targetPage +')';
     });
 }
 
