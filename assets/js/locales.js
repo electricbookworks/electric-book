@@ -1,5 +1,4 @@
-// Loads locales.yml into a locales array
-// for use in scripts.
+// Load locales.yml into a locales array.
 
 // Convert locales.yml into a JSON string.
 // Note that hyphens in keys are converted to underscores.
@@ -23,3 +22,15 @@ if (getParameterByName('lang')) {
 } else {
 	var pageLanguage = document.documentElement.lang;
 };
+
+
+// Localise Javascript-driven text
+{% if site.output == "web" or site.output == "app" %}
+
+    // Localise Google CSE search snippets
+    function localiseSearchBox() {
+        document.querySelector('.search input.search-box').placeholder = locales[pageLanguage].search.placeholder;
+    };
+    localiseSearchBox();
+
+{% endif %}

@@ -43,25 +43,35 @@ function displaySearchResults(results, store) {
 
 // Localise heading of search page
 // (since all languages use same search.html)
-if (document.querySelector('#content h1')) {
-  var localisedSearchHeading = locales[pageLanguage].search.search_title;
-  var searchHeading = document.querySelector('#content h1');
-  searchHeading.innerHTML = localisedSearchHeading;
+function localiseSearchHeading() {
+  if (document.querySelector('#content h1')) {
+    var localisedSearchHeading = locales[pageLanguage].search.search_title;
+    var searchHeading = document.querySelector('#content h1');
+    searchHeading.innerHTML = localisedSearchHeading;
+  };
 };
 
 // Change language value in input for next search on results page
-if (document.querySelector('#search-language')) {
-  var localisedSearchLanguage = document.querySelector('#search-language');
-  localisedSearchLanguage.setAttribute('value', pageLanguage);
+function localiseSearchLanguage() {
+  if (document.querySelector('#search-language')) {
+    var localisedSearchLanguage = document.querySelector('#search-language');
+    localisedSearchLanguage.setAttribute('value', pageLanguage);
+  };
+}
+
+function checkForSearchTerm() {
+  if (searchTerm) {
+
+    // perform the search
+    var results = index.search(searchTerm, {
+      bool: "AND"
+    });
+
+    // display the results
+    displaySearchResults(results, store);
+  };
 };
 
-if (searchTerm) {
-
-  // perform the search
-  var results = index.search(searchTerm, {
-    bool: "AND"
-  });
-
-  // display the results
-  displaySearchResults(results, store);
-}
+localiseSearchHeading();
+localiseSearchLanguage();
+checkForSearchTerm();

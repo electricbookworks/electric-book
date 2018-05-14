@@ -1,3 +1,15 @@
+{% unless site.output == "epub" %}
+	<script src="{{ path-to-root-directory }}assets/js/bundle.js"></script>
+{% endunless %}
+
+{% if site.output == "web" or site.output == "app" %}
+    {% if is-project-search or is-book-search %}
+        <script src="{{ path-to-root-directory }}assets/js/search-engine.js"></script>
+        <script src="{{ path-to-root-directory }}assets/js/search-index.js"></script>
+        <script src="{{ path-to-root-directory }}assets/js/search-results.js"></script>
+    {% endif %}
+{% endif %}
+
 {% include end-elements %}
 
 </div><!--#wrapper-->
