@@ -108,7 +108,7 @@ var ebMCQsMakeOptionCheckboxes = function(question) {
 var ebMCQsAddButton = function(question) {
     // make the button
     var button = document.createElement('button');
-    button.innerHTML = 'Check my answers';
+    button.innerHTML = locales[pageLanguage].questions.check_answers_button;
     button.classList.add('check-answer-button');
 
     // now add it to question, before the feedback
@@ -296,7 +296,7 @@ var ebMCQsAddWordPressAccountButton = function() {
 
     if(ebMCQsWordPressUserId()) {
         // change the button text and href
-        accountLink.innerText = 'My account';
+        accountLink.innerText = locales[pageLanguage].account.my_account;
         accountLink.href = '/account/';
     }
 }
@@ -332,6 +332,20 @@ var ebMCQsSendtoWordPress = function(quizId, score) {
     req.send(dataText); // so we send the encoded data not the original data structure
 }
 
+var ebMCQsAddFeedbackLabel = function(mcqsToCheck, feedbackType) {
+    // Remove existing feedback
+    mcqsToCheckOldLabel = mcqsToCheck.querySelector('.feedback-label');
+    if (mcqsToCheckOldLabel) {
+        mcqsToCheck.removeChild(mcqsToCheckOldLabel);
+    }
+    // Find feedback, create a div for the label, and insert it
+    var mcqsToCheckFeedback = mcqsToCheck.querySelector('.mcq-feedback');
+    var mcqsToCheckFeedbackLabel = document.createElement('div');
+    mcqsToCheckFeedbackLabel.setAttribute('class', 'feedback-label');
+    mcqsToCheckFeedbackLabel.innerText = locales[pageLanguage].questions[feedbackType];
+    mcqsToCheck.insertBefore(mcqsToCheckFeedbackLabel, mcqsToCheckFeedback);
+};
+
 var ebMCQsButtonClicks = function() {
     // get all the buttons
     var answerCheckingButtons = document.querySelectorAll('.check-answer-button');
@@ -365,16 +379,19 @@ var ebMCQsButtonClicks = function() {
             // if exactly right, mark it so, show options
             if(ebMCQsExactlyRight(correctAnswersForThisMCQs, selectedOptions)) {
                 mcqsToCheck.classList.add('mcq-correct');
+                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback_correct');
                 ebMCQsShowSelectedOptions(mcqsToCheck, selectedOptions);
 
                 // set score
                 score = 1;
             } else if(ebMCQsNotAllTheCorrectAnswers(correctAnswersForThisMCQs, selectedOptions)) {
                 mcqsToCheck.classList.add('mcq-partially-correct');
+                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback_unfinished');
                 ebMCQsShowSelectedIncorrectOptions(mcqsToCheck, selectedOptions, correctAnswersForThisMCQs);
             } else {
                 // show the feedback for the incorrect options
                 mcqsToCheck.classList.add('mcq-incorrect');
+                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback_incorrect');
                 ebMCQsShowSelectedIncorrectOptions(mcqsToCheck, selectedOptions, correctAnswersForThisMCQs);
             }
 

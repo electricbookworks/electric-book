@@ -163,6 +163,8 @@ en:
     feedback-unfinished: "You haven't selected all the correct answers."
   cross-references:
     page: "page"
+  account:
+    my-account: "My account"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -219,6 +221,8 @@ fr:
     feedback-unfinished: "Vous n'avez pas sélectionné toutes les bonnes réponses."
   cross-references:
     page: "page"
+  account:
+    my-account: "Mon compte"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
