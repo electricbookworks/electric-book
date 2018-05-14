@@ -1,18 +1,23 @@
 function displaySearchResults(results, store) {
 
+  var localisedSearchResults = locales[pageLanguage].search.search_results;
   var appendString = '';
 
   if (results.length) {
 
     appendString += '<div class="search-results" id="search-results">'
 
-    appendString += '<h2>Search results</h2>';
+    appendString += '<h2>' + localisedSearchResults + '</h2>';
 
-    appendString += '<p>' + results.length + ' result';
-    if (results.length > 1) {
-      appendString += 's';
+    if (results.length == 1) {
+      var localisedSearchResultsNumberSuffix = locales[pageLanguage].search.results_for_singular;
+    } 
+    else {
+      var localisedSearchResultsNumberSuffix = locales[pageLanguage].search.results_for_plural;
     }
-    appendString +=  ' found for "<mark>' + searchTerm + '</mark>".</p>';
+
+    appendString += '<p>' + results.length + ' ' + localisedSearchResultsNumberSuffix;
+    appendString +=  ' "<mark>' + searchTerm + '</mark>".</p>';
 
     appendString += '<ul>';
 
@@ -29,19 +34,44 @@ function displaySearchResults(results, store) {
     appendString += '</div>';
 
   } else {
-    appendString += '<p>No results found for "' + searchTerm + '".</p>';
+    var localisedSearchResultsNumberSuffix = locales[pageLanguage].search.results_for_none;
+    appendString += '<p>' + localisedSearchResultsNumberSuffix + ' "' + searchTerm + '".</p>';
   }
 
   searchForm.parentNode.innerHTML += appendString;
 }
 
-if (searchTerm) {
+// Localise heading of search page
+// (since all languages use same search.html)
+function localiseSearchHeading() {
+  if (document.querySelector('#content h1')) {
+    var localisedSearchHeading = locales[pageLanguage].search.search_title;
+    var searchHeading = document.querySelector('#content h1');
+    searchHeading.innerHTML = localisedSearchHeading;
+  };
+};
 
-  // perform the search
-  var results = index.search(searchTerm, {
-    bool: "AND"
-  });
-
-  // display the results
-  displaySearchResults(results, store);
+// Change language value in input for next search on results page
+function localiseSearchLanguage() {
+  if (document.querySelector('#search-language')) {
+    var localisedSearchLanguage = document.querySelector('#search-language');
+    localisedSearchLanguage.setAttribute('value', pageLanguage);
+  };
 }
+
+function checkForSearchTerm() {
+  if (searchTerm) {
+
+    // perform the search
+    var results = index.search(searchTerm, {
+      bool: "AND"
+    });
+
+    // display the results
+    displaySearchResults(results, store);
+  };
+};
+
+localiseSearchHeading();
+localiseSearchLanguage();
+checkForSearchTerm();

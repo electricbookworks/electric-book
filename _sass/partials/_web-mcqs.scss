@@ -53,55 +53,22 @@ $web-multiple-choice-questions: true !default;
         .mcq-feedback {
             display: block;
             position: relative;
-            margin-top: $line-height-default;
             list-style-type: none;
             margin-left: 0;
             background-color: $color-light;
             border-radius: $button-border-radius;
-            &:before {
-                display: block;
-                padding: $line-height-default / 2 0 $line-height-default / 2 $line-height-default * 2;
-            }
-            &:after {
-                position: absolute;
-                top: $line-height-default / 2;
-                left: $line-height-default;
-            }
             li {
                 display: none;
-                padding: 0 $line-height-default / 2 $line-height-default / 2 $line-height-default * 2;
+                padding: 0 ($line-height-default / 2) ($line-height-default / 2) ($line-height-default / 2);
             }
             .mcq-feedback-show {
                 display: block;
             }
         }
-        // The words hard-coded here are localised by a script in _includes/end-elements
-        .mcq-incorrect {
-            .mcq-feedback {
-                &:before {
-                    content: "Incorrect";
-                }
-                &:after {
-                    content: "\2717";
-                }
-            }
-        }
-        .mcq-partially-correct {
-            .mcq-feedback {
-                &:before {
-                    content: "Good so far but you haven't selected all the correct answers.";
-                }
-            }
-        }
-        .mcq-correct {
-            .mcq-feedback {
-                &:before {
-                    content: "Correct!";
-                }
-                &:after {
-                    content: "\2713";
-                }
-            }
+        .feedback-label {
+            margin-top: $line-height-default;
+            background-color: $color-light;
+            padding: $line-height-default / 2;
         }
     }
 

@@ -5,7 +5,3 @@ that you want in the <head> of your HTML.
 Use Liquid logic tags to include only in certain outputs, e.g.
 `if site.output == "web"` for Google Analytics scripts.
 {% endcomment %}
-
-{% if site.mathjax-enabled == true %}
-{% include mathjax-config %}
-{% endif %}

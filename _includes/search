@@ -6,11 +6,12 @@ Searches all books in the project.
 
 {% comment %}If metadata has already been included (e.g. in nav.html),
 don't include it again to avoid unnecessary looping.{% endcomment %}
-{% unless include.metadata-available == true  %}
+{% unless metadata-loaded == true  %}
 	{% include metadata %}
 {% endunless %}
 
 <form class="search" action="{{ path-to-root-directory }}search.html" method="get">
   <label for="search-box"></label>
   <input type="text" id="search-box" class="search-box" name="query" placeholder="{{ locale.search.placeholder }}">
+  <input id="search-language" type="hidden" name="lang" value="{{ language }}">
 </form>
