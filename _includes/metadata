@@ -27,6 +27,7 @@ These values can be overridden in _data/locales.yml for translations.
 {% capture project-email %}{{ site.data.meta.project.email }}{% endcapture %}
 {% capture project-name %}{{ site.data.meta.project.name }}{% endcapture %}
 {% capture project-description %}{{ site.data.meta.project.description }}{% endcapture %}
+{% capture project-logo %}{{ site.data.meta.project.logo }}{% endcapture %}
 {% capture project-image %}{{ site.data.meta.project.image }}{% endcapture %}
 {% capture project-credit %}{{ site.data.meta.project.credit }}{% endcapture %}
 {% capture project-language %}{{ site.data.meta.project.language }}{% endcapture %}
