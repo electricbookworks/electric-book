@@ -23,6 +23,9 @@ Add a bundle of JS and site search.
 
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
 
+    {% comment %}Get locales for Javascript.{% endcomment %}
+    <script src="{{ path-to-root-directory }}assets/js/locales.js"></script>
+
     {% comment %}This script gives every heading a title attribute.
     This is useful to Prince, which can use title attributes for running heads.
     By default, we only load it for PDF outputs.{% endcomment %}

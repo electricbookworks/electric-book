@@ -2,6 +2,7 @@
 layout: null
 ---
 
+{% include_relative locales.js %}
 {% include_relative polyfills.js %}
 {% include_relative nav.js %}
 {% include_relative get-query-variable.js %}

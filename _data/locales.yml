@@ -145,7 +145,12 @@ en:
     submit: "Submit"
     send: "Send"
   search:
+    search-title: "Search"
     placeholder: "Search"
+    search_results: "Search results"
+    results-for-singular: "result found for"
+    results-for-plural: "results found for"
+    results-for-none: "No results found for"
   contact:
     placeholder:
       name: "Name"
@@ -196,7 +201,12 @@ fr:
     submit: "Soumettre"
     send: "Envoyer"
   search:
+    search-title: "Recherche"
     placeholder: "Recherche"
+    search_results: "Résultats de la recherche"
+    results-for-singular: "résultat trouvé pour"
+    results-for-plural: "résultats trouvés pour"
+    results-for-none: "Aucun résultat trouvé pour"
   contact:
     placeholder:
       name: "Nom"
