@@ -153,6 +153,7 @@ $web-base-typography: true !default;
         display: block;
         margin: $line-height-default 0;
         width: 100%;
+        box-sizing: border-box;
         &[type="submit"] {
             width: auto;
         }
