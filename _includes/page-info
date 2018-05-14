@@ -16,6 +16,7 @@ See all the metadata gathered for a given page.
 | Project email          | Defined in `meta.yml` | `project-email`        | {{ project-email }}        | String |
 | Project name           | Defined in `meta.yml` | `project-name`         | {{ project-name }}         | String |
 | Project description    | Defined in `meta.yml` | `project-description`  | {{ project-description }}  | String |
+| Project logo           | Defined in `meta.yml` | `project-logo`         | {{ project-logo }}         | String |
 | Project image          | Defined in `meta.yml` | `project-image`        | {{ project-image }}        | String |
 | Project credit         | Defined in `meta.yml` | `project-credit`       | {{ project-credit }}       | String |
 | Project language       | Defined in `meta.yml` | `project-language`     | {{ project-language }}     | String |
