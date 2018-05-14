@@ -604,8 +604,14 @@ You may need to reload the web page once this server is running."
 			# Build the apps if required
 			if [ "$appbuildgenerateapp" = "a" ]
 				then
-				echo "Building Android app..."
 				cd _site/app
+	            echo "Removing old Android platform files..."
+	            cordova platform remove android
+	            echo "Fetching latest Android platform files..."
+	            call cordova platform add android
+	            echo "Preparing platforms and plugins..."
+	            call cordova prepare android
+				echo "Building Android app..."
 				if [ "$apprelease" = "y" ]
 					then
 						cordova build android --release
@@ -616,6 +622,8 @@ You may need to reload the web page once this server is running."
 				echo "Done. Opening folder containing Android app..."
 				# (On Linux, this is xdg-open, not open.)
 				open _site/app/platforms/android/build/outputs/apk/
+				echo "Attempting to run app in emulator..."
+				cordova emulate android
 			# Building iOS not available on Linux, only newish Macs
 			elif [ "$appbuildgenerateapp" = "i" ]
 				then
@@ -641,6 +649,13 @@ You may need to reload the web page once this server is running."
 			elif [ "$appbuildgenerateapp" = "ai" ]
 				then
 				echo "Building Android app first, then iOS app."
+				cd _site/app
+	            echo "Removing old Android platform files..."
+	            cordova platform remove android
+	            echo "Fetching latest Android platform files..."
+	            call cordova platform add android
+	            echo "Preparing platforms and plugins..."
+	            call cordova prepare android
 				echo "Building Android app..."
 				if [ "$apprelease" = "y" ]
 					then
@@ -651,6 +666,10 @@ You may need to reload the web page once this server is running."
 				echo "Done. Opening folder containing Android app..."
 				# (On Linux, this is xdg-open, not open.)
 				open _site/app/platforms/android/build/outputs/apk/
+
+				echo "Attempting to run app in emulator..."
+				cordova emulate android
+
 				echo "Building iOS app..."
 				if [ "$apprelease" = "y" ]
 					then

@@ -102,7 +102,7 @@
 
 
 {% elsif site.output == "app" %}
-<html{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
+<html lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
     <head>
 
     <title>

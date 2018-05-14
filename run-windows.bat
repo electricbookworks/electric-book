@@ -761,6 +761,15 @@ set /p process=Enter a number and hit return.
             echo Building your Android app... If you get an error, make sure Cordova and Android Studio are installed.
             cd _site/app
 
+            :: Prepare for build
+            echo Removing old Android platform files...
+            call cordova platform remove android
+            echo Fetching latest Android platform files...
+            call cordova platform add android
+            echo Preparing platforms and plugins...
+            call cordova prepare android
+            echo Building app...
+
             if "%apprelease%"=="y" (
                 call cordova build android --release
             ) else (
@@ -769,6 +778,11 @@ set /p process=Enter a number and hit return.
 
             echo Opening folder containing app...
             %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
+
+            :: Try to emulate
+            echo "Attempting to run app in emulator..."
+            call cordova emulate android
+
             :appbuildaftercordova
             cd "%location%"
 
