@@ -41,7 +41,7 @@ have different behaviour for web or app. {% endcomment %}
     {% comment %}This script helps rotate large figures on the page.{% endcomment %}
     {% include_relative rotate.js %}
 
-    {% comment %}This script detects the page number we're on and provides
+    {% comment %}This script detects the page number we are on and provides
     the relevant page cross-reference text as generated content.{% endcomment %}
     {% include_relative page-reference.js %}
 
