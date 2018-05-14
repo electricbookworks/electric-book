@@ -13,6 +13,15 @@ defaulting to src. {% endcomment %}
 	{% assign file-extension = include.src | split: "." | last %}
 {% endif %}
 
+{% comment %} Capture and clean any alt text. {% endcomment %}
+{% if include.alt %}
+    {% capture image-alt %}{{ include.alt 
+    | replace: "&nbsp;", " "
+    | replace: "&shy;", ""
+    | markdownify
+    | strip_html }}{% endcapture %}
+{% endif %}
+
 {% comment %} Adjust the value of `sizes` if your site design does not need
 full-width images everywhere. Here is a guide:
 https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% endcomment %}
@@ -30,6 +39,6 @@ https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% en
 
     {% if include.class %} class="{{ include.class }}"{% endif %}
     {% if include.id %} id="{{ include.id }}"{% endif %}
-    {% if include.alt %} alt="{{ include.alt }}"{% endif %} />
+    {% if image-alt %} alt="{{ image-alt }}"{% endif %} />
 
 {% endcapture %}{{ image-tag | strip_newlines | strip }}

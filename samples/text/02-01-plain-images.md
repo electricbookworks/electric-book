@@ -8,11 +8,11 @@ title: "Plain images"
 
 Also see the docs on [including images in content]({{ site.canonical-url }}/docs/editing/images.html) and [adding them to your project]({{ site.canonical-url }}/docs/images/adding-image-files.html).
 
-For exmaples of plain images, here's the first chapter of [*The Count of Monte Christo* by Alexandre Dumas](http://www.gutenberg.org/files/1184/1184-h/1184-h.htm){:#count-2}.
+For examples of plain images, here's the first chapter of [*The Count of Monte Christo* by Alexandre Dumas](http://www.gutenberg.org/files/1184/1184-h/1184-h.htm){:#count-2}.
 
 First, here is an SVG showing the relationships in this novel.
 
-{% include image file="count-of-monte-cristo-relations.svg" alt="https://commons.wikimedia.org" %}
+{% include image file="count-of-monte-cristo-relations.svg" alt="Image of network of relationships in The Count of Monte Christo from https://commons.wikimedia.org" %}
 [Relationships in *The Count of Monte Christo*](https://commons.wikimedia.org/wiki/File:CountOfMonteCristoRelations.svg#/media/File:CountOfMonteCristoRelations.svg). This is actually a paragraph that starts with an inline image, and has an `image-with-caption` class, which turns any text in this paragraph into a caption. The remaining images in this chapter are plain images, with no text or class attached.
 {:.image-with-caption}
 
