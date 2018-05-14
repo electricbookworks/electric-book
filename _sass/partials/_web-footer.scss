@@ -17,6 +17,7 @@ $web-footer: true !default;
 	.footer-content {
 		clear: both;
 		max-width: $max-width-default;
+		margin: auto;
 	}
 	#footer p,
 	#footer ol,
