@@ -87,3 +87,7 @@ Note that for the `include toc` tag to work (and many other tags, such as `{{ im
 We recommend including this `include metadata` tag at the start of all markdown files, so that tags are available.
 
 {% endraw %}
+
+## Epub TOCs
+
+Epubs have special TOC needs. See the [epub output section on metadata](../output/epub-output#metadata-and-settings).

@@ -40,7 +40,11 @@ Your epub will build correctly only if you have provided sufficient, accurate in
 	{% endraw %}
 
 6. If your epub must not include a *visible* table of contents in its pages (e.g. for a novel with no chapter headings), you can hide it visually by setting `hide-nav: true` in the `epub` section of `settings.yml`.
-7. If you're using a `toc.ncx` file for backwards compatibility with old ereaders, you cannot have two items in nav pointing to the same target. That is, with the same `file` and `id` in the `nav` or `toc` parts of `meta.yml`. You can add an `id` pointing to, say, a heading in the document to differentiate one target in the same file from another.
+7. If you're using a `toc.ncx` file for backwards compatibility with old ereaders, you have to be especially careful with how you construct your epub `toc` tree in `meta.yml`.
+
+	In an NCX, you cannot have two items in nav pointing to the same target. So in your epub `toc` in `meta.yml`, you can't have two items with the same `file` and `id`. To differentiate them, you add an `id` pointing to, say, a heading in the document to differentiate one target in the same file from another.
+
+	Also, in an NCX, every item must include a link. So if an item in your toc has no link, and only children items, then in the `toc.ncx` the Electric Book will create a link for it. It will use the `file` (without the `id`) of its first child. So, to ensure that you don't get duplicate links, you must add an `id` to that first child. This way, the parent will point to the `file`, and the first child item will point to the `file` + `id`.
 
 ## Fonts
 
