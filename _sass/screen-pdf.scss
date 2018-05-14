@@ -24,8 +24,8 @@
 $edition-suffix: null !default;
 
 // First, we set several variables related to overall page setup.
-$page-width: 210mm !default;
-$page-height: 297mm !default;
+$page-width: 152mm !default;
+$page-height: 229mm !default;
 $margin-top: 20mm !default;
 $margin-bottom: 20mm !default;
 $margin-outside: 20mm !default;
@@ -70,8 +70,8 @@ $font-display-secondary: "Crimson", prince-no-fallback !default;
 $font-code: "Ubuntu Mono", prince-no-fallback !default;
 
 // Finally, we set variables related to text flow.
-$font-size-default: 12pt !default;
-$line-height-default: 16pt !default; // Set in points. For consistent baselines, all other line heights and vertical spaces are based on this.
+$font-size-default: 11pt !default;
+$line-height-default: 15pt !default; // Set in points. For consistent baselines, all other line heights and vertical spaces are based on this.
 $font-size-smaller: 0.8 !default; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes? Use whole numbers to preserve baseline grid.
 $text-align: justify !default; // left or right or inside or outside or justify or center
