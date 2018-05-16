@@ -96,15 +96,15 @@ $print-figures: true !default;
 
 	// Image size options
 	// These need to be deprecated in favour of a multiple-based system.
-	.figure.x-small p img {
+	.figure.x-small img {
 		width: auto;
 		max-height: $line-height-default * 5;
 	}
-	.figure.small p img {
+	.figure.small img {
 		width: auto;
 		max-height: $line-height-default * 7;
 	}
-	.figure.medium p img {
+	.figure.medium img {
 		width: auto;
 		max-height: $line-height-default * 10;
 	}
