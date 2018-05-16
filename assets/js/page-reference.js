@@ -9,7 +9,7 @@
 
 // Get the locale word for page for this HTML document's language
 // pageLanguage is provided by locales.js
-var pageWord = locales[pageLanguage].cross_references.page;
+var pageWord = locales[pageLanguage]['cross-references'].page;
 
 function addPageReferenceFunc() {
 

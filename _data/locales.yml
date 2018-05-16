@@ -147,7 +147,7 @@ en:
   search:
     search-title: "Search"
     placeholder: "Search"
-    search_results: "Search results"
+    search-results: "Search results"
     results-for-singular: "result found for"
     results-for-plural: "results found for"
     results-for-none: "No results found for"
@@ -205,7 +205,7 @@ fr:
   search:
     search-title: "Recherche"
     placeholder: "Recherche"
-    search_results: "Résultats de la recherche"
+    search-results: "Résultats de la recherche"
     results-for-singular: "résultat trouvé pour"
     results-for-plural: "résultats trouvés pour"
     results-for-none: "Aucun résultat trouvé pour"

@@ -108,7 +108,7 @@ var ebMCQsMakeOptionCheckboxes = function(question) {
 var ebMCQsAddButton = function(question) {
     // make the button
     var button = document.createElement('button');
-    button.innerHTML = locales[pageLanguage].questions.check_answers_button;
+    button.innerHTML = locales[pageLanguage].questions['check-answers-button'];
     button.classList.add('check-answer-button');
 
     // now add it to question, before the feedback
@@ -296,7 +296,7 @@ var ebMCQsAddWordPressAccountButton = function() {
 
     if(ebMCQsWordPressUserId()) {
         // change the button text and href
-        accountLink.innerText = locales[pageLanguage].account.my_account;
+        accountLink.innerText = locales[pageLanguage].account['my-account'];
         accountLink.href = '/account/';
     }
 }
@@ -379,19 +379,19 @@ var ebMCQsButtonClicks = function() {
             // if exactly right, mark it so, show options
             if(ebMCQsExactlyRight(correctAnswersForThisMCQs, selectedOptions)) {
                 mcqsToCheck.classList.add('mcq-correct');
-                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback_correct');
+                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback-correct');
                 ebMCQsShowSelectedOptions(mcqsToCheck, selectedOptions);
 
                 // set score
                 score = 1;
             } else if(ebMCQsNotAllTheCorrectAnswers(correctAnswersForThisMCQs, selectedOptions)) {
                 mcqsToCheck.classList.add('mcq-partially-correct');
-                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback_unfinished');
+                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback-unfinished');
                 ebMCQsShowSelectedIncorrectOptions(mcqsToCheck, selectedOptions, correctAnswersForThisMCQs);
             } else {
                 // show the feedback for the incorrect options
                 mcqsToCheck.classList.add('mcq-incorrect');
-                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback_incorrect');
+                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback-incorrect');
                 ebMCQsShowSelectedIncorrectOptions(mcqsToCheck, selectedOptions, correctAnswersForThisMCQs);
             }
 

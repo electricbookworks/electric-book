@@ -2,7 +2,7 @@
 
 // Convert locales.yml into a JSON string.
 // Note that hyphens in keys are converted to underscores.
-var locales = {{ site.data.locales | jsonify | replace: "-", "_" }};
+var locales = {{ site.data.locales | jsonify }};
 
 // Or get the language from a URL parameter
 // https://stackoverflow.com/a/901144/1781075

@@ -1,6 +1,6 @@
 function displaySearchResults(results, store) {
 
-  var localisedSearchResults = locales[pageLanguage].search.search_results;
+  var localisedSearchResults = locales[pageLanguage].search['search-results'];
   var appendString = '';
 
   if (results.length) {
@@ -10,10 +10,10 @@ function displaySearchResults(results, store) {
     appendString += '<h2>' + localisedSearchResults + '</h2>';
 
     if (results.length == 1) {
-      var localisedSearchResultsNumberSuffix = locales[pageLanguage].search.results_for_singular;
+      var localisedSearchResultsNumberSuffix = locales[pageLanguage].search['results-for-singular'];
     } 
     else {
-      var localisedSearchResultsNumberSuffix = locales[pageLanguage].search.results_for_plural;
+      var localisedSearchResultsNumberSuffix = locales[pageLanguage].search['results-for-plural'];
     }
 
     appendString += '<p>' + results.length + ' ' + localisedSearchResultsNumberSuffix;
@@ -34,7 +34,7 @@ function displaySearchResults(results, store) {
     appendString += '</div>';
 
   } else {
-    var localisedSearchResultsNumberSuffix = locales[pageLanguage].search.results_for_none;
+    var localisedSearchResultsNumberSuffix = locales[pageLanguage].search['results-for-none'];
     appendString += '<p>' + localisedSearchResultsNumberSuffix + ' "' + searchTerm + '".</p>';
   }
 
@@ -45,7 +45,7 @@ function displaySearchResults(results, store) {
 // (since all languages use same search.html)
 function localiseSearchHeading() {
   if (document.querySelector('#content h1')) {
-    var localisedSearchHeading = locales[pageLanguage].search.search_title;
+    var localisedSearchHeading = locales[pageLanguage].search['search-title'];
     var searchHeading = document.querySelector('#content h1');
     searchHeading.innerHTML = localisedSearchHeading;
   };
