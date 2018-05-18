@@ -1,7 +1,8 @@
 // Load locales.yml into a locales array.
 
 // Convert locales.yml into a JSON string.
-// Note that hyphens in keys are converted to underscores.
+// Note that some keys use hyphens, which are invalid JS. So to use them
+// as variables, use square brackets and quotes, e.g. search['search-placeholder'].
 var locales = {{ site.data.locales | jsonify }};
 
 // Or get the language from a URL parameter
