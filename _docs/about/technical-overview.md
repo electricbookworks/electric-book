@@ -27,9 +27,10 @@ To use the workflow on your own machine, you must have the following software in
 * **Bundler**: software that manages which version of Jekyll (and other Ruby gems) to apply to a project.
 * **Jekyll**: software that turns markdown and Sass into HTML and CSS. (To learn about Jekyll, [start here](http://jekyllrb.com/). If you're installing it on Windows, [you'll also need this guide](http://jekyll-windows.juthilo.com/).) From version 0.4.0, our template requires at least Jekyll 3.2.
 * **Node.js**, which we use for doing things like converting images and optimising Javascript.
+* **Gulp**: a Node.js package we use for bulk-processing images and Javascript.
 * **PhantomJS**: a headless browser that we use for rendering MathJax in PDF and for generating search indexes.
 * **PrinceXML**: software for creating PDFs from HTML and CSS (Prince is the only proprietary tool you'll need).
-* **GraphicsMagick**: the software we use for optimising images.
+* **GraphicsMagick**: the software we use for optimising images via Gulp.
 * **Git**: the software we use for version control.
 
 You can see guidelines for [installing Jekyll on Windows here](https://gist.github.com/arthurattwell/281a5e1888ffd89b08b4861a2e3c1b35), and a guide to [setting up on Mac here](https://gist.github.com/arthurattwell/88be57cc2f660e35ebade4d098d67e4b).
