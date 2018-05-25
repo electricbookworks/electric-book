@@ -43,8 +43,11 @@ capture its contents, so we can filter them.{% endcomment %}
 
 {% comment %}Get the correct options from the YAML frontmatter.
 This depends on the file ONLY containing one line of frontmatter:
-e.g. correct: 1. We should aim for something smarter in future.{% endcomment %}
-{% capture question-correct-options %}{{ question-no-hyphens | split: "correct:" | last | split: "notthreehyphens" | first }}{% endcapture %}
+e.g. correct: 1. Note the the capture includes the line break before 'correct'
+otherwise it could split on the phrase 'correct:' in the question text.
+We should aim for something smarter in future.{% endcomment %}
+{% capture question-correct-options %}{{ question-no-hyphens | split: "
+correct:" | last | split: "notthreehyphens" | first }}{% endcapture %}
 
 {% comment %}Output a div containing that content, without the YAML frontmatter.
 To remove the frontmatter, we split the contents into an array and return
