@@ -13,7 +13,8 @@ exclude: [
 # -----------------------------------
 # Build tools
 # -----------------------------------
-README*,
+README.md,
+LICENSE,
 run-linux*,
 run-mac*,
 run-windows*,
@@ -24,6 +25,7 @@ package-lock.json,
 node_modules,
 gulpfile.js,
 eslint.json,
+CHANGELOG.md,
 /*/images/source,
 # -----------------------------------
 # Colour profiles for conversions
