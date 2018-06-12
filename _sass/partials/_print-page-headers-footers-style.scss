@@ -9,6 +9,7 @@
 
 @mixin header-position() {
   vertical-align: top;
+  line-height: 1;
   margin-top: $header-space-from-top;
   text-align: $header-text-align;
 }
@@ -23,6 +24,7 @@
 
 @mixin footer-position() {
   vertical-align: bottom;
+  line-height: 1;
   margin-bottom: $footer-space-from-bottom;
   text-align: $footer-text-align;
 }

@@ -30,8 +30,8 @@ $edition-suffix: null;
 // First, we set several variables related to overall page setup.
 $page-width: 152mm;
 $page-height: 229mm;
-$margin-top: 20mm;
-$margin-bottom: 20mm;
+$margin-top: 60pt; // by setting this in points, you align with your baseline grid
+$margin-bottom: 60pt;
 $margin-outside: 20mm;
 $margin-inside: 20mm;
 $bleed: 3mm;
@@ -195,7 +195,7 @@ $header-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
 $footer-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
 $header-letter-spacing: 0.1em;
 $footer-letter-spacing: 0.1em;
-$header-space-from-top: $margin-top / 2;
+$header-space-from-top: $margin-top / 2 + ($line-height-default / 4);
 $footer-space-from-bottom: $margin-bottom / 2;
 $header-text-align: center;
 $footer-text-align: center;
@@ -204,6 +204,10 @@ $footer-text-align: center;
 // Specify a colour for highlighting; use 'inherit' for none.
 $highlight-tightened: inherit;
 $highlight-loosened: inherit;
+
+// Show or hide a baseline grid, based on line-height-default.
+// Set to true to show or false to hide.
+$show-baseline-grid: false;
 
 // ---------------------------------
 // Set to false to turn partials off

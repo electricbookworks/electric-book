@@ -190,7 +190,7 @@ $header-case: uppercase !default; // none|capitalize|uppercase|lowercase|initial
 $footer-case: uppercase !default; // none|capitalize|uppercase|lowercase|initial|inherit;
 $header-letter-spacing: 0.1em !default;
 $footer-letter-spacing: 0.1em !default;
-$header-space-from-top: $margin-top / 2 !default;
+$header-space-from-top: $margin-top / 2 + ($line-height-default / 4) !default; // should align with baseline grid
 $footer-space-from-bottom: $margin-bottom / 2 !default;
 $header-text-align: center !default;
 $footer-text-align: center !default;
@@ -199,6 +199,10 @@ $footer-text-align: center !default;
 // Specify a colour for highlighting; use 'inherit' for none.
 $highlight-tightened: inherit !default;
 $highlight-loosened: inherit !default;
+
+// Show or hide a baseline grid, based on line-height-default.
+// Set to true to show or false to hide.
+$show-baseline-grid: false !default;
 
 // ---------------------------------
 // Set to false to turn partials off
@@ -285,6 +289,7 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 @import "partials/print-hide-non-printing"; // Hides anything .non-printing
 @import "partials/print-fitting"; // Classes for floating, tracking, shrinking, etc.
 @import "partials/print-hyphenation"; // Sets hyphenation dictionary
+@import "partials/print-baseline-grid"; // Shows a baseline grid
 
 // ---------------------
 // Theme modules
