@@ -1,0 +1,17 @@
+$show-baseline-grid: false !default;
+@if $show-baseline-grid {
+
+	$color-baselines: lightblue !default;
+
+	@page {
+		// (Stripes! Thanks https://css-tricks.com/stripes-css/)
+		background-color: white;
+		background: linear-gradient(
+			$color-baselines 50%,
+			white 50%
+		);
+		// background-position: 0 $bleed;
+		background-size: 100% $line-height-default * 2;
+	}
+
+}
