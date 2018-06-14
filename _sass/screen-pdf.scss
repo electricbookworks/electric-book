@@ -122,6 +122,8 @@ $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see
 // * For the body element's title attribute: string(page-header)
 //   Set this body title attribute with `header: Your Title` in a file's YAML frontmatter.
 //   If you don't set a page header in YAML, string(page-header) will fallback to the page title.
+//   You can also set string(page-header-left) and string(page-header-right) with page YAML
+//   `header-left: "Your Left Header"` and `header-right: "Your Right Header"` respectively.
 // * For the title attribute of the last h1 (increment to h2, h3, h4, h5, h6 as needed): string(h1-title, last)
 //   By default, this uses the heading text, unless you manually set a title attribute for a given heading.
 //   In kramdown, use {: title="Your Title Here" } after the heading to set the title manually.

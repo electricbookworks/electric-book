@@ -43,7 +43,7 @@ works:
     subtitle: ""
     creator: "A. N. Author" # E.g. the author
     contributor: "" # E.g. other contributors
-    subject: "Fiction" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
+    subject: "Fiction" # E.g. BISAC terms (https://bisg.org/page/BISACEdition) or BIC (http://editeur.dyndns.org/bic_categories)
     description: "This is the Electric Book template." # E.g. the blurb
     publisher: "EBW" # E.g. the publisher, imprint or brand name
     publisher-url: ""
