@@ -100,12 +100,12 @@ $epub-base-typography: true !default;
     $text-divider: "" !default;
 
     hr {
-        // Amazon Kindle does not support any creative use of hr styling, including
-        // `content:`, `border: 0` or `border: none`. We don't use background-image 
-        // because of problems linking to the image after export from here.
-        // Kindle output ignores rgba. So this is the least-bad solution.
+        // Amazon Kindle supports very little creative hr styling, though you
+        // might try border-colour and width in custom CSS.
+        // Kindle ignores rgba. So this is the least-bad solution.
+        // We don't use background-image because of problems linking to the image.
         border: $rule-thickness solid rgba(255,255,255,0);
-        margin: $line-height-default 0; // Adds space, esp. important for Kindle
+        margin: $line-height-default auto; // Adds space, esp. important for Kindle
         text-align: center; // Necessary for aligning :after content
         // Note: Amazon Kindle will ignore this :after content setting.
         // An hr in Amazon can be hidden by setting hr { margin-left: -200%; }
@@ -129,6 +129,7 @@ $epub-base-typography: true !default;
     //     hr {
     //         margin-left: -200%;
     //     }
+    // }
 
     // Superscripts and subscripts
 
