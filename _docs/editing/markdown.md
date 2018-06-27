@@ -311,3 +311,11 @@ For instance, you can use special HTML codes to insert non-breaking spaces, disc
 | Prevent line breaks inside big numbers| Use a non-breaking space: e.g. for '40&nbsp;000' type `40&nbsp;000`
 | Prevent a line break at a hyphen | Use `&#x2011;` for a non-breaking hyphen, e.g. `D&#x2011;Space` for 'D&#x2011;Space'
 | Allow a word to hyphenate at the end of a line | Insert a discretionary ('soft') hyphen code: `&shy;`. E.g. `mark&shy;down`
+
+### HTML entities in epub
+
+**Warning!** Epubs cannot use 'named entities' like `&nbsp;` and `&shy;` – that is, entities where the character code reads like a name. Luckily, when generating your epub's HTML, kramdown will automatically convert these into unicode characters, and you won't have to think about it.
+
+However, if you've used snippets of actual HTML in your content, such as complex tables in `<table>` elements, kramdown does not by default process the content inside them. And in this case, named entities like `&nbsp;` will remain in the epub HTML, and you'll get serious errors when validating your epub. In these cases, you need to use the hex code for these entities, such as `&#160;` instead of `&nbsp;`.
+
+In some cases it may work to add the attribute `markdown="1"` to the element to make kramdown process its contents as markdown.
