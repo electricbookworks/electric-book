@@ -960,7 +960,7 @@ set /p process=Enter a number and hit return.
 
         :: Check if refreshing web or app index
         echo To refresh the website search index, press enter.
-        echo To refresh to app search index, type a and press enter.
+        echo To refresh the app search index, type a and press enter.
         set /p searchIndexToRefresh=
 
         :: Generate HTML with Jekyll
@@ -972,7 +972,7 @@ set /p process=Enter a number and hit return.
             call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml"
             goto refreshSearchIndexRenderWithPhantom
 
-        ;buildForAppSearchIndex
+        :buildForAppSearchIndex
 
             call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml"
             goto refreshSearchIndexRenderWithPhantom
