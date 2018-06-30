@@ -860,7 +860,7 @@ You may need to reload the web page once this server is running."
 
 		# Check if refreshing web or app index
 		echo "To refresh the website search index, press enter."
-		echo "To refresh to app search index, type a and press enter."
+		echo "To refresh the app search index, type a and press enter."
 		searchIndexToRefresh=""
 		read searchIndexToRefresh
 
