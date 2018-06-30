@@ -1,3 +1,4 @@
+// Display the search results
 function displaySearchResults(results, store) {
 
   var localisedSearchResults = locales[pageLanguage].search['search-results'];
@@ -38,7 +39,15 @@ function displaySearchResults(results, store) {
     appendString += '<p>' + localisedSearchResultsNumberSuffix + ' "' + searchTerm + '".</p>';
   }
 
+  var searchForm = document.querySelector('#content .search');
   searchForm.parentNode.innerHTML += appendString;
+
+  // Hide the search-progress placeholder
+  var searchProgressPlaceholder = document.querySelector('.search-progress-placeholder');
+  if (searchProgressPlaceholder) {
+    searchProgressPlaceholder.classList.add('visuallyhidden');
+  }
+
 }
 
 // Localise heading of search page
@@ -62,6 +71,17 @@ function localiseSearchLanguage() {
 function checkForSearchTerm() {
   if (searchTerm) {
 
+    // display a 'Searching' progress placeholder
+    var searchProgress = document.createElement('div');
+    searchProgress.classList.add('search-progress-placeholder')
+    if (searchProgress) {
+      var searchBox = document.querySelector('#content #search-box')
+      if (searchBox) {
+        searchProgress.innerHTML = '<p>' + locales[pageLanguage].search['placeholder-searching'] + '</p>';
+        searchBox.insertAdjacentElement('afterEnd', searchProgress);
+      }
+    }
+
     // perform the search
     var results = index.search(searchTerm, {
       bool: "AND"
@@ -69,9 +89,11 @@ function checkForSearchTerm() {
 
     // display the results
     displaySearchResults(results, store);
+
   };
 };
 
 localiseSearchHeading();
 localiseSearchLanguage();
 checkForSearchTerm();
+fillSearchBox();

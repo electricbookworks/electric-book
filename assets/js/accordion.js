@@ -436,26 +436,6 @@ function ebAccordify() {
                 accordionSection.querySelector('header').appendChild(searchResultsMiniSummary);
             }
         });
-
-        // add a summary before the first section
-        var searchTerms = document.querySelectorAll('[data-markjs]');
-        var numberOfSearchTerms = searchTerms.length;
-        if(!!numberOfSearchTerms) {
-            // make the summary paragraph
-            var searchResultsSummary = document.createElement('p');
-            searchResultsSummary.classList.add('search-results-summary')
-            searchResultsSummary.innerHTML = numberOfSearchTerms + ' search results for ' + '"<mark>' + searchTerm + '</mark>".';
-
-            // add it after the main heading
-            var mainHeading = document.querySelector('h1');
-            var contentDiv =  document.querySelector('#content');
-
-            contentDiv.insertBefore(searchResultsSummary, mainHeading.nextSibling);
-
-            // add a link to the first result
-            searchTerms[0].id = 'first-search-result';
-            searchResultsSummary.innerHTML += ' <a href="#first-search-result">Jump to first result &darr;</a>.'
-        }
     }
 
     // if there's no hash, show the first section
