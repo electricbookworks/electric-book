@@ -6,12 +6,12 @@ layout: null
 
 {% if site.output == "web" or site.output == "app" %}
 
-    {% include_relative locales.js %}
+    {% comment %} This order is important. {% endcomment %}
     {% include_relative polyfills.js %}
-    {% include_relative nav.js %}
-    {% include_relative get-query-variable.js %}
+    {% include_relative locales.js %}
     {% include_relative mark.min.js %}
-    {% include_relative mark-search-terms.js %}
+    {% include_relative search-terms.js %}
+    {% include_relative nav.js %}
     {% include_relative videos.js %}
     {% include_relative mcqs.js %}
 

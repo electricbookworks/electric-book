@@ -63,6 +63,9 @@ $color-links: #5f738c !default;
 $color-buttons: $color-accent !default;
 $color-buttons-hover: darken( $color-buttons, 20% ) !default;
 $color-highlight: #ffd54d !default;
+$color-notification-low: #7fcebf !default;
+$color-notification-medium: #ffe388 !default;
+$color-notification-high: #ff7c4d !default;
 
 // Some features rearrange at certain screen sizes.
 // What are your break points for rearrangement?
