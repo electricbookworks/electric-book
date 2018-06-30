@@ -141,16 +141,20 @@ en:
     menu: "Contents"
     next: "Next"
     previous: "Previous"
+    back: "&larr;"
   input:
     submit: "Submit"
     send: "Send"
   search:
     search-title: "Search"
     placeholder: "Search"
+    placeholder-searching: "Searching..."
     search-results: "Search results"
     results-for-singular: "result found for"
     results-for-plural: "results found for"
     results-for-none: "No results found for"
+    jump-to-first: "Jump to first result ↓"
+    notice: ""
   contact:
     placeholder:
       name: "Name"
@@ -199,16 +203,20 @@ fr:
     menu: "Table des matières"
     next: "Suivant"
     previous: "Précédent"
+    back: "&larr;"
   input:
     submit: "Soumettre"
     send: "Envoyer"
   search:
     search-title: "Recherche"
     placeholder: "Recherche"
+    placeholder-searching: "Recherche..."
     search-results: "Résultats de la recherche"
     results-for-singular: "résultat trouvé pour"
     results-for-plural: "résultats trouvés pour"
     results-for-none: "Aucun résultat trouvé pour"
+    jump-to-first: "Aller au premier résultat ↓"
+    notice: ""
   contact:
     placeholder:
       name: "Nom"
