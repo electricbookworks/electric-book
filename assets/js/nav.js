@@ -1,6 +1,6 @@
- "use strict";
+"use strict";
 
-(function () {
+function ebNav() {
 
   // let Opera Mini use the footer-anchor pattern
   if (navigator.userAgent.indexOf('Opera Mini') === - 1) {
@@ -35,7 +35,7 @@
         subMenus[i].querySelector('ol, ul').classList.add('visuallyhidden');
         subMenus[i].querySelector('a, .docs-list-title')
                    .insertAdjacentHTML('afterend', showChildrenButton);
-      }
+      };
 
       // show the menu when we click the link
       menuLink.addEventListener("click", function(ev) {
@@ -47,7 +47,7 @@
       var ebHideMenu = function() {
           menu.classList.add("visuallyhidden");
           document.documentElement.classList.remove('js-nav-open');
-      }
+      };
 
       // listen for clicks inside the menu
       menu.addEventListener("click", function(ev) {
@@ -58,7 +58,7 @@
             ev.preventDefault();
             ebHideMenu();
             return;
-        }
+        };
 
         // show the children when we click a .has-children
         if (clickedElement.hasAttribute("data-toggle-nav")) {
@@ -66,26 +66,51 @@
             clickedElement.classList.toggle('show-children');
             clickedElement.nextElementSibling.classList.toggle('visuallyhidden');
             return;
-        }
+        };
 
         // if it's an anchor with an href (an in-page link)
         if (clickedElement.tagName === "A" && clickedElement.getAttribute('href')) {
             ebHideMenu();
             return;
-        }
+        };
 
         // if it's an anchor without an href (a nav-only link)
         if (clickedElement.tagName === "A") {
             clickedElement.nextElementSibling.classList.toggle('show-children');
             clickedElement.nextElementSibling.nextElementSibling.classList.toggle('visuallyhidden');
             return;
-        }
+        };
 
 
       });
 
-    }
+      // This enables a back button, e.g. for where we don't have a
+      // browser or hardware back button, and we have Jekyll add one.
+      // This button is hidden in scss with `$nav-bar-back-button-hide: true;`.
+      // If the user has navigated (i.e. there is a document referrer),
+      // listen for clicks on our back button and go back when clicked.
+      // We check history.length > 2 because new tab plus landing page
+      // can constitute 2 entries in the history (varies by browser).
+      if (document.referrer != "" || window.history.length > 2) {
+        var navBackButton = document.querySelector('a.nav-back-button');
+        if (navBackButton) {
+            navBackButton.addEventListener('click', function(ev) {
+                ev.preventDefault();
+                console.log('Going back...');
+                window.history.back();
+            });
+        };
+      } else {
+          var navBackButton = document.querySelector('a.nav-back-button');
+          if (navBackButton) {
+            navBackButton.parentNode.removeChild(navBackButton);
+          };
+      };
 
-  }
+    };
 
-}());
+  };
+
+};
+
+ebNav();

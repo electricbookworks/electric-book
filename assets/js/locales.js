@@ -89,16 +89,21 @@ function localiseText() {
     // We cannot localise the nav/TOC, since the root search page
     // always uses the parent-language. So we replace the nav
     // on the search page with a back button instead.
+    // In case we have a back button (`$nav-bar-back-button-hide; true` in scss)
+    // hide that one.
     var searchNavButtonToReplace = document.querySelector('.search-page [href="#nav"]');
     var searchNavDivToReplace = document.querySelector('.search-page #nav');
-    if (searchNavButtonToReplace) {
-        searchNavButtonToReplace.innerHTML = locales[pageLanguage].nav.back;
-        searchNavButtonToReplace.addEventListener('click', function(ev) {
-            ev.preventDefault();
-            console.log('Going back...');
-            window.history.back();
-        });
-
+    var navBackButton = document.querySelector('.nav-back-button');
+    if (searchNavButtonToReplace && navBackButton) {
+        if (document.referrer != "" || window.history.length > 0) {
+            navBackButton.remove();
+            searchNavButtonToReplace.innerHTML = locales[pageLanguage].nav.back;
+            searchNavButtonToReplace.addEventListener('click', function(ev) {
+                ev.preventDefault();
+                console.log('Going back...');
+                window.history.back();
+            });
+        };
     };
     if (searchNavDivToReplace) {
         searchNavDivToReplace.innerHTML = '';
