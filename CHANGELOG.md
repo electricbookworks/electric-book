@@ -11,8 +11,9 @@
 * [Add support for show-page-number and show-url classes](https://github.com/electricbookworks/electric-book/pull/259).
 * [Support a 'start-on-right' class to start new recto pages](https://github.com/electricbookworks/electric-book/pull/261).
 * [Distinguish between project logo and project image](https://github.com/electricbookworks/electric-book/pull/264).
-* [Localise search interface](https://github.com/electricbookworks/electric-book/pull/266).
+* [Localise search](https://github.com/electricbookworks/electric-book/pull/266) [pages](https://github.com/electricbookworks/electric-book/pull/274).
 * [Add ability to show a baseline grid](https://github.com/electricbookworks/electric-book/pull/272).
+* [Add optional back button for app output](https://github.com/electricbookworks/electric-book/pull/275).
 * [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/ea42c5050375cbd9e30ec2c8f7c47b7e5ecf45b7...master).
 
 ## 0.11.1
