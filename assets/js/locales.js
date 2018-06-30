@@ -19,19 +19,106 @@ function getParameterByName(name, url) {
 
 // Get the page language
 if (getParameterByName('lang')) {
-	var pageLanguage = getParameterByName('lang');
+    var pageLanguage = getParameterByName('lang');
+    var pageLanguageByURLParameter = true;
+    localiseText();
 } else {
-	var pageLanguage = document.documentElement.lang;
+    var pageLanguage = document.documentElement.lang;
+    // If epub, this is xml:lang
+    if (!pageLanguage) {
+        var pageLanguage = document.documentElement.getAttribute('xml:lang');
+    }
+    localiseText();
 };
 
+// Various content localisations
 
-// Localise Javascript-driven text
-{% if site.output == "web" or site.output == "app" %}
+function localiseText() {
+
+    // Localise masthead
+    var mastheadProjectName = document.querySelector('.masthead .masthead-series-name a');
+    if (mastheadProjectName && 
+        locales[pageLanguage].project.name && 
+        locales[pageLanguage].project.name !== '') {
+        mastheadProjectName.innerHTML = locales[pageLanguage].project.name;
+    }
+
+    // Localise search
+    var searchPageHeading = document.querySelector('.search-page #content h1:first-of-type');
+    if (searchPageHeading) {
+        searchPageHeading.innerHTML = locales[pageLanguage].search['search-title'];
+    }
+
+    // Localise search form
+    var searchLanguageToLocalise = document.querySelector('#search-language');
+    if (searchLanguageToLocalise) {
+        searchLanguageToLocalise.setAttribute('value', pageLanguage);
+    };
+
+    // Localise search-box placeholder
+    var searchInputBox = document.querySelector('.search input.search-box');
+    if (searchInputBox) {
+        var searchInputBoxPlaceholder = document.querySelector('.search input.search-box').placeholder;
+        if (searchInputBoxPlaceholder) {
+            searchInputBoxPlaceholder = locales[pageLanguage].search['search-placeholder'];
+        }
+    }
+
+    // Localise searching... notice
+    var searchProgressPlaceholder = document.querySelector('.search-progress');
+    if (searchProgressPlaceholder) {
+        searchProgressPlaceholder.innerHTML = locales[pageLanguage].search['placeholder-searching'];
+    };
 
     // Localise Google CSE search snippets
-    function localiseSearchBox() {
-        document.querySelector('.search input.search-box').placeholder = locales[pageLanguage].search.placeholder;
+    var googleCSESearchBox = document.querySelector('.search input.search-box');
+    if (googleCSESearchBox) {
+        googleCSESearchBox.placeholder = locales[pageLanguage].search.placeholder;
     };
-    localiseSearchBox();
 
-{% endif %}
+    // Add any notices set in locales as search.notice
+    if (searchPageHeading &&
+        locales[pageLanguage].search.notice &&
+        locales[pageLanguage].search.notice !== '') {
+        var searchNotice = document.createElement('div');
+        searchNotice.classList.add('search-page-notice');
+        searchNotice.innerHTML = '<p>' + locales[pageLanguage].search.notice + '</p>';
+        searchPageHeading.insertAdjacentElement('afterend', searchNotice);
+    };
+
+    // We cannot localise the nav/TOC, since the root search page
+    // always uses the parent-language. So we replace the nav
+    // on the search page with a back button instead.
+    var searchNavButtonToReplace = document.querySelector('.search-page [href="#nav"]');
+    var searchNavDivToReplace = document.querySelector('.search-page #nav');
+    if (searchNavButtonToReplace) {
+        searchNavButtonToReplace.innerHTML = locales[pageLanguage].nav.back;
+        searchNavButtonToReplace.addEventListener('click', function(ev) {
+            ev.preventDefault();
+            console.log('Going back...');
+            window.history.back();
+        });
+
+    };
+    if (searchNavDivToReplace) {
+        searchNavDivToReplace.innerHTML = '';
+    }
+
+    // If no results with GSE, translate 'No results' phrase
+    window.addEventListener("load", function (event) {
+        console.log("All loaded, checking for no-result.");
+        var noResultsGSE = document.querySelector('.gs-no-results-result .gs-snippet');
+        if (noResultsGSE) {
+            noResultsGSE.innerHTML = locales[pageLanguage].search['results-for-none'] + ' ‘' + searchTerm + '’';
+        }
+    });
+
+    // localise questions
+    var questionButtons = document.querySelectorAll('.question .check-answer-button');
+    function replaceText(button) {
+        button.innerHTML= locales[pageLanguage].questions['check-answers-button'];
+    }
+    if (questionButtons) {
+        questionButtons.forEach(replaceText);
+    }
+}
