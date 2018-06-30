@@ -341,15 +341,51 @@ defined in meta.yml for the given translation.
             {% if work.products.screen-pdf.files %}{% assign screen-pdf-file-list = work.products.screen-pdf.files %}{% endif %}
             {% if work.products.screen-pdf.toc %}{% assign screen-pdf-toc = work.products.screen-pdf.toc %}{% endif %}
 
-            {% if work.products.app.date %}{% capture app-date %}{{ work.products.app.date }}{% endcapture %}{% endif %}
-            {% if work.products.app.format %}{% capture app-format %}{{ work.products.app.format }}{% endcapture %}{% endif %}
-            {% if work.products.app.identifier %}{% capture app-identifier %}{{ work.products.app.identifier }}{% endcapture %}{% endif %}
-            {% if work.products.app.image %}{% capture app-image %}{{ work.products.app.image }}{% endcapture %}{% endif %}
-            {% if work.products.app.start-page %}{% capture app-start-page %}{{ work.products.app.start-page }}{% endcapture %}{% endif %}
-            {% if work.products.app.contents-page %}{% capture app-contents-page %}{{ work.products.app.contents-page }}{% endcapture %}{% endif %}
-            {% if work.products.app.files %}{% assign app-file-list = work.products.app.files %}{% endif %}
-            {% if work.products.app.nav %}{% assign app-nav-tree = work.products.app.nav %}{% endif %}
-            {% if work.products.app.toc %}{% assign app-toc = work.products.app.toc %}{% endif %}
+            {% if work.products.app.date %}
+                {% capture app-date %}{{ work.products.app.date }}{% endcapture %}
+            {% else %}
+                {% capture app-date %}{{ web-date }}{% endcapture %}
+            {% endif %}
+            {% if work.products.app.format %}
+                {% capture app-format %}{{ work.products.app.format }}{% endcapture %}
+            {% else %}
+                {% capture app-format %}{{ web-format }}{% endcapture %}
+            {% endif %}
+            {% if work.products.app.identifier %}
+                {% capture app-identifier %}{{ work.products.app.identifier }}{% endcapture %}
+            {% else %}
+                {% capture app-identifier %}{{ web-identifier }}{% endcapture %}
+            {% endif %}
+            {% if work.products.app.image %}
+                {% capture app-image %}{{ work.products.app.image }}{% endcapture %}
+            {% else %}
+                {% capture app-image %}{{ web-image }}{% endcapture %}
+            {% endif %}
+            {% if work.products.app.start-page %}
+                {% capture app-start-page %}{{ work.products.app.start-page }}{% endcapture %}
+            {% else %}
+                {% capture app-start-page %}{{ web-start-page }}{% endcapture %}
+            {% endif %}
+            {% if work.products.app.contents-page %}
+                {% capture app-contents-page %}{{ work.products.app.contents-page }}{% endcapture %}
+            {% else %}
+                {% capture app-contents-page %}{{ web-contents-page }}{% endcapture %}
+            {% endif %}
+            {% if work.products.app.files %}
+                {% assign app-file-list = work.products.app.files %}
+            {% else %}
+                {% assign app-file-list = web-file-list %}
+            {% endif %}
+            {% if work.products.app.nav %}
+                {% assign app-nav-tree = work.products.app.nav %}
+            {% else %}
+                {% assign app-nav-tree = web-nav-tree %}
+            {% endif %}
+            {% if work.products.app.toc %}
+                {% assign app-toc = work.products.app.toc %}
+            {% else %}
+                {% assign app-toc = web-toc %}
+            {% endif %}
 
             {% if work.variants %}
                 {% assign variants = work.variants %}
@@ -375,93 +411,130 @@ override any metadata set for that variant.{% endcomment %}
 
         {% if data.variant == variant %}
 
-              {% comment %}Note that we don't overwrite book-directory for variants{% endcomment %}
-              {% if data.title %}{% capture title %}{{ data.title }}{% endcapture %}{% endif %}
-              {% if data.subtitle %}{% capture subtitle %}{{ data.subtitle }}{% endcapture %}{% endif %}
-              {% if data.creator %}{% capture creator %}{{ data.creator }}{% endcapture %}{% endif %}
-              {% if data.contributor %}{% capture contributor %}{{ data.contributor }}{% endcapture %}{% endif %}
-              {% if data.subject %}{% capture subject %}{{ data.subject }}{% endcapture %}{% endif %}
-              {% if data.description %}{% capture description %}{{ data.description }}{% endcapture %}{% endif %}
-              {% if data.publisher %}{% capture publisher %}{{ data.publisher }}{% endcapture %}{% endif %}
-              {% if data.publisher-url %}{% capture publisher-url %}{{ data.publisher-url }}{% endcapture %}{% endif %}
-              {% if data.date %}{% capture date %}{{ data.date }}{% endcapture %}{% endif %}
-              {% if data.modified %}{% capture modified %}{{ data.modified }}{% endcapture %}{% endif %}
-              {% if data.type %}{% capture type %}{{ data.type }}{% endcapture %}{% endif %}
-              {% if data.identifier %}{% capture identifier %}{{ data.identifier }}{% endcapture %}{% endif %}
-              {% if data.source %}{% capture source %}{{ data.source }}{% endcapture %}{% endif %}
-              {% if data.language %}{% capture language %}{{ data.language }}{% endcapture %}{% endif %}
-              {% if data.relation %}{% capture relation %}{{ data.relation }}{% endcapture %}{% endif %}
-              {% if data.coverage %}{% capture coverage %}{{ data.coverage }}{% endcapture %}{% endif %}
-              {% if data.rights %}{% capture rights %}{{ data.rights }}{% endcapture %}{% endif %}
-              {% if data.image %}{% capture image %}{{ data.image }}{% endcapture %}{% endif %}
+            {% comment %}Note that we don't overwrite book-directory for variants{% endcomment %}
+            {% if data.title %}{% capture title %}{{ data.title }}{% endcapture %}{% endif %}
+            {% if data.subtitle %}{% capture subtitle %}{{ data.subtitle }}{% endcapture %}{% endif %}
+            {% if data.creator %}{% capture creator %}{{ data.creator }}{% endcapture %}{% endif %}
+            {% if data.contributor %}{% capture contributor %}{{ data.contributor }}{% endcapture %}{% endif %}
+            {% if data.subject %}{% capture subject %}{{ data.subject }}{% endcapture %}{% endif %}
+            {% if data.description %}{% capture description %}{{ data.description }}{% endcapture %}{% endif %}
+            {% if data.publisher %}{% capture publisher %}{{ data.publisher }}{% endcapture %}{% endif %}
+            {% if data.publisher-url %}{% capture publisher-url %}{{ data.publisher-url }}{% endcapture %}{% endif %}
+            {% if data.date %}{% capture date %}{{ data.date }}{% endcapture %}{% endif %}
+            {% if data.modified %}{% capture modified %}{{ data.modified }}{% endcapture %}{% endif %}
+            {% if data.type %}{% capture type %}{{ data.type }}{% endcapture %}{% endif %}
+            {% if data.identifier %}{% capture identifier %}{{ data.identifier }}{% endcapture %}{% endif %}
+            {% if data.source %}{% capture source %}{{ data.source }}{% endcapture %}{% endif %}
+            {% if data.language %}{% capture language %}{{ data.language }}{% endcapture %}{% endif %}
+            {% if data.relation %}{% capture relation %}{{ data.relation }}{% endcapture %}{% endif %}
+            {% if data.coverage %}{% capture coverage %}{{ data.coverage }}{% endcapture %}{% endif %}
+            {% if data.rights %}{% capture rights %}{{ data.rights }}{% endcapture %}{% endif %}
+            {% if data.image %}{% capture image %}{{ data.image }}{% endcapture %}{% endif %}
 
-              {% if data.products.print-pdf.date %}{% capture print-pdf-date %}{{ data.products.print-pdf.date }}{% endcapture %}{% endif %}
-              {% if data.products.print-pdf.format %}{% capture print-pdf-format %}{{ data.products.print-pdf.format }}{% endcapture %}{% endif %}
-              {% if data.products.print-pdf.identifier %}{% capture print-pdf-identifier %}{{ data.products.print-pdf.identifier }}{% endcapture %}{% endif %}
-              {% if data.products.print-pdf.image %}{% capture print-pdf-image %}{{ data.products.print-pdf.image }}{% endcapture %}{% endif %}
-              {% if data.products.print-pdf.files %}{% assign print-pdf-file-list = data.products.print-pdf.files %}{% endif %}
-              {% if data.products.print-pdf.toc %}
+            {% if data.products.print-pdf.date %}{% capture print-pdf-date %}{{ data.products.print-pdf.date }}{% endcapture %}{% endif %}
+            {% if data.products.print-pdf.format %}{% capture print-pdf-format %}{{ data.products.print-pdf.format }}{% endcapture %}{% endif %}
+            {% if data.products.print-pdf.identifier %}{% capture print-pdf-identifier %}{{ data.products.print-pdf.identifier }}{% endcapture %}{% endif %}
+            {% if data.products.print-pdf.image %}{% capture print-pdf-image %}{{ data.products.print-pdf.image }}{% endcapture %}{% endif %}
+            {% if data.products.print-pdf.files %}{% assign print-pdf-file-list = data.products.print-pdf.files %}{% endif %}
+            {% if data.products.print-pdf.toc %}
                 {% assign print-pdf-toc = data.products.print-pdf.toc %}
                 {% if site.output == "print-pdf" %}
-                  {% assign variant-toc = true %}
+                    {% assign variant-toc = true %}
                 {% endif %}
-              {% endif %}
+            {% endif %}
 
-              {% if data.products.web.date %}{% capture web-date %}{{ data.products.web.date }}{% endcapture %}{% endif %}
-              {% if data.products.web.format %}{% capture web-format %}{{ data.products.web.format }}{% endcapture %}{% endif %}
-              {% if data.products.web.identifier %}{% capture web-identifier %}{{ data.products.web.identifier }}{% endcapture %}{% endif %}
-              {% if data.products.web.image %}{% capture web-image %}{{ data.products.web.image }}{% endcapture %}{% endif %}
-              {% if data.products.web.start-page %}{% capture web-start-page %}{{ data.products.web.start-page }}{% endcapture %}{% endif %}
-              {% if data.products.web.contents-page %}{% capture web-contents-page %}{{ data.products.web.contents-page }}{% endcapture %}{% endif %}
-              {% if data.products.web.files %}{% assign web-file-list = data.products.web.files %}{% endif %}
-              {% if data.products.web.nav %}{% assign web-nav-tree = data.products.web.nav %}{% endif %}
-              {% if data.products.web.toc %}
+            {% if data.products.web.date %}{% capture web-date %}{{ data.products.web.date }}{% endcapture %}{% endif %}
+            {% if data.products.web.format %}{% capture web-format %}{{ data.products.web.format }}{% endcapture %}{% endif %}
+            {% if data.products.web.identifier %}{% capture web-identifier %}{{ data.products.web.identifier }}{% endcapture %}{% endif %}
+            {% if data.products.web.image %}{% capture web-image %}{{ data.products.web.image }}{% endcapture %}{% endif %}
+            {% if data.products.web.start-page %}{% capture web-start-page %}{{ data.products.web.start-page }}{% endcapture %}{% endif %}
+            {% if data.products.web.contents-page %}{% capture web-contents-page %}{{ data.products.web.contents-page }}{% endcapture %}{% endif %}
+            {% if data.products.web.files %}{% assign web-file-list = data.products.web.files %}{% endif %}
+            {% if data.products.web.nav %}{% assign web-nav-tree = data.products.web.nav %}{% endif %}
+            {% if data.products.web.toc %}
                 {% assign web-toc = data.products.web.toc %}
                 {% if site.output == "web" %}
-                  {% assign variant-toc = true %}
+                    {% assign variant-toc = true %}
                 {% endif %}
-              {% endif %}
+            {% endif %}
 
-              {% if data.products.epub.date %}{% capture epub-date %}{{ data.products.epub.date }}{% endcapture %}{% endif %}
-              {% if data.products.epub.format %}{% capture epub-format %}{{ data.products.epub.format }}{% endcapture %}{% endif %}
-              {% if data.products.epub.identifier %}{% capture epub-identifier %}{{ data.products.epub.identifier }}{% endcapture %}{% endif %}
-              {% if data.products.epub.image %}{% capture epub-image %}{{ data.products.epub.image }}{% endcapture %}{% endif %}
-              {% if data.products.epub.files %}{% assign epub-file-list = data.products.epub.files %}{% endif %}
-              {% if data.products.epub.contents-page %}{% capture epub-contents-page %}{{ work.products.epub.contents-page }}{% endcapture %}{% endif %}
-              {% if data.products.epub.language %}{% capture epub-language %}{{ work.products.epub.language }}{% endcapture %}{% endif %}
-              {% if data.products.epub.toc %}
+            {% if data.products.epub.date %}{% capture epub-date %}{{ data.products.epub.date }}{% endcapture %}{% endif %}
+            {% if data.products.epub.format %}{% capture epub-format %}{{ data.products.epub.format }}{% endcapture %}{% endif %}
+            {% if data.products.epub.identifier %}{% capture epub-identifier %}{{ data.products.epub.identifier }}{% endcapture %}{% endif %}
+            {% if data.products.epub.image %}{% capture epub-image %}{{ data.products.epub.image }}{% endcapture %}{% endif %}
+            {% if data.products.epub.files %}{% assign epub-file-list = data.products.epub.files %}{% endif %}
+            {% if data.products.epub.contents-page %}{% capture epub-contents-page %}{{ work.products.epub.contents-page }}{% endcapture %}{% endif %}
+            {% if data.products.epub.language %}{% capture epub-language %}{{ work.products.epub.language }}{% endcapture %}{% endif %}
+            {% if data.products.epub.toc %}
                 {% assign epub-toc = data.products.epub.toc %}
                 {% if site.output == "epub" %}
-                  {% assign variant-toc = true %}
+                    {% assign variant-toc = true %}
                 {% endif %}
-              {% endif %}
+            {% endif %}
 
-              {% if data.products.screen-pdf.date %}{% capture screen-pdf-date %}{{ data.products.screen-pdf.date }}{% endcapture %}{% endif %}
-              {% if data.products.screen-pdf.format %}{% capture screen-pdf-format %}{{ data.products.screen-pdf.format }}{% endcapture %}{% endif %}
-              {% if data.products.screen-pdf.identifier %}{% capture screen-pdf-identifier %}{{ data.products.screen-pdf.identifier }}{% endcapture %}{% endif %}
-              {% if data.products.screen-pdf.image %}{% capture screen-pdf-image %}{{ data.products.screen-pdf.image }}{% endcapture %}{% endif %}
-              {% if data.products.screen-pdf.files %}{% assign screen-pdf-file-list = data.products.screen-pdf.files %}{% endif %}
-              {% if data.products.screen-pdf.toc %}
+            {% if data.products.screen-pdf.date %}{% capture screen-pdf-date %}{{ data.products.screen-pdf.date }}{% endcapture %}{% endif %}
+            {% if data.products.screen-pdf.format %}{% capture screen-pdf-format %}{{ data.products.screen-pdf.format }}{% endcapture %}{% endif %}
+            {% if data.products.screen-pdf.identifier %}{% capture screen-pdf-identifier %}{{ data.products.screen-pdf.identifier }}{% endcapture %}{% endif %}
+            {% if data.products.screen-pdf.image %}{% capture screen-pdf-image %}{{ data.products.screen-pdf.image }}{% endcapture %}{% endif %}
+            {% if data.products.screen-pdf.files %}{% assign screen-pdf-file-list = data.products.screen-pdf.files %}{% endif %}
+            {% if data.products.screen-pdf.toc %}
                 {% assign screen-pdf-toc = data.products.screen-pdf.toc %}
                 {% if site.output == "screen-pdf" %}
-                  {% assign variant-toc = true %}
+                    {% assign variant-toc = true %}
                 {% endif %}
-              {% endif %}
+            {% endif %}
 
-              {% if data.products.app.date %}{% capture app-date %}{{ data.products.app.date }}{% endcapture %}{% endif %}
-              {% if data.products.app.format %}{% capture app-format %}{{ data.products.app.format }}{% endcapture %}{% endif %}
-              {% if data.products.app.identifier %}{% capture app-identifier %}{{ data.products.app.identifier }}{% endcapture %}{% endif %}
-              {% if data.products.app.image %}{% capture app-image %}{{ data.products.app.image }}{% endcapture %}{% endif %}
-              {% if data.products.app.start-page %}{% capture app-start-page %}{{ data.products.app.start-page }}{% endcapture %}{% endif %}
-              {% if data.products.app.contents-page %}{% capture app-contents-page %}{{ data.products.app.contents-page }}{% endcapture %}{% endif %}
-              {% if data.products.app.files %}{% assign app-file-list = data.products.app.files %}{% endif %}
-              {% if data.products.app.nav %}{% assign app-nav-tree = data.products.app.nav %}{% endif %}
-              {% if data.products.app.toc %}
+            {% if data.products.app.date %}
+                {% capture app-date %}{{ data.products.app.date }}{% endcapture %}
+            {% else %}
+                {% capture app-date %}{{ web-date }}{% endcapture %}
+            {% endif %}
+            {% if data.products.app.format %}
+                {% capture app-format %}{{ data.products.app.format }}{% endcapture %}
+            {% else %}
+                {% capture app-format %}{{ web-format }}{% endcapture %}
+            {% endif %}
+            {% if data.products.app.identifier %}
+                {% capture app-identifier %}{{ data.products.app.identifier }}{% endcapture %}
+            {% else %}
+                {% capture app-identifier %}{{ web-identifier }}{% endcapture %}
+            {% endif %}
+            {% if data.products.app.image %}
+                {% capture app-image %}{{ data.products.app.image }}{% endcapture %}
+            {% else %}
+                {% capture app-image %}{{ web-image }}{% endcapture %}
+            {% endif %}
+            {% if data.products.app.start-page %}
+                {% capture app-start-page %}{{ data.products.app.start-page }}{% endcapture %}
+            {% else %}
+                {% capture app-start-page %}{{ web-start-page }}{% endcapture %}
+            {% endif %}
+            {% if data.products.app.contents-page %}
+                {% capture app-contents-page %}{{ data.products.app.contents-page }}{% endcapture %}
+            {% else %}
+                {% capture app-contents-page %}{{ web-contents-page }}{% endcapture %}
+            {% endif %}
+            {% if data.products.app.files %}
+                {% assign app-file-list = data.products.app.files %}
+            {% else %}
+                {% assign app-file-list = web-file-list %}
+            {% endif %}
+            {% if data.products.app.nav %}
+                {% assign app-nav-tree = data.products.app.nav %}
+            {% else %}
+                {% assign app-nav-tree = web-nav-tree %}
+            {% endif %}
+            {% if data.products.app.toc %}
                 {% assign app-toc = data.products.app.toc %}
                 {% if site.output == "app" %}
-                  {% assign variant-toc = true %}
+                    {% assign variant-toc = true %}
                 {% endif %}
-              {% endif %}
+            {% else %}
+                {% assign app-toc = web-toc %}
+                {% if site.output == "app" %}
+                    {% assign variant-toc = true %}
+                {% endif %}
+            {% endif %}
 
         {% endif %}
 
