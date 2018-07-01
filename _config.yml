@@ -154,7 +154,7 @@ compress_html:
 # Version of this Electric Book template
 # This is the last release, not the current build
 # at github.com/electricbookworks/electric-book
-version: "0.11.1"
+version: "0.12.0"
 
 # Leave this unchanged as http://localhost:4000 unless you really know what you're doing here. This is the URL that Jekyll will run at by default locally.
 url: http://localhost:4000

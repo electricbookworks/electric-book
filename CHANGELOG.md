@@ -1,6 +1,8 @@
 # Changelog
 
-## 0.11.2 (in progress)
+## 0.12.1 (in progress)
+
+## 0.12.0
 
 * [Add content accordion for web and app outputs](https://github.com/electricbookworks/electric-book/pull/250).
 * [Add ability to include multiple-choice questions](https://github.com/electricbookworks/electric-book/pull/251).
