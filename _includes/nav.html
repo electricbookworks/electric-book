@@ -59,7 +59,14 @@
                     <ol class="nav-book-list">
                     {% for work in site.data.meta.works | sort: "order" %}
                     {% assign home-nav-work-directory = work.directory %}
-                    {% assign home-nav-work-tree = work.products[site.output].nav %}
+
+                    {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
+                    {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
+                        {% assign home-nav-work-tree = work.products[site.output].nav %}
+                    {% else %}
+                        {% assign home-nav-work-tree = work.products.web.nav %}
+                    {% endif %}
+
                         <li class="has-children">
                             <a href="{{ path-to-root-directory }}{{ work.directory }}/text/{{ work.products[site.output].start-page }}.html">
                                 {{ work.title }}
