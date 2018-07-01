@@ -184,6 +184,9 @@ $web-video: true !default;
 $web-pagination: true !default;
 $web-multiple-choice-questions: true !default;
 
+// Docs
+$web-docs: true !default;
+
 // Type-control classes
 $web-smallcaps: true !default;
 $web-fitting: true !default;  // E.g. tracking and shrinking
@@ -248,6 +251,9 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-video";
 @import "partials/web-pagination";
 @import "partials/web-mcqs";
+
+// Docs
+@import "partials/web-docs";
 
 // Type-control classes
 @import "partials/web-smallcaps";
