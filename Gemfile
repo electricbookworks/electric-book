@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # This Jekyll version may not be what GitHub Pages supports.
 # If you must ensure the same behaviour as GitHub pages,
 # change this to match what it supports: https://pages.github.com/versions/
-gem 'jekyll', '~>3.7.2'
+gem 'jekyll', '~>3.8.3'
 
 # GitHub Pages recommends using the github-pages gem instead,
 # but this injects unwanted files: https://github.com/github/pages-gem/issues/482
