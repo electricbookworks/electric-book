@@ -205,7 +205,7 @@ index.addDoc({
 });
 index.addDoc({
     id: 41,
-    title: "Échantillons: Teg",
+    title: "Échantillons: Couverture",
     content: ""
 });
 index.addDoc({
