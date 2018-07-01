@@ -1,63 +1,105 @@
 {% comment %}
-How this works:
-1. First we store the current file name as "current-file", so we can work out when
-   it's the active nav item.
-2. The "nav-tree" variable has been defined in the include tag that included this file,
-   usually starting with the nav list in meta.yml stored by metadata as "web-nav-tree".
-3. To include children items in that tree, this file includes itself recursively, 
-   redefining "nav-tree" each time as the children of the nav-tree it received originally.
-4. Turtles all the way down, as deep as the nav tree in meta.yml goes.
-Credit to Christian Specht for the inspiration:
-https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-jekyll/
+The nav list might be created from the files list or the nav list
+defined in meta.yml. This is defined in _config.yml as nav-source.
 {% endcomment %}
 
-{% comment %}If this is neither a text directory (i.e. in a book) nor a docs page,
-such as the home page or project search page...{% endcomment %}
-{% if is-book-subdirectory != true and is-docs-page != true %}
+{% if site.nav-source == "nav" %}
+  
+  {% comment %}
+  How this works:
+  1. First we store the current file name as "current-file", so we can work out when
+     it's the active nav item.
+  2. The "nav-tree" variable has been defined in the include tag that included this file,
+     usually starting with the nav list in meta.yml stored by metadata as "web-nav-tree".
+  3. To include children items in that tree, this file includes itself recursively, 
+     redefining "nav-tree" each time as the children of the nav-tree it received originally.
+  4. Turtles all the way down, as deep as the nav tree in meta.yml goes.
+  Credit to Christian Specht for the inspiration:
+  https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-jekyll/
+  {% endcomment %}
 
-  {% comment %}Get a list of all the pages we've output to check against{% endcomment %}
-  {% capture page-list %}{{ site.pages | remove: ".html" }}{% endcapture %}
+  {% comment %}If this is neither a text directory (i.e. in a book) nor a docs page,
+  such as the home page or project search page...{% endcomment %}
+  {% if is-book-subdirectory != true and is-docs-page != true %}
 
-  {% comment %}Create a nav list{% endcomment %}
-  <ol>
+    {% comment %}Get a list of all the pages we've output to check against{% endcomment %}
+    {% capture page-list %}{{ site.pages | remove: ".html" }}{% endcapture %}
 
-    {% for item in include.nav-tree | sort: "order" %}
-        <li class="{% unless page-list contains item.file %}no-file{% endunless %}
-        {% if item.children == nil %} no-children{% else %} has-children{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
-            <a {% if item.file != nil %}href="{{ path-to-root-directory }}{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
-                {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
-            </a>
-            {% if item.children != nil %}
-              {% include nav-list nav-tree=item.children directory=include.directory %}
-            {% endif %}
-        </li>
-    {% endfor %}
+    {% comment %}Create a nav list{% endcomment %}
+    <ol>
 
-  </ol>
+      {% for item in include.nav-tree | sort: "order" %}
+          <li class="{% unless page-list contains item.file %}no-file{% endunless %}
+          {% if item.children == nil %} no-children{% else %} has-children{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
+              <a {% if item.file != nil %}href="{{ path-to-root-directory }}{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
+                  {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+              </a>
+              {% if item.children != nil %}
+                {% include nav-list nav-tree=item.children directory=include.directory %}
+              {% endif %}
+          </li>
+      {% endfor %}
 
-{% comment %}Otherwise, we're in a text directory (i.e. in a book),
-and we're not on a docs page, create the full book nav.{% endcomment %}
-{% else %}
+    </ol>
 
-  {% capture nav-branch %}{{ include.nav-tree }}{% endcapture %}
-  {% capture page-list %}{{ site.pages | remove: ".html" }}{% endcapture %}
+  {% comment %}Otherwise, we're in a text directory (i.e. in a book),
+  and we're not on a docs page, create the full book nav.{% endcomment %}
+  {% else %}
 
-  <ol class="{% if nav-branch contains current-file %}active{% endif %}">
-    {% for item in include.nav-tree | sort: "order" %}
-        <li class="{% if page.url contains item.file %}active{% endif %}
-        {% unless page-list contains item.file %}no-file{% endunless %}
-        {% if item.link == "none" %}no-link{% endif %}
-        {% if item.children == nil %}no-children{% else %}has-children{% endif %}
-        {% if item.class != nil %}{{ item.class }}{% endif %}">
-            <a {% if item.file != nil and item.link != "none" %}href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %}
-               class="{% if page.url contains item.file %}active{% endif %}">
-                {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
-            </a>
-            {% if item.children != nil %}
-              {% include nav-list nav-tree=item.children %}
-            {% endif %}
-        </li>
-    {% endfor %}
-  </ol>
+    {% capture nav-branch %}{{ include.nav-tree }}{% endcapture %}
+    {% capture page-list %}{{ site.pages | remove: ".html" }}{% endcapture %}
+
+    <ol class="{% if nav-branch contains current-file %}active{% endif %}">
+      {% for item in include.nav-tree | sort: "order" %}
+          <li class="{% if page.url contains item.file %}active{% endif %}
+          {% unless page-list contains item.file %}no-file{% endunless %}
+          {% if item.link == "none" %}no-link{% endif %}
+          {% if item.children == nil %}no-children{% else %}has-children{% endif %}
+          {% if item.class != nil %}{{ item.class }}{% endif %}">
+              <a {% if item.file != nil and item.link != "none" %}href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %}
+                 class="{% if page.url contains item.file %}active{% endif %}">
+                  {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+              </a>
+              {% if item.children != nil %}
+                {% include nav-list nav-tree=item.children %}
+              {% endif %}
+          </li>
+      {% endfor %}
+    </ol>
+
+  {% endif %}
+
+  {% comment %}
+  Otherwise, if the site.nav-source is anything or 'files',
+  build the nav-list from the files list in meta.yml.
+  {% endcomment %}
+
+  {% else %}
+
+    <ol>
+
+      {% comment %}If the include tag specifies a directory, we assume
+      we're already in a `for work in works` loop.{% endcomment %}
+      {% if include.directory %}
+        {% capture book-text-path %}{{ include.directory }}/text/{% endcapture %}
+        {% assign relevant-files = work.products[site.output].files %}
+      {% else %}
+        {% capture book-text-path %}{{ book-directory }}/{% if is-translation %}{{ book-subdirectory }}/{% endif %}text/{% endcapture %}
+        {% assign relevant-files = file-list %}
+      {% endif %}
+
+      {% assign relevant-pages = site.pages | where_exp: 'page', 'page.path contains book-text-path' | sort: "url" %}
+      {% capture this-page-path %}{{ page.path }}{% endcapture %}
+
+      {% for page in relevant-pages %}
+        {% capture relevant-page-filename %}{{ page.path | split: "." | first | split: "/" | last }}{% endcapture %}
+        {% if relevant-files contains relevant-page-filename %}
+          <li{% if relevant-page-filename == current-file and this-page-path contains book-text-path %} class="active"{% endif %}>
+            <a href="{{ page.url }}">{{ page.title }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+    </ol>
 
 {% endif %}

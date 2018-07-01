@@ -1,140 +1,91 @@
-{% if site.nav-source == "nav" %}
+<div id="nav" class="non-printing">
 
-    <div id="nav" class="non-printing">
+        {% comment %}If we're neither in a book or a docs page,
+        show the project name.{% endcomment %}
+        {% if is-book-subdirectory != true and is-docs-page != true %}
+        <h2>{{ project-name }}</h2>
 
-            {% comment %}If we're neither in a book or a docs page,
-            show the project name.{% endcomment %}
-            {% if is-book-subdirectory != true and is-docs-page != true %}
-            <h2>{{ project-name }}</h2>
+        {% comment %}If docs are generating, and we're on a docs page
+        show a docs heading and version number{% endcomment %}
+        {% elsif output-docs == true and is-docs-page == true %}
+        <h2>Electric Book docs (v{{ site.version }})</h2>
 
-            {% comment %}If docs are generating, and we're on a docs page
-            show a docs heading and version number{% endcomment %}
-            {% elsif output-docs == true and is-docs-page == true %}
-            <h2>Electric Book docs (v{{ site.version }})</h2>
+        {% comment %}Otherwise show the book title{% endcomment %}
+        {% else %}
+        <h2>{{ title }}</h2>
+        {% endif %}
 
-            {% comment %}Otherwise show the book title{% endcomment %}
-            {% else %}
-            <h2>{{ title }}</h2>
+        {% comment %}Add the search box.{% endcomment %}
+        <div class="search">
+            {% include search %}
+        </div><!--.search-->
+
+        {% comment %}Create the nav list{% endcomment %}
+        <div class="nav-list">
+
+            {% comment %}If this is not the homepage,
+            include a link to the homepage.{% endcomment %}
+            {% if is-homepage != true %}
+                <ol class="nav-project-home">
+                    <li><a href="{{ path-to-root-directory }}index.html">{{ locale.nav.home }}</a></li>
+                </ol>
             {% endif %}
 
-            {% comment %}Add the search box.{% endcomment %}
-            <div class="search">
-                {% include search %}
-            </div><!--.search-->
+            {% comment %}If docs are on (i.e. output set to true in _config.yml),
+            show the docs nav.{% endcomment %}
+            {% if output-docs %}
+                <ul>
+                    <li{% unless is-docs-page %} class="has-children"{% endunless %}><a href="{{ path-to-root-directory }}docs">Docs</a>
+                    {% include docs-by-category %}
+                    </li>
+                </ul>
+            {% endif %}
 
-            {% comment %}Create the nav list{% endcomment %}
-            <div class="nav-list">
+            {% comment %}If this is any non-book, non-docs page,
+            such as the home page or project search...{% endcomment %}
+            {% if is-book-subdirectory != true and is-docs-page != true %}
 
-                {% comment %}If this is not the homepage,
-                include a link to the homepage.{% endcomment %}
-                {% if is-homepage != true %}
-                    <ol class="nav-project-home">
-                        <li><a href="{{ path-to-root-directory }}index.html">{{ locale.nav.home }}</a></li>
-                    </ol>
-                {% endif %}
+                {% comment %}If there is only one book, don't include its title{% endcomment %}
+                {% if number-of-works == 1 %}
 
-                {% comment %}If docs are on (i.e. output set to true in _config.yml),
-                show the docs nav.{% endcomment %}
-                {% if output-docs %}
-                    <ul>
-                        <li{% unless is-docs-page %} class="has-children"{% endunless %}><a href="{{ path-to-root-directory }}docs">Docs</a>
-                        {% include docs-by-category %}
-                        </li>
-                    </ul>
-                {% endif %}
-
-                {% comment %}If this is any non-book, non-docs page,
-                such as the home page or project search...{% endcomment %}
-                {% if is-book-subdirectory != true and is-docs-page != true %}
-
-                    {% comment %}If there is only one book, don't include its title{% endcomment %}
-                    {% if number-of-works == 1 %}
-
-                        {% for work in site.data.meta.works | sort: "order" %}
-                            {% assign home-nav-work-directory = work.directory %}
-                            {% assign home-nav-work-tree = work.products[site.output].nav %}
-                            {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
-                        {% endfor %}
-
-                    {% else %}
-
-                        <ol class="nav-book-list">
-                        {% for work in site.data.meta.works | sort: "order" %}
+                    {% for work in site.data.meta.works | sort: "order" %}
                         {% assign home-nav-work-directory = work.directory %}
                         {% assign home-nav-work-tree = work.products[site.output].nav %}
-                            <li class="has-children">
-                                <a href="{{ path-to-root-directory }}{{ work.directory }}/text/{{ work.products[site.output].start-page }}.html">
-                                    {{ work.title }}
-                                </a>
-                                {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
-                            </li>
-                        {% endfor %}
-                        </ol>
-
-                    {% endif %}
+                        {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                    {% endfor %}
 
                 {% else %}
 
-                    {% comment %}Fetch recursive navigation{% endcomment %}
-                    {% if site.output == "app" %}
-                        {% include nav-list nav-tree=app-nav-tree %}
-                    {% else %}
-                        {% include nav-list nav-tree=web-nav-tree %}
-                    {% endif %}
+                    <ol class="nav-book-list">
+                    {% for work in site.data.meta.works | sort: "order" %}
+                    {% assign home-nav-work-directory = work.directory %}
+                    {% assign home-nav-work-tree = work.products[site.output].nav %}
+                        <li class="has-children">
+                            <a href="{{ path-to-root-directory }}{{ work.directory }}/text/{{ work.products[site.output].start-page }}.html">
+                                {{ work.title }}
+                            </a>
+                            {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                        </li>
+                    {% endfor %}
+                    </ol>
 
                 {% endif %}
 
-            </div><!--.nav-list-->
-
-            <div class="widgets">
-                {% include widgets %}
-            </div><!--.widgets-->
-
-    </div><!--#nav-->
-
-{% else %}
-
-    <div id="nav" class="non-printing">
-
-            {% comment %}If we're neither in a book or a docs page{% endcomment %}
-            {% if is-book-subdirectory != true and is-docs-page != true %}
-            <h2>{{ project-name }}</h2>
-
-            {% comment %}If docs are generating, and we're on a docs page{% endcomment %}
-            {% elsif output-docs == "true" and is-docs-page == true %}
-            <h2>Electric Book docs (v{{ site.version }})</h2>
-
-            {% comment %}Otherwise use the book title{% endcomment %}
             {% else %}
-            <h2>{{ title }}</h2>
+
+                {% comment %}Fetch recursive navigation{% endcomment %}
+                {% if site.output == "app" %}
+                    {% include nav-list nav-tree=app-nav-tree %}
+                {% else %}
+                    {% include nav-list nav-tree=web-nav-tree %}
+                {% endif %}
+
             {% endif %}
 
-            {% comment %}Add the search box.{% endcomment %}
-            <div class="search">
-                {% include search %}
-            </div><!--.search-->
+        </div><!--.nav-list-->
 
-            <div class="nav-list">
-                <ul>
-                    {% comment %}
-                    - Get the file-list
-                    - Pull out file-titles in the file-list
-                    - If the file key has a value, that's a file-title
-                    - Put it in a list item, with a hyperlink pointing to the file
-                    - And if the current page.url contains the file name, this must be the active page
-                    - So add the class `nav-page-active` to the list item.
-                    {% endcomment %}
-                    {% for file in web-file-list %}
-                        {% for file-title in file %}
-                            {% if file-title[1] %}
-                                <li class="nav-page{% if page.url contains file-title[0] %} nav-page-active{% endif %}">
-                                    <a href="{{ path-to-root-directory }}{{ book-directory }}{% if is-translation %}/{{ language }}{% endif %}/text/{{ file-title[0] }}.html" class="nav-page-link">{{ file-title[1] }}</a>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div><!--.nav-list-->
-        </div><!--#nav-->
+        <div class="widgets">
+            {% include widgets %}
+        </div><!--.widgets-->
 
-{% endif %}
+</div><!--#nav-->
