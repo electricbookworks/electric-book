@@ -142,6 +142,9 @@ $web-css-reset: true !default;
 // Structural HTML components
 $web-wrappers: true !default;
 
+// Conventional helper classes
+$web-helpers: true !default;
+
 // Default typography
 $web-base-typography: true !default;
 
@@ -209,6 +212,9 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 
 // Structural HTML components
 @import "partials/web-wrappers";
+
+// Conventional helper classes
+@import "partials/web-helpers";
 
 // Default typography
 @import "partials/web-base-typography";

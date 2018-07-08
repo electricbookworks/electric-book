@@ -219,6 +219,9 @@ $show-baseline-grid: false;
 // Reset PrinceXML CSS
 $print-css-reset: true;
 
+// Conventional helper classes
+$print-helpers: true;
+
 // ---------------------------
 // Add default font-face rules
 $print-font-faces: true;
@@ -240,29 +243,29 @@ $print-base-typography: true; // Default typography for HTML elements
 $print-buttons: true;
 $print-verse: true; // Default typography for verse, poetry, lyrics
 $print-bibliographies: true;
-$print-epigraphs: true; // 
-$print-dedications: true; // 
-$print-dialogue: true; // 
+$print-epigraphs: true;
+$print-dedications: true;
+$print-dialogue: true;
 $print-glossaries: true; // Including .glossary
 $print-highlighter: true;
 $print-pullquotes: true; // Supports .pullquote
-$print-boxes: true; // 
+$print-boxes: true;
 $print-code: true; // For computer code and preformatted text
-$print-tables: true; // 
-$print-figures: true; // 
+$print-tables: true;
+$print-figures: true;
 $print-notes: true; // Footnotes, endnotes, sidenotes
 $print-previous-publications-page: true; // The 'also by the author' frontmatter apge
 $print-title-pages: true; // Half-title and title pages
-$print-copyright-page: true; // 
+$print-copyright-page: true;
 $print-toc: true; // Tables of contents
 $print-cover: true; // Front-cover image for PDF ebooks
 $print-video: true;
-$print-smallcaps: true; // 
-$print-maths: true; // 
-$print-letters: true; // 
-$print-sources: true; // 
-$print-openers: true; // 
-$print-index: true; // 
+$print-smallcaps: true;
+$print-maths: true;
+$print-letters: true;
+$print-sources: true;
+$print-openers: true;
+$print-index: true;
 $print-multiple-choice-questions: true;
 $print-cross-refs: true;
 $print-reset-sequences: true; // Resets p indents, margins after other elements. Must be last @import in list.

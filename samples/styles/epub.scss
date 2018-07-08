@@ -91,47 +91,50 @@ $text-divider: ""; // Empty leaves space. \2022 is a bullet
 $epub-css-reset: true;
 
 // Structural HTML components
-$epub-wrappers: true; // 
+$epub-wrappers: true;
+
+// Conventional helper classes
+$epub-helpers: true;
 
 // Default typography
-$epub-base-typography: true; // 
+$epub-base-typography: true;
 
 // Book parts
-$epub-cover: true; // 
-$epub-previous-publications-page: true; //
-$epub-title-pages: true; // 
-$epub-copyright-page: true; // 
-$epub-dedications: true; // 
-$epub-epigraphs: true; // 
-$epub-toc: true; // 
+$epub-cover: true;
+$epub-previous-publications-page: true;
+$epub-title-pages: true;
+$epub-copyright-page: true;
+$epub-dedications: true;
+$epub-epigraphs: true;
+$epub-toc: true;
 
 // Book-feature classes
-$epub-bibliographies: true; // 
-$epub-boxes: true; // 
-$epub-buttons: true; // 
-$epub-code: true; // 
-$epub-dialogue: true; // 
-$epub-figures: true; // 
-$epub-glossaries: true; //
-$epub-highlighter: true; //
-$epub-index: true; // 
-$epub-maths: true; // 
-$epub-notes: true; // 
-$epub-openers: true; // 
-$epub-pullquotes: true; // 
-$epub-sources: true; // 
-$epub-tables: true; // 
-$epub-letters: true; // 
-$epub-verse: true; // 
-$epub-video: true; // 
+$epub-bibliographies: true;
+$epub-boxes: true;
+$epub-buttons: true;
+$epub-code: true;
+$epub-dialogue: true;
+$epub-figures: true;
+$epub-glossaries: true;
+$epub-highlighter: true;
+$epub-index: true;
+$epub-maths: true;
+$epub-notes: true;
+$epub-openers: true;
+$epub-pullquotes: true;
+$epub-sources: true;
+$epub-tables: true;
+$epub-letters: true;
+$epub-verse: true;
+$epub-video: true;
 $epub-multiple-choice-questions: true;
 
 // Type-control classes
-$epub-smallcaps: true; // 
-$epub-fitting: true; // 
+$epub-smallcaps: true;
+$epub-fitting: true;
 
 // Logic (if this then that)
-$epub-reset-sequences: true; // 
+$epub-reset-sequences: true;
 
 // ------------
 // Import fonts

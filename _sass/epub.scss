@@ -87,47 +87,50 @@ $text-divider: "" !default; // Empty leaves space. \2022 is a bullet
 $epub-css-reset: true !default;
 
 // Structural HTML components
-$epub-wrappers: true !default; // 
+$epub-wrappers: true !default;
+
+// Conventional helper classes
+$epub-helpers: true !default;
 
 // Default typography
-$epub-base-typography: true !default; // 
+$epub-base-typography: true !default;
 
 // Book parts
-$epub-cover: true !default; // 
-$epub-previous-publications-page: true !default; //
-$epub-title-pages: true !default; // 
-$epub-copyright-page: true !default; // 
-$epub-dedications: true !default; // 
-$epub-epigraphs: true !default; // 
-$epub-toc: true !default; // 
+$epub-cover: true !default;
+$epub-previous-publications-page: true !default;
+$epub-title-pages: true !default;
+$epub-copyright-page: true !default;
+$epub-dedications: true !default;
+$epub-epigraphs: true !default;
+$epub-toc: true !default;
 
 // Book-feature classes
-$epub-bibliographies: true !default; // 
-$epub-boxes: true !default; // 
-$epub-buttons: true !default; // 
-$epub-code: true !default; // 
-$epub-dialogue: true !default; // 
-$epub-figures: true !default; // 
-$epub-glossaries: true !default; //
-$epub-highlighter: true !default; //
-$epub-index: true !default; // 
-$epub-maths: true !default; // 
-$epub-notes: true !default; // 
-$epub-openers: true !default; // 
-$epub-pullquotes: true !default; // 
-$epub-sources: true !default; // 
-$epub-tables: true !default; // 
-$epub-letters: true !default; // 
-$epub-verse: true !default; // 
-$epub-video: true !default; // 
+$epub-bibliographies: true !default;
+$epub-boxes: true !default;
+$epub-buttons: true !default;
+$epub-code: true !default;
+$epub-dialogue: true !default;
+$epub-figures: true !default;
+$epub-glossaries: true !default;
+$epub-highlighter: true !default;
+$epub-index: true !default;
+$epub-maths: true !default;
+$epub-notes: true !default;
+$epub-openers: true !default;
+$epub-pullquotes: true !default;
+$epub-sources: true !default;
+$epub-tables: true !default;
+$epub-letters: true !default;
+$epub-verse: true !default;
+$epub-video: true !default;
 $epub-multiple-choice-questions: true !default;
 
 // Type-control classes
-$epub-smallcaps: true !default; // 
-$epub-fitting: true !default; // 
+$epub-smallcaps: true !default;
+$epub-fitting: true !default;
 
 // Logic (if this then that)
-$epub-reset-sequences: true !default; // 
+$epub-reset-sequences: true !default;
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
@@ -143,44 +146,47 @@ $epub-reset-sequences: true !default; //
 @import "partials/epub-css-reset";
 
 // Structural HTML components
-@import "partials/epub-wrappers"; // 
+@import "partials/epub-wrappers";
+
+// Conventional helper classes
+@import "partials/epub-helpers";
 
 // Default typography
-@import "partials/epub-base-typography"; // 
+@import "partials/epub-base-typography";
 
 // Book parts
-@import "partials/epub-cover"; // 
-@import "partials/epub-previous-publications-page"; // 
-@import "partials/epub-title-pages"; // 
-@import "partials/epub-copyright-page"; // 
-@import "partials/epub-dedications"; // 
-@import "partials/epub-epigraphs"; // 
-@import "partials/epub-toc"; // 
+@import "partials/epub-cover";
+@import "partials/epub-previous-publications-page";
+@import "partials/epub-title-pages";
+@import "partials/epub-copyright-page";
+@import "partials/epub-dedications";
+@import "partials/epub-epigraphs";
+@import "partials/epub-toc";
 
 // Book-feature classes
-@import "partials/epub-bibliographies"; // 
-@import "partials/epub-boxes"; // 
-@import "partials/epub-buttons"; // 
-@import "partials/epub-code"; // 
-@import "partials/epub-dialogue"; // 
-@import "partials/epub-figures"; // 
+@import "partials/epub-bibliographies";
+@import "partials/epub-boxes";
+@import "partials/epub-buttons";
+@import "partials/epub-code";
+@import "partials/epub-dialogue";
+@import "partials/epub-figures";
 @import "partials/epub-glossaries"; //
 @import "partials/epub-highlighter"; //
-@import "partials/epub-index"; // 
-@import "partials/epub-maths"; // 
-@import "partials/epub-notes"; // 
-@import "partials/epub-openers"; // 
-@import "partials/epub-pullquotes"; // 
-@import "partials/epub-sources"; // 
-@import "partials/epub-tables"; // 
-@import "partials/epub-letters"; // 
-@import "partials/epub-verse"; // 
+@import "partials/epub-index";
+@import "partials/epub-maths";
+@import "partials/epub-notes";
+@import "partials/epub-openers";
+@import "partials/epub-pullquotes";
+@import "partials/epub-sources";
+@import "partials/epub-tables";
+@import "partials/epub-letters";
+@import "partials/epub-verse";
 @import "partials/epub-video"; //
 @import "partials/epub-mcqs"; //
 
 // Type-control classes
-@import "partials/epub-smallcaps"; // 
-@import "partials/epub-fitting"; // 
+@import "partials/epub-smallcaps";
+@import "partials/epub-fitting";
 
 // Logic (if this then that)
-@import "partials/epub-reset-sequences"; // 
+@import "partials/epub-reset-sequences";
