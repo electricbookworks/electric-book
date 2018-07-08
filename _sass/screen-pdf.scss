@@ -210,15 +210,15 @@ $show-baseline-grid: false !default;
 // Set to false to turn partials off
 // ---------------------------------
 
-// ---------------------
 // Reset PrinceXML CSS
 $print-css-reset: true !default;
 
-// ---------------------------
+// Conventional helper classes
+$print-helpers: true !default;
+
 // Add default font-face rules
 $print-font-faces: true !default;
 
-// --------------------------------------------
 // Page setup and control, avoid changing these
 $print-pdf-view: true !default; // Sets the default initial view on PDFs
 $print-page-setup: true !default; // Sets up the page from your variables
@@ -227,37 +227,36 @@ $print-hide-non-printing: true !default; // Hides anything .non-printing
 $print-fitting: true !default; // Classes for floating, tracking, shrinking, etc.
 $print-hyphenation: true !default; // Sets hyphenation dictionary
 
-// ---------------------
-// Theme modules
+// Book features
 $print-start-on-recto-or-verso: true !default; // Starts chapters on a left- or right-hand-page
 $print-page-start-depth: true !default; // Sets a top margin on opening pages
 $print-base-typography: true !default; // Default typography for HTML elements
 $print-buttons: true !default;
 $print-verse: true !default; // Default typography for verse, poetry, lyrics
 $print-bibliographies: true !default;
-$print-dialogue: true !default; // 
-$print-epigraphs: true !default; // 
-$print-dedications: true !default; // 
+$print-dialogue: true !default;
+$print-epigraphs: true !default;
+$print-dedications: true !default;
 $print-glossaries: true !default; // Including .glossary
 $print-highlighter: true !default;
 $print-pullquotes: true !default; // Supports .pullquote
-$print-boxes: true !default; // 
+$print-boxes: true !default;
 $print-code: true !default; // For computer code and preformatted text
-$print-tables: true !default; // 
-$print-figures: true !default; // 
+$print-tables: true !default;
+$print-figures: true !default;
 $print-notes: true !default; // Footnotes, endnotes, sidenotes
 $print-previous-publications-page: true !default; // The 'also by the author' frontmatter apge
 $print-title-pages: true !default; // Half-title and title pages
-$print-copyright-page: true !default; // 
+$print-copyright-page: true !default;
 $print-toc: true !default; // Tables of contents
 $print-cover: true !default; // Front-cover image for PDF ebooks
 $print-video: true !default;
-$print-smallcaps: true !default; // 
-$print-maths: true !default; // 
-$print-letters: true !default; // 
-$print-sources: true !default; // 
-$print-openers: true !default; // 
-$print-index: true !default; // 
+$print-smallcaps: true !default;
+$print-maths: true !default;
+$print-letters: true !default;
+$print-sources: true !default;
+$print-openers: true !default;
+$print-index: true !default;
 $print-multiple-choice-questions: true !default;
 $print-cross-refs: true !default;
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
@@ -274,15 +273,15 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 // Import theme partials
 // ---------------------
 
-// ---------------------
 // Reset PrinceXML CSS
 @import "partials/print-css-reset";
 
-// ---------------------
+// Conventional helper classes
+@import "partials/print-helpers";
+
 // Add font-face rules
 @import "partials/print-font-faces";
 
-// --------------------------------------------
 // Page setup and control, avoid changing these
 @import "partials/print-pdf-view"; // Sets the default initial view on PDFs
 @import "partials/print-page-setup"; // Sets up the page from your variables
@@ -292,39 +291,38 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-hyphenation"; // Sets hyphenation dictionary
 @import "partials/print-baseline-grid"; // Shows a baseline grid
 
-// ---------------------
-// Theme modules
+// Book features
 @import "partials/print-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
 @import "partials/print-page-start-depth"; // Sets a top margin on opening pages
 @import "partials/print-base-typography"; // Default typography for HTML elements
 @import "partials/print-buttons";
 @import "partials/print-verse"; // Default typography for verse, poetry, lyrics
 @import "partials/print-bibliographies";
-@import "partials/print-epigraphs"; // 
-@import "partials/print-dedications"; // 
-@import "partials/print-dialogue"; // 
+@import "partials/print-epigraphs";
+@import "partials/print-dedications";
+@import "partials/print-dialogue";
 @import "partials/print-glossaries"; // Including .glossary
-@import "partials/print-highlighter"; //
+@import "partials/print-highlighter";
 @import "partials/print-pullquotes"; // Supports .pullquote
-@import "partials/print-boxes"; // 
+@import "partials/print-boxes";
 @import "partials/print-code"; // For computer code and preformatted text
-@import "partials/print-tables"; // 
-@import "partials/print-figures"; // 
+@import "partials/print-tables";
+@import "partials/print-figures";
 @import "partials/print-notes"; // Footnotes, endnotes, sidenotes
 @import "partials/print-previous-publications-page"; // Also by the author page in frontmatter
 @import "partials/print-title-pages"; // Half-title and title pages
-@import "partials/print-copyright-page"; // 
+@import "partials/print-copyright-page";
 @import "partials/print-toc"; // Tables of contents
 @import "partials/print-cover"; // Front-cover image for PDF ebooks
-@import "partials/print-video"; //
-@import "partials/print-smallcaps"; // 
-@import "partials/print-maths"; // 
-@import "partials/print-letters"; // 
-@import "partials/print-sources"; // 
-@import "partials/print-openers"; // 
-@import "partials/print-index"; // 
-@import "partials/print-mcqs"; //
-@import "partials/print-cross-refs"; //
+@import "partials/print-video";
+@import "partials/print-smallcaps";
+@import "partials/print-maths";
+@import "partials/print-letters";
+@import "partials/print-sources";
+@import "partials/print-openers";
+@import "partials/print-index";
+@import "partials/print-mcqs";
+@import "partials/print-cross-refs";
 @import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
 @import "partials/print-page-headers-footers-content"; // Sets content for headers and footers
 @import "partials/print-page-headers-footers-style"; // Sets styling for headers and footers
