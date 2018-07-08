@@ -48,10 +48,11 @@ To limit a script to a given output format, use `site.output`:
 
 Scripts in epub are special. While web and PDF scripts should be in `/assets/js`, all scripts to be used in your epub should be in `_epub/js`. This is because you must not have any scripts in your epub that you aren't using, or it won't validate. By keeping epub scripts separate, only your epub scripts will end up in the epub package.
 
-Also, epub scripts must have a YAML frontmatter block, even if it's empty:
+Also, epub scripts must have a YAML frontmatter block, and use a layout with no HTML:
 
 ```
 ---
+layout: min
 ---
 ```
 
