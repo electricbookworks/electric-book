@@ -5,13 +5,33 @@ layout: min
 {% include metadata %}
 
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="{{ project-app-id }}" version="{{ project-version }}" windows-packageVersion="{{ series-version }}.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" defaultlocale="{{ project-language }}">
-    <name>{{ project-name }}</name>
+<widget id="{{ project-app-id }}{% if site.build-language and site.build-language != "" %}.{{ site.build-language }}{% endif %}"
+        version="{{ project-version }}"
+        windows-packageVersion="{{ project-version }}.0"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0"
+        defaultlocale="{% if site.build-language and site.build-language != "" %}{{ site.build-language }}{% else %}{{ project-language }}{% endif %}"
+        >
+    <name>
+        {% if site.build-language and site.build-language != "" %}
+            {{ site.data.locales[site.build-language].project.name }}
+        {% else %}
+            {{ project-name }}
+        {% endif %}
+    </name>
     <description>
-        {{ project-description }}
+        {% if site.build-language and site.build-language != "" %}
+            {{ site.data.locales[site.build-language].project.description }}
+        {% else %}
+            {{ project-description }}
+        {% endif %}
     </description>
     <author email="team@fireandlion.com" href="https://fireandlion.com/">
-        {{ project-organisation }}
+        {% if site.build-language and site.build-language != "" %}
+            {{ site.data.locales[site.build-language].project.organisation }}
+        {% else %}
+            {{ project-organisation }}
+        {% endif %}
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -48,7 +68,7 @@ layout: min
     <access origin="cdvfile:///*" />
     <plugin name="com.flyingsoftgames.xapkreader" spec="https://github.com/agamemnus/cordova-plugin-xapkreader.git#cordova-6.5.0">
         <variable name="XAPK_PUBLIC_KEY" value="{{ site.data.settings.google-play-public-api-key }}" />
-        <variable name="XAPK_EXPANSION_AUTHORITY" value="{{ project-app-id }}.expansion" />
+        <variable name="XAPK_EXPANSION_AUTHORITY" value="{{ project-app-id }}{% if site.build-language and site.build-language != "" %}.{{ site.build-language }}{% endif %}.expansion" />
     </plugin>
     {% endif %}
 

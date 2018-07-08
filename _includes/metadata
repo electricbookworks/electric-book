@@ -35,8 +35,16 @@ These values can be overridden in _data/locales.yml for translations.
 {% capture project-version %}{{ site.data.meta.project.version }}{% endcapture %}
 
 {% comment %}Also use project language as default, fallback language,
-which will be overridden below if we're on book pages.{% endcomment %}
+which will be overridden below if we're on book pages...{% endcomment %}
 {% capture language %}{{ site.data.meta.project.language }}{% endcapture %}
+
+{% comment %}
+...But if a build-language is set in _config, that takes precedence
+and overrides the project language in meta.yml as the default.
+{% endcomment %}
+{% if site.build-language and site.build-language != "" %}
+    {% capture language %}{{ site.build-language }}{% endcapture %}
+{% endif %}
 
 {% comment %}
 It's useful to know how many books are in this project
@@ -666,6 +674,21 @@ be sure we're pointing to the webserver root.{% endcomment %}
 {% comment %}Create a short tag for the path to images.{% endcomment %}
 {% capture images %}{{ path-to-book-directory }}{{ site.image-set }}{% endcapture %}
 
+{% comment %}
+If site.build-language is defined, and matches a translation directory,
+include the translation directory in the default images path.
+This is especially useful for setting the images path on non-book pages,
+such as the home and search pages, when building a single-language site or app.
+{% endcomment %}
+{% for translation in translations %}
+    {% if site.build-language == translation %}
+        {% assign build-language-is-translation = true %}
+    {% endif %}
+{% endfor %}
+{% if site.build-language and site.build-language != "" and build-language-is-translation == true %}
+    {% capture images %}{{ path-to-book-directory }}{{ site.build-language }}/{{ site.image-set }}{% endcapture %}
+{% endif %}
+
 {% comment %}If this is a translation, and a language subfolder of images exists,
 the {{ images }} path should include the language subdirectory.{% endcomment %}
 {% if is-translation %}
@@ -675,6 +698,14 @@ the {{ images }} path should include the language subdirectory.{% endcomment %}
 
     {% assign translated-images-exist = false %}
     {% if translated-images-number > 0 %}
+        {% assign translated-images-exist = true %}
+    {% endif %}
+
+    {% comment %}If we are using external-media, we can't know
+    if translated images exist, so let's assume that they do.{% endcomment %}
+    {% if site.data.settings.local-media.[build] and site.data.settings.local-media.[build] != "" %}
+        {% assign translated-images-exist = true %}
+    {% elsif site.data.settings.remote-media.[build] and site.data.settings.remote-media.[build] != "" %}
         {% assign translated-images-exist = true %}
     {% endif %}
 
@@ -719,7 +750,7 @@ and this is an app output, rewrite the images path accordingly{% endcomment %}
 {% assign google-play-expansion-file-enabled = false %}
 {% if site.data.settings.app.google-play-expansion-file-enabled == true and site.output == "app" %}
     {% assign google-play-expansion-file-enabled = true %}
-    {% capture images %}content://{{ project-app-id }}.expansion{% endcapture %}
+    {% capture images %}content://{{ project-app-id }}{% if site.build-language and site.build-language != "" %}.{{ site.build-language }}{% endif %}.expansion{% endcapture %}
 {% endif %}
 
 {% comment %}Create a tag for the path to stylesheets.
