@@ -2,6 +2,8 @@
 
 ## 0.12.1 (in progress)
 
+* [Fall back to book and project descriptions for Open Graph descriptions when page description not available](https://github.com/electricbookworks/electric-book/pull/285).
+
 ## 0.12.0
 
 * [Add content accordion for web and app outputs](https://github.com/electricbookworks/electric-book/pull/250).
