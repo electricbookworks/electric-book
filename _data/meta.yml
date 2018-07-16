@@ -13,7 +13,7 @@ project:
   # The name of the project of books in this folder.
   name: "Electric Book"
   # A one-liner about this project. Useful for Open Graph metadata.
-  description: "Books created with the Electric Book workflow"
+  description: "The Electric Book template in action."
   # The logo of the organisation, saved web-ready in /assets
   logo: "publisher-logo.jpg"
   # An image in /assets that stands for the project
@@ -44,7 +44,7 @@ works:
     creator: "A. N. Author" # E.g. the author
     contributor: "" # E.g. other contributors
     subject: "Fiction" # E.g. BISAC terms (https://bisg.org/page/BISACEdition) or BIC (http://editeur.dyndns.org/bic_categories)
-    description: "This is the Electric Book template." # E.g. the blurb
+    description: "The Electric Book's blank template." # E.g. the blurb
     publisher: "EBW" # E.g. the publisher, imprint or brand name
     publisher-url: ""
     date: "2015-12-31" # YYYY-MM-DD e.g. publication date
@@ -211,7 +211,7 @@ works:
     contributor: "" # E.g. other contributors
     subject: "Publishing" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
     description: >
-      This sample content demos Electric Book support for a wide range of book features.
+      Sample content demonstrating Electric Book support for a wide range of book features.
     publisher: "Electric Book Works" # E.g. the publisher, imprint or brand name
     publisher-url: ""
     date: "2016-09-01" # YYYY-MM-DD e.g. publication date
