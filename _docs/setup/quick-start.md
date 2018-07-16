@@ -6,7 +6,7 @@ order: 0
 
 # Quick new-book setup
 
-This quick setup assumes you already have [Jekyll](http://jekyllrb.com/) and [Prince](http://www.princexml.com/) (if you want PDFs) installed and working on your computer.
+This quick setup assumes you already have [Jekyll](http://jekyllrb.com/) and [Prince](http://www.princexml.com/) (if you want PDFs) installed and working on your computer. ([Detailed installation guidance here](setting-up-your-computer).)
 
 1. Download the [Jekyll template](https://github.com/electricbookworks/electric-book).
 2. Open `_data/meta.yml` and replace the sample book information there with your project and book information.

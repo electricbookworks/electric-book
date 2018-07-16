@@ -2,7 +2,7 @@
 title: Project metadata
 categories:
   - setup
-order: 2
+order: 20
 ---
 
 # Project metadata
