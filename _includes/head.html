@@ -168,9 +168,22 @@
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
-    {% if page.description %}
-    <meta property="og:description" content="{{ page.description }}" />
+
+    {% comment %}Get appropriate description, in order of preference:
+    1. Page description (from page frontmatter)
+    2. Book description (from meta.yml via metadata include)
+    3. Project description (from meta.yml via metadata include)
+    {% endcomment %}
+    {% if page.description and page.description != "" %}
+        {% capture og-description %}{{ page.description }}{% endcapture %}
+    {% elsif description and description != "" %}
+        {% capture og-description %}{{ description }}{% endcapture %}
+    {% else %}
+        {% capture og-description %}{{ project-description }}{% endcapture %}
     {% endif %}
+
+    <meta property="og:description" content="{{ og-description }}" />
+
     {% if page.image %}
         {% if is-homepage == true or is-project-search == true %}
             {% comment %}If a page.image is specified on the home page, we still use the project image{% endcomment %}
