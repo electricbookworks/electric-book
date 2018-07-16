@@ -1,7 +1,7 @@
 ---
 title: Navigation and TOCs
 categories: setup
-order: 3
+order: 30
 ---
 
 # Navigation and tables of contents

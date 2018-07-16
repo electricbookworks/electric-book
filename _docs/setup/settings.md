@@ -1,7 +1,7 @@
 ---
 title: Settings
 categories: setup
-order: 1
+order: 10
 ---
 
 # Settings

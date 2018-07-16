@@ -1,7 +1,7 @@
 ---
 title: Upgrading a project
 categories: setup
-order: 6
+order: 60
 ---
 
 # Upgrading a project

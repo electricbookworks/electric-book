@@ -1,7 +1,7 @@
 ---
 title: Variants
 categories: setup
-order: 5
+order: 50
 ---
 
 # Variants
