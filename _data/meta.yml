@@ -683,6 +683,7 @@ works:
         language: "fr"
         title: "Échantillons"
         subtitle: "Exemples de contenu pour le livre électrique"
+        description: "Exemples de contenu pour le livre électrique"
         products:
           print-pdf:
             files:
