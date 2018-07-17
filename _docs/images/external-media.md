@@ -18,7 +18,7 @@ There is a template repo for external media at [github.com/electricbookworks/ele
 
 You set the full URL for the `remote-media` location in `_data/settings.yml`. The `remote-media` paths must be full URLs. For example:
 
-```
+``` yaml
 remote-media:
   live: "http://media.superpotatoes.com"
   development: "http://dev.superpotatoes.com/media"
@@ -26,7 +26,7 @@ remote-media:
 
 To disable external media, just comment out the relevant settings or leave the values blank:
 
-```
+``` yaml
 remote-media:
   live: ""
   development: ""
@@ -63,7 +63,7 @@ The local-media path can be set in two ways:
 
 A relative filesystem path might look like this:
 
-```
+``` yaml
 local-media:
   live: "../../superpotatoes-media"
   development: "../../superpotatoes-media"
@@ -84,7 +84,7 @@ Web output cannot use a relative filesystem path, because a webserver cannot see
 
 So you can use a webserver running on your own machine for offline development, e.g.
 
-```
+``` yaml
 local-media:
   development: "http://localhost:5000"
 ```

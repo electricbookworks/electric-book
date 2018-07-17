@@ -85,7 +85,7 @@ We define these things in the tag using 'parameters'. For instance, we set the `
 Here is a full example:
 
 {% raw %}
-```
+``` liquid
 {% include figure
    images="mydog.jpg, yourdog.jpg"
    html="<table></table>"
@@ -103,7 +103,7 @@ Here is a full example:
 
 Note the double quotes. If the text you're adding to a parameter contains quotes, you'd use single quotes in the text – or vice versa. Do not mix single and double quotes, or the software won't know where the parameter ends. If you must use, say, double quotes inside the quotes around a parameter, use the actual unicode glyphs for curly quotes, `“` and `”`. For instance, all of these are okay:
 
-```
+``` html
 caption="Blake's illustration for 'The Tyger'."
 caption='Blake's illustration for "The Tyger".'
 caption="Blake's illustration for “The Tyger”."
@@ -114,7 +114,7 @@ caption="Blake's illustration for “The Tyger”."
 If you need to rotate a large figure on the page, add the `rotate` class. E.g.
 
 {% raw %}
-```
+``` liquid
 {% include figure
    html="<table>...</table>"
    reference="Figure 1.1"

@@ -232,7 +232,7 @@ To create a whole list of definition entries, just put one of these after the ot
 
 Code can be inline, `like this`, or block:
 
-```
+``` md
 like this
 ```
 

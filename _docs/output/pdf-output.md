@@ -28,7 +28,7 @@ Run the template's `run-` output script for your operating system, and follow th
 
 We often have to create print PDFs for Lightning Source and similar print-on-demand providers. Their needs are unusual and specific. In most cases, you can get a Lightning Source-compatible PDF by turning on the Lightning Source setting in your book's `print-pdf.scss` file:
 
-```
+``` scss
 $print-page-setup-lightning-source: true;
 ```
 
@@ -40,7 +40,7 @@ This is set off (`false`) by default. This setting:
 
 In addition, also in your book's `print-pdf.scss` file, make sure your PDF profile is set to PDF/X-1a:
 
-```
+``` scss
 $pdf-profile: "PDF/X-1a:2001"
 ```
 

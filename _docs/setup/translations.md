@@ -41,7 +41,7 @@ If any images are different, then the translated images should also be saved in 
 
 When linking to images, remember to always use the `{{ images }}` tag in the path, e.g.:
 
-```
+``` md
 ![Dog chases bus]({{ images }}/dogbus.jpg)
 ```
 
@@ -57,7 +57,7 @@ Each translation must be added to the `meta.yml` file. All `translations` are a 
 
 The `translations` node is equivalent to `works`, but for translations. The system knows a page is a translation if it's in a book subdirectory listed in `translations` in `meta.yml`. For instance, for a French translation, with our translation files saved in `book/fr/`, we would say:
 
-```
+``` yaml
   translations
     -
       directory: fr
@@ -66,7 +66,7 @@ The `translations` node is equivalent to `works`, but for translations. The syst
 
 If our translation files are in `book/francais`, in `meta.yml` we would say:
 
-```
+``` yaml
   translations
     -
       directory: francais
@@ -75,7 +75,7 @@ If our translation files are in `book/francais`, in `meta.yml` we would say:
 
 Here is an example of the translation section of the `meta.yml` file that includes translations into Xhosa and French. Note how the translations can, but don't have to, include their own work-level metadata. Where it is included, it overrides the parent language's metadata. This means each translation can even have its own `files` list.
 
-```
+``` yaml
     translations:
       -
         directory: xh
@@ -107,7 +107,7 @@ In some situations, you might want the language set in your epub's Dublin Core O
 
 To set this, add a `language` to the `epub` section of your translation:
 
-```
+``` yaml
 works:
   - directory: "potatoes"
     ...

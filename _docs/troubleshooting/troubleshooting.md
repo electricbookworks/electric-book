@@ -38,7 +38,7 @@ Issues with newlines at Liquid tags is a [widespread PITA](https://github.com/Sh
 
 This will *not* work:
 
-```
+``` md
 > This figure shows the different paths taken by these economies. 
 > 
 > {% include figure image="fig.jpg" %}
@@ -49,7 +49,7 @@ This will *not* work:
 
 And this does work:
 
-```
+``` md
 > This figure shows the different paths taken by these economies. 
 > 
 > {% capture myfigure %}
@@ -64,13 +64,16 @@ Thanks to [Clemens Tolboom and Nathan Arthur](http://stackoverflow.com/a/2580349
 
 Another approach – which is actually easier if you know a little HTML – is to use an HTML blockquote rather than a markdown one. In that case, you'd do this:
 
-```
+``` md
 <blockquote class="box" markdown=1">
+
 This figure shows the different paths taken by these economies. 
 
 {% include figure image="fig.jpg" %}
 
 Notice that West Germany started from a more favourable position in 1950 than East Germany. Yet in 1936, before the war began, the two parts of Germany had virtually identical living standards. 
+
+</blockquote>
 ```
 
 Note that you need `markdown="1"` to tell kramdown to process the content of your HTML `blockquote` as markdown.

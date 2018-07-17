@@ -33,7 +33,7 @@ To add an image, you can use standard [kramdown syntax](https://kramdown.gettalo
 
 Instead, to get responsive images, use this image tag:
 
-```
+``` liquid
 {% include image file="foobar.jpg" %}
 ```
 
@@ -41,7 +41,7 @@ where `foobar.jpg` is the original filename of the image.
 
 If necessary, you can add `class`, `id` and/or `alt` attributes to the image, too:
 
-```
+``` liquid
 {% include image file="foobar.jpg" class="example" alt="An example image." id="anyuniqueid" %}
 ```
 
@@ -127,7 +127,7 @@ Here's a step-by-step guide using example code:
 
 3. Hide the second instance of the image in any web, app or epub CSS:
    
-   ``` CSS
+   ``` css
    /* Hide second instance of images intended for DPS in print */
    .dps-right { 
      display: none;
@@ -136,7 +136,7 @@ Here's a step-by-step guide using example code:
 
 4. In print CSS, use this. Follow the comments to modify sizes to suit your page size and layout:
    
-   ``` CSS
+   ``` css
    /* DPS images */
    
    blockquote.dps-left {
@@ -169,7 +169,7 @@ Here's a step-by-step guide using example code:
 
 That's all based on these page settings. Yours may differ, affecting your margins, heights and widths accordingly:
 
-``` CSS
+``` css
 @page {
     size: 130mm 200mm;
     margin-top: 15mm;

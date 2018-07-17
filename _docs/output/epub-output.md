@@ -31,7 +31,7 @@ Your epub will build correctly only if you have provided sufficient, accurate in
 5. Since EPUB3 requires a `nav` element, it is mandatory to include {% raw %}`{% include toc %}`{% endraw %} somewhere in your book, even if it's a file, listed at the end of your `epub` `files` list, that contains only:
 
 	{% raw %}
-	```
+	``` md
 	---
 	---
 
