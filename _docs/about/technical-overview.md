@@ -19,21 +19,22 @@ The technical team members who run the workflow need to be familiar with:
 *   **Sass**: a way to create complex CSS from simple rules.
 *	**Git**: software for tracking a team's changes and syncing them with a remote server. We like to use [GitHub](http://github.com).
 
-## Dependencies
+## How it works
 
-To use the workflow on your own machine, you must have the following software installed:
+Very broadly, this is how the Electric Book template works.
 
-* **Ruby**: the software that reads and runs Ruby code. (We highly recommend installing Ruby with a Ruby version manager like Chocolatey in Windows or Homebrew on Mac.)
-* **Bundler**: software that manages which version of Jekyll (and other Ruby gems) to apply to a project.
-* **Jekyll**: software that turns markdown and Sass into HTML and CSS. (To learn about Jekyll, [start here](http://jekyllrb.com/). If you're installing it on Windows, [you'll also need this guide](http://jekyll-windows.juthilo.com/).) From version 0.4.0, our template requires at least Jekyll 3.2.
-* **Node.js**, which we use for doing things like converting images and optimising Javascript.
-* **Gulp**: a Node.js package we use for bulk-processing images and Javascript.
-* **PhantomJS**: a headless browser that we use for rendering MathJax in PDF and for generating search indexes.
-* **PrinceXML**: software for creating PDFs from HTML and CSS (Prince is the only proprietary tool you'll need).
-* **GraphicsMagick**: the software we use for optimising images via Gulp.
-* **Git**: the software we use for version control.
+* The template is set up as a Jekyll project, with lots of predefined defaults in snippets of code. When you run the template's `run-` script for your operating system, Jekyll combines those snippets and your content into HTML pages. (See ['Using the template'](#using-the-template) below for detail on the template's structure, and [Jekyll's docs on structure](https://jekyllrb.com/docs/structure/).)
+* You store your markdown content in a book's `text` folder, and images in its `images/_source` folder. You create your designs in the stylesheets in its `styles` folder. You store project settings in `_data/settings.yml` and book metadata in `_data/meta.yml`.
+* Depending which options you select when you run the `run-` script, the script might then:
+	* pass the finished HTML to Prince to convert to PDF
+	* serve the finished HTML as a website that you can browse on your machine
+	* move and zip the finished HTML into an epub
+	* pass the finished HTML to Cordova to wrap into an app
+	* pass the finished HTML to Pandoc to convert to Word
+	* run the finished HTML through PhantomJS to build a search index.
+* The `run-` script also lets you choose to process images. It converts any images in a book's `_source` folder into variations for print-PDF, screen-PDF, web, epub and apps.
 
-You can see guidelines for [installing Jekyll on Windows here](https://gist.github.com/arthurattwell/281a5e1888ffd89b08b4861a2e3c1b35), and a guide to [setting up on Mac here](https://gist.github.com/arthurattwell/88be57cc2f660e35ebade4d098d67e4b).
+Now we can go into more detail.
 
 ## Key structural concepts
 
