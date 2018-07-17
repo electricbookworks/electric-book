@@ -3,6 +3,7 @@
 ## 0.12.1 (in progress)
 
 * [Fall back to book and project descriptions for Open Graph descriptions when page description not available](https://github.com/electricbookworks/electric-book/pull/285).
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/84e065f4f64571a95120ac89e38dc5ff01717fc8...master).
 
 ## 0.12.0
 
