@@ -128,7 +128,7 @@ title: "Chapter One: What are Space Potatoes?"
 ---
 ~~~
 
-Page styles we've designed for in the Classic theme include:
+Page styles we've built into the template include:
 
 *	`index` for the home page of a collection
 *	`cover` for a front cover, which will appear in ebook editions
