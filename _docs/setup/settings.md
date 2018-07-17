@@ -16,8 +16,10 @@ You can apply a range of settings to how your books build in `_data/settings.yml
 
 These settings are not yet used. In future, we expect to use this setting to allow or disallow Electric Book Manager servers to access your book project.
 
+``` yaml
 electric-book-manager: enable
 electric-book-manager-key: ""
+```
 
 ## Variants
 
@@ -34,7 +36,7 @@ These settings control the content of your masthead in web and app outputs. You 
 
 For example:
 
-```
+``` yaml
 web:
   masthead:
     content: page-title
@@ -61,7 +63,7 @@ You'll need to adjust the epub settings if you want to embed fonts or hide the e
 
 Among other things, this is where you enable a Google Play expansion file, if you need one for a large app. This is a rare need, so by default this is off (`false`).
 
-```
+``` yaml
 google-play-expansion-file-enabled: false
 google-play-public-api-key: ""
 ```

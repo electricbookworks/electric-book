@@ -20,7 +20,7 @@ To activate a variant, put its name as the `active-variant` in `settings.yml`. M
 
 You can create new stylesheets in addition to our standard ones, and specify these in `_data/settings.yml` file, like this:
 
-``` YAML
+``` yaml
 variants:
   - variant: myvariant
     print-pdf-stylesheet: "print-pdf-myvariant.css"
@@ -33,7 +33,7 @@ variants:
 
 You can define variant-specific metadata in `_data/meta.yml` in the same way you'd create metadata for a [translation](translations.html), by creating a `variants` node in a `work` containing all the same metadata you would for the `work`. Except instead of setting a `directory`, you set a `variant`, which matches the name of the variant you created in `settings.yml`. This can include things like `identifier`s, `files` lists, and `toc` and `nav` nodes. For example:
 
-```YAML
+``` yaml
     variants:
       - variant: myvariant
         identifier: "9781234567890"
@@ -46,7 +46,7 @@ You can define variant-specific metadata in `_data/meta.yml` in the same way you
 
 For TOCs, you can also change the TOC output for a variant by adding the names of the variants in which a TOC item should appear to the main book's TOC `item` node as `variants`. This makes sure that that node in the TOC only outputs when outputting one of the listed variants. For example:
 
-```
+``` yaml
 toc:
   label: "Study tips"
   file: "05-study-tips"

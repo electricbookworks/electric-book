@@ -24,7 +24,7 @@ Keep in mind that anything you add to `head-elements` will be added to all books
 To limit a script to a given book or format, wrap the script tag in [Liquid control flow tags](https://help.shopify.com/themes/liquid/tags/control-flow-tags). For instance:
 
 {% raw %}
-```
+``` html
 {% include metadata %}
 {% if book-directory == "grapes-of-wrath" %}
 <script src="{{ site.baseurl }}/assets/js/grapes-of-wrath.js"></script>
@@ -37,7 +37,7 @@ To limit a script to a given book or format, wrap the script tag in [Liquid cont
 To limit a script to a given output format, use `site.output`:
 
 {% raw %}
-```
+``` html
 {% if site.output == "print-pdf" %}
 <script src="{{ site.baseurl }}/assets/js/print-headers.js"></script>
 {% endif %}
@@ -50,7 +50,7 @@ Scripts in epub are special. While web and PDF scripts should be in `/assets/js`
 
 Also, epub scripts must have a YAML frontmatter block, and use a layout with no HTML:
 
-```
+``` md
 ---
 layout: min
 ---
@@ -67,7 +67,7 @@ In the finished epub, these scripts will end up in a `js` folder alongside `text
 To ensure that links to scripts work from both parent-language and translation-language files, use the {% raw %}`{{ path-to-book-directory }}`{% endraw %} tag in the path to the epub scripts:
 
 {% raw %}
-```
+``` html
 {% if site.output == "epub" %}
 <script src="{{ path-to-book-directory }}js/foo.js"></script>
 {% endif %}

@@ -14,7 +14,7 @@ Each questions is stored in its own file (alongside the book's other content fil
 
 The question file should have this layout:
 
-```
+``` md
 ---
 correct: 1, 4
 ---
