@@ -66,7 +66,7 @@ $web-base-typography: true !default;
         list-style-type: disc;
     }
     ul ul, ol ol, blockquote ul ul, blockquote ol ol {
-        margin-bottom: 0;
+        margin-bottom: 0; // See '@if spaced-paras' below
     }
     ol ol {
         list-style-type: lower-alpha;
@@ -179,6 +179,9 @@ $web-base-typography: true !default;
         p, p + p {
             margin-bottom: $line-height-default;
             text-indent: 0;
+        }
+        ul ul, ol ol, blockquote ul ul, blockquote ol ol {
+            margin-bottom: $line-height-default;
         }
     }
 
