@@ -93,7 +93,7 @@ $print-base-typography: true !default;
         list-style-type: disc;
 	}
 	ul ul, ol ol, blockquote ul ul, blockquote ol ol {
-		margin-bottom: 0;
+		margin-bottom: 0; // See '@if spaced-paras' below
 	}
 	li > ul {
 		margin-bottom: 0; // manages line space after sublists in lists
@@ -189,6 +189,9 @@ $print-base-typography: true !default;
             margin-bottom: $line-height-default;
             text-indent: 0;
         }
+        ul ul, ol ol, blockquote ul ul, blockquote ol ol {
+			margin-bottom: $line-height-default;
+		}
     }
 
 }
