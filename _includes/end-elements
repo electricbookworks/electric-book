@@ -5,25 +5,3 @@ Use Liquid logic tags to include only in certain outputs, e.g.
 `if site.output == "web"` for scripts like search.js.
 {% endcomment %}
 
-{% comment %}
-Add a bundle of JS and site search.
-{% endcomment %}
-{% if site.output == "web" or site.output == "app" %}
-<script src="{{ path-to-root-directory }}assets/js/bundle.js"></script>
-
-    {% if is-project-search or is-book-search %}
-    <script src="{{ path-to-root-directory }}assets/js/search-engine.js"></script>
-    <script src="{{ path-to-root-directory }}assets/js/search-index.js"></script>
-    <script src="{{ path-to-root-directory }}assets/js/search-results.js"></script>
-    {% endif %}
-
-{% endif %}
-
-{% comment %}
-This script gives every heading a title attribute.
-This is useful to Prince, which can use title attributes for running heads.
-By default, we only load it for PDF outputs.
-{% endcomment %}
-{% if site.output == "print-pdf" or site.output == "screen-pdf" %}
-<script src="{{ path-to-root-directory }}assets/js/heading-titles.js"></script>
-{% endif %}

@@ -1,0 +1,104 @@
+$web-multiple-choice-questions: true !default;
+@if $web-multiple-choice-questions {
+
+    // Multiple-choice questions
+
+    .question {
+        font-family: $font-text-secondary;
+        page-break-inside: avoid;
+        padding: ($line-height-default / 2);
+        margin: $line-height-default 0;
+        .figure {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    .mcq-questions, .mcq-options {
+        margin-bottom: 0;
+        [type="checkbox"] {
+            display: inline-block;
+            width: auto;
+            margin: 0 ($line-height-default / 2) 0 0;
+            cursor: pointer;
+        }
+        label {
+            display: block;
+            cursor: pointer;
+        }
+    }
+
+    .mcq-feedback {
+        display: none;
+    }
+
+    .js-mcq {
+        .mcq-options {
+            list-style-type: none;
+            margin-left: 0;
+            li {
+                margin-bottom: $line-height-default / 2;
+                margin-left: -($line-height-default / 2);
+                padding: 0 ($line-height-default / 2);
+                border: $button-border-radius solid transparent;
+                border-radius: $button-border-radius;
+            }
+            .selected {
+                border-color: $color-accent;
+            }
+        }
+    }
+
+    .js-mcq {
+        .mcq-feedback {
+            display: block;
+            position: relative;
+            list-style-type: none;
+            margin-left: 0;
+            background-color: $color-light;
+            border-radius: $button-border-radius;
+            li {
+                display: none;
+                padding: 0 ($line-height-default / 2) ($line-height-default / 2) ($line-height-default / 2);
+            }
+            .mcq-feedback-show {
+                display: block;
+            }
+        }
+        .feedback-label {
+            margin-top: $line-height-default;
+            background-color: $color-light;
+            padding: $line-height-default / 2;
+        }
+    }
+
+    .question {
+        .check-answer-button {
+            display: none;
+        }
+    }
+
+    .js-mcq {
+        .question {
+            .check-answer-button {
+                display: inline-block;
+                font-family: $font-text-secondary;
+                line-height: $line-height-default;
+                padding: $line-height-default/2 $line-height-default;
+                background-color: $color-buttons;
+                color: white;
+                border: 0;
+                border-radius: $button-border-radius;
+                cursor: pointer;
+            }
+        }
+    }
+
+    // This is reserved for later use, currently hiddden.
+    // Eventually, this will be a way to log into the site
+    // that manages user authorisation.
+    #nav .wordpress-link {
+        display: none;
+    }
+
+}

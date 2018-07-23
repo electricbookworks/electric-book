@@ -36,9 +36,11 @@ The crumbs-array is created empty in _includes/metadata.
         along the way.{% endcomment %}
         {% if item.file == current-file %}
             {% for crumb in include.crumbs-array %}
-                <li>{{ crumb }}</li>
+                <li>{{ crumb | strip | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</li>
             {% endfor %}
             <li>{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines | strip }}</li>
+            {% comment %}We don't break here because some files
+            appear more than once in nav/breadcrumbs.{% endcomment %}
         {% else %}
             {% include breadcrumbs breadcrumb-tree=children crumbs-array=crumbs-array %}
         {% endif %}

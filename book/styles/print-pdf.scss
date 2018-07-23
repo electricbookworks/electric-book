@@ -30,8 +30,8 @@ $edition-suffix: null;
 // First, we set several variables related to overall page setup.
 $page-width: 152mm;
 $page-height: 229mm;
-$margin-top: 20mm;
-$margin-bottom: 20mm;
+$margin-top: 60pt; // by setting this in points, you align with your baseline grid
+$margin-bottom: 60pt;
 $margin-outside: 20mm;
 $margin-inside: 20mm;
 $bleed: 3mm;
@@ -54,9 +54,10 @@ $color-highlight: #ffd54d;
 // Options for color profile:
 // - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
 // - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
+// - Provided by digitaldistributors.co.za: Grey_Fogra39L.icc, Grey_Fogra52L.icc
 // Add other ICC profiles to /_tools/profiles
 $pdf-profile: "PDF/X-1a:2001";
-$color-profile: "PSOcoated_v3.icc";
+$color-profile: "PSOuncoated_v3_FOGRA52.icc";
 $black-ink: true; // true or rich (true for pure black or rich for rich black)
 
 // We name font variables for two categories:
@@ -126,6 +127,8 @@ $frontmatter-reference-style: lower-roman; // lower-roman, decimal, see http://w
 // * For the body element's title attribute: string(page-header)
 //   Set this body title attribute with `header: Your Title` in a file's YAML frontmatter.
 //   If you don't set a page header in YAML, string(page-header) will fallback to the page title.
+//   You can also set string(page-header-left) and string(page-header-right) with page YAML
+//   `header-left: "Your Left Header"` and `header-right: "Your Right Header"` respectively.
 // * For the title attribute of the last h1 (increment to h2, h3, h4, h5, h6 as needed): string(h1-title, last)
 //   By default, this uses the heading text, unless you manually set a title attribute for a given heading.
 //   In kramdown, use {: title="Your Title Here" } after the heading to set the title manually.
@@ -194,7 +197,7 @@ $header-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
 $footer-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
 $header-letter-spacing: 0.1em;
 $footer-letter-spacing: 0.1em;
-$header-space-from-top: $margin-top / 2;
+$header-space-from-top: $margin-top / 2 + ($line-height-default / 4);
 $footer-space-from-bottom: $margin-bottom / 2;
 $header-text-align: center;
 $footer-text-align: center;
@@ -204,6 +207,10 @@ $footer-text-align: center;
 $highlight-tightened: inherit;
 $highlight-loosened: inherit;
 
+// Show or hide a baseline grid, based on line-height-default.
+// Set to true to show or false to hide.
+$show-baseline-grid: false;
+
 // ---------------------------------
 // Set to false to turn partials off
 // ---------------------------------
@@ -211,6 +218,9 @@ $highlight-loosened: inherit;
 // ---------------------
 // Reset PrinceXML CSS
 $print-css-reset: true;
+
+// Conventional helper classes
+$print-helpers: true;
 
 // ---------------------------
 // Add default font-face rules
@@ -233,32 +243,35 @@ $print-base-typography: true; // Default typography for HTML elements
 $print-buttons: true;
 $print-verse: true; // Default typography for verse, poetry, lyrics
 $print-bibliographies: true;
-$print-epigraphs: true; // 
-$print-dedications: true; // 
-$print-dialogue: true; // 
+$print-epigraphs: true;
+$print-dedications: true;
+$print-dialogue: true;
 $print-glossaries: true; // Including .glossary
 $print-highlighter: true;
 $print-pullquotes: true; // Supports .pullquote
-$print-boxes: true; // 
+$print-boxes: true;
 $print-code: true; // For computer code and preformatted text
-$print-tables: true; // 
-$print-figures: true; // 
+$print-tables: true;
+$print-figures: true;
 $print-notes: true; // Footnotes, endnotes, sidenotes
 $print-previous-publications-page: true; // The 'also by the author' frontmatter apge
 $print-title-pages: true; // Half-title and title pages
-$print-copyright-page: true; // 
+$print-copyright-page: true;
 $print-toc: true; // Tables of contents
 $print-cover: true; // Front-cover image for PDF ebooks
 $print-video: true;
-$print-smallcaps: true; // 
-$print-maths: true; // 
-$print-letters: true; // 
-$print-sources: true; // 
-$print-openers: true; // 
-$print-index: true; // 
+$print-smallcaps: true;
+$print-maths: true;
+$print-letters: true;
+$print-sources: true;
+$print-openers: true;
+$print-index: true;
+$print-multiple-choice-questions: true;
+$print-cross-refs: true;
 $print-reset-sequences: true; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true; // Sets content for headers and footers
 $print-page-headers-footers-style: true; // Sets styling for headers and footers
+$print-page-setup-lightning-source: false; // Removes crop marks and sets 3mm trim for Lightning Source
 
 // ------------
 // Import fonts

@@ -1,0 +1,44 @@
+{% capture image-tag %}
+
+{% include metadata %}
+
+{% comment %} Get the image and its file extension.
+Let user use `file` or `src` for the image file,
+defaulting to src. {% endcomment %}
+{% if include.file %}
+	{% assign image = include.file | split: "." | first %}
+	{% assign file-extension = include.file | split: "." | last %}
+{% elsif include.src %}
+	{% assign image = include.src | split: "." | first %}
+	{% assign file-extension = include.src | split: "." | last %}
+{% endif %}
+
+{% comment %} Capture and clean any alt text. {% endcomment %}
+{% if include.alt %}
+    {% capture image-alt %}{{ include.alt 
+    | replace: "&nbsp;", " "
+    | replace: "&shy;", ""
+    | markdownify
+    | strip_html }}{% endcapture %}
+{% endif %}
+
+{% comment %} Adjust the value of `sizes` if your site design does not need
+full-width images everywhere. Here is a guide:
+https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% endcomment %}
+<img
+    src="{{ images }}/{{ image }}.{{ file-extension }}"
+
+    {% if site.output == "web" or site.output == "app" %}
+    {% unless file-extension == "svg" %}
+    sizes="auto"
+    srcset="{{ images }}/{{ image }}-320.{{ file-extension }} 320w,
+    {{ images }}/{{ image }}-640.{{ file-extension }} 640w,
+    {{ images }}/{{ image }}-1024.{{ file-extension }} 1024w"
+    {% endunless %}
+    {% endif %}
+
+    {% if include.class %} class="{{ include.class }}"{% endif %}
+    {% if include.id %} id="{{ include.id }}"{% endif %}
+    {% if image-alt %} alt="{{ image-alt }}"{% endif %} />
+
+{% endcapture %}{{ image-tag | strip_newlines | strip }}

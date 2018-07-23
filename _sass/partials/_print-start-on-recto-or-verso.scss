@@ -31,6 +31,12 @@ $print-start-on-recto-or-verso: true !default;
         page-break-before: $start-on;
     }
 
+    // Let user start any element on right, e.g. with
+    // `style: chapter start-on-right`
+    .start-on-right, .start-on-recto {
+        page-break-before: right;
+    }
+
     // Also see:
     // _print-page-break-tools.scss
     // _print-front-cover.scss

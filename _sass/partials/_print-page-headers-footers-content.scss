@@ -10,7 +10,9 @@ $print-page-headers-footers-content: true !default;
 
   body {
     string-set:
-      page-header attr(data-header);
+      page-header attr(data-header),
+      page-header-left attr(data-header-left),
+      page-header-right attr(data-header-right);
   }
 
   // Assign strings to use in headers and footers for each level of heading (h1-h6),

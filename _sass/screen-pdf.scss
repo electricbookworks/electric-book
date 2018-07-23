@@ -24,8 +24,8 @@
 $edition-suffix: null !default;
 
 // First, we set several variables related to overall page setup.
-$page-width: 210mm !default;
-$page-height: 297mm !default;
+$page-width: 152mm !default;
+$page-height: 229mm !default;
 $margin-top: 20mm !default;
 $margin-bottom: 20mm !default;
 $margin-outside: 20mm !default;
@@ -70,8 +70,8 @@ $font-display-secondary: "Crimson", prince-no-fallback !default;
 $font-code: "Ubuntu Mono", prince-no-fallback !default;
 
 // Finally, we set variables related to text flow.
-$font-size-default: 12pt !default;
-$line-height-default: 16pt !default; // Set in points. For consistent baselines, all other line heights and vertical spaces are based on this.
+$font-size-default: 11pt !default;
+$line-height-default: 15pt !default; // Set in points. For consistent baselines, all other line heights and vertical spaces are based on this.
 $font-size-smaller: 0.8 !default; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes? Use whole numbers to preserve baseline grid.
 $text-align: justify !default; // left or right or inside or outside or justify or center
@@ -122,6 +122,8 @@ $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see
 // * For the body element's title attribute: string(page-header)
 //   Set this body title attribute with `header: Your Title` in a file's YAML frontmatter.
 //   If you don't set a page header in YAML, string(page-header) will fallback to the page title.
+//   You can also set string(page-header-left) and string(page-header-right) with page YAML
+//   `header-left: "Your Left Header"` and `header-right: "Your Right Header"` respectively.
 // * For the title attribute of the last h1 (increment to h2, h3, h4, h5, h6 as needed): string(h1-title, last)
 //   By default, this uses the heading text, unless you manually set a title attribute for a given heading.
 //   In kramdown, use {: title="Your Title Here" } after the heading to set the title manually.
@@ -190,7 +192,7 @@ $header-case: uppercase !default; // none|capitalize|uppercase|lowercase|initial
 $footer-case: uppercase !default; // none|capitalize|uppercase|lowercase|initial|inherit;
 $header-letter-spacing: 0.1em !default;
 $footer-letter-spacing: 0.1em !default;
-$header-space-from-top: $margin-top / 2 !default;
+$header-space-from-top: $margin-top / 2 + ($line-height-default / 4) !default; // should align with baseline grid
 $footer-space-from-bottom: $margin-bottom / 2 !default;
 $header-text-align: center !default;
 $footer-text-align: center !default;
@@ -200,19 +202,23 @@ $footer-text-align: center !default;
 $highlight-tightened: inherit !default;
 $highlight-loosened: inherit !default;
 
+// Show or hide a baseline grid, based on line-height-default.
+// Set to true to show or false to hide.
+$show-baseline-grid: false !default;
+
 // ---------------------------------
 // Set to false to turn partials off
 // ---------------------------------
 
-// ---------------------
 // Reset PrinceXML CSS
 $print-css-reset: true !default;
 
-// ---------------------------
+// Conventional helper classes
+$print-helpers: true !default;
+
 // Add default font-face rules
 $print-font-faces: true !default;
 
-// --------------------------------------------
 // Page setup and control, avoid changing these
 $print-pdf-view: true !default; // Sets the default initial view on PDFs
 $print-page-setup: true !default; // Sets up the page from your variables
@@ -221,37 +227,38 @@ $print-hide-non-printing: true !default; // Hides anything .non-printing
 $print-fitting: true !default; // Classes for floating, tracking, shrinking, etc.
 $print-hyphenation: true !default; // Sets hyphenation dictionary
 
-// ---------------------
-// Theme modules
+// Book features
 $print-start-on-recto-or-verso: true !default; // Starts chapters on a left- or right-hand-page
 $print-page-start-depth: true !default; // Sets a top margin on opening pages
 $print-base-typography: true !default; // Default typography for HTML elements
 $print-buttons: true !default;
 $print-verse: true !default; // Default typography for verse, poetry, lyrics
 $print-bibliographies: true !default;
-$print-dialogue: true !default; // 
-$print-epigraphs: true !default; // 
-$print-dedications: true !default; // 
+$print-dialogue: true !default;
+$print-epigraphs: true !default;
+$print-dedications: true !default;
 $print-glossaries: true !default; // Including .glossary
 $print-highlighter: true !default;
 $print-pullquotes: true !default; // Supports .pullquote
-$print-boxes: true !default; // 
+$print-boxes: true !default;
 $print-code: true !default; // For computer code and preformatted text
-$print-tables: true !default; // 
-$print-figures: true !default; // 
+$print-tables: true !default;
+$print-figures: true !default;
 $print-notes: true !default; // Footnotes, endnotes, sidenotes
 $print-previous-publications-page: true !default; // The 'also by the author' frontmatter apge
 $print-title-pages: true !default; // Half-title and title pages
-$print-copyright-page: true !default; // 
+$print-copyright-page: true !default;
 $print-toc: true !default; // Tables of contents
 $print-cover: true !default; // Front-cover image for PDF ebooks
 $print-video: true !default;
-$print-smallcaps: true !default; // 
-$print-maths: true !default; // 
-$print-letters: true !default; // 
-$print-sources: true !default; // 
-$print-openers: true !default; // 
-$print-index: true !default; // 
+$print-smallcaps: true !default;
+$print-maths: true !default;
+$print-letters: true !default;
+$print-sources: true !default;
+$print-openers: true !default;
+$print-index: true !default;
+$print-multiple-choice-questions: true !default;
+$print-cross-refs: true !default;
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true !default; // Sets content for headers and footers
 $print-page-headers-footers-style: true !default; // Sets styling for headers and footers
@@ -266,15 +273,15 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 // Import theme partials
 // ---------------------
 
-// ---------------------
 // Reset PrinceXML CSS
 @import "partials/print-css-reset";
 
-// ---------------------
+// Conventional helper classes
+@import "partials/print-helpers";
+
 // Add font-face rules
 @import "partials/print-font-faces";
 
-// --------------------------------------------
 // Page setup and control, avoid changing these
 @import "partials/print-pdf-view"; // Sets the default initial view on PDFs
 @import "partials/print-page-setup"; // Sets up the page from your variables
@@ -282,38 +289,40 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-hide-non-printing"; // Hides anything .non-printing
 @import "partials/print-fitting"; // Classes for floating, tracking, shrinking, etc.
 @import "partials/print-hyphenation"; // Sets hyphenation dictionary
+@import "partials/print-baseline-grid"; // Shows a baseline grid
 
-// ---------------------
-// Theme modules
+// Book features
 @import "partials/print-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
 @import "partials/print-page-start-depth"; // Sets a top margin on opening pages
 @import "partials/print-base-typography"; // Default typography for HTML elements
 @import "partials/print-buttons";
 @import "partials/print-verse"; // Default typography for verse, poetry, lyrics
 @import "partials/print-bibliographies";
-@import "partials/print-epigraphs"; // 
-@import "partials/print-dedications"; // 
-@import "partials/print-dialogue"; // 
+@import "partials/print-epigraphs";
+@import "partials/print-dedications";
+@import "partials/print-dialogue";
 @import "partials/print-glossaries"; // Including .glossary
-@import "partials/print-highlighter"; //
+@import "partials/print-highlighter";
 @import "partials/print-pullquotes"; // Supports .pullquote
-@import "partials/print-boxes"; // 
+@import "partials/print-boxes";
 @import "partials/print-code"; // For computer code and preformatted text
-@import "partials/print-tables"; // 
-@import "partials/print-figures"; // 
+@import "partials/print-tables";
+@import "partials/print-figures";
 @import "partials/print-notes"; // Footnotes, endnotes, sidenotes
 @import "partials/print-previous-publications-page"; // Also by the author page in frontmatter
 @import "partials/print-title-pages"; // Half-title and title pages
-@import "partials/print-copyright-page"; // 
+@import "partials/print-copyright-page";
 @import "partials/print-toc"; // Tables of contents
 @import "partials/print-cover"; // Front-cover image for PDF ebooks
-@import "partials/print-video"; //
-@import "partials/print-smallcaps"; // 
-@import "partials/print-maths"; // 
-@import "partials/print-letters"; // 
-@import "partials/print-sources"; // 
-@import "partials/print-openers"; // 
-@import "partials/print-index"; // 
+@import "partials/print-video";
+@import "partials/print-smallcaps";
+@import "partials/print-maths";
+@import "partials/print-letters";
+@import "partials/print-sources";
+@import "partials/print-openers";
+@import "partials/print-index";
+@import "partials/print-mcqs";
+@import "partials/print-cross-refs";
 @import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
 @import "partials/print-page-headers-footers-content"; // Sets content for headers and footers
 @import "partials/print-page-headers-footers-style"; // Sets styling for headers and footers

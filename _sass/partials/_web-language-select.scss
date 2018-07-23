@@ -40,6 +40,9 @@ $web-language-select: true !default;
 
     // Globe icon (_includes/globe-icon)
     svg.language-select-icon {
+        // Avoid Firefox bug where tapping selects SVG as text
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
+        -moz-user-select: none;
         path {
             fill: $language-select-icon-color;
         }

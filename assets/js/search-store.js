@@ -1,13 +1,17 @@
 {% comment %} Generates a store that we can point an elasticlunr
 0-based index reference at for search results. {% endcomment %}
 
+{% comment %} Get page metadata, mainly to detect
+whether output-docs == true. {% endcomment %}
+{% include metadata %}
+
 {% comment %} Get the array-of-files to include in the index {% endcomment %}
 {% include files-listed.html %}
 
 {% comment %} Add data to a store, which we need as search results,
 because since elasticlunr only returns (0-based indexed) `ref`.
 Only show excerpts if they do not include Liquid tags.
-Also, Jekyll sets page.url form index.html pages as the path
+Also, Jekyll sets page.url for index.html pages as the path
 to the folder, not the file. So we check for that. {% endcomment %}
 var store = [
     {% for url-from-array in array-of-files %}
@@ -31,7 +35,7 @@ var store = [
         {% endfor %}
     {% endfor %}
 
-        {% if output-docs == "true" %}
+        {% if output-docs == true %}
             {% for page in site.docs %}
                 {
                     'title': {% if page.title and page.title != "" %}{{ page.title | jsonify }}{% else %}{{ page.url | replace: "/"," " | jsonify }}{% endif %},

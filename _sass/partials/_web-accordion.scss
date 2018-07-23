@@ -1,0 +1,44 @@
+$web-accordion: true !default;
+@if $web-accordion {
+
+    // Accordions
+    [role="tab"] {
+        position: relative;
+        padding-right: $line-height-default;
+        &:hover {
+            cursor: pointer;
+        }
+        a {
+            color: $color-accent;
+            &:first-of-type {
+                margin-right: 0.4em;
+            }
+        }
+        &:after {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    [data-accordion="closed"] {
+        @media (min-width: $break-point-width) {
+            font-size: $font-size-default;
+        }
+        &:after {
+            content: $nav-bar-children-prompt;
+        }
+    }
+
+    [data-accordion="open"] {
+        margin-top: $line-height-default;
+        &:after {
+            content: $nav-bar-children-prompt-hide;
+        }
+    }
+
+    [aria-expanded="false"] {
+        display: none;
+    }
+
+}

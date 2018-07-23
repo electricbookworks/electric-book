@@ -46,11 +46,38 @@ $web-search: true !default;
       }
     }
 
-    // Marked search results (wuth mark.js)
+    // Marked search results (with mark.js)
     mark {
         background-color: $color-highlight;
         color: inherit;
         border-radius: $button-border-radius;
+    }
+
+    .search-results-summary {
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        background-color: $color-notification-low;
+        border-radius: $button-border-radius;
+    }
+
+    .search-page-notice {
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        background-color: $color-notification-medium;
+        border-radius: $button-border-radius;
+        *:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .search-progress-placeholder {
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        background-color: $color-notification-low;
+        border-radius: $button-border-radius;
+        *:last-child {
+            margin-bottom: 0;
+        }
     }
 
 } // @if $web-search

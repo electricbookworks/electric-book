@@ -1,0 +1,88 @@
+# Live website build config
+# Use this to override defaults in _config.yml
+
+# This is the live build
+build: live
+
+# URLs
+canonical-url: "http://example.com"
+baseurl: "/example"
+
+# Exclude list
+exclude: [
+# -----------------------------------
+# Build tools
+# -----------------------------------
+README.md,
+LICENSE,
+run-linux*,
+run-mac*,
+run-windows*,
+Gemfile,
+Gemfile.lock,
+package.json,
+package-lock.json,
+node_modules,
+gulpfile.js,
+eslint.json,
+CHANGELOG.md,
+/*/images/source,
+# -----------------------------------
+# Colour profiles for conversions
+# -----------------------------------
+/assets/profiles,
+# -----------------------------------
+# Scripts we only want the minified versions of
+# -----------------------------------
+# 
+# -----------------------------------
+# Scripts we don't need for web output
+# -----------------------------------
+/assets/js/heading-titles.js,
+/assets/js/render-mathjax.js,
+/assets/js/render-search-index.js,
+# -----------------------------------
+# Book files we don't need for web
+# -----------------------------------
+/*/images/print-pdf,
+/*/images/screen-pdf,
+/*/images/epub,
+/*/images/app,
+/*/styles/epub*,
+/*/styles/print-pdf*,
+/*/styles/screen-pdf*,
+/*/styles/app*,
+/*/text/file-list,
+/*/package.opf,
+/*/toc.ncx,
+# -----------------------------------
+# Exclude web images only if you keep_files them below
+# -----------------------------------
+# /*/images/web,
+# -----------------------------------
+# Exclude translations not ready for prime time
+# -----------------------------------
+# /*/fr,
+]
+
+# Keep list. Adjust for faster output,
+# if you know what you're doing.
+keep_files: [
+# -----------------------------------
+# Book files
+# -----------------------------------
+# book/images/print-pdf,
+# book/images/screen-pdf,
+# book/images/web,
+# book/images/epub,
+# book/fonts,
+# book/styles,
+# book/text,
+# book/text/01.html,
+# book/text/02.html,
+]
+
+# Turn off docs
+collections:
+  docs:
+    output: false

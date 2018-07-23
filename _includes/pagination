@@ -87,7 +87,7 @@ not pages like landing and search pages. {% endcomment %}
         {% unless include.direction == "next" %}    
             {% if previous-page and previous-page-url != "" and previous-page-url != this-page-url %}
                 <div class="pagination-previous">
-                    <a href="{{ path-to-root-directory }}{{ previous-page-url }}">{% if previous-page-title and previous-page-title != "" and site.data.settings[output-format].pagination-type == "titles" %}{{ previous-page-title }}{% elsif site.data.settings[output-format].pagination-type == "direction" %}{{ locale.nav.previous }}{% else %}&#x2190;{% endif %}</a>
+                    <a href="{{ path-to-root-directory }}{{ previous-page-url | replace_first: "/" }}">{% if previous-page-title and previous-page-title != "" and site.data.settings[output-format].pagination-type == "titles" %}{{ previous-page-title }}{% elsif site.data.settings[output-format].pagination-type == "direction" %}{{ locale.nav.previous }}{% else %}&#x2190;{% endif %}</a>
                 </div>
             {% endif %}
         {% endunless %}
@@ -95,7 +95,7 @@ not pages like landing and search pages. {% endcomment %}
         {% unless include.direction == "previous" %}
             {% if next-page and next-page-url != "" and next-page-url != this-page-url %}
                 <div class="pagination-next">
-                    <a href="{{ path-to-root-directory }}{{ next-page-url }}">{% if next-page-title and next-page-title != "" and site.data.settings[output-format].pagination-type == "titles" %}{{ next-page-title }}{% elsif site.data.settings[output-format].pagination-type == "direction" %}{{ locale.nav.previous }}{% else %}&#x2192;{% endif %}</a>
+                    <a href="{{ path-to-root-directory }}{{ next-page-url | replace_first: "/" }}">{% if next-page-title and next-page-title != "" and site.data.settings[output-format].pagination-type == "titles" %}{{ next-page-title }}{% elsif site.data.settings[output-format].pagination-type == "direction" %}{{ locale.nav.previous }}{% else %}&#x2192;{% endif %}</a>
                 </div>
             {% endif %}
         {% endunless %}

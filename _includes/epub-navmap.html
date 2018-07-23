@@ -1,0 +1,98 @@
+{% comment %}
+Get the file metadata.
+{% endcomment %}
+{% include metadata %}
+
+{% comment %}
+Get the epub TOC
+{% endcomment %}
+{% if epub-toc and epub-toc != "" %}
+    {% assign toc = epub-toc %}
+{% elsif print-pdf-toc and print-pdf-toc != "" %}
+    {% assign toc = print-pdf-toc %}
+{% elsif web-nav-tree and web-nav-tree != "" %}
+    {% assign toc = web-nav-tree %}
+{% else %}
+    Please define a TOC or web nav in meta.yml.
+{% endif %}
+
+{% comment %}
+If the file that called this include didn't specify a start parameter, then
+it must be the calling entire toc from the top. If so, then
+we want the toc-branch to include the entire site.output-specific toc defined above.
+Otherwise, the toc-branch should be the children called by this include recursively.
+{% endcomment %}
+
+{% assign toc-branch = include.start %}
+
+{% if toc-branch == nil %}
+    {% assign toc-branch = toc %}
+    {% assign ncx-depth = 1 %}
+    {% assign navpoint-id = 0 %}
+{% endif %}
+
+{% comment %}
+Output the contents of the navMap
+by looping through the relevant toc-branch.
+This part will run recursively for child items,
+as the include calls itself for each list of children.
+{% endcomment %}
+
+{% for item in toc-branch | sort: "order" %}
+
+    {% assign navpoint-id = navpoint-id | plus: 1 %}
+
+    <navPoint id="navPoint-{{ navpoint-id }}" playOrder="{{ navpoint-id }}">
+
+        {% comment %}Assume we will use every item in the toc-branch{% endcomment %}
+        {% assign include-in-toc = true %}
+
+        {% comment %}If we're outputting a variant, check if a variant toc
+        has been specified. If it has, then it replaced the default toc tree.
+        If we are outputting a variant, and a variant toc is not specified,
+        check which variants, if any, this particular TOC item has specified.
+        Include the item in the TOC only if it is specified in the TOC item's
+        variants list.{% endcomment %}
+        {% if variant and variant-toc == false %}
+            {% assign toc-variants = item.variants | remove: " " | split: "," %}
+            {% for toc-variant in toc-variants %}
+                {% if toc-variant == variant %}
+                    {% assign include-in-toc = true %}
+                    {% break %}
+                {% else %}
+                    {% assign include-in-toc = false %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if include-in-toc == true %}
+
+            <navLabel>
+                <text>{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</text>
+            </navLabel>
+
+            {% comment %}If the item has no file to link to, use its first child's file,
+            because NCS requires a valid src in <content>.
+            Note: this means the first child must also have an ID specified in meta.yml,
+            for a fragment identifier that is different from the parent.{% endcomment %}
+            <content
+                {% if item.file and item.file != "" %}
+                    src="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
+                {% else %}
+
+                    {% assign children-with-file = item.children | where_exp: "item", "item.file" %}
+
+                    src="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ children-with-file[0].file }}.html"
+                {% endif %} />
+
+            {% comment %}If there are child items, run this include again here,
+            using the children as the starting point{% endcomment %}
+            {% if item.children != nil %}
+                {% include epub-navmap.html start=item.children %}
+            {% endif %}
+
+        {% endif %}
+
+    </navPoint>
+
+{% endfor %}

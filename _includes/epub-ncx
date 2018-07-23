@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!-- Note: no DOCTYPE. Not required and can trigger errors in validation. -->
+<!-- Spec: http://www.daisy.org/z3986/2005/Z3986-2005.html#NCX -->
+
+{% comment %}Below, we do not set `depth` because it's hard to calculate
+in Liquid, and EpubCheck doesn't mind an empty value.
+The toc.ncx is marked for removal from the spec anyway,
+so this value will probably not be checked in future.{% endcomment %}
+
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+    <head>
+        <meta name="dtb:uid" content="{{ epub-identifier }}"/>
+        <meta name="dtb:depth" content=""/>
+        <meta name="dtb:totalPageCount" content="0"/>
+        <meta name="dtb:maxPageNumber" content="0"/>
+    </head>
+    <docTitle>
+        <text>{{ title }}</text>
+    </docTitle>
+    <navMap>
+
+    {% include epub-navmap.html %}
+
+    {% comment %}Close the XML file.{% endcomment %}
+    </navMap>
+</ncx>

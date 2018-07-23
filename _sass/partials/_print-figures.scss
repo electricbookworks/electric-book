@@ -5,13 +5,13 @@ $print-figures: true !default;
 
 	.figure {
 		clear: both;
-		float: bottom; // By default all figures float to the bottoms of their pages
+		float: bottom; // By default all figures float to the bottoms of their pages. See margins.
+		margin: $line-height-default 0 0 0;
 		page-break-inside: avoid;
 		background-color: inherit;
 		font-size: inherit;
 		font-weight: inherit;
 		color: inherit;
-		margin: 0 0 $line-height-default 0;
 		padding: 0;
 		width: 100%;
 		box-sizing: border-box;
@@ -76,6 +76,16 @@ $print-figures: true !default;
 				padding: 0;
 			}
 		}
+
+		// Allow user to set figure width as a percentage
+		@for $i from 1 through 100 {
+			&.width-#{$i} {
+				width: $i * 1%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+
 	}
 
 	// Experimental. Effectively overrides 'unless-fit' to reduce ugly instances
@@ -86,15 +96,15 @@ $print-figures: true !default;
 
 	// Image size options
 	// These need to be deprecated in favour of a multiple-based system.
-	.figure.x-small p img {
+	.figure.x-small img {
 		width: auto;
 		max-height: $line-height-default * 5;
 	}
-	.figure.small p img {
+	.figure.small img {
 		width: auto;
 		max-height: $line-height-default * 7;
 	}
-	.figure.medium p img {
+	.figure.medium img {
 		width: auto;
 		max-height: $line-height-default * 10;
 	}
@@ -132,6 +142,62 @@ $print-figures: true !default;
 		}
 		& + p {
 			text-indent: 0;
+		}
+	}
+
+	// -------------------------------------------------------------------------------
+	// Rotated figures
+	// -------------------------------------------------------------------------------
+
+	// To make rotated figures work:
+	// 1. In the markdown/HTML, add class="rotate" to the figure(s) you want to rotate.
+	// 2. On building, rotate.js wraps each rotating figure in two wrapper divs,
+	//    figure-rotator and, wrapping that, figure-rotator-wrapper.
+	// 4. Then we do some maths to work out the proportions of our content area.
+	// 5. Then see the notes in the Sass below.
+
+	// Get the proportions we need
+	$rotator-content-width: $page-width - $margin-inside - $margin-outside;
+	$rotator-content-height: $page-height - $margin-top - $margin-bottom;
+	$rotator-content-wh-ratio: (1 - $rotator-content-width/$rotator-content-height) * 100%;
+
+	.figure-rotator-wrapper {
+		// First we float the wrapper to the top of the page,
+		// and set its height and width to match the content area.
+		float: top;
+		height: $rotator-content-height;
+		width: $rotator-content-width;
+		.figure-rotator {
+			// First we reverse the rotating div's proportions.
+			height: $rotator-content-width;
+			width: $rotator-content-height;
+			// Then we get this div into its new position:
+			// 1. We choose to rotate from the bottom-left corner.
+			transform-origin: bottom left;
+			// 2. Rotate the div anti-clockwise 90%.
+			// 3. Shift the div right by its own (now) width.
+			// 4. Shift the div down by the proportion of the content area's width:height.
+			// Now it's exactly in position.
+			transform: rotate(-90deg) translatey(100%) translatex(-($rotator-content-wh-ratio));
+			// Finally we set it to display: table, for the vertical centering to come below.
+			display: table;
+			.figure {
+				// First, override the float and margins that figures get by default.
+				float: none;
+				margin: 0;
+				// Set the height and width to the reverse of the content area.
+				height: $rotator-content-width;
+				width: $rotator-content-height;
+				// Center the figure on the page ('vertically' if you're looking sideways!).
+				display: table-cell;
+				vertical-align: middle;
+				.figure-body {
+					table {
+						// Adjust the margins that tables in figures inherit.
+						margin: 0 0 $line-height-default 0; // overrides inherited margin
+					}
+				}
+			}
 		}
 	}
 

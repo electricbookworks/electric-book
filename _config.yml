@@ -5,9 +5,12 @@
 # UPDATE THESE SETTINGS ON SETUP
 # ------------------------------
 
-# The primary language used in this project. You can set the language for each book individually below at 'defaults'. 
-# To understand what language tags to use, read: http://www.w3.org/International/articles/language-tags/ 
-# For the registry of tags: http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry 
+# The primary language used in this project. You can set the language
+# for each book individually below at 'defaults'. 
+# To understand what language tags to use, read:
+# http://www.w3.org/International/articles/language-tags/ 
+# For the registry of tags:
+# http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry 
 # Useful lookup tool: http://r12a.github.io/apps/subtags/
 language: en
 
@@ -17,8 +20,8 @@ language: en
 # theme: your-theme-gem-name-here
 
 # Which edition are we creating? You can leave this as `default`.
-# This can be used to create different editions of a book using Liquid control-flow tags, 
-# e.g. in includes, layouts and file-list
+# This can be used to create different editions of a book using
+# Liquid control-flow tags, e.g. in includes, layouts and file-list
 edition: "default"
 #edition: ""
 
@@ -28,8 +31,8 @@ canonical-url: "http://example.com"
 
 # If you're using GitHub Pages without a custom domain, make this
 # the name of your repo, e.g. /electric-book
-# It must start with a slash. Otherwise you can leave it blank.
-# See http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
+# It must start with a slash. Otherwise you can leave it blank. See:
+# http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
 baseurl: ""
 
 # If you're publishing a website on GitHub Pages
@@ -41,7 +44,10 @@ repository: ""
 
 # Web navigation source: select either files or nav
 # files: navigation will be taken from the web files list in `meta.yml`
-# nav: navigation will be taken from the web nav tree in `meta.yml` (allows submenu nesting)
+# nav: navigation will be taken from the web nav tree in `meta.yml`.
+# nav is more powerful, and allows submenu nesting;
+# files is quicker, because you don't have to create nav yaml,
+# only a files list.
 nav-source: nav
 
 # Enable MathJax to render mathematics. MathJax adds a large script to your pages,
@@ -110,6 +116,18 @@ exclude:
 - package.json
 - package-lock.json
 - CNAME
+# Files for formats we're not building here
+- /assets/profiles
+- /*/package.opf
+- /*/toc.ncx
+- /*/images/print-pdf
+- /*/images/screen-pdf
+- /*/images/epub
+- /*/images/app
+- /*/styles/print-pdf*
+- /*/styles/screen-pdf*
+- /*/styles/epub*
+- /*/styles/app*
 # Books
 # - book
 # - samples
@@ -134,7 +152,9 @@ compress_html:
 # ----------------------------
 
 # Version of this Electric Book template
-version: "0.11.0"
+# This is the last release, not the current build
+# at github.com/electricbookworks/electric-book
+version: "0.12.0"
 
 # Leave this unchanged as http://localhost:4000 unless you really know what you're doing here. This is the URL that Jekyll will run at by default locally.
 url: http://localhost:4000

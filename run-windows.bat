@@ -398,13 +398,14 @@ set /p process=Enter a number and hit return.
 
         :: Ask about validation
         :epubAskAboutValidation
+            set epubValidation=
             echo Shall we try to run EpubCheck when we're done? Hit enter for yes, or any key and enter for no.
             set /p epubValidation=
 
         :: Loop back to this point to refresh the build again
         :epubrefresh
 
-        :: let the user know we're on it!
+        :: Let the user know we're on it!
         if "%subdirectory%"=="" goto epubGeneratingHTMLNoSubdirectory
         if not "%subdirectory%"=="" goto epubGeneratingHTMLWithSubdirectory
 
@@ -427,7 +428,7 @@ set /p process=Enter a number and hit return.
         echo Assembling epub...
 
 
-        :: Copy styles, images, text and package.opf to epub folder.
+        :: Copy styles, images, text, package.opf and toc.ncx to epub folder.
         :: The echo f preemptively answers xcopy's question whether 
         :: this is a file (see https://stackoverflow.com/a/3018371).
         :: The > nul supresses command-line feedback (pseudo silent mode)
@@ -545,16 +546,36 @@ set /p process=Enter a number and hit return.
         :epubOPFDone
 
 
+        :: Get the right toc.ncx for the translation we're creating
+        :epubCopyNCX
+            echo Copying NCX file...
+            if "%subdirectory%"=="" goto epubOriginalNCX
+            if not "%subdirectory%"=="" goto epubSubdirectoryNCX
+
+        :: If original language, use the package.opf in the root
+        :epubOriginalNCX
+            echo f | xcopy /e /q "toc.ncx" "../epub" > nul
+            echo NCX copied.
+            goto epubNCXDone
+
+        :: If translation language, use the toc.ncx in the subdirectory
+        :: This will overwrite the original language NCX file
+        :epubSubdirectoryNCX
+            echo f | xcopy /e /q "%subdirectory%\toc.ncx" "../epub" > nul
+            echo NCX copied.
+            goto epubNCXDone
+
+        :epubNCXDone
+
         :: Go into _site/epub to move some more files and then zip to _output
         cd %location%_site/epub
 
         :: If there is a js folder, and it has no contents, delete it.
-        :: Otherwise, if this is a translation, move the js folder
-        :: into the subdirectory alongside text, images, styles.
+        :: Otherwise, copy the js folder into the epub folder.
+        :: (JS lives in the root directory even in translations.)
         :epubMoveJS
             echo Checking for Javascript...
             if exist "js" if not exist "js\*.*" rd /s /q "js"
-            if not "%subdirectory%"=="" if exist "js\*.*" move "js" "%subdirectory%\js"
             echo Javascript checked.
 
         :: If there is a fonts folder, and it has no contents, delete it.
@@ -567,6 +588,7 @@ set /p process=Enter a number and hit return.
             echo Fonts checked.
 
         :: If MathJax required, fetch boilerplate mathjax directory from /assets/js
+        :: (MathJax lives in the root directory even in translations.)
         if "%epubIncludeMathJax%"=="y" goto epubGetMathjax
         goto epubSetFilename
 
@@ -576,11 +598,8 @@ set /p process=Enter a number and hit return.
             :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
             :: Adding /NP will also suppress progress bar.
             robocopy "%location%_site/assets/js/mathjax" "%location%_site/epub/mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
-            :: If this is a translation, move mathjax into the language folder
-            if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" move "mathjax" "%subdirectory%\mathjax"
-            if "%epubIncludeMathJax%"=="y" if not "%subdirectory%"=="" echo MathJax moved to translation folder.
 
-        :: Set the filename of the epub, sans extension
+        :: Set the filename of the epub, sans file extension
         :epubSetFilename
             if "%subdirectory%"=="" set epubFileName=%bookfolder%
             if not "%subdirectory%"=="" set epubFileName=%bookfolder%-%subdirectory%
@@ -590,6 +609,18 @@ set /p process=Enter a number and hit return.
         if exist "%location%\_output\%epubFileName%.zip" del /q "%location%\_output\%epubFileName%.zip"
         if exist "%location%\_output\%epubFileName%.epub" del /q "%location%\_output\%epubFileName%.epub"
         echo Removed any previous zip and epub files.
+
+        :: Remove any empty folders
+        :: (Thanks https://superuser.com/a/972366/491948)
+        :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
+        :: Adding /NP will also suppress progress bar.
+        :epubRemoveEmptyFolders
+            echo Removing empty folders...
+            :: Step out of the folder temporarily to avoid robocopy error messages
+            cd %location%
+            robocopy %location%/_site/epub/ %location%/_site/epub /s /move /NFL /NDL /NJH /NJS /NC /NS /NP
+            :: Now step back into the folder before continuing
+            cd %location%/_site/epub
 
         :: Now to zip the epub files. Important: mimetype first.
         :epubCompressing
@@ -601,22 +632,29 @@ set /p process=Enter a number and hit return.
             zip --compression-method store -0 -X --quiet "%location%_output/%epubFileName%.zip" mimetype
             :: everything else: append to the zip with default compression
 
-            :: Zip root folders, if this is not a translation
-            if not "%subdirectory%"=="" goto epubZipSubdirectory
+            :: Zip root folders
             if exist "images\epub" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images\epub"
             if exist "fonts" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "fonts"
             if exist "styles" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "styles"
-            if exist "text" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "text"
             if exist "mathjax" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "mathjax"
             if exist "js" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "js"
 
-        :: And if it is a translation, just move the language subdirectory
-        :epubZipSubdirectory
-            if not "%subdirectory%"=="" if exist "%subdirectory%" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "%subdirectory%"
+            :: Zip text file if this is not a translation
+            if not "%subdirectory%"=="" goto epubZipSubdirectory
+            if exist "text" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "text"
+            goto epubAddPackageFiles
 
+            :: And if it is a translation, move the language's text subdirectory
+            :epubZipSubdirectory
+                if not "%subdirectory%"=="" if exist "%subdirectory%" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "%subdirectory%"
+                goto epubAddPackageFiles
+
+        :: Add the META-INF, package.opf and toc.ncx
+        :epubAddPackageFiles
             :: Now add these admin files to the zip
             if exist META-INF zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" META-INF
             if exist package.opf zip --quiet "%location%_output/%epubFileName%.zip" package.opf
+            if exist toc.ncx zip --quiet "%location%_output/%epubFileName%.zip" toc.ncx
 
             :: Change file extension .zip to .epub
             cd %location%_output
@@ -723,6 +761,15 @@ set /p process=Enter a number and hit return.
             echo Building your Android app... If you get an error, make sure Cordova and Android Studio are installed.
             cd _site/app
 
+            :: Prepare for build
+            echo Removing old Android platform files...
+            call cordova platform remove android
+            echo Fetching latest Android platform files...
+            call cordova platform add android
+            echo Preparing platforms and plugins...
+            call cordova prepare android
+            echo Building app...
+
             if "%apprelease%"=="y" (
                 call cordova build android --release
             ) else (
@@ -731,6 +778,11 @@ set /p process=Enter a number and hit return.
 
             echo Opening folder containing app...
             %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
+
+            :: Try to emulate
+            echo "Attempting to run app in emulator..."
+            call cordova emulate android
+
             :appbuildaftercordova
             cd "%location%"
 
@@ -861,6 +913,7 @@ set /p process=Enter a number and hit return.
         echo This process will optimise the images in a book's _source folder
         echo and copy them to the print-pdf, screen-pdf, web and epub image folders.
         echo You need to have run 'Install or update dependencies' at least once,
+        echo have Gulp installed globally (https://gulpjs.com/),
         echo and have GraphicsMagick installed (http://www.graphicsmagick.org).
         echo.
 
@@ -907,7 +960,7 @@ set /p process=Enter a number and hit return.
 
         :: Check if refreshing web or app index
         echo To refresh the website search index, press enter.
-        echo To refresh to app search index, type a and press enter.
+        echo To refresh the app search index, type a and press enter.
         set /p searchIndexToRefresh=
 
         :: Generate HTML with Jekyll
@@ -919,7 +972,7 @@ set /p process=Enter a number and hit return.
             call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml"
             goto refreshSearchIndexRenderWithPhantom
 
-        ;buildForAppSearchIndex
+        :buildForAppSearchIndex
 
             call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml"
             goto refreshSearchIndexRenderWithPhantom

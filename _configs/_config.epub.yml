@@ -23,6 +23,7 @@ exclude:
   - gulpfile.js
   - package.json
   - package-lock.json
+  - CNAME
   # exclude files we don't need for epub
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss

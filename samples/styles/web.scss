@@ -67,6 +67,9 @@ $color-links: #5f738c;
 $color-buttons: $color-accent;
 $color-buttons-hover: darken( $color-buttons, 20% );
 $color-highlight: #ffd54d;
+$color-notification-low: #7fcebf;
+$color-notification-medium: #ffe388;
+$color-notification-high: #ff7c4d;
 
 // Some features rearrange at certain screen sizes.
 // What are your break points for rearrangement?
@@ -110,6 +113,7 @@ $nav-bar-children-prompt-hide: "\2212"; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true;
 $nav-bar-width: 15em;
 $nav-bar-fixed: true;
+$nav-bar-back-button-hide: true;
 $nav-bar-label-color: $color-light;
 $nav-bar-label-background-color: $masthead-background-color;
 $nav-bar-label-border-color: transparent !default;
@@ -128,7 +132,7 @@ $nav-bar-child-text-hover-color: white;
 
 // Language selector
 $language-select-icon-color: $color-light;
-$language-select-text-color: $color-mid;
+$language-select-text-color: $color-text-secondary;
 $language-select-links-color: $color-links;
 $language-select-background-color: $color-background;
 
@@ -142,6 +146,9 @@ $web-css-reset: true;
 // Structural HTML components
 $web-wrappers: true;
 
+// Conventional helper classes
+$web-helpers: true;
+
 // Default typography
 $web-base-typography: true;
 
@@ -151,6 +158,7 @@ $web-search: true;
 $web-nav-bar: true;
 $web-footer: true;
 $web-language-select: true;
+$web-accordion: true;
 
 // Book parts
 $web-cover: true;
@@ -181,6 +189,10 @@ $web-letters: true;
 $web-verse: true;
 $web-video: true;
 $web-pagination: true;
+$web-multiple-choice-questions: true;
+
+// Docs
+$web-docs: true;
 
 // Type-control classes
 $web-smallcaps: true;

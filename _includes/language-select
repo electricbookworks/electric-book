@@ -4,8 +4,6 @@ reading the file list of each translation. To appear in the selector,
 each translated file must both exist and be included in the
 translation's file list in meta.yml.{% endcomment %}
 
-{% include metadata %}
-
 {% comment %} Do two checks for the existence of translations. {% endcomment %}
 {% for translation in translations %}
 

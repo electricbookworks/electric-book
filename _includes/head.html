@@ -1,7 +1,7 @@
 {% include metadata %}
 
-{% if site.output == 'print-pdf' %}
-<!doctype html>
+{% if site.output == "print-pdf" %}
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
@@ -15,15 +15,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
 
+    {% if site.mathjax-enabled == true %}
+        {% include mathjax-config %}
+    {% endif %}
+
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %}>
 <div id="wrapper">
 
 
-{% elsif site.output == 'screen-pdf' %}
-<!doctype html>
+{% elsif site.output == "screen-pdf" %}
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
@@ -37,14 +41,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
 
+    {% if site.mathjax-enabled == true %}
+        {% include mathjax-config %}
+    {% endif %}
+
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %} data-title="{{ page.title }}"{% if page.header %} data-header="{{ page.header }}{% endif %}">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %}>
 <div id="wrapper">
 
 
-{% elsif site.output == 'epub' %}
+{% elsif site.output == "epub" %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
@@ -82,6 +90,10 @@
         <meta name="DC.Relation" content="{{ print-pdf-identifier }}" />
         <meta name="DC.Description" content="{{ description }}" />
 
+    {% if site.mathjax-enabled == true %}
+        {% include mathjax-config %}
+    {% endif %}
+
     {% include head-elements %}
 
 </head>
@@ -90,7 +102,7 @@
 
 
 {% elsif site.output == "app" %}
-<html{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
+<html lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
     <head>
 
     <title>
@@ -104,7 +116,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1, width=device-width">
 
     {% comment %}
     Customize this policy to fit your own app's needs. For more guidance, see:
@@ -128,6 +140,10 @@
     <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-styles-directory }}/{{ app-stylesheet }}" />
     {% endif %}
 
+    {% if site.mathjax-enabled == true %}
+        {% include mathjax-config %}
+    {% endif %}
+
     {% include head-elements %}
 
     </head>
@@ -136,7 +152,7 @@
 
 
 {% else %}
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
@@ -152,9 +168,22 @@
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
-    {% if page.description %}
-    <meta property="og:description" content="{{ page.description }}" />
+
+    {% comment %}Get appropriate description, in order of preference:
+    1. Page description (from page frontmatter)
+    2. Book description (from meta.yml via metadata include)
+    3. Project description (from meta.yml via metadata include)
+    {% endcomment %}
+    {% if page.description and page.description != "" %}
+        {% capture og-description %}{{ page.description }}{% endcapture %}
+    {% elsif description and description != "" %}
+        {% capture og-description %}{{ description }}{% endcapture %}
+    {% else %}
+        {% capture og-description %}{{ project-description }}{% endcapture %}
     {% endif %}
+
+    <meta property="og:description" content="{{ og-description }}" />
+
     {% if page.image %}
         {% if is-homepage == true or is-project-search == true %}
             {% comment %}If a page.image is specified on the home page, we still use the project image{% endcomment %}
@@ -181,6 +210,10 @@
     {% endfor %}
     {% else %}
     <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-styles-directory }}/{{ web-stylesheet }}" />
+    {% endif %}
+
+    {% if site.mathjax-enabled == true %}
+        {% include mathjax-config %}
     {% endif %}
 
     {% include head-elements %}

@@ -1,7 +1,29 @@
 $web-nav-bar: true !default;
+$nav-bar-back-button-hide: false !default;
 @if $web-nav-bar {
 
     // Navigation
+
+    .nav-buttons {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0.5em;
+    }
+
+    .nav-back-button {
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: $nav-bar-label-color;
+        background-color: $nav-bar-label-background-color;
+        border: $rule-thickness solid $nav-bar-label-border-color;
+        border-radius: $button-border-radius;
+        padding: 0.25em 0.5em;
+        cursor: pointer;
+        @if $nav-bar-back-button-hide {
+            display: none;
+        }
+    }
 
     [href="#nav"] {
         font-family: $font-text-secondary;
@@ -11,11 +33,9 @@ $web-nav-bar: true !default;
         border: $rule-thickness solid $nav-bar-label-border-color;
         border-radius: $button-border-radius;
         padding: 0.25em 0.5em;
-        margin: 0.25em;
-        position: absolute;
-        top: 0;
-        left: 0;
         .js-nav-open & {
+            // Covers screen area, to let users click
+            // anywhere on page to close nav bar
             right: 0;
             bottom: 0;
             background-color: rgba(0,0,0,0.5);
@@ -24,25 +44,22 @@ $web-nav-bar: true !default;
     // Reset position to fixed if $nav-bar-fixed: true
     $nav-bar-fixed: false !default;
     @if $nav-bar-fixed {
-        [href="#nav"] {
+        .nav-buttons {
             position: fixed;
+            z-index: 1; // less than .js-nav #nav
         }
+        [href="#nav"] {
+             .js-nav-open & {
+                 z-index: inherit;
+             }
+         }
     }
 
-    .visuallyhidden {
-        border: 0;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
     // Reset position to fixed if $nav-bar-fixed: true
     $nav-bar-fixed: false !default;
     @if $nav-bar-fixed {
         .visuallyhidden {
+            // overrides default position: absolute
             position: fixed;
         }
     }
@@ -78,6 +95,7 @@ $web-nav-bar: true !default;
         @if $nav-bar-fixed {
             .js-nav & {
                 position: fixed;
+                z-index: 2; // greater than [href="#nav"]
             }
         }
 

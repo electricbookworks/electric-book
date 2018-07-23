@@ -12,14 +12,14 @@
         <dc:title id="title">{{ title }}</dc:title>
         <meta refines="#title" property="title-type">main</meta>
         <dc:identifier id="uid">{{ epub-identifier }}</dc:identifier>
-        <dc:language>{{ language }}</dc:language>
+        <dc:language>{% if site.data.settings.epub.meta.language and site.data.settings.epub.meta.language != "" %}{{ site.data.settings.epub.meta.language }}{% elsif epub-language and epub-language != "" %}{{ epub-language }}{% else %}{{ language }}{% endif %}</dc:language>
         <meta property="dcterms:modified">{{ site.time | date_to_xmlschema | truncate: 19, "" }}Z</meta>
 
     {% if subtitle and subtitle != "" %}
         <dc:title id="subtitle">{{ subtitle }}</dc:title>
         <meta refines="#subtitle" property="title-type">subtitle</meta>
     {% endif %}
-    {% if project-name and project-name != "" %}
+    {% if project-name and project-name != "" and site.data.settings.epub.meta.project-name != false %}
         <dc:title id="project-name">{{ project-name }}</dc:title>
         <meta refines="#project-name" property="title-type">collection</meta>
     {% endif %}
@@ -108,7 +108,7 @@
 
         <item id="{% if file-prefix %}{{ file-prefix }}{% endif %}{{ manifest-epub-file-name | strip }}" 
               media-type="application/xhtml+xml" 
-              href="{% if is-translation == true %}{{ language }}/{% endif %}text/{{ manifest-epub-file-name | strip }}.html"
+              href="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ manifest-epub-file-name | strip }}.html"
               {% if properties != "" %}properties="{{ properties }}"{% endif %}
               />
 
@@ -118,12 +118,12 @@
 
         <item id="epub-css" 
               media-type="text/css" 
-              href="{% if is-translation and translation-styles-exist %}{{ language }}/{% endif %}styles/{{ epub-stylesheet }}"
+              href="{% if is-translation and translation-styles-exist %}{{ book-subdirectory }}/{% endif %}styles/{{ epub-stylesheet }}"
               />
 
         {% comment %}Add images by looping through static files whose path
         contains the path to epub images.{% endcomment %}
-        {% capture path-to-epub-images %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}images/epub{% endcapture %}
+        {% capture path-to-epub-images %}/{{ book-directory }}/{% if is-translation %}{{ book-subdirectory }}/{% endif %}images/epub{% endcapture %}
 
         {% assign image-files = site.static_files | where_exp: "file", "file.path contains path-to-epub-images" %}
 
@@ -138,7 +138,7 @@
 
             <item id="image-{{ file.basename }}" 
                   media-type="{{ site.media-types[file-extension] }}"
-                  href="{% if is-translation and translated-images-exist %}{{ language }}/{% endif %}images/epub/{{ file.name }}"
+                  href="{% if is-translation and translated-images-exist %}{{ book-subdirectory }}/{% endif %}images/epub/{{ file.name }}"
                   {% if properties != "" %}properties="{{ properties }}"{% endif %}
                   />
 
@@ -152,7 +152,7 @@
 
             <item id="font-{{ file-name }}" 
                   media-type="{{ site.media-types[file-extension] }}"
-                  href="{% if is-translation and translated-images-exist %}{{ language }}/{% endif %}fonts/{{ font }}"
+                  href="{% if is-translation and translated-images-exist %}{{ book-subdirectory }}/{% endif %}fonts/{{ font }}"
                   />
 
         {% endfor %}
@@ -164,7 +164,7 @@
 
                 <item id="script-{{ file.title | slugify }}"
                       media-type="application/x-javascript"
-                      href="{% if is-translation %}{{ language }}/{% endif %}js/{{ file.path | split: "/" | last }}"
+                      href="{% if is-translation %}{{ book-subdirectory }}/{% endif %}js/{{ file.path | split: "/" | last }}"
                       />
 
             {% endif %}
@@ -175,9 +175,15 @@
             {% include mathjax-manifest.xml %}
         {% endif %}
 
+        {% comment %}If a toc.ncx exists, add it{% endcomment %}
+        {% assign ncx-check = site.pages | where_exp: "file", "file.path contains '/toc.ncx'" %}
+        {% if ncx-check.size > 0 %}
+            <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+        {% endif %}
+
     </manifest>
 
-    <spine>
+    <spine{% if ncx-check.size > 0 %} toc="ncx"{% endif %}>
 
         {% comment %}Loop through the epub file list to create itemrefs
         in the order they're in the file-list.{% endcomment %}
@@ -332,7 +338,7 @@
 
                 {% if reference-type and reference-type != "" %}
                 <reference type="{{ reference-type }}" 
-                           href="{% if is-translation %}{{ language }}/{% endif %}text/{{ file-href }}.html"
+                           href="{% if is-translation %}{{ book-subdirectory }}/{% endif %}text/{{ file-href }}.html"
                            {% if reference-title and reference-title != "" %}title="{{ reference-title }}"{% endif %}
                 />
                 {% endif %}

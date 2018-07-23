@@ -1,5 +1,5 @@
 ---
-title: Teg
+title: Couverture
 style: cover
 ---
 

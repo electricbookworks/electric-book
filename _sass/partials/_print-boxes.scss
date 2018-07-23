@@ -11,7 +11,7 @@ $print-boxes: true !default;
 		font-size: inherit;
 		border: $rule-thickness solid $color-accent;
 		margin: $line-height-default 0;
-		padding: $line-height-default $line-height-default 0 $line-height-default;
+		padding: $line-height-default;
 		// No text-indent on paragraphs after boxes
 		& + p {
 			text-indent: 0;

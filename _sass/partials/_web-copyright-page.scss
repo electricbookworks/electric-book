@@ -5,8 +5,13 @@ $web-copyright-page: true !default;
 
     .copyright-page {
         p {
-    	   text-indent: 0;
-    	   margin: 0 0 ($line-height-default / 2) 0;
+           text-indent: 0;
+           margin: 0 0 ($line-height-default / 2) 0;
+        }
+        .identifiers {
+            .identifier-scheme {}
+            .identifier-format {}
+            .identifier-id {}
         }
     }
 

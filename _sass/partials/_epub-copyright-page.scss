@@ -12,6 +12,11 @@ $epub-copyright-page: true !default;
             font-size: $font-size-default;
             margin-top: $line-height-default * 2;
         }
+        .identifiers {
+            .identifier-scheme {}
+            .identifier-format {}
+            .identifier-id {}
+        }
     }
 
 }

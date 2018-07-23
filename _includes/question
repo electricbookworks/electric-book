@@ -1,0 +1,66 @@
+{% comment %}This turns a markdown file into a .question block.{% endcomment %}
+
+{% comment %}Get the name of the file we're using, without any file extension.{% endcomment %}
+{% assign question-file = include.file | split: "." | first %}
+
+{% comment %}If we're we're outputting an error when questions are missing,
+check for the existence of the file. Otherwise, just assume it exists,
+and the Jekyll build will break if it doesn't.{% endcomment %}
+{% if site.data.settings.on-missing-questions == "error" %}
+
+	{% comment %}Create a small array of question pages to look through.{% endcomment %}
+	{% capture path-to-question-file %}{% if is-translation %}/{{ language }}{% endif %}/text/{{ question-file }}.md{% endcapture %}
+	{% assign questions = site.pages | where_exp: "page", "page.path contains path-to-question-file" %}
+
+	{% comment %}Check whether the question-file exists.{% endcomment %}
+	{% for page in questions %}
+
+		{% assign generated-page = page.path | split: '/' | last | split: '.' | first %}
+
+		{% comment %}If question-file exists, set question-file-found to true.{% endcomment %}
+		{% if question-file == generated-page %}
+			{% assign question-file-found = true %}
+		{% endif %}
+
+	{% endfor %}
+
+{% else %}
+
+	{% assign question-file-found = true %}
+
+{% endif %}
+
+{% comment %}If question-file-found is true,
+capture its contents, so we can filter them.{% endcomment %}
+{% if question-file-found == true %}
+{% capture question-markdown %}
+{% include_relative {{ question-file }}.md %}
+{% endcapture %}
+
+{% capture question-no-hyphens %}
+{{ question-markdown | replace_first: "---", "notthreehyphens" | replace_first: "---", "notthreehyphens" }}
+{% endcapture %}
+
+{% comment %}Get the correct options from the YAML frontmatter.
+This depends on the file ONLY containing one line of frontmatter:
+e.g. correct: 1. Note the the capture includes the line break before 'correct'
+otherwise it could split on the phrase 'correct:' in the question text.
+We should aim for something smarter in future.{% endcomment %}
+{% capture question-correct-options %}{{ question-no-hyphens | split: "
+correct:" | last | split: "notthreehyphens" | first }}{% endcapture %}
+
+{% comment %}Output a div containing that content, without the YAML frontmatter.
+To remove the frontmatter, we split the contents into an array and return
+only the part after the last `---`. So don't use `---` elsewhere in the question.{% endcomment %}
+<div class="question{% if include.class %} {{ include.class }}{% endif %}" markdown="1" data-question="{{ question-file }}" data-question-code="{% include question-secret-code.html correct=question-correct-options %}">
+{{ question-no-hyphens | split: "notthreehyphens" | last }}
+</div>
+
+{% comment %}If the question file is not found, output an error message.{% endcomment %}
+{% else %}
+
+<div class="question{% if include.class %} {{ include.class }}{% endif %}" markdown="1">
+<span class="highlighter"> The question file '{{ question-file }}' has not been created.</span>
+</div>
+
+{% endif %}

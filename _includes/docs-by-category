@@ -1,61 +1,108 @@
-{% comment %}Output docs by category.
-First, create an empty array for category names.
-Loop through the docs pages, and add each category to the array.{% endcomment %}
+{% comment %}Output docs by category.{% endcomment %}
 
+{% comment %}Get current page.{% endcomment %}
+{% assign current-page-url = page.url %}
+
+{% comment %}Create an empty array to write categories to.{% endcomment %}
 {% assign cat-list = "" | split: "" %}
 
-{% for page in site.docs %}
+{% comment %}If the include tag defines categories, use those in order.
+Otherwise, generate a category list from the docs.{% endcomment %}
+{% if include.categories %}
 
-  {% for cat in page.categories %}
-    {% assign cat-list = cat-list | push: cat | uniq %}
-  {% endfor %}
+    {% comment %}Create an array from the included categories.{% endcomment %}
+    {% assign included-categories = include.categories | replace: " ,", "," | replace: ", ", "," | split: "," %}
 
-{% endfor %}
+    {% comment %}Push slugified categories to cat-list.{% endcomment %}
+    {% for cat in included-categories %}
+        {% assign cat-list = cat-list | push: cat | uniq %}
+    {% endfor %}
 
-{% comment %}Sort the categories{% endcomment %}
-{% assign cat-list = cat-list | sort %}
-{% comment %}If we're using a Jekyll versino that support Liquid 4{% endcomment %}
-{% assign cat-list = cat-list | sort_natural %}
+{% else %}
+
+    {% comment %}Loop through the docs pages, and
+    add each category to the array.{% endcomment %}
+
+    {% assign included-categories = "" | split: ""  %}
+    {% for page in site.docs %}
+        {% for cat in page.categories %}
+            {% assign cat-list = cat-list | push: cat | uniq %}
+        {% endfor %}
+    {% endfor %}
+
+    {% comment %}Sort the categories{% endcomment %}
+    {% assign cat-list = cat-list | sort %}
+
+    {% comment %}If we're using a Jekyll version that supports Liquid 4{% endcomment %}
+    {% assign cat-list = cat-list | sort_natural %}
+
+{% endif %}
 
 {% comment %}Now, for each category in that array,
 create a list containing the pages that use it.{% endcomment %}
 
+{% comment %}Did the include tag specify a title?
+If not, use category names.{% endcomment %}
+
 <ul{% if include.class %} class="{{ include.class }}"{% endif %}>
 
-  {% for cat in cat-list %}
+    {% for cat in cat-list %}
 
-    <li class="has-children"><a>{{ cat | capitalize }}</a>
-      <ul>
+        {% comment %}Capitalise the first letter of the category name,
+        in case of lowercase category names in YAML frontmatter.{% endcomment %}
+        <li class="has-children">
+            {% if include.title %}
+                <span class="docs-list-title">{{ include.title }}</span>
+            {% else %}
+                <span class="docs-list-title">{{ cat | slice: 0 | capitalize }}{{ cat | slice: 1, cat.size }}</span>
+            {% endif %}
 
-        {% assign pages = site.docs | where_exp: "c", "c.categories contains cat" %}
+            <ul>
 
-        {% for page in pages %}
+            {% assign pages = site.docs | where_exp: "i", "i.categories contains cat" %}
+            {% assign pages = pages | sort: "order" %}
 
-          <li>
-            <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
-          </li>
+            {% for page in pages %}
 
-        {% endfor %}
+                {% comment %}Don't list the current page.{% endcomment %}
+                {% if site.data.settings.docs.nav.hide-active-page == true %}
+                    {% unless current-page-url == page.url %}
+                        <li>
+                            <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+                        </li>
+                    {% endunless %}
+                {% else %}
+                        <li{% if current-page-url == page.url %} class="active"{% endif %}>
+                            <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+                        </li>
+                {% endif %}
 
-      </ul>
-    </li>
+            {% endfor %}
 
-  {% endfor %}
+            </ul>
 
-  {% comment %}Now add all pages that are not categorised,
-  except the index page, which is already the parent list item.{% endcomment %}
-  {% for page in site.docs %}
-    {% unless page.url contains '/docs/index.html' %}
+        </li>
 
-      {% capture page-categories %}{{ page.categories }}{% endcapture %}
-      {% if page-categories == "" %}
+    {% endfor %}
 
-      <li>
-        <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
-      </li>
+    {% comment %}Now add all pages that are not categorised,
+    except the index page, which is already the parent list item.{% endcomment %}
+    {% for page in site.docs %}
 
-      {% endif %}
-    {% endunless %}
-  {% endfor %}
+        {% unless page.url contains '/docs/index.html' %}
+
+            {% capture page-categories %}{{ page.categories }}{% endcapture %}
+
+            {% if page-categories == "" %}
+
+            <li>
+                <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+            </li>
+
+            {% endif %}
+
+        {% endunless %}
+
+    {% endfor %}
 
 </ul>

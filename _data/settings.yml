@@ -1,11 +1,14 @@
 # Electric Book settings
 
-# Electric Book Manager settings
+# ----------------------------------------------------------
+# Electric Book Manager
 # ----------------------------------------------------------
 electric-book-manager: enable
 electric-book-manager-key: ""
 
-# Variant settings
+# ----------------------------------------------------------
+# Variants
+# ----------------------------------------------------------
 # Set a variant of the work to output.
 # A variant lets you override metadata and stylesheets and can be used,
 # where `include metadata` has been used, in if statements like
@@ -13,12 +16,11 @@ electric-book-manager-key: ""
 # Variant names must be one word, lowercase. Hyphens are allowed.
 # Add variant book metadata to meta.yml, and output settings here.
 # ----------------------------------------------------------
-# Select the active variant:
-# active-variant: myvariant
-# ----------------------------------------------------------
-# Store settings for each variant.
-# These have no effect unless an active-variant is set above.
+# Add the active variant (defined in meta.yml) to activate it:
+active-variant: ""
 variants:
+  # Store settings for each variant.
+  # These have no effect unless an active-variant is set above.
   - variant: myvariant
     print-pdf-stylesheet: "print-pdf-variant.css"
     screen-pdf-stylesheet: ""
@@ -30,41 +32,105 @@ variants:
 # ----------------------------------------------------------
 # Web settings
 # ----------------------------------------------------------
-# Turn pagination (next/previous) on or off
 web:
+  # ----------------------------------------------------------
+  # Pagination
+  # ----------------------------------------------------------
   pagination: true
   # Choose 'direction' for 'Next/Previous' pagination,
   # or 'titles' to show page titles at pagination,
   # or 'arrows' to use only arrows.
   pagination-type: "arrows"
+  # ----------------------------------------------------------
+  # Masthead
+  # ----------------------------------------------------------
+  # What kind of header do you want in the masthead? Options:
+  # project-name, book-title, page-title, breadcrumbs
+  # If not set, book-title is default.
+  # Note that breadcrumbs slows your Jekyll build significantly.
+  masthead:
+    content: breadcrumbs
+  # ----------------------------------------------------------
+  # Content accordion
+  # ----------------------------------------------------------
+  # Do you want to collapse content sections in chapters on a
+  # particular heading level? Default h2, set in accordion.js.
+  # Set this to true to enable, or false to disable.
+  accordion: false
 
 # ----------------------------------------------------------
 # Epub settings
 # ----------------------------------------------------------
 epub:
-# If you're embedding fonts, uncomment and list the font-file names here
-# and put the font files in _epub/fonts, not book/fonts
-#   fonts:
-#     - Crimson-Roman.otf
-#     - Crimson-Italic.otf
-# Every EPUB3 must have a nav element, like a TOC,
-# but you are allowed to hide it from view.
-# To hide the 'on the page' nav in epub, set this to 'true'.
-# Then you can put {% include toc %} anywhere in your epub
-# to generate a hidden nav element.
+  # ----------------------------------------------------------
+  # Fonts
+  # ----------------------------------------------------------
+  # If you're embedding fonts, uncomment and list the font-file names here
+  # and put the font files in _epub/fonts, not book/fonts
+  # fonts:
+  #   - Crimson-Roman.otf
+  #   - Crimson-Italic.otf
+  # ----------------------------------------------------------
+  # Nav element
+  # ----------------------------------------------------------
+  # Every EPUB3 must have a nav element, like a TOC,
+  # but you are allowed to hide it from view.
+  # To hide the 'on the page' nav in epub, set this to 'true'.
+  # Then you can put {% include toc %} anywhere in your epub
+  # to generate a hidden nav element.
   hide-nav: false
+  # Settings that affect OPF metadata
+  meta:
+    # Turn project name in epub OPF metadata on/off
+    project-name: false
+    # Override the language in epub OPF metadata (use a subtag, e.g. en)
+    language: ""
 
 # ----------------------------------------------------------
 # App settings
 # ----------------------------------------------------------
-# Turn pagination (next/previous) on or off
 app:
+  # ----------------------------------------------------------
+  # Pagination
+  # ----------------------------------------------------------
   pagination: true
   # Choose 'direction' for 'Next/Previous' pagination,
   # or 'titles' to show page titles at pagination,
   # or 'arrows' to use only arrows.
   pagination-type: "arrows"
-# If your book is huge and you need to store images
-# in an expansion file, edit these settings.
-google-play-expansion-file-enabled: false
-google-play-public-api-key: ""
+  # ----------------------------------------------------------
+  # Masthead
+  # ----------------------------------------------------------
+  # What kind of header do you want in the masthead? Options:
+  # site-name, book-title, page-title, breadcrumbs
+  # If not set, book-title is default.
+  # Note that breadcrumbs slows your Jekyll build significantly.
+  masthead:
+    content: breadcrumbs
+  # ----------------------------------------------------------
+  # Content accordion
+  # ----------------------------------------------------------
+  # Do you want to collapse content sections in chapters on a
+  # particular heading level? Default h2, set in accordion.js.
+  # Set this to true to enable, or false to disable.
+  accordion: false
+  # ----------------------------------------------------------
+  # Expansion file
+  # ----------------------------------------------------------
+  # If your book is huge and you need to store images
+  # in an expansion file, edit these settings.
+  google-play-expansion-file-enabled: false
+  google-play-public-api-key: ""
+
+# ----------------------------------------------------------
+# External media settings
+# ----------------------------------------------------------
+# If a large number of images makes your project too big,
+# you can store your images in a separate location.
+# See the docs for more information.
+remote-media:
+  development: ""
+  live: ""
+local-media:
+  development: ""
+  live: ""

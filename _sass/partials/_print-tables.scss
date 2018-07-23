@@ -15,8 +15,8 @@ $print-tables: true !default;
 		page-break-after: avoid;
 	}
 	th, td {
-		border-top: $rule-thickness solid $color-light;
-		border-bottom: $rule-thickness solid $color-light;
+		border-top: $rule-thickness solid $color-mid;
+		border-bottom: $rule-thickness solid $color-mid;
 		border-left: 0;
 		border-right: 0;
 		padding: ($line-height-default * 0.1) ($line-height-default * 0.2);

@@ -1,0 +1,15 @@
+$print-cross-refs: true !default;
+@if $print-cross-refs {
+
+	// Show the URL of a link with a show-url class.
+	a.show-url::after {
+	    content: " (" attr(href) ")";
+	}
+	// Show the page number of a link with a show-page-number class.
+	a.show-page-number::after {
+	    // uses prince-script in page-references.js to only insert a page number
+	    // if we're not already on the same page as the target reference.
+	    content: prince-script(pagereference, counter(page), target-counter(attr(href), page));
+	}
+
+}

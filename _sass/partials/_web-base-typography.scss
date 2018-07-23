@@ -48,10 +48,9 @@ $web-base-typography: true !default;
     }
     p {
         margin: 0;
-        text-indent: $font-size-default;
-    }
-    p:first-of-type {
-        text-indent: 0;
+        & + p {
+            text-indent: $line-height-default;
+        }
     }
 
     // Lists
@@ -67,7 +66,7 @@ $web-base-typography: true !default;
         list-style-type: disc;
     }
     ul ul, ol ol, blockquote ul ul, blockquote ol ol {
-        margin-bottom: 0;
+        margin-bottom: 0; // See '@if spaced-paras' below
     }
     ol ol {
         list-style-type: lower-alpha;
@@ -154,6 +153,7 @@ $web-base-typography: true !default;
         display: block;
         margin: $line-height-default 0;
         width: 100%;
+        box-sizing: border-box;
         &[type="submit"] {
             width: auto;
         }
@@ -176,9 +176,12 @@ $web-base-typography: true !default;
     // An option to change the default text-indented paragraphs
     // and close-up lists etc. to have space-between instead.
     @if $spaced-paras {
-        p {
+        p, p + p {
             margin-bottom: $line-height-default;
             text-indent: 0;
+        }
+        ul ul, ol ol, blockquote ul ul, blockquote ol ol {
+            margin-bottom: $line-height-default;
         }
     }
 

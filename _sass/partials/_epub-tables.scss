@@ -14,7 +14,7 @@ $epub-tables: true !default;
 		font-weight: bold;
 	}
 	th, td {
-		border: $rule-thickness solid $color-light;
+		border: $rule-thickness solid $color-mid;
 		padding: $line-height-default / 2;
 		p, ol, ul {
 			margin: 0;
