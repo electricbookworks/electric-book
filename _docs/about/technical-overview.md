@@ -80,7 +80,6 @@ Here is an explanation of all the folders and files in the template.
 *    `samples`: a sample book for demo and testing purposes. You can safely delete it (if you do, you should also remove its metadata in `_data/meta.yml`).
 *   `_config.yml`: a file for setting configuration options for Jekyll, which will compile your book for output.
 *   `_prose.yml`: configuration settings for using [prose.io](http://prose.io) for online book editing (generally, you won't have to edit this file) and for excluding files from view in the [Electric Book Manager](https://electricbookworks.github.io/electric-book-gui/).
-*   `CNAME`: tells GitHub if you're using a custom domain for your project. You can delete this, or if you're using a custom domain with GitHub or similar hosts, you'll edit it to your own project's domain name.
 *   `gulpfile.js`: the 'recipe' for processing images from `_source` into various output formats. Most users can ignore this. Advanced users may want to adjust it, or use it for processing and minifying Javascript.
 *   `index.md`: the home page of your project when served as a website.
 *   `search.md`: the search page of your project when served as a website.
