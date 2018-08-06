@@ -23,7 +23,7 @@
     "cordova-windows": "^6.0.0",
     "cordova-plugin-whitelist": "^1.3.3",
     "file-exists": "^5.0.1",
-    "gulp": "^4.0.0",
+    "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-gm": "^0.0.8",
     "gulp-newer": "^1.3.0",
