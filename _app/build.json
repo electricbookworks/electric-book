@@ -14,7 +14,8 @@
 #   package-certificate-key-file: "c:\\path\\to\\certificate\\key.pfx"
 #   package-thumbprint: "package-thumbprint"
 #   package-identity-name: "PublisherName.PackageName"
-#   publisher-id: "CN=FakeCorp.com, L=Redmond, S=Washington, C=US"
+#   publisher-id: "CN=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+#   publisher-display-name: "Your Publishing Name"
 #
 # About Android:
 # - See https://developer.android.com/studio/publish/app-signing.html
@@ -23,7 +24,9 @@
 # - In secrets.yml, change ios package-type above to match the provisioning profile that
 #   you are currently building with. Usual options are development, ad-hoc, and app-store.
 # About Windows:
-# - The publisher-id here must match the Subject Name of your certificate.
+# - The publisher-id here must match the Subject Name of your certificate ore
+#   the publisher ID in your Windows developer settings.
+# - The publisher-display-name should match the display name in your Windows developer settings.
 #
 # Never share or commit _data/secrets.yml to your repository!
 layout: min
