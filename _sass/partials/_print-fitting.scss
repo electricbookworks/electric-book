@@ -44,4 +44,11 @@ $print-fitting: true !default;
     }
   }
 
+  // Prevent spans from breaking over a line
+  span, em, strong {
+    &.keep-together#{$edition-suffix} {
+      white-space: nowrap;
+    }
+  }
+
 }

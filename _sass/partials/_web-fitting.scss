@@ -24,4 +24,11 @@ $web-fitting: true !default;
       font-weight: inherit;
   }
 
+  // Prevent spans from breaking over a line
+  span, em, strong {
+    &.keep-together#{$edition-suffix} {
+      white-space: nowrap;
+    }
+  }
+
 }
