@@ -77,7 +77,7 @@ You must have Visual Studio installed with all requirements for Cordova Windows 
 Here are the detailed steps:
 
 1. [Create a listing in the Windows app store](https://developer.microsoft.com/en-us/dashboard/). Some of the forms you need to complete may only work in Edge (!). If this is already done, perhaps check that it's up to date and add any release notes.
-1. Create or check that you have a `secrets.yml` file in `_data` with the `windows` `package-identity-name` and `publisher-id` filled in.
+1. Create or check that you have a `secrets.yml` file in `_data` with the `windows` `package-identity-name` and `publisher-id` filled in. (And remember *never* to commit secrets to version control.)
    - You get the package identity name from the app dashboard on the Windows website, under 'App management > App identity'.
    - You can get the `publisher-id` value there from your Windows developer settings.
    - If you're creating a one-language translation app, this should have a section for the language. E.g.:
@@ -117,9 +117,12 @@ Here are the detailed steps:
 2. If you're using external media, copy the images from the remote media repo manually to `_site/app/www/book/images` (or the equivalent translation images folder; see '[Add remote media](#add-remote-media)' below for more detail).
 2. At a command prompt in the repo root, run `cd _site/app && cordova platform rm windows && cordova platform add windows@6.0.0 && cordova build windows`
 3. Open Visual Studio. From there, open the Cordova solution file (`.sln`) in `_site/app/platforms/windows`, and deploy and and build for your local machine to test. (You should be able to click the '► Local machine' button in the toolbar.)
-4. We recommend building a Release version (not a Debug version) to test that the app works when fully signed. To do this, you first need to associate the app with an app listing in the store. Right-click `CordovaApp.Windows10 (Universal Windows)` then select 'Store' > 'Associate App with the Store...'.
+4. We recommend building a Release version (not a Debug version) to test that the app works when fully signed. To do this:
+    1. Associate the app with an app listing in the store. Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... (You may only have to do this once.)
+    2. Under `CordovaApp.Windows10 (Universal Windows)` open `package.windows10.appxmanifest` and add the language code to the 'Default language' field. You can also correct the description, which Visual Studio or Cordova aren't getting right currently. Save the file.
+    3. In the toolbar, select 'Release' instead of 'Debug' and select your computer's architecture in the next box (usually 'x64'). Then click the '► Local machine' button in the toolbar.
 5. To prepare for the Windows store, use Visual Studio following the guidance in [this article](https://docs.microsoft.com/en-us/windows/uwp/packaging/packaging-uwp-apps). In short, you will:
-    1. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... and select the correct app that appears. This will sign the app with the correct certificate.
+    1. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... and select the correct app that appears. This will sign the app with the correct certificate. (You may only have to do this once.)
     1. However, this unsets the default language that Cordova adds to non-release builds. So under `CordovaApp.Windows10 (Universal Windows)` open `package.windows10.appxmanifest` and add the language code to the 'Default language' field. You can also correct the description, which Visual Studio or Cordova aren't getting right currently.
     1. Now create an app package upload file. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Create App Packages.
     2. When setting the version number, we use the same version as the project version in `_data/meta.yml`, with an extra zero (e.g. if the `meta.yml` version number is `1.0.5`, your Windows app version number will be `1.0.5.0`.
