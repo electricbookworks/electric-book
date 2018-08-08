@@ -7,7 +7,7 @@
 {% endcomment %}
 
 {% comment %}Create a link to the video{% endcomment %}
-{% assign video-link = include.id | prepend: "http://www.vimeo.com/" %}
+{% assign video-link = include.id | prepend: "https://www.vimeo.com/" %}
 {% if include.link %}
     {% assign video-link = include.link %}
 {% endif %}
