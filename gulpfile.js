@@ -52,6 +52,12 @@ var paths = {
     }
 };
 
+// Shall we lint Javascript when watching with `gulp watch`?
+// If true, the jslint task will throw errors when your JS isn't perfect.
+// If false, `gulp watch` will not run the jslint task.
+// Lint settings in eslint.json, in the same folder as this gulpfile.
+var lintJS = true;
+
 // set filetypes to convert, comma separated, no spaces;
 // by default we don't convert svg which throws an error
 var filetypes = 'jpg,jpeg,gif,png';
@@ -60,7 +66,7 @@ var filetypes = 'jpg,jpeg,gif,png';
 // Minify and clean SVGs and copy to destinations
 // For EpubCheck-safe SVGs, we remove data- attributes
 // and don't strip defaults like <style "type=text/css">
-gulp.task('images:svg', function () {
+gulp.task('images:svg', function (done) {
     console.log('Processing SVG images from ' + paths.img.source);
     gulp.src(paths.img.source + '*.svg')
     .pipe(svgmin({
@@ -79,10 +85,11 @@ gulp.task('images:svg', function () {
     .pipe(gulp.dest(paths.img.web))
     .pipe(gulp.dest(paths.img.epub))
     .pipe(gulp.dest(paths.img.app));
+    done();
 });
 
 // Take the source images and convert them for print-pdf
-gulp.task('images:printpdf', function () {
+gulp.task('images:printpdf', function (done) {
     console.log('Processing print-PDF images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/PSOcoated_v3.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -96,12 +103,13 @@ gulp.task('images:printpdf', function () {
     } else {
         console.log('Colour profile _tools/profiles/PSOcoated_v3.icc not found. Exiting.');
         return;
-    }
+    };
+    done()
 });
 
 // Take the source images and optimise and resize them for
 // screen-pdf, web, epub, and app
-gulp.task('images:optimise', function () {
+gulp.task('images:optimise', function (done) {
     console.log('Processing screen-PDF, web, epub and app images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -127,11 +135,12 @@ gulp.task('images:optimise', function () {
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    }
+    };
+    done();
 });
 
 // Make small size images for web use in srcset in _includes/figure
-gulp.task('images:small', function () {
+gulp.task('images:small', function (done) {
     console.log('Creating small web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -155,11 +164,12 @@ gulp.task('images:small', function () {
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    }
+    };
+    done();
 });
 
 // Make medium size images for web use in srcset in _includes/figure
-gulp.task('images:medium', function () {
+gulp.task('images:medium', function (done) {
     console.log('Creating medium web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -183,11 +193,12 @@ gulp.task('images:medium', function () {
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    }
+    };
+    done();
 });
 
 // Make large size images for web use in srcset in _includes/figure
-gulp.task('images:large', function () {
+gulp.task('images:large', function (done) {
     console.log('Creating large web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -211,11 +222,12 @@ gulp.task('images:large', function () {
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    }
+    };
+    done();
 });
 
 // Make extra large images for web use in srcset
-gulp.task('images:xlarge', function () {
+gulp.task('images:xlarge', function (done) {
     console.log('Creating extra-large web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -239,38 +251,69 @@ gulp.task('images:xlarge', function () {
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    }
+    };
+    done();
 });
 
 // minify JS files to make them smaller
 // using the drop_console option to remove console logging
-gulp.task('js', function() {
-    console.log('Minifying Javascript');
-    gulp.src(paths.js.src)
-    .pipe(uglify({ compress: { drop_console: true } }).on('error', function(e){
-        console.log(e);
-        }))
-    .pipe(rename({ suffix:'.min' }))
-    .pipe(gulp.dest(paths.js.dest));
+gulp.task('js', function(done) {
+    if (paths.js.src.length > 0) {
+        console.log('Minifying Javascript');
+        gulp.src(paths.js.src)
+        .pipe(uglify({ compress: { drop_console: true } }).on('error', function(e){
+            console.log(e);
+            }))
+        .pipe(rename({ suffix:'.min' }))
+        .pipe(gulp.dest(paths.js.dest));
+        done();
+    } else {
+        console.log('No scripts in source list to minify.')
+        done();
+    }
 });
 
 // lint the JS files: check for errors and inconsistencies
-gulp.task('jslint', function() {
-    console.log('Linting Javascript');
-    gulp.src(paths.js.src)
-    .pipe(eslint({
-        configFile: 'eslint.json',
-        fix: true
-    }))
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+gulp.task('jslint', function(done) {
+    if (paths.js.src.length > 0) {
+        console.log('Linting Javascript');
+        gulp.src(paths.js.src)
+        .pipe(eslint({
+            configFile: 'eslint.json',
+            fix: true
+        }))
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+        done();
+    } else {
+        console.log('No scripts in source list to lint.');
+        done();
+    }
 });
 
-// watch the JS files for changes, run jslin and js tasks when they do
-gulp.task('watch', function() {
-    console.log('Watching for Javascript changes');
-    gulp.watch(paths.js.src, ['jslint', 'js']);
+// watch the JS files for changes, and run jslint and js tasks when they do
+
+gulp.task('watch', function(done) {
+    if (paths.js.src.length > 0) {
+        console.log('Watching for Javascript changes');
+        gulp.watch(paths.js.src, gulp.parallel('js'));
+        if (fileExists.sync('eslint.json') && lintJS == true) {
+            gulp.watch(paths.js.src, gulp.parallel('jslint'));
+        }
+    } else {
+        console.log('No scripts in source list to watch.');
+        done();
+    }
 });
 
 // when running `gulp`, do the image tasks
-gulp.task('default', ['images:svg', 'images:printpdf', 'images:optimise', 'images:small', 'images:medium', 'images:large', 'images:xlarge']);
+gulp.task('default', gulp.series(
+                                'images:svg',
+                                'images:printpdf',
+                                'images:optimise',
+                                'images:small',
+                                'images:medium',
+                                'images:large',
+                                'images:xlarge'
+                                )
+);
