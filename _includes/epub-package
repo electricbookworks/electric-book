@@ -118,8 +118,15 @@
 
         <item id="epub-css" 
               media-type="text/css" 
-              href="{% if is-translation and translation-styles-exist %}{{ book-subdirectory }}/{% endif %}styles/{{ epub-stylesheet }}"
+              href="styles/{{ epub-stylesheet }}"
               />
+
+        {% if is-translation and translation-styles-exist %}
+        <item id="epub-css-{{ book-subdirectory }}" 
+              media-type="text/css" 
+              href="{{ book-subdirectory }}/styles/{{ epub-stylesheet }}"
+              />
+        {% endif %}
 
         {% comment %}Add images by looping through static files whose path
         contains the path to epub images.{% endcomment %}

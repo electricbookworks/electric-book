@@ -439,13 +439,13 @@ set /p process=Enter a number and hit return.
         :epubCopyStyles
             echo Copying styles...
             :: --------------------------
-            :: If original language output: copy only files in fonts/epub
+            :: If original language output: copy original styles files only
             if "%subdirectory%"=="" if not exist %subdirectory%\styles\*.* goto epubOriginalStyles
             :: Translation output, but no translated-styles subdirectory for that translation:
             :: copy the original styles files only
             if not "%subdirectory%"=="" if not exist %subdirectory%\styles\*.* goto epubOriginalStyles
-            :: Translation output, and an styles subdir for that translation exists:
-            :: create folder structure, and copy only the styles in that translation folder
+            :: Translation output, and translation styles for that translation exist:
+            :: create folder structure, and copy the styles in that translation folder, too
             if not "%subdirectory%"=="" if exist %subdirectory%\styles\*.* goto epubTranslationStyles
 
         :: Copy original styles
@@ -455,9 +455,9 @@ set /p process=Enter a number and hit return.
             echo Styles copied.
             goto epubCopyImages
         
-        :: Copy translated styles, after deleting original styles
+        :: Copy translated styles, in addition to original styles
         :epubTranslationStyles
-            rd /s /q styles
+            xcopy /i /q "styles\*.css" "..\epub\styles" > nul
             mkdir "..\epub\%subdirectory%\styles"
             if exist "%subdirectory%\styles\*.css" xcopy /i /q "%subdirectory%\styles\*.css" "..\epub\%subdirectory%\styles" > nul
             :: Done! Move along to moving the text folder

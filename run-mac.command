@@ -379,10 +379,11 @@ You may need to reload the web page once this server is running."
 				else
 					mkdir "$location"/_site/epub/images && cp -a "$location"/_site/$bookfolder/images/. "$location"/_site/epub/images/
 				fi
-				# Copy translation styles if they exist, otherwise
+				# Copy translation styles if they exist, and
 				# copy the parent-language styles.
 				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/styles/. ]; then
 					mkdir "$location"/_site/epub/$epubsubdirectory/styles && cd "$location"/_site/$bookfolder/$epubsubdirectory/styles && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/styles/. "$location"/_site/epub/$epubsubdirectory/styles/
+					mkdir "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
 				else
 					mkdir "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
 				fi
@@ -479,20 +480,17 @@ You may need to reload the web page once this server is running."
 						fi
 					fi
 			fi
-			# Add either the parent styles folder or the translation's styles folder.
-			# If the translation has a styles folder, use it. Otherwise, use the parent's
-			# styles for the translation.
+			# Add the parent styles folder and the translation's styles folder if it exists.
 			if [ "$epubsubdirectory" = "" ]; then
 					if [ -d styles ]; then
 						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "styles"
 					fi
 				else
+					if [ -d styles ]; then
+						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "styles"
+					fi
 					if [ -d "$epubsubdirectory/styles" ]; then
 						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$epubsubdirectory/styles"
-					else
-						if [ -d styles ]; then
-							zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "styles"
-						fi
 					fi
 			fi
 			# If MathJax is enabled, copy the MathJax folder.
