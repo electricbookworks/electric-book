@@ -778,6 +778,7 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
     {% endif %}
 
     {% if translation-styles-exist == true %}
+        {% capture path-to-parent-styles-directory %}{{ path-to-styles-directory }}{% endcapture %}
         {% capture path-to-styles-directory %}{{ path-to-book-directory }}{{ book-subdirectory }}/styles{% endcapture %}
     {% endif %}
 {% endif %}
