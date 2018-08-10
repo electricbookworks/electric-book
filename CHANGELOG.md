@@ -2,6 +2,7 @@
 
 ## 0.12.1 (in progress)
 
+* [Translation styles now augment, rather than replace, parent-language styles](https://github.com/electricbookworks/electric-book/pull/298).
 * [New docs on building apps, and better Windows app](https://github.com/electricbookworks/electric-book/pull/293) [output](https://github.com/electricbookworks/electric-book/pull/294).
 * [Prevent spans with `.keep-together` from breaking over lines](https://github.com/electricbookworks/electric-book/pull/292).
 * [Fall back to book and project descriptions for Open Graph descriptions when page description not available](https://github.com/electricbookworks/electric-book/pull/285).
