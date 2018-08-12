@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cordova": "cordova"
+    "cordova": "cordova",
+    "start": "node run.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,8 @@
   "devDependencies": {
     "cordova-android": "^6.3.0",
     "cordova-ios": "^4.4.0",
-    "cordova-windows": "^6.0.0",
     "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-windows": "^6.0.0",
     "file-exists": "^5.0.1",
     "gulp": "^4.0.0",
     "gulp-eslint": "^3.0.1",
@@ -32,6 +33,8 @@
     "gulp-svgmin": "^1.2.4",
     "gulp-uglify": "^2.1.2",
     "gulp-watch": "^4.3.11",
+    "prince": "^1.5.0",
+    "shelljs": "^0.8.2",
     "yargs": "^9.0.1"
   },
   "cordova": {
