@@ -7,9 +7,10 @@
 // or, if we're on the page we're targeting
 // content: normal;
 
-// Get the locale word for page for this HTML document's language
+// Get the locale phrases for cross-references for this HTML document's language
 // pageLanguage is provided by locales.js
-var pageWord = locales[pageLanguage]['cross-references'].page;
+var prePageNumberPhrase = locales[pageLanguage]['cross-references']['pre-page-number'];
+var postPageNumberPhrase = locales[pageLanguage]['cross-references']['post-page-number'];
 
 function addPageReferenceFunc() {
 
@@ -22,7 +23,7 @@ function addPageReferenceFunc() {
         if (currentPage === targetPage) return '';
 
         // otherwise show a space and the page number in parentheses
-        return '\u00A0' + '(' + pageWord + ' ' + targetPage +')';
+        return '\u00A0' + prePageNumberPhrase + targetPage + postPageNumberPhrase;
     });
 }
 
