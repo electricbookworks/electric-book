@@ -137,8 +137,8 @@ set /p process=Enter a number and hit return.
             :: Run prince, showing progress (-v), printing the docs in file-list
             :: and saving the resulting PDF to the _output folder
             :: (For some reason this has to be run with call)
-            set print-pdf-filename=%bookfolder%-%subdirectory%
-            if "%subdirectory%"=="" set print-pdf-filename=%bookfolder%
+            set print-pdf-filename=%bookfolder%-%subdirectory%-print
+            if "%subdirectory%"=="" set print-pdf-filename=%bookfolder%-print
             call prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
 
             :: Navigate back to where we began.
@@ -243,8 +243,8 @@ set /p process=Enter a number and hit return.
             :: Run prince, showing progress (-v), printing the docs in file-list
             :: and saving the resulting PDF to the _output folder
             :: (For some reason this has to be run with call)
-            set screen-pdf-filename=%bookfolder%-%subdirectory%
-            if "%subdirectory%"=="" set screen-pdf-filename=%bookfolder%
+            set screen-pdf-filename=%bookfolder%-%subdirectory%-screen
+            if "%subdirectory%"=="" set screen-pdf-filename=%bookfolder%-screen
             call prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
 
             :: Navigate back to where we began.

@@ -67,9 +67,9 @@ Enter a number and hit enter. "
 		done
 		# Set the PDF's filename
 		if [ "$printpdfsubdirectory" = "" ]; then
-			printpdffilename="$bookfolder"
+			printpdffilename="$bookfolder-print"
 		else
-			printpdffilename="$bookfolder-$printpdfsubdirectory"
+			printpdffilename="$bookfolder-$printpdfsubdirectory-print"
 		fi
 		# We're going to let users run this over and over by pressing enter
 		repeat=""
@@ -156,9 +156,9 @@ Enter a number and hit enter. "
 		done
 		# Set the PDF's filename
 		if [ "$screenpdfsubdirectory" = "" ]; then
-			screenpdffilename="$bookfolder"
+			screenpdffilename="$bookfolder-screen"
 		else
-			screenpdffilename="$bookfolder-$screenpdfsubdirectory"
+			screenpdffilename="$bookfolder-$screenpdfsubdirectory-screen"
 		fi
 		# We're going to let users run this over and over by pressing enter
 		repeat=""
