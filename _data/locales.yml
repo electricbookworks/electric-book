@@ -166,7 +166,8 @@ en:
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "You haven't selected all the correct answers."
   cross-references:
-    page: "page"
+    pre-page-number: "(page "
+    post-page-number: ")"
   account:
     my-account: "My account"
 # eo:
@@ -228,7 +229,8 @@ fr:
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "Vous n'avez pas sélectionné toutes les bonnes réponses."
   cross-references:
-    page: "page"
+    pre-page-number: "(page "
+    post-page-number: ")"
   account:
     my-account: "Mon compte"
 # ff:
