@@ -36,8 +36,8 @@
 	"configs": {
 		"description": "Any custom config files in /_configs, comma-separated.",
 		"alias": "c",
-		"default": "_config.web.yml",
-		"defaultDescription": "_config.web.yml (The web-output config.)",
+		"default": "",
+		"defaultDescription": "No extra configs.",
 		"type": "string",
 		"implies": ["task"]
 	},
