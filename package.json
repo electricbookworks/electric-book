@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cordova": "cordova",
-    "start": "node run.js"
+    "electricbook": "node run.js"
   },
   "repository": {
     "type": "git",
@@ -46,5 +46,8 @@
       "ios",
       "windows"
     ]
+  },
+  "dependencies": {
+    "cross-spawn": "^6.0.5"
   }
 }

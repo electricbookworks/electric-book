@@ -1,8 +1,15 @@
-const { shelljs } = require('shelljs');
-const { argv } = require('yargs');
-const fs = require('fs');
-const options = require('./_tools/js/options.json');
-const setup = require('./_tools/js/setup.json');
+// Run this at the command line with
+// npm run electricbook
+// for the default output, a local web server.
+// Add arguments for other tasks, e.g.
+// npm run electricbook -- --task=output --format=print-pdf
+
+// const { shelljs } = require('shelljs'); // for unix commands, not needed yet
+const setup = require('./_tools/js/setup.json'); // defines the project setup we check against
+const options = require('./_tools/js/options.json'); // options for argv
+const argv = require('yargs').options(options).argv; // for accepting arguments when calling this script
+const fs = require('fs'); // for working with the file-system
+const spawn = require('cross-spawn'); // for spawning child processes like Jekyll across platforms
 
 // All the functions
 // -----------------
@@ -48,7 +55,46 @@ function exit() {};
 function exportWord() {};
 
 // runs Jekyll
-function jekyll(command, [configs, baseurl]) {};
+function jekyll(command, configs, baseurl) {
+
+	// Credit: https://stackoverflow.com/a/23852347/1781075
+	// var bundleExecutable = process.platform === "win32" ? "bundle.cmd" : "bundle";
+
+	// Credit for child_process examples:
+	// https://medium.com/@graeme_boy/how-to-optimize-cpu-intensive-work-in-node-js-cdc09099ed41
+
+	// Are we killing Jekyll or starting it?
+	// We have our own 'kill' Jekyll argument for this.
+	// If Jekyll is running and the command is to kill, kill the process.
+	// NOTE: I'm not sure we need this.
+	if (jekyllProcess && command == 'kill') {
+		jekyllProcess.kill();
+	} else {
+		// Create a child process
+		var jekyllProcess = spawn('bundle exec jekyll ' + command + ' ' + configs + ' ' + baseurl);
+
+		// Listen to Jekyll's stdout
+		jekyllProcess.stdout.on('data', 
+		    function (data) {
+		        console.log('Jekyll output: ' + data);
+		    }
+		);
+
+		// Listen to Jekyll's stderr
+		jekyllProcess.stderr.on('data',
+		    function (data) {
+		        console.log('Jekyll error: ' + data);
+		    }
+		);
+
+		// Listen for an exit event:
+		jekyllProcess.on('exit', function (exitCode) {
+		    console.log('Jekyll exited with code: ' + exitCode);
+		});
+		
+	}
+
+};
 
 // kills child processes
 function killProcesses() {};
@@ -104,4 +150,15 @@ function taskOutput(format) {};
 var location = projectRoot();
 
 // Check that the project contains required files
-checkProjectSetup(argv.book);
+if (argv.task == 'check') {
+	checkProjectSetup(argv.book);
+}
+
+// Output a project or a book
+if (argv.task == 'output') {
+	// Serve Jekyll as a site
+	if (argv.format == 'web') {
+		jekyll('serve', argv.configs, argv.baseurl)
+	}
+	// To do: output print-pdf, screen-pdf, epub, app
+}
