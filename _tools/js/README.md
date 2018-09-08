@@ -4,6 +4,22 @@ This is a temporary README during development.
 
 This is an attempt to replace our EB output scripts with a single node script. After that, we'll try run the node script from an Electron GUI.
 
+So far, this script can do some options from the run-* shell scripts:
+
+- [ ]  Create a print PDF
+- [ ]  Create a screen PDF
+- [x]  Run as a website
+- [ ]  Create an epub
+- [ ]  Create an app
+- [ ]  Export to Word
+- [x]  Convert source images to output formats
+- [ ]  Refresh search index
+- [x]  Install or update dependencies
+
+Additional functions it provides:
+
+- [x] Basic check of folder and file structure
+
 ## Usage
 
 Run this at the command line with
@@ -36,7 +52,7 @@ This check is not very thorough yet, and only checks the default `book` folder, 
 
 ## Arguments
 
-This script will run with arguments:
+This script runs with these arguments:
 
 |     Argument    |      Aliases       | Default |                        Possible values                        |   Type  |
 |-----------------|--------------------|---------|---------------------------------------------------------------|---------|
@@ -47,6 +63,7 @@ This script will run with arguments:
 | --configs       | -c                 |         | [any .yml file in /_configs]                                  | string  |
 | --mathjax       | -m                 | false   | true or false                                                 | boolean |
 | --baseurl       | -u                 |         | [any string that starts with a / and contains no spaces]      | string  |
+| --incremental   | -i                 | false   | true or false                                                 | boolean |
 | --epubcheck     | -e                 |         | [checks path, or uses value or arg as path]                   | string  |
 | --app-os        | -o                 | android | android, windows, ios                                         | string  |
 | --app-build     | -d                 | false   | true or false                                                 | boolean |

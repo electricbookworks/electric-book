@@ -36,8 +36,8 @@
 	"configs": {
 		"description": "Any custom config files in /_configs, comma-separated.",
 		"alias": "c",
-		"default": "",
-		"defaultDescription": "No custom configs.",
+		"default": "_config.web.yml",
+		"defaultDescription": "_config.web.yml (The web-output config.)",
 		"type": "string",
 		"implies": ["task"]
 	},
@@ -56,6 +56,14 @@
 		"defaultDescription": "No base URL.",
 		"type": "string",
 		"implies": ["task", "format"]
+	},
+	"incremental": {
+		"description": "Whether Jekyll should only rebuild changed files (i.e. incremental build).",
+		"alias": "i",
+		"default": "false",
+		"defaultDescription": "false: do not rebuild incrementally.",
+		"type": "boolean",
+		"implies": ["task"]
 	},
 	"epubcheck": {
 		"description": "The path to the folder containing epubcheck.jar on your machine.",
