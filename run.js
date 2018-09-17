@@ -186,6 +186,7 @@ function outputPrintPdf(book, subdir, mathjax, callback) {
     if (mathjax === true) {
         console.log('Mathjax enabled.');
     }
+    // to do: add Prince stuff here
     callback();
 }
 
