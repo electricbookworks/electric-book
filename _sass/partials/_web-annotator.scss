@@ -1,0 +1,41 @@
+$web-annotator: true !default;
+@if $web-annotator {
+
+    // Styles for Hypothesis annotator
+
+    // For our UI when externalContainerSelector
+    // is defined as .annotator in Hypothesis config
+
+    .annotator {
+        iframe {
+            display: none; // until shown with .annotator-toggle:checked
+            height: 100vh;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+        }
+        .annotator-toggle:checked ~ iframe {
+            display: block;
+        }
+    }
+
+    // For Hypothesis default UI
+
+    .annotator-frame {
+        .annotator-bucket-bar {
+            display: none;
+        }
+        .annotator-toolbar {
+            top: 5em;
+            display: none; // hide until shown by our button
+            button {
+                border-style: solid!important; // important to override inline styles from Hypothesis JS
+            }
+            .show-annotator:checked ~ & {
+                display: block;
+            }
+        }
+    }
+
+}

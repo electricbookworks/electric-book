@@ -1,0 +1,18 @@
+var hypothesisConfigOptions = {
+    openSidebar: false,
+    theme: 'clean',
+    enableExperimentalNewNoteButton: true,
+    externalContainerSelector: '.annotator',
+    branding: {
+        accentColor: 'black',
+        appBackgroundColor: 'white',
+        ctaBackgroundColor: 'black',
+        ctaTextColor: 'white',
+        annotationFontFamily: 'sans-serif',
+        selectionFontFamily: 'serif'
+    }
+};
+
+window.hypothesisConfig = function () {
+    return hypothesisConfigOptions;
+};

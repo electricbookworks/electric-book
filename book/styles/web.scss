@@ -198,6 +198,9 @@ $web-docs: true;
 $web-smallcaps: true;
 $web-fitting: true;  // E.g. tracking and shrinking
 
+// User features
+$web-annotator: true;
+
 // Logic (if this then that)
 $web-reset-sequences: true; // This should stay last in the @import list
 

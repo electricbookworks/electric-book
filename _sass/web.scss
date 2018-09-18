@@ -194,6 +194,9 @@ $web-docs: true !default;
 $web-smallcaps: true !default;
 $web-fitting: true !default;  // E.g. tracking and shrinking
 
+// User features
+$web-annotator: false !default;
+
 // Logic (if this then that)
 $web-reset-sequences: true !default; // This should stay last in the @import list
 
@@ -264,6 +267,9 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 // Type-control classes
 @import "partials/web-smallcaps";
 @import "partials/web-fitting";  // E.g. tracking and shrinking
+
+// User features
+@import "partials/web-annotator";
 
 // Logic (if this then that)
 @import "partials/web-reset-sequences"; // This should stay last in the @import list
