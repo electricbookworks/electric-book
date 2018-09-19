@@ -7,6 +7,12 @@ $web-annotator: true !default;
     // is defined as .annotator in Hypothesis config
 
     .annotator {
+        // If language-select is not showing, move this down
+        // as if language-select was there.
+        &:nth-child(3) {
+            position: relative;
+            top: $line-height-default * 2; // magic number :(
+        }
         label {
             display: block;
             padding: 0 ($line-height-default / 2);
@@ -29,7 +35,7 @@ $web-annotator: true !default;
             max-width: 70vw; // leave space for icon buttons which have max 80vw
             z-index: 1000;
         }
-        .annotator-toggle {
+        .annotator-toggle-sidebar {
             background-color: $color-background;
             svg {
                 fill: $annotator-icon-color-inactive;
@@ -47,7 +53,7 @@ $web-annotator: true !default;
                     }
                 }
                 // Move controls left when iframe shows
-                ~ label.annotator-toggle,
+                ~ label.annotator-toggle-sidebar,
                 ~ label.annotator-show-annotations {
                     width: $annotator-sidebar-width + $line-height-default;
                     max-width: 80vw;

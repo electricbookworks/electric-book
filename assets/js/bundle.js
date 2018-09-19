@@ -18,6 +18,9 @@ layout: null
 
 {% endif %}
 
+{% if site.output == "web" and site.data.settings.web.annotator == true %}
+    {% include_relative annotation.js %}
+{% endif %}
 
 {% comment %} Enable the content accordion in _data settings.yml,
 and define its options in assets/accordion.js. This lets us

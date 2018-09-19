@@ -4,9 +4,6 @@ $web-language-select: true !default;
     // Language selector
 
     .language-select {
-        // position: fixed;
-        // top: 0.5em;
-        // right: 1em;
         z-index: 100;
         padding: ($line-height-default / 2) ($line-height-default / 2) 0 ($line-height-default / 2);
         text-align: right;
