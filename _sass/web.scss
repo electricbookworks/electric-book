@@ -133,8 +133,9 @@ $language-select-links-color: $color-links !default;
 $language-select-background-color: $color-background !default;
 
 // Annotator
-$annotate-icon-color-active: $color-light !default;
-$annotate-icon-color-inactive: $color-accent !default;
+$annotator-sidebar-width: 15em;
+$annotator-icon-color-active: $color-accent !default;
+$annotator-icon-color-inactive: $color-light !default;
 
 // ---------------------------------
 // Set to false to turn partials off
@@ -157,7 +158,6 @@ $web-masthead: true !default;
 $web-search: true !default;
 $web-nav-bar: true !default;
 $web-footer: true !default;
-$web-language-select: true !default;
 $web-accordion: true !default;
 
 // Book parts
@@ -198,7 +198,9 @@ $web-docs: true !default;
 $web-smallcaps: true !default;
 $web-fitting: true !default;  // E.g. tracking and shrinking
 
-// User features
+// Controls
+$web-controls: true !default;
+$web-language-select: true !default;
 $web-annotator: false !default;
 
 // Logic (if this then that)
@@ -273,6 +275,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-fitting";  // E.g. tracking and shrinking
 
 // User features
+@import "partials/web-controls";
 @import "partials/web-annotator";
 
 // Logic (if this then that)

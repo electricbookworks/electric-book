@@ -157,7 +157,6 @@ $web-masthead: true;
 $web-search: true;
 $web-nav-bar: true;
 $web-footer: true;
-$web-language-select: true;
 $web-accordion: true;
 
 // Book parts
@@ -198,7 +197,9 @@ $web-docs: true;
 $web-smallcaps: true;
 $web-fitting: true;  // E.g. tracking and shrinking
 
-// User features
+// Controls
+$web-controls: true;
+$web-language-select: true;
 $web-annotator: true;
 
 // Logic (if this then that)

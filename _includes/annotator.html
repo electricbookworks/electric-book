@@ -1,9 +1,12 @@
 {% comment %} Include annotator {% endcomment %}
 
-{% comment %} Config {% endcomment %}
+{% comment %} Config. See
+https://h.readthedocs.io/projects/client/en/latest/publishers/config/ 
+{% endcomment %}
 <script>
     var hypothesisConfigOptions = {
         openSidebar: false,
+        showHighlights: false,
         theme: 'clean',
         enableExperimentalNewNoteButton: true,
         externalContainerSelector: '.annotator',
@@ -25,11 +28,17 @@
 {% comment %} Embed script {% endcomment %}
 <script src="https://hypothes.is/embed.js" async></script>
 
-{% comment %} Our controllers {% endcomment %}
+{% comment %} Controls {% endcomment %}
 <div class="annotator">
+
     <input type="checkbox" title="{{ locale.annotator.show-sidebar }}" name="annotator-toggle" class="annotator-toggle" id="annotator-toggle">
     <label class="annotator-toggle" for="annotator-toggle">{% include annotate-icon %}</label>
 
     <input type="checkbox" title="{{ locale.annotator.show-annotated }}" name="annotator-show-annotations" class="annotator-show-annotations" id="annotator-show-annotations">
     <label class="annotator-show-annotations" for="annotator-show-annotations">{% include annotate-show-icon %}</label>
+
+    {% comment %} Hypothesis JS will insert the sidebar iframe here.
+    The iframe must remain a sibling of the checkboxes above
+    in order for the CSS-based show/hide to work. {% endcomment %}
+
 </div>

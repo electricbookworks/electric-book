@@ -157,7 +157,6 @@ $web-masthead: true;
 $web-search: true;
 $web-nav-bar: true;
 $web-footer: true;
-$web-language-select: true;
 $web-accordion: true;
 
 // Book parts
@@ -197,6 +196,11 @@ $web-docs: true;
 // Type-control classes
 $web-smallcaps: true;
 $web-fitting: true;  // E.g. tracking and shrinking
+
+// Controls
+$web-controls: true;
+$web-language-select: true;
+$web-annotator: false;
 
 // Logic (if this then that)
 $web-reset-sequences: true; // This should stay last in the @import list

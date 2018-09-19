@@ -60,7 +60,15 @@
 
     {% endif %}
 
-    {% include language-select %}
+    <div class="controls">
+
+        {% include language-select %}
+
+        {% if site.output == "web" and site.data.settings.web.annotator == true %}
+            {% include annotator.html %}
+        {% endif %}
+
+    </div>
 
 {% endif %}
 

@@ -153,7 +153,6 @@ $web-masthead: true !default;
 $web-search: true !default;
 $web-nav-bar: true !default;
 $web-footer: true !default;
-$web-language-select: true !default;
 $web-accordion: true !default;
 
 // Book parts
@@ -193,6 +192,11 @@ $web-docs: true !default;
 // Type-control classes
 $web-smallcaps: true !default;
 $web-fitting: true !default;  // E.g. tracking and shrinking
+
+// Controls
+$web-controls: true !default;
+$web-language-select: true !default;
+$web-annotator: false !default;
 
 // Logic (if this then that)
 $web-reset-sequences: true !default; // This should stay last in the @import list

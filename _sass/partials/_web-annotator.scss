@@ -7,41 +7,69 @@ $web-annotator: true !default;
     // is defined as .annotator in Hypothesis config
 
     .annotator {
+        label {
+            display: block;
+            padding: 0 ($line-height-default / 2);
+            &:first-of-type {
+                padding-top: $line-height-default / 2;
+                border-radius: $button-border-radius 0 0 0;
+            }
+            &:last-of-type {
+                padding-bottom: $line-height-default / 2;
+                border-radius: 0 0 $button-border-radius 0;
+            }
+        }
         iframe {
             display: none; // until shown with .annotator-toggle:checked
             height: 100vh;
             position: fixed;
             right: 0;
             top: 0;
+            width: $annotator-sidebar-width;
+            max-width: 70vw; // leave space for icon buttons which have max 80vw
             z-index: 1000;
         }
         .annotator-toggle {
+            background-color: $color-background;
             svg {
-                fill: $annotate-icon-color-inactive;
+                fill: $annotator-icon-color-inactive;
                 width: $line-height-default;
             }
-            // Show the iframe when checked
             &:checked {
-                ~ label.annotator-toggle svg, .annotator-show-annotations svg {
-                    fill: $annotate-icon-color-active;
-                }
+                // Show the iframe when checked
                 & ~ iframe {
                     display: block;
+                }
+                // Change colour when checked
+                ~ label.annotator-toggle {
+                    svg {
+                        fill: $annotator-icon-color-active;
+                    }
+                }
+                // Move controls left when iframe shows
+                ~ label.annotator-toggle,
+                ~ label.annotator-show-annotations {
+                    width: $annotator-sidebar-width + $line-height-default;
+                    max-width: 80vw;
+                    text-align: left;
                 }
             }
         }
         .annotator-show-annotations {
+            background-color: $color-background;
             svg {
                 width: $line-height-default;
                 * {
-                    stroke: $annotate-icon-color-inactive;
+                    stroke: $annotator-icon-color-inactive;
                 }
             }
             // Change colour when checked
             &:checked {
-                ~ label.annotator-show-annotations svg {
-                    * {
-                        stroke: $annotate-icon-color-active;
+                ~ label.annotator-show-annotations {
+                    svg {
+                        * {
+                            stroke: $annotator-icon-color-active;
+                        }
                     }
                 }
             }
@@ -54,17 +82,10 @@ $web-annotator: true !default;
     // For Hypothesis default UI
 
     .annotator-frame {
-        .annotator-bucket-bar {
-            display: none;
-        }
         .annotator-toolbar {
             top: 5em;
-            display: none; // hide until shown by our button
             button {
                 border-style: solid!important; // important to override inline styles from Hypothesis JS
-            }
-            .show-annotator:checked ~ & {
-                display: block;
             }
         }
     }
