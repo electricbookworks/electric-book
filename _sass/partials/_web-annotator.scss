@@ -15,8 +15,39 @@ $web-annotator: true !default;
             top: 0;
             z-index: 1000;
         }
-        .annotator-toggle:checked ~ iframe {
-            display: block;
+        .annotator-toggle {
+            svg {
+                fill: $annotate-icon-color-inactive;
+                width: $line-height-default;
+            }
+            // Show the iframe when checked
+            &:checked {
+                ~ label.annotator-toggle svg, .annotator-show-annotations svg {
+                    fill: $annotate-icon-color-active;
+                }
+                & ~ iframe {
+                    display: block;
+                }
+            }
+        }
+        .annotator-show-annotations {
+            svg {
+                width: $line-height-default;
+                * {
+                    stroke: $annotate-icon-color-inactive;
+                }
+            }
+            // Change colour when checked
+            &:checked {
+                ~ label.annotator-show-annotations svg {
+                    * {
+                        stroke: $annotate-icon-color-active;
+                    }
+                }
+            }
+        }
+        input[type='checkbox'] {
+            display: none;
         }
     }
 
