@@ -170,6 +170,9 @@ en:
     post-page-number: ")"
   account:
     my-account: "My account"
+  annotator:
+    show-sidebar: "Show annotation sidebar"
+    show-annotated: "Show annotated text"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -233,6 +236,9 @@ fr:
     post-page-number: ")"
   account:
     my-account: "Mon compte"
+  annotator:
+    show-sidebar: "Basculer"
+    show-annotated: "Afficher le texte annoté"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
