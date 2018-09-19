@@ -252,12 +252,6 @@
         {% include mathjax-config %}
     {% endif %}
 
-    {% comment %} Include annotator {% endcomment %}
-    {% if site.output == "web" and site.data.settings.web.annotator == true %}
-    <script>{% include hypothesis-config %}</script>
-    <script src="https://hypothes.is/embed.js" async></script>
-    {% endif %}
-
     {% comment %} Include custom elements {% endcomment %}
     {% include head-elements %}
 

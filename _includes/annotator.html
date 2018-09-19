@@ -1,4 +1,35 @@
+{% comment %} Include annotator {% endcomment %}
+
+{% comment %} Config {% endcomment %}
+<script>
+    var hypothesisConfigOptions = {
+        openSidebar: false,
+        theme: 'clean',
+        enableExperimentalNewNoteButton: true,
+        externalContainerSelector: '.annotator',
+        branding: {
+            accentColor: 'black',
+            appBackgroundColor: 'white',
+            ctaBackgroundColor: 'black',
+            ctaTextColor: 'white',
+            annotationFontFamily: 'sans-serif',
+            selectionFontFamily: 'serif'
+        }
+    };
+
+    window.hypothesisConfig = function () {
+        return hypothesisConfigOptions;
+    };
+</script>
+
+{% comment %} Embed script {% endcomment %}
+<script src="https://hypothes.is/embed.js" async></script>
+
+{% comment %} Our controllers {% endcomment %}
 <div class="annotator">
-    <input type="checkbox" title="Toggle or Resize Sidebar" name="annotator-toggle" class="annotator-toggle" value="P" checked>
-    <input type="checkbox" title="Show Highlights" name="annotator-highlight-annotations" class="annotator-highlight-annotations" value="S" checked>
+    <input type="checkbox" title="{{ locale.annotator.show-sidebar }}" name="annotator-toggle" class="annotator-toggle" id="annotator-toggle">
+    <label class="annotator-toggle" for="annotator-toggle">{% include annotate-icon %}</label>
+
+    <input type="checkbox" title="{{ locale.annotator.show-annotated }}" name="annotator-show-annotations" class="annotator-show-annotations" id="annotator-show-annotations">
+    <label class="annotator-show-annotations" for="annotator-show-annotations">{% include annotate-show-icon %}</label>
 </div>
