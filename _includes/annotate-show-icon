@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 55">
   <style>
-    .iris,.eye{fill:none;stroke-width:1.5;stroke-miterlimit:10;stroke-linecap:round}
+    circle{stroke-linecap:round;stroke-linejoin:round}
   </style>
-  <path class="eye" d="M9.8 27.8c1.3-4.7 6.7-8.9 14.9-8.9s13.5 3.7 14.9 8.9M9.8 27.8c1.3 4.7 6.7 8.9 14.9 8.9s13.5-3.7 14.9-8.9"/>
-  <circle class="iris" cx="24.8" cy="27.8" r="6.7"/>
+  <path d="M24.7 18.9c-8.2 0-13.6 4.2-14.9 8.9 1.3 4.7 6.7 8.9 14.9 8.9s13.5-3.7 14.9-8.9c-1.4-5.2-6.7-8.9-14.9-8.9z"/>
+  <circle cx="24.821" cy="27.702" r="7.532"/>
 </svg>

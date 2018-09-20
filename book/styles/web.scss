@@ -138,8 +138,11 @@ $language-select-background-color: $color-background;
 
 // Annotator
 $annotator-sidebar-width: 16em;
-$annotator-icon-color-active: $color-accent;
-$annotator-icon-color-inactive: $color-mid;
+$annotator-icon-line-color-active: $color-light;
+$annotator-icon-line-color-inactive: $color-light;
+$annotator-icon-background-color-active: $color-accent;
+$annotator-icon-background-color-inactive: none;
+$annotator-icon-thickness: 1.5px;
 
 // ---------------------------------
 // Set to false to turn partials off

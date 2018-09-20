@@ -24,6 +24,12 @@ $web-annotator: true !default;
                 padding-bottom: $line-height-default / 2;
                 border-radius: 0 0 $button-border-radius 0;
             }
+            svg {
+                fill: $annotator-icon-background-color-inactive;
+                stroke: $annotator-icon-line-color-inactive;
+                stroke-width: $annotator-icon-thickness;
+                width: $line-height-default;
+            }
         }
         iframe {
             display: none; // until shown with .annotator-toggle:checked
@@ -37,19 +43,16 @@ $web-annotator: true !default;
         }
         .annotator-toggle-sidebar {
             background-color: $color-background;
-            svg {
-                fill: $annotator-icon-color-inactive;
-                width: $line-height-default;
-            }
             &:checked {
                 // Show the iframe when checked
                 & ~ iframe {
                     display: block;
                 }
                 // Change colour when checked
-                ~ label.annotator-toggle {
+                ~ label.annotator-toggle-sidebar {
                     svg {
-                        fill: $annotator-icon-color-active;
+                        fill: $annotator-icon-background-color-active;
+                        stroke: $annotator-icon-line-color-active;
                     }
                 }
                 // Move controls left when iframe shows
@@ -63,19 +66,12 @@ $web-annotator: true !default;
         }
         .annotator-show-annotations {
             background-color: $color-background;
-            svg {
-                width: $line-height-default;
-                * {
-                    stroke: $annotator-icon-color-inactive;
-                }
-            }
             // Change colour when checked
             &:checked {
                 ~ label.annotator-show-annotations {
                     svg {
-                        * {
-                            stroke: $annotator-icon-color-active;
-                        }
+                        fill: $annotator-icon-background-color-active;
+                        stroke: $annotator-icon-line-color-active;
                     }
                 }
             }
