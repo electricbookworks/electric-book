@@ -1,7 +1,9 @@
-// Let JS Lint allow window global variable
-/*global window */
+// Let JS Lint allow global variables
+/*global
+    window, MutationObserver
+*/
 
-// This script shows and hide the annotation sidebar
+// This script shows and hides the annotation sidebar
 // and the annotations in the page text.
 
 // Options
@@ -12,6 +14,17 @@ var annotationOptions = {
 // Get the elements we need
 var openSidebarToggle = document.querySelector('#annotator-toggle-sidebar');
 var showAnnotationsToggle = document.querySelector('#annotator-show-annotations');
+
+// Get annotator tool
+// This is a function because we may need to get its value
+// only when certain events have occurred.
+function annotatorTool() {
+    'use strict';
+    var tool = document.querySelector('.js-annotate-btn');
+    if (tool) {
+        return tool;
+    }
+}
 
 // Turn highlighting on
 function showAnnotationHighlights() {
@@ -71,23 +84,34 @@ function annotatorListenForToggle(target, on, off) {
 function annotatorListenForClick(target, action) {
     'use strict';
     if (target) {
-        console.log('listening?');
         target.addEventListener('click', function () {
-            console.log('heard something');
             action();
         });
     }
 }
 
+// Create an observer that will open the sidebar
+// when the hypothesis-highlight button is clicked.
+var annotatorButtonObserver = new MutationObserver(function (mutations) {
+    'use strict';
+    mutations.forEach(function (mutation) {
+        var hypothesisAdder = mutation.target.querySelector('hypothesis-highlight');
+        if (hypothesisAdder) {
+            annotatorOpenSidebar();
+        }
+    });
+});
+// Listen for changes in the body of the page
+// with the annotatorButtonObserver
+annotatorButtonObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+});
+
 // Start
 window.onload = function () {
     'use strict';
-
-    // Get the annotator button
-    // Todo: On Chrome this is in a shadowRoot. Can't get at it this way.
-    var annotatorTool = document.querySelector('.js-annotate-btn');
-
     annotatorListenForToggle(openSidebarToggle, annotatorOpenSidebar, annotatorCloseSidebar);
     annotatorListenForToggle(showAnnotationsToggle, showAnnotationHighlights, hideAnnotationHighlights);
-    annotatorListenForClick(annotatorTool, annotatorOpenSidebar);
+    annotatorListenForClick(annotatorTool(), annotatorOpenSidebar);
 };
