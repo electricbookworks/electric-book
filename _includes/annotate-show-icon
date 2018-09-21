@@ -1,0 +1,12 @@
+<!-- https://css-tricks.com/can-make-icon-system-accessible/ -->
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 55" aria-labelledby="annotate-show-icon-title annotate-show-icon-description">
+
+    <title id="annotate-show-icon-title">{{ locale.annotator.show-annotated-text-tooltip-title }}</title>
+    <desc id="annotate-show-icon-description">{{ locale.annotator.show-annotated-text-tooltip-description }}</desc>
+
+    <style>
+        circle{stroke-linecap:round;stroke-linejoin:round}
+    </style>
+    <path d="M24.7 18.9c-8.2 0-13.6 4.2-14.9 8.9 1.3 4.7 6.7 8.9 14.9 8.9s13.5-3.7 14.9-8.9c-1.4-5.2-6.7-8.9-14.9-8.9z"/>
+    <circle cx="24.821" cy="27.702" r="7.532"/>
+</svg>

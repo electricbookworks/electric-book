@@ -55,6 +55,10 @@ You define pagination for `web` and `app` output separately, so that they can di
 
 See [Pagination](../layout/web-pagination.html) for details.
 
+## Annotation
+
+You can turn on annotation with [Hypothes.is](https://hypothes.is) by setting `annotator: true`.
+
 ## Epub settings
 
 You'll need to adjust the epub settings if you want to embed fonts or hide the epub's nav element. See [Epub output](../output/epub-output.html) for details.

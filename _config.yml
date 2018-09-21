@@ -116,6 +116,9 @@ exclude:
 - package.json
 - package-lock.json
 - CNAME
+- .sass-cache
+# Included as-is in other files, no need to process
+- /assets/js/annotation.js
 # Files for formats we're not building here
 - /assets/profiles
 - /*/package.opf
