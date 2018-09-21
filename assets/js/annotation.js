@@ -14,6 +14,8 @@ var annotationOptions = {
 // Get the elements we need
 var openSidebarToggle = document.querySelector('#annotator-toggle-sidebar');
 var showAnnotationsToggle = document.querySelector('#annotator-show-annotations');
+var openSidebarToggleSVG = document.querySelector('.annotator-toggle-sidebar svg');
+var showAnnotationsToggleSVG = document.querySelector('.annotator-show-annotations svg');
 
 // Get annotator tool
 // This is a function because we may need to get its value
@@ -108,10 +110,26 @@ annotatorButtonObserver.observe(document.body, {
     subtree: true
 });
 
+// Listen for mouseover on our toggle buttons
+function annotatorHideSVGTitleOnMouseover(svg) {
+    'use strict';
+    if (svg) {
+        var title = svg.getElementsByTagName("title")[0];
+        svg.addEventListener('mouseover', function () {
+            title.remove();
+        });
+        svg.addEventListener('mouseleave', function () {
+            svg.insertAdjacentElement('afterbegin', title);
+        });
+    }
+}
+
 // Start
 window.onload = function () {
     'use strict';
     annotatorListenForToggle(openSidebarToggle, annotatorOpenSidebar, annotatorCloseSidebar);
     annotatorListenForToggle(showAnnotationsToggle, showAnnotationHighlights, hideAnnotationHighlights);
     annotatorListenForClick(annotatorTool(), annotatorOpenSidebar);
+    annotatorHideSVGTitleOnMouseover(openSidebarToggleSVG);
+    annotatorHideSVGTitleOnMouseover(showAnnotationsToggleSVG);
 };

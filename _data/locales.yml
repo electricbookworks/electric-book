@@ -171,8 +171,10 @@ en:
   account:
     my-account: "My account"
   annotator:
-    show-sidebar: "Show annotation sidebar"
-    show-annotated: "Show annotated text"
+    show-sidebar-tooltip-title: "Open annotations"
+    show-sidebar-tooltip-description: "Tap here to show the annotations sidebar. Select text to highlight and create notes on this page."
+    show-annotated-text-tooltip-title: "Highlight annotations"
+    show-annotated-text-tooltip-description: "Tap here to show or hide the annotation highlights on this page."
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -237,8 +239,10 @@ fr:
   account:
     my-account: "Mon compte"
   annotator:
-    show-sidebar: "Basculer"
-    show-annotated: "Afficher le texte annoté"
+    show-sidebar-tooltip-title: "Basculer"
+    show-sidebar-tooltip-description: ""
+    show-annotated-text-tooltip-title: "Afficher le texte annoté"
+    show-annotated-text-tooltip-description: "Afficher le texte annoté"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
