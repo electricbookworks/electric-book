@@ -1,10 +1,21 @@
 <div class="masthead">
 
+{% comment %} Home page, search page, and similar non-book pages {% endcomment %}
 {% if is-book-subdirectory != true %}
+
     <ul>
         <li class="masthead-project-name"><a href="{{ path-to-root-directory }}index.html">{{ project-name }}</a></li>
     </ul>
 
+    <div class="controls">
+
+        {% if site.output == "web" and site.data.settings.web.annotator == true %}
+            {% include annotator.html %}
+        {% endif %}
+
+    </div>
+
+{% comment %} Book pages {% endcomment %}
 {% else %}
 
     {% if site.output == "app" %}
@@ -60,7 +71,15 @@
 
     {% endif %}
 
-    {% include language-select %}
+    <div class="controls">
+
+        {% include language-select %}
+
+        {% if site.output == "web" and site.data.settings.web.annotator == true %}
+            {% include annotator.html %}
+        {% endif %}
+
+    </div>
 
 {% endif %}
 
