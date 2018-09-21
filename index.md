@@ -23,20 +23,20 @@ At its heart is the [Electric Book Jekyll template](https://github.com/electricb
 ## Key features
 
 - Learn [how to edit in markdown]({{ site.baseurl }}/docs/editing/markdown.html) in the docs.
-- Use [predefined tags]({{ site.baseurl }}/docs/editing/classes.html) for common book features
-- Quickly change many design features with [simple design configurations]({{ site.baseurl }}/docs/layout/design.html)
-- [Manage translations]({{ site.baseurl }}/docs/setup/translations.html) in the same project
-- Easily [localise]({{ site.baseurl }}/docs/setup/translations.html) website editions
-- Create [variant editions]({{ site.baseurl }}/docs/setup/variants.html) with different content or designs
-- [Enable annotations]({{ site.baseurl }}/docs/setup/settings.html#annotation) on website editions
-- Include interactive [multiple-choice questions]({{ site.baseurl }}/docs/editing/multiple-choice-questions.html)
-- [Control letter-spacing]({{ site.baseurl }}/docs/editing/classes.html#formatting) in individual paragraphs for page refinement
-- [Include complex maths]({{ site.baseurl }}/docs/editing/maths.html) using LaTex notation
-- Easily [embed streaming video]({{ site.baseurl }}/docs/editing/video.html) from YouTube or Vimeo
-- Make long pages/chapters [collapse on major headings]({{ site.baseurl }}/docs/layout/content-accordion.html) for easier reading
-- Support for [remote media]({{ site.baseurl }}/docs/images/external-media.html) and [expansion files]({{ site.baseurl }}/docs/output/app-output.html#android) for projects with many images
-- [Automatically convert master images]({{ site.baseurl }}/docs/images/image-conversions.html) to output-optimised sizes and color profiles
-- Easily [control colour and PDF profiles]({{ site.baseurl }}/docs/layout/colour-profiles.html) for high-quality printing
+- Use [predefined tags]({{ site.baseurl }}/docs/editing/classes.html) for common book features.
+- Quickly change many design features with [simple design configurations]({{ site.baseurl }}/docs/layout/design.html).
+- [Manage translations]({{ site.baseurl }}/docs/setup/translations.html) in the same project.
+- Easily [localise]({{ site.baseurl }}/docs/setup/translations.html) website editions.
+- Create [variant editions]({{ site.baseurl }}/docs/setup/variants.html) with different content or designs.
+- [Enable annotations]({{ site.baseurl }}/docs/setup/settings.html#annotation) on website editions.
+- Include interactive [multiple-choice questions]({{ site.baseurl }}/docs/editing/multiple-choice-questions.html).
+- [Control letter-spacing]({{ site.baseurl }}/docs/editing/classes.html#formatting) in individual paragraphs for page refinement.
+- [Include complex maths]({{ site.baseurl }}/docs/editing/maths.html) using LaTex notation.
+- Easily [embed streaming video]({{ site.baseurl }}/docs/editing/video.html) from YouTube or Vimeo.
+- Make long pages/chapters [collapse on major headings]({{ site.baseurl }}/docs/layout/content-accordion.html) for easier reading.
+- Support for [remote media]({{ site.baseurl }}/docs/images/external-media.html) and [expansion files]({{ site.baseurl }}/docs/output/app-output.html#android) for projects with many images.
+- [Automatically convert master images]({{ site.baseurl }}/docs/images/image-conversions.html) to output-optimised sizes and color profiles.
+- Easily [control colour and PDF profiles]({{ site.baseurl }}/docs/layout/colour-profiles.html) for high-quality printing.
 - Easily [build and refresh search indexes]({{ site.baseurl }}/docs/setup/search-indexes.html) for searching websites and apps.
 - [Export to MS Word]({{ site.baseurl }}/docs/output/word-output.html).
 
