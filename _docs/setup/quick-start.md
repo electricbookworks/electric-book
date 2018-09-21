@@ -15,4 +15,4 @@ This quick setup assumes you already have [Jekyll](http://jekyllrb.com/) and [Pr
 5. Run the `run-` script for your operating system. (On OSX and Linux, you need to [give it permission](http://stackoverflow.com/a/5126052/1781075).)
 6. The first time you run it, start with the 'Install or update dependencies' option.
 
-There is much more detail in [the docs](http://electricbook.works/docs).
+There is much more detail in [the docs](../).
