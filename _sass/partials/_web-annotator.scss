@@ -29,6 +29,9 @@ $web-annotator: true !default;
                 stroke: $annotator-icon-line-color-inactive;
                 stroke-width: $annotator-icon-thickness;
                 width: $line-height-default;
+                // Avoid Firefox bug where tapping selects SVG as text
+                // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
+                -moz-user-select: none;
             }
         }
         iframe {
