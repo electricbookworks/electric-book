@@ -6,7 +6,7 @@
 {% comment %}If we're we're outputting an error when questions are missing,
 check for the existence of the file. Otherwise, just assume it exists,
 and the Jekyll build will break if it doesn't.{% endcomment %}
-{% if site.data.settings.on-missing-questions == "error" %}
+{% if site.data.settings.on-missing-item == "error" %}
 
 	{% comment %}Create a small array of question pages to look through.{% endcomment %}
 	{% capture path-to-question-file %}{% if is-translation %}/{{ language }}{% endif %}/text/{{ question-file }}.md{% endcapture %}
