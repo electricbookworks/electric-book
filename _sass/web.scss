@@ -239,7 +239,6 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-nav-bar";
 @import "partials/web-search";
 @import "partials/web-footer";
-@import "partials/web-language-select";
 @import "partials/web-accordion";
 
 // Book parts
@@ -283,6 +282,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 // User features
 @import "partials/web-controls";
 @import "partials/web-annotator";
+@import "partials/web-language-select";
 
 // Logic (if this then that)
 @import "partials/web-reset-sequences"; // This should stay last in the @import list

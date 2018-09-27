@@ -114,7 +114,7 @@ $web-annotator: true !default;
                     border-radius: $button-border-radius;
                     color: $color-notification-low-text;
                     background-color: $color-notification-low-background;
-                    border: $rule-thickness solid $color-mid;
+                    border: $rule-thickness solid $color-notification-low-background;
                     font-size: $font-size-default / 2;
                     line-height: $line-height-default;
                     width: $line-height-default * 10;
