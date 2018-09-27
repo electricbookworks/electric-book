@@ -5,6 +5,8 @@
 # UPDATE THESE SETTINGS ON SETUP
 # ------------------------------
 
+# Language
+# --------
 # The primary language used in this project. You can set the language
 # for each book individually below at 'defaults'. 
 # To understand what language tags to use, read:
@@ -14,27 +16,36 @@
 # Useful lookup tool: http://r12a.github.io/apps/subtags/
 language: en
 
+# Gem-based theme
+# ---------------
 # Are you importing a gem-based theme? By default we do not.
 # If you are, remove the # before `theme:` and enter your theme's gem name.
 # If you're using GitHub Pages, note that it may not support your theme.
 # theme: your-theme-gem-name-here
 
+# Custom-edition variable
+# -----------------------
 # Which edition are we creating? You can leave this as `default`.
 # This can be used to create different editions of a book using
 # Liquid control-flow tags, e.g. in includes, layouts and file-list
 edition: "default"
-#edition: ""
 
+# Canonical URL
+# -------------
 # To make absolute links work, e.g. in canonical links in <head>,
 # include the url where this site will live when it's live (production).
 canonical-url: "http://example.com"
 
+# Base URL
+# --------
 # If you're using GitHub Pages without a custom domain, make this
 # the name of your repo, e.g. /electric-book
 # It must start with a slash. Otherwise you can leave it blank. See:
 # http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
 baseurl: "/electric-book"
 
+# GitHub Pages repository
+# -----------------------
 # If you're publishing a website on GitHub Pages
 # and want to ensure you're using a compatible setup,
 # add username/repository here and uncomment/enable
@@ -42,6 +53,8 @@ baseurl: "/electric-book"
 # in this project's Gemfile.
 repository: ""
 
+# Navigation
+# ----------
 # Web navigation source: select either files or nav
 # files: navigation will be taken from the web files list in `meta.yml`
 # nav: navigation will be taken from the web nav tree in `meta.yml`.
@@ -50,6 +63,8 @@ repository: ""
 # only a files list.
 nav-source: nav
 
+# MathJax
+# -------
 # Enable MathJax to render mathematics. MathJax adds a large script to your pages,
 # so this is off (false) by default. Change to true to load MathJax.
 # See http://docs.mathjax.org/en/latest/configuration.html for details.
@@ -61,44 +76,55 @@ nav-source: nav
 mathjax-enabled: false
 mathjax-font: "Gyre-Pagella"
 
-# Documentation is built into the Electric Book template.
-# These docs build along with your books, so they are available
-# as you work. To turn off the docs, change output to false.
-# The app and epub collections are off by default, and
-# turned on by those formats' _config files.
+# Jekyll collections
+# ------------------
+# docs:      Documentation is built into the Electric Book template.
+#            These docs build along with your books, so they are available
+#            as you work. To turn off the docs, change output to false.
+# app, epub: The app and epub collections are off by default, and
+#            turned on by those formats' _config files.
+# items:     Contains repeated items (e.g. text snippets) to be reused
+#            across books in this project.
 collections:
   docs:
+    output: true
+  items:
     output: true
 
 # --------------------------------------------
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY
 # --------------------------------------------
 
-# Output different HTML structures based on intent.
-# You can change these here, or rather override by loading two config files at the command line, e.g.:
-# jekyll build -c _config.yml,_config.epub.yml
+# Output format
+# -------------
+# The default output format is 'web'. Don't change this
+# unless you really know what you're doing.
+# This is overriden by output-specific config files in _configs/
 # output: "print-pdf"
+# output: "screen-pdf"
 output: "web"
 # output: "epub"
-# output: "screen-pdf"
-# output: "lightning-source-colour"
+# output: "app"
 
-# You can switch between sets of images for different purposes.
+# Image set
+# ---------
+# We use different sets of images for different purposes.
 # For instance, small, colour images for epub and screen-pdf, 
 # and high-res greyscale for print-pdf.
-# Set your default image set here. This refers to the `images`
+# This sets the default image set here. This refers to the `images`
 # directory in each book's directory, and then to any 
-# subdirectories you create per set. Default is images/web,
-# so that this works out of the box on GitHub Pages.
-# image-set: "images"
-# image-set: "images/epub"
-image-set: "images/web"
+# subdirectories you create per set. Default is images/web.
+# This is overriden in output-specific config files in _configs/.
 # image-set: "images/print-pdf"
 # image-set: "images/screen-pdf"
+image-set: "images/web"
+# image-set: "images/epub"
+# image-set: "images/app"
 
+# Files to exclude from Jekyll build
+# ----------------------------------
 # Jekyll will ignore these files and folders. 
-# Useful for temporarily speeding up processing for particular files
-# Once your CSS is stable, exclude `css` here and keep it below under `keep_files`.
+# This is useful for temporarily speeding up the build to output only certain files.
 # Include the file extension too. E.g. book/text/01.md
 exclude:
 # Build tools
@@ -136,16 +162,21 @@ exclude:
 # - samples
 # - assets
 
-# Can be useful to stop Jekyll overwriting files in _site.
-# E.g. generate CSS once, then exclude above but keep here
-# to make content regeneration faster.
-# The file path is relative to the site.output directory.
+# Files to keep from the last Jekyll build
+# ----------------------------------------
+# You can prevent Jekyll from overwriting certain files in _site.
+# E.g. generate CSS once, then exclude it above but keep it here
+# to make your build (i.e. output regeneration) faster.
+# The file path is relative to the _site directory.
 keep_files:
 # - book
 # - samples
 # - assets
 
+# HTML compression
+# ----------------
 # Configure HTML compression
+# These settings control how your output HTML is compressed.
 # See https://github.com/penibelst/jekyll-compress-html
 compress_html:
   blanklines: true
@@ -154,27 +185,44 @@ compress_html:
 # DO NOT CHANGE THESE SETTINGS
 # ----------------------------
 
-# Version of this Electric Book template
+# Electric Book template version
+# ------------------------------
+# Version of this Electric Book template.
 # This is the last release, not the current build
 # at github.com/electricbookworks/electric-book
 version: "0.12.0"
 
-# Leave this unchanged as http://localhost:4000 unless you really know what you're doing here. This is the URL that Jekyll will run at by default locally.
+# Local-build URL
+# ---------------
+# Leave this unchanged as http://localhost:4000
+# unless you really know what you're doing here.
+# This is the URL that Jekyll will run at by default locally.
 url: http://localhost:4000
 
-# Leave this unchanged as kramdown unless you really know how and why to change your markdown processor
+# Markdown processor
+# ------------------
+# Leave this unchanged as kramdown, unless
+# you really know how and why to change your markdown processor.
 markdown: kramdown
 
+# kramdown options
+# ----------------
 # kramdown options (see http://kramdown.gettalong.org/options.html)
-# auto_id_stripping remove formatting from headings before generating IDs
-# which keeps your IDs neat and tidy, and links persistent even if you format headings
+# auto_id_stripping removes formatting from headings before generating IDs,
+# which keeps your IDs neat and tidy, and your links persistent 
+# even if you format headings.
 kramdown:
   auto_id_stripping: true
 
-# Leave this unchanged as none. This way, your book's chapters will all generate correctly named in one folder.
-# This is really useful for grabbing all your HTML files at once for including in epubs or sending to PrinceXML.
+# Permalinks
+# ----------
+# Leave this unchanged as none. This way, your book's chapters
+# will all build named correctly in one folder. This is
+# important for rendering and packaging files for PDF and epub.
 permalink: none
 
+# Sass
+# ----
 # Leave this unchanged. It tells Jekyll where to find Sass partials
 # (see http://jekyllrb.com/docs/assets/#sassscss)
 # and whether to compress stylesheets
@@ -182,6 +230,8 @@ sass:
   sass_dir: _sass
   style: compressed
 
+# Default page variables
+# ----------------------
 # Set default values here for all documents/pages in this publication. 
 # (For technical details, see http://jekyllrb.com/docs/configuration/#front-matter-defaults).
 # Store only site configurations here, and book metadata (title, author, ISBNs) in _data/meta.yml
