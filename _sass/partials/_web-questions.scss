@@ -1,0 +1,42 @@
+$web-questions: true !default;
+@if $web-questions {
+
+    // Quizzes
+
+    .quiz {
+        font-family: $font-text-secondary;
+        .quiz-total-marks {
+            font-weight: bold;
+            float: right;
+        }
+    }
+
+    // Questions
+
+    .question {
+        em.marks, strong.marks {
+            font-style: normal;
+            font-weight: normal;
+            float: right;
+        }
+        input.fill-in-blank {
+            display: inline;
+            width: 8em;
+            padding: 0.2em;
+            line-height: 1;
+            margin: 0;
+            border-width: 0 0 $rule-thickness 0;
+        }
+        .question-total-marks {
+            font-weight: bold;
+            float: right;
+            &:before {
+                content: "[";
+            }
+            &:after {
+                content: "]";
+            }
+        }
+    }
+
+}
