@@ -36,6 +36,9 @@ Note that the file extension is optional. So you can also use:
 
 This is convenient, but also means that you shouldn't use the same file name for different files with different extensions. If you had both `about-charles-dickens.md` and `about-charles-dickens.html` in `_items`, your output will include the second one alphabetically: `about-charles-dickens.md`.
 
+> Note that `include` tags (or other Liquid tags) *inside* items may not regnerate when you're running an incremental build with Jekyll, because of the sequence in which Jekyll processes Liquid tags and content.
+{:.box}
+
 ## YAML frontmatter in items
 
 An item must start with YAML frontmatter, just like your book's text files, even if it's blank. At a minimum, blank YAML frontmatter is two lines of three hyphens at the top of the document:
