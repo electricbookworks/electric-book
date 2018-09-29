@@ -70,10 +70,41 @@ in the root that isn't really a listed book?{% endcomment %}
 {% for directory in book-directory-array %}
     {% if book-directory == directory %}
         {% assign is-book-directory = true %}
+    {% elsif book-directory == "_items" %}
+        {% assign is-book-directory = false %}
+        {% assign is-items-directory = true %}
     {% else %}
         {% assign is-book-directory = false %}
     {% endif %}
 {% endfor %}
+
+{% comment %} If this is an _items directory, we need info specific to that,
+because we can't get the usual book-related metadata for items. {% endcomment %}
+{% if is-items-directory %}
+
+    {% comment %} Are we in the main _items directory, or a subfolder? {% endcomment %}
+    {% assign items-folder-depth = page.path | split: "/" | size %}
+    {% if items-folder-depth > 2 %}
+        {% assign is-items-subdirectory = true %}
+        {% assign items-subdirectory = page.path | split: "/" | pop | last %}
+
+        {% comment %} Get a list of languages in this repo. {% endcomment %}
+        {% assign item-folder-possible-languages = "" | split: "|" %}
+        {% for work in site.data.meta.works %}
+            {% for translation in work.translations %}
+                {% assign item-folder-possible-languages = item-folder-possible-languages | push: translation.language %}
+            {% endfor %}
+        {% endfor %}
+
+        {% if item-folder-possible-languages contains items-subdirectory %}
+            {% assign is-translation = true %}
+            {% assign language = items-subdirectory %}
+        {% endif %}
+
+    {% endif %}
+
+{% endif %}
+
 
 {% comment %}Get the current directory name.{% endcomment %}
 
