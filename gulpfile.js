@@ -1,5 +1,3 @@
-'use strict';
-
 var gulp = require('gulp'),
     responsive = require('gulp-responsive-images'),
     uglify = require('gulp-uglify'),
@@ -15,19 +13,20 @@ var gulp = require('gulp'),
 // get the book we're processing
 var book = 'book';
 if (args.book && args.book.trim != '') {
-    var book = args.book;
-};
+    book = args.book;
+}
 
 // reminder
 if (book == 'book') {
     console.log('If processing images for a book that\'s not in the /book directory, use the --book argument, e.g. gulp --book potatoes');
+    console.log('To process images in _items, use gulp --book _items');
 }
 
 // get the language we're processing
 var language = '';
 if (args.language && args.language.trim != '') {
-    var language = '/' + args.language;
-};
+    language = '/' + args.language;
+}
 
 // reminder
 if (language == '') {
@@ -44,7 +43,7 @@ var paths = {
         web: book + language + '/images/web/',
         screenpdf: book + language + '/images/screen-pdf/',
         epub: book + language + '/images/epub/',
-        app: book + language + '/images/app/',
+        app: book + language + '/images/app/'
     },
     js: {
         src: [],
@@ -67,6 +66,7 @@ var filetypes = 'jpg,jpeg,gif,png';
 // For EpubCheck-safe SVGs, we remove data- attributes
 // and don't strip defaults like <style "type=text/css">
 gulp.task('images:svg', function (done) {
+    'use strict';
     console.log('Processing SVG images from ' + paths.img.source);
     gulp.src(paths.img.source + '*.svg')
     .pipe(svgmin({
@@ -76,7 +76,7 @@ gulp.task('images:svg', function (done) {
             removeUnknownsAndDefaults: {
                 defaultAttrs: false
             }
-        }],
+        }]
     }).on('error', function(e){
             console.log(e);
          }))
@@ -90,6 +90,7 @@ gulp.task('images:svg', function (done) {
 
 // Take the source images and convert them for print-pdf
 gulp.task('images:printpdf', function (done) {
+    'use strict';
     console.log('Processing print-PDF images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/PSOcoated_v3.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -103,13 +104,14 @@ gulp.task('images:printpdf', function (done) {
     } else {
         console.log('Colour profile _tools/profiles/PSOcoated_v3.icc not found. Exiting.');
         return;
-    };
-    done()
+    }
+    done();
 });
 
 // Take the source images and optimise and resize them for
 // screen-pdf, web, epub, and app
 gulp.task('images:optimise', function (done) {
+    'use strict';
     console.log('Processing screen-PDF, web, epub and app images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -118,7 +120,7 @@ gulp.task('images:optimise', function (done) {
             '*': [{
                 width: 810,
                 quality: 90,
-                upscale: false,
+                upscale: false
             }]
         }).on('error', function(e){
             console.log(e);
@@ -135,12 +137,13 @@ gulp.task('images:optimise', function (done) {
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    };
+    }
     done();
 });
 
 // Make small size images for web use in srcset in _includes/figure
 gulp.task('images:small', function (done) {
+    'use strict';
     console.log('Creating small web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -150,7 +153,7 @@ gulp.task('images:small', function (done) {
                     width: 320,
                     quality: 90,
                     upscale: false,
-                    suffix: '-320',
+                    suffix: '-320'
                 }]
             }).on('error', function(e){
                 console.log(e);
@@ -164,12 +167,13 @@ gulp.task('images:small', function (done) {
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    };
+    }
     done();
 });
 
 // Make medium size images for web use in srcset in _includes/figure
 gulp.task('images:medium', function (done) {
+    'use strict';
     console.log('Creating medium web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -179,7 +183,7 @@ gulp.task('images:medium', function (done) {
                     width: 640,
                     quality: 90,
                     upscale: false,
-                    suffix: '-640',
+                    suffix: '-640'
                 }]
             }).on('error', function(e){
                 console.log(e);
@@ -193,12 +197,13 @@ gulp.task('images:medium', function (done) {
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    };
+    }
     done();
 });
 
 // Make large size images for web use in srcset in _includes/figure
 gulp.task('images:large', function (done) {
+    'use strict';
     console.log('Creating large web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -208,7 +213,7 @@ gulp.task('images:large', function (done) {
                     width: 1024,
                     quality: 90,
                     upscale: false,
-                    suffix: '-1024',
+                    suffix: '-1024'
                     }]
                 }).on('error', function(e){
                     console.log(e);
@@ -222,12 +227,13 @@ gulp.task('images:large', function (done) {
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    };
+    }
     done();
 });
 
 // Make extra large images for web use in srcset
 gulp.task('images:xlarge', function (done) {
+    'use strict';
     console.log('Creating extra-large web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
@@ -237,7 +243,7 @@ gulp.task('images:xlarge', function (done) {
                     width: 2048,
                     quality: 90,
                     upscale: false,
-                    suffix: '-2048',
+                    suffix: '-2048'
                     }]
                 }).on('error', function(e){
                     console.log(e);
