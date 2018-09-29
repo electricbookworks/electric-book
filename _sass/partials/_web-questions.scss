@@ -1,7 +1,84 @@
 $web-questions: true !default;
 @if $web-questions {
 
-    // Quizzes
+    // Question formatting
+
+    .question {
+        font-family: $font-text-secondary;
+        page-break-inside: avoid;
+        padding: ($line-height-default / 2);
+        margin: $line-height-default 0;
+        .figure {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    // Check-answer button
+
+    .question {
+        .check-answer-button {
+            display: none;
+        }
+    }
+    .js-mcq {
+        .question {
+            .check-answer-button {
+                display: inline-block;
+                font-family: $font-text-secondary;
+                line-height: $line-height-default;
+                padding: $line-height-default/2 $line-height-default;
+                background-color: $color-buttons;
+                color: white;
+                border: 0;
+                border-radius: $button-border-radius;
+                cursor: pointer;
+            }
+        }
+        .feedback-label {
+            margin-top: $line-height-default;
+            background-color: $color-light;
+            padding: $line-height-default / 2;
+        }
+    }
+
+    // Exam, quiz and question numbering.
+    // Questions are gathered in quizzes,
+    // and quizzes can be gathered as sections of exams.
+
+    body, .exam {
+        counter-reset: exam 0 quiz 0;
+    }
+    .quiz {
+        &:before {
+            counter-increment: exam;
+            // content: counter(exam); // Uncomment to number quizzes
+        }
+        // Don't number if there is only one quiz in the exam
+        &:only-child:before {
+            content: normal;
+        }
+    }
+    .question {
+        counter-reset: question;
+        &:before {
+            counter-increment: quiz;
+            content: counter(quiz) ".";
+            float: left;
+            margin-right: 0.25em;
+        }
+    }
+    .question ol {
+        list-style-type: none;
+        li {
+            &:before {
+                counter-increment: question;
+                content: counter(quiz) "." counter(question) " ";
+            }
+        }
+    }
+
+    // Marks
 
     .quiz {
         font-family: $font-text-secondary;
@@ -10,22 +87,11 @@ $web-questions: true !default;
             float: right;
         }
     }
-
-    // Questions
-
     .question {
         em.marks, strong.marks {
             font-style: normal;
             font-weight: normal;
             float: right;
-        }
-        input.fill-in-blank {
-            display: inline;
-            width: 8em;
-            padding: 0.2em;
-            line-height: 1;
-            margin: 0;
-            border-width: 0 0 $rule-thickness 0;
         }
         .question-total-marks {
             font-weight: bold;
@@ -37,6 +103,78 @@ $web-questions: true !default;
                 content: "]";
             }
         }
+    }
+
+    // Inputs
+
+    .question {
+        input.fill-in-blank {
+            display: inline;
+            width: 8em;
+            padding: 0.2em;
+            line-height: 1;
+            margin: 0;
+            border-width: 0 0 $rule-thickness 0;
+        }
+    }
+
+    // Multiple-choice questions
+
+    .mcq-questions, .mcq-options {
+        margin-bottom: 0;
+        [type="checkbox"] {
+            display: inline-block;
+            width: auto;
+            margin: 0 ($line-height-default / 2) 0 0;
+            cursor: pointer;
+        }
+        label {
+            display: block;
+            cursor: pointer;
+        }
+    }
+    .mcq-feedback {
+        display: none;
+    }
+    .js-mcq {
+        .mcq-options {
+            list-style-type: none;
+            margin-left: 0;
+            li {
+                margin-bottom: $line-height-default / 2;
+                margin-left: -($line-height-default / 2);
+                padding: 0 ($line-height-default / 2);
+                border: $button-border-radius solid transparent;
+                border-radius: $button-border-radius;
+            }
+            .selected {
+                border-color: $color-accent;
+            }
+        }
+    }
+    .js-mcq {
+        .mcq-feedback {
+            display: block;
+            position: relative;
+            list-style-type: none;
+            margin-left: 0;
+            background-color: $color-light;
+            border-radius: $button-border-radius;
+            li {
+                display: none;
+                padding: 0 ($line-height-default / 2) ($line-height-default / 2) ($line-height-default / 2);
+            }
+            .mcq-feedback-show {
+                display: block;
+            }
+        }
+    }
+
+    // This is reserved for later use, currently hiddden.
+    // Eventually, this will be a way to log into the site
+    // that manages user authorisation.
+    #nav .wordpress-link {
+        display: none;
     }
 
 }
