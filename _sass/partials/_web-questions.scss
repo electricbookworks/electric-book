@@ -46,10 +46,14 @@ $web-questions: true !default;
     // Questions are gathered in quizzes,
     // and quizzes can be gathered as sections of exams.
 
-    body, .exam {
-        counter-reset: exam 0 quiz 0;
+    .exam {
+        counter-reset: exam 0 quiz 0 question 0;
     }
     .quiz {
+        counter-reset: quiz; // question numbering restarts in each quiz...
+        .exam & {
+            counter-reset: none; // ...except across quizzes in a single exam
+        }
         &:before {
             counter-increment: exam;
             // content: counter(exam); // Uncomment to number quizzes
@@ -58,22 +62,25 @@ $web-questions: true !default;
         &:only-child:before {
             content: normal;
         }
-    }
-    .question {
-        counter-reset: question;
-        &:before {
-            counter-increment: quiz;
-            content: counter(quiz) ".";
-            float: left;
-            margin-right: 0.25em;
-        }
-    }
-    .question ol {
-        list-style-type: none;
-        li {
+        .question {
+            counter-reset: question;
             &:before {
-                counter-increment: question;
-                content: counter(quiz) "." counter(question) " ";
+                counter-increment: quiz;
+                content: counter(quiz) ".";
+                float: left;
+                margin-right: 0.25em;
+            }
+            &:only-of-type:before {
+                content: normal;
+            }
+        }
+        .question ol {
+            list-style-type: none;
+            li {
+                &:before {
+                    counter-increment: question;
+                    content: counter(quiz) "." counter(question) " ";
+                }
             }
         }
     }
@@ -120,7 +127,7 @@ $web-questions: true !default;
 
     // Multiple-choice questions
 
-    .mcq-questions, .mcq-options {
+    .mcq-options {
         margin-bottom: 0;
         [type="checkbox"] {
             display: inline-block;

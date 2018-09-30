@@ -1,7 +1,7 @@
-$epub-multiple-choice-questions: true !default;
-@if $epub-multiple-choice-questions {
+$epub-questions: true !default;
+@if $epub-questions {
 
-    // Multiple-choice questions
+    // Question formatting
 
     .question {
         font-family: $font-text-secondary;
@@ -18,7 +18,116 @@ $epub-multiple-choice-questions: true !default;
         }
     }
 
-    .mcq-questions, .mcq-options {
+    // Check-answer button
+
+    .question {
+        .check-answer-button {
+            display: none;
+        }
+    }
+
+    .js-mcq {
+        .question {
+            .check-answer-button {
+                display: inline-block;
+                font-family: $font-text-secondary;
+                line-height: $line-height-default;
+                padding: $line-height-default/2 $line-height-default;
+                background-color: $color-buttons;
+                color: white;
+                border: 0;
+                border-radius: $button-border-radius;
+                cursor: pointer;
+            }
+        }
+    }
+
+    // Exam, quiz and question numbering.
+    // Questions are gathered in quizzes,
+    // and quizzes can be gathered as sections of exams.
+
+    .exam {
+        counter-reset: exam 0 quiz 0;
+    }
+    .quiz {
+        counter-reset: quiz; // question numbering restarts in each quiz...
+        .exam & {
+            counter-reset: none; // ...except across quizzes in a single exam
+        }
+        &:before {
+            counter-increment: exam;
+            // content: counter(exam); // Uncomment to number quizzes
+        }
+        // Don't number if there is only one quiz in the exam
+        &:only-child:before {
+            content: normal;
+        }
+        .question {
+            counter-reset: question;
+            &:before {
+                counter-increment: quiz;
+                content: counter(quiz) ".";
+                float: left;
+                margin-right: 0.25em;
+            }
+            &:only-of-type:before {
+                content: normal;
+            }
+        }
+        .question ol {
+            list-style-type: none;
+            li {
+                &:before {
+                    counter-increment: question;
+                    content: counter(quiz) "." counter(question) " ";
+                }
+            }
+        }
+    }
+
+    // Marks
+
+    .quiz {
+        font-family: $font-text-secondary;
+        .quiz-total-marks {
+            font-weight: bold;
+            float: right;
+        }
+    }
+    .question {
+        em.marks, strong.marks {
+            font-style: normal;
+            font-weight: normal;
+            float: right;
+        }
+        .question-total-marks {
+            font-weight: bold;
+            float: right;
+            &:before {
+                content: "[";
+            }
+            &:after {
+                content: "]";
+            }
+        }
+    }
+
+    // Inputs
+
+    .question {
+        input.fill-in-blank {
+            display: inline;
+            width: 8em;
+            padding: 0.2em;
+            line-height: 1;
+            margin: 0;
+            border-width: 0 0 $rule-thickness 0;
+        }
+    }
+
+    // Multiple-choice questions
+
+    .mcq-options {
         margin-bottom: 0;
         list-style-type: circle;
         [type="checkbox"] {
@@ -106,28 +215,6 @@ $epub-multiple-choice-questions: true !default;
                 &:after {
                     content: "\2713";
                 }
-            }
-        }
-    }
-
-    .question {
-        .check-answer-button {
-            display: none;
-        }
-    }
-
-    .js-mcq {
-        .question {
-            .check-answer-button {
-                display: inline-block;
-                font-family: $font-text-secondary;
-                line-height: $line-height-default;
-                padding: $line-height-default/2 $line-height-default;
-                background-color: $color-buttons;
-                color: white;
-                border: 0;
-                border-radius: $button-border-radius;
-                cursor: pointer;
             }
         }
     }
