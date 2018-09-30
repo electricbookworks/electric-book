@@ -12,7 +12,7 @@ order: 35
 
 ## Usage
 
-Sometimes across a book or a collection of books, you want to repeat snippets of content. For instance, you may have a standard introduction to all your books, or 'About the author' text that you want to add to the ends of certain chapters. Or you might want several books to draw questions from the same set of possible questions.
+Sometimes across a book or a collection of books, you want to repeat snippets of content. For instance, you may have a standard introduction to all your books, or 'About the author' text that you want to add to the ends of certain chapters. Or you might want several books to [draw questions or create quizzes](../editing/questions.html) from the same set of possible questions.
 
 You can create repeatable items like this by saving them as standalone files in the `_items` folder.
 
