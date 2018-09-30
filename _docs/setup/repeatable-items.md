@@ -84,18 +84,16 @@ This way, you can use exactly the same tags across translations, and your output
 
 ## Images
 
-When using images stored in items, you must tell the image include tag that your image is in the item folder, otherwise it will use an image from the book that you are including the item inside. To do this:
-
-```
-{% include image file="myimage.jpg" location="items" %}
-```
-
-> Note that `include figure` with images in items is not yet supported.
-{:.box}
-
 Images stored in `_items` follow the same conventions as in books. That is, place master images in `_items/images/_source` and process them using the output script (or `gulp --book _items`).
 
 Translated images should go into language subfolders of `_items`, such as `_items/fr/images/_source` for French images.
+
+> ### Notes
+> 
+> Unlike book directories, items may not inherit their parent-language's images. This ability is still in development. All images in the `_items`parent folder may need to be copied to (or translated in) each translation's images folder in `_items`, such as `_items/fr/images`.
+> 
+> Using `include figure` with images in items is also a feature in development.
+{:.box}
 
 ## Creating new item-based includes (advanced)
 

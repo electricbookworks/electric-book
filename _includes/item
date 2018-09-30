@@ -11,6 +11,13 @@ If it doesn't find it there, it looks in the _items folder.
 {% assign item-file-found-in-items = false %}
 {% assign question-object = "" %}
 
+{% comment %} Let include define a folder other than 'text'
+to find the item in inside _items. {% endcomment %}
+{% assign item-file-content-type = "text" %}
+{% if include.content-type %}
+    {% assign item-file-content-type = include.content-type %}
+{% endif %}
+
 {% comment %} Get the name of the file we're using. {% endcomment %}
 {% assign item-file = include.file %}
 {% assign item-file-no-extension = include.file | split: "." | first %}
@@ -43,9 +50,9 @@ and the Jekyll build will break if it doesn't. {% endcomment %}
         check whether it exists in _items. {% endcomment %}
 
         {% if is-translation %}
-            {% capture item-file-path %}_items/{{ language }}/{{ item-file }}{% endcapture %}
+            {% capture item-file-path %}_items/{{ language }}/{{ item-file-content-type }}/{{ item-file }}{% endcapture %}
         {% else %}
-            {% capture item-file-path %}_items/{{ item-file }}{% endcapture %}
+            {% capture item-file-path %}_items/{{ item-file-content-type }}/{{ item-file }}{% endcapture %}
         {% endif %}
 
         {% assign item-files-in-items = site.items | where_exp: "item", "item.path contains item-file-path" %}

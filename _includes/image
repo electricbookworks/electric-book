@@ -22,15 +22,6 @@ defaulting to src. {% endcomment %}
     | strip_html }}{% endcapture %}
 {% endif %}
 
-{% comment %} Adjust images location if location
-is set in include tag. {% endcomment %}
-{% if include.location %}
-    {% capture images %}{{ site.baseurl }}/{{ include.location }}/images/{{ site.output }}{% endcapture %}
-    {% if is-translation %}
-        {% capture images %}{{ site.baseurl }}/{{ include.location }}/{{ language }}/images/{{ site.output }}{% endcapture %}
-    {% endif %}
-{% endif %}
-
 {% comment %} Adjust the value of `sizes` if your site design does not need
 full-width images everywhere. Here is a guide:
 https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% endcomment %}

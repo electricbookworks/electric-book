@@ -343,6 +343,7 @@ You may need to reload the web page once this server is running."
 				if [ -d "$location"/_site/$bookfolder/images ]; then
 					echo "Copying images..."
 					mkdir "$location"/_site/epub/images && cp -a "$location"/_site/$bookfolder/images/. "$location"/_site/epub/images/
+					mkdir "$location"/_site/epub/items/images && cp -a "$location"/_site/items/images/. "$location"/_site/epub/items/images/
 				fi
 				if [ "$epubfonts" = "y" ]; then
 					echo "Copying fonts..."
@@ -376,6 +377,11 @@ You may need to reload the web page once this server is running."
 					mkdir "$location"/_site/epub/$epubsubdirectory/images && cd "$location"/_site/$bookfolder/$epubsubdirectory/images && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/images/. "$location"/_site/epub/$epubsubdirectory/images/
 				else
 					mkdir "$location"/_site/epub/images && cp -a "$location"/_site/$bookfolder/images/. "$location"/_site/epub/images/
+				fi
+				if [ -e "$location"/_site/items/$epubsubdirectory/images/. ]; then
+					mkdir "$location"/_site/epub/items/$epubsubdirectory/images && cd "$location"/_site/items/$epubsubdirectory/images && cp -a "$location"/_site/items/$epubsubdirectory/images/. "$location"/_site/epub/items/images/
+				else
+					mkdir "$location"/_site/epub/items/images && cp -a "$location"/_site/items/images/. "$location"/_site/epub/items/images/
 				fi
 				# Copy translation styles if they exist, and
 				# copy the parent-language styles.
@@ -453,12 +459,22 @@ You may need to reload the web page once this server is running."
 					if [ -d images ]; then
 						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "images"
 					fi
+					if [ -e $location/_site/items/images/epub/. ]; then
+						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$location/_site/items"
+					fi
 				else
 					if [ -d "$epubsubdirectory/images" ]; then
 						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$epubsubdirectory/images"
 					else
 						if [ -d images ]; then
 							zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "images"
+						fi
+					fi
+					if [ -e "$location/_site/items/$epubsubdirectory/images/epub/." ]; then
+						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$location/_site/items"
+					else
+						if [ -e "$location/_site/items/images/epub/." ]; then
+							zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$location/_site/items"
 						fi
 					fi
 			fi
