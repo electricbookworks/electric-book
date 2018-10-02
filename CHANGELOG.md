@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.13.0 (in progress)
+## 0.13.0
 
 * [Add ability to create reusable content items](https://github.com/electricbookworks/electric-book/pull/307).
 * [Add annotation with Hypothes.is](https://github.com/electricbookworks/electric-book/pull/304).
