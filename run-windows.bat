@@ -481,6 +481,7 @@ set /p process=Enter a number and hit return.
         :: Copy original images
         :epubOriginalImages
             xcopy /i /q "images\epub\*.*" "..\epub\images\epub" > nul
+            xcopy /i /q "%location%\_site\items\images\epub\*.*" "..\epub\items\images\epub"
             :: Done! Move along to moving the text folder
             echo Images copied.
             goto epubCopyText
@@ -490,6 +491,7 @@ set /p process=Enter a number and hit return.
             rd /s /q images
             mkdir "..\epub\%subdirectory%\images\epub"
             xcopy /i /q "%subdirectory%\images\epub\*.*" "..\epub\%subdirectory%\images\epub" > nul
+            xcopy /i /q "%location%\_site\items\%subdirectory%\images\epub\*.*" "..\epub\items\%subdirectory%\images\epub" > nul
             :: Done! Move along to moving the text folder
             echo Images copied.
             goto epubCopyText
@@ -634,6 +636,7 @@ set /p process=Enter a number and hit return.
 
             :: Zip root folders
             if exist "images\epub" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images\epub"
+            if exist "items" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "items"
             if exist "fonts" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "fonts"
             if exist "styles" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "styles"
             if exist "mathjax" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "mathjax"

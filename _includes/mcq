@@ -1,0 +1,12 @@
+{% include item file=include.file return="object" %}
+
+<div class="mcq question{% if include.class %} {{ include.class }}{% endif %}" markdown="1" data-question="{{ item-file-object.path | split: "/" | last | split: "." | first }}" data-question-code="{% include question-secret-code.html correct=item-file-object.correct %}">
+{{ item-file-object.content }}
+
+{% if item-file-object.marks %}
+<span class="question-total-marks">
+    {{ item-file-object.marks }}
+</span>
+{% endif %}
+
+</div>

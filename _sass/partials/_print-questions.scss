@@ -1,9 +1,9 @@
-$print-multiple-choice-questions: true !default;
-@if $print-multiple-choice-questions {
+$print-questions: true !default;
+@if $print-questions {
 
-    // Multiple-choice questions
+    // Question formatting
 
-    $main-text-width: $page-width - $margin-inside - $margin-outside;
+    $main-text-width: $page-width - $margin-inside - $margin-outside !default;
 
     .question {
         box-sizing: border-box; // to include padding in the width
@@ -17,24 +17,6 @@ $print-multiple-choice-questions: true !default;
             box-sizing: border-box;
             border: ($line-height-default / 2) solid white; // adds white space, same as other figures in boxes
             max-width: $main-text-width - $line-height-default;
-        }
-        ul {
-            // Check boxes for unordered lists in MCQs
-            &.mcq-options {
-                li {
-                    list-style: none;
-                    &:before {
-                        content: "\2009";
-                        float: left;
-                        display: inline-block;
-                        border: 0.75pt solid $color-text-main;
-                        width: $font-size-default / 2;
-                        height: $font-size-default / 2;
-                        margin-left: -$line-height-default;
-                        margin-top: $line-height-default / 4;
-                    }
-                }
-            }
         }
         table {
             width: $main-text-width - $line-height-default;
@@ -74,7 +56,7 @@ $print-multiple-choice-questions: true !default;
                     }
                 }
             }
-            // Less space between two figures in one MCQ
+            // Less space between two figures in one question
             & + .figure {
                 margin-top: -($line-height-default / 2)!important;
             }
@@ -89,17 +71,124 @@ $print-multiple-choice-questions: true !default;
                 text-indent: 0;
             }
         }
-        // We don't show the answers in PDF.
-        .mcq-answers, .mcq-feedback {
-            display: none;
-        }
-        // Add space before paragraphs that follow .mcq, and no indent
+        // Add space before paragraphs that follow .question, and no indent
         & + p,
         & + .box + p,
         & + .sidenote + p,
         & + .footnote-detail + p    {
             margin-top: $line-height-default;
             text-indent: 0;
+        }
+        &.page-break-before {
+            margin-top: 0;
+        }
+    }
+
+    // Exam, quiz and question numbering.
+    // Questions are gathered in quizzes,
+    // and quizzes can be gathered as sections of exams.
+
+    .exam {
+        counter-reset: exam 0 quiz 0;
+    }
+    .quiz {
+        counter-reset: quiz; // question numbering restarts in each quiz...
+        .exam & {
+            counter-reset: none; // ...except across quizzes in a single exam
+        }
+        &:before {
+            counter-increment: exam;
+            // content: counter(exam); // Uncomment to number quizzes
+        }
+        // Don't number if there is only one quiz in the exam
+        &:only-child:before {
+            content: normal;
+        }
+        .question {
+            counter-reset: question;
+            &:before {
+                counter-increment: quiz;
+                content: counter(quiz) ".";
+                float: left;
+                margin-right: 0.25em;
+            }
+            &:only-of-type:before {
+                content: normal;
+            }
+        }
+        .question ol {
+            list-style-type: none;
+            li {
+                &:before {
+                    counter-increment: question;
+                    content: counter(quiz) "." counter(question) " ";
+                }
+            }
+        }
+    }
+
+    // Marks
+
+    .quiz {
+        font-family: $font-text-secondary;
+        .quiz-total-marks {
+            font-weight: bold;
+            float: right;
+        }
+    }
+    .question {
+        em.marks, strong.marks {
+            font-style: normal;
+            font-weight: normal;
+            float: right;
+        }
+        .question-total-marks {
+            font-weight: bold;
+            float: right;
+            &:before {
+                content: "[";
+            }
+            &:after {
+                content: "]";
+            }
+        }
+    }
+
+    // Inputs
+
+    .question {
+        input.fill-in-blank {
+            display: inline;
+            width: 8em;
+            padding: 0.2em;
+            line-height: 1;
+            margin: 0;
+            border-width: 0 0 $rule-thickness 0;
+        }
+    }
+
+    // Multiple-choice questions
+
+    .mcq {
+        // We don't show the feedback in PDF
+        .mcq-feedback {
+            display: none;
+        }
+        // Checkboxes for unordered lists in MCQs
+        ul.mcq-options {
+            li {
+                list-style: none;
+                &:before {
+                    content: "\2009";
+                    float: left;
+                    display: inline-block;
+                    border: 0.75pt solid $color-text-main;
+                    width: $font-size-default / 2;
+                    height: $font-size-default / 2;
+                    margin-left: -$line-height-default;
+                    margin-top: $line-height-default / 4;
+                }
+            }
         }
         // Because of the hidden mcq-answers/mcq-feedback, we can't add bottom padding
         // with :last-child. So in these elements, we control spacing with
@@ -117,9 +206,6 @@ $print-multiple-choice-questions: true !default;
         h5:first-child + *,
         h6:first-child + * {
             margin-top: 0 !important;
-        }
-        &.page-break-before {
-            margin-top: 0;
         }
     }
 

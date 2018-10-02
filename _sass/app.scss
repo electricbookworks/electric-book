@@ -195,7 +195,7 @@ $web-letters: true !default;
 $web-verse: true !default;
 $web-video: true !default;
 $web-pagination: true !default;
-$web-multiple-choice-questions: true !default;
+$web-questions: true !default;
 
 // Docs
 $web-docs: true !default;
@@ -270,7 +270,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-verse";
 @import "partials/web-video";
 @import "partials/web-pagination";
-@import "partials/web-mcqs";
+@import "partials/web-questions";
 
 // Docs
 @import "partials/web-docs";

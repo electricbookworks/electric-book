@@ -1,0 +1,14 @@
+{% include metadata %}
+{% assign quiz-questions = include.questions | replace: " ", "" | split: "," %}
+{% assign quiz-total-marks = 0 %}
+
+<div class="quiz">
+
+{% for question in quiz-questions %}
+    {% include question file=question %}
+    {% assign quiz-total-marks = quiz-total-marks | plus: item-file-object.marks %}
+{% endfor %}
+
+    <div class="quiz-total-marks">{{ locale.quiz.total }}: {{ quiz-total-marks }}</div>
+
+</div>

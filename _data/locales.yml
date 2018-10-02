@@ -165,10 +165,13 @@ en:
     feedback-correct: "Correct!"
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "You haven't selected all the correct answers."
+  quiz:
+    total: "Total"
   cross-references:
     pre-page-number: "(page "
     post-page-number: ")"
   account:
+    login: "Log in"
     my-account: "My account"
   annotator:
     show-sidebar-tooltip-title: "Open annotations"
@@ -233,10 +236,13 @@ fr:
     feedback-correct: "Correct!"
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "Vous n'avez pas sélectionné toutes les bonnes réponses."
+  quiz:
+    total: "Total"
   cross-references:
     pre-page-number: "(page "
     post-page-number: ")"
   account:
+    login: "Connectez-vous"
     my-account: "Mon compte"
   annotator:
     show-sidebar-tooltip-title: "Ouvrir l'outil d'annotation"

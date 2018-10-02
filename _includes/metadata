@@ -1,4 +1,4 @@
-{% comment %}
+ {% comment %}
 Loop through meta.yml and return this book's metadata
 as a set of Liquid variables that we can use on pages
 as output tags, e.g. {{ title }} for the current
@@ -70,10 +70,42 @@ in the root that isn't really a listed book?{% endcomment %}
 {% for directory in book-directory-array %}
     {% if book-directory == directory %}
         {% assign is-book-directory = true %}
+    {% elsif book-directory == "_items" %}
+        {% assign is-book-directory = false %}
+        {% assign is-items-directory = true %}
     {% else %}
         {% assign is-book-directory = false %}
     {% endif %}
 {% endfor %}
+
+{% comment %} If this is an _items directory, we need info specific to that,
+because we can't get the usual book-related metadata for items. {% endcomment %}
+{% if is-items-directory %}
+
+    {% comment %} Are we in the main _items/text directory,
+    or a subdirectory like _items/fr/text? {% endcomment %}
+    {% assign items-folder-depth = page.path | split: "/" | size %}
+    {% if items-folder-depth > 3 %}
+        {% assign is-items-subdirectory = true %}
+        {% assign items-subdirectory = page.path | split: "/" | pop | pop | last %}
+
+        {% comment %} Get a list of languages in this repo. {% endcomment %}
+        {% assign item-folder-possible-languages = "" | split: "|" %}
+        {% for work in site.data.meta.works %}
+            {% for translation in work.translations %}
+                {% assign item-folder-possible-languages = item-folder-possible-languages | push: translation.language %}
+            {% endfor %}
+        {% endfor %}
+
+        {% if item-folder-possible-languages contains items-subdirectory %}
+            {% assign is-translation = true %}
+            {% assign language = items-subdirectory %}
+        {% endif %}
+
+    {% endif %}
+
+{% endif %}
+
 
 {% comment %}Get the current directory name.{% endcomment %}
 
@@ -714,6 +746,37 @@ the {{ images }} path should include the language subdirectory.{% endcomment %}
     {% endif %}
 {% endif %}
 
+{% comment %} Create an image path for items in the items directory.
+This path must be relative to the text files in which the item
+might be included, and not to the item file itself.{% endcomment %}
+
+{% comment %} Test for the existence of translated images in items. {% endcomment %}
+{% assign items-translated-images-exist = false %}
+{% capture path-to-items-translation-images-directory %}_items/{{ language }}/{{ site.image-set }}/{% endcapture %}
+{% assign items-collection = site.collections | where_exp: "collection", "collection.label == 'items'" %}
+{% for collection in items-collection %}
+    {% assign items-image-files = collection.files | where_exp: "file", "file.path contains path-to-items-translation-images-directory" %}
+    {% assign items-image-files-size = items-image-files | size %}
+    {% if items-image-files.size > 0 %}
+        {% assign items-translated-images-exist = true %}
+    {% endif %}
+{% endfor %}
+
+{% if is-items-directory %}
+    {% capture images %}../../items/{{ site.image-set }}{% endcapture %}
+
+    {% comment %} Epub has no book or root directory, so the path is shallower,
+    given how we structure our epubs. {% endcomment %}
+    {% if site.output == "epub" %}
+        {% capture images %}../items/{{ site.image-set }}{% endcapture %}
+    {% endif %}
+
+    {% comment %} Rewrite images path for translations. {% endcomment %}
+    {% if is-translation and items-translated-images-exist == true %}
+        {% capture images %}../../items/{{ language }}/{{ site.image-set }}{% endcapture %}
+    {% endif %}
+{% endif %}
+
 {% comment %}For PDF and web outputs, check if we are using external-media,
 and if we are, get the relevant path as `external-media`, defaulting to
 remote-media for web and local-media for PDF.{% endcomment %}
@@ -737,6 +800,12 @@ remote-media for web and local-media for PDF.{% endcomment %}
     {% capture images %}{{ external-media }}/{{ book-directory }}/{{ site.image-set }}{% endcapture %}
     {% if is-translation %}
         {% capture images %}{{ external-media }}/{{ book-directory }}/{{ book-subdirectory }}/{{ site.image-set }}{% endcapture %}
+    {% endif %}
+    {% if is-items-directory %}
+        {% capture images %}{{ external-media }}/items/{{ site.image-set }}{% endcapture %}
+        {% if is-translation %}
+            {% capture images %}{{ external-media }}/items/{{ language }}/{{ site.image-set }}{% endcapture %}
+        {% endif %}
     {% endif %}
     {% comment %}If we are not in a book directory, use the images
     from the first book in the project.{% endcomment %}
