@@ -23,7 +23,7 @@ At its heart is the [Electric Book Jekyll template](https://github.com/electricb
 ## Key features
 
 - Output print PDF, screen PDF, epub, website and app versions of books from the same content source.
-- Create a series or collection of book in one website or app. They can share common features, [metadata](http://127.0.0.1:4000/electric-book/docs/setup/metadata.html), and [common content snippets](http://127.0.0.1:4000/electric-book/docs/setup/repeatable-items.html).
+- Create a series or collection of book in one website or app. They can share common features, [metadata]({{ site.baseurl }}/docs/setup/metadata.html), and [common content snippets]({{ site.baseurl }}/docs/setup/repeatable-items.html).
 - Learn [how to edit in markdown]({{ site.baseurl }}/docs/editing/markdown.html) in the docs.
 - Use [predefined tags]({{ site.baseurl }}/docs/editing/classes.html) for common book features.
 - Quickly change many design features with [simple design configurations]({{ site.baseurl }}/docs/layout/design.html).
