@@ -5,7 +5,7 @@ style: home
 
 # The Electric Book workflow
 
-The Electric Book workflow is a set of processes and tools for making high-quality PDF, epub, website and app versions of books from a single content source. It's designed for professional book production, and lets team members collaborate on projects remotely.
+The Electric Book workflow is a set of processes and tools for making high-quality print PDF, screen PDF, epub, website and app versions of books from a single content source. It's designed for professional book production, and lets team members collaborate on projects remotely.
 
 At its heart is the [Electric Book Jekyll template](https://github.com/electricbookworks/electric-book), which you're looking at now. This template includes:
 
@@ -22,13 +22,15 @@ At its heart is the [Electric Book Jekyll template](https://github.com/electricb
 
 ## Key features
 
+- Output print PDF, screen PDF, epub, website and app versions of books from the same content source.
+- Create a series or collection of book in one website or app. They can share common features, [metadata](http://127.0.0.1:4000/electric-book/docs/setup/metadata.html), and [common content snippets](http://127.0.0.1:4000/electric-book/docs/setup/repeatable-items.html).
 - Learn [how to edit in markdown]({{ site.baseurl }}/docs/editing/markdown.html) in the docs.
 - Use [predefined tags]({{ site.baseurl }}/docs/editing/classes.html) for common book features.
 - Quickly change many design features with [simple design configurations]({{ site.baseurl }}/docs/layout/design.html).
 - [Manage translations]({{ site.baseurl }}/docs/setup/translations.html) in the same project.
 - Easily [localise]({{ site.baseurl }}/docs/setup/translations.html) website editions.
 - Create [variant editions]({{ site.baseurl }}/docs/setup/variants.html) with different content or designs.
-- [Enable annotations]({{ site.baseurl }}/docs/setup/settings.html#annotation) on website editions.
+- [Enable open annotation]({{ site.baseurl }}/docs/setup/settings.html#annotation) on website editions with [Hypothesis](https://hypothes.is).
 - Include interactive [multiple-choice questions]({{ site.baseurl }}/docs/editing/multiple-choice-questions.html).
 - [Control letter-spacing]({{ site.baseurl }}/docs/editing/classes.html#formatting) in individual paragraphs for page refinement.
 - [Include complex maths]({{ site.baseurl }}/docs/editing/maths.html) using LaTex notation.
