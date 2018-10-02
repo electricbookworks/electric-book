@@ -1,7 +1,8 @@
 # Changelog
 
-## 0.12.1 (in progress)
+## 0.13.0 (in progress)
 
+* [Add ability to create reusable content items](https://github.com/electricbookworks/electric-book/pull/307).
 * [Add annotation with Hypothes.is](https://github.com/electricbookworks/electric-book/pull/304).
 * [Translation styles now augment, rather than replace, parent-language styles](https://github.com/electricbookworks/electric-book/pull/298).
 * [New setting to avoid inaccurate image-colour-profile conversion on PDF output](https://github.com/electricbookworks/electric-book/pull/305).
