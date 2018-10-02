@@ -342,14 +342,17 @@ You may need to reload the web page once this server is running."
 				echo "Copying files to epub folder..."
 				mkdir "$location"/_site/epub/text && cd "$location"/_site/$bookfolder/text && cp `cat file-list` "$location"/_site/epub/text/
 				cd "$location"
-				if [ -d "$location"/_site/$bookfolder/images ]; then
+				if [ -d "$location"/_site/$bookfolder/images/epub ]; then
 					echo "Copying images..."
-					mkdir "$location"/_site/epub/images && cp -a "$location"/_site/$bookfolder/images/. "$location"/_site/epub/images/
-					mkdir "$location"/_site/epub/items/images && cp -a "$location"/_site/items/images/. "$location"/_site/epub/items/images/
+					mkdir -p "$location"/_site/epub/images/epub && cp -a "$location"/_site/$bookfolder/images/epub/. "$location"/_site/epub/images/epub/
+				fi
+				if [ -d "$location"/_site/items/images/epub ]; then
+					echo "Found images in _items. Copying to epub..."
+					mkdir -p "$location"/_site/epub/items/images/epub && cp -a "$location"/_site/items/images/epub/. "$location"/_site/epub/items/images/epub/
 				fi
 				if [ "$epubfonts" = "y" ]; then
 					echo "Copying fonts..."
-					mkdir "$location"/_site/epub/fonts && cp -a "$location"/_site/$bookfolder/fonts/. "$location"/_site/epub/fonts/
+					mkdir -p "$location"/_site/epub/fonts && cp -a "$location"/_site/$bookfolder/fonts/. "$location"/_site/epub/fonts/
 				fi
 				if [ -d "$location"/_site/$bookfolder/styles ]; then
 					echo "Copying styles..."
@@ -376,30 +379,34 @@ You may need to reload the web page once this server is running."
 				# Copy translation images if they exist, otherwise
 				# copy the parent-language images.
 				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/images/. ]; then
-					mkdir "$location"/_site/epub/$epubsubdirectory/images && cd "$location"/_site/$bookfolder/$epubsubdirectory/images && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/images/. "$location"/_site/epub/$epubsubdirectory/images/
+					mkdir -p "$location"/_site/epub/$epubsubdirectory/images/epub && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/images/epub/. "$location"/_site/epub/$epubsubdirectory/images/epub/
 				else
-					mkdir "$location"/_site/epub/images && cp -a "$location"/_site/$bookfolder/images/. "$location"/_site/epub/images/
+					mkdir -p "$location"/_site/epub/images/epub && cp -a "$location"/_site/$bookfolder/images/epub/. "$location"/_site/epub/images/epub/
 				fi
-				if [ -e "$location"/_site/items/$epubsubdirectory/images/. ]; then
-					mkdir "$location"/_site/epub/items/$epubsubdirectory/images && cd "$location"/_site/items/$epubsubdirectory/images && cp -a "$location"/_site/items/$epubsubdirectory/images/. "$location"/_site/epub/items/images/
+				if [ -d "$location"/_site/items/$epubsubdirectory/images/epub ]; then
+					echo "Found translated images in _items. Copying them to epub..."
+					mkdir -p "$location"/_site/epub/items/$epubsubdirectory/images/epub && cp -a "$location"/_site/items/$epubsubdirectory/images/epub/. "$location"/_site/epub/items/$epubsubdirectory/images/epub/
 				else
-					mkdir "$location"/_site/epub/items/images && cp -a "$location"/_site/items/images/. "$location"/_site/epub/items/images/
+					if [ -d "$location"/_site/items/images/epub ]; then
+						echo "Found images in _items. Copying them to epub..."
+						mkdir -p "$location"/_site/epub/items/images/epub && cp -a "$location"/_site/items/images/epub/. "$location"/_site/epub/items/images/epub/
+					fi
 				fi
 				# Copy translation styles if they exist, and
 				# copy the parent-language styles.
 				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/styles/. ]; then
-					mkdir "$location"/_site/epub/$epubsubdirectory/styles && cd "$location"/_site/$bookfolder/$epubsubdirectory/styles && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/styles/. "$location"/_site/epub/$epubsubdirectory/styles/
-					mkdir "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
+					mkdir -p "$location"/_site/epub/$epubsubdirectory/styles && cd "$location"/_site/$bookfolder/$epubsubdirectory/styles && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/styles/. "$location"/_site/epub/$epubsubdirectory/styles/
+					mkdir -p "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
 				else
-					mkdir "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
+					mkdir -p "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
 				fi
 				# Copy translation fonts if they exist, otherwise
 				# copy the parent-language fonts.
 				if [ "$epubfonts" = "y" ]; then
 					if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/fonts/. ]; then
-						mkdir "$location"/_site/epub/$epubsubdirectory/fonts && cd "$location"/_site/$bookfolder/$epubsubdirectory/fonts && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/fonts/. "$location"/_site/epub/$epubsubdirectory/fonts/
+						mkdir -p "$location"/_site/epub/$epubsubdirectory/fonts && cd "$location"/_site/$bookfolder/$epubsubdirectory/fonts && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/fonts/. "$location"/_site/epub/$epubsubdirectory/fonts/
 					else
-						mkdir "$location"/_site/epub/fonts && cp -a "$location"/_site/$bookfolder/fonts/. "$location"/_site/epub/fonts/
+						mkdir -p "$location"/_site/epub/fonts && cp -a "$location"/_site/$bookfolder/fonts/. "$location"/_site/epub/fonts/
 					fi
 				fi
 				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/package.opf ]; then
@@ -462,7 +469,7 @@ You may need to reload the web page once this server is running."
 						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "images"
 					fi
 					if [ -e $location/_site/items/images/epub/. ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$location/_site/items"
+						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "items/images"
 					fi
 				else
 					if [ -d "$epubsubdirectory/images" ]; then
@@ -473,10 +480,10 @@ You may need to reload the web page once this server is running."
 						fi
 					fi
 					if [ -e "$location/_site/items/$epubsubdirectory/images/epub/." ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$location/_site/items"
+						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "items/$epubsubdirectory/images"
 					else
 						if [ -e "$location/_site/items/images/epub/." ]; then
-							zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$location/_site/items"
+							zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "items/images"
 						fi
 					fi
 			fi
@@ -538,15 +545,16 @@ You may need to reload the web page once this server is running."
 			fi
 			echo "Epub created!"
 			# Validation
-			echo "To run validation now, enter the path to the EpubCheck folder on your machine. E.g. /usr/local/bin/epubcheck-4.0.2"
-			echo "Or hit enter to skip EpubCheck validation."
-			echo "(You can get EpubCheck from https://github.com/IDPF/epubcheck/releases)"
+			echo "To run validation, enter the path to the EpubCheck folder on your machine."
+			echo "Hit enter for the default: /usr/local/bin/epubcheck-4.0.2"
+			echo "(You can get EpubCheck from https://github.com/IDPF/epubcheck/releases"
+			echo "Or go to http://validator.idpf.org to validate online.)"
 			read pathtoepubcheck
 			if [ "$pathtoepubcheck" = "" ]; then
-				echo "Okay, skipping EpubCheck. Try http://validator.idpf.org to validate separately."
-			else
-				java -jar "$pathtoepubcheck"/epubcheck.jar "$epubfilename".epub
+				echo "Okay, using default EpubCheck location. "
+				pathtoepubcheck="/usr/local/bin/epubcheck-4.0.2"
 			fi
+			java -jar "$pathtoepubcheck"/epubcheck.jar "$epubfilename".epub
 			# Open file browser to see epub
 			# (for Linux, this is xdg-open, not open)
 			open .
