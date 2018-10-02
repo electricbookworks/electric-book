@@ -111,7 +111,6 @@ function localiseText() {
 
     // If no results with GSE, translate 'No results' phrase
     window.addEventListener("load", function (event) {
-        console.log("All loaded, checking for no-result.");
         var noResultsGSE = document.querySelector('.gs-no-results-result .gs-snippet');
         if (noResultsGSE) {
             noResultsGSE.innerHTML = locales[pageLanguage].search['results-for-none'] + ' ‘' + searchTerm + '’';
