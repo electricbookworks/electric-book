@@ -18,7 +18,7 @@ A Jekyll template for creating books in multiple formats:
 	- the content files in `book/text`
 3. Run the `run-` script for your operating system.
 
-[Read the guide](http://electricbook.works) for much more. The guide is also an example of the template in action.
+[Read the guide](https://electricbookworks.github.io/electric-book) for much more. The guide is also an example of the template in action.
 
 ## Dependencies
 
