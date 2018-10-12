@@ -141,7 +141,7 @@ gulp.task('images:optimise', function (done) {
     done();
 });
 
-// Make small size images for web use in srcset in _includes/figure
+// Make small size images for web use in srcset
 gulp.task('images:small', function (done) {
     'use strict';
     console.log('Creating small web images from ' + paths.img.source);
@@ -171,7 +171,7 @@ gulp.task('images:small', function (done) {
     done();
 });
 
-// Make medium size images for web use in srcset in _includes/figure
+// Make medium size images for web use in srcset
 gulp.task('images:medium', function (done) {
     'use strict';
     console.log('Creating medium web images from ' + paths.img.source);
