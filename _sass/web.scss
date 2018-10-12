@@ -102,6 +102,7 @@ $footer-border-color: $color-accent !default;
 $masthead-text-color: $color-light !default;
 $masthead-background-color: $color-accent !default;
 $masthead-border-color: $color-light !default;
+$masthead-breadcrumb-divider: "\2044"; // 2044 is a fraction slash
 
 // Website sidebar/navigation
 $nav-bar-text-size: 0.8em !default;
