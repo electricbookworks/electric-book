@@ -553,25 +553,25 @@ function ebAccordify() {
     // if there's no hash, show the first section
     // else (there is a hash, so) show that section
     if (!window.location.hash) {
-        if (ebAccordionPageSetting() === "expand") {
-            ebAccordionShowAll();
-        } else {
-            ebAccordionShowDefaultSection();
-        }
+        ebAccordionShowDefaultSection();
         return;
     }
+
+    ebAccordionHideAll();
+    ebAccordionShow();
+}
+
+function ebExpand() {
+    'use strict';
 
     // Check for expand-accordion setting on page
     if (ebAccordionPageSetting() === "expand") {
         ebAccordionShowAll();
-    } else {
-        ebAccordionHideAll();
     }
-
-    ebAccordionShow();
 }
 
 ebAccordify();
+ebExpand();
 ebAccordionListenForAnchorClicks();
 ebAccordionListenForHeadingClicks();
 ebAccordionListenForNavClicks();
