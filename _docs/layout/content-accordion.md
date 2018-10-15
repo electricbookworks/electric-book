@@ -28,6 +28,18 @@ To turn on the content accordion, change the value of `accordion` in `_data.sett
 
 This is set separately for `web` and `app` outputs. So you'll find in `settings.yml` that you can set `accordion` in two places.
 
+When the accordion is on, you may want to turn it off for some pages (e.g. a chapter with a few headings but very little content). To do this, set `accordion` to `none` or `expand` in the page's YAML frontmatter (the part between the `---`s at the top of the file):
+
+``` yaml
+accordion: none
+```
+
+or
+
+``` yaml
+accordion: expand
+```
+
 ## Setting the accordion heading level
 
 By default, the content accordion collapses on `h2`s. You can change this in the `// Options` section of `assets/js/accordion.js`. For instance, to set the accordion to collapse on third-level headings, change:
