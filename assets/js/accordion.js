@@ -1,7 +1,7 @@
 /*jslint browser */
 /*global window, ebLazyLoadImages, searchTerm, videoShow */
 
-console.log('Debugging accordions.js');
+// console.log('Debugging accordions.js');
 
 // --------------------------------------------------------------
 // Options
@@ -144,7 +144,7 @@ function ebAccordionHideAll() {
 function ebAccordionHideAllExceptThisOne(targetID) {
     'use strict';
 
-    console.log('Starting ebAccordionHideAllExceptThisOne...');
+    // console.log('Starting ebAccordionHideAllExceptThisOne...');
 
     var tabPanels = document.querySelectorAll('[role="tabpanel"]');
     tabPanels.forEach(function (tabPanel) {
@@ -164,9 +164,9 @@ function ebAccordionHideAllExceptThisOne(targetID) {
 function ebAccordionCheckParent(node) {
     'use strict';
 
-    if (node !== null) {
-        console.log('Checking for parent element of "' + node.innerText.substring(0, 20) + '..."');
-    }
+    // if (node !== null) {
+    //     console.log('Checking for parent element of "' + node.innerText.substring(0, 20) + '..."');
+    // }
 
     // if there is no parent, or something went wrong, exit
     if (!node) {
@@ -177,14 +177,14 @@ function ebAccordionCheckParent(node) {
     }
     if (node.tagName === "BODY") {
 
-        console.log('Parent node is the body element. We\'re done looking.');
+        // console.log('Parent node is the body element. We\'re done looking.');
 
         return false;
     }
 
     var nodeParent = node.parentNode;
 
-    console.log('nodeParent is "' + nodeParent.innerText.substring(0, 20) + '..."');
+    // console.log('nodeParent is "' + nodeParent.innerText.substring(0, 20) + '..."');
 
     var parentAttribute = nodeParent.getAttribute('data-accordion-container');
 
@@ -193,9 +193,9 @@ function ebAccordionCheckParent(node) {
     if (parentAttribute) {
         return nodeParent.getAttribute('data-accordion-container');
     }
-    if (!parentAttribute) {
-        console.log('Parent node of "' + node.innerText.substring(0, 20) + '..." is not an accordion section');
-    }
+    // if (!parentAttribute) {
+    //     console.log('Parent node of "' + node.innerText.substring(0, 20) + '..." is not an accordion section');
+    // }
 
     return ebAccordionCheckParent(nodeParent);
 }
@@ -205,9 +205,9 @@ function ebAccordionCheckParent(node) {
 function ebAccordionFindSection(targetToCheck) {
     'use strict';
 
-    if (targetToCheck !== null) {
-        console.log('Finding section that contains: ' + targetToCheck.outerHTML.substring(0, 80));
-    }
+    // if (targetToCheck !== null) {
+    //     console.log('Finding section that contains: ' + targetToCheck.outerHTML.substring(0, 80));
+    // }
 
     // work recursively up the DOM looking for the section
     return ebAccordionCheckParent(targetToCheck);
@@ -216,18 +216,18 @@ function ebAccordionFindSection(targetToCheck) {
 function ebWhichTarget(targetID) {
     'use strict';
 
-    console.log('Starting ebWhichTarget...');
+    // console.log('Starting ebWhichTarget...');
 
     var targetToCheck;
 
     // if we're given an ID, use it
     if (targetID) {
-        console.log('Using targetID ' + targetID);
+        // console.log('Using targetID ' + targetID);
 
         // Decode the targetID URI in case it's not ASCII
-        console.log('targetID encoded: ' + targetID);
+        // console.log('targetID encoded: ' + targetID);
         targetID = decodeURIComponent(targetID);
-        console.log('targetID decoded: ' + targetID);
+        // console.log('targetID decoded: ' + targetID);
 
         targetToCheck = document.getElementById(targetID);
     } else {
@@ -235,9 +235,9 @@ function ebWhichTarget(targetID) {
         var trimmedHash = window.location.hash.replace('#', '');
 
         // Decode the trimmedHash in case it's not ASCII
-        console.log('Using trimmedHash; encoded: ' + trimmedHash);
+        // console.log('Using trimmedHash; encoded: ' + trimmedHash);
         trimmedHash = decodeURIComponent(trimmedHash);
-        console.log('using trimmedHash; decoded: ' + trimmedHash);
+        // console.log('using trimmedHash; decoded: ' + trimmedHash);
 
         targetToCheck = document.getElementById(trimmedHash);
     }
@@ -254,8 +254,8 @@ function ebWhichTarget(targetID) {
 function ebAccordionShow(targetID) {
     'use strict';
 
-    console.log('Starting ebAccordionShow...');
-    console.log('ebAccordionShow\'s targetID is: ' + targetID);
+    // console.log('Starting ebAccordionShow...');
+    // console.log('ebAccordionShow\'s targetID is: ' + targetID);
 
     var targetToCheck = ebWhichTarget(targetID);
     if (!targetToCheck) {
@@ -282,7 +282,9 @@ function ebAccordionShow(targetID) {
 
     // lazyload the images inside
     var lazyimages = sectionToShow.querySelectorAll('[data-srcset]');
-    console.log('lazyimages: ' + lazyimages.innerHTML);
+
+    // console.log('lazyimages: ' + lazyimages.innerHTML);
+
     if (lazyimages.innerHTML !== undefined) {
         ebLazyLoadImages(lazyimages);
     }
@@ -311,7 +313,7 @@ function ebAccordionShow(targetID) {
 function ebAccordionListenForAnchorClicks() {
     'use strict';
 
-    console.log('Starting ebAccordionListenForAnchorClicks...');
+    // console.log('Starting ebAccordionListenForAnchorClicks...');
 
     // listen for clicks on *all* the anchors (;_;)
     var allTheAnchors = document.querySelectorAll('#content a');
@@ -334,7 +336,7 @@ function ebAccordionListenForAnchorClicks() {
             // get the target ID by removing any file path and the #
             if (this.hasAttribute('href')) {
                 var targetID = this.getAttribute('href').replace(/.*#/, '');
-                console.log('The targetID is: ' + targetID);
+                // console.log('The targetID is: ' + targetID);
             } else {
                 return;
             }
@@ -348,7 +350,7 @@ function ebAccordionListenForAnchorClicks() {
             // which section / accordion is it inside?
             if (!this.parentNode.getAttribute('data-accordion')) {
 
-                console.log('We clicked on something that is not an accordion. Now to find targetID ' + targetID + ' in the DOM...');
+                // console.log('We clicked on something that is not an accordion. Now to find targetID ' + targetID + ' in the DOM...');
 
                 // find the target of the link in the DOM
                 var targetOfLink = document.getElementById(targetID);
@@ -398,17 +400,17 @@ function ebAccordionListenForNavClicks() {
 function ebAccordionListenForHashChange() {
     'use strict';
 
-    console.log('Starting ebAccordionListenForHashChange...');
+    // console.log('Starting ebAccordionListenForHashChange...');
 
     window.addEventListener("hashchange", function () {
         // get the target ID from the hash
         var targetID = window.location.hash;
-        console.log('targetID encoded: ' + targetID);
+        // console.log('targetID encoded: ' + targetID);
         targetID = decodeURIComponent(targetID);
-        console.log('targetID decoded: ' + targetID);
+        // console.log('targetID decoded: ' + targetID);
         // get the target of the link
         var targetOfLink = document.getElementById(targetID.replace(/.*#/, ''));
-        console.log('targetOfLink: ' + targetOfLink.innerHTML);
+        // console.log('targetOfLink: ' + targetOfLink.innerHTML);
 
         // check if it's in the viewport already
         var targetRect = targetOfLink.getBoundingClientRect();
