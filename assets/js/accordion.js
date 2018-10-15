@@ -15,10 +15,28 @@ var defaultAccordionHead = '#content h2:first-of-type';
 
 function ebAccordionInit() {
     'use strict';
+
+    var pageAccordionOff;
+
+    // Check for no-accordion setting on page
+    var accordionPageSetting = document.body.getAttribute('data-accordion-page');
+    if (accordionPageSetting &&
+            (accordionPageSetting === "none")) {
+        pageAccordionOff = true;
+    }
+
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
             document.querySelectorAll !== "undefined" &&
             window.addEventListener !== "undefined" &&
-            !!Array.prototype.forEach;
+            !!Array.prototype.forEach &&
+            !pageAccordionOff;
+}
+
+function ebAccordionPageSetting() {
+    'use strict';
+
+    var accordionPageSetting = document.body.getAttribute('data-accordion-page');
+    return accordionPageSetting;
 }
 
 function ebAccordionDefaultAccordionHeadID() {
@@ -146,6 +164,20 @@ function ebAccordionHideAll() {
             .setAttribute('data-accordion', 'closed');
         current.querySelector('[data-container]')
             .setAttribute('aria-expanded', 'false');
+    });
+}
+
+function ebAccordionShowAll() {
+    'use strict';
+
+    console.log('expanding all');
+
+    var tabPanels = document.querySelectorAll('[role="tabpanel"]');
+    tabPanels.forEach(function (current) {
+        current.querySelector('[role="tab"]')
+            .setAttribute('data-accordion', 'open');
+        current.querySelector('[data-container]')
+            .setAttribute('aria-expanded', 'true');
     });
 }
 
@@ -521,11 +553,21 @@ function ebAccordify() {
     // if there's no hash, show the first section
     // else (there is a hash, so) show that section
     if (!window.location.hash) {
-        ebAccordionShowDefaultSection();
+        if (ebAccordionPageSetting() === "expand") {
+            ebAccordionShowAll();
+        } else {
+            ebAccordionShowDefaultSection();
+        }
         return;
     }
 
-    ebAccordionHideAll();
+    // Check for expand-accordion setting on page
+    if (ebAccordionPageSetting() === "expand") {
+        ebAccordionShowAll();
+    } else {
+        ebAccordionHideAll();
+    }
+
     ebAccordionShow();
 }
 
