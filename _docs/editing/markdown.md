@@ -152,7 +152,7 @@ Result:
 Note the minimum three hyphens in the lines that creates the border between the table head and table body. (Kramdown doesn't require three, but GitHub previews do, so it's best practice.)
 {:.sidenote}
 
-To make more complex tables with merged or individually styled cells, you have to use actual HTML table markup. See the [Tables](18-tables.html#tables) chapter for more detail.
+To make more complex tables with merged or individually styled cells, you have to use actual HTML table markup. See the [Tables](tables.html#tables) chapter for more detail.
 
 ### Blockquotes
 
@@ -195,7 +195,7 @@ To place an image, you include a line telling the computer where to find the ima
 
 In the parentheses above, the `images/` part says that the `dogbus.jpg` image is in the `images` folder, which is alongside the markdown file. In our workflow, we always put images in the `images` folder like this.
 
-See the [Images](15-images.html#images) chapter for more detail.
+See the [Images](images.html#images) chapter for more detail.
 
 ### Endnotes
 
@@ -210,7 +210,7 @@ We'll explain how to create notes on the side or bottom of a page (footnotes) la
 
 [^1]: In kramdown syntax, unfortunately, endnotes are called footnotes; so it's easy to confuse them. In book parlance, there is a big difference between footnotes and endnotes.
 
-See the [Notes](17-notes.html#footnotes-endnotes-and-sidenotes) chapter for more detail.
+See the [Notes](notes.html#footnotes-endnotes-and-sidenotes) chapter for more detail.
 
 ### Definition lists
 
