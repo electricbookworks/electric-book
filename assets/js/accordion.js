@@ -15,10 +15,22 @@ var defaultAccordionHead = '#content h2:first-of-type';
 
 function ebAccordionInit() {
     'use strict';
+
+    var pageAccordionOff;
+
+    // Check for no-accordion setting on page
+    var pageAccordionSetting = document.body.getAttribute('data-accordion-page');
+    if (pageAccordionSetting &&
+            (pageAccordionSetting === "none" ||
+            pageAccordionSetting === "expand")) {
+        pageAccordionOff = true;
+    }
+
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
             document.querySelectorAll !== "undefined" &&
             window.addEventListener !== "undefined" &&
-            !!Array.prototype.forEach;
+            !!Array.prototype.forEach &&
+            !pageAccordionOff;
 }
 
 function ebAccordionDefaultAccordionHeadID() {
