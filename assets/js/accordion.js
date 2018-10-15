@@ -1,30 +1,36 @@
-"use strict";
+/*jslint browser */
+/*global window, ebLazyLoadImages, searchTerm, videoShow */
 
 console.log('Debugging accordions.js');
 
 // --------------------------------------------------------------
 // Options
-// 
+//
 // 1. Use CSS selectors to list the headings that will
 //    define each accordion section, e.g. '#content h2'
-var accordionHeads = '#content h2'
+var accordionHeads = '#content h2';
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content h2:first-of-type'
+var defaultAccordionHead = '#content h2:first-of-type';
 // --------------------------------------------------------------
 
 function ebAccordionInit() {
+    'use strict';
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
-        'querySelectorAll' in document &&
-        'addEventListener' in window &&
-        !!Array.prototype.forEach;
+            document.querySelectorAll !== "undefined" &&
+            window.addEventListener !== "undefined" &&
+            !!Array.prototype.forEach;
 }
 
 function ebAccordionSetUpSections(collapserButtons) {
+    'use strict';
 
-    if (!document.querySelector(accordionHeads)) return;
+    // Exit if there are no accordionHeads
+    if (!document.querySelector(accordionHeads)) {
+        return;
+    }
 
     // Give the default accordion section an id, if it's set
-    if (defaultAccordionHead != '') {
+    if (defaultAccordionHead !== '') {
         if (document.querySelector(defaultAccordionHead)) {
             document.querySelector(defaultAccordionHead).id = 'defaultAccordionSection';
         }
@@ -35,7 +41,7 @@ function ebAccordionSetUpSections(collapserButtons) {
     content.setAttribute('role', 'tablist');
 
     // loop through collapserButtons
-    collapserButtons.forEach(function(collapserButton) {
+    collapserButtons.forEach(function (collapserButton) {
 
         // make a section to move the collapsing content into
         var section = document.createElement('section');
@@ -76,12 +82,14 @@ function ebAccordionSetUpSections(collapserButtons) {
 }
 
 function ebAccordionFillSections() {
+    'use strict';
+
     // grab the individual #contents elements of the page
     var contentItems = document.querySelectorAll('#content > *');
 
     var currentSection = false;
     // loop through it
-    contentItems.forEach(function(contentItem) {
+    contentItems.forEach(function (contentItem) {
 
         // if this is a section, update currentSection, then move on
         if (contentItem.getAttribute('role') === 'tabpanel') {
@@ -90,70 +98,84 @@ function ebAccordionFillSections() {
         }
 
         // have we reached the first section yet? if not, move on
-        if (!currentSection) return;
+        if (!currentSection) {
+            return;
+        }
 
         // otherwise, move it inside the currentSection's data-container
         currentSection.querySelector('[data-container]')
-                      .appendChild(contentItem);
+            .appendChild(contentItem);
     });
 }
 
 function ebMoveThemeKeys() {
+    'use strict';
+
     // get the theme keys and the theme key links
     var themeKeys = document.querySelectorAll('.theme-key');
     var themeKeysLinks = document.querySelectorAll('.theme-key a');
 
-    themeKeysLinks.forEach(function(themeKeysLink) {
+    themeKeysLinks.forEach(function (themeKeysLink) {
         // up to themeKeys div, up to data-container, up to section,
         // on to next section, down to heading, down to h2
         themeKeysLink.parentNode.parentNode.parentNode
-                     .nextElementSibling.firstChild.firstChild
-                     .appendChild(themeKeysLink);
-    })
+            .nextElementSibling.firstChild.firstChild
+            .appendChild(themeKeysLink);
+    });
 
     // remove now empty theme keys divs
-    themeKeys.forEach(function(themeKey) {
+    themeKeys.forEach(function (themeKey) {
         themeKey.parentNode.removeChild(themeKey);
-    })
+    });
 }
 
 function ebAccordionHideAll() {
+    'use strict';
+
     var tabPanels = document.querySelectorAll('[role="tabpanel"]');
-    tabPanels.forEach(function(current) {
+    tabPanels.forEach(function (current) {
         current.querySelector('[role="tab"]')
-               .setAttribute('data-accordion', 'closed');
+            .setAttribute('data-accordion', 'closed');
         current.querySelector('[data-container]')
-               .setAttribute('aria-expanded', 'false');
+            .setAttribute('aria-expanded', 'false');
     });
 }
 
 function ebAccordionHideAllExceptThisOne(targetID) {
+    'use strict';
 
     console.log('Starting ebAccordionHideAllExceptThisOne...');
 
     var tabPanels = document.querySelectorAll('[role="tabpanel"]');
-    tabPanels.forEach(function(tabPanel) {
+    tabPanels.forEach(function (tabPanel) {
         // if it's the one we just clicked, skip it
-        if(tabPanel.getAttribute('aria-labelledby') === targetID) return;
+        if (tabPanel.getAttribute('aria-labelledby') === targetID) {
+            return;
+        }
 
         // otherwise, hide it
         tabPanel.querySelector('[role="tab"]')
-               .setAttribute('data-accordion', 'closed');
+            .setAttribute('data-accordion', 'closed');
         tabPanel.querySelector('[data-container]')
-               .setAttribute('aria-expanded', 'false');
+            .setAttribute('aria-expanded', 'false');
     });
 }
 
 function ebAccordionCheckParent(node) {
+    'use strict';
 
-    if(node != null) {
+    if (node !== null) {
         console.log('Checking for parent element of "' + node.innerText.substring(0, 20) + '..."');
     }
 
     // if there is no parent, or something went wrong, exit
-    if(!node) return false;
-    if(!node.parentNode) return false;
-    if(node.tagName == "BODY") {
+    if (!node) {
+        return false;
+    }
+    if (!node.parentNode) {
+        return false;
+    }
+    if (node.tagName === "BODY") {
 
         console.log('Parent node is the body element. We\'re done looking.');
 
@@ -162,16 +184,17 @@ function ebAccordionCheckParent(node) {
 
     var nodeParent = node.parentNode;
 
-    console.log('nodeParent is "' + nodeParent.innerText.substring(0,20) + '..."');
+    console.log('nodeParent is "' + nodeParent.innerText.substring(0, 20) + '..."');
 
     var parentAttribute = nodeParent.getAttribute('data-accordion-container');
 
     // if there's a parent, check if it's got data-accordion-container
     // and return that value, which is copied from the id of the section heading
-    if(parentAttribute) {
+    if (parentAttribute) {
         return nodeParent.getAttribute('data-accordion-container');
-    } else {
-        console.log('Parent node of "' + node.innerText.substring(0,20) + '..." is not an accordion section');
+    }
+    if (!parentAttribute) {
+        console.log('Parent node of "' + node.innerText.substring(0, 20) + '..." is not an accordion section');
     }
 
     return ebAccordionCheckParent(nodeParent);
@@ -180,9 +203,10 @@ function ebAccordionCheckParent(node) {
 // find and return containing section
 // (the aria-labelledby attribute matches the ID)
 function ebAccordionFindSection(targetToCheck) {
+    'use strict';
 
-    if(targetToCheck != null) {
-        console.log('Finding section that contains: ' + targetToCheck.outerHTML.substring(0,80));
+    if (targetToCheck !== null) {
+        console.log('Finding section that contains: ' + targetToCheck.outerHTML.substring(0, 80));
     }
 
     // work recursively up the DOM looking for the section
@@ -190,18 +214,19 @@ function ebAccordionFindSection(targetToCheck) {
 }
 
 function ebWhichTarget(targetID) {
+    'use strict';
 
     console.log('Starting ebWhichTarget...');
 
     var targetToCheck;
 
     // if we're given an ID, use it
-    if(targetID) {
+    if (targetID) {
         console.log('Using targetID ' + targetID);
 
         // Decode the targetID URI in case it's not ASCII
         console.log('targetID encoded: ' + targetID);
-        var targetID = decodeURIComponent(targetID);
+        targetID = decodeURIComponent(targetID);
         console.log('targetID decoded: ' + targetID);
 
         targetToCheck = document.getElementById(targetID);
@@ -211,7 +236,7 @@ function ebWhichTarget(targetID) {
 
         // Decode the trimmedHash in case it's not ASCII
         console.log('Using trimmedHash; encoded: ' + trimmedHash);
-        var trimmedHash = decodeURIComponent(trimmedHash);
+        trimmedHash = decodeURIComponent(trimmedHash);
         console.log('using trimmedHash; decoded: ' + trimmedHash);
 
         targetToCheck = document.getElementById(trimmedHash);
@@ -219,7 +244,7 @@ function ebWhichTarget(targetID) {
 
 
     // if the ID doesn't exist, exit
-    if(!targetToCheck) {
+    if (!targetToCheck) {
         return false;
     }
 
@@ -227,24 +252,29 @@ function ebWhichTarget(targetID) {
 }
 
 function ebAccordionShow(targetID) {
+    'use strict';
 
     console.log('Starting ebAccordionShow...');
     console.log('ebAccordionShow\'s targetID is: ' + targetID);
 
     var targetToCheck = ebWhichTarget(targetID);
-    if (!targetToCheck) return;
+    if (!targetToCheck) {
+        return;
+    }
 
     var sectionID = ebAccordionFindSection(targetToCheck);
     // if there's a section to show
-    if (!sectionID) return;
+    if (!sectionID) {
+        return;
+    }
 
     // set the accordion, then work down to toggle and content div
-    var sectionTarget = '[aria-labelledby="' + sectionID +'"]';
+    var sectionTarget = '[aria-labelledby="' + sectionID + '"]';
     var sectionToShow = document.querySelector(sectionTarget);
 
     // update the tab
     var tab = sectionToShow.querySelector('[role="tab"]');
-    tab.setAttribute('data-accordion', 'open')
+    tab.setAttribute('data-accordion', 'open');
 
     // update the tab contents
     var tabContents = sectionToShow.querySelector('[data-container]');
@@ -253,65 +283,70 @@ function ebAccordionShow(targetID) {
     // lazyload the images inside
     var lazyimages = sectionToShow.querySelectorAll('[data-srcset]');
     console.log('lazyimages: ' + lazyimages.innerHTML);
-    if (lazyimages.innerHTML != undefined) {
+    if (lazyimages.innerHTML !== undefined) {
         ebLazyLoadImages(lazyimages);
     }
 
     // if we have a slideline in this section, check if it's a portrait one
     var slidelinesInThisSection = sectionToShow.querySelectorAll('.slides');
 
-    slidelinesInThisSection.forEach(function(slidelineInThisSection) {
+    slidelinesInThisSection.forEach(function (slidelineInThisSection) {
         var firstFigureImg = slidelineInThisSection.querySelector('.figure img');
 
         if (firstFigureImg) {
-            firstFigureImg.addEventListener('load', function() {
+            firstFigureImg.addEventListener('load', function () {
                 var portraitSlideline = (firstFigureImg.height > firstFigureImg.width);
-                if(portraitSlideline) {
+                if (portraitSlideline) {
                     slidelineInThisSection.querySelector('nav').classList.add('nav-slides-portrait');
                 }
-            })
-        };
-    })
+            });
+        }
+    });
 
-    if(typeof(videoShow) === 'function') {
+    if (typeof(videoShow) === 'function') {
         videoShow(sectionToShow);
     }
 }
 
 function ebAccordionListenForAnchorClicks() {
+    'use strict';
 
     console.log('Starting ebAccordionListenForAnchorClicks...');
 
     // listen for clicks on *all* the anchors (;_;)
     var allTheAnchors = document.querySelectorAll('#content a');
-    allTheAnchors.forEach(function(oneOfTheAnchors) {
+    allTheAnchors.forEach(function (oneOfTheAnchors) {
 
         // if it's an external link, exit
-        if(oneOfTheAnchors.target === '_blank') return;
+        if (oneOfTheAnchors.target === '_blank') {
+            return;
+        }
 
-        oneOfTheAnchors.addEventListener("click", function(ev) {
+        oneOfTheAnchors.addEventListener("click", function (ev) {
 
             ev.stopPropagation();
 
             // ignore target blank / rel noopener links
-            if(this.getAttribute('rel') === 'noopener') return;
+            if (this.getAttribute('rel') === 'noopener') {
+                return;
+            }
 
             // get the target ID by removing any file path and the #
-            if(this.hasAttribute('href')) {
+            if (this.hasAttribute('href')) {
                 var targetID = this.getAttribute('href').replace(/.*#/, '');
                 console.log('The targetID is: ' + targetID);
             } else {
                 return;
             }
             // if it's an open accordion, close it
-            if(this.parentNode.getAttribute('data-accordion') === 'open') {
+            if (this.parentNode.getAttribute('data-accordion') === 'open') {
                 ebAccordionHideAll();
                 return;
             }
 
             // did we click on a thing that wasn't an accordion?
             // which section / accordion is it inside?
-            if(!this.parentNode.getAttribute('data-accordion')) {
+            if (!this.parentNode.getAttribute('data-accordion')) {
 
                 console.log('We clicked on something that is not an accordion. Now to find targetID ' + targetID + ' in the DOM...');
 
@@ -324,47 +359,52 @@ function ebAccordionListenForAnchorClicks() {
             // now open the right closed accordion
             ebAccordionShow(targetID);
             ebAccordionHideAllExceptThisOne(targetID);
-        })
-    })
+        });
+    });
 }
 
 function ebAccordionListenForHeadingClicks() {
+    'use strict';
+
     // also listen for heading clicks
     var allTheToggleHeaders = document.querySelectorAll('[data-accordion]');
-    allTheToggleHeaders.forEach(function(oneOfTheToggleHeaders) {
-        oneOfTheToggleHeaders.addEventListener("click", function() {
+    allTheToggleHeaders.forEach(function (oneOfTheToggleHeaders) {
+        oneOfTheToggleHeaders.addEventListener("click", function () {
             // simulate anchor click
             this.querySelector('a').click();
-        })
-    })
+        });
+    });
 }
 
 function ebAccordionListenForNavClicks() {
+    'use strict';
+
     // also listen for nav clicks
     var navLinks = document.querySelectorAll('#nav [href]');
-    navLinks.forEach(function(navLink) {
-        navLink.addEventListener("click", function() {
+    navLinks.forEach(function (navLink) {
+        navLink.addEventListener("click", function () {
             // get the section and click to open it if it's closed
             var theSection = document.getElementById(this.hash.replace(/.*#/, ''));
             // simulate anchor click, if it's closed
-            if(theSection) {
-                if(theSection.getAttribute('data-accordion') === 'closed') {
+            if (theSection) {
+                if (theSection.getAttribute('data-accordion') === 'closed') {
                     theSection.querySelector('a').click();
                 }
             }
-        })
-    })
+        });
+    });
 }
 
 function ebAccordionListenForHashChange() {
+    'use strict';
 
     console.log('Starting ebAccordionListenForHashChange...');
 
-    window.addEventListener("hashchange", function() {
+    window.addEventListener("hashchange", function () {
         // get the target ID from the hash
         var targetID = window.location.hash;
         console.log('targetID encoded: ' + targetID);
-        var targetID = decodeURIComponent(targetID);
+        targetID = decodeURIComponent(targetID);
         console.log('targetID decoded: ' + targetID);
         // get the target of the link
         var targetOfLink = document.getElementById(targetID.replace(/.*#/, ''));
@@ -372,19 +412,21 @@ function ebAccordionListenForHashChange() {
 
         // check if it's in the viewport already
         var targetRect = targetOfLink.getBoundingClientRect();
-        var targetInViewport = targetRect.top >= - targetRect.height
-                            && targetRect.left >= - targetRect.width
-                            && targetRect.bottom <= targetRect.height + window.innerHeight
-                            && targetRect.right <= targetRect.width + window.innerWidth;
+        var targetInViewport = targetRect.top >= -targetRect.height
+                && targetRect.left >= -targetRect.width
+                && targetRect.bottom <= targetRect.height + window.innerHeight
+                && targetRect.right <= targetRect.width + window.innerWidth;
 
         // check if it's an accordion
         var targetAccordionStatus = targetOfLink.getAttribute('data-accordion');
 
         // if it's in the viewport and it's not an accordion, then exit
-        if(targetInViewport && !targetAccordionStatus) return;
+        if (targetInViewport && !targetAccordionStatus) {
+            return;
+        }
 
         // if it's an accordion and it's closed, open it / jump to it
-        if(targetAccordionStatus === 'closed') {
+        if (targetAccordionStatus === 'closed') {
             targetOfLink.querySelector('a').click();
             return;
         }
@@ -398,35 +440,43 @@ function ebAccordionListenForHashChange() {
 }
 
 function ebAccordify() {
+    'use strict';
+
     // early exit for older browsers
-    if (!ebAccordionInit()) return;
+    if (!ebAccordionInit()) {
+        return;
+    }
 
     // exit if there aren't any headings
     var collapserTargets = accordionHeads;
     var collapserButtons = document.querySelectorAll(collapserTargets);
-    if (!collapserButtons) return;
+    if (!collapserButtons) {
+        return;
+    }
 
     // exit if this isn't a chapter
     var thisIsNotAChapter = (document.querySelector('body').getAttribute('class').indexOf('chapter') === -1);
     var thisHasNoH2s = (document.querySelector(accordionHeads) === null);
     var thisIsEndmatter = (document.querySelector('body').getAttribute('class').indexOf('endmatter') !== -1);
-    if(thisIsNotAChapter || thisHasNoH2s || thisIsEndmatter) return;
+    if (thisIsNotAChapter || thisHasNoH2s || thisIsEndmatter) {
+        return;
+    }
 
     ebAccordionSetUpSections(collapserButtons);
     ebAccordionFillSections();
     ebMoveThemeKeys();
 
-    if(searchTerm) {
+    if (searchTerm) {
         // loop through sections
         var accordionSections = document.querySelectorAll('section[data-accordion-container]');
-        accordionSections.forEach(function(accordionSection) {
+        accordionSections.forEach(function (accordionSection) {
 
             // check for any markjs marks
             var searchTermsInSection = accordionSection.querySelectorAll('[data-markjs]');
             var numberOfSearchTermsInSection = searchTermsInSection.length;
 
             // mark the sections that have the search term inside
-            if(!!numberOfSearchTermsInSection) {
+            if (!!numberOfSearchTermsInSection) {
                 var sectionHeaderLink = accordionSection.querySelector('header a');
                 sectionHeaderLink.innerHTML = '<mark>' + sectionHeaderLink.innerHTML + '</mark>';
 
@@ -440,7 +490,7 @@ function ebAccordify() {
 
     // if there's no hash, show the first section
     // else (there is a hash, so) show that section
-    if(!window.location.hash) {
+    if (!window.location.hash) {
         ebAccordionHideAllExceptThisOne('defaultAccordionSection');
         ebAccordionShow('defaultAccordionSection');
         return;
