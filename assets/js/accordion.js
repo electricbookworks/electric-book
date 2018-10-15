@@ -21,19 +21,27 @@ function ebAccordionInit() {
             !!Array.prototype.forEach;
 }
 
+function ebAccordionDefaultAccordionHeadID() {
+    'use strict';
+
+    var defaultAccordionHeadID;
+
+    // Get the default accordion section's id
+    if (defaultAccordionHead !== '') {
+        defaultAccordionHeadID = document.querySelector(defaultAccordionHead).id;
+        if (!defaultAccordionHeadID) {
+            defaultAccordionHeadID = 'defaultAccordionSection';
+        }
+    }
+    return defaultAccordionHeadID;
+}
+
 function ebAccordionSetUpSections(collapserButtons) {
     'use strict';
 
     // Exit if there are no accordionHeads
     if (!document.querySelector(accordionHeads)) {
         return;
-    }
-
-    // Give the default accordion section an id, if it's set
-    if (defaultAccordionHead !== '') {
-        if (document.querySelector(defaultAccordionHead)) {
-            document.querySelector(defaultAccordionHead).id = 'defaultAccordionSection';
-        }
     }
 
     // add role="tablist" to the parent of the role="tab"s
@@ -263,9 +271,10 @@ function ebAccordionShow(targetID) {
     }
 
     var sectionID = ebAccordionFindSection(targetToCheck);
-    // if there's a section to show
+    // If we are not linking to a section or something inside it,
+    // show the default section
     if (!sectionID) {
-        return;
+        ebAccordionShowDefaultSection();
     }
 
     // set the accordion, then work down to toggle and content div
@@ -273,40 +282,42 @@ function ebAccordionShow(targetID) {
     var sectionToShow = document.querySelector(sectionTarget);
 
     // update the tab
-    var tab = sectionToShow.querySelector('[role="tab"]');
-    tab.setAttribute('data-accordion', 'open');
+    if (sectionToShow) {
+        var tab = sectionToShow.querySelector('[role="tab"]');
+        tab.setAttribute('data-accordion', 'open');
 
-    // update the tab contents
-    var tabContents = sectionToShow.querySelector('[data-container]');
-    tabContents.setAttribute('aria-expanded', 'true');
+        // update the tab contents
+        var tabContents = sectionToShow.querySelector('[data-container]');
+        tabContents.setAttribute('aria-expanded', 'true');
 
-    // lazyload the images inside
-    var lazyimages = sectionToShow.querySelectorAll('[data-srcset]');
+        // lazyload the images inside
+        var lazyimages = sectionToShow.querySelectorAll('[data-srcset]');
 
-    // console.log('lazyimages: ' + lazyimages.innerHTML);
+        // console.log('lazyimages: ' + lazyimages.innerHTML);
 
-    if (lazyimages.innerHTML !== undefined) {
-        ebLazyLoadImages(lazyimages);
-    }
-
-    // if we have a slideline in this section, check if it's a portrait one
-    var slidelinesInThisSection = sectionToShow.querySelectorAll('.slides');
-
-    slidelinesInThisSection.forEach(function (slidelineInThisSection) {
-        var firstFigureImg = slidelineInThisSection.querySelector('.figure img');
-
-        if (firstFigureImg) {
-            firstFigureImg.addEventListener('load', function () {
-                var portraitSlideline = (firstFigureImg.height > firstFigureImg.width);
-                if (portraitSlideline) {
-                    slidelineInThisSection.querySelector('nav').classList.add('nav-slides-portrait');
-                }
-            });
+        if (lazyimages.innerHTML !== undefined) {
+            ebLazyLoadImages(lazyimages);
         }
-    });
 
-    if (typeof(videoShow) === 'function') {
-        videoShow(sectionToShow);
+        // if we have a slideline in this section, check if it's a portrait one
+        var slidelinesInThisSection = sectionToShow.querySelectorAll('.slides');
+
+        slidelinesInThisSection.forEach(function (slidelineInThisSection) {
+            var firstFigureImg = slidelineInThisSection.querySelector('.figure img');
+
+            if (firstFigureImg) {
+                firstFigureImg.addEventListener('load', function () {
+                    var portraitSlideline = (firstFigureImg.height > firstFigureImg.width);
+                    if (portraitSlideline) {
+                        slidelineInThisSection.querySelector('nav').classList.add('nav-slides-portrait');
+                    }
+                });
+            }
+        });
+
+        if (typeof(videoShow) === 'function') {
+            videoShow(sectionToShow);
+        }
     }
 }
 
@@ -328,6 +339,9 @@ function ebAccordionListenForAnchorClicks() {
 
             ev.stopPropagation();
 
+            // Declare targetID so JSLint knows it's coming in this function.
+            var targetID;
+
             // ignore target blank / rel noopener links
             if (this.getAttribute('rel') === 'noopener') {
                 return;
@@ -335,7 +349,7 @@ function ebAccordionListenForAnchorClicks() {
 
             // get the target ID by removing any file path and the #
             if (this.hasAttribute('href')) {
-                var targetID = this.getAttribute('href').replace(/.*#/, '');
+                targetID = this.getAttribute('href').replace(/.*#/, '');
                 // console.log('The targetID is: ' + targetID);
             } else {
                 return;
@@ -402,12 +416,18 @@ function ebAccordionListenForHashChange() {
 
     // console.log('Starting ebAccordionListenForHashChange...');
 
-    window.addEventListener("hashchange", function () {
+    window.addEventListener("hashchange", function (event) {
+
+        // Don't treat this like a normal click on a link
+        event.preventDefault();
+
         // get the target ID from the hash
         var targetID = window.location.hash;
         // console.log('targetID encoded: ' + targetID);
+
         targetID = decodeURIComponent(targetID);
         // console.log('targetID decoded: ' + targetID);
+
         // get the target of the link
         var targetOfLink = document.getElementById(targetID.replace(/.*#/, ''));
         // console.log('targetOfLink: ' + targetOfLink.innerHTML);
@@ -418,9 +438,11 @@ function ebAccordionListenForHashChange() {
                 && targetRect.left >= -targetRect.width
                 && targetRect.bottom <= targetRect.height + window.innerHeight
                 && targetRect.right <= targetRect.width + window.innerWidth;
+        // console.log('targetInViewport of ' + targetOfLink + ": " + targetInViewport);
 
         // check if it's an accordion
-        var targetAccordionStatus = targetOfLink.getAttribute('data-accordion');
+        var targetAccordionStatus = targetOfLink.parentNode.getAttribute('data-accordion');
+        // console.log('targetAccordionStatus: ' + targetAccordionStatus);
 
         // if it's in the viewport and it's not an accordion, then exit
         if (targetInViewport && !targetAccordionStatus) {
@@ -439,6 +461,12 @@ function ebAccordionListenForHashChange() {
         ebAccordionShow(targetAccordionID);
         ebAccordionHideAllExceptThisOne(targetAccordionID);
     });
+}
+
+function ebAccordionShowDefaultSection() {
+    'use strict';
+    ebAccordionHideAllExceptThisOne(ebAccordionDefaultAccordionHeadID());
+    ebAccordionShow(ebAccordionDefaultAccordionHeadID());
 }
 
 function ebAccordify() {
@@ -493,8 +521,7 @@ function ebAccordify() {
     // if there's no hash, show the first section
     // else (there is a hash, so) show that section
     if (!window.location.hash) {
-        ebAccordionHideAllExceptThisOne('defaultAccordionSection');
-        ebAccordionShow('defaultAccordionSection');
+        ebAccordionShowDefaultSection();
         return;
     }
 
