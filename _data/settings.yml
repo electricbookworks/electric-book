@@ -2,25 +2,30 @@
 
 # ----------------------------------------------------------
 # Electric Book Manager
-# ----------------------------------------------------------
+# ---------------------
 electric-book-manager: enable
 electric-book-manager-key: ""
 
 # ----------------------------------------------------------
 # Variants
-# ----------------------------------------------------------
+# --------
 # Set a variant of the work to output.
 # A variant lets you override metadata and stylesheets and can be used,
 # where `include metadata` has been used, in if statements like
 # {% if variant == "somename" %}Variant text!{% endif %}
 # Variant names must be one word, lowercase. Hyphens are allowed.
 # Add variant book metadata to meta.yml, and output settings here.
-# ----------------------------------------------------------
+# --------------
+# Active variant
+# --------------
 # Add the active variant (defined in meta.yml) to activate it:
 active-variant: ""
+# ---------------
+# Variant options
+# ---------------
+# Store settings for each variant.
+# These have no effect unless an active-variant is set above.
 variants:
-  # Store settings for each variant.
-  # These have no effect unless an active-variant is set above.
   - variant: myvariant
     print-pdf-stylesheet: "print-pdf-variant.css"
     screen-pdf-stylesheet: ""
@@ -31,54 +36,63 @@ variants:
 
 # ----------------------------------------------------------
 # Web settings
-# ----------------------------------------------------------
+# ------------
 web:
-  # ----------------------------------------------------------
+  # ----------
   # Pagination
-  # ----------------------------------------------------------
+  # ----------
   pagination: true
   # Choose 'direction' for 'Next/Previous' pagination,
   # or 'titles' to show page titles at pagination,
   # or 'arrows' to use only arrows.
   pagination-type: "arrows"
-  # ----------------------------------------------------------
+  # --------
   # Masthead
-  # ----------------------------------------------------------
+  # --------
   # What kind of header do you want in the masthead? Options:
   # project-name, book-title, page-title, breadcrumbs
   # If not set, book-title is default.
   # Note that breadcrumbs slows your Jekyll build significantly.
   masthead:
     content: breadcrumbs
-  # ----------------------------------------------------------
+  # -----------------
   # Content accordion
-  # ----------------------------------------------------------
+  # -----------------
   # Do you want to collapse content sections in chapters on a
   # particular heading level? Default h2, set in accordion.js.
   # Set this to true to enable, or false to disable.
   accordion: false
+  # Enable annotation
+  # You can have annotation on for development and/or for live.
+  # Set each to either true or false
+  annotator:
+    development: true
+    live: false
 
 # ----------------------------------------------------------
 # Epub settings
-# ----------------------------------------------------------
+# -------------
 epub:
-  # ----------------------------------------------------------
+  # -----
   # Fonts
-  # ----------------------------------------------------------
+  # -----
   # If you're embedding fonts, uncomment and list the font-file names here
   # and put the font files in _epub/fonts, not book/fonts
   # fonts:
   #   - Crimson-Roman.otf
   #   - Crimson-Italic.otf
-  # ----------------------------------------------------------
+  # -----------
   # Nav element
-  # ----------------------------------------------------------
+  # -----------
   # Every EPUB3 must have a nav element, like a TOC,
   # but you are allowed to hide it from view.
   # To hide the 'on the page' nav in epub, set this to 'true'.
   # Then you can put {% include toc %} anywhere in your epub
   # to generate a hidden nav element.
   hide-nav: false
+  # --------
+  # Metadata
+  # --------
   # Settings that affect OPF metadata
   meta:
     # Turn project name in epub OPF metadata on/off
@@ -88,35 +102,35 @@ epub:
 
 # ----------------------------------------------------------
 # App settings
-# ----------------------------------------------------------
+# ------------
 app:
-  # ----------------------------------------------------------
+  # ----------
   # Pagination
-  # ----------------------------------------------------------
+  # ----------
   pagination: true
   # Choose 'direction' for 'Next/Previous' pagination,
   # or 'titles' to show page titles at pagination,
   # or 'arrows' to use only arrows.
   pagination-type: "arrows"
-  # ----------------------------------------------------------
+  # --------
   # Masthead
-  # ----------------------------------------------------------
+  # --------
   # What kind of header do you want in the masthead? Options:
   # site-name, book-title, page-title, breadcrumbs
   # If not set, book-title is default.
   # Note that breadcrumbs slows your Jekyll build significantly.
   masthead:
     content: breadcrumbs
-  # ----------------------------------------------------------
+  # -----------------
   # Content accordion
-  # ----------------------------------------------------------
+  # -----------------
   # Do you want to collapse content sections in chapters on a
   # particular heading level? Default h2, set in accordion.js.
   # Set this to true to enable, or false to disable.
   accordion: false
-  # ----------------------------------------------------------
+  # --------------
   # Expansion file
-  # ----------------------------------------------------------
+  # --------------
   # If your book is huge and you need to store images
   # in an expansion file, edit these settings.
   google-play-expansion-file-enabled: false
@@ -124,7 +138,7 @@ app:
 
 # ----------------------------------------------------------
 # External media settings
-# ----------------------------------------------------------
+# -----------------------
 # If a large number of images makes your project too big,
 # you can store your images in a separate location.
 # See the docs for more information.
@@ -134,3 +148,10 @@ remote-media:
 local-media:
   development: ""
   live: ""
+
+# ----------------------------------------------------------
+# General output options
+# ----------------------
+# If included items are missing, do we show an error in output,
+# or does the site build break completely? Default is to break.
+on-missing-item: error

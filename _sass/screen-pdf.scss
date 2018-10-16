@@ -50,10 +50,13 @@ $color-highlight: #ffd54d !default;
 // Options for color profile:
 // - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
 // - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
-// Add other ICC profiles to /_tools/profiles
+// Add other ICC profiles to /_tools/profiles.
+// If you set convert-images-to-color-profile to false, ensure your print-PDF images
+// are in the same colour space as the document for X-1a compliance.
 $pdf-profile: "PDF/A-3b" !default;
 $color-profile: "sRGB_v4_ICC_preference_displayclass.icc" !default;
 $black-ink: true !default; // true or rich (true for pure black or rich for rich black)
+$convert-images-to-color-profile: false !default; // 'true' may convert true black to rich black in images
 
 // We name font variables for two categories:
 // - 'text' fonts are used for body text and some page features;
@@ -257,7 +260,7 @@ $print-letters: true !default;
 $print-sources: true !default;
 $print-openers: true !default;
 $print-index: true !default;
-$print-multiple-choice-questions: true !default;
+$print-questions: true !default;
 $print-cross-refs: true !default;
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true !default; // Sets content for headers and footers
@@ -321,7 +324,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-sources";
 @import "partials/print-openers";
 @import "partials/print-index";
-@import "partials/print-mcqs";
+@import "partials/print-questions";
 @import "partials/print-cross-refs";
 @import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
 @import "partials/print-page-headers-footers-content"; // Sets content for headers and footers

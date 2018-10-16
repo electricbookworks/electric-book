@@ -29,6 +29,7 @@ exclude:
   - /*/styles/screen-pdf.scss
   - /*/styles/web.scss
   - /*/styles/app.scss
+  - /*/styles/*.dic
   - /*/index.md
   - /*/images/print-pdf
   - /*/images/screen-pdf

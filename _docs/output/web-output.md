@@ -18,7 +18,7 @@ Run the template's `run-` script for your operating system and follow the prompt
 
 ## Using GitHub Pages
 
-If you activate GitHub Pages in your repository settings on [GitHub.com](https://github.com), GitHub will host your built site for free. GitHub will assign the site a URL by default that looks like `username.github.io/reponame`. You can then set up a custom domain name by pointing your own domain at GitHub's servers, and putting a CNAME file containing that domain name in your project's root directory. Our template already has a CNAME file (for `electricbook.works`) that you should remove or edit.
+If you activate GitHub Pages in your repository settings on [GitHub.com](https://github.com), GitHub will host your built site for free. GitHub will assign the site a URL by default that looks like `username.github.io/reponame`. You can then set up a custom domain name by pointing your own domain at GitHub's servers, and putting a CNAME file containing that domain name in your project's root directory.
 
 See GitHub's help docs for [guidance](https://help.github.com/articles/using-a-custom-domain-with-github-pages/) on how to do this.
 

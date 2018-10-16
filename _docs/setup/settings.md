@@ -55,6 +55,12 @@ You define pagination for `web` and `app` output separately, so that they can di
 
 See [Pagination](../layout/web-pagination.html) for details.
 
+## Annotation
+
+You can turn on open annotation with [Hypothes.is](https://hypothes.is) by setting the `annotator` settings for the development and/or live versions of your website to `true` (i.e. annotation on) or `false` (i.e. annotation off).
+
+By default, the template turns annotation for development, and off for live. This is because annotation can be useful during development for discussing changes within a team.
+
 ## Epub settings
 
 You'll need to adjust the epub settings if you want to embed fonts or hide the epub's nav element. See [Epub output](../output/epub-output.html) for details.

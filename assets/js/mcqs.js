@@ -12,7 +12,7 @@ var ebMCQsInit = function() {
     'querySelector' in document &&
     !!Array.prototype.forEach &&
     'addEventListener' in window &&
-    document.querySelectorAll('.question');
+    document.querySelectorAll('.mcq');
 }
 
 var ebMCQsFindNumberOfCorrectAnswers = function(questionCode) {
@@ -191,7 +191,7 @@ var ebMCQsGetAllCorrectAnswers = function() {
     var ebMCQsCorrectAnswersForPage = {};
 
     // get all the questions
-    var questions = document.querySelectorAll('.question');
+    var questions = document.querySelectorAll('.mcq');
 
     // loop over questions
     questions.forEach(function(question) {
@@ -277,7 +277,6 @@ var ebMCQsWordPressUserId = function() {
 
 // Add the WordPress account button to the nav,
 // change the text based on logged in or not
-// TO DO: localise the Wordpress terms here
 var ebMCQsAddWordPressAccountButton = function() {
     // get #nav
     var theNav = document.querySelector('#nav');
@@ -287,7 +286,7 @@ var ebMCQsAddWordPressAccountButton = function() {
 
     // make the WordPress link to insert into the nav
     var accountLink = document.createElement('a');
-    accountLink.innerText = 'Log in';
+    accountLink.innerText = locales[pageLanguage].account.login;
     accountLink.href = '/login/';
     accountLink.classList.add('wordpress-link');
 
@@ -413,7 +412,7 @@ var ebMCQs = function() {
     document.documentElement.classList.add('js-mcq');
 
     // get all the questions
-    var questions = document.querySelectorAll('.question');
+    var questions = document.querySelectorAll('.mcq');
 
     // loop over questions
     questions.forEach(function(question) {

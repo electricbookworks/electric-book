@@ -42,11 +42,16 @@ Here is an explanation of all the folders and files in the template.
 
 *   `_app`: template files for app output. You shouldn't ever have to change these.
 *   `_configs`: a folder of configuration settings for different outputs. You'll rarely have to change these, though you might occasionally need to customise outputs here.
-*   `_data`: a folder of data to use in your books (including project metadata).
+*   `_data`: a folder of data to use in your books (including project metadata). This folder includes at least three important files:
+
+    * `meta.yml`: your publication metadata,
+    * `locales.yml`: phrases used in your publications,
+    * `settings.yml`: settings for your project.
+
 *   `_docs`: this documentation on how to use the template.
 *   `_epub`: template files for epub output. You shouldn't ever have to change these.
 *   `_includes`: HTML templates that Jekyll uses to build your books. You will rarely change anything here. You may need to add new templates here for custom book features.
-*    `_layouts`: templates that Jekyll uses to structure pages. You shouldn't ever have to change these.
+*   `_layouts`: templates that Jekyll uses to structure pages. You shouldn't ever have to change these.
 *   `_output`: the folder where our output scripts will save your PDFs and epubs.
 *   `_sass`: a folder that stores the default styles for your books. You shouldn't ever have to change these unless you're heavily modifying designs for a series.
 *   `_site`: where Jekyll and our output scripts will generate the web and app versions of your books.
@@ -70,17 +75,16 @@ Here is an explanation of all the folders and files in the template.
      *   `fonts`: store any font files for your book here. (If you want to share font files across books, you can also store fonts in `assets/fonts`.)
      *   `images`: this is where you store images for a book. See the ['Adding image files' section](../images/adding-image-files.html) for more detail.
      *   `styles`: contains the stylesheets for designing your book's various outputs. See the ['Design'](../layout/design.html) section for more detail.
-     *   `text`: where you store your content files in markdown (`.md` files).
+     *   `text`: where you store your content files in markdown (`.md`) files.
        
          The `text` folder contains these important files. They should be present as is in every book's `text` folder. You don't need to change them at all:
 
          * `file-list`: Jekyll turns this into a list of files that the system uses for output, for instance to tell PrinceXML which files to include in a PDF. It gets this file list from the `files:` lists that you create in `_data/meta.yml`
          * `index.md`: a landing page for your book. Jekyll will build this to contain the book's cover image, and clicking it will open the book's start page, which you define in `_data/meta.yml`.
 
-*    `samples`: a sample book for demo and testing purposes. You can safely delete it (if you do, you should also remove its metadata in `_data/meta.yml`).
+*   `samples`: a sample book for demo and testing purposes. You can safely delete it (if you do, you should also remove its metadata in `_data/meta.yml`).
 *   `_config.yml`: a file for setting configuration options for Jekyll, which will compile your book for output.
 *   `_prose.yml`: configuration settings for using [prose.io](http://prose.io) for online book editing (generally, you won't have to edit this file) and for excluding files from view in the [Electric Book Manager](https://electricbookworks.github.io/electric-book-gui/).
-*   `CNAME`: tells GitHub if you're using a custom domain for your project. You can delete this, or if you're using a custom domain with GitHub or similar hosts, you'll edit it to your own project's domain name.
 *   `gulpfile.js`: the 'recipe' for processing images from `_source` into various output formats. Most users can ignore this. Advanced users may want to adjust it, or use it for processing and minifying Javascript.
 *   `index.md`: the home page of your project when served as a website.
 *   `search.md`: the search page of your project when served as a website.

@@ -1,0 +1,8 @@
+---
+# This YAML frontmatter makes Jekyll process this file.
+# So you can use Liquid tags to include files such as
+# other hyphenation dictionaries, e.g.
+# `{% include_relative hyph-en-gb.pat %}`
+# or to use hyphenation in certain cases, e.g. variants.
+---
+

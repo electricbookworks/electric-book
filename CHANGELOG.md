@@ -1,8 +1,17 @@
 # Changelog
 
-## 0.12.1 (in progress)
+## 0.13.0
 
+* [Add ability to create reusable content items](https://github.com/electricbookworks/electric-book/pull/307).
+* [Add annotation with Hypothes.is](https://github.com/electricbookworks/electric-book/pull/304).
+* [Translation styles now augment, rather than replace, parent-language styles](https://github.com/electricbookworks/electric-book/pull/298).
+* [New setting to avoid inaccurate image-colour-profile conversion on PDF output](https://github.com/electricbookworks/electric-book/pull/305).
+* [New docs on building apps, and better Windows app](https://github.com/electricbookworks/electric-book/pull/293) [output](https://github.com/electricbookworks/electric-book/pull/294).
+* [Prevent spans with `.keep-together` from breaking over lines](https://github.com/electricbookworks/electric-book/pull/292).
 * [Fall back to book and project descriptions for Open Graph descriptions when page description not available](https://github.com/electricbookworks/electric-book/pull/285).
+* [Upgrade gulp dependency to 4.0.0](https://github.com/electricbookworks/electric-book/pull/296).
+* [Improvements to docs](https://github.com/electricbookworks/electric-book/pull/288) and [setup](https://github.com/electricbookworks/electric-book/pull/284) [guidance](https://github.com/electricbookworks/electric-book/pull/287).
+* [Fix the ability to use a file list as a source for the nav list](https://github.com/electricbookworks/electric-book/pull/279).
 * [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/84e065f4f64571a95120ac89e38dc5ff01717fc8...master).
 
 ## 0.12.0

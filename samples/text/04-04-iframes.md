@@ -12,6 +12,6 @@ At this stage, it's best to use Liquid control flow tags to show text-only alter
 
 Here's an iFrame showing a quiz from a nursing textbook. How well do you know your Ebola prevention?
 
-<iframe width="100%" height="400px" src="http://quiz.bettercare.co.za/?qz=63&amp;r=http://quiz.bettercare.co.za/login_form.php?qz=63"></iframe>
+<iframe width="100%" height="400px" src="https://quiz.bettercare.co.za/?qz=63&amp;r=https://quiz.bettercare.co.za/login_form.php?qz=63"></iframe>
 
 {% endif %}

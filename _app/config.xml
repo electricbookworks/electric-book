@@ -54,7 +54,9 @@ layout: min
     <platform name="windows">
         <icon src="res/icon.png" />
         <preference name="windows-target-version" value="10.0" />
-        <preference name="WindowsStoreIdentityName" value="{{ site.data.secrets.windows.package-identity-name }}" />
+        <preference name="WindowsStoreIdentityName" value="{% if site.build-language and site.build-language != "" %}{{ site.data.secrets[site.build-language].windows.package-identity-name }}{% else %}{{ site.data.secrets.windows.package-identity-name }}{% endif %}" />
+        <preference name="WindowsStorePublisherName" value="{% if site.build-language and site.build-language != "" %}{{ site.data.secrets[site.build-language].windows.publisher-display-name }}{% else %}{{ site.data.secrets.windows.publisher-display-name }}{% endif %}" />
+        <preference name="WindowsStoreDisplayName" value="{% if site.build-language and site.build-language != "" %}{{ site.data.locales[site.build-language].project.name }}{% else %}{{ series-name }}{% endif %}"/>
     </platform>
     <engine name="android" spec="~6.2.3" />
     <plugin name="cordova-plugin-whitelist" spec="1" />

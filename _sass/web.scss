@@ -63,9 +63,12 @@ $color-links: #5f738c !default;
 $color-buttons: $color-accent !default;
 $color-buttons-hover: darken( $color-buttons, 20% ) !default;
 $color-highlight: #ffd54d !default;
-$color-notification-low: #7fcebf !default;
-$color-notification-medium: #ffe388 !default;
-$color-notification-high: #ff7c4d !default;
+$color-notification-low-text: $color-light !default;
+$color-notification-medium-text: $color-light !default;
+$color-notification-high-text: $color-light !default;
+$color-notification-low-background: #009E7F !default;
+$color-notification-medium-background: #ffe388 !default;
+$color-notification-high-background: #ff7c4d !default;
 
 // Some features rearrange at certain screen sizes.
 // What are your break points for rearrangement?
@@ -99,6 +102,7 @@ $footer-border-color: $color-accent !default;
 $masthead-text-color: $color-light !default;
 $masthead-background-color: $color-accent !default;
 $masthead-border-color: $color-light !default;
+$masthead-breadcrumb-divider: "\2044"; // 2044 is a fraction slash
 
 // Website sidebar/navigation
 $nav-bar-text-size: 0.8em !default;
@@ -132,6 +136,14 @@ $language-select-text-color: $color-text-secondary !default;
 $language-select-links-color: $color-links !default;
 $language-select-background-color: $color-background !default;
 
+// Annotator
+$annotator-sidebar-width: 16em !default;
+$annotator-icon-line-color-active: $color-light !default;
+$annotator-icon-line-color-inactive: $color-light !default;
+$annotator-icon-background-color-active: $color-accent !default;
+$annotator-icon-background-color-inactive: $color-background !default;
+$annotator-icon-thickness: 1.5px !default;
+
 // ---------------------------------
 // Set to false to turn partials off
 // ---------------------------------
@@ -153,7 +165,6 @@ $web-masthead: true !default;
 $web-search: true !default;
 $web-nav-bar: true !default;
 $web-footer: true !default;
-$web-language-select: true !default;
 $web-accordion: true !default;
 
 // Book parts
@@ -185,7 +196,7 @@ $web-letters: true !default;
 $web-verse: true !default;
 $web-video: true !default;
 $web-pagination: true !default;
-$web-multiple-choice-questions: true !default;
+$web-questions: true !default;
 
 // Docs
 $web-docs: true !default;
@@ -193,6 +204,11 @@ $web-docs: true !default;
 // Type-control classes
 $web-smallcaps: true !default;
 $web-fitting: true !default;  // E.g. tracking and shrinking
+
+// Controls
+$web-controls: true !default;
+$web-language-select: true !default;
+$web-annotator: false !default;
 
 // Logic (if this then that)
 $web-reset-sequences: true !default; // This should stay last in the @import list
@@ -224,7 +240,6 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-nav-bar";
 @import "partials/web-search";
 @import "partials/web-footer";
-@import "partials/web-language-select";
 @import "partials/web-accordion";
 
 // Book parts
@@ -256,7 +271,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-verse";
 @import "partials/web-video";
 @import "partials/web-pagination";
-@import "partials/web-mcqs";
+@import "partials/web-questions";
 
 // Docs
 @import "partials/web-docs";
@@ -264,6 +279,11 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 // Type-control classes
 @import "partials/web-smallcaps";
 @import "partials/web-fitting";  // E.g. tracking and shrinking
+
+// User features
+@import "partials/web-controls";
+@import "partials/web-annotator";
+@import "partials/web-language-select";
 
 // Logic (if this then that)
 @import "partials/web-reset-sequences"; // This should stay last in the @import list

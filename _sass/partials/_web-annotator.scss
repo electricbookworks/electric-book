@@ -1,0 +1,141 @@
+$web-annotator: true !default;
+@if $web-annotator {
+
+    // Styles for Hypothesis annotator
+
+    // For our UI when externalContainerSelector
+    // is defined as .annotator in Hypothesis config
+
+    .annotator {
+        // If language-select is not showing, move this down
+        // as if language-select was there.
+        &:nth-child(3) {
+            position: relative;
+            top: $line-height-default * 2; // magic number :(
+        }
+        label {
+            display: block;
+            padding: 0 ($line-height-default / 2);
+            &:first-of-type {
+                margin-top: $line-height-default / 2;
+                border-radius: $button-border-radius 0 0 0;
+            }
+            &:last-of-type {
+                margin-bottom: $line-height-default / 2;
+                border-radius: 0 0 $button-border-radius 0;
+            }
+            svg {
+                fill: $annotator-icon-background-color-inactive;
+                stroke: $annotator-icon-line-color-inactive;
+                stroke-width: $annotator-icon-thickness;
+                width: $line-height-default;
+                // Avoid Firefox bug where tapping selects SVG as text
+                // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
+                -moz-user-select: none;
+            }
+        }
+        iframe {
+            display: none; // until shown with .annotator-toggle:checked
+            height: 100vh;
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: $annotator-sidebar-width;
+            max-width: 70vw; // leave space for icon buttons which have max 80vw
+            z-index: 1000;
+            border-left: $rule-thickness solid $annotator-icon-line-color-active;
+        }
+        .annotator-toggle-sidebar {
+            &:checked {
+                // Show the iframe when checked
+                & ~ iframe {
+                    display: block;
+                }
+                // Change colour when checked
+                ~ label.annotator-toggle-sidebar {
+                    svg {
+                        fill: $annotator-icon-background-color-active;
+                        stroke: $annotator-icon-line-color-active;
+                    }
+                }
+                // Move controls left when iframe shows
+                ~ label.annotator-toggle-sidebar,
+                ~ label.annotator-show-annotations {
+                    width: $annotator-sidebar-width + $line-height-default;
+                    max-width: 80vw;
+                    text-align: left;
+                }
+            }
+        }
+        .annotator-show-annotations {
+            // Change colour when checked
+            &:checked {
+                ~ label.annotator-show-annotations {
+                    svg {
+                        fill: $annotator-icon-background-color-active;
+                        stroke: $annotator-icon-line-color-active;
+                    }
+                }
+            }
+        }
+        input[type='checkbox'] {
+            display: none;
+        }
+
+        // Tooltips
+        [data-tooltip-description]:after {
+            content: attr(data-tooltip-description);
+            display: none;
+        }
+        [data-tooltip-description] {
+            position: relative;
+            &:hover {
+                // The arrow
+                &:before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    border-width: 4px 6px 0 6px;
+                    margin-left: -4px;
+                    border-style: solid;
+                    border-color: $color-notification-low-background transparent transparent transparent;
+                    transform: translateY(-50%) rotate(-90deg);
+                    z-index: 100;
+                }
+                // The text
+                &:after {
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    z-index: 100;
+                    pointer-events: none;
+                    border-radius: $button-border-radius;
+                    color: $color-notification-low-text;
+                    background-color: $color-notification-low-background;
+                    border: $rule-thickness solid $color-notification-low-background;
+                    font-size: $font-size-default / 2;
+                    line-height: $line-height-default;
+                    width: $line-height-default * 10;
+                    max-width: 50vw;
+                    padding: $line-height-default / 2;
+                    transform: translateX(-100%) translateY(-50%);
+                }
+            }
+        }
+
+    }
+
+    // For Hypothesis default UI
+
+    .annotator-frame {
+        .annotator-toolbar {
+            top: 5em;
+            button {
+                border-style: solid!important; // important to override inline styles from Hypothesis JS
+            }
+        }
+    }
+
+}

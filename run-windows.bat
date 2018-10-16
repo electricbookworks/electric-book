@@ -137,8 +137,8 @@ set /p process=Enter a number and hit return.
             :: Run prince, showing progress (-v), printing the docs in file-list
             :: and saving the resulting PDF to the _output folder
             :: (For some reason this has to be run with call)
-            set print-pdf-filename=%bookfolder%-%subdirectory%
-            if "%subdirectory%"=="" set print-pdf-filename=%bookfolder%
+            set print-pdf-filename=%bookfolder%-%subdirectory%-print
+            if "%subdirectory%"=="" set print-pdf-filename=%bookfolder%-print
             call prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
 
             :: Navigate back to where we began.
@@ -243,8 +243,8 @@ set /p process=Enter a number and hit return.
             :: Run prince, showing progress (-v), printing the docs in file-list
             :: and saving the resulting PDF to the _output folder
             :: (For some reason this has to be run with call)
-            set screen-pdf-filename=%bookfolder%-%subdirectory%
-            if "%subdirectory%"=="" set screen-pdf-filename=%bookfolder%
+            set screen-pdf-filename=%bookfolder%-%subdirectory%-screen
+            if "%subdirectory%"=="" set screen-pdf-filename=%bookfolder%-screen
             call prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
 
             :: Navigate back to where we began.
@@ -439,13 +439,13 @@ set /p process=Enter a number and hit return.
         :epubCopyStyles
             echo Copying styles...
             :: --------------------------
-            :: If original language output: copy only files in fonts/epub
+            :: If original language output: copy original styles files only
             if "%subdirectory%"=="" if not exist %subdirectory%\styles\*.* goto epubOriginalStyles
             :: Translation output, but no translated-styles subdirectory for that translation:
             :: copy the original styles files only
             if not "%subdirectory%"=="" if not exist %subdirectory%\styles\*.* goto epubOriginalStyles
-            :: Translation output, and an styles subdir for that translation exists:
-            :: create folder structure, and copy only the styles in that translation folder
+            :: Translation output, and translation styles for that translation exist:
+            :: create folder structure, and copy the styles in that translation folder, too
             if not "%subdirectory%"=="" if exist %subdirectory%\styles\*.* goto epubTranslationStyles
 
         :: Copy original styles
@@ -455,9 +455,9 @@ set /p process=Enter a number and hit return.
             echo Styles copied.
             goto epubCopyImages
         
-        :: Copy translated styles, after deleting original styles
+        :: Copy translated styles, in addition to original styles
         :epubTranslationStyles
-            rd /s /q styles
+            xcopy /i /q "styles\*.css" "..\epub\styles" > nul
             mkdir "..\epub\%subdirectory%\styles"
             if exist "%subdirectory%\styles\*.css" xcopy /i /q "%subdirectory%\styles\*.css" "..\epub\%subdirectory%\styles" > nul
             :: Done! Move along to moving the text folder
@@ -481,6 +481,7 @@ set /p process=Enter a number and hit return.
         :: Copy original images
         :epubOriginalImages
             xcopy /i /q "images\epub\*.*" "..\epub\images\epub" > nul
+            xcopy /i /q "%location%\_site\items\images\epub\*.*" "..\epub\items\images\epub"
             :: Done! Move along to moving the text folder
             echo Images copied.
             goto epubCopyText
@@ -490,6 +491,7 @@ set /p process=Enter a number and hit return.
             rd /s /q images
             mkdir "..\epub\%subdirectory%\images\epub"
             xcopy /i /q "%subdirectory%\images\epub\*.*" "..\epub\%subdirectory%\images\epub" > nul
+            xcopy /i /q "%location%\_site\items\%subdirectory%\images\epub\*.*" "..\epub\items\%subdirectory%\images\epub" > nul
             :: Done! Move along to moving the text folder
             echo Images copied.
             goto epubCopyText
@@ -634,6 +636,7 @@ set /p process=Enter a number and hit return.
 
             :: Zip root folders
             if exist "images\epub" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images\epub"
+            if exist "items" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "items"
             if exist "fonts" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "fonts"
             if exist "styles" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "styles"
             if exist "mathjax" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "mathjax"

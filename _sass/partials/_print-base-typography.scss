@@ -1,4 +1,5 @@
 $print-base-typography: true !default;
+$convert-images-to-color-profile: false !default;
 @if $print-base-typography {
 
     // Base typography
@@ -180,6 +181,12 @@ $print-base-typography: true !default;
 
     img {
         max-width: 100%;
+        // Control colorspace conversion. See:
+        // https://www.princexml.com/forum/topic/3831/dont-convert-images
+        prince-image-magic: ignore-icc-profile;
+        @if $convert-images-to-color-profile {
+            prince-image-magic: none;
+        }
     }
 
     // An option to change the default text-indented paragraphs

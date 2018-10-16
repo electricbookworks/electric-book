@@ -4,11 +4,8 @@ $web-language-select: true !default;
     // Language selector
 
     .language-select {
-        position: fixed;
-        top: 0.5em;
-        right: 1em;
         z-index: 100;
-        padding: 0.1em 0.25em; // allow space for when we hover
+        padding: ($line-height-default / 2) ($line-height-default / 2) 0 ($line-height-default / 2);
         text-align: right;
         color: $language-select-text-color;
         .language-select-list {
@@ -30,10 +27,13 @@ $web-language-select: true !default;
             display: none;
         }
         &:hover {
-            background-color: $language-select-background-color;
-            border-radius: $button-border-radius;
             .language-select-list {
+                background-color: $language-select-background-color;
+                border-radius: $button-border-radius;
                 display: inline;
+                position: fixed;
+                right: 0;
+                padding: $line-height-default / 2;
             }
         }
     }

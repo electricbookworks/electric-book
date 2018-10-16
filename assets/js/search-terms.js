@@ -80,7 +80,6 @@ function jumpToSearchResult() {
 }
 
 if (isSearchPage() == false) {
-  console.log('Not a search page, checking for search results...');
   jumpToSearchResult();
 } else {
   fillSearchBox();
