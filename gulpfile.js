@@ -3,7 +3,6 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     eslint = require('gulp-eslint'),
-    watch = require('gulp-watch'),
     newer = require('gulp-newer'),
     gm = require('gulp-gm'),
     svgmin = require('gulp-svgmin'),
@@ -12,24 +11,24 @@ var gulp = require('gulp'),
 
 // get the book we're processing
 var book = 'book';
-if (args.book && args.book.trim != '') {
+if (args.book && args.book.trim !== '') {
     book = args.book;
 }
 
 // reminder
-if (book == 'book') {
+if (book === 'book') {
     console.log('If processing images for a book that\'s not in the /book directory, use the --book argument, e.g. gulp --book potatoes');
     console.log('To process images in _items, use gulp --book _items');
 }
 
 // get the language we're processing
 var language = '';
-if (args.language && args.language.trim != '') {
+if (args.language && args.language.trim !== '') {
     language = '/' + args.language;
 }
 
 // reminder
-if (language == '') {
+if (language === '') {
     console.log('If processing a translation\'s images, use the --language argument, e.g. gulp --language fr');
 }
 
@@ -69,22 +68,22 @@ gulp.task('images:svg', function (done) {
     'use strict';
     console.log('Processing SVG images from ' + paths.img.source);
     gulp.src(paths.img.source + '*.svg')
-    .pipe(svgmin({
-       plugins: [{
-            removeAttrs: { attrs: 'data.*' }
-        }, {
-            removeUnknownsAndDefaults: {
-                defaultAttrs: false
-            }
-        }]
-    }).on('error', function(e){
+        .pipe(svgmin({
+            plugins: [{
+                removeAttrs: {attrs: 'data.*'}
+            }, {
+                removeUnknownsAndDefaults: {
+                    defaultAttrs: false
+                }
+            }]
+        }).on('error', function (e) {
             console.log(e);
-         }))
-    .pipe(gulp.dest(paths.img.printpdf))
-    .pipe(gulp.dest(paths.img.screenpdf))
-    .pipe(gulp.dest(paths.img.web))
-    .pipe(gulp.dest(paths.img.epub))
-    .pipe(gulp.dest(paths.img.app));
+        }))
+        .pipe(gulp.dest(paths.img.printpdf))
+        .pipe(gulp.dest(paths.img.screenpdf))
+        .pipe(gulp.dest(paths.img.web))
+        .pipe(gulp.dest(paths.img.epub))
+        .pipe(gulp.dest(paths.img.app));
     done();
 });
 
@@ -94,13 +93,13 @@ gulp.task('images:printpdf', function (done) {
     console.log('Processing print-PDF images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/PSOcoated_v3.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
-        .pipe(newer(paths.img.printpdf))
-        .pipe(gm(function(gmfile) {
-            return gmfile.profile('_tools/profiles/PSOcoated_v3.icc').colorspace('cmyk');
-        }).on('error', function(e){
-            console.log(e);
+            .pipe(newer(paths.img.printpdf))
+            .pipe(gm(function (gmfile) {
+                return gmfile.profile('_tools/profiles/PSOcoated_v3.icc').colorspace('cmyk');
+            }).on('error', function (e) {
+                console.log(e);
             }))
-        .pipe(gulp.dest(paths.img.printpdf));
+            .pipe(gulp.dest(paths.img.printpdf));
     } else {
         console.log('Colour profile _tools/profiles/PSOcoated_v3.icc not found. Exiting.');
         return;
@@ -117,23 +116,23 @@ gulp.task('images:optimise', function (done) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
             .pipe(responsive({
-            '*': [{
-                width: 810,
-                quality: 90,
-                upscale: false
-            }]
-        }).on('error', function(e){
-            console.log(e);
+                '*': [{
+                    width: 810,
+                    quality: 90,
+                    upscale: false
+                }]
+            }).on('error', function (e) {
+                console.log(e);
             }))
-        .pipe(gm(function(gmfile) {
-            return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-        }).on('error', function(e){
-            console.log(e);
+            .pipe(gm(function (gmfile) {
+                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+            }).on('error', function (e) {
+                console.log(e);
             }))
-        .pipe(gulp.dest(paths.img.screenpdf))
-        .pipe(gulp.dest(paths.img.web))
-        .pipe(gulp.dest(paths.img.epub))
-        .pipe(gulp.dest(paths.img.app));
+            .pipe(gulp.dest(paths.img.screenpdf))
+            .pipe(gulp.dest(paths.img.web))
+            .pipe(gulp.dest(paths.img.epub))
+            .pipe(gulp.dest(paths.img.app));
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
@@ -155,14 +154,14 @@ gulp.task('images:small', function (done) {
                     upscale: false,
                     suffix: '-320'
                 }]
-            }).on('error', function(e){
+            }).on('error', function (e) {
                 console.log(e);
-                }))
-            .pipe(gm(function(gmfile) {
+            }))
+            .pipe(gm(function (gmfile) {
                 return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-            }).on('error', function(e){
+            }).on('error', function (e) {
                 console.log(e);
-                }))
+            }))
             .pipe(gulp.dest(paths.img.web));
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
@@ -185,14 +184,14 @@ gulp.task('images:medium', function (done) {
                     upscale: false,
                     suffix: '-640'
                 }]
-            }).on('error', function(e){
+            }).on('error', function (e) {
                 console.log(e);
-                }))
-            .pipe(gm(function(gmfile) {
+            }))
+            .pipe(gm(function (gmfile) {
                 return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-            }).on('error', function(e){
+            }).on('error', function (e) {
                 console.log(e);
-                }))
+            }))
             .pipe(gulp.dest(paths.img.web));
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
@@ -214,15 +213,15 @@ gulp.task('images:large', function (done) {
                     quality: 90,
                     upscale: false,
                     suffix: '-1024'
-                    }]
-                }).on('error', function(e){
-                    console.log(e);
-                    }))
-            .pipe(gm(function(gmfile) {
-                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-            }).on('error', function(e){
+                }]
+            }).on('error', function (e) {
                 console.log(e);
-                }))
+            }))
+            .pipe(gm(function (gmfile) {
+                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+            }).on('error', function (e) {
+                console.log(e);
+            }))
             .pipe(gulp.dest(paths.img.web));
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
@@ -244,52 +243,56 @@ gulp.task('images:xlarge', function (done) {
                     quality: 90,
                     upscale: false,
                     suffix: '-2048'
-                    }]
-                }).on('error', function(e){
-                    console.log(e);
-                    }))
-            .pipe(gm(function(gmfile) {
-                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
-            }).on('error', function(e){
+                }]
+            }).on('error', function (e) {
                 console.log(e);
-                }))
+            }))
+            .pipe(gm(function (gmfile) {
+                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+            }).on('error', function (e) {
+                console.log(e);
+            }))
             .pipe(gulp.dest(paths.img.web));
     } else {
         console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
         return;
-    };
+    }
     done();
 });
 
 // minify JS files to make them smaller
 // using the drop_console option to remove console logging
-gulp.task('js', function(done) {
+gulp.task('js', function (done) {
+    'use strict';
+
     if (paths.js.src.length > 0) {
         console.log('Minifying Javascript');
         gulp.src(paths.js.src)
-        .pipe(uglify({ compress: { drop_console: true } }).on('error', function(e){
-            console.log(e);
+            .pipe(uglify({compress: {drop_console: true}}).on('error', function (e) {
+                console.log(e);
             }))
-        .pipe(rename({ suffix:'.min' }))
-        .pipe(gulp.dest(paths.js.dest));
+            .pipe(rename({suffix: '.min'}))
+            .pipe(gulp.dest(paths.js.dest));
         done();
     } else {
-        console.log('No scripts in source list to minify.')
+        console.log('No scripts in source list to minify.');
         done();
     }
 });
 
 // lint the JS files: check for errors and inconsistencies
-gulp.task('jslint', function(done) {
+gulp.task('jslint', function (done) {
+    'use strict';
+
     if (paths.js.src.length > 0) {
         console.log('Linting Javascript');
         gulp.src(paths.js.src)
-        .pipe(eslint({
-            configFile: 'eslint.json',
-            fix: true
-        }))
-        .pipe(eslint.format())
-        .pipe(eslint.failAfterError());
+            .pipe(eslint({
+                configFile: 'eslint.json',
+                fix: true
+            }))
+            .pipe(eslint.format())
+            .pipe(eslint.failAfterError());
         done();
     } else {
         console.log('No scripts in source list to lint.');
@@ -299,11 +302,13 @@ gulp.task('jslint', function(done) {
 
 // watch the JS files for changes, and run jslint and js tasks when they do
 
-gulp.task('watch', function(done) {
+gulp.task('watch', function (done) {
+    'use strict';
+
     if (paths.js.src.length > 0) {
         console.log('Watching for Javascript changes');
         gulp.watch(paths.js.src, gulp.parallel('js'));
-        if (fileExists.sync('eslint.json') && lintJS == true) {
+        if (fileExists.sync('eslint.json') && lintJS === true) {
             gulp.watch(paths.js.src, gulp.parallel('jslint'));
         }
     } else {
@@ -314,12 +319,11 @@ gulp.task('watch', function(done) {
 
 // when running `gulp`, do the image tasks
 gulp.task('default', gulp.series(
-                                'images:svg',
-                                'images:printpdf',
-                                'images:optimise',
-                                'images:small',
-                                'images:medium',
-                                'images:large',
-                                'images:xlarge'
-                                )
-);
+    'images:svg',
+    'images:printpdf',
+    'images:optimise',
+    'images:small',
+    'images:medium',
+    'images:large',
+    'images:xlarge'
+));
