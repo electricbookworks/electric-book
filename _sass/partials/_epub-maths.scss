@@ -18,4 +18,18 @@ $epub-maths: true !default;
     	font-style: inherit;
     }
 
+    // MathJax
+    // Only use these styles to position maths blocks,
+    // not to style the maths itself. For dire warnings, see
+    // http://stackoverflow.com/questions/5639827/styling-mathjax/25329062#25329062
+    // MathJax output should be styled in _includes/mathjax-config
+    .MathJax_Display {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0 0 0.4em 0; // avoids vertical scrollbars appearing
+        &.visuallyhidden {
+            padding: 0;
+        }
+    }
+
 }
