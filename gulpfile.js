@@ -1,39 +1,47 @@
+// This gulpfile processes:
+// - images, optimising them for output formats
+// - Javascript, optionally, minifying scripts for performance
+// - HTML, rendering MathJax as MathML.
+// It takes two arguments: --book and --language, e.g.:
+// gulp --book samples --language fr
+
+// Get Node modules
 var gulp = require('gulp'),
     responsive = require('gulp-responsive-images'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
-    eslint = require('gulp-eslint'),
     newer = require('gulp-newer'),
     gm = require('gulp-gm'),
     svgmin = require('gulp-svgmin'),
     args = require('yargs').argv,
-    fileExists = require('file-exists');
+    fileExists = require('file-exists'),
+    mathjax = require('gulp-mathjax-page');
 
-// get the book we're processing
+// Get the book we're processing
 var book = 'book';
 if (args.book && args.book.trim !== '') {
     book = args.book;
 }
 
-// reminder
+// Reminder on usage
 if (book === 'book') {
     console.log('If processing images for a book that\'s not in the /book directory, use the --book argument, e.g. gulp --book potatoes');
     console.log('To process images in _items, use gulp --book _items');
 }
 
-// get the language we're processing
+// Get the language we're processing
 var language = '';
 if (args.language && args.language.trim !== '') {
     language = '/' + args.language;
 }
 
-// reminder
+// Reminder on usage
 if (language === '') {
     console.log('If processing a translation\'s images, use the --language argument, e.g. gulp --language fr');
 }
 
-// set up paths for later
-// add paths to any JS files to minify to the src array, e.g.
+// Set up paths.
+// Add paths to any JS files to minify to the src array, e.g.
 // src: ['assets/js/foo.js,assets/js/bar.js'],
 var paths = {
     img: {
@@ -44,24 +52,20 @@ var paths = {
         epub: book + language + '/images/epub/',
         app: book + language + '/images/app/'
     },
+    text: {
+        src: '_site/' + book + language + '/text/',
+        dest: '_site/' + book + language + '/text/'
+    },
     js: {
         src: [],
         dest: 'assets/js/'
     }
 };
 
-// Shall we lint Javascript when watching with `gulp watch`?
-// If true, the jslint task will throw errors when your JS isn't perfect.
-// If false, `gulp watch` will not run the jslint task.
-// Lint settings in eslint.json, in the same folder as this gulpfile.
-var lintJS = true;
-
-// set filetypes to convert, comma separated, no spaces;
-// by default we don't convert svg which throws an error
+// Set filetypes to convert, comma separated, no spaces
 var filetypes = 'jpg,jpeg,gif,png';
 
-
-// Minify and clean SVGs and copy to destinations
+// Minify and clean SVGs and copy to destinations.
 // For EpubCheck-safe SVGs, we remove data- attributes
 // and don't strip defaults like <style "type=text/css">
 gulp.task('images:svg', function (done) {
@@ -87,7 +91,7 @@ gulp.task('images:svg', function (done) {
     done();
 });
 
-// Take the source images and convert them for print-pdf
+// Convert source images for print-pdf
 gulp.task('images:printpdf', function (done) {
     'use strict';
     console.log('Processing print-PDF images from ' + paths.img.source);
@@ -107,8 +111,8 @@ gulp.task('images:printpdf', function (done) {
     done();
 });
 
-// Take the source images and optimise and resize them for
-// screen-pdf, web, epub, and app
+// Convert and optimise source images
+// for screen-pdf, web, epub, and app
 gulp.task('images:optimise', function (done) {
     'use strict';
     console.log('Processing screen-PDF, web, epub and app images from ' + paths.img.source);
@@ -140,7 +144,7 @@ gulp.task('images:optimise', function (done) {
     done();
 });
 
-// Make small size images for web use in srcset
+// Make small images for web use in srcset
 gulp.task('images:small', function (done) {
     'use strict';
     console.log('Creating small web images from ' + paths.img.source);
@@ -170,7 +174,7 @@ gulp.task('images:small', function (done) {
     done();
 });
 
-// Make medium size images for web use in srcset
+// Make medium images for web use in srcset
 gulp.task('images:medium', function (done) {
     'use strict';
     console.log('Creating medium web images from ' + paths.img.source);
@@ -200,7 +204,7 @@ gulp.task('images:medium', function (done) {
     done();
 });
 
-// Make large size images for web use in srcset in _includes/figure
+// Make large images for web use in srcset
 gulp.task('images:large', function (done) {
     'use strict';
     console.log('Creating large web images from ' + paths.img.source);
@@ -230,7 +234,7 @@ gulp.task('images:large', function (done) {
     done();
 });
 
-// Make extra large images for web use in srcset
+// Make extra-large images for web use in srcset
 gulp.task('images:xlarge', function (done) {
     'use strict';
     console.log('Creating extra-large web images from ' + paths.img.source);
@@ -260,7 +264,7 @@ gulp.task('images:xlarge', function (done) {
     done();
 });
 
-// minify JS files to make them smaller
+// Minify JS files to make them smaller,
 // using the drop_console option to remove console logging
 gulp.task('js', function (done) {
     'use strict';
@@ -280,41 +284,54 @@ gulp.task('js', function (done) {
     }
 });
 
-// lint the JS files: check for errors and inconsistencies
-gulp.task('jslint', function (done) {
+// Process MathJax in output HTML
+
+// Settings for mathjax-node-page. leave empty for defaults.
+// https://www.npmjs.com/package/gulp-mathjax-page
+var mjpageOptions = {
+    mjpageConfig: {
+        format: ["TeX"], // determines type of pre-processors to run
+        output: 'mml', // global override for output option; 'svg', 'html' or 'mml'
+        tex: {}, // configuration options for tex pre-processor, cf. lib/tex.js
+        ascii: {}, // configuration options for ascii pre-processor, cf. lib/ascii.js
+        singleDollars: false, // allow single-dollar delimiter for inline TeX
+        fragment: false, // return body.innerHTML instead of full document
+        cssInline: true,  // determines whether inline css should be added
+        jsdom: {}, // jsdom-related options
+        displayMessages: false, // determines whether Message.Set() calls are logged
+        displayErrors: true, // determines whether error messages are shown on the console
+        undefinedCharError: false, // determines whether unknown characters are saved in the error array
+        extensions: '', // a convenience option to add MathJax extensions
+        fontURL: '', // for webfont urls in the CSS for HTML output
+        MathJax: {} // options MathJax configuration, see https://docs.mathjax.org
+    },
+    mjnodeConfig: {
+        ex: 6, // ex-size in pixels (ex is an x-height unit)
+        width: 100, // width of math container (in ex) for linebreaking and tags
+        useFontCache: true, // use <defs> and <use> in svg output?
+        useGlobalCache: false, // use common <defs> for all equations?
+        // state: mjstate, // track global state
+        linebreaks: true, // do linebreaking?
+        equationNumbers: "none", // or "AMS" or "all"
+        math: "", // the math to typeset
+        html: false, // generate HTML output?
+        css: false, // generate CSS for HTML output?
+        mml: false, // generate mml output?
+        svg: false, // generate svg output?
+        speakText: false, // add spoken annotations to output?
+        timeout: 10 * 1000 // 10 second timeout before restarting MathJax
+    }
+};
+
+// Process MathJax in HTML files
+gulp.task('mathjax', function (done) {
     'use strict';
 
-    if (paths.js.src.length > 0) {
-        console.log('Linting Javascript');
-        gulp.src(paths.js.src)
-            .pipe(eslint({
-                configFile: 'eslint.json',
-                fix: true
-            }))
-            .pipe(eslint.format())
-            .pipe(eslint.failAfterError());
-        done();
-    } else {
-        console.log('No scripts in source list to lint.');
-        done();
-    }
-});
-
-// watch the JS files for changes, and run jslint and js tasks when they do
-
-gulp.task('watch', function (done) {
-    'use strict';
-
-    if (paths.js.src.length > 0) {
-        console.log('Watching for Javascript changes');
-        gulp.watch(paths.js.src, gulp.parallel('js'));
-        if (fileExists.sync('eslint.json') && lintJS === true) {
-            gulp.watch(paths.js.src, gulp.parallel('jslint'));
-        }
-    } else {
-        console.log('No scripts in source list to watch.');
-        done();
-    }
+    console.log('Processing MathJax in ' + paths.text.src);
+    gulp.src(paths.text.src + '*.html')
+        .pipe(mathjax(mjpageOptions))
+        .pipe(gulp.dest(paths.text.dest));
+    done();
 });
 
 // when running `gulp`, do the image tasks
