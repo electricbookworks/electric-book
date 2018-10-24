@@ -1,38 +1,13 @@
 {% comment %}
-Mathjax configuration
-Note that configs are different for pdf, epub and web.
+Mathjax configuration when using JS MathJax (epub, web, app).
+Print and screen PDF outputs use mathjax-node-page to output MML,
+configured in gulpfile.js.
 {% endcomment %}
 
-{% if site.output == "print-pdf" or site.output == "screen-pdf" %}
+{% if site.output == "epub" %}
 
-<script id="MathJax"
-   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_SVG">
-</script>
-<script id="MathJaxConfig" type="text/x-mathjax-config" >
-MathJax.Hub.Config({
-    messageStyle: "none",
-    "SVG": {
-        scale: 75,
-        font: "{% if page.mathjax-font %}{{ page.mathjax-font }}{% else %}{{ site.mathjax-font }}{% endif %}",
-        matchFontHeight: false,
-        styles: {
-            ".MathJax [style*=border-top-width]": {
-                "border-top-width": "0.5pt ! important"
-            }
-        }
-    }
-});
-MathJax.Hub.Queue(
-    // fires after MathJax is done
-    function () {
-        if (typeof window.callPhantom === 'function') {
-            window.callPhantom({ mathJaxDone: true});
-        }
-    }
-);
-</script>
-
-{% elsif site.output == "epub" %}
+{% comment %}To do: change output script for epub to use mathjax-node-page,
+then we can remove all this and only use MathML in epubs.{% endcomment %}
 
 <!--See https://www.peterkrautzberger.org/0129/ -->
 <script type="text/x-mathjax-config">
@@ -62,6 +37,9 @@ MathJax.Hub.Config({
 
 {% elsif site.output == "app" %}
 
+{% comment %}To do: change output script for app to use mathjax-node-page,
+then we can remove all this and only use MathML in apps.{% endcomment %}
+
 <!--See https://www.peterkrautzberger.org/0129/ -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -88,7 +66,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"></script>
 
-{% else %}
+{% elsif site.output == "web" %}
 
 <script id="MathJax"
    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
