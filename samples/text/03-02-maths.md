@@ -8,7 +8,7 @@ Jekyll uses [MathJax](http://docs.mathjax.org/en/latest/), which the Electric Bo
 
 {% if site.mathjax-enabled == true %}
 
-LaTeX-style maths via MathJax:
+LaTeX-style maths via MathJax can be inline ($$E = mc^2$$) or displayed:
 
 $$E = mc^2$$
 
