@@ -89,7 +89,7 @@ set /p process=Enter a number and hit return.
             set /p config=
             echo.
 
-        :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+        :: Ask if we're processing MathJax, so we know whether to process the HTML
             echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
             set /p print-pdf-mathjax=
 
@@ -111,17 +111,15 @@ set /p process=Enter a number and hit return.
 
             :printpdfjekylldone
 
-            :: Skip PhantomJS if we're not using MathJax.
-            if not "%print-pdf-mathjax%"=="y" goto printpdfafterphantom
+            :: Skip the next step if we're not using MathJax.
+            if not "%print-pdf-mathjax%"=="y" goto printpdfaftermathjax
 
-            :: Run this through phantom for extra magic,
-            :: We have to run the PhantomJS script from the folder it's in
-            :: for the directory paths to work.
-            cd _site\assets\js
-            call phantomjs render-mathjax.js
+            :: Convert all MathJax LaTeX to MathML
+            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
             cd "%location%"
 
-            :printpdfafterphantom
+            :printpdfaftermathjax
 
             :: Navigate into the book's folder in _site output
             cd _site\%bookfolder%\"%subdirectory%\text"
@@ -203,7 +201,7 @@ set /p process=Enter a number and hit return.
             set /p config=
             echo.
 
-        :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+        :: Ask if we're processing MathJax, so we know whether to process the HTML
         echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
         set /p screen-pdf-mathjax=
 
@@ -222,17 +220,15 @@ set /p process=Enter a number and hit return.
             call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
             :screenpdfjekylldone
 
-            :: Skip PhantomJS if we're not using MathJax.
-            if not "%screen-pdf-mathjax%"=="y" goto screenpdfafterphantom
+            :: Skip the next step if we're not using MathJax.
+            if not "%screen-pdf-mathjax%"=="y" goto screenpdfaftermathjax
 
-            :: Run this through phantom for extra magic,
-            :: We have to run the PhantomJS script from the folder it's in
-            :: for the directory paths to work.
-            cd _site\assets\js
-            call phantomjs render-mathjax.js
+            :: Convert all MathJax LaTeX to MathML
+            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
             cd "%location%"
 
-            :screenpdfafterphantom
+            :screenpdfaftermathjax
 
             :: Navigate into the book's folder in _site output
             cd _site\%bookfolder%\"%subdirectory%\text"
