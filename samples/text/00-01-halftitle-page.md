@@ -1,6 +1,6 @@
 ---
 title: Half-title page
-style: halftitle-page
+style: halftitle-page page-1
 ---
 
 {% include metadata %}
