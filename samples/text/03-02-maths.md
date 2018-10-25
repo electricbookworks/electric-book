@@ -10,7 +10,15 @@ Jekyll uses [MathJax](http://docs.mathjax.org/en/latest/), which the Electric Bo
 
 LaTeX-style maths via MathJax can be inline ($$E = mc^2$$) or displayed:
 
-$$E = mc^2$$
+$$P_{t+1} - P_t=\frac{b+d}{s}(P_t-\overline{P})$$
+
+The maths above and below is borrowed from [*The Economy*](https://core-econ.org/the-economy/book/text/leibniz-11-08-01.html) by CORE.
+
+$$P_{t+2} - P_{t+1}=\frac{b+d}{s}(P_{t+1}-\overline{P})$$
+
+It follows from $$P_{t} = \overset{\overline{}}{P} - \frac{s}{b + d}E_{t}$$ , $$E_{t} = P_{t + 1} - P_{t}$$ and the equation above that
+
+$$\frac{P_{t+2} - P_{t+1}}{P_{t+1} - P_{t}}=\frac{P_{t+1}-\overline{P}}{ P_{t}-\overline{P}}=R$$
 
 {% else %}
 
