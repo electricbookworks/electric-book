@@ -4,10 +4,11 @@ Print and screen PDF outputs use mathjax-node-page to output MML,
 configured in gulpfile.js.
 {% endcomment %}
 
-{% if site.output == "epub" %}
-
-{% comment %}To do: change output script for epub to use mathjax-node-page,
-then we can remove all this and only use MathML in epubs.{% endcomment %}
+{% comment %}
+PDF outputs use mathjax-node-page to turn LaTeX into MathML,
+so we don't need MathJax there.
+To do: change output script for app and epub to use mathjax-node-page, too.
+{% endcomment %}
 
 <!--See https://www.peterkrautzberger.org/0129/ -->
 <script type="text/x-mathjax-config">
@@ -30,60 +31,33 @@ MathJax.Hub.Config({
       automatic: true,
       width: "container",
     },
-  },
+  }
 });
 </script>
+
+<script>
+// OPTIONAL
+// If you change your MathJax renderer, you must clear users' caches
+// or their browser might look for the wrong, cached config file.
+function delete_cookie(name) {
+  document.cookie = name +'=; Path=/; Expires={{ site.time | date: "%a, %-d %b %Y %H:%M:%S GMT" }};';
+  console.log('Expired and removed MathJax menu cookie.');
+}
+delete_cookie('mjx.menu')
+</script>
+
+{% if site.output == "epub" %}
+{% comment %}This path uses the structure in the final, packaged epub.{% endcomment %}
 <script type="text/javascript" src="{{ path-to-book-directory }}mathjax/MathJax.js"></script>
 
-{% elsif site.output == "app" %}
-
-{% comment %}To do: change output script for app to use mathjax-node-page,
-then we can remove all this and only use MathML in apps.{% endcomment %}
-
-<!--See https://www.peterkrautzberger.org/0129/ -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  jax: ["input/TeX","input/MathML","output/SVG"],
-  extensions: ["tex2jax.js","mml2jax.js","MathEvents.js"],
-  TeX: {
-    extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
-  },
-  MathMenu: {
-    showRenderer: false
-  },
-  menuSettings: {
-    zoom: "Click"
-  },
-  messageStyle: "none",
-  SVG: {
-    scale: 90,
-    linebreaks: {
-      automatic: true,
-      width: "container",
-    },
-  },
-});
-</script>
+{% elsif site.output == "app" or site.output == "web" %}
 <script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"></script>
 
-{% elsif site.output == "web" %}
+{% endif %}
 
+{% comment %}This fallback in case you need it is for the CDN version.{% endcomment %}
+{% comment %}
 <script id="MathJax"
    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<script id="MathJaxConfig" type="text/x-mathjax-config" >
-MathJax.Hub.Config({
-    "HTML-CSS": {
-        availableFonts: [], // force use of webFont
-        webFont: "{% if page.mathjax-font %}{{ page.mathjax-font }}{% else %}{{ site.mathjax-font }}{% endif %}",
-        scale: 90,
-        styles: {
-            ".MathJax [style*=border-top-width]": {
-                "border-top-width": "0.5pt ! important"
-            }
-        }
-    }
-});
-</script>
-
-{% endif %}
+{% endcomment %}
