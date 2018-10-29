@@ -15,7 +15,42 @@ var gulp = require('gulp'),
     svgmin = require('gulp-svgmin'),
     args = require('yargs').argv,
     fileExists = require('file-exists'),
-    mathjax = require('gulp-mathjax-page');
+    mathjax = require('gulp-mathjax-page'),
+    fs = require('fs'),
+    yaml = require('js-yaml'),
+    debug = require('gulp-debug');
+
+// Get arrays of possible book and language paths
+var metadata = yaml.load(fs.readFileSync('_data/meta.yml', 'utf8'));
+var works = metadata.works;
+function loadMetadata() {
+    'use strict';
+    var paths = [];
+    var filePaths = [];
+    var books = [];
+    var languages = [];
+    var i;
+    var j;
+    for (i = 0; i < works.length; i += 1) {
+        books.push(works[i].directory);
+        paths.push('_site/' + works[i].directory + '/text/');
+        filePaths.push('_site/' + works[i].directory + '/text/*.html');
+        if (works[i].translations) {
+            for (j = 0; j < works[i].translations.length; j += 1) {
+                languages.push(works[i].translations[j].directory);
+                paths.push('_site/' + works[i].directory + '/' + works[i].translations[j].directory + '/text/');
+                filePaths.push('_site/' + works[i].directory + '/' + works[i].translations[j].directory + '/text/*.html');
+            }
+        }
+    }
+    return {
+        books: books,
+        languages: languages,
+        paths: paths,
+        filePaths: filePaths
+    };
+}
+loadMetadata();
 
 // Get the book we're processing
 var book = 'book';
@@ -41,6 +76,7 @@ if (language === '') {
 }
 
 // Set up paths.
+// Paths to text src must include the *.html extension.
 // Add paths to any JS files to minify to the src array, e.g.
 // src: ['assets/js/foo.js,assets/js/bar.js'],
 var paths = {
@@ -53,7 +89,7 @@ var paths = {
         app: book + language + '/images/app/'
     },
     text: {
-        src: '_site/' + book + language + '/text/',
+        src: '_site/' + book + language + '/text/*.html',
         dest: '_site/' + book + language + '/text/'
     },
     js: {
@@ -72,6 +108,7 @@ gulp.task('images:svg', function (done) {
     'use strict';
     console.log('Processing SVG images from ' + paths.img.source);
     gulp.src(paths.img.source + '*.svg')
+        .pipe(debug({title: 'Processing SVG '}))
         .pipe(svgmin({
             plugins: [{
                 removeAttrs: {attrs: 'data.*'}
@@ -98,6 +135,7 @@ gulp.task('images:printpdf', function (done) {
     if (fileExists.sync('_tools/profiles/PSOcoated_v3.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.printpdf))
+            .pipe(debug({title: 'Creating print-PDF version of '}))
             .pipe(gm(function (gmfile) {
                 return gmfile.profile('_tools/profiles/PSOcoated_v3.icc').colorspace('cmyk');
             }).on('error', function (e) {
@@ -119,6 +157,7 @@ gulp.task('images:optimise', function (done) {
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
+            .pipe(debug({title: 'Optimising '}))
             .pipe(responsive({
                 '*': [{
                     width: 810,
@@ -151,6 +190,7 @@ gulp.task('images:small', function (done) {
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
+            .pipe(debug({title: 'Creating small '}))
             .pipe(responsive({
                 '*': [{
                     width: 320,
@@ -181,6 +221,7 @@ gulp.task('images:medium', function (done) {
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
+            .pipe(debug({title: 'Creating medium '}))
             .pipe(responsive({
                 '*': [{
                     width: 640,
@@ -211,6 +252,7 @@ gulp.task('images:large', function (done) {
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
+            .pipe(debug({title: 'Creating large '}))
             .pipe(responsive({
                 '*': [{
                     width: 1024,
@@ -241,6 +283,7 @@ gulp.task('images:xlarge', function (done) {
     if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
+            .pipe(debug({title: 'Creating extra-large '}))
             .pipe(responsive({
                 '*': [{
                     width: 2048,
@@ -272,6 +315,7 @@ gulp.task('js', function (done) {
     if (paths.js.src.length > 0) {
         console.log('Minifying Javascript');
         gulp.src(paths.js.src)
+            .pipe(debug({title: 'Minifying '}))
             .pipe(uglify({compress: {drop_console: true}}).on('error', function (e) {
                 console.log(e);
             }))
@@ -328,10 +372,26 @@ gulp.task('mathjax', function (done) {
     'use strict';
 
     console.log('Processing MathJax in ' + paths.text.src);
-    gulp.src(paths.text.src + '*.html')
+    gulp.src(paths.text.src)
         .pipe(mathjax(mjpageOptions))
+        .pipe(debug({title: 'Processing MathJax in '}))
         .pipe(gulp.dest(paths.text.dest));
     done();
+});
+
+// Process MathJax in all HTML files
+gulp.task('mathjax:all', function (done) {
+    'use strict';
+    var k;
+    var mathJaxFilePaths = loadMetadata().paths;
+    for (k = 0; k < mathJaxFilePaths.length; k += 1) {
+        console.log('Processing MathJax in ' + mathJaxFilePaths[k]);
+        gulp.src(mathJaxFilePaths[k] + '*.html')
+            .pipe(mathjax(mjpageOptions))
+            .pipe(debug({title: 'Processing MathJax in '}))
+            .pipe(gulp.dest(mathJaxFilePaths[k]));
+        done();
+    }
 });
 
 // when running `gulp`, do the image tasks
