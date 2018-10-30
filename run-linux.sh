@@ -87,7 +87,11 @@ Enter a number and hit enter. "
 				echo "No MathJax required."
 			else
 				echo "Processing MathJax in HTML."
-				gulp mathjax --book $bookfolder --language $printpdfsubdirectory
+				if [ "$printpdfsubdirectory" = "" ]; then
+					gulp mathjax --book $bookfolder
+				else
+					gulp mathjax --book $bookfolder --language $printpdfsubdirectory
+				fi
 			fi
 			# Navigate into the book's text folder in _site
 			if [ "$printpdfsubdirectory" = "" ]; then
@@ -173,7 +177,11 @@ Enter a number and hit enter. "
 				echo "No MathJax required."
 			else
 				echo "Processing MathJax in HTML."
-				gulp mathjax --book $bookfolder --language $screenpdfsubdirectory
+				if [ "$printpdfsubdirectory" = "" ]; then
+					gulp mathjax --book $bookfolder
+				else
+					gulp mathjax --book $bookfolder --language $screenpdfsubdirectory
+				fi
 			fi
 			# Navigate into the book's text folder in _site
 			if [ "$screenpdfsubdirectory" = "" ]; then
