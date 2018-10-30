@@ -56,7 +56,7 @@ Enter a number and hit enter. "
 		echo "_configs/_config.myconfig.yml"
 		echo "If not, just hit return."
 		read config
-		# Ask whether we're processing MathJax, to know whether to send the HTML via PhantomJS
+		# Ask whether we're processing MathJax, to know whether to pre-process the HTML
 		printpdfmathjax="unknown"
 		until [ "$printpdfmathjax" = "" ] || [ "$printpdfmathjax" = "y" ]
 		do
@@ -82,15 +82,12 @@ Enter a number and hit enter. "
 			else
 				bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
 			fi
-			# If using, MathJax, let PhantomJS render the HTML
+			# If using, MathJax, preprocess the HTML
 			if [ "$printpdfmathjax" = "" ]; then
-				echo "No MathJax, skipping PhantomJS."
+				echo "No MathJax required."
 			else
-				echo "Rendering MathJax in HTML with PhantomJS. If you get an error, check that PhantomJS is installed."
-				# We have to go to the folder for Phantom to work
-				cd _site/assets/js
-				phantomjs render-mathjax.js
-				cd "$location"
+				echo "Processing MathJax in HTML."
+				gulp mathjax --book $bookfolder --language $printpdfsubdirectory
 			fi
 			# Navigate into the book's text folder in _site
 			if [ "$printpdfsubdirectory" = "" ]; then
@@ -145,7 +142,7 @@ Enter a number and hit enter. "
 		echo "_configs/_config.myconfig.yml"
 		echo "If not, just hit return."
 		read config
-		# Ask whether we're processing MathJax, to know whether to send the HTML via PhantomJS
+		# Ask whether we're processing MathJax, to know whether to process the HTML
         screenpdfmathjax="unknown"
 		until [ "$screenpdfmathjax" = "" ] || [ "$screenpdfmathjax" = "y" ]
 		do
@@ -171,15 +168,12 @@ Enter a number and hit enter. "
 			else
 				bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
 			fi
-			# If using, MathJax, let PhantomJS render the HTML
+			# If using MathJax, process the HTML
 			if [ "$screenpdfmathjax" = "" ]; then
-				echo "No MathJax, skipping PhantomJS."
+				echo "No MathJax required."
 			else
-				echo "Rendering MathJax in HTML with PhantomJS. If you get an error, check that PhantomJS is installed."
-				# We have to go to the folder for Phantom to work
-				cd _site/assets/js
-				phantomjs render-mathjax.js
-				cd "$location"
+				echo "Processing MathJax in HTML."
+				gulp mathjax --book $bookfolder --language $screenpdfsubdirectory
 			fi
 			# Navigate into the book's text folder in _site
 			if [ "$screenpdfsubdirectory" = "" ]; then
