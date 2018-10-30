@@ -1,20 +1,46 @@
 {% comment %}
-Mathjax configuration when using JS MathJax (epub, web, app).
-Print and screen PDF outputs use mathjax-node-page to output MML,
-configured in gulpfile.js.
+Mathjax configuration
+---------------------
+
+- PDF outputs use mathjax-node-page to turn LaTeX into MathML, which Prince
+  can display as-is, so we don't need MathJax JS for PDF output.
+- Epub reader support for MathML is spotty. So we continue to
+  provide a local MathJax.js that generates SVG maths in the reader.
+- App output will render in a webview, where the underlying browser
+  may not support MathML. So we need local MathJax.js to display it.
+- For web output, most browsers do not support MathML, so we need MathJax
+  to render maths. We load the local MathJax.js with SVG output by default.
+  Switch to the CDN version to use MathJax options not in our small local version.
+  There is template code for that below that you can uncomment.
 {% endcomment %}
 
+
 {% comment %}
-PDF outputs use mathjax-node-page to turn LaTeX into MathML,
-so we don't need MathJax there.
-To do: change output script for app and epub to use mathjax-node-page, too.
+Optional: If you change your MathJax output format, you must clear users' caches
+or their browsers might look for the wrong, cached config file.
+If your MathJax choices here are stable, you can comment out this script.
 {% endcomment %}
+{% if site.output == "app" or site.output == "web" %}
+<script>
+function delete_cookie(name) {
+  document.cookie = name +'=; Path=/; Expires={{ site.time | date: "%a, %-d %b %Y %H:%M:%S GMT" }};';
+  console.log('Expired and removed MathJax menu cookie.');
+}
+delete_cookie('mjx.menu')
+</script>
+{% endif %}
+
+
+{% comment %}
+MathJax config for MathJax with SVG output.
+{% endcomment %}
+{% if site.output == "epub" or site.output == "app" or site.output == "web" %}
 
 <!--See https://www.peterkrautzberger.org/0129/ -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
-  jax: ["input/TeX","input/MathML","output/SVG"],
-  extensions: ["tex2jax.js","mml2jax.js","MathEvents.js"],
+  jax: ["input/TeX","output/SVG"],
+  extensions: ["tex2jax.js","MathEvents.js"],
   TeX: {
     extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
   },
@@ -31,33 +57,52 @@ MathJax.Hub.Config({
       automatic: true,
       width: "container",
     },
+    font: "Gyre-Pagella",
+    blacker: 0
   }
 });
 </script>
 
-<script>
-// OPTIONAL
-// If you change your MathJax renderer, you must clear users' caches
-// or their browser might look for the wrong, cached config file.
-function delete_cookie(name) {
-  document.cookie = name +'=; Path=/; Expires={{ site.time | date: "%a, %-d %b %Y %H:%M:%S GMT" }};';
-  console.log('Expired and removed MathJax menu cookie.');
-}
-delete_cookie('mjx.menu')
-</script>
+{% endif %}
 
+
+{% comment %}
+Link to local MathJax script.
+{% endcomment %}
 {% if site.output == "epub" %}
+
 {% comment %}This path uses the structure in the final, packaged epub.{% endcomment %}
 <script type="text/javascript" src="{{ path-to-book-directory }}mathjax/MathJax.js"></script>
 
 {% elsif site.output == "app" or site.output == "web" %}
+
 <script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"></script>
 
 {% endif %}
 
-{% comment %}This fallback in case you need it is for the CDN version.{% endcomment %}
+
 {% comment %}
-<script id="MathJax"
-   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+For the CDN version (not local), with prettier HTML-CSS output,
+use this link instead, and remove `if site.output == "web"` above.
+{% endcomment %}
+{% comment %}
+{% if site.output == "web" %}
+  <script>
+    MathJax.Hub.Config({
+      "HTML-CSS": {
+        availableFonts: [], // force use of webFont
+        webFont: "Gyre-Pagella",
+        scale: 90,
+        styles: {
+          ".MathJax [style*=border-top-width]": {
+            "border-top-width": "0.5pt ! important"
+          }
+        }
+      }
+    });
+  </script>
+  <script id="MathJax"
+     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+{% endif %}
 {% endcomment %}

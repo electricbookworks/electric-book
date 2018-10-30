@@ -72,10 +72,7 @@ nav-source: nav
 # MathJax scripts are loaded by mathjax-config include, where you can also
 # configure MathJax for your project. For MathJax font choices, see
 # http://docs.mathjax.org/en/latest/font-support.html
-# This font can be overridden per page by adding mathjax-font: "" to page frontmatter YAML.
-# To use MathJax in PDF output, you must have PhantomJS installed: http://phantomjs.org
-mathjax-enabled: false
-mathjax-font: "Gyre-Pagella"
+mathjax-enabled: true
 
 # Jekyll collections
 # ------------------
