@@ -66,7 +66,7 @@ web:
   # You can have annotation on for development and/or for live.
   # Set each to either true or false
   annotator:
-    development: true
+    development: false
     live: false
 
 # ----------------------------------------------------------
