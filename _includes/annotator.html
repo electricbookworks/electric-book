@@ -11,9 +11,9 @@ https://h.readthedocs.io/projects/client/en/latest/publishers/config/
         enableExperimentalNewNoteButton: true,
         externalContainerSelector: '.annotator',
         branding: {
-            accentColor: 'black',
+            accentColor: getComputedStyle(document.body,null).getPropertyValue("background-color"),
             appBackgroundColor: 'white',
-            ctaBackgroundColor: 'black',
+            ctaBackgroundColor: getComputedStyle(document.body,null).getPropertyValue("background-color"),
             ctaTextColor: 'white',
             annotationFontFamily: 'sans-serif',
             selectionFontFamily: 'serif'

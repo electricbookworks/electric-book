@@ -40,7 +40,7 @@ You can also just use the usual `question` include like this:
 ```
 {% endraw %}
 
-and if the question file includes a `correct` value its its YAML frontmatter, it will be rendered as an interactive multiple-choice question.
+and if the question file includes a `correct` value in its YAML frontmatter, it will be rendered as an interactive multiple-choice question.
 
 MCQ files must include the correct answer option(s) in their YAML frontmatter to be rendered as interactive MCQs in web and app output. They should include feedback for each answer option. Here is an example of an MCQ markdown file:
 
@@ -82,7 +82,7 @@ You can gather several questions into a quiz using the `include quiz` tag:
 ```
 {% endraw %}
 
-If each question file has a `marks` value its its YAML frontmatter, a quiz will add up those marks and show the total.
+If each question file has a `marks` value in its YAML frontmatter, a quiz will add up those marks and show the total.
 
 ## Exam papers
 

@@ -18,7 +18,9 @@ layout: null
 
 {% endif %}
 
-{% if site.output == "web" and site.data.settings.web.annotator == true %}
+{% if site.output == "web" and site.build != "live" and site.data.settings.web.annotator.development == true %}
+    {% include_relative annotation.js %}
+{% elsif site.output == "web" and site.build == "live" and site.data.settings.web.annotator.live == true %}
     {% include_relative annotation.js %}
 {% endif %}
 
