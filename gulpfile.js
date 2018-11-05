@@ -335,7 +335,7 @@ gulp.task('js', function (done) {
 var mjpageOptions = {
     mjpageConfig: {
         format: ["TeX"], // determines type of pre-processors to run
-        output: 'mml', // global override for output option; 'svg', 'html' or 'mml'
+        output: 'svg', // global override for output option; 'svg', 'html' or 'mml'
         tex: {}, // configuration options for tex pre-processor, cf. lib/tex.js
         ascii: {}, // configuration options for ascii pre-processor, cf. lib/ascii.js
         singleDollars: false, // allow single-dollar delimiter for inline TeX
@@ -347,7 +347,19 @@ var mjpageOptions = {
         undefinedCharError: false, // determines whether unknown characters are saved in the error array
         extensions: '', // a convenience option to add MathJax extensions
         fontURL: '', // for webfont urls in the CSS for HTML output
-        MathJax: {} // options MathJax configuration, see https://docs.mathjax.org
+        MathJax: {
+            messageStyle: "none",
+            SVG: {
+                font: "Gyre-Pagella",
+                matchFontHeight: false,
+                blacker: 0,
+                styles: {
+                    ".MathJax [style*=border-top-width]": {
+                        "border-top-width": "0.5pt ! important"
+                    }
+                }
+            }
+        } // options MathJax configuration, see https://docs.mathjax.org
     },
     mjnodeConfig: {
         ex: 6, // ex-size in pixels (ex is an x-height unit)
@@ -361,7 +373,7 @@ var mjpageOptions = {
         html: false, // generate HTML output?
         css: false, // generate CSS for HTML output?
         mml: false, // generate mml output?
-        svg: false, // generate svg output?
+        svg: true, // generate svg output?
         speakText: false, // add spoken annotations to output?
         timeout: 10 * 1000 // 10 second timeout before restarting MathJax
     }
