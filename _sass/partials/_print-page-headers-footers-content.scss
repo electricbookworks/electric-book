@@ -12,7 +12,8 @@ $print-page-headers-footers-content: true !default;
     string-set:
       page-header attr(data-header),
       page-header-left attr(data-header-left),
-      page-header-right attr(data-header-right);
+      page-header-right attr(data-header-right),
+      page-info attr(data-page-info);
   }
 
   // Assign strings to use in headers and footers for each level of heading (h1-h6),
@@ -250,6 +251,17 @@ $print-page-headers-footers-content: true !default;
   // Reset page numbering to 1
   .page-1 {
     counter-reset: page 1;
+  }
+
+  // Add page info to trim area
+  @page {
+    @prince-overlay {
+      color: #bbbbbb;
+      content: string(page-info);
+      font-family: sans-serif;
+      font-size: 7pt;
+      margin-top: $page-height + $bleed;
+    }
   }
 
 }
