@@ -30,5 +30,11 @@ $print-maths: true !default;
             margin-right: auto;
         }
     }
-
+    // PDF output override to match math font size to
+    // text font size when using mathjax-node-page.
+    // This may be a magic number to adjust,
+    // depending on your body text font.
+    .mjpage * {
+        font-size: 75%;
+    }
 }
