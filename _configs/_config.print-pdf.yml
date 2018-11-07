@@ -23,6 +23,23 @@ exclude:
   - package-lock.json
   - CNAME
   # Exclude files we don't need for print-pdf
+  - search*
+  - index*
+  - /assets/*.jpg
+  - /assets/js/accordion.js
+  - /assets/js/annotation.js
+  - /assets/js/elasticlunr-setup.js
+  - /assets/js/elasticlunr.min.js
+  - /assets/js/mark.min.js
+  - /assets/js/mcqs.js
+  - /assets/js/nav.js
+  - /assets/js/render-search-index.js
+  - /assets/js/search-engine.js
+  - /assets/js/search-index.js
+  - /assets/js/search-results.js
+  - /assets/js/search-store.js
+  - /assets/js/search-terms.js
+  - /assets/js/videos.js
   - /*/package.opf
   - /*/toc.ncx
   - /*/styles/screen-pdf.scss
@@ -34,6 +51,14 @@ exclude:
   - /*/images/web
   - /*/images/epub
   - /*/images/app
+# Temporarily exclude these and keep_files them below
+# for faster builds where you don't need to refresh these.
+  # - /assets/fonts
+  # - /book/fonts
+  # - /book/styles
 # Populate the keep_files list for temporary faster builds
 # or to keep previously generated files for other formats.
-keep_files: []
+keep_files:
+  # - /assets/fonts
+  # - /book/fonts
+  # - /book/styles
