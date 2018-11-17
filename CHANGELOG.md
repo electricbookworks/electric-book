@@ -2,6 +2,7 @@
 
 ## 0.13.1 (in progress)
 
+* [Major improvement to preprocessing and output of maths](https://github.com/electricbookworks/electric-book/pull/328)
 * [Enable turning off or expanding accordion per-page](https://github.com/electricbookworks/electric-book/pull/318)
 * [Fix to prevent false positives in active menu items](https://github.com/electricbookworks/electric-book/pull/316)
 * [Add canonical link tag to head for better SEO and annotation](https://github.com/electricbookworks/electric-book/pull/314)
