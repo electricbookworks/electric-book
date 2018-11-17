@@ -22,9 +22,8 @@
 
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
 
-    {% if site.mathjax-enabled == true %}
-        {% include mathjax-config %}
-    {% endif %}
+    {% comment %} Note: MathJax script not included for PDF output.
+    MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
     {% include head-elements %}
 
@@ -55,9 +54,8 @@
 
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
 
-    {% if site.mathjax-enabled == true %}
-        {% include mathjax-config %}
-    {% endif %}
+    {% comment %} Note: MathJax script not included for PDF output.
+    MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
     {% include head-elements %}
 

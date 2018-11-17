@@ -75,7 +75,7 @@ set /p process=Enter a number and hit return.
         :: Ask if we're outputting the files from a subdirectory
         :printpdfwhatsubdirectory
             set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
-            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto printpdfwhatsubdirectory
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. && goto printpdfwhatsubdirectory
             echo.
 
         :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
@@ -89,7 +89,7 @@ set /p process=Enter a number and hit return.
             set /p config=
             echo.
 
-        :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+        :: Ask if we're processing MathJax, so we know whether to process the HTML
             echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
             set /p print-pdf-mathjax=
 
@@ -111,17 +111,15 @@ set /p process=Enter a number and hit return.
 
             :printpdfjekylldone
 
-            :: Skip PhantomJS if we're not using MathJax.
-            if not "%print-pdf-mathjax%"=="y" goto printpdfafterphantom
+            :: Skip the next step if we're not using MathJax.
+            if not "%print-pdf-mathjax%"=="y" goto printpdfaftermathjax
 
-            :: Run this through phantom for extra magic,
-            :: We have to run the PhantomJS script from the folder it's in
-            :: for the directory paths to work.
-            cd _site\assets\js
-            call phantomjs render-mathjax.js
+            :: Convert all MathJax LaTeX to MathML
+            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
             cd "%location%"
 
-            :printpdfafterphantom
+            :printpdfaftermathjax
 
             :: Navigate into the book's folder in _site output
             cd _site\%bookfolder%\"%subdirectory%\text"
@@ -189,7 +187,7 @@ set /p process=Enter a number and hit return.
         :: Ask if we're outputting the files from a subdirectory
         :screenpdfwhatsubdirectory
             set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
-            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto screenpdfwhatsubdirectory
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. && goto screenpdfwhatsubdirectory
             echo.
 
         :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
@@ -203,7 +201,7 @@ set /p process=Enter a number and hit return.
             set /p config=
             echo.
 
-        :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+        :: Ask if we're processing MathJax, so we know whether to process the HTML
         echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
         set /p screen-pdf-mathjax=
 
@@ -222,17 +220,15 @@ set /p process=Enter a number and hit return.
             call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
             :screenpdfjekylldone
 
-            :: Skip PhantomJS if we're not using MathJax.
-            if not "%screen-pdf-mathjax%"=="y" goto screenpdfafterphantom
+            :: Skip the next step if we're not using MathJax.
+            if not "%screen-pdf-mathjax%"=="y" goto screenpdfaftermathjax
 
-            :: Run this through phantom for extra magic,
-            :: We have to run the PhantomJS script from the folder it's in
-            :: for the directory paths to work.
-            cd _site\assets\js
-            call phantomjs render-mathjax.js
+            :: Convert all MathJax LaTeX to MathML
+            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
             cd "%location%"
 
-            :screenpdfafterphantom
+            :screenpdfaftermathjax
 
             :: Navigate into the book's folder in _site output
             cd _site\%bookfolder%\"%subdirectory%\text"
@@ -813,8 +809,16 @@ set /p process=Enter a number and hit return.
         set location=%~dp0
 
         :: Ask user which folder to process
-        set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-        if "%bookfolder%"=="" set bookfolder=book
+        :wordwhatdirectory
+            set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+            if "%bookfolder%"=="" set bookfolder=book
+            if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto wordwhatdirectory
+
+        :: Ask if we're outputting the files from a subdirectory
+        :wordwhatsubdirectory
+            set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. && goto wordwhatsubdirectory
+            echo.
 
         :: Ask user which output type to work from
         echo Which format are we converting from? Enter a number or hit enter for the default:
@@ -841,6 +845,10 @@ set /p process=Enter a number and hit return.
         set /p config=
         echo.
 
+        :: Ask if we're processing MathJax, so we know whether to process the HTML
+        echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
+        set /p word-mathjax=
+
         :: Loop back to this point to refresh the build again
         :wordrefresh
 
@@ -848,10 +856,30 @@ set /p process=Enter a number and hit return.
             echo Generating HTML...
 
             :: ...and run Jekyll to build new HTML
+            :: with MathJax enabled if necessary
+            if not "%word-mathjax%"=="y" goto wordnomathjax
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            goto wordjekylldone
+
+            :: Build Jekyll without MathJax
+            :wordnomathjax
             call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,%config%"
 
+            :wordjekylldone
+
+            :: Skip the next step if we're not using MathJax.
+            if not "%word-mathjax%"=="y" goto wordaftermathjax
+
+            :: Convert all MathJax LaTeX to MathML
+            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
+            cd "%location%"
+
+            :wordaftermathjax
+
             :: Navigate to the HTML we just generated
-            cd _site\%bookfolder%\text
+            if "%subdirectory%"=="" cd _site\%bookfolder%\text
+            if not "%subdirectory%"=="" cd _site\%bookfolder%\%subdirectory%\text
 
             :: What're we doing?
             echo Converting %bookfolder% HTML to Word...
@@ -893,7 +921,8 @@ set /p process=Enter a number and hit return.
             echo Done, opening folder...
 
             :: Open file explorer to show the docx files.
-            %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text"
+            if "%subdirectory%"=="" %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text"
+            if not "%subdirectory%"=="" %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\%subdirectory%\text"
 
             :: Navigate back to where we began
             cd "%location%"

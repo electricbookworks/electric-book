@@ -68,6 +68,10 @@ web:
   annotator:
     development: false
     live: false
+  # MathJax is activated in _config.yml. Further settings here.
+  # At `source` choose local (`local`) MathJax.js or the CDN (`cdn`).
+  mathjax:
+    source: cdn
 
 # ----------------------------------------------------------
 # Epub settings
