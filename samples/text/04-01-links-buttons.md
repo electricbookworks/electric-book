@@ -12,5 +12,5 @@ Buttons are trickier. Basically, buttons should be defined by adding a `.button`
 {:.button}
 
 {% raw %}
-Again, the print version should have a way to deal with these. Alternatively, the book author can hide buttons in the print version. For instance, themes may support adding a `.non-printing` class to the element. Or the author can use Liquid control-flow tags, like `{% if site.output == "print" %}`, to control whether and how buttons appear in print.
+Again, the print version should have a way to deal with these. Alternatively, the book author can hide buttons in the print version. For instance, themes may support adding a `.non-printing` class to the element. Or the author can use Liquid control-flow tags, like `{% if site.output == "print-pdf" %}`, to control whether and how buttons appear in print.
 {% endraw %}
