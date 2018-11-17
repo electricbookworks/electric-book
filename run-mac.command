@@ -733,6 +733,16 @@ You may need to reload the web page once this server is running."
 			bookfolder="book"
 		fi
 		echo "Okay, let's make Word files for $bookfolder..."
+		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
+		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
+		read wordsubdirectory
+		# Ask whether we're processing MathJax, to know whether to pre-process the HTML
+		wordmathjax="unknown"
+		until [ "$wordmathjax" = "" ] || [ "$wordmathjax" = "y" ]
+		do
+			echo "Does this book use MathJax? If no, hit enter. If yes, enter y."
+			read wordmathjax
+		done
 		# Ask user which output format to work from
 		echo "Which format are we converting from? Enter a number or hit enter for the default 'print-pdf'. "
 		echo "1. Print PDF (default)"
@@ -782,9 +792,29 @@ You may need to reload the web page once this server is running."
 			# let the user know we're on it!
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML
-			bundle exec jekyll build --config="_config.yml,_configs/_config.$fromformat.yml,$config"
-			# Navigate into the book's folder in _site output
-			cd _site/$bookfolder/text
+			# with MathJax enabled if necessary
+			if [ "$wordmathjax" = "" ]; then
+				bundle exec jekyll build --config="_config.yml,_configs/_config.$fromformat.yml,$config"
+			else
+				bundle exec jekyll build --config="_config.yml,_configs/_config.$fromformat.yml,_configs/_config.mathjax-enabled.yml,$config"
+			fi
+			# If using, MathJax, preprocess the HTML
+			if [ "$wordmathjax" = "" ]; then
+				echo "No MathJax required."
+			else
+				echo "Processing MathJax in HTML."
+				if [ "$wordsubdirectory" = "" ]; then
+					gulp mathjax --book $bookfolder
+				else
+					gulp mathjax --book $bookfolder --language $wordsubdirectory
+				fi
+			fi
+			# Navigate into the book's text folder in _site
+			if [ "$wordsubdirectory" = "" ]; then
+				cd _site/$bookfolder/text
+			else
+				cd _site/$bookfolder/$wordsubdirectory/text
+			fi
 			# Update user
 			echo "Converting $bookfolder HTML to Word..."
 			# Before looping through file-list, remove blank lines.
