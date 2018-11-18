@@ -1,5 +1,10 @@
 # Changelog
 
+## Latest
+
+* [Improvements to video output](https://github.com/electricbookworks/electric-book/pull/329)
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/149705bd114fb48fa3b84377eb192e23cd6a2c0f...master).
+
 ## 0.14.0
 
 * [Major improvement to preprocessing and output of maths](https://github.com/electricbookworks/electric-book/pull/328)
