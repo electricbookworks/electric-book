@@ -5,6 +5,7 @@ $print-video: true !default;
     // Works specifically with our video includes
 
     .video {
+        font-family: $font-text-secondary;
         margin: 1em 0;
         position: relative; // positions child element play button correctly
         img {
@@ -12,8 +13,30 @@ $print-video: true !default;
             padding: 0 $line-height-default;
         }
         .video-link {
-            // If there's no image, e.g. for Vimeo
-            .video-no-image {}
+            // Add play button before iframe loads
+            &:before {
+                content: "\25b6";
+                position: absolute; // not supported in epub yet
+                font-size: $font-size-default * 3;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+                color: white;
+                opacity: 0.5;
+            }
+            // If there's no image, e.g. for Vimeo, make a frame placeholder
+            .video-no-image {
+                display: block;
+                height: $line-height-default * 4;
+                border-radius: $button-border-radius;
+                background-color: $color-mid;
+                margin: 0 auto;
+            }
+        }
+        .video-description {
+            margin-top: $line-height-default;
+            text-align: center;
         }
         // Don't indent a paragraph after a video.
         & + p {

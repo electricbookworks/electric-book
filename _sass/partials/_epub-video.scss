@@ -5,6 +5,7 @@ $epub-video: true !default;
     // Works specifically with our video includes
 
     .video {
+        font-family: $font-text-secondary;
         margin: 0 0 1em 0;
         position: relative; // positions child element play button correctly
         img {
@@ -27,11 +28,14 @@ $epub-video: true !default;
             .video-no-image {
                 display: block;
                 height: $line-height-default * 4;
-                width: 80%;
                 border-radius: $button-border-radius;
                 background-color: $color-mid;
                 margin: 0 auto;
             }
+        }
+        .video-description {
+            margin-top: $line-height-default;
+            text-align: center;
         }
         .video-wrapper {
             // JS will add an iframe here; when it does:
