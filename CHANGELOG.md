@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.13.1 (in progress)
+## 0.14.0
 
 * [Major improvement to preprocessing and output of maths](https://github.com/electricbookworks/electric-book/pull/328)
 * [Enable turning off or expanding accordion per-page](https://github.com/electricbookworks/electric-book/pull/318)
