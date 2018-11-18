@@ -12,4 +12,4 @@ In this example, we have a YouTube video.
 
 And a Vimeo one.
 
-{% include vimeo id="113933422" %}
+{% include vimeo id="113933422" link="https://www.vimeo.com/113933422" description="The Hey Duggee series trailer" %}
