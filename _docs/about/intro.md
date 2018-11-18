@@ -39,6 +39,7 @@ There are several digital-first book-publishing systems around. Some are also ba
 * [LeanPub](https://leanpub.com/) (which uses [Markua](http://markua.com/))
 * [PubPub](https://www.pubpub.org/)
 * [MagicBook](https://github.com/magicbookproject/magicbook)
+* [Bookdown](https://bookdown.org/yihui/bookdown/)
 * [Phil Schatz's viewer](http://philschatz.com/2014/07/07/tiny-book-reader).
 
 [PressBooks](http://pressbooks.com/), which is built on Wordpress, is a superb, affordable service.
