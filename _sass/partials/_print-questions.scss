@@ -7,7 +7,6 @@ $print-questions: true !default;
 
     .question {
         box-sizing: border-box; // to include padding in the width
-        font-family: $font-text-secondary;
         page-break-inside: avoid;
         padding: ($line-height-default / 2);
         margin: $line-height-default 0;
@@ -84,23 +83,23 @@ $print-questions: true !default;
         }
     }
 
-    // Exam, quiz and question numbering.
+    // Quiz-group (e.g. exam), quiz and question numbering.
     // Questions are gathered in quizzes,
-    // and quizzes can be gathered as sections of exams.
+    // and quizzes can be gathered as sections in quiz-groups.
 
-    .exam {
-        counter-reset: exam 0 quiz 0;
+    .quiz-group {
+        counter-reset: quiz-group 0 quiz 0;
     }
     .quiz {
         counter-reset: quiz; // question numbering restarts in each quiz...
-        .exam & {
-            counter-reset: none; // ...except across quizzes in a single exam
+        .quiz-group & {
+            counter-reset: none; // ...except across quizzes in a single quiz-group
         }
         &:before {
-            counter-increment: exam;
-            // content: counter(exam); // Uncomment to number quizzes
+            counter-increment: quiz-group;
+            // content: counter(quiz-group); // Uncomment to number quizzes
         }
-        // Don't number if there is only one quiz in the exam
+        // Don't number if there is only one quiz in the quiz-group
         &:only-child:before {
             content: normal;
         }
@@ -116,7 +115,7 @@ $print-questions: true !default;
                 content: normal;
             }
         }
-        .question ol {
+        .question ol.sub-questions {
             list-style-type: none;
             li {
                 &:before {
@@ -129,11 +128,18 @@ $print-questions: true !default;
 
     // Marks
 
-    .quiz {
-        font-family: $font-text-secondary;
-        .quiz-total-marks {
+    .quiz-group {
+        .quiz-group-total-marks {
+            font-family: $font-text-secondary;
             font-weight: bold;
-            float: right;
+            text-align: right;
+        }
+    }
+    .quiz {
+        .quiz-total-marks {
+            font-family: $font-text-secondary;
+            font-weight: bold;
+            text-align: right;
         }
     }
     .question {
@@ -143,6 +149,7 @@ $print-questions: true !default;
             float: right;
         }
         .question-total-marks {
+            font-family: $font-text-secondary;
             font-weight: bold;
             float: right;
             &:before {
@@ -197,6 +204,9 @@ $print-questions: true !default;
         p, ul, ol, blockquote {
             margin-bottom: 0 !important;
             margin-top: $line-height-default !important;
+            &:first-child {
+                margin-top: 0 !important;
+            }
         }
         // Except the element after the first heading, which has no margin-top
         h1:first-child + *,
