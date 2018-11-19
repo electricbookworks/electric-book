@@ -84,23 +84,23 @@ $print-questions: true !default;
         }
     }
 
-    // Exam, quiz and question numbering.
+    // Quiz-group (e.g. exam), quiz and question numbering.
     // Questions are gathered in quizzes,
-    // and quizzes can be gathered as sections of exams.
+    // and quizzes can be gathered as sections in quiz-groups.
 
-    .exam {
-        counter-reset: exam 0 quiz 0;
+    .quiz-group {
+        counter-reset: quiz-group 0 quiz 0;
     }
     .quiz {
         counter-reset: quiz; // question numbering restarts in each quiz...
-        .exam & {
-            counter-reset: none; // ...except across quizzes in a single exam
+        .quiz-group & {
+            counter-reset: none; // ...except across quizzes in a single quiz-group
         }
         &:before {
-            counter-increment: exam;
-            // content: counter(exam); // Uncomment to number quizzes
+            counter-increment: quiz-group;
+            // content: counter(quiz-group); // Uncomment to number quizzes
         }
-        // Don't number if there is only one quiz in the exam
+        // Don't number if there is only one quiz in the quiz-group
         &:only-child:before {
             content: normal;
         }

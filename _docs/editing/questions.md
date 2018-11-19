@@ -84,25 +84,27 @@ You can gather several questions into a quiz using the `include quiz` tag:
 
 If each question file has a `marks` value in its YAML frontmatter, a quiz will add up those marks and show the total.
 
-## Exam papers
+## Quiz groups
 
-You can create exam papers by collecting quizzes in an exam `div`. An exam treats each quiz as a section of the exam, and numbers questions consecutively across quizzes (aka exam sections, in this situation).
+You can collect quizzes into quiz-groups, for instance to create exam papers. To create a quiz-group, wrap quizzes in a `<div class="quiz-group"></div>`. A quiz group treats each quiz as a section, and numbers their questions consecutively across all quizzes in the quiz-group. This is useful for creating exam papers, where questions must numbered consecutively across sections (which are quiz-groups).
 
-You can collect quizzes in an exam `div` in one of two ways:
+You can create a quiz group in one of two ways:
 
-1. If an entire markdown file represents an exam, add `exam` to the `style: ` values in the file's YAML frontmatter. For instance:
+1. If an entire markdown file represents a quiz group (e.g. it's a single exam paper), add `quiz-group` to the `style: ` values in the file's YAML frontmatter. For instance:
 
    ``` md
    ---
-   style: exam
+   style: quiz-group
    ---
    ```
 
-2. If only a part of a markdown file represents an exam, wrap the quizzes in a `div` element with an `exam` class. Also add a `markdown="1"` attribute so that markdown in the `div` is processed into HTML as usual:
+   (Technically, the values in `style` become classes of your output HTML's `body` element.)
+
+2. If only a part of a markdown file represents a quiz-group, wrap the quizzes in a `div` element with a `quiz-group` class. Also add a `markdown="1"` attribute so that markdown in the `div` is processed into HTML as usual:
 
    {% raw %}
    ``` html
-   <div class="exam" markdown="1">
+   <div class="quiz-group" markdown="1">
 
    ## Section 1
 
