@@ -8,7 +8,6 @@ $print-questions: true !default;
     .question {
         box-sizing: border-box; // to include padding in the width
         page-break-inside: avoid;
-        padding: ($line-height-default / 2);
         margin: $line-height-default 0;
         // Add some space around images when they're placed with markdown,
         // rather than in figure includes.
@@ -81,6 +80,16 @@ $print-questions: true !default;
         &.page-break-before {
             margin-top: 0;
         }
+        // Don't add space after the last item
+        // before the (hidden) question-feedback starts
+        .question-content *:nth-last-child(2):not(.question-feedback) {
+            margin-bottom: 0;
+        }
+        // Don't allow a page break before the first
+        // element in a question, i.e. before the question number
+        *:first-child {
+            page-break-before: avoid;
+        }
     }
 
     // Quiz-group (e.g. exam), quiz and question numbering.
@@ -110,6 +119,7 @@ $print-questions: true !default;
                 content: counter(quiz) ".";
                 float: left;
                 margin-right: 0.25em;
+                page-break-before: avoid;
             }
             &:only-of-type:before {
                 content: normal;
@@ -133,6 +143,7 @@ $print-questions: true !default;
             font-family: $font-text-secondary;
             font-weight: bold;
             text-align: right;
+            page-break-before: avoid;
         }
     }
     .quiz {
@@ -140,18 +151,27 @@ $print-questions: true !default;
             font-family: $font-text-secondary;
             font-weight: bold;
             text-align: right;
+            page-break-before: avoid;
+            clear: right;
         }
     }
     .question {
+        li {
+            // Avoid marks appearing beside wrong text
+            clear: right;
+        }
         em.marks, strong.marks {
             font-style: normal;
             font-weight: normal;
             float: right;
+            margin-left: 1em;
         }
         .question-total-marks {
             font-family: $font-text-secondary;
             font-weight: bold;
-            float: right;
+            text-align: right;
+            page-break-before: avoid;
+            clear: right;
             &:before {
                 content: "[";
             }

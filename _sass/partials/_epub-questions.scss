@@ -101,15 +101,20 @@ $epub-questions: true !default;
         }
     }
     .question {
+        li {
+            // Avoid marks appearing beside wrong text
+            clear: right;
+        }
         em.marks, strong.marks {
             font-style: normal;
             font-weight: normal;
             float: right;
+            margin-left: 1em;
         }
         .question-total-marks {
             font-family: $font-text-secondary;
             font-weight: bold;
-            float: right;
+            text-align: right;
             &:before {
                 content: "[";
             }
