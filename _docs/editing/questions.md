@@ -84,6 +84,24 @@ You can gather several questions into a quiz using the `include quiz` tag:
 
 If each question file has a `marks` value in its YAML frontmatter, a quiz will add up those marks and show the total.
 
+### Applying classes to quizzes
+
+You can apply a class to a quiz in the `include quiz` tag. For example, to make a quiz your 'featured quiz', you might use a `featured-quiz` class:
+
+{% raw %}
+``` liquid
+{% include quiz questions="question-01, question-02, question-03" class="featured-quiz" %}
+```
+{% endraw %}
+
+Also, if you want all the *questions* inside a quiz to have a particular class, you can set that, too, like this:
+
+{% raw %}
+``` liquid
+{% include quiz questions="question-01, question-02, question-03" question-class="my-featured-questions" %}
+```
+{% endraw %}
+
 ## Quiz groups
 
 You can collect quizzes into quiz-groups, for instance to create exam papers. To create a quiz-group, wrap quizzes in a `<div class="quiz-group"></div>`. A quiz group treats each quiz as a section, and numbers their questions consecutively across all quizzes in the quiz-group. This is useful for creating exam papers, where questions must numbered consecutively across sections (which are quiz-groups).
