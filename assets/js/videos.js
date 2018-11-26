@@ -1,31 +1,37 @@
-"use strict";
+/* jslint browser */
+/*globals window */
 
-var ebwVideoInit = function() {
+function ebwVideoInit() {
+    'use strict';
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
-        'querySelector' in document &&
-        !!Array.prototype.forEach &&
-        'classList' in Element.prototype &&
-        'addEventListener' in window &&
-        document.querySelectorAll('.video');
+            document.querySelector &&
+            !!Array.prototype.forEach &&
+            document.body.classList &&
+            document.addEventListener &&
+            document.querySelectorAll('.video');
 }
 
 var ebwVideoHosts = {
-    'youtube': 'https://www.youtube.com/embed/',
-    'vimeo': 'https://player.vimeo.com/video/',
-}
+    youtube: 'https://www.youtube.com/embed/',
+    vimeo: 'https://player.vimeo.com/video/'
+};
 
-var ebwGetVideoHost = function(videoElement) {
+function ebwGetVideoHost(videoElement) {
+    'use strict';
     var videoHost;
     var classes = videoElement.classList;
 
-    classes.forEach(function(currentClass){
-        if(ebwVideoHosts.hasOwnProperty(currentClass)) videoHost = currentClass;
+    classes.forEach(function (currentClass) {
+        if (ebwVideoHosts.hasOwnProperty(currentClass)) {
+            videoHost = currentClass;
+        }
     });
 
     return videoHost;
 }
 
-var ebwVideoMakeIframe = function(host, videoId) {
+function ebwVideoMakeIframe(host, videoId) {
+    'use strict';
     var hostURL = ebwVideoHosts[host];
 
     var iframe = document.createElement('iframe');
@@ -36,14 +42,19 @@ var ebwVideoMakeIframe = function(host, videoId) {
     return iframe;
 }
 
-var videoShow = function() {
+function videoShow() {
+    'use strict';
+
     // early exit for unsupported browsers
-    if (!ebwVideoInit()) return;
+    if (!ebwVideoInit()) {
+        console.log('Video JS not supported in this browser.');
+        return;
+    }
 
     // get all the videos
     var videos = document.querySelectorAll('.video');
 
-    videos.forEach(function(currentVideo){
+    videos.forEach(function (currentVideo) {
         // make the iframe
         var videoHost = ebwGetVideoHost(currentVideo);
         var videoId = currentVideo.id;
@@ -55,7 +66,7 @@ var videoShow = function() {
         console.log('videoHost: ' + videoHost);
         console.log('currentVideo ID: ' + videoId);
 
-        currentVideo.addEventListener("click", function(ev){
+        currentVideo.addEventListener("click", function (ev) {
             videoWrapper.classList.add('contains-iframe');
             ev.preventDefault();
             // replace the link with the generated iframe
