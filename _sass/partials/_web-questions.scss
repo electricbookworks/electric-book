@@ -1,3 +1,4 @@
+        }
 $web-questions: true !default;
 @if $web-questions {
 
@@ -63,11 +64,13 @@ $web-questions: true !default;
         }
         .question {
             counter-reset: question;
+            margin-left: $line-height-default; // with &:before margin-left, creates hanging indent
             &:before {
                 counter-increment: quiz;
                 content: counter(quiz) ".";
                 float: left;
                 margin-right: 0.25em;
+                margin-left: -($line-height-default); // with parent's margin-left, creates hanging indent
             }
             &:only-of-type:before {
                 content: normal;
@@ -110,6 +113,7 @@ $web-questions: true !default;
             font-weight: normal;
             float: right;
             margin-left: 1em;
+            text-indent: 0; // don't inherit parent text-indent
         }
         .question-total-marks {
             font-family: $font-text-secondary;

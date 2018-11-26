@@ -5,7 +5,6 @@ $epub-questions: true !default;
 
     .question {
         line-height: $line-height-default;
-        page-break-inside: avoid;
         padding: ($line-height-default / 2);
         margin: $line-height-default 0;
         p {
@@ -41,9 +40,9 @@ $epub-questions: true !default;
         }
     }
 
-    // Quiz-group (e.g. exam), quiz and question numbering.
+    // Quiz groups, quiz and question numbering.
     // Questions are gathered in quizzes,
-    // and quizzes can be gathered as sections in quiz-groups.
+    // and quizzes can be grouped together, e.g. as a single section or as a complete exam.
 
     .quiz-group {
         counter-reset: quiz-group 0 quiz 0;
@@ -51,23 +50,25 @@ $epub-questions: true !default;
     .quiz {
         counter-reset: quiz; // question numbering restarts in each quiz...
         .quiz-group & {
-            counter-reset: none; // ...except across quizzes in a single quiz-group
+            counter-reset: none; // ...except when quizzes are grouped together.
         }
         &:before {
             counter-increment: quiz-group;
             // content: counter(quiz-group); // Uncomment to number quizzes
         }
-        // Don't number if there is only one quiz in the quiz-group
+        // Don't number if there is only one quiz in the group
         &:only-child:before {
             content: normal;
         }
         .question {
             counter-reset: question;
+            margin-left: $line-height-default; // with &:before margin-left, creates hanging indent
             &:before {
                 counter-increment: quiz;
                 content: counter(quiz) ".";
                 float: left;
                 margin-right: 0.25em;
+                margin-left: -($line-height-default); // with parent's margin-left, creates hanging indent
             }
             &:only-of-type:before {
                 content: normal;
@@ -75,10 +76,15 @@ $epub-questions: true !default;
         }
         .question ol.sub-questions {
             list-style-type: none;
+            margin-left: $line-height-default * 1.5; // with &:before margin-left, creates hanging indent
+            text-indent: -($line-height-default * 1.5); // with parent's margin-left, creates hanging indent
             li {
                 &:before {
                     counter-increment: question;
                     content: counter(quiz) "." counter(question) " ";
+                    display: inline-block;
+                    width: $line-height-default * 1.5;
+                    text-indent: 0; // not to inherit from parent
                 }
             }
         }
@@ -110,6 +116,7 @@ $epub-questions: true !default;
             font-weight: normal;
             float: right;
             margin-left: 1em;
+            text-indent: 0; // don't inherit parent text-indent
         }
         .question-total-marks {
             font-family: $font-text-secondary;
