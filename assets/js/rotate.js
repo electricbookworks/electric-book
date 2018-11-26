@@ -32,4 +32,7 @@ function rotateGetFigures() {
     }
 }
 
-rotateGetFigures();
+if (figuresToRotate) {
+    console.log('Found figures to rotate.');
+    rotateGetFigures();
+}
