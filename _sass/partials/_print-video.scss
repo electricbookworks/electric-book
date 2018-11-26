@@ -12,11 +12,17 @@ $print-video: true !default;
             width: 100%;
             padding: 0 $line-height-default;
         }
-        .video-link {
+        .video-link {}
+        .video-description {
+            margin-top: $line-height-default;
+            text-align: center;
+        }
+        .video-wrapper {
+            position: relative;
             // Add play button before iframe loads
             &:before {
                 content: "\25b6";
-                position: absolute; // not supported in epub yet
+                position: absolute;
                 font-size: $font-size-default * 3;
                 top: 50%;
                 left: 50%;
@@ -25,18 +31,14 @@ $print-video: true !default;
                 color: white;
                 opacity: 0.5;
             }
-            // If there's no image, e.g. for Vimeo, make a frame placeholder
-            .video-no-image {
-                display: block;
-                height: $line-height-default * 4;
-                border-radius: $button-border-radius;
+            // Create placeholder with 16:9 aspect ratio
+            // when there is no image to display
+            &.video-no-image {
+                width: 100%;
+                padding-bottom: 56.25%;
                 background-color: $color-mid;
-                margin: 0 auto;
+                border-radius: $button-border-radius;
             }
-        }
-        .video-description {
-            margin-top: $line-height-default;
-            text-align: center;
         }
         // Don't indent a paragraph after a video.
         & + p {
