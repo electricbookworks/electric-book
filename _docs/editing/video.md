@@ -14,8 +14,8 @@ You can include any iframe in markdown to embed a video. We've created a simple 
 
 ## Embed from YouTube or Vimeo
 
-1.	Find the video's ID. On YouTube, this is a code in the URL that looks like this: `MqlyxZiDoOA`. On Vimeo, it's a string of numbers in the URL like this: `75421736`.
-2.	In your markdown, use the ID in either this YouTube tag:
+1. Find the video's ID. On YouTube, this is a code in the URL that looks like this: `MqlyxZiDoOA`. On Vimeo, it's a string of numbers in the URL like this: `75421736`.
+2. In your markdown, use the ID in either this YouTube tag:
 
     {% raw %}
 
@@ -92,11 +92,40 @@ You can add a clickable link to a video. This is especially useful for screen PD
 ```
 {% endraw %}
 
+## Subtitles
+
+If the video you're embedding has subtitles, you can turn them on by adding `subtitles="true"` to your include tag:
+
+{% raw %}
+```
+{% include youtube
+    id="MqlyxZiDoOA"
+    subtitles="true"
+%}
+```
+{% endraw %}
+
+By default, the language used will be the language of the book you're editing. So, if you're editing the French translation of a book, and the video has French subtitles, those will be shown.
+
+If you want to specify that subtitles should show in a particular language (that the video actually supports), then add `language="xx"`, too, where `xx` is the language code. For instance, to specify that German subtitles should show:
+
+{% raw %}
+```
+{% include youtube
+    id="MqlyxZiDoOA"
+    subtitles="true"
+    language="de"
+%}
+```
+{% endraw %}
+
+These subtitles and language options currently only work with YouTube videos.
+
 ## Other services
 
 If you're embedding from any other service, instead of using our `include` tags:
 
-*	use their standard embed iframe
-*	try to select a width of around 850 px
-*	add `style="max-width: 100%;"`
-*   add `class="non-printing"` to the iframe tag to hide it from PDF output.
+* use their standard embed iframe
+* try to select a width of around 850 px
+* add `style="max-width: 100%;"`
+* add `class="non-printing"` to the iframe tag to hide it from PDF output.
