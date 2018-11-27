@@ -260,7 +260,8 @@ $print-page-headers-footers-content: true !default;
       content: string(page-info);
       font-family: sans-serif;
       font-size: 7pt;
-      margin-top: $page-height + $bleed;
+      margin-bottom: -($margin-bottom + $page-info-offset);
+      vertical-align: bottom;
     }
   }
 
