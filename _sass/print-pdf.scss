@@ -36,6 +36,7 @@ $margin-inside: 20mm !default;
 $bleed: 3mm !default;
 $trim: 3mm !default;
 $crop-marks: crop !default; // crop | none
+$page-info-offset: 5mm;
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
