@@ -35,6 +35,24 @@ variants:
   - variant: yourvariant
 
 # ----------------------------------------------------------
+# Print-PDF settings
+# ------------
+print-pdf:
+  # Choose between endnotes or footnotes (endnotes are default)
+  # (You can also set this per markdown file with notes: footnotes,
+  # or per endnote by adding .move-to-footnote to it.)
+  notes: endnotes
+
+# ----------------------------------------------------------
+# Screen-PDF settings
+# ------------
+screen-pdf:
+  # Choose between endnotes or footnotes (endnotes are default)
+  # (You can also set this per markdown file with notes: footnotes,
+  # or per endnote by adding .move-to-footnote to it.)
+  notes: endnotes
+
+# ----------------------------------------------------------
 # Web settings
 # ------------
 web:

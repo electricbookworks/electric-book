@@ -44,6 +44,9 @@ have different behaviour for web or app. {% endcomment %}
     {% comment %}This script helps rotate large figures on the page.{% endcomment %}
     {% include_relative rotate.js %}
 
+    {% comment %}This script moves endnotes to the bottoms of pages.{% endcomment %}
+    {% include_relative footnotes.js %}
+
     {% comment %}This script detects the page number we are on and provides
     the relevant page cross-reference text as generated content.{% endcomment %}
     {% include_relative page-reference.js %}
