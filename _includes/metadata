@@ -311,7 +311,7 @@ that matches a translation language, set is-translation to true, and change
 the `language` variable, which we captured above, to the translation language.
 {% endcomment %}
 {% for translation in translations %}
-    {% if book-subdirectory == translation.directory %}
+    {% if book-subdirectory == translation.directory and translation.directory != "" %}
         {% assign is-translation = true %}
         {% capture language %}{{ translation.language }}{% endcapture %}
     {% endif %}
