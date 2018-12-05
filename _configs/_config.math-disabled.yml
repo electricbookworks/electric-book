@@ -1,0 +1,4 @@
+# Disable processing of LaTeX for MathJax completely.
+# This will leave `$$E=mc^2$$` in your HTML as in your markdown.
+kramdown:
+  math_engine: nil

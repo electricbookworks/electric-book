@@ -845,37 +845,16 @@ set /p process=Enter a number and hit return.
         set /p config=
         echo.
 
-        :: Ask if we're processing MathJax, so we know whether to process the HTML
-        echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
-        set /p word-mathjax=
-
         :: Loop back to this point to refresh the build again
         :wordrefresh
 
             :: let the user know we're on it!
             echo Generating HTML...
 
-            :: ...and run Jekyll to build new HTML
-            :: with MathJax enabled if necessary
-            if not "%word-mathjax%"=="y" goto wordnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.mathjax-enabled.yml,%config%"
-            goto wordjekylldone
-
-            :: Build Jekyll without MathJax
-            :wordnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,%config%"
-
-            :wordjekylldone
-
-            :: Skip the next step if we're not using MathJax.
-            if not "%word-mathjax%"=="y" goto wordaftermathjax
-
-            :: Convert all MathJax LaTeX to MathML
-            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
-            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
-            cd "%location%"
-
-            :wordaftermathjax
+            :: ...and run Jekyll to build new HTML.
+            :: We turn off the math engine so that we get raw TeX output,
+            :: and because Pandoc does not support SVG output anyway.
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.math-disabled.yml,%config%"
 
             :: Navigate to the HTML we just generated
             if "%subdirectory%"=="" cd _site\%bookfolder%\text
