@@ -786,7 +786,7 @@ You may need to reload the web page once this server is running."
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML.
 			# We turn off the math engine so that we get raw TeX output,
-            # and because Pandoc does not support SVG output anyway.
+			# and because Pandoc does not support SVG output anyway.
 			bundle exec jekyll build --config="_config.yml,_configs/_config.$fromformat.yml,_configs/_config.math-disabled.yml,$config"
 			# Navigate into the book's text folder in _site
 			if [ "$wordsubdirectory" = "" ]; then
