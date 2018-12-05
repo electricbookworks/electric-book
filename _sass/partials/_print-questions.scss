@@ -16,10 +16,10 @@ $print-questions: true !default;
             max-width: $main-text-width - $line-height-default;
         }
         table {
-            width: $main-text-width - $line-height-default;
+            width: auto;
         }
         .figure {
-            width: $main-text-width - ($line-height-default * 2);
+            width: auto;
             float: none;
             margin-top: $line-height-default;
             img {
