@@ -99,7 +99,7 @@ function ebEndnotesToFootnotes() {
 }
 
 /// If there are footnotes to move, move them.
-if (ebFootnotesToMove) {
+if (ebFootnotesToMove()) {
     console.log('Yes, we have footnotes to move...');
     ebEndnotesToFootnotes();
 }
