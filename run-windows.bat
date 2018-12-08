@@ -875,7 +875,7 @@ set /p process=Enter a number and hit return.
             :: and convert them each from .html to .docx.
             :: We end up with the same filenames, 
             :: with .docx extensions appended.
-            for /F "tokens=*" %%F in (file-list) do (
+            for /F "tokens=*" %%F in (file-list-pandoc) do (
                 pandoc %%F -f html -t docx -s -o %%F.docx
                 )
 
