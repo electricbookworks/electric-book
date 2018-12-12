@@ -7,6 +7,10 @@ layout: null
 {% include_relative polyfills.js %}
 {% include_relative locales.js %}
 
+{% if site.data.settings.redact == true %}
+    {% include_relative redact.js %}
+{% endif %}
+
 {% if site.output == "web" or site.output == "app" %}
 
     {% comment %} This order is important. {% endcomment %}
