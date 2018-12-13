@@ -131,19 +131,24 @@ gulp.task('images:svg', function (done) {
 // Convert source images for print-pdf
 gulp.task('images:printpdf', function (done) {
     'use strict';
+
+    // Options
+    var printPDFColorProfile = 'PSOcoated_v3.icc';
+    var printPDFColorSpace = 'cmyk';
+
     console.log('Processing print-PDF images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/PSOcoated_v3.icc')) {
+    if (fileExists.sync('_tools/profiles/' + printPDFColorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.printpdf))
             .pipe(debug({title: 'Creating print-PDF version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/PSOcoated_v3.icc').colorspace('cmyk');
+                return gmfile.profile('_tools/profiles/' + printPDFColorProfile).colorspace(printPDFColorSpace);
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.printpdf));
     } else {
-        console.log('Colour profile _tools/profiles/PSOcoated_v3.icc not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + printPDFColorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -153,8 +158,13 @@ gulp.task('images:printpdf', function (done) {
 // for screen-pdf, web, epub, and app
 gulp.task('images:optimise', function (done) {
     'use strict';
+
+    // Options
+    var imagesOptimiseColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+    var imagesOptimiseColorSpace = 'rgb';
+
     console.log('Processing screen-PDF, web, epub and app images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
+    if (fileExists.sync('_tools/profiles/' + imagesOptimiseColorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Optimising '}))
@@ -168,7 +178,7 @@ gulp.task('images:optimise', function (done) {
                 console.log(e);
             }))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+                return gmfile.profile('_tools/profiles/' + imagesOptimiseColorProfile).colorspace(imagesOptimiseColorSpace);
             }).on('error', function (e) {
                 console.log(e);
             }))
@@ -177,7 +187,7 @@ gulp.task('images:optimise', function (done) {
             .pipe(gulp.dest(paths.img.epub))
             .pipe(gulp.dest(paths.img.app));
     } else {
-        console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + imagesOptimiseColorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -186,8 +196,13 @@ gulp.task('images:optimise', function (done) {
 // Make small images for web use in srcset
 gulp.task('images:small', function (done) {
     'use strict';
+
+    // Options
+    var imagesSmallColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+    var imagesSmallColorSpace = 'rgb';
+
     console.log('Creating small web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
+    if (fileExists.sync('_tools/profiles/' + imagesSmallColorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Creating small '}))
@@ -202,13 +217,13 @@ gulp.task('images:small', function (done) {
                 console.log(e);
             }))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+                return gmfile.profile('_tools/profiles/' + imagesSmallColorProfile).colorspace(imagesSmallColorSpace);
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + imagesSmallColorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -217,8 +232,13 @@ gulp.task('images:small', function (done) {
 // Make medium images for web use in srcset
 gulp.task('images:medium', function (done) {
     'use strict';
+
+    // Options
+    var imagesMediumColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+    var imagesMediumColorSpace = 'rgb';
+
     console.log('Creating medium web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
+    if (fileExists.sync('_tools/profiles/' + imagesMediumColorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Creating medium '}))
@@ -233,13 +253,13 @@ gulp.task('images:medium', function (done) {
                 console.log(e);
             }))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+                return gmfile.profile('_tools/profiles/' + imagesMediumColorProfile).colorspace(imagesMediumColorSpace);
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + imagesMediumColorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -248,8 +268,13 @@ gulp.task('images:medium', function (done) {
 // Make large images for web use in srcset
 gulp.task('images:large', function (done) {
     'use strict';
+
+    // Options
+    var imagesLargeColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+    var imagesLargeColorSpace = 'rgb';
+
     console.log('Creating large web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
+    if (fileExists.sync('_tools/profiles/' + imagesLargeColorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Creating large '}))
@@ -264,13 +289,13 @@ gulp.task('images:large', function (done) {
                 console.log(e);
             }))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+                return gmfile.profile('_tools/profiles/' + imagesLargeColorProfile).colorspace(imagesLargeColorSpace);
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + imagesLargeColorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -279,8 +304,13 @@ gulp.task('images:large', function (done) {
 // Make extra-large images for web use in srcset
 gulp.task('images:xlarge', function (done) {
     'use strict';
+
+    // Options
+    var imagesXLargeColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+    var imagesXLargeColorSpace = 'rgb';
+
     console.log('Creating extra-large web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc')) {
+    if (fileExists.sync('_tools/profiles/' + imagesXLargeColorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}')
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Creating extra-large '}))
@@ -295,13 +325,13 @@ gulp.task('images:xlarge', function (done) {
                 console.log(e);
             }))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc').colorspace('rgb');
+                return gmfile.profile('_tools/profiles/' + imagesXLargeColorProfile).colorspace(imagesXLargeColorSpace);
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + imagesXLargeColorProfile + ' not found. Exiting.');
         return;
     }
     done();
