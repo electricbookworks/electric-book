@@ -177,3 +177,5 @@ local-media:
 # If included items are missing, do we show an error in output,
 # or does the site build break completely? Default is to break.
 on-missing-item: error
+# Redact elements with the 'redact' class: true or false
+redact: false
