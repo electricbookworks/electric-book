@@ -43,6 +43,15 @@ $print-fitting: true !default;
       height: $height;
     }
   }
+  // Sets the height of images inside any element
+  // e.g. the images in a figure
+  @for $i from 1 through 100 {
+    $height: $i * $line-height-default;
+    .image-height-#{$i}#{$edition-suffix} img,
+    img.image-height-#{$i}#{$edition-suffix} {
+      height: $height;
+    }
+  }
 
   // Prevent spans from breaking over a line
   span, em, strong {
