@@ -11,7 +11,7 @@ You can redact text and images in PDF output, and turn that redaction on or off.
 To redact content in PDF:
 
 1. Add the `redact` class to any element you want to redact.
-2. Set `redaction: true` in `_data/settings.yml`.
+2. Set `redact: true` in `_data/settings.yml`.
 
 The redaction turns images black and text to series of `x`es and a few other letters. The aim is to completely replace the original text, but as closely as possible retain text flow, which might have been manually refined.
 
