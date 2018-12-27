@@ -72,7 +72,7 @@ Let's ruin some more of that fine book to show nested lists:
 
 ### Chapter contents
 
-In kramdown, you can get a list of all the headings in a file by adding the tag `{:toc}` after a single list item. They automatically get a class of `markdown-toc`. How does this theme handle those in-chapter tables of contents?
+In kramdown, you can get a list of all the headings in a file by adding the tag `{:toc}` after a single list item. They automatically get an id of `markdown-toc`. How does this theme handle those in-chapter tables of contents?
 
 -	hello
 {:toc}
