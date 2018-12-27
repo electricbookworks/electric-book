@@ -128,8 +128,6 @@ function ebRedactTextNodes(element) {
     // }
 
     // Slow, Prince-friendly approach
-    console.log('Going slow');
-
     // Thanks https://stackoverflow.com/a/10730777/1781075
     function getTextNodes(node) {
         var textNodes = [];
