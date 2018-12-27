@@ -36,7 +36,13 @@
 
 {% else %}
 
-<div class="question{% if include.class %} {{ include.class }}{% endif %}" data-question="{{ item-file-object.path | split: "/" | last | split: "." | first }}" data-question-code="{% include question-secret-code.html correct=item-file-object.correct %}">
+{% comment %}Get image source, necessary for exports{% endcomment %}
+{% assign question-images-source = site.canonical-url %}
+{% if site.data.settings.remote-media.live and site.data.settings.remote-media.live != "" %}
+    {% assign question-images-source = site.data.settings.remote-media.live %}
+{% endif %}
+
+<div class="question{% if include.class %} {{ include.class }}{% endif %}" data-question="{{ item-file-object.path | split: "/" | last | split: "." | first }}" data-question-code="{% include question-secret-code.html correct=item-file-object.correct %}" data-question-images-source="{{ question-images-source }}/{{ book-directory }}/images/{{ site.output }}">
 
 {% if question-images != "" %}
 <div class="question-images">
