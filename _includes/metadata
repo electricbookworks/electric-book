@@ -773,7 +773,10 @@ might be included, and not to the item file itself.{% endcomment %}
 
     {% comment %} Rewrite images path for translations. {% endcomment %}
     {% if is-translation and items-translated-images-exist == true %}
-        {% capture images %}../../items/{{ language }}/{{ site.image-set }}{% endcapture %}
+        {% capture images %}../../../items/{{ language }}/{{ site.image-set }}{% endcapture %}
+        {% if site.output == "epub" %}
+            {% capture images %}../../items/{{ language }}/{{ site.image-set }}{% endcapture %}
+        {% endif %}
     {% endif %}
 {% endif %}
 
