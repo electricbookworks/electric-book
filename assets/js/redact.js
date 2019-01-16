@@ -74,11 +74,12 @@ function ebRedactionCypherSwitch(char) {
 }
 
 // Apply styles to redacted elements
+// (Note that Prince doesn't support innerText, hence textContent)
 function ebRedactTextStyles(element) {
     'use strict';
-    if (element.innerText) {
+    if (element.textContent) {
         console.log('Applying redaction styles...');
-        element.style.color = 'pink';
+        element.style.visibility = 'hidden';
     }
 }
 
@@ -111,7 +112,7 @@ function ebRedactImages(element) {
     arrayOfImages.forEach(function (imageNode) {
         if (imageNode) {
             console.log('Redacting ' + imageNode.src);
-            imageNode.style.filter = 'brightness(0)';
+            imageNode.style.visibility = 'hidden';
         }
     });
     return element;
@@ -128,6 +129,8 @@ function ebRedactTextNodes(element) {
     // }
 
     // Slow, Prince-friendly approach
+    console.log('Going slow');
+
     // Thanks https://stackoverflow.com/a/10730777/1781075
     function getTextNodes(node) {
         var textNodes = [];
