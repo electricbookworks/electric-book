@@ -156,6 +156,7 @@ en:
     jump-to-first: "Jump to first result ↓"
     notice: ""
   contact:
+    subject-line: "Enquiry"
     placeholder:
       name: "Name"
       email: "Email address"
@@ -227,6 +228,7 @@ fr:
     jump-to-first: "Aller au premier résultat ↓"
     notice: ""
   contact:
+    subject-line: "Enquête"
     placeholder:
       name: "Nom"
       email: "L’adresse e-mail"
