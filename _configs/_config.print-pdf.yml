@@ -59,6 +59,6 @@ exclude:
 # Populate the keep_files list for temporary faster builds
 # or to keep previously generated files for other formats.
 keep_files:
-  # - /assets/fonts
-  # - /book/fonts
-  # - /book/styles
+  # - assets/fonts
+  # - book/fonts
+  # - book/styles
