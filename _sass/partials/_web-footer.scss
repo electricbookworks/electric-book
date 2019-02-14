@@ -13,6 +13,7 @@ $web-footer: true !default;
 		margin: ($line-height-default * 2) 0 0 0;
 		padding: $line-height-default / 2;
 		width: 100%; // Prevents floating when preceding elements float or flex
+		box-sizing: border-box; // prevents max-width from causing effective left padding
 	}
 	.footer-content {
 		clear: both;
