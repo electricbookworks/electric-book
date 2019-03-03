@@ -90,7 +90,9 @@ $epub-base-typography: true !default;
     dl {
         margin: $line-height-default 0;
     }
-    dt {}
+    dt {
+        font-weight: bold;
+    }
     dd {
         margin: 0 0 $line-height-default 0;
     }
