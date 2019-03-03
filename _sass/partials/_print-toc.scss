@@ -52,10 +52,9 @@ $print-toc: true !default;
 			li {
 				margin: 0;
 				ol, ul {
-					margin-bottom: $line-height-default;
-					li {
-						margin-left: $line-height-default;
-					}
+					list-style-type: none;
+					margin-bottom: 0;
+					margin-left: $line-height-default;
 				}
 			}
 		a::after {

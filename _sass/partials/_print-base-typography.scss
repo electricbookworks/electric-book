@@ -141,6 +141,7 @@ $convert-images-to-color-profile: false !default;
     }
     dt {
         page-break-after: avoid;
+        font-weight: bold;
     }
     dd {
         margin: 0 0 $line-height-default $line-height-default;
