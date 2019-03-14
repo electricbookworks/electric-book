@@ -6,6 +6,7 @@
 * [Fix math in Word export](https://github.com/electricbookworks/electric-book/pull/339).
 * [Allow converting endnotes to footnotes in PDF](https://github.com/electricbookworks/electric-book/pull/337).
 * [Improvements to video output](https://github.com/electricbookworks/electric-book/pull/329), and [allow turning on YouTube subtitles](https://github.com/electricbookworks/electric-book/pull/335).
+* [Fix a bug where some multiline maths did not show in epub output](https://github.com/electricbookworks/electric-book/pull/352).
 * [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/149705bd114fb48fa3b84377eb192e23cd6a2c0f...master).
 
 ## 0.14.0
