@@ -1,3 +1,4 @@
+{% capture epub-package %}
 {% comment %}If we're outputting an epub, create a package.opf file{% endcomment %}
 {% if site.output == "epub" %}
 
@@ -384,3 +385,4 @@
 </package>
 
 {% endif %}
+{% endcapture %}{{ epub-package | strip }}
