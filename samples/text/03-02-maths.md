@@ -12,7 +12,7 @@ LaTeX-style maths via MathJax can be inline ($$E = mc^2$$) or displayed:
 
 $$P_{t+1} - P_t=\frac{b+d}{s}(P_t-\overline{P})$$
 
-The maths above and below is borrowed and adaptedfrom [*The Economy*](https://core-econ.org/the-economy/book/text/leibniz-11-08-01.html) by CORE.
+The maths above and below is borrowed and adapted from [*The Economy*](https://core-econ.org/the-economy/book/text/leibniz-11-08-01.html) by CORE.
 
 $$P_{t+2} - P_{t+1}=\frac{b+d}{s}(P_{t+1}-\overline{P})$$
 
