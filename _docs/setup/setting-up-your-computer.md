@@ -46,6 +46,10 @@ For a detailed guide on installing all dependencies on a Mac, see [this guide by
 
 For a detailed guide on installing Chocolatey, Ruby, Jekyll and Bundler on Windows, see [this guide by Arthur Attwell](https://gist.github.com/arthurattwell/281a5e1888ffd89b08b4861a2e3c1b35).
 
+### Linux
+
+We don't have a detailed guide for setting up on Linux yet. Ubuntu users who are familiar with shell scripts will find [this script](https://gist.github.com/arthurattwell/2684d50c286f3b005ea84eb61954458f) useful. It installs all the dependencies in one go. Don't run it as-is unless you know what you're doing. It may be better to read it as a guide to the commands you might run to install each Electric Book dependency in turn.
+
 ### Suggestions
 
 If you know of other good guides to setting up these applications, especially for Ubuntu Linux, please let us know. We have successfully installed all of these tools on Ubuntu, using each project's own installation guides and various online fora.
