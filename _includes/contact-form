@@ -1,5 +1,5 @@
 {% comment %}
-Contact form createed with Formspree.
+Contact form created with Formspree.
 See https://formspree.io for how to initialise.
 {% endcomment %}
 
@@ -11,6 +11,7 @@ See https://formspree.io for how to initialise.
     <input type="email" name="_replyto" placeholder="{{ locale.contact.placeholder.email }}">
     <textarea type="text" name="message" placeholder="{{ locale.contact.placeholder.message }}"></textarea>
     <input type="submit" value="{{ locale.input.send }}">
-    <input type="hidden" name="_next" value="" />
+    <input type="hidden" name="_next" value="{{ site.baseurl }}" />
+    <input type="hidden" name="_subject" id="_subject" value="{{ locale.contact.subject-line }}">
     <input type="text" name="_gotcha" style="display:none" />
 </form>

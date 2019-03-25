@@ -5,15 +5,23 @@ $epub-video: true !default;
     // Works specifically with our video includes
 
     .video {
+        font-family: $font-text-secondary;
         margin: 0 0 1em 0;
         position: relative; // positions child element play button correctly
         img {
             width: 100%;
         }
-        .video-link {
+        .video-link {}
+        .video-description {
+            margin-top: $line-height-default;
+            text-align: center;
+        }
+        .video-wrapper {
+            position: relative;
             // Add play button before iframe loads
             &:before {
                 content: "\25b6";
+                position: relative;
                 // position: absolute; // not supported in epub yet
                 font-size: $font-size-default * 3;
                 top: 50%;
@@ -23,17 +31,14 @@ $epub-video: true !default;
                 color: white;
                 opacity: 0.5;
             }
-            // If there's no image, e.g. for Vimeo, make a frame placeholder
-            .video-no-image {
-                display: block;
-                height: $line-height-default * 4;
-                width: 80%;
-                border-radius: $button-border-radius;
+            // Create placeholder with 16:9 aspect ratio
+            // when there is no image to display
+            &.video-no-image {
+                width: 100%;
+                padding-bottom: 56.25%;
                 background-color: $color-mid;
-                margin: 0 auto;
+                border-radius: $button-border-radius;
             }
-        }
-        .video-wrapper {
             // JS will add an iframe here; when it does:
             &.contains-iframe {
             float: none;

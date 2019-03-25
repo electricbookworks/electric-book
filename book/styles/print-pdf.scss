@@ -217,18 +217,15 @@ $show-baseline-grid: false;
 // Set to false to turn partials off
 // ---------------------------------
 
-// ---------------------
 // Reset PrinceXML CSS
 $print-css-reset: true;
 
 // Conventional helper classes
 $print-helpers: true;
 
-// ---------------------------
 // Add default font-face rules
 $print-font-faces: true;
 
-// --------------------------------------------
 // Page setup and control, avoid changing these
 $print-pdf-view: true; // Sets the default initial view on PDFs
 $print-page-setup: true; // Sets up the page from your variables
@@ -237,8 +234,7 @@ $print-hide-non-printing: true; // Hides anything .non-printing
 $print-fitting: true; // Classes for floating, tracking, shrinking, etc.
 $print-hyphenation: true; // Sets hyphenation dictionary
 
-// ---------------------
-// Theme modules
+// Book features
 $print-start-on-recto-or-verso: true; // Starts chapters on a left- or right-hand-page
 $print-page-start-depth: true; // Sets a top margin on opening pages
 $print-base-typography: true; // Default typography for HTML elements

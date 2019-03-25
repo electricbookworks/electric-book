@@ -8,6 +8,8 @@ in Liquid, and EpubCheck doesn't mind an empty value.
 The toc.ncx is marked for removal from the spec anyway,
 so this value will probably not be checked in future.{% endcomment %}
 
+{% include metadata %}
+
 <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
     <head>
         <meta name="dtb:uid" content="{{ epub-identifier }}"/>

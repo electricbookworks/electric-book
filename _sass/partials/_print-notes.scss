@@ -1,84 +1,119 @@
 $print-notes: true !default;
 @if $print-notes {
 
-	// Footnotes
+    // Footnotes
 
-	// kramdown gives footnote references the class .footnote
-	// and the div containing the footnotes .footnotes
-	// Styling for sup and sub is in base typography
+    // kramdown gives footnote references the class .footnote
+    // and the div containing the footnotes .footnotes.
+    // In books, we call these endnotes. To avoid confusion,
+    // here we will call true footnotes 'page-footnotes'.
+    // Styling for sup and sub is in base typography
 
-	// Single footnote
-	.footnote {
-		line-height: inherit;
-	}
+    // Single footnote
+    .footnote {
+        line-height: inherit;
+    }
 
-	// Footnotes section
-	.footnotes {
-		margin: $line-height-default 0 0 0;
-		font-size: $font-size-default * $font-size-smaller;
-		line-height: $line-height-default * $font-size-smaller;
-		p {
-			text-indent: 0;
-		}
-	}
-	// Hide the link back to the footnote reference from the footnote text.
-	.reversefootnote {
-		display: none;
-	}
+    // Footnotes section
+    .footnotes {
+        margin: $line-height-default 0 0 0;
+        font-size: $font-size-default * $font-size-smaller;
+        line-height: $line-height-default * $font-size-smaller;
+        p {
+            text-indent: 0;
+        }
+    }
+    // Hide the link back to the footnote reference from the footnote text.
+    .reversefootnote {
+        display: none;
+    }
 
-	// Sidenotes
-	.sidenote {
-		clear: both;
-		float: right;
-		font-family: $font-text-secondary;
-		font-size: $font-size-default * $font-size-smaller;
-		line-height: $line-height-default;
-		font-style: inherit;
-		text-indent: 0;
-		max-width: 40%;
-		min-width: 5em;
-		margin: ($line-height-default * 0.75) 0 ($line-height-default * 0.5) ($line-height-default);
-		padding: ($line-height-default * 0.25) 0 0 0;
-		border-top: $rule-thickness solid $color-light;
-		box-sizing: border-box;
-		// Don't text-indent paragraphs that follow sidenotes that follow a heading.
-		// We allow for up to three sidenotes between the heading and paragraph.
-		h1 + & + p,
-		h2 + & + p,
-		h3 + & + p,
-		h4 + & + p,
-		h5 + & + p,
-		h6 + & + p,
-		h1 + & + & + p,
-		h2 + & + & + p,
-		h3 + & + & + p,
-		h4 + & + & + p,
-		h5 + & + & + p,
-		h6 + & + & + p,
-		h1 + & + & + & + p,
-		h2 + & + & + & + p,
-		h3 + & + & + & + p,
-		h4 + & + & + & + p,
-		h5 + & + & + & + p,
-		h6 + & + & + & + p {
-			text-indent: 0;
-		}
-		// Unless we're spacing paras, put back the indent
-		// on paras that follow sidenotes that follow paras.
-		p + & + p {
-			text-indent: $line-height-default;
-		}
-		@if $spaced-paras {
-	        p + & + p {
-	            text-indent: 0;
-	        }
-	    }
-	}
-	// Sidenotes that appear at the bottom of the page, aka footer notes.
-	.bottom {
-		float: bottom;
-		max-width: 100%;
-		margin: ($line-height-default * 0.75) 0 0 0;
-	}
+    // Sidenotes
+    .sidenote {
+        clear: both;
+        float: right;
+        font-family: $font-text-secondary;
+        font-size: $font-size-default * $font-size-smaller;
+        line-height: $line-height-default;
+        font-style: inherit;
+        text-indent: 0;
+        max-width: 40%;
+        min-width: 5em;
+        margin: ($line-height-default * 0.75) 0 ($line-height-default * 0.5) ($line-height-default);
+        padding: ($line-height-default * 0.25) 0 0 0;
+        border-top: $rule-thickness solid $color-light;
+        box-sizing: border-box;
+        // Don't text-indent paragraphs that follow sidenotes that follow a heading.
+        // We allow for up to three sidenotes between the heading and paragraph.
+        h1 + & + p,
+        h2 + & + p,
+        h3 + & + p,
+        h4 + & + p,
+        h5 + & + p,
+        h6 + & + p,
+        h1 + & + & + p,
+        h2 + & + & + p,
+        h3 + & + & + p,
+        h4 + & + & + p,
+        h5 + & + & + p,
+        h6 + & + & + p,
+        h1 + & + & + & + p,
+        h2 + & + & + & + p,
+        h3 + & + & + & + p,
+        h4 + & + & + & + p,
+        h5 + & + & + & + p,
+        h6 + & + & + & + p {
+            text-indent: 0;
+        }
+        // Unless we're spacing paras, put back the indent
+        // on paras that follow sidenotes that follow paras.
+        p + & + p {
+            text-indent: $line-height-default;
+        }
+        @if $spaced-paras {
+            p + & + p {
+                text-indent: 0;
+            }
+        }
+    }
+    // Sidenotes that appear at the bottom of the page, aka footer notes.
+    .bottom {
+        float: bottom;
+        max-width: 100%;
+        margin: ($line-height-default * 0.75) 0 0 0;
+    }
+
+    // True footnotes (we call them page-footnotes for clarity)
+    // For styling see https://www.princexml.com/doc-prince/#footnote-calls
+    .page-footnote {
+        float: footnote;
+        footnote-style-position: inside;
+        text-indent: -($line-height-default * 1.5);
+        margin-left: $line-height-default * 1.5;
+    }
+        // The numbers in front of footnote text
+        *::footnote-marker {
+            float: left;
+            width: $line-height-default * 1.5;
+        }
+
+    // The page-footnotes area
+    @page {
+        @footnotes {
+            margin-top: $line-height-default / 2;
+            padding-top: $line-height-default / 2;
+            font-size: $font-size-default * $font-size-smaller;
+        }
+    }
+
+    // The page-footnote references in body text
+    // Note that other <sup> styling is defined in
+    // _print-base-typography.scss
+    *::footnote-call {
+        content: counter(footnote);
+        font-size: $font-size-default * $font-size-smaller;
+        vertical-align: super;
+        line-height: none;
+    }
 
 }

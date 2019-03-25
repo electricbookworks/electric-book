@@ -22,14 +22,13 @@
 
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
 
-    {% if site.mathjax-enabled == true %}
-        {% include mathjax-config %}
-    {% endif %}
+    {% comment %} Note: MathJax script not included for PDF output.
+    MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %}>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %} data-page-info="{% unless site.data.settings.redact == true %}{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first | truncate: 20 }} • {% endunless %}{{ site.time | date: "%-d %b %Y, %H:%M" }}"{% if site.data.settings.print-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}>
 <div id="wrapper">
 
 
@@ -55,14 +54,13 @@
 
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
 
-    {% if site.mathjax-enabled == true %}
-        {% include mathjax-config %}
-    {% endif %}
+    {% comment %} Note: MathJax script not included for PDF output.
+    MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %}>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %} data-page-info="{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first }} • {{ site.time | date: "%-d %b %Y, %H:%M" }}"{% if site.data.settings.screen-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}>
 <div id="wrapper">
 
 

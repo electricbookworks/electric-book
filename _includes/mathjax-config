@@ -1,111 +1,99 @@
 {% comment %}
 Mathjax configuration
-Note that configs are different for pdf, epub and web.
+---------------------
+
+- PDF outputs use mathjax-node-page to turn LaTeX into MathML, which Prince
+  can display as-is, so we don't need MathJax JS for PDF output.
+- Epub reader support for MathML is spotty. So we continue to
+  provide a local MathJax.js that generates SVG maths in the reader.
+- App output will render in a webview, where the underlying browser
+  may not support MathML. So we need local MathJax.js to display it.
+- For web output, most browsers do not support MathML, so we need MathJax
+  to render maths.
 {% endcomment %}
 
-{% if site.output == "print-pdf" or site.output == "screen-pdf" %}
 
-<script id="MathJax"
-   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_SVG">
-</script>
-<script id="MathJaxConfig" type="text/x-mathjax-config" >
-MathJax.Hub.Config({
-    messageStyle: "none",
-    "SVG": {
-        scale: 75,
-        font: "{% if page.mathjax-font %}{{ page.mathjax-font }}{% else %}{{ site.mathjax-font }}{% endif %}",
-        matchFontHeight: false,
-        styles: {
-            ".MathJax [style*=border-top-width]": {
-                "border-top-width": "0.5pt ! important"
+{% comment %}
+Optional: If you change your MathJax output format, you must clear users' caches
+or their browsers might look for the wrong, cached config file.
+This little script deletes the MathJax menu cookie.
+If your MathJax choices here are stable, you can comment out this script.
+{% endcomment %}
+{% if site.output == "app" or site.output == "web" %}
+    <script>
+        function delete_cookie(name) {
+            document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
+            console.log('Expired and removed MathJax menu cookie.');
+        }
+        delete_cookie('mjx.menu')
+    </script>
+{% endif %}
+
+
+{% comment %}
+MathJax config for local MathJax with SVG output.
+{% endcomment %}
+{% if site.output == "epub" or site.output == "app" or site.data.settings.web.mathjax.source == "local" %}
+
+    <!--See https://www.peterkrautzberger.org/0129/ -->
+    <script id="MathJaxConfig" type="text/x-mathjax-config" >
+        MathJax.Hub.Config({
+            jax: ["input/TeX", "output/SVG"],
+            extensions: ["tex2jax.js", "MathEvents.js"],
+            TeX: {
+                extensions: ["noErrors.js", "noUndefined.js", "autoload-all.js"]
+            },
+            MathMenu: {
+                showRenderer: false
+            },
+            menuSettings: {
+                zoom: "Click"
+            },
+            messageStyle: "none",
+            SVG: {
+                blacker: 0,
+                font: "Gyre-Pagella",
+                linebreaks: {
+                    automatic: true,
+                    width: "container"
+                },
+                scale: 90
             }
-        }
-    }
-});
-MathJax.Hub.Queue(
-    // fires after MathJax is done
-    function () {
-        if (typeof window.callPhantom === 'function') {
-            window.callPhantom({ mathJaxDone: true});
-        }
-    }
-);
-</script>
+        });
+    </script>
 
-{% elsif site.output == "epub" %}
+    {% comment %} Link to local MathJax script. {% endcomment %}
+    {% if site.output == "epub" %}
 
-<!--See https://www.peterkrautzberger.org/0129/ -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  jax: ["input/TeX","input/MathML","output/SVG"],
-  extensions: ["tex2jax.js","mml2jax.js","MathEvents.js"],
-  TeX: {
-    extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
-  },
-  MathMenu: {
-    showRenderer: false
-  },
-  menuSettings: {
-    zoom: "Click"
-  },
-  messageStyle: "none",
-  SVG: {
-    scale: 90,
-    linebreaks: {
-      automatic: true,
-      width: "container",
-    },
-  },
-});
-</script>
-<script type="text/javascript" src="{{ path-to-book-directory }}mathjax/MathJax.js"></script>
+        {% comment %}This path uses the structure in the final, packaged epub.{% endcomment %}
+        <script type="text/javascript" src="{{ path-to-book-directory }}mathjax/MathJax.js"></script>
 
-{% elsif site.output == "app" %}
+    {% else %}
 
-<!--See https://www.peterkrautzberger.org/0129/ -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  jax: ["input/TeX","input/MathML","output/SVG"],
-  extensions: ["tex2jax.js","mml2jax.js","MathEvents.js"],
-  TeX: {
-    extensions: ["noErrors.js","noUndefined.js","autoload-all.js"]
-  },
-  MathMenu: {
-    showRenderer: false
-  },
-  menuSettings: {
-    zoom: "Click"
-  },
-  messageStyle: "none",
-  SVG: {
-    scale: 90,
-    linebreaks: {
-      automatic: true,
-      width: "container",
-    },
-  },
-});
-</script>
-<script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"></script>
+        <script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"></script>
 
+    {% endif %}
+
+{% comment %} MathJax from the CDN (not local),
+with HTML-CSS output. {% endcomment %}
 {% else %}
 
-<script id="MathJax"
-   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<script id="MathJaxConfig" type="text/x-mathjax-config" >
-MathJax.Hub.Config({
-    "HTML-CSS": {
-        availableFonts: [], // force use of webFont
-        webFont: "{% if page.mathjax-font %}{{ page.mathjax-font }}{% else %}{{ site.mathjax-font }}{% endif %}",
-        scale: 90,
-        styles: {
-            ".MathJax [style*=border-top-width]": {
-                "border-top-width": "0.5pt ! important"
+    <script id="MathJaxConfig" type="text/x-mathjax-config" >
+        MathJax.Hub.Config({
+            "HTML-CSS": {
+                availableFonts: [], // force use of webFont
+                webFont: "Gyre-Pagella",
+                scale: 90,
+                styles: {
+                    ".MathJax [style*=border-top-width]": {
+                        "border-top-width": "0.5pt ! important"
+                    }
+                }
             }
-        }
-    }
-});
-</script>
+        });
+    </script>
+    <script id="MathJax"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML">
+    </script>
 
 {% endif %}

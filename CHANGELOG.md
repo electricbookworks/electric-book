@@ -1,5 +1,23 @@
 # Changelog
 
+## Latest
+
+* [Enable redaction in PDF](https://github.com/electricbookworks/electric-book/pull/342).
+* [Fix math in Word export](https://github.com/electricbookworks/electric-book/pull/339).
+* [Allow converting endnotes to footnotes in PDF](https://github.com/electricbookworks/electric-book/pull/337).
+* [Improvements to video output](https://github.com/electricbookworks/electric-book/pull/329), and [allow turning on YouTube subtitles](https://github.com/electricbookworks/electric-book/pull/335).
+* [Fix a bug where some multiline maths did not show in epub output](https://github.com/electricbookworks/electric-book/pull/352).
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/149705bd114fb48fa3b84377eb192e23cd6a2c0f...master).
+
+## 0.14.0
+
+* [Major improvement to preprocessing and output of maths](https://github.com/electricbookworks/electric-book/pull/328)
+* [Enable turning off or expanding accordion per-page](https://github.com/electricbookworks/electric-book/pull/318)
+* [Fix to prevent false positives in active menu items](https://github.com/electricbookworks/electric-book/pull/316)
+* [Add canonical link tag to head for better SEO and annotation](https://github.com/electricbookworks/electric-book/pull/314)
+* [Hide breadcrumbs on small screens](https://github.com/electricbookworks/electric-book/pull/313)
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/65a56fb75dd3e40223c9f327d144c176d12682e5...master).
+
 ## 0.13.0
 
 * [Add ability to create reusable content items](https://github.com/electricbookworks/electric-book/pull/307).

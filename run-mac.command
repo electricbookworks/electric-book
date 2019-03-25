@@ -58,7 +58,7 @@ Enter a number and hit enter. "
 		echo "_configs/_config.myconfig.yml"
 		echo "If not, just hit return."
 		read config
-		# Ask whether we're processing MathJax, to know whether to send the HTML via PhantomJS
+		# Ask whether we're processing MathJax, to know whether to pre-process the HTML
 		printpdfmathjax="unknown"
 		until [ "$printpdfmathjax" = "" ] || [ "$printpdfmathjax" = "y" ]
 		do
@@ -84,15 +84,16 @@ Enter a number and hit enter. "
 			else
 				bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
 			fi
-			# If using, MathJax, let PhantomJS render the HTML
+			# If using, MathJax, preprocess the HTML
 			if [ "$printpdfmathjax" = "" ]; then
-				echo "No MathJax, skipping PhantomJS."
+				echo "No MathJax required."
 			else
-				echo "Rendering MathJax in HTML with PhantomJS. If you get an error, check that PhantomJS is installed."
-				# We have to go to the folder for Phantom to work
-				cd _site/assets/js
-				phantomjs render-mathjax.js
-				cd "$location"
+				echo "Processing MathJax in HTML."
+				if [ "$printpdfsubdirectory" = "" ]; then
+					gulp mathjax --book $bookfolder
+				else
+					gulp mathjax --book $bookfolder --language $printpdfsubdirectory
+				fi
 			fi
 			# Navigate into the book's text folder in _site
 			if [ "$printpdfsubdirectory" = "" ]; then
@@ -147,7 +148,7 @@ Enter a number and hit enter. "
 		echo "_configs/_config.myconfig.yml"
 		echo "If not, just hit return."
 		read config
-		# Ask whether we're processing MathJax, to know whether to send the HTML via PhantomJS
+		# Ask whether we're processing MathJax, to know whether to process the HTML
         screenpdfmathjax="unknown"
 		until [ "$screenpdfmathjax" = "" ] || [ "$screenpdfmathjax" = "y" ]
 		do
@@ -173,15 +174,16 @@ Enter a number and hit enter. "
 			else
 				bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
 			fi
-			# If using, MathJax, let PhantomJS render the HTML
+			# If using MathJax, process the HTML
 			if [ "$screenpdfmathjax" = "" ]; then
-				echo "No MathJax, skipping PhantomJS."
+				echo "No MathJax required."
 			else
-				echo "Rendering MathJax in HTML with PhantomJS. If you get an error, check that PhantomJS is installed."
-				# We have to go to the folder for Phantom to work
-				cd _site/assets/js
-				phantomjs render-mathjax.js
-				cd "$location"
+				echo "Processing MathJax in HTML."
+				if [ "$printpdfsubdirectory" = "" ]; then
+					gulp mathjax --book $bookfolder
+				else
+					gulp mathjax --book $bookfolder --language $screenpdfsubdirectory
+				fi
 			fi
 			# Navigate into the book's text folder in _site
 			if [ "$screenpdfsubdirectory" = "" ]; then
@@ -731,6 +733,9 @@ You may need to reload the web page once this server is running."
 			bookfolder="book"
 		fi
 		echo "Okay, let's make Word files for $bookfolder..."
+		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
+		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
+		read wordsubdirectory
 		# Ask user which output format to work from
 		echo "Which format are we converting from? Enter a number or hit enter for the default 'print-pdf'. "
 		echo "1. Print PDF (default)"
@@ -779,10 +784,16 @@ You may need to reload the web page once this server is running."
 		do
 			# let the user know we're on it!
 			echo "Generating HTML..."
-			# ...and run Jekyll to build new HTML
-			bundle exec jekyll build --config="_config.yml,_configs/_config.$fromformat.yml,$config"
-			# Navigate into the book's folder in _site output
-			cd _site/$bookfolder/text
+			# ...and run Jekyll to build new HTML.
+			# We turn off the math engine so that we get raw TeX output,
+			# and because Pandoc does not support SVG output anyway.
+			bundle exec jekyll build --config="_config.yml,_configs/_config.$fromformat.yml,_configs/_config.math-disabled.yml,$config"
+			# Navigate into the book's text folder in _site
+			if [ "$wordsubdirectory" = "" ]; then
+				cd _site/$bookfolder/text
+			else
+				cd _site/$bookfolder/$wordsubdirectory/text
+			fi
 			# Update user
 			echo "Converting $bookfolder HTML to Word..."
 			# Before looping through file-list, remove blank lines.

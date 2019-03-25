@@ -14,7 +14,7 @@ order: 35
 
 Sometimes across a book or a collection of books, you want to repeat snippets of content. For instance, you may have a standard introduction to all your books, or 'About the author' text that you want to add to the ends of certain chapters. Or you might want several books to [draw questions or create quizzes](../editing/questions.html) from the same set of possible questions.
 
-You can create repeatable items like this by saving them as standalone files in the `_items` folder.
+You can create repeatable items like this by saving them as standalone files in the `_items` folder. The contents of the `_items` folder should be structured in the same way as a book folder. That is, markdown files should be in `_items/text`, and markdown files for a French translation would be in `_items/fr/text`.
 
 To include an item in your book, use the `include item` tag, and specify in the tag which file you want to include. For example:
 
@@ -24,7 +24,7 @@ To include an item in your book, use the `include item` tag, and specify in the 
 ```
 {% endraw %}
 
-In your output, the content in `_items/about-charles-dickens.md` will appear where you placed that tag.
+In your output, the content in `_items/text/about-charles-dickens.md` will appear where you placed that tag.
 
 Note that the file extension is optional. So you can also use:
 
@@ -34,7 +34,7 @@ Note that the file extension is optional. So you can also use:
 ```
 {% endraw %}
 
-This is convenient, but also means that you shouldn't use the same file name for different files with different extensions. If you had both `about-charles-dickens.md` and `about-charles-dickens.html` in `_items`, your output will include the second one alphabetically: `about-charles-dickens.md`.
+This is convenient, but also means that you shouldn't use the same file name for different files with different extensions. If you had both `about-charles-dickens.md` and `about-charles-dickens.html` in `_items/text`, your output will include the second one alphabetically: `about-charles-dickens.md`.
 
 > Note that `include` tags (or other Liquid tags) *inside* items may not regnerate when you're running an incremental build with Jekyll, because of the sequence in which Jekyll processes Liquid tags and content.
 {:.box}
@@ -70,7 +70,7 @@ When you use {% raw %}`{% include item file="about-charles-dickens" %}`{% endraw
 
 When you need to create translations of items in the `_items` folder, save those in a subfolder of `_items` that has the same name as the book's translation folder. 
 
-For instance, if your book's French translation is in `book/fr`, save your French items to `_items/fr`.
+For instance, if your book's French translation is in `book/fr`, save your French items to `_items/fr`, in relevant `text` or `images` subfolders.
 
 Then in the French book text, use the `include item` tag as usual:
 
@@ -84,13 +84,13 @@ This way, you can use exactly the same tags across translations, and your output
 
 ## Images
 
-Images stored in `_items` follow the same conventions as in books. That is, place master images in `_items/images/_source` and process them using the output script (or `gulp --book _items`).
+Images stored in `_items/images` follow the same conventions as in books. That is, place master images in `_items/images/_source` and process them using the output script (or `gulp --book _items`).
 
 Translated images should go into language subfolders of `_items`, such as `_items/fr/images/_source` for French images.
 
 > ### Notes
 > 
-> Unlike book directories, items may not inherit their parent-language's images. This ability is still in development. All images in the `_items`parent folder may need to be copied to (or translated in) each translation's images folder in `_items`, such as `_items/fr/images`.
+> Unlike book directories, items may not inherit their parent-language's images. This ability is still in development. All images in the `_items` parent folder may need to be copied to (or translated in) each translation's images folder in `_items`, such as `_items/fr/images`.
 > 
 > Using `include figure` with images in items is also a feature in development.
 {:.box}
@@ -139,4 +139,4 @@ And when you use that include in your book's text, you'd use:
 ```
 {% endraw %}
 
-assuming that you'd saved the poem in `_items` as `the-tiger.md`.
+assuming that you'd saved the poem in `_items/text` as `the-tiger.md`.

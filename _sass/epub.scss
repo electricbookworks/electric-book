@@ -17,6 +17,9 @@
 // Set variables
 // -------------
 
+// Provide a variable for site output
+$output-format: "epub" !default;
+
 // Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
 $edition-suffix: null !default;
 

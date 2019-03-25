@@ -7,9 +7,6 @@ $print-questions: true !default;
 
     .question {
         box-sizing: border-box; // to include padding in the width
-        font-family: $font-text-secondary;
-        page-break-inside: avoid;
-        padding: ($line-height-default / 2);
         margin: $line-height-default 0;
         // Add some space around images when they're placed with markdown,
         // rather than in figure includes.
@@ -19,10 +16,10 @@ $print-questions: true !default;
             max-width: $main-text-width - $line-height-default;
         }
         table {
-            width: $main-text-width - $line-height-default;
+            width: auto;
         }
         .figure {
-            width: $main-text-width - ($line-height-default * 2);
+            width: auto;
             float: none;
             margin-top: $line-height-default;
             img {
@@ -82,46 +79,64 @@ $print-questions: true !default;
         &.page-break-before {
             margin-top: 0;
         }
+        .question-content {
+            // Don't allow a page break before the first
+            // element in a question, i.e. before the question number
+            page-break-before: avoid;
+            // Don't add space after the last item
+            // before the (hidden) question-feedback starts
+            & > *:nth-last-child(2):not(.question-feedback) {
+                margin-bottom: 0;
+            }
+        }
     }
 
-    // Exam, quiz and question numbering.
+    // Quiz groups, quiz and question numbering.
     // Questions are gathered in quizzes,
-    // and quizzes can be gathered as sections of exams.
+    // and quizzes can be grouped together, e.g. as a single section or as a complete exam.
 
-    .exam {
-        counter-reset: exam 0 quiz 0;
+    .quiz-group {
+        counter-reset: quiz-group 0 quiz 0;
     }
     .quiz {
         counter-reset: quiz; // question numbering restarts in each quiz...
-        .exam & {
-            counter-reset: none; // ...except across quizzes in a single exam
+        .quiz-group & {
+            counter-reset: none; // ...except when quizzes are grouped together.
         }
         &:before {
-            counter-increment: exam;
-            // content: counter(exam); // Uncomment to number quizzes
+            counter-increment: quiz-group;
+            // content: counter(quiz-group); // Uncomment to number quizzes
         }
-        // Don't number if there is only one quiz in the exam
+        // Don't number if there is only one quiz in the group
         &:only-child:before {
             content: normal;
         }
         .question {
             counter-reset: question;
+            margin-left: $line-height-default; // with &:before margin-left, creates hanging indent
             &:before {
                 counter-increment: quiz;
                 content: counter(quiz) ".";
                 float: left;
                 margin-right: 0.25em;
+                margin-left: -($line-height-default); // with parent's margin-left, creates hanging indent
+                page-break-after: avoid;
             }
             &:only-of-type:before {
                 content: normal;
             }
         }
-        .question ol {
+        .question ol.sub-questions {
             list-style-type: none;
             li {
+                margin-left: $line-height-default * 1.5; // with &:before margin-left, creates hanging indent
+                text-indent: -($line-height-default * 1.5); // with parent's margin-left, creates hanging indent
                 &:before {
                     counter-increment: question;
-                    content: counter(quiz) "." counter(question) " ";
+                    content: counter(quiz) "." counter(question);
+                    display: inline-block;
+                    width: $line-height-default * 1.5;
+                    text-indent: 0; // not to inherit from parent
                 }
             }
         }
@@ -129,22 +144,41 @@ $print-questions: true !default;
 
     // Marks
 
-    .quiz {
-        font-family: $font-text-secondary;
-        .quiz-total-marks {
+    .quiz-group {
+        .quiz-group-total-marks {
+            font-family: $font-text-secondary;
             font-weight: bold;
-            float: right;
+            text-align: right;
+            page-break-before: avoid;
+        }
+    }
+    .quiz {
+        .quiz-total-marks {
+            font-family: $font-text-secondary;
+            font-weight: bold;
+            text-align: right;
+            page-break-before: avoid;
+            clear: right;
         }
     }
     .question {
+        li {
+            // Avoid marks appearing beside wrong text
+            clear: right;
+        }
         em.marks, strong.marks {
             font-style: normal;
             font-weight: normal;
             float: right;
+            margin-left: 1em;
+            text-indent: 0; // don't inherit parent text-indent
         }
         .question-total-marks {
+            font-family: $font-text-secondary;
             font-weight: bold;
-            float: right;
+            text-align: right;
+            page-break-before: avoid;
+            clear: right;
             &:before {
                 content: "[";
             }
@@ -164,6 +198,15 @@ $print-questions: true !default;
             line-height: 1;
             margin: 0;
             border-width: 0 0 $rule-thickness 0;
+        }
+    }
+
+    // Question feedback
+
+    .question {
+        // We don't show the feedback in PDF
+        .question-feedback {
+            display: none;
         }
     }
 
@@ -197,6 +240,9 @@ $print-questions: true !default;
         p, ul, ol, blockquote {
             margin-bottom: 0 !important;
             margin-top: $line-height-default !important;
+            &:first-child {
+                margin-top: 0 !important;
+            }
         }
         // Except the element after the first heading, which has no margin-top
         h1:first-child + *,

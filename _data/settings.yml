@@ -35,6 +35,24 @@ variants:
   - variant: yourvariant
 
 # ----------------------------------------------------------
+# Print-PDF settings
+# ------------
+print-pdf:
+  # Choose between endnotes or footnotes (endnotes are default)
+  # (You can also set this per markdown file with notes: footnotes,
+  # or per endnote by adding .move-to-footnote to it.)
+  notes: endnotes
+
+# ----------------------------------------------------------
+# Screen-PDF settings
+# ------------
+screen-pdf:
+  # Choose between endnotes or footnotes (endnotes are default)
+  # (You can also set this per markdown file with notes: footnotes,
+  # or per endnote by adding .move-to-footnote to it.)
+  notes: endnotes
+
+# ----------------------------------------------------------
 # Web settings
 # ------------
 web:
@@ -66,8 +84,12 @@ web:
   # You can have annotation on for development and/or for live.
   # Set each to either true or false
   annotator:
-    development: true
+    development: false
     live: false
+  # MathJax is activated in _config.yml. Further settings here.
+  # At `source` choose local (`local`) MathJax.js or the CDN (`cdn`).
+  mathjax:
+    source: cdn
 
 # ----------------------------------------------------------
 # Epub settings
@@ -155,3 +177,5 @@ local-media:
 # If included items are missing, do we show an error in output,
 # or does the site build break completely? Default is to break.
 on-missing-item: error
+# Redact elements with the 'redact' class: true or false
+redact: false

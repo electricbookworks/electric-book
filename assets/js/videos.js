@@ -1,61 +1,100 @@
-"use strict";
+/* jslint browser */
+/*globals window */
 
-var ebwVideoInit = function() {
+function ebVideoInit() {
+    'use strict';
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
-        'querySelector' in document &&
-        !!Array.prototype.forEach &&
-        'classList' in Element.prototype &&
-        'addEventListener' in window &&
-        document.querySelectorAll('.video');
+            document.querySelector &&
+            !!Array.prototype.forEach &&
+            document.body.classList &&
+            document.addEventListener &&
+            document.querySelectorAll('.video');
 }
 
-var ebwVideoHosts = {
-    'youtube': 'https://www.youtube.com/embed/',
-    'vimeo': 'https://player.vimeo.com/video/',
-}
+var ebVideoHosts = {
+    youtube: 'https://www.youtube.com/embed/',
+    vimeo: 'https://player.vimeo.com/video/'
+};
 
-var ebwGetVideoHost = function(videoElement) {
+function ebGetVideoHost(videoElement) {
+    'use strict';
     var videoHost;
     var classes = videoElement.classList;
 
-    classes.forEach(function(currentClass){
-        if(ebwVideoHosts.hasOwnProperty(currentClass)) videoHost = currentClass;
+    classes.forEach(function (currentClass) {
+        if (ebVideoHosts.hasOwnProperty(currentClass)) {
+            videoHost = currentClass;
+        }
     });
 
     return videoHost;
 }
 
-var ebwVideoMakeIframe = function(host, videoId) {
-    var hostURL = ebwVideoHosts[host];
+function ebVideoSubtitles(videoElement) {
+    'use strict';
+    var subtitles = videoElement.getAttribute('data-video-subtitles');
+    if (subtitles === 'true') {
+        subtitles = 1;
+        return subtitles;
+    }
+}
+
+function ebVideoLanguage(videoElement) {
+    'use strict';
+    var language = videoElement.getAttribute('data-video-language');
+    return language;
+}
+
+function ebVideoMakeIframe(host, videoId, videoLanguage, videoSubtitles) {
+    'use strict';
+    var hostURL = ebVideoHosts[host];
+
+    var parametersString = '?autoplay=1';
+    if (videoLanguage) {
+        if (host === 'youtube') {
+            parametersString += '&cc_lang_pref=' + videoLanguage;
+        }
+    }
+    if (videoSubtitles) {
+        if (host === 'youtube') {
+            parametersString += '&cc_load_policy=' + videoSubtitles;
+        }
+    }
 
     var iframe = document.createElement('iframe');
     iframe.setAttribute('frameborder', 0);
     iframe.setAttribute('allowfullscreen', '');
-    iframe.setAttribute('src', hostURL + videoId + '?autoplay=1');
+    iframe.setAttribute('src', hostURL + videoId + parametersString);
 
     return iframe;
 }
 
-var videoShow = function() {
+function ebVideoShow() {
+    'use strict';
+
     // early exit for unsupported browsers
-    if (!ebwVideoInit()) return;
+    if (!ebVideoInit()) {
+        console.log('Video JS not supported in this browser.');
+        return;
+    }
 
     // get all the videos
     var videos = document.querySelectorAll('.video');
 
-    videos.forEach(function(currentVideo){
+    videos.forEach(function (currentVideo) {
         // make the iframe
-        var videoHost = ebwGetVideoHost(currentVideo);
+        var videoHost = ebGetVideoHost(currentVideo);
         var videoId = currentVideo.id;
+        var videoLanguage = ebVideoLanguage(currentVideo);
+        var videoSubtitles = ebVideoSubtitles(currentVideo);
         var videoWrapper = currentVideo.querySelector('.video-wrapper');
-        var iframe = ebwVideoMakeIframe(videoHost, videoId);
-
+        var iframe = ebVideoMakeIframe(videoHost, videoId, videoLanguage, videoSubtitles);
 
         console.log('currentVideo: ' + currentVideo);
         console.log('videoHost: ' + videoHost);
         console.log('currentVideo ID: ' + videoId);
 
-        currentVideo.addEventListener("click", function(ev){
+        currentVideo.addEventListener("click", function (ev) {
             videoWrapper.classList.add('contains-iframe');
             ev.preventDefault();
             // replace the link with the generated iframe
@@ -65,4 +104,4 @@ var videoShow = function() {
     });
 }
 
-videoShow();
+ebVideoShow();

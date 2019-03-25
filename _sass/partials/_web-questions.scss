@@ -4,7 +4,6 @@ $web-questions: true !default;
     // Question formatting
 
     .question {
-        font-family: $font-text-secondary;
         page-break-inside: avoid;
         padding: ($line-height-default / 2);
         margin: $line-height-default 0;
@@ -42,39 +41,41 @@ $web-questions: true !default;
         }
     }
 
-    // Exam, quiz and question numbering.
+    // Quiz-group (e.g. exam), quiz and question numbering.
     // Questions are gathered in quizzes,
-    // and quizzes can be gathered as sections of exams.
+    // and quizzes can be gathered as sections in quiz-groups.
 
-    .exam {
-        counter-reset: exam 0 quiz 0 question 0;
+    .quiz-group {
+        counter-reset: quiz-group 0 quiz 0 question 0;
     }
     .quiz {
         counter-reset: quiz; // question numbering restarts in each quiz...
-        .exam & {
-            counter-reset: none; // ...except across quizzes in a single exam
+        .quiz-group & {
+            counter-reset: none; // ...except across quizzes in a single quiz-group
         }
         &:before {
-            counter-increment: exam;
-            // content: counter(exam); // Uncomment to number quizzes
+            counter-increment: quiz-group;
+            // content: counter(quiz-group); // Uncomment to number quizzes
         }
-        // Don't number if there is only one quiz in the exam
+        // Don't number if there is only one quiz in the quiz-group
         &:only-child:before {
             content: normal;
         }
         .question {
             counter-reset: question;
+            margin-left: $line-height-default; // with &:before margin-left, creates hanging indent
             &:before {
                 counter-increment: quiz;
                 content: counter(quiz) ".";
                 float: left;
                 margin-right: 0.25em;
+                margin-left: -($line-height-default); // with parent's margin-left, creates hanging indent
             }
             &:only-of-type:before {
                 content: normal;
             }
         }
-        .question ol {
+        .question ol.sub-questions {
             list-style-type: none;
             li {
                 &:before {
@@ -87,22 +88,36 @@ $web-questions: true !default;
 
     // Marks
 
-    .quiz {
-        font-family: $font-text-secondary;
-        .quiz-total-marks {
+    .quiz-group {
+        .quiz-group-total-marks {
+            font-family: $font-text-secondary;
             font-weight: bold;
-            float: right;
+            text-align: right;
+        }
+    }
+    .quiz {
+        .quiz-total-marks {
+            font-family: $font-text-secondary;
+            font-weight: bold;
+            text-align: right;
         }
     }
     .question {
+        li {
+            // Avoid marks appearing beside wrong text
+            clear: right;
+        }
         em.marks, strong.marks {
             font-style: normal;
             font-weight: normal;
             float: right;
+            margin-left: 1em;
+            text-indent: 0; // don't inherit parent text-indent
         }
         .question-total-marks {
+            font-family: $font-text-secondary;
             font-weight: bold;
-            float: right;
+            text-align: right;
             &:before {
                 content: "[";
             }
