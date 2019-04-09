@@ -50,8 +50,9 @@ $font-size-bigger: 2; // How many times bigger than font-size-default for featur
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: true;
 
-// Buttons
-$button-border-radius: 0.1em; // Roundness of button corners.
+// Rounded corners
+$button-border-radius: 0.1em; // Roundness of button corners
+$box-border-radius: 0.5em; // Roundness of box corners
 
 // Rules, lines
 $rule-thickness: 1px;
@@ -75,9 +76,13 @@ $color-notification-medium-background: #ffe388;
 $color-notification-high-background: #ff7c4d;
 
 // Some features rearrange at certain screen sizes.
-// What are your break points for rearrangement?
-$break-point-height: 600px;
-$break-point-width: 600px;
+// What are your screen-width break points?
+$break-width-small: 600px;
+$break-width-medium: 900px;
+$break-width-large: 1200px;
+$break-height-small: 600px;
+$break-height-medium: 900px;
+$break-height-large: 1200px;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.

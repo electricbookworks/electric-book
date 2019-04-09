@@ -2,7 +2,7 @@ $epub-base-typography: true !default;
 @if $epub-base-typography {
 
     body {
-        margin: 0;
+        margin: $epub-margin;
         padding: 0;
         background-color: $color-background;
         font-family: $font-text-main;
