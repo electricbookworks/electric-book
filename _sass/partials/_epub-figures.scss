@@ -25,7 +25,7 @@ $epub-figures: true !default;
 		img, p img {
 			margin: 0 auto;
 			max-width: 100%; 
-			object-fit: scale-down;
+			object-fit: contain;
 			display: block;
 		}
 		// No media queries here as in web-figures, because older ereaders don't support them properly.
