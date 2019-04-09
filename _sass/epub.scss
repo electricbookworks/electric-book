@@ -46,8 +46,17 @@ $font-size-bigger: 2 !default; // How many times bigger than font-size-default f
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
 
-// Buttons
-$button-border-radius: 0.1em !default; // Roundness of button corners.
+// Extra margin
+// Some epub readers don't add any margin to their viewport.
+// You can add your own here to force a margin.
+// Use CSS margin syntax: a single value sets all sides,
+// two values set top/bottom and then left/right,
+// four values set top, right, bottom, left respectively.
+$epub-margin: 0.5em !default;
+
+// Rounded corners
+$button-border-radius: 0.1em !default; // Roundness of button corners
+$box-border-radius: 0.5em !default; // Roundness of box corners
 
 // Rules, lines
 $rule-thickness: 1px !default;

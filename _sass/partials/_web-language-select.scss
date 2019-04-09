@@ -29,7 +29,7 @@ $web-language-select: true !default;
         &:hover {
             .language-select-list {
                 background-color: $language-select-background-color;
-                border-radius: $button-border-radius;
+                border-radius: $box-border-radius;
                 display: inline;
                 position: fixed;
                 right: 0;

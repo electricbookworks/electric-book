@@ -37,7 +37,7 @@ $print-video: true !default;
                 width: 100%;
                 padding-bottom: 56.25%;
                 background-color: $color-mid;
-                border-radius: $button-border-radius;
+                border-radius: $box-border-radius;
             }
         }
         // Don't indent a paragraph after a video.

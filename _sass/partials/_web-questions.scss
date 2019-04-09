@@ -181,7 +181,7 @@ $web-questions: true !default;
             list-style-type: none;
             margin-left: 0;
             background-color: $color-light;
-            border-radius: $button-border-radius;
+            border-radius: $box-border-radius;
             li {
                 display: none;
                 padding: 0 ($line-height-default / 2) ($line-height-default / 2) ($line-height-default / 2);
