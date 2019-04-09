@@ -19,6 +19,8 @@ layout: null
     {% include_relative nav.js %}
     {% include_relative videos.js %}
     {% include_relative mcqs.js %}
+    {% include_relative tables.js %}
+    {% include_relative footnote-popups.js %}
 
 {% endif %}
 
