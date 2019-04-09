@@ -166,6 +166,12 @@ $web-notes: true !default;
                 position: relative;
                 top: -0.1em;
             }
+            // When a footnote is used twice in a doc,
+            // hide the second reverse footnote in popups, which
+            // breaks the 'close' action of footnote popups.
+            & + .reversefootnote {
+                display: none;
+            }
         }
     }
 
