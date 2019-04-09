@@ -36,7 +36,7 @@ $web-toc: true !default;
 				float: none;
 				width: 100%;
 				max-width: none;
-				@media (min-width: $break-point-width) {
+				@media (min-width: $break-width-small) {
 					columns: 2;
 				}
 			}

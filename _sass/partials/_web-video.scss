@@ -36,7 +36,7 @@ $web-video: true !default;
                 width: 100%;
                 padding-bottom: 56.25%;
                 background-color: $color-mid;
-                border-radius: $button-border-radius;
+                border-radius: $box-border-radius;
             }
             // JS will add an iframe here; when it does:
             &.contains-iframe {

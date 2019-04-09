@@ -90,8 +90,9 @@ $letter-spacing-text: 0em; // Default letter-spacing for p, ul, ol, dl. Set in e
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false;
 
-// Buttons
-$button-border-radius: 0.1em; // Roundness of button corners.
+// Rounded corners
+$button-border-radius: 0.1em; // Roundness of button corners
+$box-border-radius: 0.5em; // Roundness of box corners
 
 // Rules, lines
 $rule-thickness: 0.5pt;
