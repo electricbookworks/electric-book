@@ -2,6 +2,8 @@
 
 ## Latest
 
+* [Footnote references popup footnote text on web](https://github.com/electricbookworks/electric-book/pull/358).
+* [Tables scroll horizontally on small screens](https://github.com/electricbookworks/electric-book/pull/357).
 * [Enable redaction in PDF](https://github.com/electricbookworks/electric-book/pull/342).
 * [Fix math in Word export](https://github.com/electricbookworks/electric-book/pull/339).
 * [Allow converting endnotes to footnotes in PDF](https://github.com/electricbookworks/electric-book/pull/337).
