@@ -2,6 +2,8 @@
 
 ## Latest
 
+* [Add easy way to set favicon](https://github.com/electricbookworks/electric-book/pull/362).
+* [Improve use of images as text dividers](https://github.com/electricbookworks/electric-book/pull/361).
 * [Footnote references popup footnote text on web](https://github.com/electricbookworks/electric-book/pull/358).
 * [Tables scroll horizontally on small screens](https://github.com/electricbookworks/electric-book/pull/357).
 * [Enable redaction in PDF](https://github.com/electricbookworks/electric-book/pull/342).
