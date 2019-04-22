@@ -106,7 +106,11 @@ $hyphenate-lines: 2 !default; // Preferred maximum number of consecutive lines e
 
 // Text dividers
 // For breaks created with *** in markdown.
-$text-divider: "" !default; // Empty leaves space. \2022 is a bullet
+// If using an image, set $text-divider-image in CSS URL syntax, e.g.
+// $text-divider-image: url('../images/epub/text-divider.jpg');
+$text-divider-text: "" !default; // Empty leaves space. \2022 is a bullet
+$text-divider-image: "" !default;
+$text-divider-image-height: $line-height-default !default;
 
 // Should chapters start on a right-hand page (recto) or on any page?
 // This setting applies to the frontmatter, dedication-page, epigraph-page and chapter page styles.

@@ -97,18 +97,37 @@ $web-base-typography: true !default;
         margin: 0 0 $line-height-default 0;
     }
 
-    // Horizontal rules
-    // Using <hr> as a divider (in markdown created with ***)
+    // Horizontal rules used as text dividers (*** in markdown)
 
-    $text-divider: "" !default;
-    
+    $text-divider-text: "" !default;
+    $text-divider-image: "" !default;
+    $text-divider-image-width: $line-height-default * 2 !default;
+
     hr {
         border: 0;
-        font-family: $font-display-main;
-        text-align: center;
-        margin: $line-height-default 0;
+        margin: $line-height-default auto; // Adds space, esp. important for Kindle
+        text-align: center; // Necessary for aligning :after content
+        // Note: Amazon Kindle will ignore this :after content setting.
+        // An hr in Amazon can be hidden by setting hr { margin-left: -200%; }
+        // in a Kindle media query. See below for example code.
+        // We don't do that here because it is a case-by-case hack.
         &:after {
-            content: $text-divider;
+            content: $text-divider-text;
+        }
+        @if $text-divider-image != "" {
+            margin: 0 auto $line-height-default auto;
+            @if not $spaced-paras {
+                margin: $line-height-default auto;
+            }
+            width: $text-divider-image-width;
+            &:after {
+                background-image: $text-divider-image;
+                background-repeat: no-repeat;
+                background-size: 100%;
+                display: inline-block;
+                height: $line-height-default;
+                width: 100%;
+            }
         }
         & + p {
             text-indent: 0;
@@ -183,7 +202,9 @@ $web-base-typography: true !default;
             text-indent: 0;
         }
         ul ul, ol ol, blockquote ul ul, blockquote ol ol {
-            margin-bottom: $line-height-default;
+            // Disabled, because on most real projects we remove this.
+            // margin-top: $line-height-default;
+            // margin-bottom: $line-height-default;
         }
     }
 
