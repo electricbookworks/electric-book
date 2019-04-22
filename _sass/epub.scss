@@ -87,9 +87,13 @@ $hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1 !default; // Maximum number of consecutive lines ending with hyphens
 
 // Text dividers
-// Some ereaders can display a character as a text divider
-// for horizontal rules created with *** in markdown.
-$text-divider: "" !default; // Empty leaves space. \2022 is a bullet
+// Some ereaders can display a character as a text divider.
+// For breaks created with *** in markdown.
+// If using an image, set $text-divider-image in CSS URL syntax, e.g.
+// $text-divider-image: url('../images/epub/text-divider.jpg');
+$text-divider-text: "" !default; // Empty leaves space. \2022 is a bullet
+$text-divider-image: "" !default;
+$text-divider-image-width: $line-height-default !default;
 
 // ---------------------------------
 // Set to false to turn partials off
