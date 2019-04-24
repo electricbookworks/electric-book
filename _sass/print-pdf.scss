@@ -340,4 +340,4 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 @import "partials/print-page-headers-footers-style"; // Sets styling for headers and footers
 
 // Lightning Source setup
-@import "partials/print-page-setup-lightning-source" // Removes crop marks and sets 3mm trim for Lightning Source
+@import "partials/print-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
