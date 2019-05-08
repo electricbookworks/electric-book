@@ -23,6 +23,11 @@ layout: null
     {% include_relative tables.js %}
     {% include_relative footnote-popups.js %}
 
+    {% if site.data.settings.web.svg.inject == true %}
+        {% include_relative svg-inject.min.js %}
+        {% include_relative svg-management.js %}
+    {% endif %}
+
 {% endif %}
 
 {% if site.output == "web" and site.build != "live" and site.data.settings.web.annotator.development == true %}
