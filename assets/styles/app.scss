@@ -1,0 +1,25 @@
+---
+# Project CSS for app output
+---
+
+// This CSS is mainly for use on the project home-page,
+// used in web and app outputs. (Others don't have a home page.)
+// In older projects, we fetched the home-page CSS from
+// the first book in _meta.yml. But sometimes that book
+// is excluded from the build, or has idiosyncratic styles.
+// This Sass file is project-wide CSS for non-book pages.
+
+// Set variables specific to the project here
+// that override the defaults in _sass/app.scss
+
+
+// Import master styles
+@import 'app';
+
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom Sass or CSS here.
+

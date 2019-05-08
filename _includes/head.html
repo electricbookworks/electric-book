@@ -147,13 +147,10 @@
     {% endcomment %}
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https://fonts.googleapis.com https://www.youtube.com http://player.vimeo.com; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;{% if site.mathjax-enabled == true %} script-src 'self' 'unsafe-inline' 'unsafe-eval';{% endif %}">
 
-    {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
+    {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-homepage == true or is-project-search == true or page.collection == "docs" %}
-    {% for book in site.data.meta.works %}
-        <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-root-directory }}{{ book.directory }}/styles/{{ app-stylesheet }}" />
-        {% break %}
-    {% endfor %}
+        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/assets/styles/{{ app-stylesheet }}" />
     {% else %}
 
     {% comment %}If this is a translation with its own styles,
@@ -237,13 +234,10 @@
     <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
     {% endif %}
 
-    {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
+    {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-homepage == true or is-project-search == true or page.collection == "docs" %}
-    {% for book in site.data.meta.works %}
-        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ web-stylesheet }}" />
-        {% break %}
-    {% endfor %}
+        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/assets/styles/{{ web-stylesheet }}" />
     {% else %}
 
     {% comment %}If this is a translation with its own styles,
