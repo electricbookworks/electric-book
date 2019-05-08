@@ -37,7 +37,7 @@ https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% en
     {% endunless %}
     {% endif %}
 
-    {% if include.class %} class="{{ include.class }}"{% endif %}
+    class="{% if include.class %}{{ include.class }}{% endif %}{% if file-extension == 'svg' %} inject-svg{% endif %}"
     {% if include.id %} id="{{ include.id }}"{% endif %}
     {% if image-alt %} alt="{{ image-alt }}"{% endif %} />
 
