@@ -25,6 +25,7 @@ exclude:
   # Exclude files we don't need for print-pdf
   - search*
   - index*
+  - /assets/styles
   - /assets/*.jpg
   - /assets/js/accordion.js
   - /assets/js/annotation.js
