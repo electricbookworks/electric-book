@@ -2,6 +2,15 @@
 
 ## Latest
 
+## 0.15.0
+
+* [Add PDF columns options](https://github.com/electricbookworks/electric-book/pull/372)
+* [Inject SVGs inline](https://github.com/electricbookworks/electric-book/pull/371)
+* [Add max-quality image output](https://github.com/electricbookworks/electric-book/pull/370)
+* [Add an option for creating a sidebar in PDF output](https://github.com/electricbookworks/electric-book/pull/368)
+* [Add classes for all PrinceXML-supported floats on figures in PDF](https://github.com/electricbookworks/electric-book/pull/367)
+* [Add shift-up- and shift-down- classes for page refinement](https://github.com/electricbookworks/electric-book/pull/366)
+* [Create a dedicated styles folder for non-book pages](https://github.com/electricbookworks/electric-book/pull/365)
 * [Add easy way to set favicon](https://github.com/electricbookworks/electric-book/pull/362).
 * [Improve use of images as text dividers](https://github.com/electricbookworks/electric-book/pull/361).
 * [Footnote references popup footnote text on web](https://github.com/electricbookworks/electric-book/pull/358).
