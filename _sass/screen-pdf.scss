@@ -271,6 +271,7 @@ $print-boxes: true !default;
 $print-code: true !default; // For computer code and preformatted text
 $print-tables: true !default;
 $print-figures: true !default;
+$print-dps-images: true !default;
 $print-notes: true !default; // Footnotes, endnotes, sidenotes
 $print-previous-publications-page: true !default; // The 'also by the author' frontmatter apge
 $print-title-pages: true !default; // Half-title and title pages
@@ -337,6 +338,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-code"; // For computer code and preformatted text
 @import "partials/print-tables";
 @import "partials/print-figures";
+@import "partials/print-dps-images";
 @import "partials/print-notes"; // Footnotes, endnotes, sidenotes
 @import "partials/print-previous-publications-page"; // Also by the author page in frontmatter
 @import "partials/print-title-pages"; // Half-title and title pages

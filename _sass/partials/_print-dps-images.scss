@@ -1,0 +1,173 @@
+// DPS images
+// Works in concert with dps-images.js
+// Experimental! This will need tweaking for each project.
+
+// Mixins
+
+    $page-body-width: $page-width - $margin-inside - $margin-outside !default;
+    $columns-gap-default: $line-height-default !default;
+    $columns-1-gap: 0 !default;
+    $columns-2-gap: $columns-gap-default !default;
+    $columns-3-gap: $columns-gap-default !default;
+    $columns-1-width: $page-body-width !default;
+    $columns-2-width: ($page-body-width - $columns-2-gap) / 2 !default;
+    $columns-3-width: ($page-body-width - $columns-3-gap * 2) / 3 !default;
+
+    // Allowance on each page for image in gutter. Hypothetical.
+    // Note that this will push the image outward, affecting text.
+    // So the maths here should take that into account before using
+    // this variable. Probably should affect .dps-left and .dps-right width.
+    $dps-gutter-allowance: 0 !default;
+
+    // Get height of DPS image, allowing users to set the height
+    // by adding a dps-height-n class where n is number of lines high
+    $dps-height-default: $line-height-default * 20 !default;
+    @mixin dps-height() {
+        @for $i from 1 to 100 {
+            &.dps-height-#{$i} {
+                height: $line-height-default * $i;
+            }
+        }
+    }
+
+    // Calculate widths of DPS images based on number of columns,
+    // allowing for a default column setting, or a body.columns-n setting
+
+    // When 1 column, image floats from part of verso
+    // to entire width of recto.
+    @mixin dps-floats-columns-1() {
+        .figure.dps {
+            width: $columns-1-width;
+            float: top next;
+        }
+        .dps-left {
+            float: inside;
+            margin-outside: $line-height-default;
+            width: ($columns-1-width / 4) + $margin-inside + $bleed;
+            margin-inside: $dps-gutter-allowance - $margin-inside - $bleed;
+            img {
+                width: 400%;
+            }
+        }
+        .dps-right {
+            float: top next;
+            width: $columns-1-width + $margin-inside + $bleed;
+            margin-inside: $dps-gutter-allowance - $margin-inside - $bleed;
+            img {
+                width: 133.33%;
+            }
+        }
+    }
+
+    // When 2 columns, image is centred on the DPS
+    // occupying the two centre columns.
+    @mixin dps-floats-columns-2() {
+        .dps-left, .dps-right {
+            width: $columns-2-width + $margin-inside + $bleed;
+            column-span: 1;
+        }
+        .dps-left {
+            float: column-top-corner;
+        }
+        .dps-right {
+            float: column-top next;
+        }
+        .figure.dps {
+            float: column-top next;
+        }
+    }
+
+    // When 3 columns, image is centred on the DPS
+    // occupying the four centre columns.
+    @mixin dps-floats-columns-3() {
+        .dps-left, .dps-right {
+            width: ($columns-3-width * 2) + $columns-3-gap + $margin-inside + $bleed;
+            column-span: 2;
+        }
+        .dps-left {
+            float: column-top-corner;
+        }
+        .dps-right {
+            float: column-top next;
+        }
+        .figure.dps {
+            column-span: 1;
+            float: column-top next;
+        }
+    }
+
+$print-dps-images: true !default;
+@if $print-dps-images {
+
+    // Override .figure defaults
+    .dps, .figure.dps {
+        clear: none;
+        margin-top: 0;
+        margin-bottom: $line-height-default;
+        .caption {
+            text-align: left;
+            margin-bottom: $line-height-default;
+        }
+        .figure-body {
+            .figure-images {
+                margin: 0;
+            }
+        }
+    }
+
+    // Position image wrappers, added by dps.js.
+    // Min-height required to push image onto second page.
+    // Columns-specific floats controlled below.
+    .dps-left, .dps-right {
+        margin: 0;
+        margin-inside: $dps-gutter-allowance - $margin-inside - $bleed;
+        margin-bottom: $line-height-default;
+        height: $dps-height-default;
+        min-height: $page-height - $margin-bottom - $margin-top / 2;
+        position: relative;
+        @include dps-height();
+        img {
+            position: absolute;
+            width: 200%;
+            max-width: none;
+            max-height: 100%;
+        }
+    }
+    .dps-left {
+        text-align: left;
+    }
+    .dps-right {
+        text-align: right;
+        img {
+            right: 0;
+        }
+    }
+
+    @if $columns-default == 1 {
+        @include dps-floats-columns-1();
+    }
+    .columns-1 {
+        @include dps-floats-columns-1();
+    }
+
+    @if $columns-default == 2 {
+        @include dps-floats-columns-2();
+    }
+    .columns-2 {
+        @include dps-floats-columns-2();
+    }
+    @if $columns-default == 3 {
+        @include dps-floats-columns-3();
+    }
+    .columns-3 {
+        @include dps-floats-columns-3();
+    }
+
+    // Fixes
+    .dps {
+        & + p {
+            text-indent: 0;
+        }
+    }
+
+}
