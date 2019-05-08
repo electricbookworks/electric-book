@@ -53,6 +53,9 @@ have different behaviour for web or app. {% endcomment %}
     {% comment %}This script moves endnotes to the bottoms of pages.{% endcomment %}
     {% include_relative footnotes.js %}
 
+    {% comment %}This script shifts elements in the DOM.{% endcomment %}
+    {% include_relative shift-elements.js %}
+
     {% comment %}This script detects the page number we are on and provides
     the relevant page cross-reference text as generated content.{% endcomment %}
     {% include_relative page-reference.js %}
