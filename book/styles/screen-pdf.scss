@@ -38,6 +38,24 @@ $bleed: 0;
 $trim: 0;
 $crop-marks: none; // crop | none
 
+// Optional sidebar setup
+// If you want a sidebar, set these values and change
+// $print-sidebar to 'true' (it is disabled by default).
+$print-sidebar: false;
+// For guidance on sidebar variables, see partials/_pdf-sidebar.scss.
+// 1. Set the margin between the page edge and the sidebar:
+$sidebar-margin-outside: 10mm;
+// 2. The number of 'columns' in your page grid:
+$grid-columns: 3;
+// 3. As a single integer, set the ratio of the column width to column-gap width.
+//    That is, how wide is a column, as a multiple of the column-gap?
+//    A higher number makes the column wider, and the gap smaller.
+//    A lower number makes the column narrower, and the gap wider.
+$column-gap-ratio: 10;
+// Leave this import here. It must import after setting page margins above.
+// If you've left $print-sidebar as false above, it will have no effect.
+@import "partials/print-sidebar";
+
 // Colours
 $colorspace: rgb; // auto | none | rgb | cmyk | gray
 $color-text-main: cmyk(0,0,0,1);

@@ -38,6 +38,20 @@ $trim: 0 !default;
 $crop-marks: none !default; // crop | none
 $page-info-offset: 5mm;
 
+// Optional sidebar setup
+// If you want a sidebar, set these values and change $print-sidebar
+// to 'true' in the list of partials below, where it is disabled by default.
+// For guidance on sidebar variables, see partials/_pdf-sidebar.scss.
+// 1. Set the margin between the page edge and the sidebar:
+$sidebar-margin-outside: 10mm !default;
+// 2. The number of 'columns' in your page grid:
+$grid-columns: 3 !default;
+// 3. As a single integer, set the ratio of the column width to column-gap width.
+//    That is, how wide is a column, as a multiple of the column-gap?
+//    A higher number makes the column wider, and the gap smaller.
+//    A lower number makes the column narrower, and the gap wider.
+$column-gap-ratio: 10 !default;
+
 // Colours
 $colorspace: rgb !default; // auto | none | rgb | cmyk | gray
 $color-text-main: cmyk(0,0,0,1) !default;
@@ -270,6 +284,7 @@ $print-openers: true !default;
 $print-index: true !default;
 $print-questions: true !default;
 $print-cross-refs: true !default;
+$print-sidebar: false !default; // Note that this is disabled by default
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true !default; // Sets content for headers and footers
 $print-page-headers-footers-style: true !default; // Sets styling for headers and footers
@@ -334,6 +349,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-index";
 @import "partials/print-questions";
 @import "partials/print-cross-refs";
+@import "partials/print-sidebar";
 @import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
 @import "partials/print-page-headers-footers-content"; // Sets content for headers and footers
 @import "partials/print-page-headers-footers-style"; // Sets styling for headers and footers
