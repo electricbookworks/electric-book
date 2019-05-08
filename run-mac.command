@@ -548,13 +548,13 @@ You may need to reload the web page once this server is running."
 			echo "Epub created!"
 			# Validation
 			echo "To run validation, enter the path to the EpubCheck folder on your machine."
-			echo "Hit enter for the default: /usr/local/bin/epubcheck-4.0.2"
+			echo "Hit enter for the default: /usr/local/bin/epubcheck-4.2.0"
 			echo "(You can get EpubCheck from https://github.com/IDPF/epubcheck/releases"
 			echo "Or go to http://validator.idpf.org to validate online.)"
 			read pathtoepubcheck
 			if [ "$pathtoepubcheck" = "" ]; then
 				echo "Okay, using default EpubCheck location. "
-				pathtoepubcheck="/usr/local/bin/epubcheck-4.0.2"
+				pathtoepubcheck="/usr/local/bin/epubcheck-4.2.0"
 			fi
 			java -jar "$pathtoepubcheck"/epubcheck.jar "$epubfilename".epub
 			# Open file browser to see epub
