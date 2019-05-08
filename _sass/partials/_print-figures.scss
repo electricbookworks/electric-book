@@ -60,6 +60,63 @@ $print-figures: true !default;
 			text-align: center;
 			text-indent: 0;
 		}
+		// Other floats
+		&.float-bottom {
+			float: bottom;
+			margin: $line-height-default 0 0 0;
+		}
+		&.float-top {
+			float: top;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-inside {
+			float: inside;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-outside {
+			float: outside;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-left {
+			float: left;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-right {
+			float: right;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-top {
+			float: column-top;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-top-next {
+			float: column-top next;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-bottom {
+			float: column-bottom;
+			margin: $line-height-default 0 0 0;
+		}
+		&.float-column-bottom-next {
+			float: column-bottom next;
+			margin: $line-height-default 0 0 0;
+		}
+		&.float-column-top-corner {
+			float: column-top-corner;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-top-corner-next {
+			float: column-top-corner next;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-bottom-corner {
+			float: column-bottom-corner;
+			margin: $line-height-default 0 0 0;
+		}
+		&.float-column-bottom-corner-next {
+			float: column-bottom-corner next;
+			margin: $line-height-default 0 0 0;
+		}
 		// Figures that do not float
 		&.fixed {
 			clear: both;
