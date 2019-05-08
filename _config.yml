@@ -186,9 +186,9 @@ compress_html:
 # Electric Book template version
 # ------------------------------
 # Version of this Electric Book template.
-# This is the last release, not the current build
+# This is the last release, not necessarily the current build
 # at github.com/electricbookworks/electric-book
-version: "0.14.0"
+version: "0.15.0"
 
 # Local-build URL
 # ---------------
