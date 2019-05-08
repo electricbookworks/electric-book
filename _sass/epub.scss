@@ -38,7 +38,7 @@ $font-code: monospace !default;
 // These values, especially $line-height-default, are used to compute vertical rhythm
 // for many features in this theme. So do not use a unitless value for line-height,
 // and don't use percentages, which will break layouts computed by multiplying this value.
-$font-size-default: 1.2em !default;
+$font-size-default: 1em !default;
 $line-height-default: 1.5em !default;
 $font-size-smaller: 0.8 !default; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
