@@ -6,6 +6,7 @@ layout: null
 
 {% include_relative polyfills.js %}
 {% include_relative locales.js %}
+{% include_relative mark-parents.js %}
 
 {% if site.data.settings.redact == true %}
     {% include_relative redact.js %}
