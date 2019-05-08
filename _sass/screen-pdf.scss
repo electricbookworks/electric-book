@@ -36,7 +36,7 @@ $margin-inside: 20mm !default;
 $bleed: 0 !default;
 $trim: 0 !default;
 $crop-marks: none !default; // crop | none
-$page-info-offset: 5mm;
+$page-info-offset: 5mm !default;
 $columns-default: 1 !default;
 
 // Optional sidebar setup
