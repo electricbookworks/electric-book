@@ -1,0 +1,77 @@
+$print-columns: true !default;
+@if $print-columns {
+
+    // Columns
+
+    $page-body-width: $page-width - $margin-inside - $margin-outside !default;
+    $columns-gap-default: $line-height-default !default;
+    $columns-1-gap: 0 !default;
+    $columns-2-gap: $columns-gap-default !default;
+    $columns-3-gap: $columns-gap-default !default;
+    $columns-1-width: $page-body-width !default;
+    $columns-2-width: ($page-body-width - $columns-2-gap) / 2 !default;
+    $columns-3-width: ($page-body-width - $columns-3-gap * 2) / 3 !default;
+
+    #content {
+        column-count: $columns-default;
+        column-gap: $columns-gap-default;
+        // column-fill: auto; // do not balance columns
+        // Allow document-level overrides by
+        // columns-x class on body element
+        .columns-1 & {
+            column-count: 1;
+            column-gap: $columns-1-gap;
+        }
+        .columns-2 & {
+            column-count: 2;
+            column-gap: $columns-2-gap;
+        }
+        .columns-3 & {
+            column-count: 3;
+            column-gap: $columns-3-gap;
+        }
+    }
+    @if $columns-default == 1 {
+        .figure.columns-1 {
+            width: $columns-1-width;
+        }
+    }
+    .columns-1 {
+        .figure.columns-1 {
+            width: $columns-1-width;
+        }
+    }
+    @if $columns-default == 2 {
+        .figure.columns-1 {
+            width: $columns-2-width;
+        }
+        .figure.columns-2 {
+            width: $columns-2-width * 2 + $columns-2-gap;
+        }
+    }
+    .columns-2 {
+        .figure.columns-1 {
+            width: $columns-2-width;
+        }
+        .figure.columns-2 {
+            width: $columns-2-width * 2 + $columns-2-gap;
+        }
+    }
+    @if $columns-default == 3 {
+        .figure.columns-1 {
+            width: $columns-3-width;
+        }
+        .figure.columns-2 {
+            width: $columns-3-width * 2 + $columns-2-gap;
+        }
+    }
+    .columns-3 {
+        .figure.columns-1 {
+            width: $columns-3-width;
+        }
+        .figure.columns-2 {
+            width: $columns-3-width * 2 + $columns-2-gap;
+        }
+    }
+
+}

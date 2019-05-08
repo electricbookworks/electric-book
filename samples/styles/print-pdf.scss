@@ -37,6 +37,7 @@ $margin-inside: 20mm;
 $bleed: 3mm;
 $trim: 3mm;
 $crop-marks: crop; // crop | none
+$columns-default: 1;
 
 // Optional sidebar setup
 // If you want a sidebar, set these values and change
@@ -261,6 +262,7 @@ $print-hyphenation: true; // Sets hyphenation dictionary
 $print-start-on-recto-or-verso: true; // Starts chapters on a left- or right-hand-page
 $print-page-start-depth: true; // Sets a top margin on opening pages
 $print-base-typography: true; // Default typography for HTML elements
+$print-columns: true;
 $print-buttons: true;
 $print-verse: true; // Default typography for verse, poetry, lyrics
 $print-bibliographies: true;

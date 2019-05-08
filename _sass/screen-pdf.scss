@@ -37,6 +37,7 @@ $bleed: 0 !default;
 $trim: 0 !default;
 $crop-marks: none !default; // crop | none
 $page-info-offset: 5mm;
+$columns-default: 1 !default;
 
 // Optional sidebar setup
 // If you want a sidebar, set these values and change $print-sidebar
@@ -256,6 +257,7 @@ $print-hyphenation: true !default; // Sets hyphenation dictionary
 $print-start-on-recto-or-verso: true !default; // Starts chapters on a left- or right-hand-page
 $print-page-start-depth: true !default; // Sets a top margin on opening pages
 $print-base-typography: true !default; // Default typography for HTML elements
+$print-columns: true !default;
 $print-buttons: true !default;
 $print-verse: true !default; // Default typography for verse, poetry, lyrics
 $print-bibliographies: true !default;
@@ -321,6 +323,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
 @import "partials/print-page-start-depth"; // Sets a top margin on opening pages
 @import "partials/print-base-typography"; // Default typography for HTML elements
+@import "partials/print-columns";
 @import "partials/print-buttons";
 @import "partials/print-verse"; // Default typography for verse, poetry, lyrics
 @import "partials/print-bibliographies";
