@@ -68,7 +68,7 @@ as the include calls itself for each list of children.
         {% if include-in-toc == true %}
 
             <navLabel>
-                <text>{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</text>
+                <text>{{ item.label | markdownify | strip_html | strip_newlines }}</text>
             </navLabel>
 
             {% comment %}If the item has no file to link to, use its first child's file,
