@@ -110,13 +110,21 @@ gulp.task('images:svg', function (done) {
     gulp.src(paths.img.source + '*.svg')
         .pipe(debug({title: 'Processing SVG '}))
         .pipe(svgmin({
-            plugins: [{
-                removeAttrs: {attrs: 'data.*'}
-            }, {
-                removeUnknownsAndDefaults: {
-                    defaultAttrs: false
+            plugins: [
+                {
+                    removeViewBox: false
+                },
+                {
+                    removeDimensions: true
+                },
+                {
+                    removeAttrs: {attrs: 'data.*'}
+                }, {
+                    removeUnknownsAndDefaults: {
+                        defaultAttrs: false
+                    }
                 }
-            }]
+            ]
         }).on('error', function (e) {
             console.log(e);
         }))
