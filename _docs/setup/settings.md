@@ -77,3 +77,25 @@ google-play-public-api-key: ""
 ## External media
 
 If a large number of images makes your project too big, you can store your images in a separate location. See [External media](../images/external-media.html) for details.
+
+## SVG injection
+
+If you link to SVG images, in web output we can inject those SVGs into the page as inline XML. This makes their text selectable and searchable, and lets you target their elements with CSS. For instance, they can then get site-wide font faces.
+
+You turn SVG injection off or on by changing this value:
+
+```yaml
+web:
+  svg:
+    inject: true
+```
+
+{% raw %}
+When this is `true`, SVG injection happens automatically for all images added with `{% include figure %}` or `{% include image %}`, and to any image to which you apply the class `inject-svg`.
+{% endraw %}
+
+Injecting SVGs can have side-effects, depending how your SVGs are created and coded. If you are going to inject SVGs, we recommend:
+
+- Your SVGs should have inline styles (Illustrator called these 'Style attributes'), not stylesheets in `<style>` elements. If different SVGs use the same class names for different styles, they all inherit each other's styles, ruining your SVGs.
+- If font names in your SVGs are different from the font names you use in your site CSS, adjust the font names in `assets/js/svg-management.js`. That script can replace font-family names in SVGs after injection.
+- All SVGs must have a [`viewBox` attribute](https://css-tricks.com/scale-svg/#article-header-id-3) for correct sizing. Good programs like Illustrator will add this automatically. Otherwise you should add it yourself to the SVG you save in your book's `_source` images.
