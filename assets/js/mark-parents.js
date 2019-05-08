@@ -22,7 +22,7 @@
 
 
 // Options: use a querySelector string
-var ebMarkParentsOfTheseChildren = '.lb-reference';
+var ebMarkParentsOfTheseChildren = '.place';
 
 // Promote
 function ebMarkParent(child) {
