@@ -74,6 +74,7 @@ In the tag for each figure, we can define the following information:
 * a title (can be used to title descriptive text)
 * a description (hidden by default and used at `alt` text on the image; can be displayed and used with custom CSS)
 * a source (appears below the figure)
+* the height of the image in lines
 * a [class](classes.html) (for styling the layout of a given figure).
 
 The template uses that information differently depending on the output format. For instance, on the web and in the epub, the description is the text that screen-readers will read aloud to visually impaired users who can't see an image; and we don't need to display it in print.
@@ -96,6 +97,7 @@ Here is a full example:
    title="My Example Figure"
    description="This should describe what the images look like."
    source="Fire and Lion, 2017"
+   image-height="10"
    class="featured"
 %}
 ```
