@@ -219,9 +219,13 @@ $footer-case: uppercase !default; // none|capitalize|uppercase|lowercase|initial
 $header-letter-spacing: 0.1em !default;
 $footer-letter-spacing: 0.1em !default;
 $header-space-from-top: $margin-top / 2 + ($line-height-default / 4) !default; // should align with baseline grid
+$header-space-from-text: $line-height-default !default;
 $footer-space-from-bottom: $margin-bottom / 2 !default;
+$footer-space-from-text: $line-height-default !default;
 $header-text-align: center !default;
 $footer-text-align: center !default;
+$header-text-color: $color-text-main !default;
+$footer-text-color: $color-text-main !default;
 
 // Special highlights for temporary debugging/viewing:
 // Specify a colour for highlighting; use 'inherit' for none.

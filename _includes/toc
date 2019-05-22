@@ -99,7 +99,7 @@ at the top of the toc, put this in a nav element.{% endcomment %}
 <nav epub:type="toc" id="toc"{% if site.data.settings.epub.hide-nav == true %} hidden=""{% endif %}>
 {% endif %}
 
-<ol class="toc-list {% if toc-branch contains current-file %}active{% endif %}">
+<ol class="toc-list{% if include.class %} {{ include.class }}{% endif %}{% if toc-branch contains current-file %} active{% endif %}">
 {% for item in toc-branch | sort: "order" %}
 
     {% comment %}Assume we will use every item in the toc-branch{% endcomment %}
