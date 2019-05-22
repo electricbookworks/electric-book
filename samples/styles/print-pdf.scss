@@ -224,10 +224,14 @@ $header-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
 $footer-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
 $header-letter-spacing: 0.1em;
 $footer-letter-spacing: 0.1em;
-$header-space-from-top: $margin-top / 2 + ($line-height-default / 4);
+$header-space-from-top: $margin-top / 2 + ($line-height-default / 4); // should align with baseline grid
+$header-space-from-text: $line-height-default;
 $footer-space-from-bottom: $margin-bottom / 2;
+$footer-space-from-text: $line-height-default;
 $header-text-align: center;
 $footer-text-align: center;
+$header-text-color: $color-text-main;
+$footer-text-color: $color-text-main;
 
 // Special highlights for temporary debugging/viewing:
 // Specify a colour for highlighting; use 'inherit' for none.

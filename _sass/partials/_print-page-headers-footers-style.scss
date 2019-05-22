@@ -1,5 +1,6 @@
 // Mixins, which cannot be inside Sass control directives (the @if section below).
 @mixin header-style() {
+  color: $header-text-color;
   font-family: $header-font;
   font-size: $header-font-size;
   font-weight: $header-font-weight;
@@ -11,10 +12,12 @@
   vertical-align: top;
   line-height: 1;
   margin-top: $header-space-from-top;
+  margin-bottom: $header-space-from-text;
   text-align: $header-text-align;
 }
 
 @mixin footer-style() {
+  color: footer-text-color;
   font-family: $footer-font;
   font-size: $footer-font-size;
   font-weight: $footer-font-weight;
@@ -25,6 +28,7 @@
 @mixin footer-position() {
   vertical-align: bottom;
   line-height: 1;
+  margin-top: $footer-space-from-text;
   margin-bottom: $footer-space-from-bottom;
   text-align: $footer-text-align;
 }
