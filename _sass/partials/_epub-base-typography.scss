@@ -1,6 +1,15 @@
 $epub-base-typography: true !default;
 @if $epub-base-typography {
 
+    // General typography
+
+    html {
+        box-sizing: border-box;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+
     body {
         margin: $epub-margin;
         padding: 0;
