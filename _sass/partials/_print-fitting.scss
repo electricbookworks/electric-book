@@ -12,12 +12,17 @@ $print-fitting: true !default;
   .float-bottom#{$edition-suffix} {
     float: bottom;
   }
+  .float-top-next#{$edition-suffix} {
+    float: top next;
+  }
   // If a paragraph would normally be flush left after an element, 
   // but that element is floated away, it should get its indent back.
-  .float-top#{$edition-suffix} + p, .float-bottom#{$edition-suffix} + p {
+  .float-top#{$edition-suffix} + p,
+  .float-bottom#{$edition-suffix} + p,
+  .float-top-next#{$edition-suffix} + p {
     text-indent: $line-height-default;
   }
-   
+
   // These classes control letter-spacing (tracking), usually to save widows and orphans.
   @for $i from 1 through 100 {
     $add-space: $i * 0.001em;
