@@ -43,7 +43,7 @@ $columns-default: 1;
 // Optional sidebar setup
 // If you want a sidebar, set these values and change
 // $print-sidebar to 'true' (it is disabled by default).
-$print-sidebar: true;
+$print-sidebar: false;
 // For guidance on sidebar variables, see partials/_pdf-sidebar.scss.
 // 1. Set the margin between the page edge and the sidebar:
 $sidebar-margin-outside: 10mm;

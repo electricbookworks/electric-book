@@ -102,9 +102,9 @@ $hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
 // For breaks created with *** in markdown.
 // If using an image, set $text-divider-image in CSS URL syntax, e.g.
 // $text-divider-image: url('../images/epub/text-divider.jpg');
-$text-divider-text: "—"; // Empty leaves space. \2022 is a bullet
-$text-divider-image: url('../images/web/publisher-logo.jpg');
-$text-divider-image-width: $line-height-default;
+$text-divider-text: ""; // Empty leaves space. \2022 is a bullet
+$text-divider-image: "";
+$text-divider-image-width: $line-height-default * 2;
 
 // Footer
 $footer-text-color: $color-text-main;

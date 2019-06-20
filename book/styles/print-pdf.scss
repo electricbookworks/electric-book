@@ -130,8 +130,8 @@ $hyphenate-lines: 2; // Preferred maximum number of consecutive lines ending wit
 // For breaks created with *** in markdown.
 // If using an image, set $text-divider-image in CSS URL syntax, e.g.
 // $text-divider-image: url('../images/epub/text-divider.jpg');
-$text-divider-text: "*"; // Empty leaves space. \2022 is a bullet
-$text-divider-image: url('../images/print-pdf/publisher-logo.jpg');
+$text-divider-text: ""; // Empty leaves space. \2022 is a bullet
+$text-divider-image: "";
 $text-divider-image-height: $line-height-default;
 
 // Should chapters start on a right-hand page (recto) or on any page?
