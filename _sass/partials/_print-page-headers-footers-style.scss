@@ -120,27 +120,27 @@ $print-page-headers-footers-style: true !default;
       @include footer-position();
     }
     @left {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @left-top {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @left-bottom {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @right {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
     @right-top {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
     @right-bottom {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
   }
@@ -188,27 +188,27 @@ $print-page-headers-footers-style: true !default;
       @include footer-position();
     }
     @left {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @left-top {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @left-bottom {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @right {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
     @right-top {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
     @right-bottom {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
   }
@@ -256,27 +256,27 @@ $print-page-headers-footers-style: true !default;
       @include footer-position();
     }
     @left {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @left-top {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @left-bottom {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @right {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
     @right-top {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
     @right-bottom {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
   }
@@ -324,27 +324,27 @@ $print-page-headers-footers-style: true !default;
       @include footer-position();
     }
     @left {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @left-top {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @left-bottom {
-      @include left-margin-style
+      @include left-margin-style();
       @include left-margin-position();
     }
     @right {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
     @right-top {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
     @right-bottom {
-      @include right-margin-style
+      @include right-margin-style();
       @include right-margin-position();
     }
   }
