@@ -1,0 +1,2 @@
+# Enable Paged Media polyfill in <head> for browser layout
+pdf-renderer: pagedjs
