@@ -58,9 +58,11 @@ $print-notes: true !default;
 @if $print-notes {
 
 
-    // Single footnote
+    // Footnote reference in text
     .footnote {
         line-height: inherit;
+        // Ensure footnote refs in headings are small
+        font-size: $font-size-default * $font-size-smaller;
     }
 
     // Footnotes section
