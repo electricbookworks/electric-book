@@ -344,6 +344,7 @@ $print-cross-refs: true;
 $print-reset-sequences: true; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true; // Sets content for headers and footers
 $print-page-headers-footers-style: true; // Sets styling for headers and footers
+$print-page-info: false; // Adds page info to bottom bleed area of page. Do not use with PagedJS.
 $print-page-setup-lightning-source: false; // Removes crop marks and sets 3mm trim for Lightning Source
 
 // ------------

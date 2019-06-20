@@ -1,0 +1,18 @@
+$print-page-info: true !default;
+@if $print-page-info {
+
+  // This partial sets page info at the bottom of the page.
+  // It does not work in PagedJS at this time.
+
+  @page {
+    @prince-overlay {
+      color: #bbbbbb;
+      content: string(page-info);
+      font-family: sans-serif;
+      font-size: 7pt;
+      margin-bottom: -($margin-bottom + $page-info-offset);
+      vertical-align: bottom;
+    }
+  }
+
+}
