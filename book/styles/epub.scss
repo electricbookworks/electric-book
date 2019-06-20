@@ -93,7 +93,7 @@ $hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
 // If using an image, set $text-divider-image in CSS URL syntax, e.g.
 // $text-divider-image: url('../images/epub/text-divider.jpg');
 $text-divider-text: ""; // Empty leaves space. \2022 is a bullet
-$text-divider-image: url('../images/epub/publisher-logo.jpg');
+$text-divider-image: "";
 $text-divider-image-width: $line-height-default;
 
 // ---------------------------------
