@@ -17,12 +17,12 @@ var postPageNumberPhrase = locales[pageLanguage]['cross-references']['post-page-
 function addPageReferenceFunc() {
     'use strict';
 
-    // exit if we're in phantom; we only want Prince to do this
+    // Exit if we're in PhantomJS, where we don't need this
     if (typeof window.callPhantom === 'function') {
         return;
     }
 
-    if (Prince) {
+    if (typeof Prince == 'object') {
         console.log('Adding page references in Prince.');
         Prince.addScriptFunc("pagereference", function (currentPage, targetPage) {
 
