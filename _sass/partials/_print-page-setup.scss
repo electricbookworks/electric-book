@@ -6,96 +6,96 @@ $paged-display: "single" !default;
 $print-page-setup: true !default;
 @if $print-page-setup {
 
-	// Set up our basic page margins
-	@page { 
-		size: $page-width $page-height;
-		margin-top: $margin-top;
-		margin-bottom: $margin-bottom;
-		margin-outside: $margin-outside;
-		margin-inside: $margin-inside;
-		padding: 0;
-		marks: $crop-marks;
-		prince-bleed: $bleed;
-		prince-trim: $trim;
-		prince-pdf-page-colorspace: $colorspace;
-	}
+    // Set up our basic page margins
+    @page { 
+        size: $page-width $page-height;
+        margin-top: $margin-top;
+        margin-bottom: $margin-bottom;
+        margin-outside: $margin-outside;
+        margin-inside: $margin-inside;
+        padding: 0;
+        marks: $crop-marks;
+        prince-bleed: $bleed;
+        prince-trim: $trim;
+        prince-pdf-page-colorspace: $colorspace;
+    }
 
-	// Paged.js does not yet support margin-left and margin-right,
-	// so we use this workaround
-	@page :left {
-	    margin-left: $margin-outside;
-	    margin-right: $margin-inside;
-	}
-	@page :right {
-	    margin-left: $margin-inside;
-	    margin-right: $margin-outside;
-	}
+    // Paged.js does not yet support margin-left and margin-right,
+    // so we use this workaround
+    @page :left {
+        margin-left: $margin-outside;
+        margin-right: $margin-inside;
+    }
+    @page :right {
+        margin-left: $margin-inside;
+        margin-right: $margin-outside;
+    }
 
-	// Name our book-part styles as divs.
-	// PrinceXML needs the pages named for @page rules.
-	// 'data-page-styles' are for paged.js.
-	.cover, [data-page-styles*="cover"] {
-		page: cover;
-	}
-	.halftitle-page, [data-page-styles*="halftitle-page"],
-	.half-title-page, [data-page-styles*="half-title-page"] {
-		page: halftitle-page;
-	}
-	.title-page, [data-page-styles*="title-page"] {
-		page: title-page;
-	}
-	.previous-publications-page, [data-page-styles*="previous-publications"] {
-		page: previous-publications-page;
-	}
-	.copyright-page, [data-page-styles*="copyright-page"] {
-		page: copyright-page;
-	}
-	.dedication-page, [data-page-styles*="dedication-page"] {
-		page: dedication-page;
-	}
-	.frontispiece-page, [data-page-styles*="frontispiece-page"] {
-		page: frontispiece-page;
-	}
-	.contents-page, [data-page-styles*="contents-page"] {
-		page: contents-page;
-	}
-	.frontmatter, [data-page-styles*="frontmatter"] {
-		page: frontmatter;
-	}
-	.part-page, [data-page-styles*="part-page"] {
-		page: part-page;
-	}
-	.chapter, [data-page-styles*="chapter"] {
-		page: chapter;
-	}
+    // Name our book-part styles as divs.
+    // PrinceXML needs the pages named for @page rules.
+    // 'data-page-styles' are for paged.js.
+    .cover, [data-page-styles*="cover"] {
+        page: cover;
+    }
+    .halftitle-page, [data-page-styles*="halftitle-page"],
+    .half-title-page, [data-page-styles*="half-title-page"] {
+        page: halftitle-page;
+    }
+    .title-page, [data-page-styles*="title-page"] {
+        page: title-page;
+    }
+    .previous-publications-page, [data-page-styles*="previous-publications"] {
+        page: previous-publications-page;
+    }
+    .copyright-page, [data-page-styles*="copyright-page"] {
+        page: copyright-page;
+    }
+    .dedication-page, [data-page-styles*="dedication-page"] {
+        page: dedication-page;
+    }
+    .frontispiece-page, [data-page-styles*="frontispiece-page"] {
+        page: frontispiece-page;
+    }
+    .contents-page, [data-page-styles*="contents-page"] {
+        page: contents-page;
+    }
+    .frontmatter, [data-page-styles*="frontmatter"] {
+        page: frontmatter;
+    }
+    .part-page, [data-page-styles*="part-page"] {
+        page: part-page;
+    }
+    .chapter, [data-page-styles*="chapter"] {
+        page: chapter;
+    }
 
-	// Paged.js on-screen display
+    // Paged.js on-screen display
 
-	@media only screen {
-	    // Background ('pasteboard')
-	    html {
-	        background-color: $color-pasteboard;
-	        padding: $line-height-default;
-	    }
-	    // Show page border in browser view
-	    .pagedjs_page {
-	        background-color: $color-paper !important; // must override pagejs inline styles
-	        box-shadow: 0px 0px 0.1px lightblue;
-	        margin-bottom: $line-height-default;
-	    }
-	    // Show single pages or spreads
-	    // (To fix: this seems to break pagination)
-	    @if $paged-display == "spreads" {
-	        .pagedjs_left_page {
-	            float: left;
-	        }
-	        .pagedjs_right_page {
-	            margin-left: $page-width;
-	        }
-	        .pagedjs_first_page {
-	            margin-left: $page-width;
-	        }
-	    }
-	}
+    @media only screen {
+        // Background ('pasteboard')
+        html {
+            background-color: $color-pasteboard;
+            padding: $line-height-default;
+        }
+        // Show page border in browser view
+        .pagedjs_page {
+            background-color: $color-paper !important; // must override pagejs inline styles
+            box-shadow: 0px 0px 0.1px lightblue;
+            margin-bottom: $line-height-default;
+        }
+        // Show single pages or spreads
+        // (To fix: this seems to break pagination)
+        @if $paged-display == "spreads" {
+            .pagedjs_left_page {
+                float: left;
+            }
+            .pagedjs_right_page {
+                margin-left: $page-width;
+            }
+            .pagedjs_first_page {
+                margin-left: $page-width;
+            }
+        }
+    }
 
 }
