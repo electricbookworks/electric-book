@@ -177,6 +177,12 @@ $verso-bottom-left: normal;
 $verso-bottom-right: normal;
 $verso-bottom-left-corner: normal;
 $verso-bottom-right-corner: normal;
+$verso-left: normal;
+$verso-left-top: normal;
+$verso-left-bottom: normal;
+$verso-right: normal;
+$verso-right-top: normal;
+$verso-right-bottom: normal;
 
 // Recto (right-hand-page)
 $recto-top: string(h2-text, last);
@@ -189,6 +195,12 @@ $recto-bottom-left: normal;
 $recto-bottom-right: normal;
 $recto-bottom-left-corner: normal;
 $recto-bottom-right-corner: normal;
+$recto-left: normal;
+$recto-left-top: normal;
+$recto-left-bottom: normal;
+$recto-right: normal;
+$recto-right-top: normal;
+$recto-right-bottom: normal;
 
 // Verso (left-hand-page) for .frontmatter pages (`style: frontmatter`)
 $verso-top-frontmatter: string(page-header);
@@ -201,6 +213,12 @@ $verso-bottom-left-frontmatter: normal;
 $verso-bottom-right-frontmatter: normal;
 $verso-bottom-left-corner-frontmatter: normal;
 $verso-bottom-right-corner-frontmatter: normal;
+$verso-left-frontmatter: normal;
+$verso-left-top-frontmatter: normal;
+$verso-left-bottom-frontmatter: normal;
+$verso-right-frontmatter: normal;
+$verso-right-top-frontmatter: normal;
+$verso-right-bottom-frontmatter: normal;
 
 // Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
 $recto-top-frontmatter: string(h2-text, last);
@@ -213,6 +231,12 @@ $recto-bottom-left-frontmatter: normal;
 $recto-bottom-right-frontmatter: normal;
 $recto-bottom-left-corner-frontmatter: normal;
 $recto-bottom-right-corner-frontmatter: normal;
+$recto-left-frontmatter: normal;
+$recto-left-top-frontmatter: normal;
+$recto-left-bottom-frontmatter: normal;
+$recto-right-frontmatter: normal;
+$recto-right-top-frontmatter: normal;
+$recto-right-bottom-frontmatter: normal;
 
 // Set styles for headers and footers
 $header-font: $font-text-secondary;
@@ -233,6 +257,26 @@ $header-text-align: center;
 $footer-text-align: center;
 $header-text-color: $color-text-main;
 $footer-text-color: $color-text-main;
+$left-margin-font: $header-font;
+$left-margin-font-size: $header-font-size;
+$left-margin-font-weight: $header-font-weight;
+$left-margin-case: $header-case;
+$left-margin-letter-spacing: $header-letter-spacing;
+$left-margin-alignment: top;
+$left-margin-space-from-edge: $margin-outside / 2;
+$left-margin-space-from-text: $margin-outside / 2 - $left-margin-font-size;
+$left-margin-text-align: $header-text-align;
+$left-margin-text-color: $color-text-main;
+$right-margin-font: $header-font;
+$right-margin-font-size: $header-font-size;
+$right-margin-font-weight: $header-font-weight;
+$right-margin-case: $header-case;
+$right-margin-letter-spacing: $header-letter-spacing;
+$right-margin-alignment: top;
+$right-margin-space-from-edge: $margin-outside / 2 + $right-margin-font-size;
+$right-margin-space-from-text: $margin-outside / 2 - $right-margin-font-size;
+$right-margin-text-align: $header-text-align;
+$right-margin-text-color: $color-text-main;
 
 // Special highlights for temporary debugging/viewing:
 // Specify a colour for highlighting; use 'inherit' for none.
