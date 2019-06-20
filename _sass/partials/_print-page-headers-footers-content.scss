@@ -344,9 +344,11 @@ $print-page-headers-footers-content: true !default;
     @right-bottom { content: normal; }
   }
 
-  // Reset page numbering to 1
-  .page-1 {
-    counter-reset: page 1;
+  // Allow page-n to start page numbering at a given page
+  @for $i from 1 through 1200 {
+    .page-#{$i} {
+      counter-reset: page #{$i};
+    }
   }
 
   // Add page info to trim area
