@@ -171,6 +171,12 @@ $verso-bottom-left: normal !default;
 $verso-bottom-right: normal !default;
 $verso-bottom-left-corner: normal !default;
 $verso-bottom-right-corner: normal !default;
+$recto-left: normal !default;
+$recto-left-top: normal !default;
+$recto-left-bottom: normal !default;
+$recto-right: normal !default;
+$recto-right-top: normal !default;
+$recto-right-bottom: normal !default;
 
 // Recto (right-hand-page)
 $recto-top: string(h2-text, last) !default;
@@ -183,6 +189,12 @@ $recto-bottom-left: normal !default;
 $recto-bottom-right: normal !default;
 $recto-bottom-left-corner: normal !default;
 $recto-bottom-right-corner: normal !default;
+$recto-left: normal !default;
+$recto-left-top: normal !default;
+$recto-left-bottom: normal !default;
+$recto-right: normal !default;
+$recto-right-top: normal !default;
+$recto-right-bottom: normal !default;
 
 // Verso (left-hand-page) for .frontmatter pages (`style: frontmatter`)
 $verso-top-frontmatter: string(page-header) !default;
@@ -195,6 +207,12 @@ $verso-bottom-left-frontmatter: normal !default;
 $verso-bottom-right-frontmatter: normal !default;
 $verso-bottom-left-corner-frontmatter: normal !default;
 $verso-bottom-right-corner-frontmatter: normal !default;
+$verso-left-frontmatter: normal !default;
+$verso-left-top-frontmatter: normal !default;
+$verso-left-bottom-frontmatter: normal !default;
+$verso-right-frontmatter: normal !default;
+$verso-right-top-frontmatter: normal !default;
+$verso-right-bottom-frontmatter: normal !default;
 
 // Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
 $recto-top-frontmatter: string(h2-text, last) !default;
@@ -207,6 +225,12 @@ $recto-bottom-left-frontmatter: normal !default;
 $recto-bottom-right-frontmatter: normal !default;
 $recto-bottom-left-corner-frontmatter: normal !default;
 $recto-bottom-right-corner-frontmatter: normal !default;
+$recto-left-frontmatter: normal !default;
+$recto-left-top-frontmatter: normal !default;
+$recto-left-bottom-frontmatter: normal !default;
+$recto-right-frontmatter: normal !default;
+$recto-right-top-frontmatter: normal !default;
+$recto-right-bottom-frontmatter: normal !default;
 
 // Set styles for headers and footers
 $header-font: $font-text-secondary !default;
@@ -227,6 +251,26 @@ $header-text-align: center !default;
 $footer-text-align: center !default;
 $header-text-color: $color-text-main !default;
 $footer-text-color: $color-text-main !default;
+$left-margin-font: $header-font !default;
+$left-margin-font-size: $header-font-size !default;
+$left-margin-font-weight: $header-font-weight !default;
+$left-margin-case: $header-case !default;
+$left-margin-letter-spacing: $header-letter-spacing !default;
+$left-margin-alignment: top !default;
+$left-margin-space-from-edge: $margin-outside / 2 !default;
+$left-margin-space-from-text: $margin-outside / 2 - $left-margin-font-size !default;
+$left-margin-text-align: $header-text-align !default;
+$left-margin-text-color: $color-text-main !default;
+$right-margin-font: $header-font !default;
+$right-margin-font-size: $header-font-size !default;
+$right-margin-font-weight: $header-font-weight !default;
+$right-margin-case: $header-case !default;
+$right-margin-letter-spacing: $header-letter-spacing !default;
+$right-margin-alignment: top !default;
+$right-margin-space-from-edge: $margin-outside / 2 + $right-margin-font-size !default;
+$right-margin-space-from-text: $margin-outside / 2 - $right-margin-font-size !default;
+$right-margin-text-align: $header-text-align !default;
+$right-margin-text-color: $color-text-main !default;
 
 // Special highlights for temporary debugging/viewing:
 // Specify a colour for highlighting; use 'inherit' for none.

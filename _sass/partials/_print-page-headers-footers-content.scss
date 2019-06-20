@@ -90,6 +90,24 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $verso-bottom-right-corner;
     }
+    @left {
+      content: $verso-left;
+    }
+    @left-top {
+      content: $verso-left-top;
+    }
+    @left-bottom {
+      content: $verso-left-bottom;
+    }
+    @right {
+      content: $verso-right;
+    }
+    @right-top {
+      content: $verso-right-top;
+    }
+    @right-bottom {
+      content: $verso-right-bottom;
+    }
   }
 
   // Recto
@@ -124,6 +142,24 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $recto-bottom-right-corner;
     }
+    @left {
+      content: $recto-left;
+    }
+    @left-top {
+      content: $recto-left-top;
+    }
+    @left-bottom {
+      content: $recto-left-bottom;
+    }
+    @right {
+      content: $recto-right;
+    }
+    @right-top {
+      content: $recto-right-top;
+    }
+    @right-bottom {
+      content: $recto-right-bottom;
+    }
   }
 
   // No headers on first pages of chapters
@@ -136,6 +172,12 @@ $print-page-headers-footers-content: true !default;
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
+    @left { content: normal; }
+    @left-top { content: normal; }
+    @left-bottom { content: normal; }
+    @right { content: normal; }
+    @right-top { content: normal; }
+    @right-bottom { content: normal; }
   }
 
   // No headers or footers on blank pages of chapters
@@ -150,6 +192,12 @@ $print-page-headers-footers-content: true !default;
     @bottom-right { content: normal; }
     @bottom-left-corner { content: normal; }
     @bottom-right-corner { content: normal; }
+    @left { content: normal; }
+    @left-top { content: normal; }
+    @left-bottom { content: normal; }
+    @right { content: normal; }
+    @right-top { content: normal; }
+    @right-bottom { content: normal; }
   }
 
   // Now we place our content for `.frontmatter` pages
@@ -186,6 +234,24 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $verso-bottom-right-corner-frontmatter;
     }
+    @left {
+      content: $verso-left-frontmatter;
+    }
+    @left-top {
+      content: $verso-left-top-frontmatter;
+    }
+    @left-bottom {
+      content: $verso-left-bottom-frontmatter;
+    }
+    @right {
+      content: $verso-right-frontmatter;
+    }
+    @right-top {
+      content: $verso-right-top-frontmatter;
+    }
+    @right-bottom {
+      content: $verso-right-bottom-frontmatter;
+    }
   }
 
   // Recto
@@ -220,6 +286,24 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $recto-bottom-right-corner-frontmatter;
     }
+    @left {
+      content: $recto-left-frontmatter;
+    }
+    @left-top {
+      content: $recto-left-top-frontmatter;
+    }
+    @left-bottom {
+      content: $recto-left-bottom-frontmatter;
+    }
+    @right {
+      content: $recto-right-frontmatter;
+    }
+    @right-top {
+      content: $recto-right-top-frontmatter;
+    }
+    @right-bottom {
+      content: $recto-right-bottom-frontmatter;
+    }
   }
 
   // No headers on first pages of frontmatter
@@ -232,6 +316,12 @@ $print-page-headers-footers-content: true !default;
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
+    @left { content: normal; }
+    @left-top { content: normal; }
+    @left-bottom { content: normal; }
+    @right { content: normal; }
+    @right-top { content: normal; }
+    @right-bottom { content: normal; }
   }
 
   // No headers or footers on blank pages of frontmatter
@@ -246,6 +336,12 @@ $print-page-headers-footers-content: true !default;
     @bottom-right { content: normal; }
     @bottom-left-corner { content: normal; }
     @bottom-right-corner { content: normal; }
+    @left { content: normal; }
+    @left-top { content: normal; }
+    @left-bottom { content: normal; }
+    @right { content: normal; }
+    @right-top { content: normal; }
+    @right-bottom { content: normal; }
   }
 
   // Reset page numbering to 1

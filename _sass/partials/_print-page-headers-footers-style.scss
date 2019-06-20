@@ -33,6 +33,40 @@
   text-align: $footer-text-align;
 }
 
+@mixin left-margin-style() {
+  font-family: $left-margin-font;
+  font-size: $left-margin-font-size;
+  font-weight: $left-margin-font-weight;
+  text-transform: $left-margin-case;
+  letter-spacing: $left-margin-letter-spacing;
+  writing-mode: vertical-rl; // should be vertical-lr but prince doesn't support it
+}
+
+@mixin left-margin-position() {
+  vertical-align: $left-margin-alignment;
+  line-height: 1;
+  padding-left: $left-margin-space-from-edge;
+  margin-right: $left-margin-space-from-text;
+  text-align: $left-margin-text-align;
+}
+
+@mixin right-margin-style() {
+  font-family: $right-margin-font;
+  font-size: $right-margin-font-size;
+  font-weight: $right-margin-font-weight;
+  text-transform: $right-margin-case;
+  letter-spacing: $right-margin-letter-spacing;
+  writing-mode: vertical-rl;
+}
+
+@mixin right-margin-position() {
+  vertical-align: $right-margin-alignment;
+  line-height: 1;
+  padding-right: $right-margin-space-from-edge;
+  margin-left: $right-margin-space-from-text;
+  text-align: $right-margin-text-align;
+}
+
 $print-page-headers-footers-style: true !default;
 @if $print-page-headers-footers-style {
 
@@ -85,6 +119,30 @@ $print-page-headers-footers-style: true !default;
       @include footer-style();
       @include footer-position();
     }
+    @left {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @left-top {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @left-bottom {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @right {
+      @include right-margin-style
+      @include right-margin-position();
+    }
+    @right-top {
+      @include right-margin-style
+      @include right-margin-position();
+    }
+    @right-bottom {
+      @include right-margin-style
+      @include right-margin-position();
+    }
   }
 
   // Recto
@@ -128,6 +186,30 @@ $print-page-headers-footers-style: true !default;
     @bottom-right-corner {
       @include footer-style();
       @include footer-position();
+    }
+    @left {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @left-top {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @left-bottom {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @right {
+      @include right-margin-style
+      @include right-margin-position();
+    }
+    @right-top {
+      @include right-margin-style
+      @include right-margin-position();
+    }
+    @right-bottom {
+      @include right-margin-style
+      @include right-margin-position();
     }
   }
 
@@ -173,6 +255,30 @@ $print-page-headers-footers-style: true !default;
       @include footer-style();
       @include footer-position();
     }
+    @left {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @left-top {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @left-bottom {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @right {
+      @include right-margin-style
+      @include right-margin-position();
+    }
+    @right-top {
+      @include right-margin-style
+      @include right-margin-position();
+    }
+    @right-bottom {
+      @include right-margin-style
+      @include right-margin-position();
+    }
   }
 
   // Recto
@@ -216,6 +322,30 @@ $print-page-headers-footers-style: true !default;
     @bottom-right-corner {
       @include footer-style();
       @include footer-position();
+    }
+    @left {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @left-top {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @left-bottom {
+      @include left-margin-style
+      @include left-margin-position();
+    }
+    @right {
+      @include right-margin-style
+      @include right-margin-position();
+    }
+    @right-top {
+      @include right-margin-style
+      @include right-margin-position();
+    }
+    @right-bottom {
+      @include right-margin-style
+      @include right-margin-position();
     }
   }
 
