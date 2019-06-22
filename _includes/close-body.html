@@ -1,12 +1,16 @@
+{% if site.data.settings.[site.output].assets.force-js-refresh == true %}
+    {% capture js-query-string-date %}?date={{ site.time | date: "%Y%m%d%H%M%S" }}{% endcapture %}
+{% endif %}
+
 {% unless site.output == "epub" %}
-	<script src="{{ path-to-root-directory }}assets/js/bundle.js"></script>
+	<script src="{{ path-to-root-directory }}assets/js/bundle.js{{ js-query-string-date }}"></script>
 {% endunless %}
 
 {% if site.output == "web" or site.output == "app" %}
     {% if is-project-search or is-book-search %}
-        <script src="{{ path-to-root-directory }}assets/js/search-engine.js"></script>
-        <script src="{{ path-to-root-directory }}assets/js/search-index.js"></script>
-        <script src="{{ path-to-root-directory }}assets/js/search-results.js"></script>
+        <script src="{{ path-to-root-directory }}assets/js/search-engine.js{{ js-query-string-date }}"></script>
+        <script src="{{ path-to-root-directory }}assets/js/search-index.js{{ js-query-string-date }}"></script>
+        <script src="{{ path-to-root-directory }}assets/js/search-results.js{{ js-query-string-date }}"></script>
     {% endif %}
 {% endif %}
 

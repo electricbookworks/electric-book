@@ -19,7 +19,7 @@ or their browsers might look for the wrong, cached config file.
 This little script deletes the MathJax menu cookie.
 If your MathJax choices here are stable, you can comment out this script.
 {% endcomment %}
-{% if site.output == "app" or site.output == "web" %}
+{% if site.output == "app" or site.output == "web" or site.pdf-renderer == "pagedjs" %}
     <script>
         function delete_cookie(name) {
             document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
@@ -73,6 +73,40 @@ MathJax config for local MathJax with SVG output.
         <script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"></script>
 
     {% endif %}
+
+{% comment %} MathJax from the CDN (not local), with HTML-CSS output for use with PagedJS.
+This means you must be online to output maths while rendering with PagedJS.
+We don't use the local SVG-output MathJax because MathJax relies on a single SVG defs element,
+which is inserted before the #wrapper that names the document's first page group, causing
+PagedJS to add a blank page before the #wrapper. And we don't want to add the bloat
+of a local HTML-CSS output jax to this repository.{% endcomment %}
+{% if site.pdf-renderer == "pagedjs" %}
+
+    <!--See https://www.peterkrautzberger.org/0129/ -->
+    <script id="MathJaxConfig" type="text/x-mathjax-config" >
+        MathJax.Hub.Config({
+            "HTML-CSS": {
+                availableFonts: [], // force use of webFont
+                webFont: "Gyre-Pagella",
+                scale: 90,
+                styles: {
+                    ".MathJax [style*=border-top-width]": {
+                        "border-top-width": "0.5pt ! important"
+                    }
+                }
+            },
+            extensions: [],
+            showProcessingMessages: false,
+            messageStyle: "none",
+            showMathMenu: false
+        });
+    </script>
+    <script id="MathJax"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML">
+    </script>
+
+{% endif %}
+
 
 {% comment %} MathJax from the CDN (not local),
 with HTML-CSS output. {% endcomment %}

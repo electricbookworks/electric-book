@@ -1,5 +1,12 @@
 {% include metadata %}
 
+{% if site.data.settings.[site.output].assets.force-css-refresh == true %}
+    {% capture css-query-string-date %}?date={{ site.time | date: "%Y%m%d%H%M%S" }}{% endcapture %}
+{% endif %}
+{% if site.data.settings.[site.output].assets.force-js-refresh == true %}
+    {% capture js-query-string-date %}?date={{ site.time | date: "%Y%m%d%H%M%S" }}{% endcapture %}
+{% endif %}
+
 {% if site.output == "print-pdf" %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
@@ -17,18 +24,19 @@
     {% comment %}If this is a translation with its own styles,
     load the parent styles first, then translation styles override them.{% endcomment %}
     {% if is-translation and translation-styles-exist %}
-        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ print-pdf-stylesheet }}" />
+        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ print-pdf-stylesheet }}{{ css-query-string-date }}" />
     {% endif %}
 
-    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}{{ css-query-string-date }}" />
 
-    {% comment %} If we're rendering with paged.js, load the script. {% endcomment %}
-    {% if site.pdf-renderer == "pagedjs" %}
-        <script src="{{ path-to-root-directory }}/assets/js/pagedjs/paged.polyfill.js"></script>
+    {% comment %} If we're rendering with paged.js, and mathjax is enabled,
+    include the mathjax config. {% endcomment %}
+    {% if site.pdf-renderer == "pagedjs" and site.mathjax-enabled == true %}
+        {% include mathjax-config %}
     {% endif %}
 
-    {% comment %} Note: MathJax script not included for PDF output.
-    MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
+    {% comment %} Note: MathJax script not included for PDF output with Prince.
+    MathJax for Prince rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
     {% include head-elements %}
 
@@ -58,18 +66,19 @@ so that we can target it for use in paged.js. {% endcomment %}
     {% comment %}If this is a translation with its own styles,
     load the parent styles first, then translation styles override them.{% endcomment %}
     {% if is-translation and translation-styles-exist %}
-        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ screen-pdf-stylesheet }}" />
+        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ screen-pdf-stylesheet }}{{ css-query-string-date }}" />
     {% endif %}
 
-    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}{{ css-query-string-date }}" />
 
-    {% comment %} If we're rendering with paged.js, load the script. {% endcomment %}
-    {% if site.pdf-renderer == "pagedjs" %}
-        <script src="{{ path-to-root-directory }}/assets/js/pagedjs/paged.polyfill.js"></script>
+    {% comment %} If we're rendering with paged.js, and mathjax is enabled,
+    include the mathjax config. {% endcomment %}
+    {% if site.pdf-renderer == "pagedjs" and site.mathjax-enabled == true %}
+        {% include mathjax-config %}
     {% endif %}
 
-    {% comment %} Note: MathJax script not included for PDF output.
-    MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
+    {% comment %} Note: MathJax script not included for PDF output with Prince.
+    MathJax for Prince rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
     {% include head-elements %}
 
@@ -261,10 +270,10 @@ so that we can target it for use in paged.js. {% endcomment %}
     {% comment %}If this is a translation with its own styles,
     load the parent styles first, then translation styles override them.{% endcomment %}
     {% if is-translation and translation-styles-exist %}
-        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ web-stylesheet }}" />
+        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ web-stylesheet }}{{ css-query-string-date }}" />
     {% endif %}
 
-    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ web-stylesheet }}" />
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ web-stylesheet }}{{ css-query-string-date }}" />
 
     {% endif %}
 

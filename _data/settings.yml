@@ -42,6 +42,13 @@ print-pdf:
   # (You can also set this per markdown file with notes: footnotes,
   # or per endnote by adding .move-to-footnote to it.)
   notes: endnotes
+  # Add query to force asset reload
+  # Set to true to force users' browsers to re-download CSS or Javascript files.
+  # This is useful to avoid having to hard refresh or clear caches
+  # after you change your CSS or Javascript. Only relevant when rendering in browser.
+  assets:
+    force-css-refresh: false
+    force-js-refresh: false
 
 # ----------------------------------------------------------
 # Screen-PDF settings
@@ -51,6 +58,13 @@ screen-pdf:
   # (You can also set this per markdown file with notes: footnotes,
   # or per endnote by adding .move-to-footnote to it.)
   notes: endnotes
+  # Add query to force asset reload
+  # Set to true to force users' browsers to re-download CSS or Javascript files.
+  # This is useful to avoid having to hard refresh or clear caches
+  # after you change your CSS or Javascript. Only relevant when rendering in browser.
+  assets:
+    force-css-refresh: false
+    force-js-refresh: false
 
 # ----------------------------------------------------------
 # Web settings
@@ -103,6 +117,13 @@ web:
   # Set 'inject' to false to disable SVG injection.
   svg:
     inject: true
+  # Add query to force asset reload
+  # Set to true to force users' browsers to re-download CSS or Javascript files.
+  # This is useful to avoid users having to hard refresh or clear caches
+  # after you change your CSS or Javascript.
+  assets:
+    force-css-refresh: false
+    force-js-refresh: false
 
 # ----------------------------------------------------------
 # Epub settings
