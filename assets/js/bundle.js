@@ -66,4 +66,9 @@ have different behaviour for web or app. {% endcomment %}
     the relevant page cross-reference text as generated content.{% endcomment %}
     {% include_relative page-reference.js %}
 
+    {% comment %}If we're rendering with paged.js, load it carefully.{% endcomment %}
+    {% if site.pdf-renderer == "pagedjs" %}
+        {% include_relative pagedjs-loader.js %}
+    {% endif %}
+
 {% endif %}
