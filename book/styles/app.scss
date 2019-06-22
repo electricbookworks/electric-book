@@ -86,7 +86,7 @@ $break-height-large: 1200px;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
-$start-depth: $line-height-default * 2;
+$start-depth: 0;
 
 // Hyphenation
 // Variables here apply to p, ul, ol, dl.
