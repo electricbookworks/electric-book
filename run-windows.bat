@@ -93,75 +93,111 @@ set /p process=Enter a number and hit return.
             echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
             set /p print-pdf-mathjax=
 
-        :: Loop back to this point to refresh the build and PDF
-        :printpdfrefresh
+        :: Ask whether to render with PrinceXML or PagedJS
+        :print-pdf-renderer
+            echo Render PDF with Prince or in Chrome?
+            echo - Enter for Prince (default)
+            echo - Any key and enter for Chrome
+            set /p print-pdf-renderer=
+            if not "%print-pdf-renderer%"=="" goto print-pdf-render-in-browser
 
-            :: let the user know we're on it!
-            echo Generating HTML...
+        :: Build and render with Prince or in the browser
 
-            :: ...and run Jekyll to build new HTML
-            :: with MathJax enabled if necessary
-            if not "%print-pdf-mathjax%"=="y" goto printpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
-            goto printpdfjekylldone
+            :: Build and render with PrinceXML
 
-            :: Build Jekyll without MathJax
-            :printpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
+            :: Loop back to this point to refresh the build and PDF
+            :printpdfrefresh
 
-            :printpdfjekylldone
+                :: let the user know we're on it!
+                echo Generating HTML...
 
-            :: Skip the next step if we're not using MathJax.
-            if not "%print-pdf-mathjax%"=="y" goto printpdfaftermathjax
+                :: ...and run Jekyll to build new HTML
+                :: with MathJax enabled if necessary
+                if not "%print-pdf-mathjax%"=="y" goto printpdfnomathjax
+                call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+                goto printpdfjekylldone
 
-            :: Convert all MathJax LaTeX to MathML
-            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
-            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
-            cd "%location%"
+                :: Build Jekyll without MathJax
+                :printpdfnomathjax
+                call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
 
-            :printpdfaftermathjax
+                :printpdfjekylldone
 
-            :: Navigate into the book's folder in _site output
-            cd _site\%bookfolder%\"%subdirectory%\text"
+                :: Skip the next step if we're not using MathJax.
+                if not "%print-pdf-mathjax%"=="y" goto printpdfaftermathjax
 
-            :: Let the user know we're now going to make the PDF
-            echo Creating PDF...
+                :: Convert all MathJax LaTeX to MathML
+                if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+                if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
+                cd "%location%"
 
-            :: Check if the _output folder exists, or create it if not.
-            :: (this check is currently not working in some setups, disabling it)
-            rem if not exist ..\..\..\_output\nul
-            rem mkdir ..\..\..\_output
+                :printpdfaftermathjax
 
-            :: Run prince, showing progress (-v), printing the docs in file-list
-            :: and saving the resulting PDF to the _output folder
-            :: (For some reason this has to be run with call)
-            set print-pdf-filename=%bookfolder%-%subdirectory%-print
-            if "%subdirectory%"=="" set print-pdf-filename=%bookfolder%-print
-            call prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
+                :: Navigate into the book's folder in _site output
+                cd _site\%bookfolder%\"%subdirectory%\text"
 
-            :: Navigate back to where we began.
-            cd "%location%"
+                :: Let the user know we're now going to make the PDF
+                echo Creating PDF...
 
-            :: Tell the user we're done
-            echo Done! Opening PDF...
+                :: Check if the _output folder exists, or create it if not.
+                :: (this check is currently not working in some setups, disabling it)
+                rem if not exist ..\..\..\_output\nul
+                rem mkdir ..\..\..\_output
 
-            :: Navigate to the _output folder...
-            cd _output
+                :: Run Prince, showing progress (-v), printing the docs in file-list
+                :: and saving the resulting PDF to the _output folder
+                :: (For some reason this has to be run with call)
+                set print-pdf-filename=%bookfolder%-%subdirectory%-print
+                if "%subdirectory%"=="" set print-pdf-filename=%bookfolder%-print
+                call prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
 
-            :: and open the PDF we just created 
-            :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
-            start %print-pdf-filename%.pdf
+                :: Navigate back to where we began.
+                cd "%location%"
 
-            :: Navigate back to where we began.
-            cd ..\
+                :: Tell the user we're done
+                echo Done! Opening PDF...
 
-        :: Let the user easily refresh the PDF by running jekyll b and prince again
-        set repeat=
-        set /p repeat=Enter to run again, or any other key and enter to stop. 
-        if "%repeat%"=="" goto printpdfrefresh
-        echo.
-        goto begin
+                :: Navigate to the _output folder...
+                cd _output
 
+                :: and open the PDF we just created 
+                :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
+                start %print-pdf-filename%.pdf
+
+                :: Navigate back to where we began.
+                cd ..\
+
+                :: Let the user easily refresh the PDF by running jekyll b and prince again
+                set repeat=
+                set /p repeat=Enter to run again, or any other key and enter to stop. 
+                if "%repeat%"=="" goto printpdfrefresh
+                echo.
+                goto begin
+
+            :: Render in the browser
+            :print-pdf-render-in-browser
+
+                :: let the user know we're on it!
+                echo Generating HTML...
+
+                :: Open the web browser
+                :: (This is before jekyll s, because jekyll s pauses the script.)
+                echo Once the server is running, open Chrome to http://127.0.0.1:4000/%bookfolder%/
+
+                :: ...and run Jekyll to serve new HTML
+                :: with MathJax enabled if necessary
+                if not "%print-pdf-mathjax%"=="y" goto print-pdf-render-in-browser-no-mathjax
+                call bundle exec jekyll serve --baseurl="" --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,_configs/_config.browser-pdf.yml,%config%"
+                goto print-pdf-render-in-browser-open
+
+                :: Serve with Jekyll without MathJax
+                :print-pdf-render-in-browser-no-mathjax
+                call bundle exec jekyll serve --baseurl="" --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.browser-pdf.yml,%config%"
+
+                :: Open the browser
+                :print-pdf-render-in-browser-open
+
+                goto begin
 
     :: :: :: :: :: ::
     :: SCREEN PDF  ::
@@ -190,7 +226,7 @@ set /p process=Enter a number and hit return.
             if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. && goto screenpdfwhatsubdirectory
             echo.
 
-        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.screen-pdf.yml
         :screen-pdf-otherconfigs
             echo.
             echo Any extra config files?
@@ -202,69 +238,114 @@ set /p process=Enter a number and hit return.
             echo.
 
         :: Ask if we're processing MathJax, so we know whether to process the HTML
-        echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
-        set /p screen-pdf-mathjax=
+            echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
+            set /p screen-pdf-mathjax=
 
-        :: Loop back to this point to refresh the build and PDF
-        :screenpdfrefresh
+        :: Ask whether to render with PrinceXML or PagedJS
+        :screen-pdf-renderer
+            echo Render PDF with Prince or in Chrome?
+            echo - Enter for Prince (default)
+            echo - Any key and enter for Chrome
+            set /p screen-pdf-renderer=
+            if not "%screen-pdf-renderer%"=="" goto screen-pdf-render-in-browser
 
-            :: let the user know we're on it!
-            echo Generating HTML...
+        :: Build and render with Prince or in the browser
 
-            :: ...and run Jekyll to build new HTML
-            :: with MathJax enabled if necessary
-            if not "%screen-pdf-mathjax%"=="y" goto screenpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
-            goto screenpdfjekylldone
-            :screenpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
-            :screenpdfjekylldone
+            :: Build and render with PrinceXML
 
-            :: Skip the next step if we're not using MathJax.
-            if not "%screen-pdf-mathjax%"=="y" goto screenpdfaftermathjax
+            :: Loop back to this point to refresh the build and PDF
+            :screenpdfrefresh
 
-            :: Convert all MathJax LaTeX to MathML
-            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
-            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
-            cd "%location%"
+                :: let the user know we're on it!
+                echo Generating HTML...
 
-            :screenpdfaftermathjax
+                :: ...and run Jekyll to build new HTML
+                :: with MathJax enabled if necessary
+                if not "%screen-pdf-mathjax%"=="y" goto screenpdfnomathjax
+                call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+                goto screenpdfjekylldone
 
-            :: Navigate into the book's folder in _site output
-            cd _site\%bookfolder%\"%subdirectory%\text"
+                :: Build Jekyll without MathJax
+                :screenpdfnomathjax
+                call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
 
-            :: Let the user know we're now going to make the PDF
-            echo Creating PDF...
+                :screenpdfjekylldone
 
-            :: Run prince, showing progress (-v), printing the docs in file-list
-            :: and saving the resulting PDF to the _output folder
-            :: (For some reason this has to be run with call)
-            set screen-pdf-filename=%bookfolder%-%subdirectory%-screen
-            if "%subdirectory%"=="" set screen-pdf-filename=%bookfolder%-screen
-            call prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
+                :: Skip the next step if we're not using MathJax.
+                if not "%screen-pdf-mathjax%"=="y" goto screenpdfaftermathjax
 
-            :: Navigate back to where we began.
-            cd "%location%"
+                :: Convert all MathJax LaTeX to MathML
+                if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+                if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
+                cd "%location%"
 
-            :: Tell the user we're done
-            echo Done! Opening PDF...
+                :screenpdfaftermathjax
 
-            :: Navigate to the _output folder...
-            cd _output
+                :: Navigate into the book's folder in _site output
+                cd _site\%bookfolder%\"%subdirectory%\text"
 
-            :: and open the PDF we just created 
-            :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
-            start %screen-pdf-filename%.pdf
+                :: Let the user know we're now going to make the PDF
+                echo Creating PDF...
 
-            :: Navigate back to where we began.
-            cd ..\
+                :: Check if the _output folder exists, or create it if not.
+                :: (this check is currently not working in some setups, disabling it)
+                rem if not exist ..\..\..\_output\nul
+                rem mkdir ..\..\..\_output
 
-        :: Let the user easily refresh the PDF by running jekyll b and prince again
-        set repeat=
-        set /p repeat=Enter to run again, or any other key and enter to stop. 
-        if "%repeat%"=="" goto screenpdfrefresh
-        echo.
-        goto begin
+                :: Run Prince, showing progress (-v), printing the docs in file-list
+                :: and saving the resulting PDF to the _output folder
+                :: (For some reason this has to be run with call)
+                set screen-pdf-filename=%bookfolder%-%subdirectory%-screen
+                if "%subdirectory%"=="" set screen-pdf-filename=%bookfolder%-screen
+                call prince -v -l file-list -o "%location%_output\%screen-pdf-filename%.pdf" --javascript
+
+                :: Navigate back to where we began.
+                cd "%location%"
+
+                :: Tell the user we're done
+                echo Done! Opening PDF...
+
+                :: Navigate to the _output folder...
+                cd _output
+
+                :: and open the PDF we just created 
+                :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
+                start %screen-pdf-filename%.pdf
+
+                :: Navigate back to where we began.
+                cd ..\
+
+                :: Let the user easily refresh the PDF by running jekyll b and prince again
+                set repeat=
+                set /p repeat=Enter to run again, or any other key and enter to stop. 
+                if "%repeat%"=="" goto screenpdfrefresh
+                echo.
+                goto begin
+
+            :: Render in the browser
+            :screen-pdf-render-in-browser
+
+                :: let the user know we're on it!
+                echo Generating HTML...
+
+                :: Open the web browser
+                :: (This is before jekyll s, because jekyll s pauses the script.)
+                echo Once the server is running, open Chrome to http://127.0.0.1:4000/%bookfolder%/
+
+                :: ...and run Jekyll to serve new HTML
+                :: with MathJax enabled if necessary
+                if not "%screen-pdf-mathjax%"=="y" goto screen-pdf-render-in-browser-no-mathjax
+                call bundle exec jekyll serve --baseurl="" --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,_configs/_config.browser-pdf.yml,%config%"
+                goto screen-pdf-render-in-browser-open
+
+                :: Serve with Jekyll without MathJax
+                :screen-pdf-render-in-browser-no-mathjax
+                call bundle exec jekyll serve --baseurl="" --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.browser-pdf.yml,%config%"
+
+                :: Open the browser
+                :screen-pdf-render-in-browser-open
+
+                goto begin
 
 
     :: :: :: :: :: ::
@@ -276,7 +357,7 @@ set /p process=Enter a number and hit return.
         :: Encouraging message
         echo Okay, let's make a website.
 
-        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
+        :: Ask the user to add any extra Jekyll config files, e.g. _config.live.yml
         echo.
         echo Any extra config files?
         echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
