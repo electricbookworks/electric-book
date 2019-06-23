@@ -63,69 +63,92 @@ Enter a number and hit enter. "
 			echo "Does this book use MathJax? If no, hit enter. If yes, enter y."
 			read printpdfmathjax
 		done
-		# Set the PDF's filename
-		if [ "$printpdfsubdirectory" = "" ]; then
-			printpdffilename="$bookfolder-print"
+		# Ask whether to render with PrinceXML or PagedJS
+		printpdfrenderer=""
+		echo "Render PDF with Prince or in Chrome?"
+		echo "- Enter for Prince (default)"
+		echo "- Any key and enter for Chrome"
+		read printpdfrenderer
+
+		if [ "$printpdfrenderer" = "" ]; then
+
+			# Set the PDF's filename
+			if [ "$printpdfsubdirectory" = "" ]; then
+				printpdffilename="$bookfolder-print"
+			else
+				printpdffilename="$bookfolder-$printpdfsubdirectory-print"
+			fi
+			# We're going to let users run this over and over by pressing enter
+			repeat=""
+			while [ "$repeat" = "" ]
+			do
+				# let the user know we're on it!
+				echo "Generating HTML..."
+				# ...and run Jekyll to build new HTML
+				# with MathJax enabled if necessary
+				if [ "$printpdfmathjax" = "" ]; then
+					bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,$config"
+				else
+					bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
+				fi
+				# If using, MathJax, preprocess the HTML
+				if [ "$printpdfmathjax" = "" ]; then
+					echo "No MathJax required."
+				else
+					echo "Processing MathJax in HTML."
+					if [ "$printpdfsubdirectory" = "" ]; then
+						gulp mathjax --book $bookfolder
+					else
+						gulp mathjax --book $bookfolder --language $printpdfsubdirectory
+					fi
+				fi
+				# Navigate into the book's text folder in _site
+				if [ "$printpdfsubdirectory" = "" ]; then
+					cd _site/$bookfolder/text
+				else
+					cd _site/$bookfolder/$printpdfsubdirectory/text
+				fi
+				# Let the user know we're now going to make the PDF
+				echo Creating PDF...
+				# Run prince, showing progress (-v), printing the docs in file-list
+				# and saving the resulting PDF to the _output folder
+				prince -v -l file-list -o "$location"/_output/$printpdffilename.pdf --javascript
+				# Navigate back to where we began.
+				cd "$location"
+				# Tell the user we're done
+				echo Done! Opening PDF...
+				# Navigate to the _output folder...
+				cd _output
+				# and open the PDF we just created
+				# (for OSX, this is open, not xdg-open)
+				xdg-open $printpdffilename.pdf
+				# Navigate back to where we began.
+				cd ../
+				# Ask the user if they want to refresh the PDF by running Jekyll and Prince again
+				repeat=""
+				echo "Enter to run again, or any other key and enter to stop."
+				read repeat
+			done
+			# Head back to the Electric Book options
+			process=0
+
 		else
-			printpdffilename="$bookfolder-$printpdfsubdirectory-print"
-		fi
-		# We're going to let users run this over and over by pressing enter
-		repeat=""
-		while [ "$repeat" = "" ]
-		do
-			# let the user know we're on it!
+			# Let the user know we're on it!
 			echo "Generating HTML..."
-			# ...and run Jekyll to build new HTML
+			echo "Once the server is running, open Chrome to http://127.0.0.1:4000/$bookfolder/"
+			# ...and run Jekyll to serve new HTML
 			# with MathJax enabled if necessary
 			if [ "$printpdfmathjax" = "" ]; then
-				bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,$config"
+				bundle exec jekyll serve --baseurl="" --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.browser-pdf.yml,$config"
 			else
-				bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
+				bundle exec jekyll serve --baseurl="" --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,_configs/_config.browser-pdf.yml,$config"
 			fi
-			# If using, MathJax, preprocess the HTML
-			if [ "$printpdfmathjax" = "" ]; then
-				echo "No MathJax required."
-			else
-				echo "Processing MathJax in HTML."
-				if [ "$printpdfsubdirectory" = "" ]; then
-					gulp mathjax --book $bookfolder
-				else
-					gulp mathjax --book $bookfolder --language $printpdfsubdirectory
-				fi
-			fi
-			# Navigate into the book's text folder in _site
-			if [ "$printpdfsubdirectory" = "" ]; then
-				cd _site/$bookfolder/text
-			else
-				cd _site/$bookfolder/$printpdfsubdirectory/text
-			fi
-			# Let the user know we're now going to make the PDF
-			echo Creating PDF...
-			# Run prince, showing progress (-v), printing the docs in file-list
-			# and saving the resulting PDF to the _output folder
-			prince -v -l file-list -o "$location"/_output/$printpdffilename.pdf --javascript
-			# Navigate back to where we began.
-			cd "$location"
-			# Tell the user we're done
-			echo Done! Opening PDF...
-			# Navigate to the _output folder...
-			cd _output
-			# and open the PDF we just created
-			# (for OSX, this is open, not xdg-open)
-			xdg-open $printpdffilename.pdf
-			# Navigate back to where we began.
-			cd ../
-			# Ask the user if they want to refresh the PDF by running Jekyll and Prince again
-			repeat=""
-			echo "Enter to run again, or any other key and enter to stop."
-			read repeat
-		done
-		# Head back to the Electric Book options
-		process=0
+		fi
+
 	##############
 	# SCREEN PDF #
 	##############
-	elif [ "$process" = 2 ]
+	elif [ "$process" = "2" ]
 		then
 		# Remember the current folder
 		location=$(pwd)
@@ -136,7 +159,7 @@ Enter a number and hit enter. "
 			then
 			bookfolder="book"
 		fi
-		echo "Okay, let's make a screen PDF using $bookfolder..."
+		echo "Okay, let's make a screen-ready PDF using $bookfolder..."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
 		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read screenpdfsubdirectory
@@ -146,72 +169,95 @@ Enter a number and hit enter. "
 		echo "_configs/_config.myconfig.yml"
 		echo "If not, just hit return."
 		read config
-		# Ask whether we're processing MathJax, to know whether to process the HTML
-        screenpdfmathjax="unknown"
+		# Ask whether we're processing MathJax, to know whether to pre-process the HTML
+		screenpdfmathjax="unknown"
 		until [ "$screenpdfmathjax" = "" ] || [ "$screenpdfmathjax" = "y" ]
 		do
 			echo "Does this book use MathJax? If no, hit enter. If yes, enter y."
 			read screenpdfmathjax
 		done
-		# Set the PDF's filename
-		if [ "$screenpdfsubdirectory" = "" ]; then
-			screenpdffilename="$bookfolder-screen"
+		# Ask whether to render with PrinceXML or PagedJS
+		screenpdfrenderer=""
+		echo "Render PDF with Prince or in Chrome?"
+		echo "- Enter for Prince (default)"
+		echo "- Any key and enter for Chrome"
+		read screenpdfrenderer
+
+		if [ "$screenpdfrenderer" = "" ]; then
+
+			# Set the PDF's filename
+			if [ "$screenpdfsubdirectory" = "" ]; then
+				screenpdffilename="$bookfolder-screen"
+			else
+				screenpdffilename="$bookfolder-$screenpdfsubdirectory-screen"
+			fi
+			# We're going to let users run this over and over by pressing enter
+			repeat=""
+			while [ "$repeat" = "" ]
+			do
+				# let the user know we're on it!
+				echo "Generating HTML..."
+				# ...and run Jekyll to build new HTML
+				# with MathJax enabled if necessary
+				if [ "$screenpdfmathjax" = "" ]; then
+					bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,$config"
+				else
+					bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
+				fi
+				# If using, MathJax, preprocess the HTML
+				if [ "$screenpdfmathjax" = "" ]; then
+					echo "No MathJax required."
+				else
+					echo "Processing MathJax in HTML."
+					if [ "$screenpdfsubdirectory" = "" ]; then
+						gulp mathjax --book $bookfolder
+					else
+						gulp mathjax --book $bookfolder --language $screenpdfsubdirectory
+					fi
+				fi
+				# Navigate into the book's text folder in _site
+				if [ "$screenpdfsubdirectory" = "" ]; then
+					cd _site/$bookfolder/text
+				else
+					cd _site/$bookfolder/$screenpdfsubdirectory/text
+				fi
+				# Let the user know we're now going to make the PDF
+				echo Creating PDF...
+				# Run prince, showing progress (-v), printing the docs in file-list
+				# and saving the resulting PDF to the _output folder
+				prince -v -l file-list -o "$location"/_output/$screenpdffilename.pdf --javascript
+				# Navigate back to where we began.
+				cd "$location"
+				# Tell the user we're done
+				echo Done! Opening PDF...
+				# Navigate to the _output folder...
+				cd _output
+				# and open the PDF we just created
+				# (for OSX, this is open, not xdg-open)
+				xdg-open $screenpdffilename.pdf
+				# Navigate back to where we began.
+				cd ../
+				# Ask the user if they want to refresh the PDF by running Jekyll and Prince again
+				repeat=""
+				echo "Enter to run again, or any other key and enter to stop."
+				read repeat
+			done
+			# Head back to the Electric Book options
+			process=0
+
 		else
-			screenpdffilename="$bookfolder-$screenpdfsubdirectory-screen"
-		fi
-		# We're going to let users run this over and over by pressing enter
-		repeat=""
-		while [ "$repeat" = "" ]
-		do
-			# let the user know we're on it!
+			# Let the user know we're on it!
 			echo "Generating HTML..."
-			# ...and run Jekyll to build new HTML
+			echo "Once the server is running, open Chrome to http://127.0.0.1:4000/$bookfolder/"
+			# ...and run Jekyll to serve new HTML
 			# with MathJax enabled if necessary
 			if [ "$screenpdfmathjax" = "" ]; then
-				bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,$config"
+				bundle exec jekyll serve --baseurl="" --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.browser-pdf.yml,$config"
 			else
-				bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
+				bundle exec jekyll serve --baseurl="" --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,_configs/_config.browser-pdf.yml,$config"
 			fi
-			# If using MathJax, process the HTML
-			if [ "$screenpdfmathjax" = "" ]; then
-				echo "No MathJax required."
-			else
-				echo "Processing MathJax in HTML."
-				if [ "$printpdfsubdirectory" = "" ]; then
-					gulp mathjax --book $bookfolder
-				else
-					gulp mathjax --book $bookfolder --language $screenpdfsubdirectory
-				fi
-			fi
-			# Navigate into the book's text folder in _site
-			if [ "$screenpdfsubdirectory" = "" ]; then
-				cd _site/$bookfolder/text
-			else
-				cd _site/$bookfolder/$screenpdfsubdirectory/text
-			fi
-			# Let the user know we're now going to make the PDF
-			echo Creating PDF...
-			# Run prince, showing progress (-v), printing the docs in file-list
-			# and saving the resulting PDF to the _output folder
-			prince -v -l file-list -o "$location"/_output/$screenpdffilename.pdf --javascript
-			# Navigate back to where we began.
-			cd "$location"
-			# Tell the user we're done
-			echo Done! Opening PDF...
-			# Navigate to the _output folder...
-			cd _output
-			# and open the PDF we just created
-			# (for OSX, this is open, not xdg-open)
-			xdg-open $screenpdffilename.pdf
-			# Navigate back to where we began.
-			cd ../
-			# Ask the user if they want to refresh the PDF by running Jekyll and Prince again
-			repeat=""
-			echo "Enter to run again, or any other key and enter to stop."
-			read repeat
-		done
-		# Head back to the Electric Book options
-		process=0
+		fi
+
 	###########
 	# WEBSITE #
 	###########
