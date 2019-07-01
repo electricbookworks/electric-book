@@ -110,13 +110,21 @@ gulp.task('images:svg', function (done) {
     gulp.src(paths.img.source + '*.svg')
         .pipe(debug({title: 'Processing SVG '}))
         .pipe(svgmin({
-            plugins: [{
-                removeAttrs: {attrs: 'data.*'}
-            }, {
-                removeUnknownsAndDefaults: {
-                    defaultAttrs: false
+            plugins: [
+                {
+                    removeViewBox: false
+                },
+                {
+                    removeDimensions: true
+                },
+                {
+                    removeAttrs: {attrs: 'data.*'}
+                }, {
+                    removeUnknownsAndDefaults: {
+                        defaultAttrs: false
+                    }
                 }
-            }]
+            ]
         }).on('error', function (e) {
             console.log(e);
         }))
@@ -337,6 +345,33 @@ gulp.task('images:xlarge', function (done) {
     done();
 });
 
+// Make full-quality images in RGB
+gulp.task('images:max', function (done) {
+    'use strict';
+
+    // Options
+    var imagesMaxColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+    var imagesMaxColorSpace = 'rgb';
+
+    console.log('Creating max-quality web images from ' + paths.img.source);
+    if (fileExists.sync('_tools/profiles/' + imagesMaxColorProfile)) {
+        gulp.src(paths.img.source + '*.{' + filetypes + '}')
+            .pipe(newer(paths.img.web))
+            .pipe(debug({title: 'Creating max-quality '}))
+            .pipe(gm(function (gmfile) {
+                return gmfile.quality(100).profile('_tools/profiles/' + imagesMaxColorProfile).colorspace(imagesMaxColorSpace);
+            }).on('error', function (e) {
+                console.log(e);
+            }))
+            .pipe(rename({suffix: "-max"}))
+            .pipe(gulp.dest(paths.img.web));
+    } else {
+        console.log('Colour profile _tools/profiles/' + imagesMaxColorProfile + ' not found. Exiting.');
+        return;
+    }
+    done();
+});
+
 // Minify JS files to make them smaller,
 // using the drop_console option to remove console logging
 gulp.task('js', function (done) {
@@ -444,5 +479,6 @@ gulp.task('default', gulp.series(
     'images:small',
     'images:medium',
     'images:large',
-    'images:xlarge'
+    'images:xlarge',
+    'images:max'
 ));

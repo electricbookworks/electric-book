@@ -37,6 +37,26 @@ $margin-inside: 20mm;
 $bleed: 3mm;
 $trim: 3mm;
 $crop-marks: crop; // crop | none
+$page-info-offset: 5mm;
+$columns-default: 1;
+
+// Optional sidebar setup
+// If you want a sidebar, set these values and change
+// $print-sidebar to 'true' (it is disabled by default).
+$print-sidebar: false;
+// For guidance on sidebar variables, see partials/_pdf-sidebar.scss.
+// 1. Set the margin between the page edge and the sidebar:
+$sidebar-margin-outside: 10mm;
+// 2. The number of 'columns' in your page grid:
+$grid-columns: 3;
+// 3. As a single integer, set the ratio of the column width to column-gap width.
+//    That is, how wide is a column, as a multiple of the column-gap?
+//    A higher number makes the column wider, and the gap smaller.
+//    A lower number makes the column narrower, and the gap wider.
+$column-gap-ratio: 10;
+// Leave this import here. It must import after setting page margins above.
+// If you've left $print-sidebar as false above, it will have no effect.
+@import "partials/print-sidebar";
 
 // Colours
 $colorspace: cmyk; // auto | none | rgb | cmyk | gray
@@ -86,12 +106,14 @@ $text-align: justify; // left or right or inside or outside or justify or center
 $orphans: 1; // Minimum number of lines that must be left at the bottom of the first page
 $widows: 1; // Minimum number of lines that must be left at the top of the second page
 $letter-spacing-text: 0em; // Default letter-spacing for p, ul, ol, dl. Set in ems, e.g. 0.01em for 10/1000s of an em.
+$math-size-percent: 85%; // Adjust this to make math character size match your body font
 
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false;
 
-// Buttons
-$button-border-radius: 0.1em; // Roundness of button corners.
+// Rounded corners
+$button-border-radius: 0.1em; // Roundness of button corners
+$box-border-radius: 0.5em; // Roundness of box corners
 
 // Rules, lines
 $rule-thickness: 0.5pt;
@@ -106,7 +128,11 @@ $hyphenate-lines: 2; // Preferred maximum number of consecutive lines ending wit
 
 // Text dividers
 // For breaks created with *** in markdown.
-$text-divider: ""; // Empty leaves space. \2022 is a bullet
+// If using an image, set $text-divider-image in CSS URL syntax, e.g.
+// $text-divider-image: url('../images/epub/text-divider.jpg');
+$text-divider-text: ""; // Empty leaves space. \2022 is a bullet
+$text-divider-image: "";
+$text-divider-image-height: $line-height-default;
 
 // Should chapters start on a right-hand page (recto) or on any page?
 // This setting applies to the frontmatter, dedication-page, epigraph-page and chapter page styles.
@@ -151,6 +177,12 @@ $verso-bottom-left: normal;
 $verso-bottom-right: normal;
 $verso-bottom-left-corner: normal;
 $verso-bottom-right-corner: normal;
+$verso-left: normal;
+$verso-left-top: normal;
+$verso-left-bottom: normal;
+$verso-right: normal;
+$verso-right-top: normal;
+$verso-right-bottom: normal;
 
 // Recto (right-hand-page)
 $recto-top: string(h2-text, last);
@@ -163,6 +195,12 @@ $recto-bottom-left: normal;
 $recto-bottom-right: normal;
 $recto-bottom-left-corner: normal;
 $recto-bottom-right-corner: normal;
+$recto-left: normal;
+$recto-left-top: normal;
+$recto-left-bottom: normal;
+$recto-right: normal;
+$recto-right-top: normal;
+$recto-right-bottom: normal;
 
 // Verso (left-hand-page) for .frontmatter pages (`style: frontmatter`)
 $verso-top-frontmatter: string(page-header);
@@ -175,6 +213,12 @@ $verso-bottom-left-frontmatter: normal;
 $verso-bottom-right-frontmatter: normal;
 $verso-bottom-left-corner-frontmatter: normal;
 $verso-bottom-right-corner-frontmatter: normal;
+$verso-left-frontmatter: normal;
+$verso-left-top-frontmatter: normal;
+$verso-left-bottom-frontmatter: normal;
+$verso-right-frontmatter: normal;
+$verso-right-top-frontmatter: normal;
+$verso-right-bottom-frontmatter: normal;
 
 // Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
 $recto-top-frontmatter: string(h2-text, last);
@@ -187,6 +231,12 @@ $recto-bottom-left-frontmatter: normal;
 $recto-bottom-right-frontmatter: normal;
 $recto-bottom-left-corner-frontmatter: normal;
 $recto-bottom-right-corner-frontmatter: normal;
+$recto-left-frontmatter: normal;
+$recto-left-top-frontmatter: normal;
+$recto-left-bottom-frontmatter: normal;
+$recto-right-frontmatter: normal;
+$recto-right-top-frontmatter: normal;
+$recto-right-bottom-frontmatter: normal;
 
 // Set styles for headers and footers
 $header-font: $font-text-secondary;
@@ -199,10 +249,34 @@ $header-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
 $footer-case: uppercase; // none|capitalize|uppercase|lowercase|initial|inherit;
 $header-letter-spacing: 0.1em;
 $footer-letter-spacing: 0.1em;
-$header-space-from-top: $margin-top / 2 + ($line-height-default / 4);
+$header-space-from-top: $margin-top / 2 + ($line-height-default / 4); // should align with baseline grid
+$header-space-from-text: $line-height-default;
 $footer-space-from-bottom: $margin-bottom / 2;
+$footer-space-from-text: $line-height-default;
 $header-text-align: center;
 $footer-text-align: center;
+$header-text-color: $color-text-main;
+$footer-text-color: $color-text-main;
+$left-margin-font: $header-font;
+$left-margin-font-size: $header-font-size;
+$left-margin-font-weight: $header-font-weight;
+$left-margin-case: $header-case;
+$left-margin-letter-spacing: $header-letter-spacing;
+$left-margin-alignment: top;
+$left-margin-space-from-edge: $margin-outside / 2;
+$left-margin-space-from-text: $margin-outside / 2 - $left-margin-font-size;
+$left-margin-text-align: $header-text-align;
+$left-margin-text-color: $color-text-main;
+$right-margin-font: $header-font;
+$right-margin-font-size: $header-font-size;
+$right-margin-font-weight: $header-font-weight;
+$right-margin-case: $header-case;
+$right-margin-letter-spacing: $header-letter-spacing;
+$right-margin-alignment: top;
+$right-margin-space-from-edge: $margin-outside / 2 + $right-margin-font-size;
+$right-margin-space-from-text: $margin-outside / 2 - $right-margin-font-size;
+$right-margin-text-align: $header-text-align;
+$right-margin-text-color: $color-text-main;
 
 // Special highlights for temporary debugging/viewing:
 // Specify a colour for highlighting; use 'inherit' for none.
@@ -238,6 +312,7 @@ $print-hyphenation: true; // Sets hyphenation dictionary
 $print-start-on-recto-or-verso: true; // Starts chapters on a left- or right-hand-page
 $print-page-start-depth: true; // Sets a top margin on opening pages
 $print-base-typography: true; // Default typography for HTML elements
+$print-columns: true;
 $print-buttons: true;
 $print-verse: true; // Default typography for verse, poetry, lyrics
 $print-bibliographies: true;

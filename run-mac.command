@@ -548,13 +548,13 @@ You may need to reload the web page once this server is running."
 			echo "Epub created!"
 			# Validation
 			echo "To run validation, enter the path to the EpubCheck folder on your machine."
-			echo "Hit enter for the default: /usr/local/bin/epubcheck-4.0.2"
+			echo "Hit enter for the default: /usr/local/bin/epubcheck-4.2.0"
 			echo "(You can get EpubCheck from https://github.com/IDPF/epubcheck/releases"
 			echo "Or go to http://validator.idpf.org to validate online.)"
 			read pathtoepubcheck
 			if [ "$pathtoepubcheck" = "" ]; then
 				echo "Okay, using default EpubCheck location. "
-				pathtoepubcheck="/usr/local/bin/epubcheck-4.0.2"
+				pathtoepubcheck="/usr/local/bin/epubcheck-4.2.0"
 			fi
 			java -jar "$pathtoepubcheck"/epubcheck.jar "$epubfilename".epub
 			# Open file browser to see epub
@@ -897,13 +897,20 @@ You may need to reload the web page once this server is running."
 		searchIndexToRefresh=""
 		read searchIndexToRefresh
 
+		# Ask the user to add any extra Jekyll config files, e.g. _config.live.yml
+		echo "Any extra config files?"
+		echo "Enter filenames (including any relative path), comma separated, no spaces. E.g."
+		echo "_configs/_config.live.yml"
+		echo "If not, just hit return."
+		read searchIndexConfig
+
 		# Generate HTML with Jekyll
 		echo "Generating HTML with Jekyll..."
 		if [ "$searchIndexToRefresh" = "a" ]
 			then
-			bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml"
+			bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,$searchIndexConfig"
 		else
-			bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml"
+			bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,$searchIndexConfig"
 		fi
 
 		# Run PhantomJS script from scripts directory

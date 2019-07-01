@@ -190,7 +190,7 @@ $epub-questions: true !default;
             list-style-type: none;
             margin-left: 0;
             background-color: $color-light;
-            border-radius: $button-border-radius;
+            border-radius: $box-border-radius;
             &:before {
                 display: block;
                 padding: $line-height-default / 2 0 $line-height-default / 2 $line-height-default * 2;

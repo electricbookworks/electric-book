@@ -35,6 +35,6 @@ $print-maths: true !default;
     // This may be a magic number to adjust,
     // depending on your body text font.
     .mjpage * {
-        font-size: 75%;
+        font-size: $math-size-percent;
     }
 }

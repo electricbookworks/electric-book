@@ -90,6 +90,19 @@ web:
   # At `source` choose local (`local`) MathJax.js or the CDN (`cdn`).
   mathjax:
     source: cdn
+  # --------------
+  # SVG management
+  # --------------
+  # By default on the web, we'll inject SVG as img tags into the page
+  # so that you can control fonts and other SVG features with CSS.
+  # This works for figure and image includes, and any image with
+  # a 'inject-svg' class.
+  # If you use injected SVGs, make sure their styles are inline,
+  # or SVGs may end up 'sharing' styles for duplicated classes.
+  # Advanced: see font-switching options in assets/js/svg-management.js
+  # Set 'inject' to false to disable SVG injection.
+  svg:
+    inject: true
 
 # ----------------------------------------------------------
 # Epub settings

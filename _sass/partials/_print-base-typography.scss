@@ -8,6 +8,13 @@ $convert-images-to-color-profile: false !default;
         background-color: $color-background;
     }
 
+    html {
+        box-sizing: border-box;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+
     body {
         margin: 0;
         padding: 0;
@@ -164,14 +171,20 @@ $convert-images-to-color-profile: false !default;
     // Horizontal rules
     // Using <hr> as a divider (in markdown created with ***)
 
-    $text-divider: "" !default;
+    $text-divider-text: "" !default;
+    $text-divider-image: "" !default;
+    $text-divider-image-height: $line-height-default !default;
 
     hr {
-        content: $text-divider;
+        content: $text-divider-text;
         border: 0;
         font-family: $font-display-main;
         text-align: center;
-        margin: $line-height-default 0;
+        margin: $line-height-default auto;
+        @if $text-divider-image != "" {
+            content: $text-divider-image;
+            height: $text-divider-image-height;
+        }
         & + p {
             text-indent: 0;
         }
@@ -198,7 +211,9 @@ $convert-images-to-color-profile: false !default;
             text-indent: 0;
         }
         ul ul, ol ol, blockquote ul ul, blockquote ol ol {
-            margin-bottom: $line-height-default;
+            // Disabled, because on most real projects we remove this.
+            // margin-top: $line-height-default;
+            // margin-bottom: $line-height-default;
         }
     }
 

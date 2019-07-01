@@ -38,7 +38,7 @@ $font-code: monospace !default;
 // These values, especially $line-height-default, are used to compute vertical rhythm
 // for many features in this theme. So do not use a unitless value for line-height,
 // and don't use percentages, which will break layouts computed by multiplying this value.
-$font-size-default: 1.2em !default;
+$font-size-default: 1em !default;
 $line-height-default: 1.5em !default;
 $font-size-smaller: 0.8 !default; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
@@ -46,8 +46,17 @@ $font-size-bigger: 2 !default; // How many times bigger than font-size-default f
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
 
-// Buttons
-$button-border-radius: 0.1em !default; // Roundness of button corners.
+// Extra margin
+// Some epub readers don't add any margin to their viewport.
+// You can add your own here to force a margin.
+// Use CSS margin syntax: a single value sets all sides,
+// two values set top/bottom and then left/right,
+// four values set top, right, bottom, left respectively.
+$epub-margin: 0.5em !default;
+
+// Rounded corners
+$button-border-radius: 0.1em !default; // Roundness of button corners
+$box-border-radius: 0.5em !default; // Roundness of box corners
 
 // Rules, lines
 $rule-thickness: 1px !default;
@@ -78,9 +87,13 @@ $hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
 $hyphenate-lines: 1 !default; // Maximum number of consecutive lines ending with hyphens
 
 // Text dividers
-// Some ereaders can display a character as a text divider
-// for horizontal rules created with *** in markdown.
-$text-divider: "" !default; // Empty leaves space. \2022 is a bullet
+// Some ereaders can display a character as a text divider.
+// For breaks created with *** in markdown.
+// If using an image, set $text-divider-image in CSS URL syntax, e.g.
+// $text-divider-image: url('../images/epub/text-divider.jpg');
+$text-divider-text: "" !default; // Empty leaves space. \2022 is a bullet
+$text-divider-image: "" !default;
+$text-divider-image-width: $line-height-default !default;
 
 // ---------------------------------
 // Set to false to turn partials off

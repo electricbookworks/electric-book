@@ -974,18 +974,31 @@ set /p process=Enter a number and hit return.
         echo To refresh the app search index, type a and press enter.
         set /p searchIndexToRefresh=
 
+
+        :: Ask the user to add any extra Jekyll config files,
+        :: e.g. _config.live.yml
+        :searchIndexOtherConfigs
+            echo.
+            echo Any extra config files?
+            echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+            echo _configs/_config.live.yml
+            echo If not, just hit return.
+            echo.
+            set /p searchIndexConfig=
+            echo.
+
         :: Generate HTML with Jekyll
         echo Generating HTML with Jekyll...
         if "%searchIndexToRefresh%"=="a" goto buildForAppSearchIndex
 
         :buildForWebSearchIndex
 
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,%searchIndexConfig%"
             goto refreshSearchIndexRenderWithPhantom
 
         :buildForAppSearchIndex
 
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%searchIndexConfig%"
             goto refreshSearchIndexRenderWithPhantom
 
         :: Run phantomjs script from scripts directory

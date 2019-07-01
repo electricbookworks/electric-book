@@ -6,6 +6,7 @@ layout: null
 
 {% include_relative polyfills.js %}
 {% include_relative locales.js %}
+{% include_relative mark-parents.js %}
 
 {% if site.data.settings.redact == true %}
     {% include_relative redact.js %}
@@ -19,6 +20,13 @@ layout: null
     {% include_relative nav.js %}
     {% include_relative videos.js %}
     {% include_relative mcqs.js %}
+    {% include_relative tables.js %}
+    {% include_relative footnote-popups.js %}
+
+    {% if site.data.settings.web.svg.inject == true %}
+        {% include_relative svg-inject.min.js %}
+        {% include_relative svg-management.js %}
+    {% endif %}
 
 {% endif %}
 
@@ -50,6 +58,9 @@ have different behaviour for web or app. {% endcomment %}
 
     {% comment %}This script moves endnotes to the bottoms of pages.{% endcomment %}
     {% include_relative footnotes.js %}
+
+    {% comment %}This script shifts elements in the DOM.{% endcomment %}
+    {% include_relative shift-elements.js %}
 
     {% comment %}This script detects the page number we are on and provides
     the relevant page cross-reference text as generated content.{% endcomment %}

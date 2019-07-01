@@ -30,7 +30,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 <div class="figure-images contains-{{ number-of-images }}">
     {%for image in figure-images %}
         {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ images }}/{{ image }}">{% endif %}
-            <img src="{{ images }}/{{ image }}" alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html }}" {% if include.image-height != nil %}class="height-{{ include.image-height }}"{% endif %}/>
+            <img src="{{ images }}/{{ image }}" alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html }}" class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
         {% if include.link or site.output == "web" %}</a>{% endif %}
     {% endfor %}
 </div>

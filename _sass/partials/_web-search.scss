@@ -57,14 +57,14 @@ $web-search: true !default;
         margin: $line-height-default 0;
         padding: $line-height-default / 2;
         background-color: $color-notification-low-background;
-        border-radius: $button-border-radius;
+        border-radius: $box-border-radius;
     }
 
     .search-page-notice {
         margin: $line-height-default 0;
         padding: $line-height-default / 2;
         background-color: $color-notification-medium-background;
-        border-radius: $button-border-radius;
+        border-radius: $box-border-radius;
         *:last-child {
             margin-bottom: 0;
         }
@@ -74,7 +74,7 @@ $web-search: true !default;
         margin: $line-height-default 0;
         padding: $line-height-default / 2;
         background-color: $color-notification-low-background;
-        border-radius: $button-border-radius;
+        border-radius: $box-border-radius;
         *:last-child {
             margin-bottom: 0;
         }

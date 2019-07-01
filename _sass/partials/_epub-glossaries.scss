@@ -4,17 +4,22 @@ $epub-glossaries: true !default;
     // Definition lists used in a simple glossary
     // Note dl rules are also defined in base typography
 
-    .glossary dl, dl.glossary {
-    	color: inherit;
+    // By default this is commented out of epub.css
+    // because ADE doesn't support pseudo classes
+    .glossary {
+        color: inherit;
+        // dt {
+        //     float: left;
+        //     color: inherit;
+        //     &:after {
+        //         content: ":\00a0";
+        //     }
+        // }
+        // dd {
+        //     ul, ol {
+        //         clear: left;
+        //     }
+        // }
     }
-
-    // // By default this is commented out of epub.css because ADE doesn't support pseudo classes
-    // .glossary dt {
-    // 	float: left;
-    // 	color: inherit;
-    // }
-    // .glossary dt:after {
-    //     content: ":\00a0";
-    // }
 
 }
