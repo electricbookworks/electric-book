@@ -72,6 +72,12 @@ $color-accent: #000000;
 $color-links: #5f738c;
 $color-buttons: #5f738c;
 $color-highlight: #ffd54d;
+$color-notification-low-text: $color-light;
+$color-notification-medium-text: $color-light;
+$color-notification-high-text: $color-light;
+$color-notification-low-background: #009E7F;
+$color-notification-medium-background: #ffe388;
+$color-notification-high-background: #ff7c4d;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.

@@ -401,6 +401,7 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 @import "partials/print-openers";
 @import "partials/print-index";
 @import "partials/print-questions";
+@import "partials/print-select-questions";
 @import "partials/print-cross-refs";
 @import "partials/print-sidebar";
 @import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.

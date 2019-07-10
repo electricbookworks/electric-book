@@ -71,6 +71,12 @@ $color-accent: #000000 !default;
 $color-links: #5f738c !default;
 $color-buttons: #5f738c !default;
 $color-highlight: #ffd54d !default;
+$color-notification-low-text: $color-light !default;
+$color-notification-medium-text: $color-light !default;
+$color-notification-high-text: $color-light !default;
+$color-notification-low-background: #009E7F !default;
+$color-notification-medium-background: #ffe388 !default;
+$color-notification-high-background: #ff7c4d !default;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
@@ -186,8 +192,8 @@ $epub-reset-sequences: true !default;
 @import "partials/epub-code";
 @import "partials/epub-dialogue";
 @import "partials/epub-figures";
-@import "partials/epub-glossaries"; //
-@import "partials/epub-highlighter"; //
+@import "partials/epub-glossaries";
+@import "partials/epub-highlighter";
 @import "partials/epub-index";
 @import "partials/epub-maths";
 @import "partials/epub-notes";
@@ -197,8 +203,9 @@ $epub-reset-sequences: true !default;
 @import "partials/epub-tables";
 @import "partials/epub-letters";
 @import "partials/epub-verse";
-@import "partials/epub-video"; //
-@import "partials/epub-questions"; //
+@import "partials/epub-video";
+@import "partials/epub-questions";
+@import "partials/epub-select-questions";
 
 // Type-control classes
 @import "partials/epub-smallcaps";
