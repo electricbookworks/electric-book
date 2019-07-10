@@ -58,6 +58,12 @@ if (args.book && args.book.trim !== '') {
     book = args.book;
 }
 
+// let '--folder' be an alias for '--book',
+// to make sense for gulping 'assets' and '_items'
+if (args.folder && args.folder.trim !== '') {
+    book = args.folder;
+}
+
 // Reminder on usage
 if (book === 'book') {
     console.log('If processing images for a book that\'s not in the /book directory, use the --book argument, e.g. gulp --book potatoes');
