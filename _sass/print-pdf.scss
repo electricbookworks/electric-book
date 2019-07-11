@@ -334,6 +334,7 @@ $print-sources: true !default;
 $print-openers: true !default;
 $print-index: true !default;
 $print-questions: true !default;
+$print-select-questions: true !default;
 $print-cross-refs: true !default;
 $print-sidebar: false !default; // Note that this is disabled by default
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
