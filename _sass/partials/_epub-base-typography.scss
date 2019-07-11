@@ -214,7 +214,10 @@ $epub-base-typography: true !default;
         // Inline
         p > &,
         li > &,
-        dd > & {
+        dd > &,
+        td > &,
+        th > &,
+        span > & {
             font-family: inherit;
             line-height: 1;
             margin: 0;
