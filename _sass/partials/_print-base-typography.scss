@@ -190,6 +190,30 @@ $convert-images-to-color-profile: false !default;
         }
     }
 
+    // Forms
+
+    select {
+        padding: $line-height-default / 2;
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: inherit;
+        border: $rule-thickness solid $color-mid;
+        margin: $line-height-default 0;
+        box-sizing: border-box;
+        // Inline
+        p > &,
+        li > &,
+        dd > &,
+        td > &,
+        th > &,
+        span > & {
+            font-family: inherit;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
     // Images
     // Also see figures partial
 

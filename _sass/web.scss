@@ -284,6 +284,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-video";
 @import "partials/web-pagination";
 @import "partials/web-questions";
+@import "partials/web-select-questions";
 
 // Docs
 @import "partials/web-docs";
