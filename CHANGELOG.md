@@ -2,6 +2,7 @@
 
 ## Latest
 
+* [Add ability to use gap-fill questions](https://github.com/electricbookworks/electric-book/pull/389)
 * [Add variables for content and style in side-margin boxes](https://github.com/electricbookworks/electric-book/pull/379)
 * [Enable setting relative size of maths in PDF as a variable](https://github.com/electricbookworks/electric-book/pull/378)
 * [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/34f8038025a1df45b72f6e7fcdb1e066fdb6ee73...master).
