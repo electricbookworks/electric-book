@@ -822,14 +822,14 @@ set /p process=Enter a number and hit return.
 
         :: Ask user which output type to work from
         echo Which format are we converting from? Enter a number or hit enter for the default:
-        echo 1. Print PDF (default)
-        echo 2. Screen PDF
+        echo 1. Print PDF
+        echo 2. Screen PDF (default)
         echo 3. Web
         echo 4. Epub
         set /p fromformat=
 
         :: Turn that choice into the name of an output format for our config
-        if "%fromformat%"=="" set fromformat=print-pdf
+        if "%fromformat%"=="" set fromformat=screen-pdf
         if "%fromformat%"=="1" set fromformat=print-pdf
         if "%fromformat%"=="2" set fromformat=screen-pdf
         if "%fromformat%"=="3" set fromformat=web

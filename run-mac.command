@@ -738,8 +738,8 @@ You may need to reload the web page once this server is running."
 		read wordsubdirectory
 		# Ask user which output format to work from
 		echo "Which format are we converting from? Enter a number or hit enter for the default 'print-pdf'. "
-		echo "1. Print PDF (default)"
-		echo "2. Screen PDF"
+		echo "1. Print PDF"
+		echo "2. Screen PDF (default)"
 		echo "3. Web"
 		echo "4. Epub"
 		echo "Enter a number and/or hit enter. "
@@ -750,7 +750,7 @@ You may need to reload the web page once this server is running."
 		do
 			if [ "$fromformat" = "" ]
 				then
-				fromformat="print-pdf"
+				fromformat="screen-pdf"
 				wordformatchoice="1"
 			elif [ "$fromformat" = "1" ]
 				then
