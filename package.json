@@ -25,7 +25,6 @@
     "file-exists": "^5.0.1",
     "gulp": "^4.0.2",
     "gulp-debug": "^4.0.0",
-    "gulp-eslint": "^5.0.0",
     "gulp-gm": "^0.0.8",
     "gulp-mathjax-page": "^1.1.0",
     "gulp-newer": "^1.4.0",
