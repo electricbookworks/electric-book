@@ -821,7 +821,7 @@ set /p process=Enter a number and hit return.
             echo.
 
         :: Ask user which output type to work from
-        echo Which format are we converting from? Enter a number or hit enter for the default:
+        echo Which format are we converting from? Enter a number or hit enter for the default (screen PDF):
         echo 1. Print PDF
         echo 2. Screen PDF (default)
         echo 3. Web

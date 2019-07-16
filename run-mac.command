@@ -737,7 +737,7 @@ You may need to reload the web page once this server is running."
 		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read wordsubdirectory
 		# Ask user which output format to work from
-		echo "Which format are we converting from? Enter a number or hit enter for the default 'print-pdf'. "
+		echo "Which format are we converting from? Enter a number or hit enter for the default (screen PDF). "
 		echo "1. Print PDF"
 		echo "2. Screen PDF (default)"
 		echo "3. Web"
