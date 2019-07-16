@@ -25,7 +25,7 @@
     "file-exists": "^5.0.1",
     "gulp": "^4.0.2",
     "gulp-debug": "^4.0.0",
-    "gulp-gm": "^0.0.8",
+    "gulp-gm": "^0.0.9",
     "gulp-mathjax-page": "^1.1.0",
     "gulp-newer": "^1.4.0",
     "gulp-rename": "^1.4.0",
