@@ -71,6 +71,7 @@ $color-mid: #9c9c9c;
 $color-accent: #000000;
 $color-links: #5f738c;
 $color-buttons: #5f738c;
+$color-buttons-hover: darken( $color-buttons, 20% );
 $color-highlight: #ffd54d;
 $color-notification-low-text: $color-light;
 $color-notification-medium-text: $color-light;

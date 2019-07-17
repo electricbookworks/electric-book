@@ -145,6 +145,8 @@ en:
   input:
     submit: "Submit"
     send: "Send"
+    show: "Show"
+    hide: "Hide"
   search:
     search-title: "Search"
     placeholder: "Search"
@@ -219,6 +221,8 @@ fr:
   input:
     submit: "Soumettre"
     send: "Envoyer"
+    show: "Montrer"
+    hide: "Cacher"
   search:
     search-title: "Recherche"
     placeholder: "Recherche"

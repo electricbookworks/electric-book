@@ -23,6 +23,7 @@ layout: null
     {% include_relative select-list.js %}
     {% include_relative tables.js %}
     {% include_relative footnote-popups.js %}
+    {% include_relative show-hide.js %}
 
     {% if site.data.settings.web.svg.inject == true %}
         {% include_relative svg-inject.min.js %}
