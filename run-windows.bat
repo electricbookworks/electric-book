@@ -679,7 +679,7 @@ set /p process=Enter a number and hit return.
             for /f "tokens=2-8 delims=.:/, " %%a in ("%date% %time%") do set timestamp=%%c-%%a-%%bT%%d-%%e-%%f
             set epubCheckLogFile=epubcheck-log-%timestamp%
             echo Found EpubCheck at %epubchecklocation%, running validation...
-            call java -jar %epubchecklocation% %epubFileName%.epub 2>> %epubCheckLogFile%.txt
+            call java -Xss1024k -jar %epubchecklocation% %epubFileName%.epub 2>> %epubCheckLogFile%.txt
             echo Opening EpubCheck log...
             start %epubCheckLogFile%.txt
 
