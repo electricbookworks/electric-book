@@ -2,6 +2,9 @@
 
 ## Latest
 
+* [Don't force a blank baseurl on web output](https://github.com/electricbookworks/electric-book/pull/397)
+* [Localise home-page title element in locales](https://github.com/electricbookworks/electric-book/pull/396)
+* [Add ability to hide content behind show-hide buttons](https://github.com/electricbookworks/electric-book/pull/394)
 * [Add ability to use gap-fill questions](https://github.com/electricbookworks/electric-book/pull/389)
 * [Add variables for content and style in side-margin boxes](https://github.com/electricbookworks/electric-book/pull/379)
 * [Enable setting relative size of maths in PDF as a variable](https://github.com/electricbookworks/electric-book/pull/378)
