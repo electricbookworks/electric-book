@@ -620,11 +620,19 @@ set /p process=Enter a number and hit return.
             :: Now step back into the folder before continuing
             cd %location%/_site/epub
 
-        :: Let our PhantomJS script rename .html to .xhtml
+        :: Rename .html to .xhtml in files and links
         :epubRenameHtmlXhtml
             echo Renaming .html to .xhtml...
-            cd %location%/_site/assets/js
-            phantomjs render-html-xhtml.js
+
+            cd %location%
+            if "%subdirectory%"=="" call gulp epub:xhtmlLinks
+            if "%subdirectory%"=="" call gulp epub:xhtmlLinksInXml
+            if "%subdirectory%"=="" call gulp epub:xhtmlFiles
+            if "%subdirectory%"=="" call gulp epub:cleanHtmlFiles
+            if not "%subdirectory%"=="" call gulp epub:xhtmlLinks --language %subdirectory%
+            if not "%subdirectory%"=="" call gulp epub:xhtmlLinksInXml --language %subdirectory%
+            if not "%subdirectory%"=="" call gulp epub:xhtmlFiles --language %subdirectory%
+            if not "%subdirectory%"=="" call gulp epub:cleanHtmlFiles --language %subdirectory%
             cd %location%/_site/epub
 
         :: Now to zip the epub files. Important: mimetype first.

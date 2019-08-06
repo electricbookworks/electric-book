@@ -18,7 +18,10 @@ var gulp = require('gulp'),
     mathjax = require('gulp-mathjax-page'),
     fs = require('fs'),
     yaml = require('js-yaml'),
-    debug = require('gulp-debug');
+    debug = require('gulp-debug'),
+    replace = require('gulp-replace'),
+    del = require('del'),
+    cheerio = require('gulp-cheerio');
 
 // Get arrays of possible book and language paths
 var metadata = yaml.load(fs.readFileSync('_data/meta.yml', 'utf8'));
@@ -97,6 +100,10 @@ var paths = {
     text: {
         src: '_site/' + book + language + '/text/*.html',
         dest: '_site/' + book + language + '/text/'
+    },
+    epub: {
+        src: '_site/epub' + language + '/text/*.html',
+        dest: '_site/epub' + language + '/text/'
     },
     js: {
         src: [],
@@ -475,6 +482,92 @@ gulp.task('mathjax:all', function (done) {
             .pipe(gulp.dest(mathJaxFilePaths[k]));
         done();
     }
+});
+
+// Convert all file names in internal links from .html to .xhtml.
+// This is required for epub output to avoid EPUBCheck warnings.
+// Cheerio may break XML files like .ncx and .opf, so can't be used on those.
+// To do: check if we can use Cheerio for this,
+// and remove regex-based fix below if so.
+gulp.task('epub:xhtmlLinks', function (done) {
+    'use strict';
+
+    console.log('Converting internal links to .xhtml in ' + paths.epub.src);
+    gulp.src([paths.epub.src], {base: './'})
+        // .pipe(dom(convertLinksHTMLtoXHTML))
+        .pipe(cheerio({
+            run: function ($) {
+                var target, newTarget;
+                $('[href*=".html"], [src*=".html"]').each(function () {
+                    console.log('Processing link: ' + $(this));
+                    if ($(this).attr('href')) {
+                        target = $(this).attr('href');
+                    } else if ($(this).attr('src')) {
+                        target = $(this).attr('src');
+                    } else {
+                        return;
+                    }
+                    console.log('Found target: ' + target);
+
+                    if (target.includes('.html') && !target.includes('http')) {
+                        console.log('Target includes ".html", replacing with ".xhtml"');
+                        newTarget = target.replace('.html', '.xhtml');
+                        if ($(this).attr('href')) {
+                            $(this).attr('href', newTarget);
+                        } else if ($(this).attr('src')) {
+                            $(this).attr('src', newTarget);
+                        }
+                        console.log('Link now: ' + $(this));
+                    } else {
+                        console.log('This target is an external link or doesn\'t include ".html".');
+                    }
+                });
+            },
+            parserOptions: {
+                xmlMode: true
+            }
+        }))
+        .pipe(debug({title: 'Converting internal links to .xhtml in '}))
+        .pipe(gulp.dest('./'));
+    done();
+});
+
+// Change links in XML files
+// To do: This may not be necessary if Cheerio can do the job above
+// without breaking the XML.
+gulp.task('epub:xhtmlLinksInXml', function (done) {
+    'use strict';
+
+    gulp.src(['_site/epub/package.opf', '_site/epub/toc.ncx'], {base: './'})
+        // See http://mdn.io/string.replace#Specifying_a_string_as_a_parameter
+        .pipe(debug({title: 'Converting internal links to .xhtml in '}))
+        .pipe(replace(/(src=.+)\.html/g, '$1.xhtml'))
+        .pipe(replace(/(href=.+)\.html/g, '$1.xhtml'))
+        .pipe(gulp.dest('./'));
+    done();
+});
+
+
+// Rename epub .html files to .xhtml.
+// Creates a copy of the file that must then be cleaned out.
+gulp.task('epub:xhtmlFiles', function (done) {
+    'use strict';
+
+    console.log('Renaming *.html to *.xhtml in ' + paths.epub.src);
+    gulp.src(paths.epub.src)
+        .pipe(debug({title: 'Renaming '}))
+        .pipe(rename({
+            extname: '.xhtml'
+        }))
+        .pipe(gulp.dest(paths.epub.dest));
+    done();
+});
+
+// Clean out renamed .html files
+gulp.task('epub:cleanHtmlFiles', function () {
+    'use strict';
+    console.log('Removing old *.html files in ' + paths.epub.src);
+    return del(paths.epub.src);
 });
 
 // when running `gulp`, do the image tasks
