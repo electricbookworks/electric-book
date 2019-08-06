@@ -252,6 +252,7 @@ $nav-bar-back-button-hide: false !default;
         }
         &:hover {
             cursor: pointer;
+            background-color: transparent;
         }
         &:after {
             color: $nav-bar-children-prompt-color;
