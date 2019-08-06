@@ -287,7 +287,7 @@ set /p process=Enter a number and hit return.
         echo.
 
         :: Ask the user to set a baseurl if needed
-        echo Do you need a baseurl?
+        echo Do you need to set a baseurl?
         echo If yes, enter it with no slashes at the start or end, e.g.
         echo my/base
         echo.
@@ -335,10 +335,10 @@ set /p process=Enter a number and hit return.
 
                 :: Run Jekyll, with MathJax enabled if necessary
                 if not "%webmathjax%"=="y" goto webnomathjax
-                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
+                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%"
                 goto webjekyllservednobaseurl
                 :webnomathjax
-                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
+                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%"
 
                 :webjekyllservednobaseurl
 
