@@ -129,6 +129,7 @@ en:
   project:
     # Project items are set for the parent language
     # in meta.yml and can be overridden here.
+    # Project 'name' also sets the HTML title on the home page.
     organisation: ""
     url: ""
     email: ""
