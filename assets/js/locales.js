@@ -35,10 +35,19 @@ if (getParameterByName('lang')) {
 
 function localiseText() {
 
+    // Localise HTML title element on home page
+    var titleElement = document.querySelector('title');
+    if (titleElement
+        && document.querySelector('body.home') !== undefined
+        && locales[pageLanguage].project.name
+        && locales[pageLanguage].project.name !== '') {
+        titleElement.innerHTML = locales[pageLanguage].project.name;
+    }
+
     // Localise masthead
     var mastheadProjectName = document.querySelector('.masthead .masthead-series-name a');
-    if (mastheadProjectName && 
-        locales[pageLanguage].project.name && 
+    if (mastheadProjectName &&
+        locales[pageLanguage].project.name &&
         locales[pageLanguage].project.name !== '') {
         mastheadProjectName.innerHTML = locales[pageLanguage].project.name;
     }
