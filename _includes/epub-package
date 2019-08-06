@@ -1,3 +1,4 @@
+{% capture epub-package %}
 {% comment %}If we're outputting an epub, create a package.opf file{% endcomment %}
 {% if site.output == "epub" %}
 
@@ -9,28 +10,28 @@
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" xml:lang="en" unique-identifier="uid" prefix="cc: http://creativecommons.org/ns#">
 
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-        <dc:title id="title">{{ title }}</dc:title>
+        <dc:title id="title">{{ title | escape }}</dc:title>
         <meta refines="#title" property="title-type">main</meta>
         <dc:identifier id="uid">{{ epub-identifier }}</dc:identifier>
         <dc:language>{% if site.data.settings.epub.meta.language and site.data.settings.epub.meta.language != "" %}{{ site.data.settings.epub.meta.language }}{% elsif epub-language and epub-language != "" %}{{ epub-language }}{% else %}{{ language }}{% endif %}</dc:language>
         <meta property="dcterms:modified">{{ site.time | date_to_xmlschema | truncate: 19, "" }}Z</meta>
 
     {% if subtitle and subtitle != "" %}
-        <dc:title id="subtitle">{{ subtitle }}</dc:title>
+        <dc:title id="subtitle">{{ subtitle | escape }}</dc:title>
         <meta refines="#subtitle" property="title-type">subtitle</meta>
     {% endif %}
     {% if project-name and project-name != "" and site.data.settings.epub.meta.project-name != false %}
-        <dc:title id="project-name">{{ project-name }}</dc:title>
+        <dc:title id="project-name">{{ project-name | escape }}</dc:title>
         <meta refines="#project-name" property="title-type">collection</meta>
     {% endif %}
     {% if publisher and publisher != "" %}
-        <dc:publisher>{{ publisher }}</dc:publisher>
+        <dc:publisher>{{ publisher | escape }}</dc:publisher>
     {% endif %}
     {% if creator and creator != "" %}
-        <dc:creator>{{ creator }}</dc:creator>
+        <dc:creator>{{ creator | escape }}</dc:creator>
     {% endif %}
     {% if contributor and contributor != "" %}
-        <dc:contributor>{{ contributor }}</dc:contributor>
+        <dc:contributor>{{ contributor | escape }}</dc:contributor>
     {% endif %}
     {% if epub-date and epub-date != "" %}
         <dc:date>{{ epub-date }}</dc:date>
@@ -38,28 +39,28 @@
         <dc:date>{{ date }}</dc:date>
     {% endif %}
     {% if description and description != "" %}
-        <dc:description>{{ description }}</dc:description>
+        <dc:description>{{ description | escape }}</dc:description>
     {% endif %}
     {% if relation and relation != "" %}
-        <dc:relation>{{ relation }}</dc:relation>
+        <dc:relation>{{ relation | escape }}</dc:relation>
     {% endif %}
     {% if source and source != "" %}
-        <dc:source>{{ source }}</dc:source>
+        <dc:source>{{ source | escape }}</dc:source>
     {% endif %}
     {% if subject and subject != "" %}
-        <dc:subject>{{ subject }}</dc:subject>
+        <dc:subject>{{ subject | escape }}</dc:subject>
     {% endif %}
     {% if rights and rights != "" %}
-        <dc:rights>{{ rights }}</dc:rights>
+        <dc:rights>{{ rights | escape }}</dc:rights>
     {% endif %}
     {% if coverage and coverage != "" %}
-        <dc:coverage>{{ coverage }}</dc:coverage>
+        <dc:coverage>{{ coverage | escape }}</dc:coverage>
     {% endif %}
     {% if epub-format and epub-format != "" %}
-        <dc:format>{{ epub-format }}</dc:format>
+        <dc:format>{{ epub-format | escape }}</dc:format>
     {% endif %}
     {% if type and type != "" %}
-        <dc:type>{{ type }}</dc:type>
+        <dc:type>{{ type | escape }}</dc:type>
     {% endif %}
     </metadata>
 
@@ -118,8 +119,15 @@
 
         <item id="epub-css" 
               media-type="text/css" 
-              href="{% if is-translation and translation-styles-exist %}{{ book-subdirectory }}/{% endif %}styles/{{ epub-stylesheet }}"
+              href="styles/{{ epub-stylesheet }}"
               />
+
+        {% if is-translation and translation-styles-exist %}
+        <item id="epub-css-{{ book-subdirectory }}" 
+              media-type="text/css" 
+              href="{{ book-subdirectory }}/styles/{{ epub-stylesheet }}"
+              />
+        {% endif %}
 
         {% comment %}Add images by looping through static files whose path
         contains the path to epub images.{% endcomment %}
@@ -136,9 +144,31 @@
 
             {% assign file-extension = file.extname | remove: "." %}
 
-            <item id="image-{{ file.basename }}" 
+            <item id="image-{{ file.name | slugify }}" 
                   media-type="{{ site.media-types[file-extension] }}"
                   href="{% if is-translation and translated-images-exist %}{{ book-subdirectory }}/{% endif %}images/epub/{{ file.name }}"
+                  {% if properties != "" %}properties="{{ properties }}"{% endif %}
+                  />
+
+        {% endfor %}
+
+        {% comment %} Add images in items. Note we have to list
+        all images in items even if they are not used in the epub,
+        because we can't know if they've been used or not. {% endcomment %}
+        {% capture path-to-items-epub-images %}_items/{% if is-translation %}{{ language }}/{% endif %}{{ site.image-set}}{% endcapture %}
+        {% assign items-collection = site.collections | where_exp: "collection", "collection.label == 'items'" %}
+
+        {% for collection in items-collection %}
+            {% assign items-image-files = collection.files | where_exp: "file", "file.path contains path-to-items-epub-images" %}
+        {% endfor %}
+
+        {% for file in items-image-files %}
+
+            {% assign file-extension = file.extname | remove: "." %}
+
+            <item id="image-{{ file.name | slugify }}"
+                  media-type="{{ site.media-types[file-extension] }}"
+                  href="items/{% if is-translation and items-translated-images-exist %}{{ language }}/{% endif %}images/epub/{{ file.name }}"
                   {% if properties != "" %}properties="{{ properties }}"{% endif %}
                   />
 
@@ -355,3 +385,4 @@
 </package>
 
 {% endif %}
+{% endcapture %}{{ epub-package | strip }}

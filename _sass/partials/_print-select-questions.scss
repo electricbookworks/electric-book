@@ -1,0 +1,12 @@
+$print-select-questions: true !default;
+@if $print-select-questions {
+
+    // Select lists
+
+    .select-list {
+        width: $line-height-default * 3;
+        border: 0;
+        border-bottom: $rule-thickness solid $color-text-main;
+    }
+
+}

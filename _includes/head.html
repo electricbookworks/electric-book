@@ -1,7 +1,7 @@
 {% include metadata %}
 
 {% if site.output == "print-pdf" %}
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
@@ -13,17 +13,27 @@
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% comment %}If this is a translation with its own styles,
+    load the parent styles first, then translation styles override them.{% endcomment %}
+    {% if is-translation and translation-styles-exist %}
+        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ print-pdf-stylesheet }}" />
+    {% endif %}
+
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ print-pdf-stylesheet }}" />
+
+    {% comment %} Note: MathJax script not included for PDF output.
+    MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %} data-page-info="{% unless site.data.settings.redact == true %}{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first | truncate: 20 }} • {% endunless %}{{ site.time | date: "%-d %b %Y, %H:%M" }}"{% if site.data.settings.print-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}>
 <div id="wrapper">
 
 
 {% elsif site.output == "screen-pdf" %}
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
@@ -35,12 +45,22 @@
     </title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% comment %}If this is a translation with its own styles,
+    load the parent styles first, then translation styles override them.{% endcomment %}
+    {% if is-translation and translation-styles-exist %}
+        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ screen-pdf-stylesheet }}" />
+    {% endif %}
+
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ screen-pdf-stylesheet }}" />
+
+    {% comment %} Note: MathJax script not included for PDF output.
+    MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %} data-title="{{ page.title }}"{% if page.header %} data-header="{{ page.header }}{% endif %}">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %} data-page-info="{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first }} • {{ site.time | date: "%-d %b %Y, %H:%M" }}"{% if site.data.settings.screen-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}>
 <div id="wrapper">
 
 
@@ -59,6 +79,12 @@
     {% comment %}This full meta tag is necessary for Kindle's character encoding to work.{% endcomment %}
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
+    {% comment %}If this is a translation with its own styles,
+    load the parent styles first, then translation styles override them.{% endcomment %}
+    {% if is-translation and translation-styles-exist %}
+        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ epub-stylesheet }}" />
+    {% endif %}
+
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ epub-stylesheet }}" />
     
     {% comment %}Metadata defined in page frontmatter overrides
@@ -73,14 +99,18 @@
     {% if page.description %}{% capture description %}{{ page.description }}{% endcapture %}{% endif %}
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
-        <meta name="DC.Title" content="{{ title }}" />
-        <meta name="DC.Language" content="{{ language }}" />
-        <meta name="DC.Creator" content="{{ creator }}" />
-        <meta name="DC.Publisher" content="{{ publisher }}" />
+        <meta name="DC.Title" content="{{ title | escape }}" />
+        <meta name="DC.Language" content="{{ language | escape }}" />
+        <meta name="DC.Creator" content="{{ creator | escape }}" />
+        <meta name="DC.Publisher" content="{{ publisher | escape }}" />
         <meta name="DC.Date" content="{{ date }}" />
         <meta name="DC.Identifier" content="{{ epub-identifier }}" />
         <meta name="DC.Relation" content="{{ print-pdf-identifier }}" />
-        <meta name="DC.Description" content="{{ description }}" />
+        <meta name="DC.Description" content="{{ description | escape }}" />
+
+    {% if site.mathjax-enabled == true %}
+        {% include mathjax-config %}
+    {% endif %}
 
     {% include head-elements %}
 
@@ -90,7 +120,7 @@
 
 
 {% elsif site.output == "app" %}
-<html{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
+<html lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
     <head>
 
     <title>
@@ -117,26 +147,36 @@
     {% endcomment %}
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https://fonts.googleapis.com https://www.youtube.com http://player.vimeo.com; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;{% if site.mathjax-enabled == true %} script-src 'self' 'unsafe-inline' 'unsafe-eval';{% endif %}">
 
-    {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
+    {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-homepage == true or is-project-search == true or page.collection == "docs" %}
-    {% for book in site.data.meta.works %}
-        <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-root-directory }}{{ book.directory }}/styles/{{ app-stylesheet }}" />
-        {% break %}
-    {% endfor %}
+        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/assets/styles/{{ app-stylesheet }}" />
     {% else %}
-    <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-styles-directory }}/{{ app-stylesheet }}" />
+
+    {% comment %}If this is a translation with its own styles,
+    load the parent styles first, then translation styles override them.{% endcomment %}
+    {% if is-translation and translation-styles-exist %}
+        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ app-stylesheet }}" />
+    {% endif %}
+
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ app-stylesheet }}" />
+
+    {% endif %}
+
+    {% if site.mathjax-enabled == true %}
+        {% include mathjax-config %}
     {% endif %}
 
     {% include head-elements %}
 
     </head>
-    <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
+    <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
+    {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}>
         <div id="wrapper">
 
 
 {% else %}
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ language }}" xml:lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
 <head>
     <title>
@@ -149,12 +189,34 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    {% comment %}Set canonical URL{% endcomment %}
+    {% if site.canonical-url and site.canonical-url != "" %}
+        <link rel="canonical" href="{{ site.canonical-url }}">
+    {% endif %}
+
+    {% comment %}Add favicon{% endcomment %}
+    <link rel="icon" type="image/png" href="{{ path-to-root-directory }}assets/favicon.png">
+
+    {% comment %}OpenGraph metadata{% endcomment %}
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
-    {% if page.description %}
-    <meta property="og:description" content="{{ page.description }}" />
+
+    {% comment %}Get appropriate description, in order of preference:
+    1. Page description (from page frontmatter)
+    2. Book description (from meta.yml via metadata include)
+    3. Project description (from meta.yml via metadata include)
+    {% endcomment %}
+    {% if page.description and page.description != "" %}
+        {% capture og-description %}{{ page.description }}{% endcapture %}
+    {% elsif description and description != "" %}
+        {% capture og-description %}{{ description }}{% endcapture %}
+    {% else %}
+        {% capture og-description %}{{ project-description }}{% endcapture %}
     {% endif %}
+
+    <meta property="og:description" content="{{ og-description }}" />
+
     {% if page.image %}
         {% if is-homepage == true or is-project-search == true %}
             {% comment %}If a page.image is specified on the home page, we still use the project image{% endcomment %}
@@ -172,21 +234,32 @@
     <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
     {% endif %}
 
-    {% comment %}If we're not in a book subdirectory, load the first book's stylesheets.
+    {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-homepage == true or is-project-search == true or page.collection == "docs" %}
-    {% for book in site.data.meta.works %}
-        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/{{ book.directory }}/styles/{{ web-stylesheet }}" />
-        {% break %}
-    {% endfor %}
+        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/assets/styles/{{ web-stylesheet }}" />
     {% else %}
-    <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-styles-directory }}/{{ web-stylesheet }}" />
+
+    {% comment %}If this is a translation with its own styles,
+    load the parent styles first, then translation styles override them.{% endcomment %}
+    {% if is-translation and translation-styles-exist %}
+        <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ web-stylesheet }}" />
     {% endif %}
 
+    <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ web-stylesheet }}" />
+
+    {% endif %}
+
+    {% if site.mathjax-enabled == true %}
+        {% include mathjax-config %}
+    {% endif %}
+
+    {% comment %} Include custom elements {% endcomment %}
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
+{% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}>
 <div id="wrapper">
 
 {% endif %}

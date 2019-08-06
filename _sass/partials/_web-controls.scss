@@ -1,0 +1,13 @@
+$web-controls: true !default;
+@if $web-controls {
+
+    // Controls and settings
+
+    .controls {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 1000;
+    }
+
+}

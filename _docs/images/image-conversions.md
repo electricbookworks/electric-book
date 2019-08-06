@@ -27,18 +27,21 @@ Instead of using the output script, you can also use `gulp` directly from the co
 
 By default, `gulp` will convert the images in your `book/images/_source` folder. To convert the images in a different book folder's `images/_source`, say for `my-potato-book`:
 
-```
+``` shell
 gulp --book my-potato-book
 ```
 
+> Note: You can also use `--folder` instead of `--book`. They have the same effect. 'Folder' can be easier to remember when processing images in `assets/images` and `_items/images`.
+{:.box}
+
 If you're processing image files in a translation subdirectory, specify the language by its code. E.g.:
 
-```
+``` shell
 gulp --language fr
 ```
 
 You can also combine these:
 
-```
+``` shell
 gulp --book my-potato-book --language fr
 ```

@@ -25,17 +25,17 @@ $web-figures: true !default;
 		img, p img {
 			margin: 0 auto;
 			max-width: 100%; 
-			object-fit: scale-down;
+			object-fit: contain;
 			display: block;
 		}
-		@media screen and (max-height: $break-point-height) {
+		@media screen and (max-height: $break-height-small) {
 			img, p img {
-				max-height: $break-point-height / 2;
+				max-height: $break-height-small / 2;
 			}
 		}
-		@media screen and (max-height: ($break-point-height * 0.7)) {
+		@media screen and (max-height: ($break-height-small * 0.7)) {
 			img, p img {
-				max-height: $break-point-height * 0.35;
+				max-height: $break-height-small * 0.35;
 			}
 		}
 		.figure-body {
@@ -80,10 +80,10 @@ $web-figures: true !default;
 				max-height: inherit;
 			}
 		}
-		@media screen and (min-width: $break-point-width) {
+		@media screen and (min-width: $break-width-small) {
 			&.large {
 				img, p img {
-					max-height: $break-point-width;
+					max-height: $break-width-small;
 				}
 			}
 		}

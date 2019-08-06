@@ -90,7 +90,7 @@ Just put `*` before and after the italicised words: `is it really *this* easy?`.
 
 Just put two `*`s before and after the bold text: `good for **shouting**`. **Shouting.**
 
-Tip: If you use bold in a first-level heading (e.g. `# **Chapter 1** Lost at Sea`), our Classic theme's typography will put that bold text onto its own line, set off from the heading. This is useful for chapter numbers that should look separate from the chapter title, but in the underlying HTML need to be part of the heading, for instance when software generates tables of contents.
+Tip: If you use bold in a first-level heading (e.g. `# **Chapter 1** Lost at Sea`), our template's typography will put that bold text onto its own line, set off from the heading. This is useful for chapter numbers that should look separate from the chapter title, but in the underlying HTML need to be part of the heading, for instance when software generates tables of contents.
 {:.sidenote}
 
 ### Lists
@@ -152,7 +152,7 @@ Result:
 Note the minimum three hyphens in the lines that creates the border between the table head and table body. (Kramdown doesn't require three, but GitHub previews do, so it's best practice.)
 {:.sidenote}
 
-To make more complex tables with merged or individually styled cells, you have to use actual HTML table markup. See the [Tables](18-tables.html#tables) chapter for more detail.
+To make more complex tables with merged or individually styled cells, you have to use actual HTML table markup. See the [Tables](tables.html#tables) chapter for more detail.
 
 ### Blockquotes
 
@@ -195,7 +195,7 @@ To place an image, you include a line telling the computer where to find the ima
 
 In the parentheses above, the `images/` part says that the `dogbus.jpg` image is in the `images` folder, which is alongside the markdown file. In our workflow, we always put images in the `images` folder like this.
 
-See the [Images](15-images.html#images) chapter for more detail.
+See the [Images](images.html#images) chapter for more detail.
 
 ### Endnotes
 
@@ -206,11 +206,11 @@ Endnotes in our workflow appear at the end of a document (that is, a web page or
 
 We'll explain how to create notes on the side or bottom of a page (footnotes) later when we talk about classes.
 
-(By the way, endnote references are `<sup>` in kramdown's HTML, not unicode numbers like ². The Classic theme includes styling for these and for `<sub>`, as in H<sub>2</sub>O.)
+(By the way, endnote references are `<sup>` in kramdown's HTML, not unicode numbers like ². The template includes styling for these and for `<sub>`, as in H<sub>2</sub>O.)
 
 [^1]: In kramdown syntax, unfortunately, endnotes are called footnotes; so it's easy to confuse them. In book parlance, there is a big difference between footnotes and endnotes.
 
-See the [Notes](17-notes.html#footnotes-endnotes-and-sidenotes) chapter for more detail.
+See the [Notes](notes.html#footnotes-endnotes-and-sidenotes) chapter for more detail.
 
 ### Definition lists
 
@@ -232,7 +232,7 @@ To create a whole list of definition entries, just put one of these after the ot
 
 Code can be inline, `like this`, or block:
 
-```
+``` md
 like this
 ```
 
@@ -272,7 +272,7 @@ This paragraph should be in a box.
 
 For the resulting HTML to actually appear in a box, when we turn your markdown into a finished book, we'll have to combine it with a CSS stylesheet that includes formatting instructions for the `box` class. If you're just editing in markdown, you don't have to think about the stylesheets. Our default stylesheets include designs for `box` as well as several other classes. (Which we'll list in a moment.)
 
-But if your book needs classes that aren't already supported in the Classic theme, you'll need to ask a CSS-savvy designer to write you some CSS rules for your new class, to add to the bottom of your theme's master `.scss` files as custom CSS.
+But if your book needs classes that aren't already supported in the template, you'll need to ask a CSS-savvy designer to write you some CSS rules for your new class, to add to the bottom of your theme's master `.scss` files as custom CSS.
 
 > ### Inventing classes
 >
@@ -287,11 +287,11 @@ In addition to boxes, our default stylesheets include lots of other classes for 
 > 
 > A block element is anything that should (in print or on screen) start and end with a line break, like a paragraph or a list. An inline element is anything that appears inside a line of running text, like bold and italic.
 > 
-> Most of the Classic theme's pre-designed classes are for either block or inline elements, and sometimes both.
+> Most of the template's pre-designed classes are for either block or inline elements, and sometimes both.
 >
 > When you apply an attribute tag to a block-level element in kramdown, you put the tag on the line immediately following the element.
 >
-> When you apply an attribute tag to an inline element, it appears immediately at the end of a span (a span is any contiguous series of inline characters inside a block element). Spans in kramdown can be marked off with asterisks as if they are italics: mark off the text you're tagging with asterisks (`*`), as you would italics, and put your tag immediately after the closing `*`, on the same line. E.g. `*Make this small-caps.*{:.smallcaps}`. The Classic theme will then apply the correct styling to the span, instead of the default italic. 
+> When you apply an attribute tag to an inline element, it appears immediately at the end of a span (a span is any contiguous series of inline characters inside a block element). Spans in kramdown can be marked off with asterisks as if they are italics: mark off the text you're tagging with asterisks (`*`), as you would italics, and put your tag immediately after the closing `*`, on the same line. E.g. `*Make this small-caps.*{:.smallcaps}`. The template will then apply the correct styling to the span, instead of the default italic. 
 {:.box}
 
 To see all the classes that our template supports by default, see the [Supported classes](classes.html#supported-classes) section.
@@ -311,3 +311,11 @@ For instance, you can use special HTML codes to insert non-breaking spaces, disc
 | Prevent line breaks inside big numbers| Use a non-breaking space: e.g. for '40&nbsp;000' type `40&nbsp;000`
 | Prevent a line break at a hyphen | Use `&#x2011;` for a non-breaking hyphen, e.g. `D&#x2011;Space` for 'D&#x2011;Space'
 | Allow a word to hyphenate at the end of a line | Insert a discretionary ('soft') hyphen code: `&shy;`. E.g. `mark&shy;down`
+
+### HTML entities in epub
+
+**Warning!** Epubs cannot use 'named entities' like `&nbsp;` and `&shy;` – that is, entities where the character code reads like a name. Luckily, when generating your epub's HTML, kramdown will automatically convert these into unicode characters, and you won't have to think about it.
+
+However, if you've used snippets of actual HTML in your content, such as complex tables in `<table>` elements, kramdown does not by default process the content inside them. And in this case, named entities like `&nbsp;` will remain in the epub HTML, and you'll get serious errors when validating your epub. In these cases, you need to use the hex code for these entities, such as `&#160;` instead of `&nbsp;`.
+
+In some cases it may work to add the attribute `markdown="1"` to the element to make kramdown process its contents as markdown.

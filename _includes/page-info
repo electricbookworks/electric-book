@@ -16,6 +16,7 @@ See all the metadata gathered for a given page.
 | Project email          | Defined in `meta.yml` | `project-email`        | {{ project-email }}        | String |
 | Project name           | Defined in `meta.yml` | `project-name`         | {{ project-name }}         | String |
 | Project description    | Defined in `meta.yml` | `project-description`  | {{ project-description }}  | String |
+| Project logo           | Defined in `meta.yml` | `project-logo`         | {{ project-logo }}         | String |
 | Project image          | Defined in `meta.yml` | `project-image`        | {{ project-image }}        | String |
 | Project credit         | Defined in `meta.yml` | `project-credit`       | {{ project-credit }}       | String |
 | Project language       | Defined in `meta.yml` | `project-language`     | {{ project-language }}     | String |
@@ -164,6 +165,9 @@ See all the metadata gathered for a given page.
 | Is this the homepage?                                                     | If `pageurl-slug` matches `baseurl-slug`, this is the home page  | `is-homepage`             | {{ is-homepage }}             | Boolean |
 | Is this the root directory?                                               | Checks whether the path to the file is the same as the `baseurl` | `is-root-directory`       | {{ is-root-directory }}       | Boolean |
 | Is this a book directory?                                                 | Compares directory with directories listed in `meta.yml`         | `is-book-directory`       | {{ is-book-directory }}       | Boolean |
+| Is this the `_items` directory?                                           | Checks if `book-directory` value is actually "`_items`"          | `is-items-directory`      | {{ is-items-directory }}      | Boolean |
+| Is this a subdirectory of `_items`?                                       | Checks if directory value is actually "`_items`"                 | `is-items-subdirectory`   | {{ is-items-subdirectory }}   | Boolean |
+| The items subdirectory, if we're in one.                                  | Gets the second-last element of the page path, if in `_items`    | `items-subdirectory`      | {{ items-subdirectory }}      | String  |
 | URL of a project-root search page                                         | URL of any potential `search.html` in project root               | `project-search-url`      | {{ project-search-url }}      | String  |
 | URL of a book-directory search page (deprecated, only use project-search) | URL of any potential `search.html` in `book/text`                | `book-search-url`         | {{ book-search-url }}         | String  |
 | Slug of project-root search URL                                           | Slug of above value                                              | `project-search-url-slug` | {{ project-search-url-slug }} | String  |

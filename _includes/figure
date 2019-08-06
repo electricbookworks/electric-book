@@ -30,37 +30,37 @@ because https://github.com/jekyll/jekyll/issues/2248.
 <div class="figure-images contains-{{ number-of-images }}">
     {%for image in figure-images %}
         {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ images }}/{{ image }}">{% endif %}
-            <img src="{{ images }}/{{ image }}" alt="{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
+            <img src="{{ images }}/{{ image }}" alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html }}" class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
         {% if include.link or site.output == "web" %}</a>{% endif %}
     {% endfor %}
 </div>
 {% endif %}
 
-{% if include.html %}
+{% if include.html and include.html != "" %}
 <div class="figure-html">
 {{ include.html }}
 </div>
 {% endif %}
 
-{% if include.markdown %}
+{% if include.markdown and include.markdown != "" %}
 <div class="figure-md">
 {{ include.markdown | markdownify }}
 </div>
 {% endif %}
 
-{% if include.title %}
+{% if include.title and include.title != "" %}
 <p class="title">
 {{ include.title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
 {% endif %}
 
-{% if include.description %}
+{% if include.description and include.description != "" %}
 <p class="description">
 {{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
 {% endif %}
 
-{% if include.caption %}
+{% if include.caption and include.caption != "" %}
 <p class="caption">
 {% if include.reference %}<span class="figure-reference">{{ include.reference }} </span>{% endif %}
 {{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
@@ -69,7 +69,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
 </div><!--.figure-body-->
 
-{% if include.source %}
+{% if include.source and include.source != "" %}
 
 <div class="figure-source">
 <p class="source">

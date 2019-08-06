@@ -5,13 +5,13 @@ $print-figures: true !default;
 
 	.figure {
 		clear: both;
-		float: bottom; // By default all figures float to the bottoms of their pages
+		float: bottom; // By default all figures float to the bottoms of their pages. See margins.
+		margin: $line-height-default 0 0 0;
 		page-break-inside: avoid;
 		background-color: inherit;
 		font-size: inherit;
 		font-weight: inherit;
 		color: inherit;
-		margin: 0 0 $line-height-default 0;
 		padding: 0;
 		width: 100%;
 		box-sizing: border-box;
@@ -60,6 +60,63 @@ $print-figures: true !default;
 			text-align: center;
 			text-indent: 0;
 		}
+		// Other floats
+		&.float-bottom {
+			float: bottom;
+			margin: $line-height-default 0 0 0;
+		}
+		&.float-top {
+			float: top;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-inside {
+			float: inside;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-outside {
+			float: outside;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-left {
+			float: left;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-right {
+			float: right;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-top {
+			float: column-top;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-top-next {
+			float: column-top next;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-bottom {
+			float: column-bottom;
+			margin: $line-height-default 0 0 0;
+		}
+		&.float-column-bottom-next {
+			float: column-bottom next;
+			margin: $line-height-default 0 0 0;
+		}
+		&.float-column-top-corner {
+			float: column-top-corner;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-top-corner-next {
+			float: column-top-corner next;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-column-bottom-corner {
+			float: column-bottom-corner;
+			margin: $line-height-default 0 0 0;
+		}
+		&.float-column-bottom-corner-next {
+			float: column-bottom-corner next;
+			margin: $line-height-default 0 0 0;
+		}
 		// Figures that do not float
 		&.fixed {
 			clear: both;
@@ -76,6 +133,16 @@ $print-figures: true !default;
 				padding: 0;
 			}
 		}
+
+		// Allow user to set figure width as a percentage
+		@for $i from 1 through 100 {
+			&.width-#{$i} {
+				width: $i * 1%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+
 	}
 
 	// Experimental. Effectively overrides 'unless-fit' to reduce ugly instances
@@ -86,15 +153,15 @@ $print-figures: true !default;
 
 	// Image size options
 	// These need to be deprecated in favour of a multiple-based system.
-	.figure.x-small p img {
+	.figure.x-small img {
 		width: auto;
 		max-height: $line-height-default * 5;
 	}
-	.figure.small p img {
+	.figure.small img {
 		width: auto;
 		max-height: $line-height-default * 7;
 	}
-	.figure.medium p img {
+	.figure.medium img {
 		width: auto;
 		max-height: $line-height-default * 10;
 	}

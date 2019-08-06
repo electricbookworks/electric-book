@@ -5,15 +5,40 @@ $print-video: true !default;
     // Works specifically with our video includes
 
     .video {
+        font-family: $font-text-secondary;
         margin: 1em 0;
         position: relative; // positions child element play button correctly
         img {
             width: 100%;
             padding: 0 $line-height-default;
         }
-        .video-link {
-            // If there's no image, e.g. for Vimeo
-            .video-no-image {}
+        .video-link {}
+        .video-description {
+            margin-top: $line-height-default;
+            text-align: center;
+        }
+        .video-wrapper {
+            position: relative;
+            // Add play button before iframe loads
+            &:before {
+                content: "\25b6";
+                position: absolute;
+                font-size: $font-size-default * 3;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+                color: white;
+                opacity: 0.5;
+            }
+            // Create placeholder with 16:9 aspect ratio
+            // when there is no image to display
+            &.video-no-image {
+                width: 100%;
+                padding-bottom: 56.25%;
+                background-color: $color-mid;
+                border-radius: $box-border-radius;
+            }
         }
         // Don't indent a paragraph after a video.
         & + p {

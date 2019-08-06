@@ -18,7 +18,7 @@ A Jekyll template for creating books in multiple formats:
 	- the content files in `book/text`
 3. Run the `run-` script for your operating system.
 
-[Read the guide](http://electricbook.works) for much more. The guide is also an example of the template in action.
+[Read the guide](https://electricbookworks.github.io/electric-book) for much more. The guide is also an example of the template in action.
 
 ## Dependencies
 
@@ -26,8 +26,8 @@ To use the Electric Book template on your machine, you need to have installed:
 
 - [Jekyll](https://jekyllrb.com/) (and which requires Ruby and Bundler)
 - [PrinceXML](http://www.princexml.com/) (for PDF output; the only proprietary requirement)
-- [PhantomJS](http://phantomjs.org/) (if your books include maths in LaTeX/[MathJax](https://www.mathjax.org/), and to generate search indexes for web and app outputs)
-- [Node.js](https://nodejs.org) and [GraphicsMagick](http://www.graphicsmagick.org/) (to create multiformat images)
+- [PhantomJS](http://phantomjs.org/) (to generate search indexes for web and app outputs)
+- [Node.js](https://nodejs.org), [Gulp](https://gulpjs.com/) and [GraphicsMagick](http://www.graphicsmagick.org/) (to create multiformat images)
 - [Pandoc](http://pandoc.org/) (for Word export)
 - [Cordova](https://cordova.apache.org), [Android Studio](https://developer.android.com/studio), and (on OSX) [XCode](https://developer.apple.com/xcode/) (for building ebook apps)
 

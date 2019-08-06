@@ -1,0 +1,12 @@
+$epub-helpers: true !default;
+@if $epub-helpers {
+
+    .visuallyhidden {
+        // We don't use the best-practice technique in web partials
+        // because that requires moving the element out of the flow
+        // with position absolute or fixed, but epubcheck throws
+        // warnings if we use those.
+        display: none;
+    }
+
+}

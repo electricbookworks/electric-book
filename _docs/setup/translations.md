@@ -1,7 +1,7 @@
 ---
 title: Translations
 categories: setup
-order: 4
+order: 40
 ---
 
 # Translations
@@ -33,7 +33,52 @@ The text files of each translation are saved in a `text` subdirectory. So all te
 
 ## Styles, fonts and images
 
-Translations inherit `styles`, `fonts` and `images` from the parent language, unless those folders exist in the translation directory.
+Translations inherit `styles`, `fonts` and `images` from the parent language, unless files in those folders exist in the translation directory.
+
+### Styles
+
+If you add a stylesheet to a translation's `styles` directory (e.g. `book/fr/styles/print-pdf.scss`), those styles are *added to* the parent CSS. Your pages will load the parent CSS, followed by your translation CSS.
+
+This way, you only need to add to your translation CSS those rules that override parent styles.
+
+You need to create a translation stylesheet for each format that you want to augment, and it must have the same name as its parent: `app.scss`, `epub.scss`, `print-pdf.scss`, `screen-pdf.scss`, and `web.scss`.
+
+For instance, say you've used a large quote mark before all blockquotes in English. In French, you may want to use a guillemet. Your French stylesheets might only contain this:
+
+``` scss
+---
+---
+
+blockquote:before {
+  content: "«";
+}
+
+```
+
+Note the three-hyphen YAML frontmatter, which tells Jekyll to process the file.
+
+An important, advanced example is custom [hyphenation](../editing/hyphenation.html). If your book's parent language is English, and you've used auto hyphenation with a custom hyphenation dictionary, you do not want your French translation to use your English hyphenation patterns. You want different custom hyphenation patterns for French. So in `book/fr/styles` you'll add a stylesheet for each output format, and a new custom hyphenation dictionary.
+
+Your new translation stylesheet might have this content:
+
+``` scss
+---
+# French translation styles
+# These override the parent language
+---
+
+$hyphenation: auto;
+$hyphenation-dictionary: "hyphenation.dic";
+@import 'partials/print-hyphenation'
+```
+
+This snippet:
+
+1. Uses three-hyphen YAML frontmatter so that Jekyll processes the Sass file.
+2. Sets new values for Sass variables `$hyphenation` and `$hyphenation-dictionary` that may be different from your parent-language styles. The `$hyphenation-dictionary` value points to a `hyphenation.dic` file saved alongside the translation stylesheet.
+3. Imports the relevant Sass partial `_print-hyphenation.scss` to override the parent-language version of the same partial.
+
+### Images
 
 This works well if your images contain no text, and all the images are the same in both the parent and translation languages.
 
@@ -41,7 +86,7 @@ If any images are different, then the translated images should also be saved in 
 
 When linking to images, remember to always use the `{{ images }}` tag in the path, e.g.:
 
-```
+``` md
 ![Dog chases bus]({{ images }}/dogbus.jpg)
 ```
 
@@ -57,7 +102,7 @@ Each translation must be added to the `meta.yml` file. All `translations` are a 
 
 The `translations` node is equivalent to `works`, but for translations. The system knows a page is a translation if it's in a book subdirectory listed in `translations` in `meta.yml`. For instance, for a French translation, with our translation files saved in `book/fr/`, we would say:
 
-```
+``` yaml
   translations
     -
       directory: fr
@@ -66,7 +111,7 @@ The `translations` node is equivalent to `works`, but for translations. The syst
 
 If our translation files are in `book/francais`, in `meta.yml` we would say:
 
-```
+``` yaml
   translations
     -
       directory: francais
@@ -75,7 +120,7 @@ If our translation files are in `book/francais`, in `meta.yml` we would say:
 
 Here is an example of the translation section of the `meta.yml` file that includes translations into Xhosa and French. Note how the translations can, but don't have to, include their own work-level metadata. Where it is included, it overrides the parent language's metadata. This means each translation can even have its own `files` list.
 
-```
+``` yaml
     translations:
       -
         directory: xh
@@ -107,7 +152,7 @@ In some situations, you might want the language set in your epub's Dublin Core O
 
 To set this, add a `language` to the `epub` section of your translation:
 
-```
+``` yaml
 works:
   - directory: "potatoes"
     ...

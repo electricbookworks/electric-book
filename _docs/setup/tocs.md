@@ -1,7 +1,7 @@
 ---
 title: Navigation and TOCs
 categories: setup
-order: 3
+order: 30
 ---
 
 # Navigation and tables of contents
@@ -28,7 +28,7 @@ The `label` can be anything you want, but is usually the heading of the section 
 
 Here is an example:
 
-```
+``` yaml
         nav:
           - label: "Chapter Two"
             file: "02"
@@ -51,7 +51,7 @@ Note that within a file, an `id` can only be used once, as `id`s are unique. So,
 
 If you are having trouble finding the slug for the `id`: generate a web version of your book, go to the heading, right click on it and choose ‘Inspect’ (you may need Cmd Shift C on Mac to get element-specific information). In the Elements box you should see a line of code that gives you the element’s `id`. For a heading level 1 called ‘Chapter 5: Animals’, the `id` is shown in this line of code followed by the label:
 
-```
+``` html
 <h1 id="chapter-5-animals">Chapter 5: Animals</h1>
 ```
 
@@ -72,7 +72,7 @@ Once you have constructed your metadata for all of the outputs of the book that 
 
 {% raw %}
 
-```
+``` liquid
 {% include toc %}
 ```
 
@@ -80,10 +80,14 @@ in a markdown file. This tag generates a table of contents. In the default templ
 
 Note that for the `include toc` tag to work (and many other tags, such as `{{ images }}`), somewhere earlier in the document you must include this tag:
 
-```
+``` liquid
 {% include metadata %}
 ```
 
 We recommend including this `include metadata` tag at the start of all markdown files, so that tags are available.
 
 {% endraw %}
+
+## Epub TOCs
+
+Epubs have special TOC needs. See the [epub output section on metadata](../output/epub-output#metadata-and-settings).

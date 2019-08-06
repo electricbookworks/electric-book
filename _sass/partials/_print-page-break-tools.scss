@@ -17,6 +17,7 @@ $print-page-break-tools: true !default;
 	}
 
 	// To prevent an element breaking across pages, apply this class
+	// Also see _print-fitting.scss for span.keep-together to avoid line breaks
 	.keep-together {
 		page-break-inside: avoid;
 	}

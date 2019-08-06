@@ -129,6 +129,7 @@ en:
   project:
     # Project items are set for the parent language
     # in meta.yml and can be overridden here.
+    # Project 'name' also sets the HTML title on the home page.
     organisation: ""
     url: ""
     email: ""
@@ -141,12 +142,24 @@ en:
     menu: "Contents"
     next: "Next"
     previous: "Previous"
+    back: "&larr;"
   input:
     submit: "Submit"
     send: "Send"
+    show: "Show"
+    hide: "Hide"
   search:
+    search-title: "Search"
     placeholder: "Search"
+    placeholder-searching: "Searching..."
+    search-results: "Search results"
+    results-for-singular: "result found for"
+    results-for-plural: "results found for"
+    results-for-none: "No results found for"
+    jump-to-first: "Jump to first result ↓"
+    notice: ""
   contact:
+    subject-line: "Enquiry"
     placeholder:
       name: "Name"
       email: "Email address"
@@ -156,6 +169,21 @@ en:
     feedback-correct: "Correct!"
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "You haven't selected all the correct answers."
+    mark-correct: "&#10003;" # check mark
+    mark-incorrect: "&#10007;" # ballot x
+  quiz:
+    total: "Total"
+  cross-references:
+    pre-page-number: "(page "
+    post-page-number: ")"
+  account:
+    login: "Log in"
+    my-account: "My account"
+  annotator:
+    show-sidebar-tooltip-title: "Open annotations"
+    show-sidebar-tooltip-description: "Tap here to show the annotations sidebar. Select text to highlight and create notes on this page."
+    show-annotated-text-tooltip-title: "Highlight annotations"
+    show-annotated-text-tooltip-description: "Tap here to show or hide the annotation highlights on this page."
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -190,12 +218,24 @@ fr:
     menu: "Table des matières"
     next: "Suivant"
     previous: "Précédent"
+    back: "&larr;"
   input:
     submit: "Soumettre"
     send: "Envoyer"
+    show: "Montrer"
+    hide: "Cacher"
   search:
+    search-title: "Recherche"
     placeholder: "Recherche"
+    placeholder-searching: "Recherche..."
+    search-results: "Résultats de la recherche"
+    results-for-singular: "résultat trouvé pour"
+    results-for-plural: "résultats trouvés pour"
+    results-for-none: "Aucun résultat trouvé pour"
+    jump-to-first: "Aller au premier résultat ↓"
+    notice: ""
   contact:
+    subject-line: "Enquête"
     placeholder:
       name: "Nom"
       email: "L’adresse e-mail"
@@ -205,6 +245,21 @@ fr:
     feedback-correct: "Correct!"
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "Vous n'avez pas sélectionné toutes les bonnes réponses."
+    mark-correct: "&#10003;" # check mark
+    mark-incorrect: "&#10007;" # ballot x
+  quiz:
+    total: "Total"
+  cross-references:
+    pre-page-number: "(page "
+    post-page-number: ")"
+  account:
+    login: "Connectez-vous"
+    my-account: "Mon compte"
+  annotator:
+    show-sidebar-tooltip-title: "Ouvrir l'outil d'annotation"
+    show-sidebar-tooltip-description: "Cliquer ici pour afficher la barre latérale des annotations. Vous pouvez sélectionner le texte à surligner et à annoter sur cette page."
+    show-annotated-text-tooltip-title: "Surligner les annotations"
+    show-annotated-text-tooltip-description: "Cliquer ici pour afficher ou masquer les annotations surlignées sur cette page."
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""

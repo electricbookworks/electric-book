@@ -74,6 +74,7 @@ In the tag for each figure, we can define the following information:
 * a title (can be used to title descriptive text)
 * a description (hidden by default and used at `alt` text on the image; can be displayed and used with custom CSS)
 * a source (appears below the figure)
+* the height of the image in lines
 * a [class](classes.html) (for styling the layout of a given figure).
 
 The template uses that information differently depending on the output format. For instance, on the web and in the epub, the description is the text that screen-readers will read aloud to visually impaired users who can't see an image; and we don't need to display it in print.
@@ -85,7 +86,7 @@ We define these things in the tag using 'parameters'. For instance, we set the `
 Here is a full example:
 
 {% raw %}
-```
+``` liquid
 {% include figure
    images="mydog.jpg, yourdog.jpg"
    html="<table></table>"
@@ -96,6 +97,7 @@ Here is a full example:
    title="My Example Figure"
    description="This should describe what the images look like."
    source="Fire and Lion, 2017"
+   image-height="10"
    class="featured"
 %}
 ```
@@ -103,7 +105,7 @@ Here is a full example:
 
 Note the double quotes. If the text you're adding to a parameter contains quotes, you'd use single quotes in the text – or vice versa. Do not mix single and double quotes, or the software won't know where the parameter ends. If you must use, say, double quotes inside the quotes around a parameter, use the actual unicode glyphs for curly quotes, `“` and `”`. For instance, all of these are okay:
 
-```
+``` html
 caption="Blake's illustration for 'The Tyger'."
 caption='Blake's illustration for "The Tyger".'
 caption="Blake's illustration for “The Tyger”."
@@ -114,7 +116,7 @@ caption="Blake's illustration for “The Tyger”."
 If you need to rotate a large figure on the page, add the `rotate` class. E.g.
 
 {% raw %}
-```
+``` liquid
 {% include figure
    html="<table>...</table>"
    reference="Figure 1.1"
@@ -125,3 +127,7 @@ If you need to rotate a large figure on the page, add the `rotate` class. E.g.
 {% endraw %}
 
 Rotation only affects PDF output.
+
+### Figure width
+
+If you need to make a figure narrower than the full text area, add a `width-x` class, where `x` is the width you want in percent. E.g. `width-50` will create a half-width image.

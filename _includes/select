@@ -1,0 +1,49 @@
+{% capture select-html %}
+
+{% comment %}Clean up the options list, and then
+turn it into an array.{% endcomment %}
+{% capture select-options-list %}{{ include.options | replace: " |", "|" | replace: "| ", "|" }}{% endcapture %}
+{% assign select-options = select-options-list | split: "|" %}
+
+{% comment %}Wrap the select element for extra CSS control.{% endcomment %}
+<span class="select-list-wrapper">
+    <select class="select-list">
+
+        {% comment %}Blank option to start the list{% endcomment %}
+        <option>
+            {% if include.placeholder and include.placeholder != "" %}
+                {{ include.placeholder }}
+            {% else %}
+                {% comment %}Use at least a no-break space
+                so that Prince gives the select box its width,
+                and does not collapse the empty element.
+                Use a decimal entity for valid EPUB3.{% endcomment %}
+                &#160;
+            {% endif %}
+        </option>
+
+        {% for option in select-options %}
+
+            {% comment %}Generate obfuscated answer code.
+            If the answer is correct, the fifth character will be
+            a number, not a letter.{% endcomment %}
+            {% capture select-option-code %}
+                {% include random length=4 %}
+                {% if option == include.correct %}
+                    {% include random length=1 type="numbers" %}
+                {% else %}
+                    {% include random length=1 type="letters" %}
+                {% endif %}
+                {% include random length=3 %}
+            {% endcapture %}
+            {% capture select-option-code %}{{ select-option-code | replace: " ", "" | strip_newlines | strip }}{% endcapture %}
+
+            {% comment %}Generate option HTML{% endcomment %}
+            <option data-select-code="{{ select-option-code }}">{{ option }}</option>
+
+        {% endfor %}
+
+    </select>
+</span>
+
+{% endcapture %}{{ select-html | strip_newlines | strip }}

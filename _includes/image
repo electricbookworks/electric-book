@@ -13,13 +13,29 @@ defaulting to src. {% endcomment %}
 	{% assign file-extension = include.src | split: "." | last %}
 {% endif %}
 
+{% comment %} Capture and clean any alt text. {% endcomment %}
+{% if include.alt %}
+    {% capture image-alt %}{{ include.alt 
+    | replace: "&nbsp;", " "
+    | replace: "&shy;", ""
+    | markdownify
+    | strip_html }}{% endcapture %}
+{% endif %}
+
+{% comment %} Allow tag to override default images location,
+where 'path=""' can specify a path relative to the site's
+root directory. {% endcomment %}
+{% if include.path and include.path != "" %}
+    {% capture images %}{{ path-to-root-directory }}{{ include.path }}{% endcapture %}
+{% endif %}
+
 {% comment %} Adjust the value of `sizes` if your site design does not need
 full-width images everywhere. Here is a guide:
 https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% endcomment %}
 <img
     src="{{ images }}/{{ image }}.{{ file-extension }}"
 
-    {% if site.output == "web" or site.output == "app" %}
+    {% if site.output == "web" %}
     {% unless file-extension == "svg" %}
     sizes="auto"
     srcset="{{ images }}/{{ image }}-320.{{ file-extension }} 320w,
@@ -28,8 +44,8 @@ https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% en
     {% endunless %}
     {% endif %}
 
-    {% if include.class %} class="{{ include.class }}"{% endif %}
+    class="{% if include.class %}{{ include.class }}{% endif %}{% if file-extension == 'svg' %} inject-svg{% endif %}"
     {% if include.id %} id="{{ include.id }}"{% endif %}
-    {% if include.alt %} alt="{{ include.alt }}"{% endif %} />
+    {% if image-alt %} alt="{{ image-alt }}"{% endif %} />
 
-{% endcapture %}{{ image-tag | strip_newlines }}
+{% endcapture %}{{ image-tag | strip_newlines | strip }}

@@ -2,7 +2,7 @@
 title: Project metadata
 categories:
   - setup
-order: 2
+order: 20
 ---
 
 # Project metadata
@@ -20,14 +20,14 @@ The Electric Book template uses the data in `meta.yml` to populate and build nav
 
 The `meta.yml` file is written in a syntax called YAML. At its simplest, YAML is just a list of values like this:
 
-```
+``` yaml
 title: "Great Expectations"
 creator: "Charles Dickens"
 ```
 
 Importantly, you can nest information in YAML, so that information can be grouped. For example:
 
-```
+``` yaml
 title: "Great Expectations"
 products:
   print-pdf

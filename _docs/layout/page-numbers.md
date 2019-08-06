@@ -10,7 +10,7 @@ order: 2
 * Page contents
 {:toc}
 
-In print output in the Classic theme, the YAML header's `style` setting determines how the pages are numbered:
+In print output, the YAML header's `style` setting affects how the pages are numbered:
 
 * all book parts set to `style: frontmatter` have roman-numeral page numbers;
 * all book parts set to `style: chapter` (or, since that's the default fallback, all those without a `style` setting) have decimal page numbers;

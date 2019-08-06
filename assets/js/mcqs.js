@@ -1,21 +1,26 @@
+/*jslint*/
+/*globals window, locales, pageLanguage*/
+
 // -----------------------------
 // Options
 // 1. If you're pining scores to a Wordpress database,
 //    enter the name of the cookie it leaves here.
-var wordpressCookieName = "mywpcookie"
+var wordpressCookieName = "mywpcookie";
 // -----------------------------
 
-var ebMCQsInit = function() {
+function ebMCQsInit() {
+    'use strict';
     // check for browser support of the features we use
     // and presence of mcqs
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
-    'querySelector' in document &&
-    !!Array.prototype.forEach &&
-    'addEventListener' in window &&
-    document.querySelectorAll('.question');
+            document.querySelector &&
+            !!Array.prototype.forEach &&
+            window.addEventListener &&
+            document.querySelectorAll('.mcq');
 }
 
-var ebMCQsFindNumberOfCorrectAnswers = function(questionCode) {
+function ebMCQsFindNumberOfCorrectAnswers(questionCode) {
+    'use strict';
     // not digits
     var digitsRegex = /\D/;
 
@@ -23,12 +28,13 @@ var ebMCQsFindNumberOfCorrectAnswers = function(questionCode) {
     var matchedDigitsRegex = questionCode.match(digitsRegex);
 
     // grab the index of the match
-    var numberOfCorrectAnswers = matchedDigitsRegex["index"];
+    var numberOfCorrectAnswers = matchedDigitsRegex.index;
 
     return numberOfCorrectAnswers;
 }
 
-var ebMCQsPositionOfCorrectAnswer = function(trimmedQuestionCode) {
+function ebMCQsPositionOfCorrectAnswer(trimmedQuestionCode) {
+    'use strict';
     // vowels * numberOfCorrectAnswers, then consonants * numberOfCorrectAnswers, repeated numberOfCorrectAnswers times
     // vowel regex
     var vowelRegex = /[aeiou]*/;
@@ -42,7 +48,8 @@ var ebMCQsPositionOfCorrectAnswer = function(trimmedQuestionCode) {
     return positionOfCorrectAnswer;
 }
 
-var ebMCQsDobfuscateQuestionCode = function(questionCode) {
+function ebMCQsDobfuscateQuestionCode(questionCode) {
+    'use strict';
     // find the first batch of numbers in the string
     var numberOfCorrectAnswers = ebMCQsFindNumberOfCorrectAnswers(questionCode);
 
@@ -54,17 +61,19 @@ var ebMCQsDobfuscateQuestionCode = function(questionCode) {
     var correctAnswers = [];
 
     // loop for the right length: numberOfCorrectAnswers long
-    for (var i = 0; i < numberOfCorrectAnswers; i++) {
-        var positionOfCorrectAnswer  = ebMCQsPositionOfCorrectAnswer(trimmedQuestionCode);
+    var i, positionOfCorrectAnswer;
+    for (i = 0; i < numberOfCorrectAnswers; i += 1) {
+        positionOfCorrectAnswer = ebMCQsPositionOfCorrectAnswer(trimmedQuestionCode);
         correctAnswers.push(positionOfCorrectAnswer);
 
         // trim the bit we've used out of the string
-        trimmedQuestionCode = trimmedQuestionCode.substr(positionOfCorrectAnswer*2, trimmedQuestionCode.length)
+        trimmedQuestionCode = trimmedQuestionCode.substr(positionOfCorrectAnswer * 2, trimmedQuestionCode.length);
     }
     return correctAnswers;
 }
 
-var ebMCQsGetCorrectAnswers = function(question) {
+function ebMCQsGetCorrectAnswers(question) {
+    'use strict';
 
     // get the correct answers
     var questionCode = question.getAttribute('data-question-code');
@@ -77,24 +86,25 @@ var ebMCQsGetCorrectAnswers = function(question) {
     var feedbacks = question.querySelectorAll('.mcq-feedback li');
 
     // set it all false for now
-    feedbacks.forEach(function(feedback, index) {
-        correctAnswersObj[index+1] = false;
+    feedbacks.forEach(function (feedback, index) {
+        correctAnswersObj[index + 1] = false;
     });
 
     // update correctAnswersObj from the correctAnswers array
-    correctAnswers.forEach(function(correctAnswer) {
+    correctAnswers.forEach(function (correctAnswer) {
         correctAnswersObj[correctAnswer] = true;
     });
 
     return correctAnswersObj;
 }
 
-var ebMCQsMakeOptionCheckboxes = function(question) {
+function ebMCQsMakeOptionCheckboxes(question) {
+    'use strict';
     // get all the options for this question
     var options = question.querySelectorAll('.mcq-options li');
 
     // loop over options
-    options.forEach(function(option, index) {
+    options.forEach(function (option, index) {
         // make the checkbox
         var checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
@@ -105,32 +115,34 @@ var ebMCQsMakeOptionCheckboxes = function(question) {
     });
 }
 
-var ebMCQsAddButton = function(question) {
+function ebMCQsAddButton(question) {
+    'use strict';
     // make the button
     var button = document.createElement('button');
-    button.innerHTML = 'Check my answers';
+    button.innerHTML = locales[pageLanguage].questions['check-answers-button'];
     button.classList.add('check-answer-button');
 
-    // now add it to question, before the feedback
-    var feedback = question.querySelector('.mcq-feedback');
-    question.insertBefore(button, feedback);
+    // now add it to question, after the options
+    var options = question.querySelector('.mcq-options, .question-options');
+    options.insertAdjacentElement('afterend', button);
 }
 
 
-var ebMCQsGetAllSelected = function(mcqsToCheck) {
+function ebMCQsGetAllSelected(mcqsToCheck) {
+    'use strict';
 
     // set the default selectedOptions
     var selectedOptions = {};
 
     // set it all false for now
     var allTheCheckboxes = mcqsToCheck.querySelectorAll('[type="checkbox"]');
-    allTheCheckboxes.forEach(function(selectedCheckbox, index){
-        selectedOptions[index+1] = false;
+    allTheCheckboxes.forEach(function (selectedCheckbox, index) {
+        selectedOptions[index + 1] = false;
     });
 
     // update for the selected ones
     var selectedCheckboxes = mcqsToCheck.querySelectorAll('[type="checkbox"]:checked');
-    selectedCheckboxes.forEach(function(selectedCheckbox) {
+    selectedCheckboxes.forEach(function (selectedCheckbox) {
         var dataIndex = parseFloat(selectedCheckbox.getAttribute('data-index'));
         selectedOptions[dataIndex + 1] = true;
     });
@@ -138,45 +150,49 @@ var ebMCQsGetAllSelected = function(mcqsToCheck) {
     return selectedOptions;
 }
 
-var ebMCQsHideAllFeedback = function(mcqsToCheck) {
+function ebMCQsHideAllFeedback(mcqsToCheck) {
+    'use strict';
     var feedbacks = mcqsToCheck.querySelectorAll('.mcq-feedback li');
-    feedbacks.forEach(function(feedback) {
+    feedbacks.forEach(function (feedback) {
         // reset the styles
         feedback.classList.remove('mcq-feedback-show');
     });
 }
 
-var ebMCQsShowSelectedOptions = function(mcqsToCheck, selectedOptions) {
+function ebMCQsShowSelectedOptions(mcqsToCheck, selectedOptions) {
+    'use strict';
     var feedbacks = mcqsToCheck.querySelectorAll('.mcq-feedback li');
-    feedbacks.forEach(function(feedback, index) {
+    feedbacks.forEach(function (feedback, index) {
         // if it's been selected, show it
-        if(selectedOptions[index+1]) {
+        if (selectedOptions[index + 1]) {
             feedback.classList.add('mcq-feedback-show');
         }
 
     });
 }
 
-var ebMCQsShowSelectedIncorrectOptions = function(mcqsToCheck, selectedOptions, correctAnswersForThisMCQs) {
+function ebMCQsShowSelectedIncorrectOptions(mcqsToCheck, selectedOptions, correctAnswersForThisMCQs) {
+    'use strict';
     var feedbacks = mcqsToCheck.querySelectorAll('.mcq-feedback li');
-    feedbacks.forEach(function(feedback, index) {
+    feedbacks.forEach(function (feedback, index) {
         // if it's been selected, and it's incorrect, show it
-        if(selectedOptions[index+1] &&
-            selectedOptions[index+1] !== correctAnswersForThisMCQs[index+1]) {
+        if (selectedOptions[index + 1] &&
+                selectedOptions[index + 1] !== correctAnswersForThisMCQs[index + 1]) {
             feedback.classList.add('mcq-feedback-show');
         }
 
     });
 }
 
-var ebMCQsMarkSelectedOptions = function() {
+function ebMCQsMarkSelectedOptions() {
+    'use strict';
     // get all the options
     var questionOptions = document.querySelectorAll('.mcq-options li');
 
     // loop over them
-    questionOptions.forEach(function(questionOption) {
+    questionOptions.forEach(function (questionOption) {
         // listen for clicks on the label and add/remove .selected to the li
-        questionOption.addEventListener('click', function(){
+        questionOption.addEventListener('click', function () {
             if (this.querySelector('[type="checkbox"]:checked')) {
                 this.classList.add('selected');
             } else {
@@ -186,15 +202,16 @@ var ebMCQsMarkSelectedOptions = function() {
     });
 }
 
-var ebMCQsGetAllCorrectAnswers = function() {
+function ebMCQsGetAllCorrectAnswers() {
+    'use strict';
     // initialise answer store
     var ebMCQsCorrectAnswersForPage = {};
 
     // get all the questions
-    var questions = document.querySelectorAll('.question');
+    var questions = document.querySelectorAll('.mcq');
 
     // loop over questions
-    questions.forEach(function(question) {
+    questions.forEach(function (question) {
         // get the correct answers
         var correctAnswersObj = ebMCQsGetCorrectAnswers(question);
 
@@ -206,11 +223,13 @@ var ebMCQsGetAllCorrectAnswers = function() {
     return ebMCQsCorrectAnswersForPage;
 }
 
-var ebMCQsExactlyRight = function(correctAnswersForThisMCQs, selectedOptions) {
+function ebMCQsExactlyRight(correctAnswersForThisMCQs, selectedOptions) {
+    'use strict';
     // compare each selectedOption with the correctAnswer
     // if one is wrong, exit with false
-    for (var optionNumber in selectedOptions) {
-        if(selectedOptions[optionNumber] !== correctAnswersForThisMCQs[optionNumber]) {
+    var optionNumber;
+    for (optionNumber in selectedOptions) {
+        if (selectedOptions[optionNumber] !== correctAnswersForThisMCQs[optionNumber]) {
             return false;
         }
     }
@@ -219,32 +238,34 @@ var ebMCQsExactlyRight = function(correctAnswersForThisMCQs, selectedOptions) {
     return true;
 }
 
-var ebMCQsNotAllTheCorrectAnswers = function(correctAnswersForThisMCQs, selectedOptions) {
+function ebMCQsNotAllTheCorrectAnswers(correctAnswersForThisMCQs, selectedOptions) {
+    'use strict';
     var numberOfCorrectAnswers = 0;
     var numberOfSelectedCorrectAnswers = 0;
     var numberOfSelectedIncorrectAnswers = 0;
 
     // loop through the correct answers
-    for (var key in correctAnswersForThisMCQs) {
+    var key;
+    for (key in correctAnswersForThisMCQs) {
         // count correct answers
-        if(correctAnswersForThisMCQs[key]) {
-            numberOfCorrectAnswers++;
+        if (correctAnswersForThisMCQs[key]) {
+            numberOfCorrectAnswers += 1;
         }
 
         // count selected correct answers
-        if(correctAnswersForThisMCQs[key] && selectedOptions[key]) {
-            numberOfSelectedCorrectAnswers++;
+        if (correctAnswersForThisMCQs[key] && selectedOptions[key]) {
+            numberOfSelectedCorrectAnswers += 1;
         }
 
         // count selected incorrect answers
-        if(!correctAnswersForThisMCQs[key] && selectedOptions[key]) {
-            numberOfSelectedIncorrectAnswers++;
+        if (!correctAnswersForThisMCQs[key] && selectedOptions[key]) {
+            numberOfSelectedIncorrectAnswers += 1;
         }
     }
 
     // if we haven't selected all the correct answers
     // and we haven't selected any incorrect answers
-    if(numberOfSelectedCorrectAnswers < numberOfCorrectAnswers && numberOfSelectedIncorrectAnswers === 0) {
+    if (numberOfSelectedCorrectAnswers < numberOfCorrectAnswers && numberOfSelectedIncorrectAnswers === 0) {
         return true;
     }
 
@@ -252,14 +273,15 @@ var ebMCQsNotAllTheCorrectAnswers = function(correctAnswersForThisMCQs, selected
 }
 
 // get the WordPress ID from a cookie, or return false if we don't have one
-var ebMCQsWordPressUserId = function() {
+function ebMCQsWordPressUserId() {
+    'use strict';
 
     var cookieName = wordpressCookieName;
 
     // get the cookie, split it into bits
     var cookie = document.cookie.split('; ');
 
-    var WordPressUserIdCookie = cookie.find(function(el) {
+    var WordPressUserIdCookie = cookie.find(function (el) {
         // if it starts with our wordpressCookieName in options above, it's our WP one
         return el.indexOf(cookieName) === 0;
     });
@@ -272,13 +294,13 @@ var ebMCQsWordPressUserId = function() {
     // decode it and remove the cookie name
     var decodedCookie = decodeURIComponent(WordPressUserIdCookie).replace(cookieName + '=', '');
 
-    return decodedCookie;;
+    return decodedCookie;
 }
 
 // Add the WordPress account button to the nav,
 // change the text based on logged in or not
-// TO DO: localise the Wordpress terms here
-var ebMCQsAddWordPressAccountButton = function() {
+function ebMCQsAddWordPressAccountButton() {
+    'use strict';
     // get #nav
     var theNav = document.querySelector('#nav');
 
@@ -287,33 +309,36 @@ var ebMCQsAddWordPressAccountButton = function() {
 
     // make the WordPress link to insert into the nav
     var accountLink = document.createElement('a');
-    accountLink.innerText = 'Log in';
+    accountLink.innerText = locales[pageLanguage].account.login;
     accountLink.href = '/login/';
     accountLink.classList.add('wordpress-link');
 
     // add the account link to the nav
     theNav.insertBefore(accountLink, insertBeforeTarget);
 
-    if(ebMCQsWordPressUserId()) {
+    if (ebMCQsWordPressUserId()) {
         // change the button text and href
-        accountLink.innerText = 'My account';
+        accountLink.innerText = locales[pageLanguage].account['my-account'];
         accountLink.href = '/account/';
     }
 }
 
 // Send a bit of JSON for eacn question submission
-var ebMCQsSendtoWordPress = function(quizId, score) {
+function ebMCQsSendtoWordPress(quizId, score) {
+    'use strict';
     // if we don't have a user id, early exit
     var userId = ebMCQsWordPressUserId();
-    if (!ebMCQsWordPressUserId()) return;
+    if (!ebMCQsWordPressUserId()) {
+        return;
+    }
 
     // make the object to send
     var data = {
-        "action" : "quiz_score", // existing action name
-        "book_id" : 1,
-        "quiz_id" : quizId,
-        "user_id" : userId,
-        "score" : score,
+        action: "quiz_score", // existing action name
+        book_id: 1,
+        quiz_id: quizId,
+        user_id: userId,
+        score: score
     };
 
     // set url to send json to
@@ -321,29 +346,54 @@ var ebMCQsSendtoWordPress = function(quizId, score) {
 
     // send the data
     // first build the data structure into a string
-    var query = [];
-    for (var key in data) // make an array of 'key=value' with special characters encoded
-       query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-    var dataText=query.join('&'); // join the array into 'key=value1&key2=value2...'
+    var query = [], key;
+
+    // make an array of 'key=value' with special characters encoded
+    for (key in data) {
+        query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+    }
+    var dataText = query.join('&'); // join the array into 'key=value1&key2=value2...'
     // now send the data
-    var req=new XMLHttpRequest(); // create the request
+    var req = new XMLHttpRequest(); // create the request
     req.open('POST', wordPressURL, true); // put in the target url here!
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.send(dataText); // so we send the encoded data not the original data structure
 }
 
-var ebMCQsButtonClicks = function() {
+function ebMCQsAddFeedbackLabel(mcqsToCheck, feedbackType) {
+    'use strict';
+
+    var mcqsToCheckQuestionContent = mcqsToCheck.querySelector('.question-content');
+
+    // Remove existing feedback
+    var mcqsToCheckOldLabel = mcqsToCheck.querySelector('.feedback-label');
+    if (mcqsToCheckOldLabel) {
+        mcqsToCheckQuestionContent.removeChild(mcqsToCheckOldLabel);
+    }
+
+    // Find feedback, create a div for the label, and insert it
+    var mcqsToCheckFeedback = mcqsToCheck.querySelector('.mcq-feedback');
+    var mcqsToCheckFeedbackLabel = document.createElement('div');
+
+    mcqsToCheckFeedbackLabel.setAttribute('class', 'feedback-label');
+    mcqsToCheckFeedbackLabel.innerText = locales[pageLanguage].questions[feedbackType];
+
+    mcqsToCheckQuestionContent.insertBefore(mcqsToCheckFeedbackLabel, mcqsToCheckFeedback);
+}
+
+function ebMCQsButtonClicks() {
+    'use strict';
     // get all the buttons
     var answerCheckingButtons = document.querySelectorAll('.check-answer-button');
 
     // for each button
-    answerCheckingButtons.forEach(function(answerCheckingButton){
+    answerCheckingButtons.forEach(function (answerCheckingButton) {
         // listen for clicks on the buttons
-        answerCheckingButton.addEventListener('click', function(){
+        answerCheckingButton.addEventListener('click', function () {
             // get the mcq and it's ID
-            var mcqsToCheck = this.parentNode;
+            var mcqsToCheck = this.parentNode.parentNode; // 'this' is the button
             var mcqsToCheckName = mcqsToCheck.getAttribute('data-question');
-            var mcqsToCheckCode = mcqsToCheck.getAttribute('data-question-code');
+            // var mcqsToCheckCode = mcqsToCheck.getAttribute('data-question-code'); // not used
 
             // reset the styles
             ebMCQsHideAllFeedback(mcqsToCheck);
@@ -363,18 +413,21 @@ var ebMCQsButtonClicks = function() {
             var score = 0;
 
             // if exactly right, mark it so, show options
-            if(ebMCQsExactlyRight(correctAnswersForThisMCQs, selectedOptions)) {
+            if (ebMCQsExactlyRight(correctAnswersForThisMCQs, selectedOptions)) {
                 mcqsToCheck.classList.add('mcq-correct');
+                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback-correct');
                 ebMCQsShowSelectedOptions(mcqsToCheck, selectedOptions);
 
                 // set score
                 score = 1;
-            } else if(ebMCQsNotAllTheCorrectAnswers(correctAnswersForThisMCQs, selectedOptions)) {
+            } else if (ebMCQsNotAllTheCorrectAnswers(correctAnswersForThisMCQs, selectedOptions)) {
                 mcqsToCheck.classList.add('mcq-partially-correct');
+                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback-unfinished');
                 ebMCQsShowSelectedIncorrectOptions(mcqsToCheck, selectedOptions, correctAnswersForThisMCQs);
             } else {
                 // show the feedback for the incorrect options
                 mcqsToCheck.classList.add('mcq-incorrect');
+                ebMCQsAddFeedbackLabel(mcqsToCheck, 'feedback-incorrect');
                 ebMCQsShowSelectedIncorrectOptions(mcqsToCheck, selectedOptions, correctAnswersForThisMCQs);
             }
 
@@ -385,9 +438,12 @@ var ebMCQsButtonClicks = function() {
     });
 }
 
-var ebMCQs = function() {
+function ebMCQs() {
+    'use strict';
     // early exit for lack of browser support or no mcqs
-    if (!ebMCQsInit()) return;
+    if (!ebMCQsInit()) {
+        return;
+    }
 
     // add the WordPress account button
     ebMCQsAddWordPressAccountButton();
@@ -396,10 +452,10 @@ var ebMCQs = function() {
     document.documentElement.classList.add('js-mcq');
 
     // get all the questions
-    var questions = document.querySelectorAll('.question');
+    var questions = document.querySelectorAll('.mcq');
 
     // loop over questions
-    questions.forEach(function(question) {
+    questions.forEach(function (question) {
         // add the interactive stuff: the checkboxes and the buttons
         ebMCQsMakeOptionCheckboxes(question);
         ebMCQsAddButton(question);

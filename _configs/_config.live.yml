@@ -13,7 +13,8 @@ exclude: [
 # -----------------------------------
 # Build tools
 # -----------------------------------
-README*,
+README.md,
+LICENSE,
 run-linux*,
 run-mac*,
 run-windows*,
@@ -24,6 +25,7 @@ package-lock.json,
 node_modules,
 gulpfile.js,
 eslint.json,
+CHANGELOG.md,
 /*/images/source,
 # -----------------------------------
 # Colour profiles for conversions
@@ -38,7 +40,7 @@ eslint.json,
 # -----------------------------------
 /assets/js/heading-titles.js,
 /assets/js/render-mathjax.js,
-/assets/js/render-search-index.js,
+# /assets/js/render-search-index.js, # Needed for generating live-build search index
 # -----------------------------------
 # Book files we don't need for web
 # -----------------------------------

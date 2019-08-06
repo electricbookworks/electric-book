@@ -8,7 +8,7 @@ Everyone loves a good quotation. Good themes should support blockquotes, and mig
 
 ### Blockquotes
 
-Generally, blockquotes are set off from body text with line spaces above and below, and an indent left and right. What does this theme do with a blockquote? Thanks to [The Quote Garden](http://www.quotegarden.com/quotations.html) for these quotes about quotes.
+Generally, blockquotes are set off from body text with line spaces above and below, and an indent left and right. What does this theme do with a blockquote? Thanks to [The Quote Garden](http://www.quotegarden.com/quotations.html){:.show-url} for these quotes about quotes.
 
 > Next to the originator of a good sentence is the first quoter of it. Many will read the book before one thinks of quoting a passage. As soon as he has done this, that line will be quoted east and west.
 

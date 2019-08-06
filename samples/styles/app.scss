@@ -50,8 +50,9 @@ $font-size-bigger: 2; // How many times bigger than font-size-default for featur
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: true;
 
-// Buttons
-$button-border-radius: 0.1em; // Roundness of button corners.
+// Rounded corners
+$button-border-radius: 0.1em; // Roundness of button corners
+$box-border-radius: 0.5em; // Roundness of box corners
 
 // Rules, lines
 $rule-thickness: 1px;
@@ -67,11 +68,21 @@ $color-links: #5f738c;
 $color-buttons: $color-accent;
 $color-buttons-hover: darken( $color-buttons, 20% );
 $color-highlight: #ffd54d;
+$color-notification-low-text: $color-light;
+$color-notification-medium-text: $color-light;
+$color-notification-high-text: $color-light;
+$color-notification-low-background: #009E7F;
+$color-notification-medium-background: #ffe388;
+$color-notification-high-background: #ff7c4d;
 
 // Some features rearrange at certain screen sizes.
-// What are your break points for rearrangement?
-$break-point-height: 600px;
-$break-point-width: 600px;
+// What are your screen-width break points?
+$break-width-small: 600px;
+$break-width-medium: 900px;
+$break-width-large: 1200px;
+$break-height-small: 600px;
+$break-height-medium: 900px;
+$break-height-large: 1200px;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
@@ -89,7 +100,11 @@ $hyphenate-lines: 1; // Maximum number of consecutive lines ending with hyphens
 
 // Text dividers
 // For breaks created with *** in markdown.
-$text-divider: ""; // Empty leaves space. \2022 is a bullet
+// If using an image, set $text-divider-image in CSS URL syntax, e.g.
+// $text-divider-image: url('../images/epub/text-divider.jpg');
+$text-divider-text: ""; // Empty leaves space. \2022 is a bullet
+$text-divider-image: "";
+$text-divider-image-width: $line-height-default * 2;
 
 // Footer
 $footer-text-color: $color-text-main;
@@ -100,6 +115,7 @@ $footer-border-color: $color-accent;
 $masthead-text-color: $color-light;
 $masthead-background-color: $color-accent;
 $masthead-border-color: $color-light;
+$masthead-breadcrumb-divider: "\2044"; // 2044 is a fraction slash
 
 // Website sidebar/navigation
 $nav-bar-text-size: 0.8em;
@@ -110,6 +126,7 @@ $nav-bar-children-prompt-hide: "\2212"; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true;
 $nav-bar-width: 15em;
 $nav-bar-fixed: true;
+$nav-bar-back-button-hide: false;
 $nav-bar-label-color: $color-light;
 $nav-bar-label-background-color: $masthead-background-color;
 $nav-bar-label-border-color: transparent !default;
@@ -132,6 +149,14 @@ $language-select-text-color: $color-text-secondary;
 $language-select-links-color: $color-links;
 $language-select-background-color: $color-background;
 
+// Annotator
+$annotator-sidebar-width: 16em;
+$annotator-icon-line-color-active: $color-light;
+$annotator-icon-line-color-inactive: $color-light;
+$annotator-icon-background-color-active: $color-accent;
+$annotator-icon-background-color-inactive: $color-background;
+$annotator-icon-thickness: 1.5px;
+
 // ---------------------------------
 // Set to false to turn partials off
 // ---------------------------------
@@ -142,6 +167,9 @@ $web-css-reset: true;
 // Structural HTML components
 $web-wrappers: true;
 
+// Conventional helper classes
+$web-helpers: true;
+
 // Default typography
 $web-base-typography: true;
 
@@ -150,7 +178,6 @@ $web-masthead: true;
 $web-search: true;
 $web-nav-bar: true;
 $web-footer: true;
-$web-language-select: true;
 $web-accordion: true;
 
 // Book parts
@@ -182,11 +209,20 @@ $web-letters: true;
 $web-verse: true;
 $web-video: true;
 $web-pagination: true;
-$web-multiple-choice-questions: true;
+$web-questions: true;
+$web-select-questions: true;
+
+// Docs
+$web-docs: true;
 
 // Type-control classes
 $web-smallcaps: true;
 $web-fitting: true;  // E.g. tracking and shrinking
+
+// Controls
+$web-controls: true;
+$web-language-select: true;
+$web-annotator: false;
 
 // Logic (if this then that)
 $web-reset-sequences: true; // This should stay last in the @import list

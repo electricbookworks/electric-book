@@ -1,0 +1,35 @@
+@mixin select-list-marker($color-background: $color-light, $color-text: $color-text-main) {
+    background-color: $color-background;
+    border-radius: $line-height-default;
+    color: $color-text;
+    height: $line-height-default;
+    line-height: 1.3; // magic number :(
+    margin: 0 ($line-height-default / 4);
+    padding: ($line-height-default / 8) ($line-height-default / 4);
+    position: absolute;
+    right: -($line-height-default * 0.7);
+    top: -($line-height-default / 2);
+}
+
+$web-select-questions: true !default;
+@if $web-select-questions {
+
+    // Select lists
+
+    .select-list-wrapper {
+        position: relative;
+        .select-list {
+            &.select-option-correct {
+                & + .select-list-marker {
+                    @include select-list-marker($color-notification-low-background, $color-notification-low-text);
+                }
+            }
+            &.select-option-incorrect {
+                & + .select-list-marker {
+                    @include select-list-marker($color-notification-high-background, $color-notification-high-text);
+                }
+            }
+        }
+    }
+
+}

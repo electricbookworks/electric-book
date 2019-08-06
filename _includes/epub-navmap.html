@@ -6,11 +6,11 @@ Get the file metadata.
 {% comment %}
 Get the epub TOC
 {% endcomment %}
-{% if epub-toc != nil %}
+{% if epub-toc and epub-toc != "" %}
     {% assign toc = epub-toc %}
-{% elsif print-pdf-toc != nil %}
+{% elsif print-pdf-toc and print-pdf-toc != "" %}
     {% assign toc = print-pdf-toc %}
-{% elsif web-nav-tree != nil %}
+{% elsif web-nav-tree and web-nav-tree != "" %}
     {% assign toc = web-nav-tree %}
 {% else %}
     Please define a TOC or web nav in meta.yml.
@@ -68,11 +68,13 @@ as the include calls itself for each list of children.
         {% if include-in-toc == true %}
 
             <navLabel>
-                <text>{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</text>
+                <text>{{ item.label | markdownify | strip_html | strip_newlines }}</text>
             </navLabel>
 
             {% comment %}If the item has no file to link to, use its first child's file,
-            because NCS requires a valid src in <content>.{% endcomment %}
+            because NCS requires a valid src in <content>.
+            Note: this means the first child must also have an ID specified in meta.yml,
+            for a fragment identifier that is different from the parent.{% endcomment %}
             <content
                 {% if item.file and item.file != "" %}
                     src="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"

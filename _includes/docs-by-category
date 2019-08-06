@@ -65,13 +65,17 @@ If not, use category names.{% endcomment %}
             {% for page in pages %}
 
                 {% comment %}Don't list the current page.{% endcomment %}
-                {% unless current-page-url == page.url %}
-
-                    <li>
-                        <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
-                    </li>
-
-                {% endunless %}
+                {% if site.data.settings.docs.nav.hide-active-page == true %}
+                    {% unless current-page-url == page.url %}
+                        <li>
+                            <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+                        </li>
+                    {% endunless %}
+                {% else %}
+                        <li{% if current-page-url == page.url %} class="active"{% endif %}>
+                            <a href="{{site.baseurl}}{{ page.url }}">{{ page.title }}</a>
+                        </li>
+                {% endif %}
 
             {% endfor %}
 

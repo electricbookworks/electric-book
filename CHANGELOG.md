@@ -1,13 +1,72 @@
 # Changelog
 
-## 0.11.2 (in progress)
+## Latest
+
+* [Don't force a blank baseurl on web output](https://github.com/electricbookworks/electric-book/pull/397)
+* [Localise home-page title element in locales](https://github.com/electricbookworks/electric-book/pull/396)
+* [Add ability to hide content behind show-hide buttons](https://github.com/electricbookworks/electric-book/pull/394)
+* [Add ability to use gap-fill questions](https://github.com/electricbookworks/electric-book/pull/389)
+* [Add variables for content and style in side-margin boxes](https://github.com/electricbookworks/electric-book/pull/379)
+* [Enable setting relative size of maths in PDF as a variable](https://github.com/electricbookworks/electric-book/pull/378)
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/34f8038025a1df45b72f6e7fcdb1e066fdb6ee73...master).
+
+## 0.15.0
+
+* [Add PDF columns options](https://github.com/electricbookworks/electric-book/pull/372)
+* [Inject SVGs inline](https://github.com/electricbookworks/electric-book/pull/371)
+* [Add max-quality image output](https://github.com/electricbookworks/electric-book/pull/370)
+* [Add an option for creating a sidebar in PDF output](https://github.com/electricbookworks/electric-book/pull/368)
+* [Add classes for all PrinceXML-supported floats on figures in PDF](https://github.com/electricbookworks/electric-book/pull/367)
+* [Add shift-up- and shift-down- classes for page refinement](https://github.com/electricbookworks/electric-book/pull/366)
+* [Create a dedicated styles folder for non-book pages](https://github.com/electricbookworks/electric-book/pull/365)
+* [Add easy way to set favicon](https://github.com/electricbookworks/electric-book/pull/362).
+* [Improve use of images as text dividers](https://github.com/electricbookworks/electric-book/pull/361).
+* [Footnote references popup footnote text on web](https://github.com/electricbookworks/electric-book/pull/358).
+* [Tables scroll horizontally on small screens](https://github.com/electricbookworks/electric-book/pull/357).
+* [Enable redaction in PDF](https://github.com/electricbookworks/electric-book/pull/342).
+* [Fix math in Word export](https://github.com/electricbookworks/electric-book/pull/339).
+* [Allow converting endnotes to footnotes in PDF](https://github.com/electricbookworks/electric-book/pull/337).
+* [Improvements to video output](https://github.com/electricbookworks/electric-book/pull/329), and [allow turning on YouTube subtitles](https://github.com/electricbookworks/electric-book/pull/335).
+* [Fix a bug where some multiline maths did not show in epub output](https://github.com/electricbookworks/electric-book/pull/352).
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/149705bd114fb48fa3b84377eb192e23cd6a2c0f...master).
+
+## 0.14.0
+
+* [Major improvement to preprocessing and output of maths](https://github.com/electricbookworks/electric-book/pull/328)
+* [Enable turning off or expanding accordion per-page](https://github.com/electricbookworks/electric-book/pull/318)
+* [Fix to prevent false positives in active menu items](https://github.com/electricbookworks/electric-book/pull/316)
+* [Add canonical link tag to head for better SEO and annotation](https://github.com/electricbookworks/electric-book/pull/314)
+* [Hide breadcrumbs on small screens](https://github.com/electricbookworks/electric-book/pull/313)
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/65a56fb75dd3e40223c9f327d144c176d12682e5...master).
+
+## 0.13.0
+
+* [Add ability to create reusable content items](https://github.com/electricbookworks/electric-book/pull/307).
+* [Add annotation with Hypothes.is](https://github.com/electricbookworks/electric-book/pull/304).
+* [Translation styles now augment, rather than replace, parent-language styles](https://github.com/electricbookworks/electric-book/pull/298).
+* [New setting to avoid inaccurate image-colour-profile conversion on PDF output](https://github.com/electricbookworks/electric-book/pull/305).
+* [New docs on building apps, and better Windows app](https://github.com/electricbookworks/electric-book/pull/293) [output](https://github.com/electricbookworks/electric-book/pull/294).
+* [Prevent spans with `.keep-together` from breaking over lines](https://github.com/electricbookworks/electric-book/pull/292).
+* [Fall back to book and project descriptions for Open Graph descriptions when page description not available](https://github.com/electricbookworks/electric-book/pull/285).
+* [Upgrade gulp dependency to 4.0.0](https://github.com/electricbookworks/electric-book/pull/296).
+* [Improvements to docs](https://github.com/electricbookworks/electric-book/pull/288) and [setup](https://github.com/electricbookworks/electric-book/pull/284) [guidance](https://github.com/electricbookworks/electric-book/pull/287).
+* [Fix the ability to use a file list as a source for the nav list](https://github.com/electricbookworks/electric-book/pull/279).
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/84e065f4f64571a95120ac89e38dc5ff01717fc8...master).
+
+## 0.12.0
 
 * [Add content accordion for web and app outputs](https://github.com/electricbookworks/electric-book/pull/250).
 * [Add ability to include multiple-choice questions](https://github.com/electricbookworks/electric-book/pull/251).
 * [Better docs on output formats and setting up GitHub Pages](https://github.com/electricbookworks/electric-book/commit/70ac2b10f6a929fccca137630253f3880c154633).
 * [Add ability to override epub-specific language](https://github.com/electricbookworks/electric-book/pull/248).
-* [Add toc.ncx for backwards-compatible epubs](https://github.com/electricbookworks/electric-book/pull/255).
+* [Add toc.ncx for backwards-compatible epubs](https://github.com/electricbookworks/electric-book/pull/255). [And fixes to it](https://github.com/electricbookworks/electric-book/pull/263).
 * [Add `image` include for responsive image tags](https://github.com/electricbookworks/electric-book/pull/256).
+* [Add support for show-page-number and show-url classes](https://github.com/electricbookworks/electric-book/pull/259).
+* [Support a 'start-on-right' class to start new recto pages](https://github.com/electricbookworks/electric-book/pull/261).
+* [Distinguish between project logo and project image](https://github.com/electricbookworks/electric-book/pull/264).
+* [Localise search](https://github.com/electricbookworks/electric-book/pull/266) [pages](https://github.com/electricbookworks/electric-book/pull/274).
+* [Add ability to show a baseline grid](https://github.com/electricbookworks/electric-book/pull/272).
+* [Add optional back button for app output](https://github.com/electricbookworks/electric-book/pull/275).
 * [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/ea42c5050375cbd9e30ec2c8f7c47b7e5ecf45b7...master).
 
 ## 0.11.1

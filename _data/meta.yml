@@ -13,9 +13,11 @@ project:
   # The name of the project of books in this folder.
   name: "Electric Book"
   # A one-liner about this project. Useful for Open Graph metadata.
-  description: "Books created with the Electric Book workflow"
+  description: "The Electric Book template in action."
+  # The logo of the organisation, saved web-ready in /assets
+  logo: "publisher-logo.jpg"
   # An image in /assets that stands for the project
-  image: "publisher-logo.jpg"
+  image: "cover.jpg"
   # Credit line, by default in the footer, overidden in locales.yml
   credit: "Built with the [Electric Book](http://electricbook.works)"
   # Primary language code for this project as a whole
@@ -41,8 +43,8 @@ works:
     subtitle: ""
     creator: "A. N. Author" # E.g. the author
     contributor: "" # E.g. other contributors
-    subject: "Fiction" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
-    description: "This is the Electric Book template." # E.g. the blurb
+    subject: "Fiction" # E.g. BISAC terms (https://bisg.org/page/BISACEdition) or BIC (http://editeur.dyndns.org/bic_categories)
+    description: "The Electric Book's blank template." # E.g. the blurb
     publisher: "EBW" # E.g. the publisher, imprint or brand name
     publisher-url: ""
     date: "2015-12-31" # YYYY-MM-DD e.g. publication date
@@ -128,15 +130,12 @@ works:
           - "01": "text"
           - "02"
         toc: # For each menu item, include at least label and file (epub requires file). Optionally add id (for deep linking) and children.
-          - label: "Frontmatter"
+          - label: "Cover"
             file: "0-0-cover"
-            children:
-              - label: "Cover"
-                file: "0-0-cover"
-              - label: "Title page"
-                file: "0-1-titlepage"
-              - label: "Copyright"
-                file: "0-2-copyright"
+          - label: "Title page"
+            file: "0-1-titlepage"
+          - label: "Copyright"
+            file: "0-2-copyright"
           - label: "Contents"
             file: "0-3-contents"
           - label: "Chapter One"
@@ -209,7 +208,7 @@ works:
     contributor: "" # E.g. other contributors
     subject: "Publishing" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
     description: >
-      This sample content demos Electric Book support for a wide range of book features.
+      Sample content demonstrating Electric Book support for a wide range of book features.
     publisher: "Electric Book Works" # E.g. the publisher, imprint or brand name
     publisher-url: ""
     date: "2016-09-01" # YYYY-MM-DD e.g. publication date
@@ -246,7 +245,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -341,9 +340,9 @@ works:
               - label: "Poetry"
                 file: "01-09-poetry"
                 id: "poetry"
-              - label: "Multiple-choice questions"
-                file: "01-10-mcqs"
-                id: "multiple-choice-questions"
+              - label: "Questions and quizzes"
+                file: "01-10-questions"
+                id: "questions-and-quizzes"
           - label: "Images"
             children: 
               - label: "Plain images"
@@ -407,7 +406,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -505,9 +504,9 @@ works:
               - label: "Poetry"
                 file: "01-09-poetry"
                 id: "poetry"
-              - label: "Multiple-choice questions"
-                file: "01-10-mcqs"
-                id: "multiple-choice-questions"
+              - label: "Questions and quizzes"
+                file: "01-10-questions"
+                id: "questions-and-quizzes"
           - label: "Images"
             children: 
               - label: "Plain images"
@@ -578,7 +577,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -619,7 +618,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -659,7 +658,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -681,6 +680,7 @@ works:
         language: "fr"
         title: "Échantillons"
         subtitle: "Exemples de contenu pour le livre électrique"
+        description: "Exemples de contenu pour le livre électrique"
         products:
           print-pdf:
             files:
@@ -705,10 +705,12 @@ works:
                 children:
                   - file: "01-01-plain-text"
                     label: "Texte brut"
+                    id: "texte-brut"
               - label: "Images"
                 children:
                   - file: "02-01-plain-images"
                     label: "Images simples"
+                    id: "images-simples"
               - label: "Mathématiques"
                 file: "03-02-maths"
           web:
@@ -766,3 +768,15 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+          app:
+            files: # Required for translations to activate language-selector
+              - "00-00-cover"
+              - "00-03-title-page"
+              - "00-04-copyright-page"
+              - "00-05-contents-page"
+              - "01-00-text"
+              - "01-01-plain-text"
+              - "02-00-images"
+              - "02-01-plain-images"
+              - "03-02-maths"
+              - "contact"

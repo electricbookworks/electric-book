@@ -45,8 +45,8 @@ A program that employs the pre-cloak stage of superheroes has been active in Rwa
     image="fradkin-2.jpg"
     image-height="15"
     reference="Figure 2"
-    caption="On the pediatric ward of the A.C. Camargo Cancer Center, superhero IV covers transform children’s chemo drip into _Superformula_. Design & Branding © J. Walter Thompson, Brazil, 2016 (Accessed 15 May 2016)."
-    description="On the pediatric ward of the A.C. Camargo Cancer Center, superhero IV covers transform children’s chemo drip into _Superformula_. Design & Branding © J. Walter Thompson, Brazil, 2016 (Accessed 15 May 2016)."
+    caption="On the pediatric ward of the A.C. Camargo Cancer Center, superhero IV covers transform children’s chemo drip into _Superformula_. Design & Branding © J. Walter Thompson, Brazil, 2016 (Accessed 15&nbsp;May 2016)."
+    description="A poster that describes _Superformula to fight cancer_ covers, which have superhero logos on the covers of chemo drips. There is a batman logo on the cover in the foreground. Photos and text explain how the cover is attached."
 %}
 
 So where to go? I pondered on the future of the project; an effort conceived in several stages. The Rwandans were standing in the background. Therapists were asking what to do…. The cart was put in motion; it was rolling down the hill; but still, the next step was elusive. Then, bang! the answer hit me: A compilation! A directory for the therapists; in particular, those who work with high-risk children. I envisioned a sleek database; a gold-foil embossed book. I celebrated, having settled on direction. My compass was following the course.

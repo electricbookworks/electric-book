@@ -6,8 +6,10 @@
     - switch for iframe
 {% endcomment %}
 
+{% include metadata %}
+
 {% comment %}Create a link to the video{% endcomment %}
-{% assign video-link = include.id | prepend: "http://www.youtube.com/watch?v=" %}
+{% assign video-link = include.id | prepend: "https://www.youtube.com/watch?v=" %}
 {% if include.link %}
     {% assign video-link = include.link %}
 {% endif %}
@@ -22,13 +24,17 @@ Epubs and apps aren't online, so don't fetch an image automatically.{% endcommen
     {% capture video-image %}{{ images }}/{{ include.image }}{% endcapture %}
 {% endif %}
 
-<div class="video youtube{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}">
-    <div class="video-wrapper">
+{% comment %}Get the language of the video, if subtitles are required.{% endcomment %}
+{% assign video-language = language %}
+{% if include.language %}
+    {% assign video-language = include.language %}
+{% endif %}
+
+<div class="video youtube{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles == "true" %}data-video-subtitles="true"{% endif %}>
+    <div class="video-wrapper{% unless video-image %} video-no-image{% endunless %}">
         <a class="video-link" href="{{ video-link }}">
             {% if video-image %}
                 <img src="{{ video-image }}">
-            {% else %}
-                <span class="video-no-image"></span>
             {% endif %}
         </a>
     </div>

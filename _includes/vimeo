@@ -6,8 +6,10 @@
     - switch for iframe
 {% endcomment %}
 
+{% include metadata %}
+
 {% comment %}Create a link to the video{% endcomment %}
-{% assign video-link = include.id | prepend: "http://www.vimeo.com/" %}
+{% assign video-link = include.id | prepend: "https://www.vimeo.com/" %}
 {% if include.link %}
     {% assign video-link = include.link %}
 {% endif %}
@@ -15,13 +17,19 @@
 {% comment %}Unlike YouTube, it's not simple to get a Vimeo thumbnail.
 So an image must be specified to get a placeholder image.{% endcomment %}
 
-<div class="video vimeo{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}">
-    <div class="video-wrapper">
+{% comment %}Get the language of the video, if subtitles are required.
+This isn't currently supported for Vimeo, but the code is ready here
+for when it can be.{% endcomment %}
+{% assign video-language = language %}
+{% if include.language %}
+    {% assign video-language = include.language %}
+{% endif %}
+
+<div class="video vimeo{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles %}data-video-subtitles="true"{% endif %}>
+    <div class="video-wrapper{% unless include.image %} video-no-image{% endunless %}">
         <a class="video-link" href="{{ video-link }}">
             {% if include.image %}
                 <img src="{{ images }}/{{ include.image }}">
-            {% else %}
-                <span class="video-no-image"></span>
             {% endif %}
         </a>
     </div>
