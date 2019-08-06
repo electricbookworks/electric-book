@@ -1,8 +1,13 @@
 /*jslint browser */
 /*globals locales, pageLanguage */
 
-// Which select elements will this script apply to?
-var selects = document.querySelectorAll('select.select-list');
+// Options
+// -------
+// 1. Which select elements will this script apply to?
+var ebSelectLists = document.querySelectorAll('select.select-list');
+// 2. Do you want to convert correct answers to plain text?
+var ebSelectCorrectToText = true;
+
 
 // Polyfill for IE (thanks, MDN)
 Number.isInteger = Number.isInteger || function (value) {
@@ -43,6 +48,12 @@ function ebSelectAddMarker(selectElement, markerContent) {
     selectElement.insertAdjacentElement('afterend', newMarker);
 }
 
+// Convert an option to unclickable text
+function ebSelectConvertToText(selectElement, optionElement) {
+    'use strict';
+    selectElement.outerHTML = optionElement.innerHTML;
+}
+
 // Mark a selected option as correct or incorrect.
 function ebSelectMarkResult(event) {
     'use strict';
@@ -60,6 +71,9 @@ function ebSelectMarkResult(event) {
         selectList.classList.remove('select-option-incorrect');
         selectList.classList.add('select-option-correct');
         ebSelectAddMarker(selectList, locales[pageLanguage].questions['mark-correct']);
+        if (ebSelectCorrectToText === true) {
+            ebSelectConvertToText(selectList, selectedOption);
+        }
     } else {
         selectList.classList.remove('select-option-correct');
         selectList.classList.add('select-option-incorrect');
@@ -87,4 +101,4 @@ function ebSelects(selects) {
 }
 
 // Go!
-ebSelects(selects);
+ebSelects(ebSelectLists);
