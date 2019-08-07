@@ -626,11 +626,9 @@ set /p process=Enter a number and hit return.
 
             cd %location%
             if "%subdirectory%"=="" call gulp epub:xhtmlLinks
-            if "%subdirectory%"=="" call gulp epub:xhtmlLinksInXml
             if "%subdirectory%"=="" call gulp epub:xhtmlFiles
             if "%subdirectory%"=="" call gulp epub:cleanHtmlFiles
             if not "%subdirectory%"=="" call gulp epub:xhtmlLinks --language %subdirectory%
-            if not "%subdirectory%"=="" call gulp epub:xhtmlLinksInXml --language %subdirectory%
             if not "%subdirectory%"=="" call gulp epub:xhtmlFiles --language %subdirectory%
             if not "%subdirectory%"=="" call gulp epub:cleanHtmlFiles --language %subdirectory%
             cd %location%/_site/epub

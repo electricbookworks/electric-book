@@ -19,7 +19,6 @@ var gulp = require('gulp'),
     fs = require('fs'),
     yaml = require('js-yaml'),
     debug = require('gulp-debug'),
-    replace = require('gulp-replace'),
     del = require('del'),
     cheerio = require('gulp-cheerio');
 
@@ -486,20 +485,14 @@ gulp.task('mathjax:all', function (done) {
 
 // Convert all file names in internal links from .html to .xhtml.
 // This is required for epub output to avoid EPUBCheck warnings.
-// Cheerio may break XML files like .ncx and .opf, so can't be used on those.
-// To do: check if we can use Cheerio for this,
-// and remove regex-based fix below if so.
 gulp.task('epub:xhtmlLinks', function (done) {
     'use strict';
 
-    console.log('Converting internal links to .xhtml in ' + paths.epub.src);
-    gulp.src([paths.epub.src], {base: './'})
-        // .pipe(dom(convertLinksHTMLtoXHTML))
+    gulp.src([paths.epub.src, '_site/epub/package.opf', '_site/epub/toc.ncx'], {base: './'})
         .pipe(cheerio({
             run: function ($) {
                 var target, newTarget;
                 $('[href*=".html"], [src*=".html"]').each(function () {
-                    console.log('Processing link: ' + $(this));
                     if ($(this).attr('href')) {
                         target = $(this).attr('href');
                     } else if ($(this).attr('src')) {
@@ -507,19 +500,14 @@ gulp.task('epub:xhtmlLinks', function (done) {
                     } else {
                         return;
                     }
-                    console.log('Found target: ' + target);
 
                     if (target.includes('.html') && !target.includes('http')) {
-                        console.log('Target includes ".html", replacing with ".xhtml"');
                         newTarget = target.replace('.html', '.xhtml');
                         if ($(this).attr('href')) {
                             $(this).attr('href', newTarget);
                         } else if ($(this).attr('src')) {
                             $(this).attr('src', newTarget);
                         }
-                        console.log('Link now: ' + $(this));
-                    } else {
-                        console.log('This target is an external link or doesn\'t include ".html".');
                     }
                 });
             },
@@ -532,24 +520,9 @@ gulp.task('epub:xhtmlLinks', function (done) {
     done();
 });
 
-// Change links in XML files
-// To do: This may not be necessary if Cheerio can do the job above
-// without breaking the XML.
-gulp.task('epub:xhtmlLinksInXml', function (done) {
-    'use strict';
-
-    gulp.src(['_site/epub/package.opf', '_site/epub/toc.ncx'], {base: './'})
-        // See http://mdn.io/string.replace#Specifying_a_string_as_a_parameter
-        .pipe(debug({title: 'Converting internal links to .xhtml in '}))
-        .pipe(replace(/(src=.+)\.html/g, '$1.xhtml'))
-        .pipe(replace(/(href=.+)\.html/g, '$1.xhtml'))
-        .pipe(gulp.dest('./'));
-    done();
-});
-
-
 // Rename epub .html files to .xhtml.
-// Creates a copy of the file that must then be cleaned out.
+// Creates a copy of the file that must then be cleaned out
+// with the subsequent gulp task `epub:cleanHtmlFiles``
 gulp.task('epub:xhtmlFiles', function (done) {
     'use strict';
 
