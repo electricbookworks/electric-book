@@ -2,6 +2,7 @@
 
 ## Latest
 
+* [Convert .html to .xhtml on epub output](https://github.com/electricbookworks/electric-book/pull/398)
 * [Don't force a blank baseurl on web output](https://github.com/electricbookworks/electric-book/pull/397)
 * [Localise home-page title element in locales](https://github.com/electricbookworks/electric-book/pull/396)
 * [Add ability to hide content behind show-hide buttons](https://github.com/electricbookworks/electric-book/pull/394)
