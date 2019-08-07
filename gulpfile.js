@@ -18,7 +18,9 @@ var gulp = require('gulp'),
     mathjax = require('gulp-mathjax-page'),
     fs = require('fs'),
     yaml = require('js-yaml'),
-    debug = require('gulp-debug');
+    debug = require('gulp-debug'),
+    del = require('del'),
+    cheerio = require('gulp-cheerio');
 
 // Get arrays of possible book and language paths
 var metadata = yaml.load(fs.readFileSync('_data/meta.yml', 'utf8'));
@@ -97,6 +99,10 @@ var paths = {
     text: {
         src: '_site/' + book + language + '/text/*.html',
         dest: '_site/' + book + language + '/text/'
+    },
+    epub: {
+        src: '_site/epub' + language + '/text/*.html',
+        dest: '_site/epub' + language + '/text/'
     },
     js: {
         src: [],
@@ -475,6 +481,66 @@ gulp.task('mathjax:all', function (done) {
             .pipe(gulp.dest(mathJaxFilePaths[k]));
         done();
     }
+});
+
+// Convert all file names in internal links from .html to .xhtml.
+// This is required for epub output to avoid EPUBCheck warnings.
+gulp.task('epub:xhtmlLinks', function (done) {
+    'use strict';
+
+    gulp.src([paths.epub.src, '_site/epub/package.opf', '_site/epub/toc.ncx'], {base: './'})
+        .pipe(cheerio({
+            run: function ($) {
+                var target, newTarget;
+                $('[href*=".html"], [src*=".html"]').each(function () {
+                    if ($(this).attr('href')) {
+                        target = $(this).attr('href');
+                    } else if ($(this).attr('src')) {
+                        target = $(this).attr('src');
+                    } else {
+                        return;
+                    }
+
+                    if (target.includes('.html') && !target.includes('http')) {
+                        newTarget = target.replace('.html', '.xhtml');
+                        if ($(this).attr('href')) {
+                            $(this).attr('href', newTarget);
+                        } else if ($(this).attr('src')) {
+                            $(this).attr('src', newTarget);
+                        }
+                    }
+                });
+            },
+            parserOptions: {
+                xmlMode: true
+            }
+        }))
+        .pipe(debug({title: 'Converting internal links to .xhtml in '}))
+        .pipe(gulp.dest('./'));
+    done();
+});
+
+// Rename epub .html files to .xhtml.
+// Creates a copy of the file that must then be cleaned out
+// with the subsequent gulp task `epub:cleanHtmlFiles``
+gulp.task('epub:xhtmlFiles', function (done) {
+    'use strict';
+
+    console.log('Renaming *.html to *.xhtml in ' + paths.epub.src);
+    gulp.src(paths.epub.src)
+        .pipe(debug({title: 'Renaming '}))
+        .pipe(rename({
+            extname: '.xhtml'
+        }))
+        .pipe(gulp.dest(paths.epub.dest));
+    done();
+});
+
+// Clean out renamed .html files
+gulp.task('epub:cleanHtmlFiles', function () {
+    'use strict';
+    console.log('Removing old *.html files in ' + paths.epub.src);
+    return del(paths.epub.src);
 });
 
 // when running `gulp`, do the image tasks
