@@ -430,6 +430,18 @@ You may need to reload the web page once this server is running."
 				echo "Copying Javascript..."
 				mkdir "$location"/_site/epub/js && cp -a "$location"/_site/js/. "$location"/_site/epub/js/
 			fi
+			# Convert all .html files and internal links to .xhtml
+			echo "Renaming .html to .xhtml..."
+			cd "$location"
+			if [ "$epubsubdirectory" = "" ]; then
+				gulp epub:xhtmlLinks
+				gulp epub:xhtmlFiles
+				gulp epub:cleanHtmlFiles
+			else
+				gulp epub:xhtmlLinks --language $epubsubdirectory
+				gulp epub:xhtmlFiles --language $epubsubdirectory
+				gulp epub:cleanHtmlFiles --language $epubsubdirectory
+			fi
 			# Now to create a compressed epub.
 			# First, though, if they exist, remove previous .zip and .epub files that we will replace.
 			echo "Removing previous zips or epubs..."
@@ -548,13 +560,13 @@ You may need to reload the web page once this server is running."
 			echo "Epub created!"
 			# Validation
 			echo "To run validation, enter the path to the EpubCheck folder on your machine."
-			echo "Hit enter for the default: /usr/local/bin/epubcheck-4.2.0"
+			echo "Hit enter for the default: /usr/local/bin/epubcheck-4.2.2"
 			echo "(You can get EpubCheck from https://github.com/IDPF/epubcheck/releases"
 			echo "Or go to http://validator.idpf.org to validate online.)"
 			read pathtoepubcheck
 			if [ "$pathtoepubcheck" = "" ]; then
 				echo "Okay, using default EpubCheck location. "
-				pathtoepubcheck="/usr/local/bin/epubcheck-4.2.0"
+				pathtoepubcheck="/usr/local/bin/epubcheck-4.2.2"
 			fi
 			java -jar "$pathtoepubcheck"/epubcheck.jar "$epubfilename".epub
 			# Open file browser to see epub
