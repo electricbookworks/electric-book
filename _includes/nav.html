@@ -3,16 +3,16 @@
         {% comment %}If we're neither in a book or a docs page,
         show the project name.{% endcomment %}
         {% if is-book-subdirectory != true and is-docs-page != true %}
-        <h2>{{ project-name }}</h2>
+        <div class="nav-title">{{ project-name }}</div>
 
         {% comment %}If docs are generating, and we're on a docs page
         show a docs heading and version number{% endcomment %}
         {% elsif output-docs == true and is-docs-page == true %}
-        <h2>Electric Book docs (v{{ site.version }})</h2>
+        <div class="nav-title">Electric Book docs (v{{ site.version }})</div>
 
         {% comment %}Otherwise show the book title{% endcomment %}
         {% else %}
-        <h2>{{ title }}</h2>
+        <div class="nav-title">{{ title }}</div>
         {% endif %}
 
         {% comment %}Add the search box.{% endcomment %}
