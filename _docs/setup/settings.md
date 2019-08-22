@@ -91,7 +91,7 @@ web:
 ```
 
 {% raw %}
-When this is `true`, SVG injection happens automatically for all images added with `{% include figure %}` or `{% include image %}`, and to any image to which you apply the class `inject-svg`.
+When this is `true`, SVG injection happens automatically for all images added with `{% include figure %}` or `{% include image %}`, and to any image to which you apply the class `inject-svg`. To turn off SVG-injection for a specific image only, add the class `no-inject-svg` to it.
 {% endraw %}
 
 Injecting SVGs can have side-effects, depending how your SVGs are created and coded. If you are going to inject SVGs, we recommend:
