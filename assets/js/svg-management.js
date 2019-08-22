@@ -62,7 +62,7 @@ SVGInject.setOptions({
 // that have an 'inject-svg' class.
 function ebInjectSVGs() {
     'use strict';
-    var ebSVGsToInject = document.querySelectorAll('img.inject-svg');
+    var ebSVGsToInject = document.querySelectorAll('img.inject-svg:not(.no-inject-svg)');
     var i;
     for (i = 0; i < ebSVGsToInject.length; i += 1) {
         SVGInject(ebSVGsToInject[i]);
