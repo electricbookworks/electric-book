@@ -11,5 +11,9 @@ $print-cross-refs: true !default;
 	    // if we're not already on the same page as the target reference.
 	    content: prince-script(pagereference, counter(page), target-counter(attr(href), page));
 	}
+	// Use `show-page-number-lower-roman` for page refs to lower-roman pages
+	a.show-page-number-lower-roman::after {
+	    content: prince-script(pagereference, counter(page), target-counter(attr(href), page, lower-roman));
+	}
 
 }
