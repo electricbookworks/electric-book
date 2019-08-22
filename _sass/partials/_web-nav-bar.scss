@@ -226,7 +226,11 @@ $nav-bar-back-button-hide: false !default;
             margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
         } // .widgets
 
-        h2 {
+        .nav-title {
+            color: $nav-bar-title-color;
+            font-size: $font-size-default * 1.5;
+            line-height: $line-height-default * 0.75;
+            margin: ($line-height-default) 0 ($line-height-default * 0.5) 0;
             padding-left: 0.4em;
         }
 
