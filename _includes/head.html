@@ -150,7 +150,7 @@
     {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-homepage == true or is-project-search == true or page.collection == "docs" %}
-        <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/assets/styles/{{ app-stylesheet }}" />
+        <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-root-directory }}assets/styles/{{ app-stylesheet }}" />
     {% else %}
 
     {% comment %}If this is a translation with its own styles,
