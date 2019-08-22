@@ -6,11 +6,11 @@
 Let user use `file` or `src` for the image file,
 defaulting to src. {% endcomment %}
 {% if include.file %}
-	{% assign image = include.file | split: "." | first %}
-	{% assign file-extension = include.file | split: "." | last %}
+    {% assign image = include.file | split: "." | first %}
+    {% assign file-extension = include.file | split: "." | last %}
 {% elsif include.src %}
-	{% assign image = include.src | split: "." | first %}
-	{% assign file-extension = include.src | split: "." | last %}
+    {% assign image = include.src | split: "." | first %}
+    {% assign file-extension = include.src | split: "." | last %}
 {% endif %}
 
 {% comment %} Capture and clean any alt text. {% endcomment %}
@@ -40,7 +40,8 @@ https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% en
     sizes="auto"
     srcset="{{ images }}/{{ image }}-320.{{ file-extension }} 320w,
     {{ images }}/{{ image }}-640.{{ file-extension }} 640w,
-    {{ images }}/{{ image }}-1024.{{ file-extension }} 1024w"
+    {{ images }}/{{ image }}-1024.{{ file-extension }} 1024w,
+    {{ images }}/{{ image }}-2048.{{ file-extension }} 2048w"
     {% endunless %}
     {% endif %}
 
