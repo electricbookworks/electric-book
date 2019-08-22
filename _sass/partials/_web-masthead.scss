@@ -21,8 +21,11 @@ $web-masthead: true !default;
         ul {
             list-style-type: none;
             margin: 0 auto;
-            min-height: $line-height-default;
-            padding: 0.5em 0;
+            // Leave space left and right for the nav label ('Contents' button)
+            padding: 0.5em ($line-height-default * 4);
+            // Keep masthead height when li is display:none,
+            // including 1em for the padding top and bottom when content is displayed
+            min-height: $line-height-default + 1em;
             li {
                 display: none; // hide masthead breadcrumbs as mobile-first default
                 @media only screen and (min-width: $max-width-default) {
