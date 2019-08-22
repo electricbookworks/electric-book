@@ -8,9 +8,9 @@
 //
 // 1. Use CSS selectors to list the headings that will
 //    define each accordion section, e.g. '#content h2'
-var accordionHeads = '#content h2';
+var accordionHeads = '#content > h2';
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content h2:first-of-type';
+var defaultAccordionHead = '#content > h2:first-of-type, #content header > h2:first-of-type';
 // --------------------------------------------------------------
 
 function ebAccordionInit() {
