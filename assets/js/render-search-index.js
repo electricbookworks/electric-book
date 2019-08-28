@@ -40,8 +40,12 @@ function getPageData(url, count, callback) {
         // });
         var entry = 'index.addDoc({\n    id: ' + count + ',\n    title: "' + title + '",\n    content: "' + content + '"\n});\n';
 
+        // Strip out backslashes to avoid invalid unicode escape sequences
+        // e.g. at MathJax you can get \\uparrow, where \u will throw a JS exception
+        var entryCleaned = entry.replace(/\\/g, '');
+
         // Add entry to the index array
-        index += entry;
+        index += entryCleaned;
 
         callback();
 
