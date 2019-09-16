@@ -2,6 +2,7 @@
 
 ## Latest
 
+* [Create TOCs outside of book files (and other nav fixes)](https://github.com/electricbookworks/electric-book/pull/413)
 * [Convert .html to .xhtml on epub output](https://github.com/electricbookworks/electric-book/pull/398)
 * [Don't force a blank baseurl on web output](https://github.com/electricbookworks/electric-book/pull/397)
 * [Localise home-page title element in locales](https://github.com/electricbookworks/electric-book/pull/396)
