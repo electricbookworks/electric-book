@@ -50,18 +50,19 @@ defined in meta.yml. This is defined in _config.yml as nav-source.
   and we're not on a docs page, create the full book nav.{% endcomment %}
   {% else %}
 
-    {% comment %}Get an array of all the pages we're listing to check against{% endcomment %}
+    {% comment %}Get an array of existing pages to check against{% endcomment %}
+    {% assign site-pages-in-book = site.pages | where_exp: 'p', 'p.path contains book-directory' %}
     {% assign nav-tree-page-list = "" | split: "|" %}
-    {% for page in include.nav-tree %}
-      {% capture nav-tree-page-name %}{{ page.file | split: "." | first }}{% endcapture %}
+    {% for page in site-pages-in-book %}
+      {% capture nav-tree-page-name %}{{ page.name | split: "." | first }}{% endcapture %}
       {% assign nav-tree-page-list = nav-tree-page-list | push: nav-tree-page-name %}
     {% endfor %}
 
-    <ol{% if nav-tree-page-list contains current-file %} class="active"{% endif %}>
+    <ol>
       {% for item in include.nav-tree | sort: "order" %}
         <li class="{% if item.file == current-file %}active{% endif %}
         {% unless nav-tree-page-list contains item.file %}no-file{% endunless %}
-        {% if item.link == "none" %}no-link{% endif %}
+        {% if item.link == 'none' %}no-link{% endif %}
         {% if item.children == nil %}no-children{% else %}has-children{% endif %}
         {% if item.class != nil %}{{ item.class }}{% endif %}">
             <a {% if item.file != nil and item.link != "none" %}href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %}
@@ -69,7 +70,7 @@ defined in meta.yml. This is defined in _config.yml as nav-source.
                 {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
             </a>
             {% if item.children != nil %}
-              {% include nav-list nav-tree=item.children has-active-child=has-active-child %}
+              {% include nav-list nav-tree=item.children %}
             {% endif %}
         </li>
       {% endfor %}

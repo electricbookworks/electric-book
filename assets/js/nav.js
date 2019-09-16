@@ -1,116 +1,125 @@
-"use strict";
+/*jslint browser */
+/*globals window */
 
 function ebNav() {
+    'use strict';
 
-  // let Opera Mini use the footer-anchor pattern
-  if (navigator.userAgent.indexOf('Opera Mini') === - 1) {
+    // let Opera Mini use the footer-anchor pattern
+    if (navigator.userAgent.indexOf('Opera Mini') === -1) {
 
-    // let newer browsers use js-powered menu
-    if('querySelector' in document &&
-       'addEventListener' in window) {
+        // let newer browsers use js-powered menu
+        if (document.querySelector !== "undefined" &&
+                window.addEventListener) {
 
-      // set js nav class
-      document.documentElement.classList.add('js-nav');
+            // set js nav class
+            document.documentElement.classList.add('js-nav');
 
-      // set up the variables
-      var menuLink = document.querySelector('[href="#nav"]');
-      var menu = document.querySelector('#nav');
+            // set up the variables
+            var menuLink = document.querySelector('[href="#nav"]');
+            var menu = document.querySelector('#nav');
 
-      // hide the menu until we click the link
-      menu.classList.add("visuallyhidden");
+            // hide the menu until we click the link
+            menu.classList.add("visuallyhidden");
 
-      // add a close button
-      var closeButton = '<button data-toggle data-nav-close>';
-          closeButton += '<span class="visuallyhidden">Close menu</span>';
-          closeButton += '</button>';
-      menu.insertAdjacentHTML('afterBegin', closeButton);
+            // add a close button
+            var closeButton = '<button data-toggle data-nav-close>';
+            closeButton += '<span class="visuallyhidden">Close menu</span>';
+            closeButton += '</button>';
+            menu.insertAdjacentHTML('afterBegin', closeButton);
 
-      // hide the children and add the button for toggling
-      var subMenus = document
-                    .querySelectorAll('#nav .has-children, #nav .has-children');
-      var showChildrenButton = '<button data-toggle data-toggle-nav>';
-          showChildrenButton += '<span class="visuallyhidden">Toggle</span>'
-          showChildrenButton += '</button>';
-      for (var i = 0; i < subMenus.length; i++) {
-        subMenus[i].querySelector('ol, ul').classList.add('visuallyhidden');
-        subMenus[i].querySelector('a, .docs-list-title')
-                   .insertAdjacentHTML('afterend', showChildrenButton);
-      };
+            // hide the children and add the button for toggling
+            var subMenus = document
+                .querySelectorAll('#nav .has-children, #nav .has-children');
+            var showChildrenButton = '<button data-toggle data-toggle-nav>';
+            showChildrenButton += '<span class="visuallyhidden">Toggle</span>';
+            showChildrenButton += '</button>';
+            var i;
+            for (i = 0; i < subMenus.length; i += 1) {
+                subMenus[i].querySelector('ol, ul').classList.add('visuallyhidden');
+                subMenus[i].querySelector('a, .docs-list-title')
+                    .insertAdjacentHTML('afterend', showChildrenButton);
+            }
 
-      // show the menu when we click the link
-      menuLink.addEventListener("click", function(ev) {
-        ev.preventDefault();
-        menu.classList.toggle("visuallyhidden");
-        document.documentElement.classList.toggle('js-nav-open');
-      }, true);
+            // Mark parents of active children active too
+            var activeChildren = menu.querySelectorAll('li.active');
+            var j, equallyActiveParent;
+            for (j = 0; j < activeChildren.length; j += 1) {
+                equallyActiveParent = activeChildren[j].closest('li:not(.active)');
+                if (equallyActiveParent && equallyActiveParent !== 'undefined') {
+                    equallyActiveParent.classList.add('active');
+                }
+            }
 
-      var ebHideMenu = function() {
-          menu.classList.add("visuallyhidden");
-          document.documentElement.classList.remove('js-nav-open');
-      };
-
-      // listen for clicks inside the menu
-      menu.addEventListener("click", function(ev) {
-        var clickedElement = ev.target || ev.srcElement;
-
-        // hide the menu when we click the button
-        if (clickedElement.hasAttribute("data-nav-close")) {
-            ev.preventDefault();
-            ebHideMenu();
-            return;
-        };
-
-        // show the children when we click a .has-children
-        if (clickedElement.hasAttribute("data-toggle-nav")) {
-            ev.preventDefault();
-            clickedElement.classList.toggle('show-children');
-            clickedElement.nextElementSibling.classList.toggle('visuallyhidden');
-            return;
-        };
-
-        // if it's an anchor with an href (an in-page link)
-        if (clickedElement.tagName === "A" && clickedElement.getAttribute('href')) {
-            ebHideMenu();
-            return;
-        };
-
-        // if it's an anchor without an href (a nav-only link)
-        if (clickedElement.tagName === "A") {
-            clickedElement.nextElementSibling.classList.toggle('show-children');
-            clickedElement.nextElementSibling.nextElementSibling.classList.toggle('visuallyhidden');
-            return;
-        };
-
-
-      });
-
-      // This enables a back button, e.g. for where we don't have a
-      // browser or hardware back button, and we have Jekyll add one.
-      // This button is hidden in scss with `$nav-bar-back-button-hide: true;`.
-      // If the user has navigated (i.e. there is a document referrer),
-      // listen for clicks on our back button and go back when clicked.
-      // We check history.length > 2 because new tab plus landing page
-      // can constitute 2 entries in the history (varies by browser).
-      if (document.referrer != "" || window.history.length > 2) {
-        var navBackButton = document.querySelector('a.nav-back-button');
-        if (navBackButton) {
-            navBackButton.addEventListener('click', function(ev) {
+            // show the menu when we click the link
+            menuLink.addEventListener("click", function (ev) {
                 ev.preventDefault();
-                console.log('Going back...');
-                window.history.back();
+                menu.classList.toggle("visuallyhidden");
+                document.documentElement.classList.toggle('js-nav-open');
+            }, true);
+
+            var ebHideMenu = function () {
+                menu.classList.add("visuallyhidden");
+                document.documentElement.classList.remove('js-nav-open');
+            };
+
+            // listen for clicks inside the menu
+            menu.addEventListener("click", function (ev) {
+                var clickedElement = ev.target || ev.srcElement;
+
+                // hide the menu when we click the button
+                if (clickedElement.hasAttribute("data-nav-close")) {
+                    ev.preventDefault();
+                    ebHideMenu();
+                    return;
+                }
+
+                // show the children when we click a .has-children
+                if (clickedElement.hasAttribute("data-toggle-nav")) {
+                    ev.preventDefault();
+                    clickedElement.classList.toggle('show-children');
+                    clickedElement.nextElementSibling.classList.toggle('visuallyhidden');
+                    return;
+                }
+
+                // if it's an anchor with an href (an in-page link)
+                if (clickedElement.tagName === "A" && clickedElement.getAttribute('href')) {
+                    ebHideMenu();
+                    return;
+                }
+
+                // if it's an anchor without an href (a nav-only link)
+                if (clickedElement.tagName === "A") {
+                    clickedElement.nextElementSibling.classList.toggle('show-children');
+                    clickedElement.nextElementSibling.nextElementSibling.classList.toggle('visuallyhidden');
+                    return;
+                }
             });
-        };
-      } else {
-          var navBackButton = document.querySelector('a.nav-back-button');
-          if (navBackButton) {
-            navBackButton.parentNode.removeChild(navBackButton);
-          };
-      };
 
-    };
-
-  };
-
-};
+            // This enables a back button, e.g. for where we don't have a
+            // browser or hardware back button, and we have Jekyll add one.
+            // This button is hidden in scss with `$nav-bar-back-button-hide: true;`.
+            // If the user has navigated (i.e. there is a document referrer),
+            // listen for clicks on our back button and go back when clicked.
+            // We check history.length > 2 because new tab plus landing page
+            // can constitute 2 entries in the history (varies by browser).
+            var navBackButton;
+            if (document.referrer !== "" || window.history.length > 2) {
+                navBackButton = document.querySelector('a.nav-back-button');
+                if (navBackButton) {
+                    navBackButton.addEventListener('click', function (ev) {
+                        ev.preventDefault();
+                        console.log('Going back...');
+                        window.history.back();
+                    });
+                }
+            } else {
+                navBackButton = document.querySelector('a.nav-back-button');
+                if (navBackButton) {
+                    navBackButton.parentNode.removeChild(navBackButton);
+                }
+            }
+        }
+    }
+}
 
 ebNav();

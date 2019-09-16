@@ -8,73 +8,77 @@ Now check which output format we're creating, and capture its toc.
 Fall back to print-pdf toc, then web nav list.
 {% endcomment %}
 
-{% if site.output == "print-pdf" %}
-    {% if print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
+{% unless include.start %}
+
+    {% if site.output == "print-pdf" %}
+        {% if print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
+    {% elsif site.output == "screen-pdf" %}
+        {% if screen-pdf-toc != nil %}
+            {% assign toc = screen-pdf-toc %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
+    {% elsif site.output == "epub" %}
+        {% if epub-toc != nil %}
+            {% assign toc = epub-toc %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
+    {% elsif site.output == "web" %}
+        {% if web-toc != nil %}
+            {% assign toc = web-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
+    {% elsif site.output == "app" %}
+        {% if app-toc != nil %}
+            {% assign toc = app-toc %}
+        {% elsif app-nav-tree != nil %}
+            {% assign toc = app-nav-tree %}
+        {% elsif web-toc != nil %}
+            {% assign toc = web-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
     {% else %}
-        Please define a TOC or web nav in meta.yml.
+        {% if web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
     {% endif %}
 
-{% elsif site.output == "screen-pdf" %}
-    {% if screen-pdf-toc != nil %}
-        {% assign toc = screen-pdf-toc %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% elsif site.output == "epub" %}
-    {% if epub-toc != nil %}
-        {% assign toc = epub-toc %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% elsif site.output == "web" %}
-    {% if web-toc != nil %}
-        {% assign toc = web-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% elsif site.output == "app" %}
-    {% if app-toc != nil %}
-        {% assign toc = app-toc %}
-    {% elsif app-nav-tree != nil %}
-        {% assign toc = app-nav-tree %}
-    {% elsif web-toc != nil %}
-        {% assign toc = web-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% else %}
-    {% if web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% endif %}
+{% endunless %}
 
 {% comment %}
 If the file that called this include didn't specify a start parameter, then
@@ -88,6 +92,20 @@ Otherwise, the toc-branch should be the children called by this include recursiv
 {% if toc-branch == nil %}
     {% assign toc-branch = toc %}
 {% endif %}
+
+{% comment %}If we're not inside a book, we need a path to each file.
+By default, assume we're linking to files in 'book',
+and allow setting a different book directory as a 'book' argument.{% endcomment %}
+{% if is-book-directory %}
+    {% capture toc-path-to-file %}{% endcapture %}
+{% else %}
+    {% if include.book %}
+        {% capture toc-path-to-file %}{{ include.book }}/text/{% endcapture %}
+    {% else %}
+        {% capture toc-path-to-file %}book/text/{% endcapture %}
+    {% endif %}
+{% endif %}
+
 
 {% comment %}
 Now we'll use all that to output the toc list.
@@ -126,7 +144,7 @@ at the top of the toc, put this in a nav element.{% endcomment %}
     {% if include-in-toc == true %}
 
         <li class="toc-entry-title{% if page.url contains item.file %} active{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
-            {% if item.file != nil %}<a href="{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
+            {% if item.file != nil %}<a href="{{ toc-path-to-file }}{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
                {% if page.url contains item.file %}class="active"{% endif %}>{% endif %}
                 <span class="toc-entry-text">{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>
             {% if item.file != nil %}</a>{% endif %}
