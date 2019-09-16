@@ -9,7 +9,7 @@ function ebTables() {
         return;
     }
 
-    var tables = document.querySelectorAll('.figure table');
+    var tables = document.querySelectorAll('table');
 
     tables.forEach(function (table) {
         // make the wrapper and add a class
