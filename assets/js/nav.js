@@ -45,7 +45,9 @@ function ebNav() {
             var j, equallyActiveParent;
             for (j = 0; j < activeChildren.length; j += 1) {
                 equallyActiveParent = activeChildren[j].closest('li:not(.active)');
-                equallyActiveParent.classList.add('active');
+                if (equallyActiveParent && equallyActiveParent !== 'undefined') {
+                    equallyActiveParent.classList.add('active');
+                }
             }
 
             // show the menu when we click the link
