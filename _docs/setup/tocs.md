@@ -86,6 +86,20 @@ in a markdown file. This tag generates a table of contents. In the default templ
 
 Epubs have special TOC needs. See the [epub output section on metadata](../output/epub-output#metadata-and-settings).
 
+## TOCs outside of books
+
+Sometimes you may want to place the TOC of a book on a page that isn't inside that book's directly – on the home page, for instance. To do this, you need to tell the `toc` include which book's TOC you're generating, like this:
+
+{% raw %}
+
+``` liquid
+{% include toc book="moon-potatoes" %}
+```
+
+{% endraw %}
+
+By default, the `toc` include will generate the TOC of the book in the `book`folder.
+
 ## TOCs of book parts
 
 Sometimes you may want to output a TOC of only part of a book. For instance, say your book has four parts, each containing several chapters. You may want each part page to include a TOC of its chapters.
@@ -100,10 +114,14 @@ It can take some advanced technical know-how to write the 'address' of that node
 
 We need to add the following two lines to our part page's markdown file. The first assigns the `children` node's data to a variable. The second includes the TOC on the page, using that variable:
 
+{% raw %}
+
 ```liquid
 {% assign my-chapter-list = site.data.meta.works[0].products[site.output].toc[4].children %}
 {% include toc start=my-chapter-list %}
 ```
+
+{% endraw %}
 
 If you want to know how that works, let's break it down. In `site.data.meta.works[0].products[site.output].toc[4].children`, each dot or `[` means we're drilling down into the data by one level:
 
