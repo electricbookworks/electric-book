@@ -8,73 +8,77 @@ Now check which output format we're creating, and capture its toc.
 Fall back to print-pdf toc, then web nav list.
 {% endcomment %}
 
-{% if site.output == "print-pdf" %}
-    {% if print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
+{% unless include.start %}
+
+    {% if site.output == "print-pdf" %}
+        {% if print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
+    {% elsif site.output == "screen-pdf" %}
+        {% if screen-pdf-toc != nil %}
+            {% assign toc = screen-pdf-toc %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
+    {% elsif site.output == "epub" %}
+        {% if epub-toc != nil %}
+            {% assign toc = epub-toc %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
+    {% elsif site.output == "web" %}
+        {% if web-toc != nil %}
+            {% assign toc = web-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
+    {% elsif site.output == "app" %}
+        {% if app-toc != nil %}
+            {% assign toc = app-toc %}
+        {% elsif app-nav-tree != nil %}
+            {% assign toc = app-nav-tree %}
+        {% elsif web-toc != nil %}
+            {% assign toc = web-toc %}
+        {% elsif web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
     {% else %}
-        Please define a TOC or web nav in meta.yml.
+        {% if web-nav-tree != nil %}
+            {% assign toc = web-nav-tree %}
+        {% elsif print-pdf-toc != nil %}
+            {% assign toc = print-pdf-toc %}
+        {% else %}
+            Please define a TOC or web nav in meta.yml.
+        {% endif %}
+
     {% endif %}
 
-{% elsif site.output == "screen-pdf" %}
-    {% if screen-pdf-toc != nil %}
-        {% assign toc = screen-pdf-toc %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% elsif site.output == "epub" %}
-    {% if epub-toc != nil %}
-        {% assign toc = epub-toc %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% elsif site.output == "web" %}
-    {% if web-toc != nil %}
-        {% assign toc = web-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% elsif site.output == "app" %}
-    {% if app-toc != nil %}
-        {% assign toc = app-toc %}
-    {% elsif app-nav-tree != nil %}
-        {% assign toc = app-nav-tree %}
-    {% elsif web-toc != nil %}
-        {% assign toc = web-toc %}
-    {% elsif web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% else %}
-    {% if web-nav-tree != nil %}
-        {% assign toc = web-nav-tree %}
-    {% elsif print-pdf-toc != nil %}
-        {% assign toc = print-pdf-toc %}
-    {% else %}
-        Please define a TOC or web nav in meta.yml.
-    {% endif %}
-
-{% endif %}
+{% endunless %}
 
 {% comment %}
 If the file that called this include didn't specify a start parameter, then
