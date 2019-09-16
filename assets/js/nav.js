@@ -40,6 +40,14 @@ function ebNav() {
                     .insertAdjacentHTML('afterend', showChildrenButton);
             }
 
+            // Mark parents of active children active too
+            var activeChildren = menu.querySelectorAll('li.active');
+            var j, equallyActiveParent;
+            for (j = 0; j < activeChildren.length; j += 1) {
+                equallyActiveParent = activeChildren[j].closest('li:not(.active)');
+                equallyActiveParent.classList.add('active');
+            }
+
             // show the menu when we click the link
             menuLink.addEventListener("click", function (ev) {
                 ev.preventDefault();
