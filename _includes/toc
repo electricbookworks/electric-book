@@ -93,6 +93,20 @@ Otherwise, the toc-branch should be the children called by this include recursiv
     {% assign toc-branch = toc %}
 {% endif %}
 
+{% comment %}If we're not inside a book, we need a path to each file.
+By default, assume we're linking to files in 'book',
+and allow setting a different book directory as a 'book' argument.{% endcomment %}
+{% if is-book-directory %}
+    {% capture toc-path-to-file %}{% endcapture %}
+{% else %}
+    {% if include.book %}
+        {% capture toc-path-to-file %}{{ include.book }}/text/{% endcapture %}
+    {% else %}
+        {% capture toc-path-to-file %}book/text/{% endcapture %}
+    {% endif %}
+{% endif %}
+
+
 {% comment %}
 Now we'll use all that to output the toc list.
 {% endcomment %}
@@ -130,7 +144,7 @@ at the top of the toc, put this in a nav element.{% endcomment %}
     {% if include-in-toc == true %}
 
         <li class="toc-entry-title{% if page.url contains item.file %} active{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
-            {% if item.file != nil %}<a href="{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
+            {% if item.file != nil %}<a href="{{ toc-path-to-file }}{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
                {% if page.url contains item.file %}class="active"{% endif %}>{% endif %}
                 <span class="toc-entry-text">{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>
             {% if item.file != nil %}</a>{% endif %}
