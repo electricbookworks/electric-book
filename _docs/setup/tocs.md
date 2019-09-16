@@ -98,7 +98,7 @@ Sometimes you may want to place the TOC of a book on a page that isn't inside th
 
 {% endraw %}
 
-By default, the `toc` include will generate the TOC of the book in the `book`folder.
+By default, the `toc` include will generate the TOC of the book in the `book` folder.
 
 ## TOCs of book parts
 
@@ -118,14 +118,21 @@ We need to add the following two lines to our part page's markdown file. The fir
 
 ```liquid
 {% assign my-chapter-list = site.data.meta.works[0].products[site.output].toc[4].children %}
+
 {% include toc start=my-chapter-list %}
 ```
 
 {% endraw %}
 
-If you want to know how that works, let's break it down. In `site.data.meta.works[0].products[site.output].toc[4].children`, each dot or `[` means we're drilling down into the data by one level:
+If you want to know how that works, let's break it down. In
 
-- `'site.data.meta` refers to all the data in `_data/meta.yml`.
+``` liquid
+site.data.meta.works[0].products[site.output].toc[4].children
+```
+
+each dot or `[` means we're drilling down into the data by one level:
+
+- `site.data.meta` refers to all the data in `_data/meta.yml`.
 - `.works` refers to the `works` node in that file.
 - `[0]` refers to the first work in the `works` node – that is, the first book in your project. If you wanted the second book in your project, you'd use [1]. The numbering of nodes in data starts at 0.
 - `.products` refers to the products – or output formats – of the work.
@@ -134,4 +141,4 @@ If you want to know how that works, let's break it down. In `site.data.meta.work
 - `[4]` refers to the fifth item in the `toc` node, which in our example is the part for which we want to list the chapters.
 - `.children` refers to the list of chapters inside that `toc[4]` part. That's what we want for our TOC!
 
-Finally, in `start=my-chapter-list` we're telling the TOC include to start listing chapters at the `my-chapter-list` we just defined.
+Finally, in `start=my-chapter-list` we're telling the TOC include to start listing chapters at `my-chapter-list`, which we just defined.
