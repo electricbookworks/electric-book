@@ -23,10 +23,11 @@ $web-footer: true !default;
 	#footer p,
 	#footer ol,
 	#footer ul {
-		font-size: $font-size-default * $font-size-smaller;
 		color: $footer-text-color;
-		text-indent: 0;
+		font-size: $font-size-default * $font-size-smaller;
+		line-height: $line-height-default;
 		margin: 0;
+		text-indent: 0;
 		a {
 			color: $footer-text-color;
 			text-decoration: underline;
