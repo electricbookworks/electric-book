@@ -25,8 +25,6 @@ $web-slides: true !default;
         .figure {
             clear: none;
             margin: 0 0 ($line-height-default * 0.5) 0; // default figures have margin-top
-            width: calc(100% - 1.6em); // even narrow figures fill the slide width
-            // float: left;
             padding: $line-height-default / 2;
             border: $rule-thickness solid $color-light;
             .figure-body {
@@ -137,7 +135,7 @@ $web-slides: true !default;
             display: inline-block;
             img {
                 background: $color-background; // important when image is transparent
-                border: ($line-height-default / 4) solid $color-background;
+                max-width: 100%;
                 object-fit: contain; // for really wide images, only necessary when screen is resized
                 padding: 0.1em; // important when browser doesn't support flex
                 @supports (display: flex) {
@@ -149,6 +147,7 @@ $web-slides: true !default;
                 max-width: 100%; // max-width: none doesn't work on IE
                 width: 100%; // required for Firefox
                 img {
+                    border: ($line-height-default / 4) solid $color-background;
                     width: 100%; // important for SVGs
                     max-width: 100%; // important for SVGs
                 }
@@ -217,10 +216,11 @@ $web-slides: true !default;
         // we don't put the thumbnails in the margin
         @media (min-width: $break-width-large) {
             &.nav-slides-many-many {
-                padding: $line-height-default / 4 0;
+                float: none;
                 margin: 0;
                 max-width: none;
-                float: none;
+                padding: $line-height-default / 4 0;
+                width: auto;
                 ol {
                     display: flex;
                 }
