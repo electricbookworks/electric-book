@@ -34,6 +34,7 @@ var ebSlidesMoveSummaryMeta = function (slidelines) {
         } else {
             // get the summary's .caption and .figure-source
             summaryCaption = summary.querySelector('.caption');
+            summarySubCaption = '';
             summaryFigureSource = summary.querySelector('.figure-source');
         }
 
@@ -45,13 +46,13 @@ var ebSlidesMoveSummaryMeta = function (slidelines) {
         // (To put the caption and source somewhere else,
         // move them using insertAdjacentHTML, which takes
         // beforebegin, afterbegin, beforeend, or afterend as params.)
-        if (summaryCaption !== null) {
+        if (summaryCaption !== null && summaryCaption !== '') {
             summaryMeta.insertAdjacentHTML('beforeend', summaryCaption.outerHTML);
         }
-        if (summarySubCaption !== null) {
+        if (summarySubCaption !== null && summarySubCaption !== '') {
             summaryMeta.insertAdjacentHTML('beforeend', summarySubCaption.outerHTML);
         }
-        if (summaryFigureSource !== null) {
+        if (summaryFigureSource !== null && summaryFigureSource !== '') {
             summaryMeta.insertAdjacentHTML('beforeend', summaryFigureSource.outerHTML);
         }
 
