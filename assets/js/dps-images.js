@@ -9,7 +9,8 @@
 // again on the right-hand page, showing its right-hand side.
 // This works with _print-dps-image.scss and any custom styling
 // on the classes .dps, .dps-image-left, .dps-image-right.
-// This should only run on PDF output.
+// This should only run on PDF output,
+// and currently only works with figures with a .dps class.
 
 // Get the DPS elements
 var ebDPSElements = document.querySelectorAll('.dps');
