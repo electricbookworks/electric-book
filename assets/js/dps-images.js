@@ -56,6 +56,9 @@ function ebDPSDuplicate(element) {
         }
     }
 
+    // Remove the original element
+    element.remove();
+
 }
 
 // Loop through images to duplicate and tag
