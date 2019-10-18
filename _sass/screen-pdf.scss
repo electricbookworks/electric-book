@@ -286,6 +286,7 @@ $print-openers: true !default;
 $print-index: true !default;
 $print-questions: true !default;
 $print-cross-refs: true !default;
+$print-slides: true !default;
 $print-sidebar: false !default; // Note that this is disabled by default
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true !default; // Sets content for headers and footers
@@ -352,6 +353,7 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 @import "partials/print-index";
 @import "partials/print-questions";
 @import "partials/print-cross-refs";
+@import "partials/print-slides";
 @import "partials/print-sidebar";
 @import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
 @import "partials/print-page-headers-footers-content"; // Sets content for headers and footers
