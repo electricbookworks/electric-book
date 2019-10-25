@@ -39,7 +39,6 @@
   font-weight: $left-margin-font-weight;
   text-transform: $left-margin-case;
   letter-spacing: $left-margin-letter-spacing;
-  writing-mode: vertical-rl; // should be vertical-lr but prince doesn't support it
 }
 
 @mixin left-margin-position() {
@@ -56,7 +55,6 @@
   font-weight: $right-margin-font-weight;
   text-transform: $right-margin-case;
   letter-spacing: $right-margin-letter-spacing;
-  writing-mode: vertical-rl;
 }
 
 @mixin right-margin-position() {
