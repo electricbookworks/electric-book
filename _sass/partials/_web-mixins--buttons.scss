@@ -1,0 +1,46 @@
+@mixin button($text-color: $color-background, $button-color: $color-buttons, $button-hover-color: $color-buttons-hover) {
+    display: inline-block;
+    font-family: $font-text-secondary;
+    color: $text-color;
+    line-height: 100%;
+    text-decoration: none;
+    background-color: $button-color;
+    padding: 0.2em 0.4em;
+    margin: 0;
+    text-align: center;
+    text-indent: 0;
+    border-radius: $button-border-radius;
+    cursor: pointer;
+    border: none;
+    &:hover {
+        background-color: $button-hover-color;
+    }
+}
+
+// This mixin used for close buttons
+// on items like footnote popups
+@mixin button-close($color) {
+    background: $color;
+    border-radius: 1em;
+    border: 0;
+    color: white;
+    display: inline-block;
+    font-family: $font-text-secondary;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1;
+    min-width: 1em;
+    padding: 0.15em 0.1em 0em 0.1em;
+    position: absolute;
+    right: -($line-height-default / 2);
+    text-align: center;
+    top: -($line-height-default / 2);
+    vertical-align: inherit;
+    &:before {
+        content: $nav-bar-close;
+        display: inline-block;
+        width: 1em;
+        position: relative;
+        top: -0.1em;
+    }
+}

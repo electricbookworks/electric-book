@@ -2,7 +2,7 @@ $print-buttons: true !default;
 @if $print-buttons {
 
     // Buttons
-        
+
     // Applied to inline elements
     a.button,
     em.button,
@@ -28,24 +28,7 @@ $print-buttons: true !default;
     h4.button,
     h5.button,
     h6.button, {
-        text-indent: 0;
-        text-align: center;
-        a {
-            font-family: $font-text-secondary;
-            display: inline-block;
-            background-color: $color-light;
-            color: inherit;
-            padding: $line-height-default / 2;
-            margin: $line-height-default 0;
-            border-radius: $button-border-radius;
-            text-decoration: none;
-            &:after {
-                content: " (" attr(href) ")";
-            }
-        }
-        & + p {
-            text-indent: 0;
-        }
+        @include button();
     }
 
     // An option to change the default text-indented paragraphs

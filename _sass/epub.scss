@@ -169,6 +169,9 @@ $epub-reset-sequences: true !default;
 // Reset ereader CSS as best we can
 @import "partials/epub-css-reset";
 
+// Load general-purpose mixins
+@import "partials/epub-mixins--buttons";
+@import "partials/epub-mixins--sidenotes";
 // Structural HTML components
 @import "partials/epub-wrappers";
 
