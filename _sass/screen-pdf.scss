@@ -29,8 +29,8 @@ $edition-suffix: null !default;
 // First, we set several variables related to overall page setup.
 $page-width: 152mm !default;
 $page-height: 229mm !default;
-$margin-top: 20mm !default;
-$margin-bottom: 20mm !default;
+$margin-top: 60pt !default; // set in points to align with baseline grid
+$margin-bottom: 60pt !default;
 $margin-outside: 20mm !default;
 $margin-inside: 20mm !default;
 $bleed: 0 !default;
