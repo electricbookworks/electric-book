@@ -105,6 +105,8 @@ $math-size-percent: 85%; // Adjust this to make math character size match your b
 
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
+// If not spacing paras, how large is the first-line indent on paragraphs?
+$paragraph-indent: $font-size-default !default;
 
 // Rounded corners
 $button-border-radius: 0.1em !default; // Roundness of button corners
@@ -359,6 +361,7 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 // Load general-purpose mixins
 @import "partials/print-mixins--buttons";
 @import "partials/print-mixins--sidenotes";
+
 // Conventional helper classes
 @import "partials/print-helpers";
 

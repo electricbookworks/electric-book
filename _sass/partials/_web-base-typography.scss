@@ -56,7 +56,7 @@ $web-base-typography: true !default;
     p {
         margin: 0;
         & + p {
-            text-indent: $line-height-default;
+            text-indent: $paragraph-indent;
         }
     }
 
