@@ -32,7 +32,10 @@ $print-sidebar: false !default;
     //
     //           <---------------- $content-width ------------------>
     //                              <------ $main-text-width ------->
-    // <--- $margin-outside -------->
+    //           <-----------> $sidebar-text-width
+    // <--------> $sidebar-margin-outside
+    //                        <----> $sidebar-margin-inside
+    // <--- $margin-outside ------->
 
     // Our page has a main text area (4-6) and a sidebar (2).
     // They are based on a multi-column grid, where the sidebar occupies
@@ -88,16 +91,34 @@ $print-sidebar: false !default;
     // ----------------------------------------------------------------------------
     // Now we calculate various widths based on the above settings.
     // Do not change these calculations or terrible things will happen to your layout.
-    $content-width: $page-width - $sidebar-margin-outside - $margin-inside;
-    $grid-unit-width: $content-width / ($column-gap-ratio * $grid-columns + ($grid-columns - 1));
-    $sidebar-text-width: $grid-unit-width * $column-gap-ratio;
-    $sidebar-margin-inside: $grid-unit-width;
-    $main-text-width: ($column-gap-ratio * $grid-unit-width * ($grid-columns - 1)) + $grid-unit-width;
+    $content-width: $page-width - $sidebar-margin-outside - $margin-inside !global;
+    $grid-unit-width: $content-width / ($column-gap-ratio * $grid-columns + ($grid-columns - 1)) !global;
+    $sidebar-text-width: $grid-unit-width * $column-gap-ratio !global;
+    $sidebar-margin-inside: $grid-unit-width !global;
+    $main-text-width: ($column-gap-ratio * $grid-unit-width * ($grid-columns - 1)) + $grid-unit-width !global;
     // $margin-outside is the distance from the edge of the page to the main text area.
     // The sidebar is outside the 'normal' margin.
     // Move items into the sidebar with negative $margin-outside.
-    $margin-outside: $sidebar-text-width + $sidebar-margin-inside + $sidebar-margin-outside;
+    $margin-outside: $sidebar-text-width + $sidebar-margin-inside + $sidebar-margin-outside !global;
     // Done calculating.
     // ----------------------------------------------------------------------------
 
+}
+
+@mixin sidebar() {
+    // Include this mixin to move elements to the sidebar.
+    // You can add padding in other classes after including sidebar().
+    // This approach is necessary at least in Prince 11 and earlier.
+    // The concept is that the sidenote must be very slightly (0.01pt here)
+    // too big for the available space, so that sidebar elements don't overlap
+    // but not too big to push visibly into the main text area.
+    box-sizing: border-box;
+    clear: outside;
+    float: outside;
+    width: $sidebar-text-width + 0.01pt;
+    margin-bottom: $line-height-default; // cosmetic only
+    margin-inside: $sidebar-margin-inside;
+    margin-outside: -($sidebar-text-width + $sidebar-margin-inside);
+    margin-top: 0; // cosmetic only
+    max-width: none; // overrides inherited template .sidenote rules
 }

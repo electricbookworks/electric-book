@@ -52,6 +52,7 @@ $grid-columns: 3 !default;
 //    A higher number makes the column wider, and the gap smaller.
 //    A lower number makes the column narrower, and the gap wider.
 $column-gap-ratio: 10 !default;
+// 4. Then use @mixin sidebar() to move elements into the sidebar
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
@@ -336,7 +337,7 @@ $print-index: true !default;
 $print-questions: true !default;
 $print-select-questions: true !default;
 $print-cross-refs: true !default;
-$print-sidebar: false !default; // Note that this is disabled by default
+$print-sidebar: false !default; // Note that this is disabled by default here and in the partial, remove !default to override partial
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true !default; // Sets content for headers and footers
 $print-page-headers-footers-style: true !default; // Sets styling for headers and footers
