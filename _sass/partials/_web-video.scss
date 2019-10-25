@@ -21,6 +21,7 @@ $web-video: true !default;
             // Add play button before iframe loads
             &:before {
                 content: "\25b6";
+                cursor: pointer;
                 position: absolute;
                 font-size: $font-size-default * 3;
                 top: 50%;
