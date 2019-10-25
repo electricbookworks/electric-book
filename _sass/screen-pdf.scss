@@ -357,6 +357,9 @@ $print-page-headers-footers-style: true !default; // Sets styling for headers an
 // Reset PrinceXML CSS
 @import "partials/print-css-reset";
 
+// Load general-purpose mixins
+@import "partials/print-mixins--buttons";
+@import "partials/print-mixins--sidenotes";
 
 // Conventional helper classes
 @import "partials/print-helpers";
