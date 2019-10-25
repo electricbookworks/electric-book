@@ -34,6 +34,7 @@
 }
 
 @mixin left-margin-style() {
+  color: $left-margin-text-color;
   font-family: $left-margin-font;
   font-size: $left-margin-font-size;
   font-weight: $left-margin-font-weight;
@@ -50,6 +51,7 @@
 }
 
 @mixin right-margin-style() {
+  color: $right-margin-text-color;
   font-family: $right-margin-font;
   font-size: $right-margin-font-size;
   font-weight: $right-margin-font-weight;
