@@ -174,12 +174,12 @@ $verso-bottom-left: normal !default;
 $verso-bottom-right: normal !default;
 $verso-bottom-left-corner: normal !default;
 $verso-bottom-right-corner: normal !default;
-$recto-left: normal !default;
-$recto-left-top: normal !default;
-$recto-left-bottom: normal !default;
-$recto-right: normal !default;
-$recto-right-top: normal !default;
-$recto-right-bottom: normal !default;
+$verso-left: normal !default;
+$verso-left-top: normal !default;
+$verso-left-bottom: normal !default;
+$verso-right: normal !default;
+$verso-right-top: normal !default;
+$verso-right-bottom: normal !default;
 
 // Recto (right-hand-page)
 $recto-top: string(h2-text, last) !default;
