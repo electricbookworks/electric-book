@@ -65,8 +65,16 @@ $print-figures: true !default;
 			float: bottom;
 			margin: $line-height-default 0 0 0;
 		}
+		&.float-bottom-next {
+			float: bottom next;
+			margin: $line-height-default 0 0 0;
+		}
 		&.float-top {
 			float: top;
+			margin: 0 0 $line-height-default 0;
+		}
+		&.float-top-next {
+			float: top next;
 			margin: 0 0 $line-height-default 0;
 		}
 		&.float-inside {
@@ -153,27 +161,27 @@ $print-figures: true !default;
 
 	// Image size options
 	// These need to be deprecated in favour of a multiple-based system.
-	.figure.x-small img {
-		width: auto;
-		max-height: $line-height-default * 5;
-	}
-	.figure.small img {
-		width: auto;
-		max-height: $line-height-default * 7;
-	}
-	.figure.medium img {
-		width: auto;
-		max-height: $line-height-default * 10;
-	}
-	.figure.large {
-		float: none;
-		page-break-before: always;
-	}
-	.figure.large img {
-		max-height: $page-height - ($margin-top + $margin-bottom);
-		max-width: 100%;
-		width: auto;
-	}
+	// .figure.x-small img {
+	// 	width: auto;
+	// 	max-height: $line-height-default * 5;
+	// }
+	// .figure.small img {
+	// 	width: auto;
+	// 	max-height: $line-height-default * 7;
+	// }
+	// .figure.medium img {
+	// 	width: auto;
+	// 	max-height: $line-height-default * 10;
+	// }
+	// .figure.large {
+	// 	float: none;
+	// 	page-break-before: always;
+	// }
+	// .figure.large img {
+	// 	max-height: $page-height - ($margin-top + $margin-bottom);
+	// 	max-width: 100%;
+	// 	width: auto;
+	// }
 
 	// For another way to fit images to size, see _print-fitting.scss
 

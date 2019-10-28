@@ -29,8 +29,8 @@ $edition-suffix: null !default;
 // First, we set several variables related to overall page setup.
 $page-width: 152mm !default;
 $page-height: 229mm !default;
-$margin-top: 20mm !default;
-$margin-bottom: 20mm !default;
+$margin-top: 60pt !default; // set in points to align with baseline grid
+$margin-bottom: 60pt !default;
 $margin-outside: 20mm !default;
 $margin-inside: 20mm !default;
 $bleed: 3mm !default;
@@ -52,6 +52,7 @@ $grid-columns: 3 !default;
 //    A higher number makes the column wider, and the gap smaller.
 //    A lower number makes the column narrower, and the gap wider.
 $column-gap-ratio: 10 !default;
+// 4. Then use @mixin sidebar() to move elements into the sidebar
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
@@ -104,6 +105,8 @@ $math-size-percent: 85%; // Adjust this to make math character size match your b
 
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
+// If not spacing paras, how large is the first-line indent on paragraphs?
+$paragraph-indent: $font-size-default !default;
 
 // Rounded corners
 $button-border-radius: 0.1em !default; // Roundness of button corners
@@ -336,7 +339,7 @@ $print-index: true !default;
 $print-questions: true !default;
 $print-select-questions: true !default;
 $print-cross-refs: true !default;
-$print-sidebar: false !default; // Note that this is disabled by default
+$print-sidebar: false !default; // Note that this is disabled by default here and in the partial, remove !default to override partial
 $print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $print-page-headers-footers-content: true !default; // Sets content for headers and footers
 $print-page-headers-footers-style: true !default; // Sets styling for headers and footers
@@ -354,6 +357,10 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 
 // Reset PrinceXML CSS
 @import "partials/print-css-reset";
+
+// Load general-purpose mixins
+@import "partials/print-mixins--buttons";
+@import "partials/print-mixins--sidenotes";
 
 // Conventional helper classes
 @import "partials/print-helpers";

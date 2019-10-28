@@ -45,6 +45,8 @@ $font-size-bigger: 2 !default; // How many times bigger than font-size-default f
 
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
+// If not spacing paras, how large is the first-line indent on paragraphs?
+$paragraph-indent: $font-size-default !default;
 
 // Extra margin
 // Some epub readers don't add any margin to their viewport.
@@ -168,6 +170,10 @@ $epub-reset-sequences: true !default;
 
 // Reset ereader CSS as best we can
 @import "partials/epub-css-reset";
+
+// Load general-purpose mixins
+@import "partials/epub-mixins--buttons";
+@import "partials/epub-mixins--sidenotes";
 
 // Structural HTML components
 @import "partials/epub-wrappers";

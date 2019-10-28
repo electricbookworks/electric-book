@@ -28,9 +28,7 @@ $web-accordion: true !default;
     }
 
     [data-accordion="closed"] {
-        @media (min-width: $break-width-small) {
-            font-size: $font-size-default;
-        }
+        font-size: $font-size-default;
         &:after {
             content: $nav-bar-children-prompt;
         }

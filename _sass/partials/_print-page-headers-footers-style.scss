@@ -34,12 +34,12 @@
 }
 
 @mixin left-margin-style() {
+  color: $left-margin-text-color;
   font-family: $left-margin-font;
   font-size: $left-margin-font-size;
   font-weight: $left-margin-font-weight;
   text-transform: $left-margin-case;
   letter-spacing: $left-margin-letter-spacing;
-  writing-mode: vertical-rl; // should be vertical-lr but prince doesn't support it
 }
 
 @mixin left-margin-position() {
@@ -51,12 +51,12 @@
 }
 
 @mixin right-margin-style() {
+  color: $right-margin-text-color;
   font-family: $right-margin-font;
   font-size: $right-margin-font-size;
   font-weight: $right-margin-font-weight;
   text-transform: $right-margin-case;
   letter-spacing: $right-margin-letter-spacing;
-  writing-mode: vertical-rl;
 }
 
 @mixin right-margin-position() {

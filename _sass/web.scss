@@ -48,6 +48,8 @@ $font-size-bigger: 2 !default; // How many times bigger than font-size-default f
 
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: true !default;
+// If not spacing paras, how large is the first-line indent on paragraphs?
+$paragraph-indent: $font-size-default !default;
 
 // Rounded corners
 $button-border-radius: 0.1em !default; // Roundness of button corners
@@ -239,6 +241,10 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 
 // Reset browser CSS as best we can
 @import "partials/web-css-reset";
+
+// Load general-purpose mixins
+@import "partials/web-mixins--buttons";
+@import "partials/web-mixins--sidenotes";
 
 // Structural HTML components
 @import "partials/web-wrappers";
