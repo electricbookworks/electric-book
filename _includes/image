@@ -32,13 +32,37 @@ root directory. {% endcomment %}
 {% comment %} Adjust the value of `sizes` if your site design does not need
 full-width images everywhere. Here is a guide:
 https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% endcomment %}
+
+{% comment %} Provide no-JS fallback when lazyloading JS
+is not available {% endcomment %}
+<noscript>
+
+    <img
+        src="{{ images }}/{{ image }}.{{ file-extension }}"
+
+        {% if site.output == "web" %}
+        {% unless file-extension == "svg" %}
+        sizes="auto"
+        srcset="{{ images }}/{{ image }}-320.{{ file-extension }} 320w,
+        {{ images }}/{{ image }}-640.{{ file-extension }} 640w,
+        {{ images }}/{{ image }}-1024.{{ file-extension }} 1024w,
+        {{ images }}/{{ image }}-2048.{{ file-extension }} 2048w"
+        {% endunless %}
+        {% endif %}
+
+        class="{% if include.class %}{{ include.class }}{% endif %}{% if file-extension == 'svg' %} inject-svg{% endif %}"
+        {% if include.id %} id="{{ include.id }}"{% endif %}
+        {% if image-alt %} alt="{{ image-alt }}"{% endif %} />
+
+</noscript>
+
 <img
-    src="{{ images }}/{{ image }}.{{ file-extension }}"
+    data-src="{{ images }}/{{ image }}.{{ file-extension }}"
 
     {% if site.output == "web" %}
     {% unless file-extension == "svg" %}
     sizes="auto"
-    srcset="{{ images }}/{{ image }}-320.{{ file-extension }} 320w,
+    data-srcset="{{ images }}/{{ image }}-320.{{ file-extension }} 320w,
     {{ images }}/{{ image }}-640.{{ file-extension }} 640w,
     {{ images }}/{{ image }}-1024.{{ file-extension }} 1024w,
     {{ images }}/{{ image }}-2048.{{ file-extension }} 2048w"

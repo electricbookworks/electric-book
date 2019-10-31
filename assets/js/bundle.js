@@ -24,6 +24,7 @@ layout: null
     {% include_relative tables.js %}
     {% include_relative footnote-popups.js %}
     {% include_relative show-hide.js %}
+    {% include_relative lazyload.js %}
 
     {% if site.data.settings.web.svg.inject == true %}
         {% include_relative svg-inject.min.js %}

@@ -50,8 +50,8 @@ because https://github.com/jekyll/jekyll/issues/2248.
                     />
                 </noscript>
 
-                <img src="{{ images }}/{{ image }}"
-                    srcset="{{ images }}/{{ image-without-filetype }}-320.{{ image-filetype[1] }} 320w,
+                <img data-src="{{ images }}/{{ image }}"
+                    data-srcset="{{ images }}/{{ image-without-filetype }}-320.{{ image-filetype[1] }} 320w,
                                 {{ images }}/{{ image-without-filetype }}-640.{{ image-filetype[1] }} 640w,
                                 {{ images }}/{{ image-without-filetype }}-1024.{{ image-filetype[1] }} 1024w,
                                 {{ images }}/{{ image-without-filetype }}.{{ image-filetype[1] }} 1280w"
