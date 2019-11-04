@@ -49,8 +49,7 @@ function ebLazyLoadImages() {
             });
         }, ebImageObserverConfig);
 
-        // For each image, give it a min-height
-        // and then observe it.
+        // Observe each image
         lazyImages.forEach(function (lazyImage) {
             lazyImageObserver.observe(lazyImage);
         });
