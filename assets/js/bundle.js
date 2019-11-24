@@ -24,12 +24,14 @@ layout: null
     {% include_relative tables.js %}
     {% include_relative footnote-popups.js %}
     {% include_relative show-hide.js %}
-    {% include_relative lazyload.js %}
 
     {% if site.data.settings.web.svg.inject == true %}
         {% include_relative svg-inject.min.js %}
         {% include_relative svg-management.js %}
     {% endif %}
+
+    {% comment %} Load after SVG management {% endcomment %}
+    {% include_relative lazyload.js %}
 
 {% endif %}
 
