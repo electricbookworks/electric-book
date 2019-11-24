@@ -167,3 +167,16 @@ works:
 ## Localisation
 
 The translate things like the navigation button and contact form, edit `_data/locales.yml`.
+
+## Translating the landing page
+
+If your project is translated, it is best to create a landing page for each language. Create a folder in the root directory named after the relevant language code, e.g. `fr`. In that folder, create an `index.md` file. This is the landing page for that language. It's best to copy and then translate the existing `index.md` file in the root directory.
+
+> ### Technical details
+>
+> By default, the home page (aka the landing page) is in the project's parent language. If the landing-page URL contains a query string defining a language (e.g `?lang=fr`), by default the `<title>` element and masthead will be translated by Javascript, using phrases set in `locales.yml`. However, the social-sharing (open graph) data will remain in the parent language, e.g. English.
+>
+> It is better to provide fully translated landing pages in each language. To do this, create a folder in the root directory named after the relevant language code. In that folder, create an `index.md` file. This is the landing page for that language. It's best to copy and then translate the existing `index.md` file in the root directory.
+>
+> If that page exists, and a user navigates to a landing page containing a query string defining the language, they will be redirected to the actual, fully translated landing page for that language.
+{:.box}

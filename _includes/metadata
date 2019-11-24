@@ -47,6 +47,21 @@ and overrides the project language in meta.yml as the default.
 {% endif %}
 
 {% comment %}
+Create an array of all possible translations.
+{% endcomment %}
+
+    {% comment %} Get all works that have translations. {% endcomment %}
+    {% assign works-with-translations = site.data.meta.works | where_exp: 'work', 'work contains "translations"' %}
+
+    {% comment %} Create an empty array, then add each language to it. {% endcomment %}
+    {% assign all-translated-languages = "" | split: "" %}
+    {% for works in works-with-translations %}
+        {% for translation in works.translations %}
+            {% assign all-translated-languages = all-translated-languages | push: translation.language %}
+        {% endfor %}
+    {% endfor %}
+
+{% comment %}
 It's useful to know how many books are in this project
 {% endcomment %}
 {% assign number-of-works = site.data.meta.works | size %}
@@ -89,15 +104,7 @@ because we can't get the usual book-related metadata for items. {% endcomment %}
         {% assign is-items-subdirectory = true %}
         {% assign items-subdirectory = page.path | split: "/" | pop | pop | last %}
 
-        {% comment %} Get a list of languages in this repo. {% endcomment %}
-        {% assign item-folder-possible-languages = "" | split: "|" %}
-        {% for work in site.data.meta.works %}
-            {% for translation in work.translations %}
-                {% assign item-folder-possible-languages = item-folder-possible-languages | push: translation.language %}
-            {% endfor %}
-        {% endfor %}
-
-        {% if item-folder-possible-languages contains items-subdirectory %}
+        {% if all-translated-languages contains items-subdirectory %}
             {% assign is-translation = true %}
             {% assign language = items-subdirectory %}
         {% endif %}
@@ -117,12 +124,16 @@ because Jekyll's page.url for index.html is / {% endcomment %}
     {% capture page-url %}{{ page.url }}index.html{% endcapture %}
 {% endif %}
 {% comment %}Remove any file extensions, then create an array of what's left{% endcomment %}
-{% assign url-as-array = page-url | split: "." %}
-{% assign url-as-array = url-as-array | first | remove_first: "/" | split: "/" %}
+{% if page.url contains "." %}
+    {% assign url-as-array = page-url | split: "." %}
+    {% assign url-as-array = url-as-array | first | remove_first: "/" | split: "/" %}
+{% else %}
+    {% assign url-as-array = page-url | remove_first: "/" | split: "/" %}
+{% endif %}
 {% assign url-as-array-size = url-as-array | size %}
 
-{% if url-as-array-size == 1 %}
-    {% capture current-directory %}{% endcapture %}
+{% if url-as-array-size < 2 %}
+    {% capture current-directory %}{{ url-as-array[0] }}{% endcapture %}
 {% else %}
     {% capture current-directory %}{{ url-as-array[-2] }}{% endcapture %}
 {% endif %}
@@ -132,7 +143,7 @@ Get the current file's name
 {% endcomment %}
 
 {% capture current-file %}{{ url-as-array.last }}{% endcapture %}
-{% if current-file == "" %}
+{% if current-file == "" or current-file == "index.html" %}
     {% capture current-file %}index{% endcapture %}
 {% endif %}
 
@@ -314,6 +325,20 @@ the `language` variable, which we captured above, to the translation language.
     {% if book-subdirectory == translation.directory and translation.directory != "" %}
         {% assign is-translation = true %}
         {% capture language %}{{ translation.language }}{% endcapture %}
+    {% endif %}
+{% endfor %}
+
+{% comment %}
+Also check if we're in a root translation subdirectory,
+e.g. this is fr/index.md
+{% endcomment %}
+{% for language in all-translated-languages %}
+    {% if folder-depth == 1 and current-directory == language %}
+        {% assign is-translation = true %}
+        {% capture language %}{{ language }}{% endcapture %}
+        {% if page.name == "index.md" %}
+            {% assign is-translation-homepage = true %}
+        {% endif %}
     {% endif %}
 {% endfor %}
 
@@ -628,7 +653,7 @@ Check if we're on the project homepage:
 Check if we're on the search pages.
 {% endcomment %}
 {% capture project-search-url %}{{ site.baseurl }}/search.html{% endcapture %}
-{% unless is-homepage %}
+{% unless is-homepage or is-translation-homepage %}
     {% capture book-search-url %}{{ site.baseurl }}/{{ book-directory }}/text/search.html{% endcapture %}
 {% endunless %}
 {% capture project-search-url-slug %}{{ project-search-url | slugify | remove: "-" }}{% endcapture %}
@@ -645,7 +670,7 @@ Check if we're on the search pages.
 {% endif %}
 
 {% assign is-book-search = false %}
-{% if pageurl-slug == book-search-url-slug and is-homepage != true %}
+{% if pageurl-slug == book-search-url-slug and is-homepage != true and is-translation-homepage != true %}
     {% assign is-book-search = true %}
 {% endif %}
 
@@ -654,7 +679,7 @@ On homepage and project-search we are not in a book-directory,
 so make the book-directory variable nil. If we don't,
 then on these pages any links that use {{ book-directory }} will be broken
 {% endcomment %}
-{% if is-homepage == true or is-project-search == true %}
+{% if is-homepage == true or is-translation-homepage == true or is-project-search == true %}
     {% assign book-directory = nil %}
 {% endif %}
 
@@ -671,6 +696,9 @@ Get relative paths to other book-asset folders, even if we're in a book-subsubdi
 {% comment %}First, for pages not in a book directory, set the path as
 the first book-directory listed in meta.yml{% endcomment %}
 {% capture path-to-book-directory %}{{ site.data.meta.works.[0].directory }}/{% endcapture %}
+{% if is-translation-homepage %}
+    {% capture path-to-book-directory %}../{{ site.data.meta.works.[0].directory }}/{% endcapture %}
+{% endif %}
 
 {% comment %}Then, for all pages in a text directory, create a relative path to the book-directory{% endcomment %}
 {% if is-book-subdirectory %}
@@ -725,6 +753,10 @@ such as the home and search pages, when building a single-language site or app.
 the {{ images }} path should include the language subdirectory.{% endcomment %}
 {% if is-translation %}
     {% capture path-to-translation-images-directory %}/{{ book-directory }}/{{ book-subdirectory }}/images/{{ site.output }}/{% endcapture %}
+    {% if is-translation-homepage %}
+        {% capture path-to-translation-images-directory %}/{{ site.data.meta.works.[0].directory }}/{{ language }}/images/{{ site.output }}/{% endcapture %}
+    {% endif %}
+
     {% assign translated-images = site.static_files | where_exp: "file", "file.path contains path-to-translation-images-directory" %}
     {% assign translated-images-number = translated-images | size %}
 
@@ -815,6 +847,9 @@ remote-media for web and local-media for PDF.{% endcomment %}
     {% if is-root-directory == true %}
         {% capture images %}{{ external-media }}/{{ site.data.meta.works.[0].directory }}/{{ site.image-set }}{% endcapture %}
     {% endif %}
+    {% if is-translation-homepage %}
+        {% capture images %}{{ external-media }}/{{ site.data.meta.works.[0].directory }}/{{ site.image-set }}{% endcapture %}
+    {% endif %}
 {% endif %}
 
 {% comment %}If using a Google Play expansion file for images,
@@ -838,8 +873,14 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
         {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ epub-stylesheet }}{% endcapture %}
     {% elsif site.output == "app" %}
         {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ app-stylesheet }}{% endcapture %}
+        {% if is-translation-homepage %}
+            {% capture path-to-translation-stylesheet %}/{{ site.data.meta.works.[0].directory }}/{{ language }}/styles/{{ app-stylesheet }}/{% endcapture %}
+        {% endif %}
     {% else %}
         {% capture path-to-translation-stylesheet %}/{{ book-directory }}/{{ book-subdirectory }}/styles/{{ web-stylesheet }}{% endcapture %}
+        {% if is-translation-homepage %}
+            {% capture path-to-translation-stylesheet %}/{{ site.data.meta.works.[0].directory }}/{{ language }}/styles/{{ web-stylesheet }}/{% endcapture %}
+        {% endif %}
     {% endif %}
     {% assign translation-styles = site.pages | where_exp: "file", "file.url contains path-to-translation-stylesheet" %}
     {% assign translation-styles-number = translation-styles | size %}
@@ -860,6 +901,10 @@ First, the default. Then if a translation, the translation's.{% endcomment %}
 
 {% if is-translation %}
     {% capture path-to-translation-fonts-directory %}/{{ book-directory }}/{{ book-subdirectory }}/fonts{% endcapture %}
+    {% if is-translation-homepage %}
+        {% capture path-to-translation-fonts-directory %}/{{ site.data.meta.works.[0].directory }}/{{ language }}/fonts{% endcapture %}
+    {% endif %}
+
     {% assign translation-fonts = site.static_files | where_exp: "file", "file.path contains path-to-translation-fonts-directory" %}
     {% assign translation-fonts-number = translation-fonts | size %}
 
