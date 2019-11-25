@@ -1,5 +1,5 @@
 /*jslint browser */
-/*globals window, IntersectionObserver, svgInject */
+/*globals window, IntersectionObserver, SVGInject */
 
 // Add observer
 var ebImageObserverConfig = {
@@ -11,8 +11,9 @@ var ebImageObserverConfig = {
 function ebInjectLazyLoadedSVG(image) {
     'use strict';
     if (image.classList.contains('inject-svg')
-            && !image.classList.contains('no-inject-svg')) {
-        svgInject(image);
+            && !image.classList.contains('no-inject-svg')
+            && typeof SVGInject === 'function') {
+        SVGInject(image);
     }
 }
 
@@ -41,6 +42,12 @@ function ebLazyLoadImages() {
                     }
                     if (lazyImage.dataset.srcset) {
                         lazyImage.srcset = lazyImage.dataset.srcset;
+                    }
+
+                    // If the image is an SVG, inject it if necessary
+                    var fileExtension = lazyImage.src.split('.').pop();
+                    if (fileExtension === 'svg' || fileExtension === 'SVG') {
+                        ebInjectLazyLoadedSVG(lazyImage);
                     }
 
                     // Stop observing the image once loaded
