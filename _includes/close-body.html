@@ -5,7 +5,7 @@
 {% if site.output == "web" or site.output == "app" %}
     {% if is-project-search or is-book-search %}
         <script src="{{ path-to-root-directory }}assets/js/search-engine.js"></script>
-        <script src="{{ path-to-root-directory }}assets/js/search-index.js"></script>
+        <script src="{{ path-to-root-directory }}assets/js/search-index-{{ site.output }}.js"></script>
         <script src="{{ path-to-root-directory }}assets/js/search-results.js"></script>
     {% endif %}
 {% endif %}

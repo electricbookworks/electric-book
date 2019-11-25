@@ -1,7 +1,8 @@
 ---
 # Jekyll processes this file to generate the array of URLs.
 # Then the output script passes this to phantomjs,
-# which generates the search index as search-index.js.
+# which generates the search index as search-index-web.js
+# or search-index-app.js, depending on current output format.
 layout: null
 ---
 
@@ -73,8 +74,8 @@ function process() {
         count = count + 1;
 
     } else {
-        console.log('Writing search-index.js...');
-        fs.write('../../../assets/js/search-index.js', index, 'w');
+        console.log('Writing search-index-{{ site.output }}.js...');
+        fs.write('../../../assets/js/search-index-{{ site.output }}.js', index, 'w');
         console.log('Done.');
         page.close();
         phantom.exit();

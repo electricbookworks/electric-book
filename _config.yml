@@ -143,6 +143,9 @@ exclude:
 - .sass-cache
 # Included as-is in other files, no need to process
 - /assets/js/annotation.js
+- /assets/js/search-store.js
+- /assets/js/elasticlunr.min.js
+- /assets/js/elasticlunr-setup.js
 # Files for formats we're not building here
 - /assets/profiles
 - /*/package.opf
