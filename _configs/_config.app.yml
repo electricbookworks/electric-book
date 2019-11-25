@@ -26,6 +26,12 @@ exclude:
 - package.json
 - package-lock.json
 - CNAME
+- .sass-cache
+# Included as-is in other files, no need to process
+- /assets/js/annotation.js
+- /assets/js/search-store.js
+- /assets/js/elasticlunr.min.js
+- /assets/js/elasticlunr-setup.js
 # Things we don't need for an app
 - assets/profiles
 - /*/package.opf
