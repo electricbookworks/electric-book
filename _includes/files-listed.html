@@ -6,6 +6,10 @@ It should respect active variants: if there is an active variant
 (as set in _data/settings), it should only include files listed
 for that variant and its translations. But this has not been properly tested yet.
 
+Inheritance:
+- If app output has no file list in meta.yml, it inherits the web file list.
+- If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
+
 This include is primarily for use in creating search stores and indexes. {% endcomment %}
 
 {% capture list-of-files %}
@@ -18,7 +22,22 @@ This include is primarily for use in creating search stores and indexes. {% endc
 
             {% for variant in work.variants %}
                 {% if variant.variant == site.data.settings.active-variant %}
-                    {% for file in variant.products[site.output].files %}
+
+                    {% comment %}
+                    - If app output has no file list in meta.yml, it inherits the web file list.
+                    - If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
+                    {% endcomment %}
+                    {% if variant.products[site.output].files and variant.products[site.output].files != "" %}
+                        {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
+                    {% else %}
+                        {% if site.output == "app" %}
+                            {% capture site-output-for-files %}web{% endcapture %}
+                        {% elsif site.output == "screen-pdf" %}
+                            {% capture site-output-for-files %}print-pdf{% endcapture %}
+                        {% endif %}
+                    {% endif %}
+
+                    {% for file in variant.products[site-output-for-files].files %}
                         {% for file-title in file %}
                             {% if file-title[0] %}
                                 /{{ work.directory }}/text/{{ file-title[0] }}.html,
@@ -37,7 +56,21 @@ This include is primarily for use in creating search stores and indexes. {% endc
 
                     {% for translation in variant.translations %}
 
-                        {% for file in translation.products[site.output].files %}
+                        {% comment %}
+                        - If app output has no file list in meta.yml, it inherits the web file list.
+                        - If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
+                        {% endcomment %}
+                        {% if translation.products[site.output].files and translation.products[site.output].files != "" %}
+                            {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
+                        {% else %}
+                            {% if site.output == "app" %}
+                                {% capture site-output-for-files %}web{% endcapture %}
+                            {% elsif site.output == "screen-pdf" %}
+                                {% capture site-output-for-files %}print-pdf{% endcapture %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% for file in translation.products[site-output-for-files].files %}
                             {% for file-title in file %}
                                 {% if file-title[0] %}
                                     /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title[0] }}'.html,
@@ -56,7 +89,21 @@ This include is primarily for use in creating search stores and indexes. {% endc
         {% comment %} Otherwise, get the normal, non-variant file lists {% endcomment %}
         {% else %}
 
-            {% for file in work.products[site.output].files %}
+            {% comment %}
+            - If app output has no file list in meta.yml, it inherits the web file list.
+            - If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
+            {% endcomment %}
+            {% if work.products[site.output].files and work.products[site.output].files != "" %}
+                {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
+            {% else %}
+                {% if site.output == "app" %}
+                    {% capture site-output-for-files %}web{% endcapture %}
+                {% elsif site.output == "screen-pdf" %}
+                    {% capture site-output-for-files %}print-pdf{% endcapture %}
+                {% endif %}
+            {% endif %}
+
+            {% for file in work.products[site-output-for-files].files %}
                 {% for file-title in file %}
                     {% if file-title[0] %}
                         /{{ work.directory }}/text/{{ file-title[0] }}.html,
@@ -68,7 +115,21 @@ This include is primarily for use in creating search stores and indexes. {% endc
 
             {% for translation in work.translations %}
 
-                {% for file in translation.products[site.output].files %}
+                {% comment %}
+                - If app output has no file list in meta.yml, it inherits the web file list.
+                - If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
+                {% endcomment %}
+                {% if translation.products[site.output].files and translation.products[site.output].files != "" %}
+                    {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
+                {% else %}
+                    {% if site.output == "app" %}
+                        {% capture site-output-for-files %}web{% endcapture %}
+                    {% elsif site.output == "screen-pdf" %}
+                        {% capture site-output-for-files %}print-pdf{% endcapture %}
+                    {% endif %}
+                {% endif %}
+
+                {% for file in translation.products[site-output-for-files].files %}
                     {% for file-title in file %}
                         {% if file-title[0] %}
                             /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title[0] }}.html,
