@@ -693,14 +693,6 @@ works:
               - "02-01-plain-images"
               - "03-02-maths"
             toc:
-              - file: "00-00-cover"
-                label: "Couverture"
-              - file: "00-03-title-page"
-                label: "Titre"
-              - file: "00-04-copyright-page"
-                label: "Droits"
-              - file: "00-05-contents-page"
-                label: "Table des matières"
               - label: "Texte"
                 children:
                   - file: "01-01-plain-text"
