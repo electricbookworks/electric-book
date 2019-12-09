@@ -2,6 +2,11 @@
 
 {% include metadata %}
 
+{% comment %} Reset variables {% endcomment %}
+{% assign image = "" %}
+{% assign file-extension = "" %}
+{% assign image-alt = "" %}
+
 {% comment %} Get the image and its file extension.
 Let user use `file` or `src` for the image file,
 defaulting to src. {% endcomment %}
