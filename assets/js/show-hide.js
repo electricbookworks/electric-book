@@ -65,6 +65,7 @@ function ebShowHideAddButton(elementToHide) {
 function ebShowHideHideInitially(elementToHide) {
     'use strict';
     elementToHide.classList.add('visuallyhidden');
+    elementToHide.classList.add('show-hide-content');
 }
 
 // Process all show-hides
