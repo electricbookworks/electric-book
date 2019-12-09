@@ -33,9 +33,13 @@ A program that employs the pre-cloak stage of superheroes has been active in Rwa
 
 [^3]: Rwandan Orphans Project (2016).  Available at: http://www.rwandanorphansproject.org/ (Accessed 14 May 2016).
 
-![Figure 1](../{{ site.image-set }}/fradkin-1.jpg){:.height-15}
-**Figure 1**{:.figure-reference} The Rwandan Orphans Project (near Kigali, Rwanda) uses comic superheroes to empower orphaned children. Capes from old t-shirts, masks from cereal boxes. Published with permission from The Rwandan Orphans Project. Photo © Lisa Meaney, MFT, [Rwandan Orphans Project](http://www.rwandanorphansproject.org), 2016 (Accessed 14 May 2016).
-{:.image-with-caption #figure-1}
+{% include figure
+    image="fradkin-1.jpg"
+    image-height="15"
+    reference="Figure 1"
+    caption="The Rwandan Orphans Project (near Kigali, Rwanda) uses comic superheroes to empower orphaned children. Capes from old t-shirts, masks from cereal boxes. Published with permission from The Rwandan Orphans Project. Photo © Lisa Meaney, MFT, [Rwandan Orphans Project](http://www.rwandanorphansproject.org), 2016 (Accessed 14 May 2016)."
+    description="Children stand in a line wearing super-hero capes and masks made from cereal boxes, making bold super-hero poses."
+%}
 
 5,000 miles WSW of Rwanda is a program in São Paulo, Brazil. The ‘Superformula’ program at the A.C. Camargo Cancer Center (2016[^4]), attempts to raise the spirits of its pediatric patients using special comics, videos, and superhero plastic covers for IV bags ([Figure 2](#figure-2)). The children are encouraged to do battle with their cancer, as the comic superheroes battle evil. Their chemo drip is ‘Superformula.’ While this approach may first seem novel, over time it may wear thin, as many patients on the ward will lose their battle. The Superformula program instills hope upon the ward, through the premise of ‘invincibility suggestion.’
 
