@@ -2,7 +2,8 @@ $print-cross-refs: true !default;
 @if $print-cross-refs {
 
 	// Show the URL of a link with a show-url class.
-	a.show-url::after {
+	a.show-url::after,
+	a.pdf-show-url::after {
 	    content: " (" attr(href) ")";
 	}
 	// Show the page number of a link with a show-page-number class.
