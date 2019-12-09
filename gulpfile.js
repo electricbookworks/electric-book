@@ -51,6 +51,10 @@ function loadMetadata() {
         paths: paths,
         filePaths: filePaths
     };
+// Load image settings if they exist
+var imageSettings = [];
+if (fs.existsSync('_data/images.yml')) {
+    imageSettings = yaml.load(fs.readFileSync('_data/images.yml', 'utf8'));
 }
 loadMetadata();
 
@@ -155,6 +159,8 @@ gulp.task('images:printpdf', function (done) {
     // Options
     var printPDFColorProfile = 'PSOcoated_v3.icc';
     var printPDFColorSpace = 'cmyk';
+    var printPDFColorProfileGrayscale = 'Grey_Fogra39L.icc';
+    var printPDFColorSpaceGrayscale = 'gray';
 
     console.log('Processing print-PDF images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/' + printPDFColorProfile)) {
@@ -162,7 +168,24 @@ gulp.task('images:printpdf', function (done) {
             .pipe(newer(paths.img.printpdf))
             .pipe(debug({title: 'Creating print-PDF version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/' + printPDFColorProfile).colorspace(printPDFColorSpace);
+
+                // Check for grayscale
+                var thisColorProfile = printPDFColorProfile; // set default/fallback
+                var thisColorSpace = printPDFColorSpace; // set default/fallback
+                var thisFilename = gmfile.source.split('\/').pop(); // for unix slashes
+                thisFilename = thisFilename.split('\\').pop(); // for windows backslashes
+
+                // Look up image colour settings
+                imageSettings.forEach(function (image) {
+                    if (image.file === thisFilename) {
+                        if (image['print-pdf'].colorspace === 'gray') {
+                            thisColorProfile = printPDFColorProfileGrayscale;
+                            thisColorSpace = printPDFColorSpaceGrayscale;
+                        }
+                    }
+                });
+
+                return gmfile.profile('_tools/profiles/' + thisColorProfile).colorspace(thisColorSpace);
             }).on('error', function (e) {
                 console.log(e);
             }))
