@@ -1,0 +1,30 @@
+@mixin show-url() {
+    // Show URLs, so that they are viewable on
+    // ereaders without built-in browsers
+    &::after {
+        content: " (" attr(href) ")";
+    }
+    // but if the ereader is likely to have a browser,
+    // don't show the URL because it's ugly and clicking is better.
+    // For now, we're assuming that any ereader that supports
+    // media queries has a built-in browser. This is not
+    // technically true of Kindle Paperwhite, though...
+    @media all {
+        &::after {
+            content: normal;
+        }
+    }
+    // ... in case we've let an e-ink Kindle through there,
+    // use this Paperwhite selector from
+    // http://epubsecrets.com/media-queries-for-kindle-devices.php
+    @media amzn-kf8
+    and (device-height: 1024px)
+    and (device-width: 758px),
+    amzn-kf8
+    and (device-height: 758px)
+    and (device-width: 1024px){
+        &::after {
+            content: " (" attr(href) ")";
+        }
+    }
+}

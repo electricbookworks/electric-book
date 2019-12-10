@@ -1,0 +1,8 @@
+$epub-cross-refs: true !default;
+@if $epub-cross-refs {
+
+    .show-url {
+        @include show-url();
+    }
+
+}
