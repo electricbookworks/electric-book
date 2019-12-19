@@ -50,7 +50,12 @@
 
                     {% for work in site.data.meta.works | sort: "order" %}
                         {% assign home-nav-work-directory = work.directory %}
-                        {% assign home-nav-work-tree = work.products[site.output].nav %}
+                        {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
+                        {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
+                            {% assign home-nav-work-tree = work.products[site.output].nav %}
+                        {% else %}
+                            {% assign home-nav-work-tree = work.products.web.nav %}
+                        {% endif %}
                         {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                     {% endfor %}
 
