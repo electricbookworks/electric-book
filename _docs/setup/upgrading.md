@@ -1,14 +1,18 @@
 ---
-title: Upgrading a project
+title: Upgrading or updating a project
 categories: setup
 order: 60
 ---
 
-# Upgrading a project
+# Upgrading or updating a project
 
 The Electric Book template is developing all the time. Sometimes you'll want to add features from later versions into a project built on an earlier version.
 
 This is rarely a simple exercise. Especially while the template is still at v0.x.x, fundamental features like `metadata`-generated tag names and folder structures might change.
+
+Also, if you're working on a family of projects with common files, you may want to update projects based on changes in another, to keep files in sync.
+
+## Upgrading manually
 
 So upgrading is a largely manual exercise of knitting your content, styles and templates into a new copy of the template.
 
@@ -31,3 +35,37 @@ Here is an example workflow for upgrading that you could adapt as follow for you
 7. Decide whether to use the latest template styles or keep your old styles. Especially if you have an existing, page-refined print edition and you want to retain its layout, we recommend copying across your old project's `_sass` partials and book styles, and discarding the new template's ones, to ensure like-for-like output. You're likely to find some bugs either way that you will have to find and fix manually.
 8. Copy any content you'd like to keep from the old project's root `index.md` and `README` files into the new template's ones.
 9. Output and manually debug.
+
+## Using the `update` script
+
+The process of upgrading or updating a project can be made much easier by using the `update.sh` script in `_tools/update`, together with `files.txt`, a list of files to update.
+
+The `update.sh` script copies all the files listed in `files.txt` to or from another project. As long as `files.txt` lists every file you need to update, running `update.sh` will work. After running the update, check all the changes to your files (e.g. in a Git diff) to be sure that they are expected changes.
+
+The `files.txt` file should therefore list all files that are common to all the projects you might sync -- so not content files in places like `_data` and `book` folders, or project-specific files in `_includes`. The `files.txt` file can include blank lines and comments on lines that start with `#`.
+
+The `update.sh` script only works on Mac and Linux machines, or on unix terminals in Windows (e.g. Cygwin with rsync installed).
+
+In Terminal (or Cygwin with rsync installed), navigate (`cd`) to `_tools/update` and run the script with at least one argument: the name of the project to or from which you want to update.
+
+For example, in Terminal, in `theeEmpireStrikesBack/_tools/update`, you might enter:
+
+``` sh
+./update.sh --to aNewHope
+```
+
+That would copy all the common files in `theeEmpireStrikesBack` to `aNewHope`.
+
+If you set only one direction to copy (e.g. `--to`), the other direction (`--from`) is assumed to be the project you're in. The `files.txt` list used is always the one in the current project.
+
+Optionally, add the `--preview` option, which only does a dry run of the update, showing you what files will be changed without actually copying any files:
+
+``` sh
+./update.sh --to aNewHope --preview
+```
+
+Or to sync two *other* projects with the file list from `theeEmpireStrikesBack`:
+
+``` sh
+./update.sh --from returnOfTheJedi --to aNewHope
+```
