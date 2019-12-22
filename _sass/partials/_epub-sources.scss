@@ -1,5 +1,5 @@
-$epub-quotations: true !default;
-@if $epub-quotations {
+$epub-sources: true !default;
+@if $epub-sources {
 
     // Styles not covered by the default blockquote element in base-typography
     // The source of a quotation, e.g. a name or book title, that appears after the quote
