@@ -49,7 +49,7 @@ $font-size-bigger: 2 !default; // How many times bigger than font-size-default f
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: true !default;
 // If not spacing paras, how large is the first-line indent on paragraphs?
-$paragraph-indent: $line-height-default !default;
+$paragraph-indent: 1em !default;
 
 // Rounded corners
 $button-border-radius: 0.1em !default; // Roundness of button corners
