@@ -5,25 +5,25 @@ $web-index: true !default;
 
     ol.reference-index,
     ul.reference-index {
-        margin-left: $line-height-default;
+        margin-left: $paragraph-indent;
         list-style-type: none;
         ul, ol {
             list-style-type: none;
         }
         li {
-        	text-indent: -($line-height-default);
+            text-indent: -($paragraph-indent);
             li {
                 margin: 0;
             }
             a:after {
-            	content: ", ";
+                content: ", ";
             }
             a:last-of-type:after {
-            	content: "";
+                content: "";
             }
             a.indexed {
-            	color: inherit;
-            	text-decoration: none;
+                color: inherit;
+                text-decoration: none;
             }
         }
         .duplicate {

@@ -37,7 +37,7 @@
     // Unless we're spacing paras, put back the indent
     // on paras that follow sidenotes that follow paras.
     p + & + p {
-        text-indent: $line-height-default;
+        text-indent: $paragraph-indent;
     }
     @if $spaced-paras {
         p + & + p {
