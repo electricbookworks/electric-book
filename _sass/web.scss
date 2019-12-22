@@ -224,7 +224,7 @@ $web-fitting: true !default;  // E.g. tracking and shrinking
 // Controls
 $web-controls: true !default;
 $web-language-select: true !default;
-$web-annotator: false !default;
+$web-annotator: true !default;
 
 // Logic (if this then that)
 $web-reset-sequences: true !default; // This should stay last in the @import list
