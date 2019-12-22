@@ -10,7 +10,7 @@ $epub-toc: true !default;
 				margin: 0;
 				padding: 0;
 				ol, ul {
-					margin-left: $line-height-default;
+					margin-left: $paragraph-indent;
 				}
 			}
 		} // #content

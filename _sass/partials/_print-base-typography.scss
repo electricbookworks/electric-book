@@ -108,9 +108,9 @@ $convert-images-to-color-profile: false !default;
     }
     li {
         list-style-position: outside;
-        margin-left: $line-height-default;
+        margin-left: $paragraph-indent;
         &::marker {
-            width: $line-height-default;
+            width: $paragraph-indent;
             text-align: left;
         }
     }
@@ -128,7 +128,7 @@ $convert-images-to-color-profile: false !default;
 
     blockquote {
         margin: $line-height-default 0;
-        padding: 0 $line-height-default;
+        padding: 0 $paragraph-indent;
         p {
             margin: 0;
             padding: 0;
@@ -151,7 +151,7 @@ $convert-images-to-color-profile: false !default;
         font-weight: bold;
     }
     dd {
-        margin: 0 0 $line-height-default $line-height-default;
+        margin: 0 0 $line-height-default $paragraph-indent;
     }
 
     // Super and subscripts
@@ -193,7 +193,7 @@ $convert-images-to-color-profile: false !default;
     // Forms
 
     select {
-        padding: $line-height-default / 2;
+        padding: ($line-height-default / 2) ($paragraph-indent / 2);
         font-family: $font-text-secondary;
         font-size: inherit;
         color: inherit;

@@ -20,7 +20,7 @@ $print-fitting: true !default;
   .float-top#{$edition-suffix} + p,
   .float-bottom#{$edition-suffix} + p,
   .float-top-next#{$edition-suffix} + p {
-    text-indent: $line-height-default;
+    text-indent: $paragraph-indent;
   }
 
   // These classes control letter-spacing (tracking), usually to save widows and orphans.

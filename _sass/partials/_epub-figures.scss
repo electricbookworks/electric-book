@@ -1,103 +1,103 @@
 $epub-figures: true !default;
 @if $epub-figures {
 
-	// Figures
+    // Figures
 
-	.figure {
-		clear: both;
-		page-break-inside: avoid;
-		background-color: inherit;
-		font-size: inherit;
-		font-weight: inherit;
-		margin: $line-height-default 0;
-		padding: $line-height-default / 2;
-		p {
-			clear: both;
-			text-align: center;
-			page-break-inside: avoid;
-			page-break-before: avoid;
-			hyphens: none;
-			font-size: $font-size-default * $font-size-smaller;
-			&:last-of-type {
-				margin-bottom: 0;
-			}
-		}
-		img, p img {
-			margin: 0 auto;
-			max-width: 100%; 
-			object-fit: contain;
-			display: block;
-		}
-		// No media queries here as in web-figures, because older ereaders don't support them properly.
-		.figure-body {
-			.figure-images {
-				text-align: center;
-				margin-bottom: $line-height-default;
-			}
-			.figure-html, .figure-md {
-				margin-bottom: $line-height-default;
-			}
-			.title {}
-			// Descriptions are hidden by default, and used for image alt text
-			.description {
-				display: none;
-			}
-			.caption {
-				margin: 0;
-				text-align: center;
-				text-indent: 0;
-				.figure-reference {
-					font-weight: bold;
-				}
-			}
-		}
-		.figure-source {
-			.source {}
-		}
-		// Paragraphs following the image inside the blockquote
-		// Allow for up to five
-		.caption,
-		p:nth-child(2),
-		p:nth-child(2) + p,
-		p:nth-child(2) + p + p,
-		p:nth-child(2) + p + p + p,
-		p:nth-child(2) + p + p + p + p {
-			padding: 0;
-			text-align: center;
-			text-indent: 0;
-		}
-		&.x-small, &.small, &.large {
-			p img, img {
-				max-height: inherit;
-			}
-		}
-		// No media queries here as in web-figures, because older ereaders don't support them properly.
-		// Thumbnail figures
-		&.thumbnail {
-			max-width: 25%;
-			float: right;
-			margin: 0 0 0 ($line-height-default / 2);
-			padding: 0;
-			img {
-				padding: 0;
-			}
-		}
-	}
+    .figure {
+        clear: both;
+        page-break-inside: avoid;
+        background-color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        margin: $line-height-default 0;
+        padding: 0;
+        p {
+            clear: both;
+            text-align: center;
+            page-break-inside: avoid;
+            page-break-before: avoid;
+            hyphens: none;
+            font-size: $font-size-default * $font-size-smaller;
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
+        img, p img {
+            margin: 0 auto;
+            max-width: 100%; 
+            object-fit: contain;
+            display: block;
+        }
+        // No media queries here as in web-figures, because older ereaders don't support them properly.
+        .figure-body {
+            .figure-images {
+                text-align: center;
+                margin-bottom: $line-height-default;
+            }
+            .figure-html, .figure-md {
+                margin-bottom: $line-height-default;
+            }
+            .title {}
+            // Descriptions are hidden by default, and used for image alt text
+            .description {
+                display: none;
+            }
+            .caption {
+                margin: 0;
+                text-align: center;
+                text-indent: 0;
+                .figure-reference {
+                    font-weight: bold;
+                }
+            }
+        }
+        .figure-source {
+            .source {}
+        }
+        // Paragraphs following the image inside the blockquote
+        // Allow for up to five
+        .caption,
+        p:nth-child(2),
+        p:nth-child(2) + p,
+        p:nth-child(2) + p + p,
+        p:nth-child(2) + p + p + p,
+        p:nth-child(2) + p + p + p + p {
+            padding: 0;
+            text-align: center;
+            text-indent: 0;
+        }
+        &.x-small, &.small, &.large {
+            p img, img {
+                max-height: inherit;
+            }
+        }
+        // No media queries here as in web-figures, because older ereaders don't support them properly.
+        // Thumbnail figures
+        &.thumbnail {
+            max-width: 25%;
+            float: right;
+            margin: 0 0 0 $paragraph-indent;
+            padding: 0;
+            img {
+                padding: 0;
+            }
+        }
+    }
 
-	// Paragraphs that start with an image
-	.image-with-caption {
-		font-size: $font-size-default * $font-size-smaller;
-		margin: $line-height-default 0;
-		text-align: center;
-		img {
-			display: block;
-			margin: $line-height-default auto;
-			max-height: 80vh;
-			max-width: 100%;
-		}
-		& + p {
-			text-indent: 0;
-		}
-	}
+    // Paragraphs that start with an image
+    .image-with-caption {
+        font-size: $font-size-default * $font-size-smaller;
+        margin: $line-height-default 0;
+        text-align: center;
+        img {
+            display: block;
+            margin: $line-height-default auto;
+            max-height: 80vh;
+            max-width: 100%;
+        }
+        & + p {
+            text-indent: 0;
+        }
+    }
 
 }

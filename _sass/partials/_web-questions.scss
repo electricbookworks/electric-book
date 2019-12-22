@@ -64,13 +64,13 @@ $web-questions: true !default;
         }
         .question {
             counter-reset: question;
-            margin-left: $line-height-default; // with &:before margin-left, creates hanging indent
+            margin-left: $paragraph-indent; // with &:before margin-left, creates hanging indent
             &:before {
                 counter-increment: quiz;
                 content: counter(quiz) ".";
                 float: left;
                 margin-right: 0.25em;
-                margin-left: -($line-height-default); // with parent's margin-left, creates hanging indent
+                margin-left: -($paragraph-indent); // with parent's margin-left, creates hanging indent
             }
             &:only-of-type:before {
                 content: normal;
