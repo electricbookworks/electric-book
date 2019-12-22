@@ -6,7 +6,7 @@ title: "Links and buttons"
 
 Links are pretty straightforward. How does [this link](http://electricbook.works) to the Electric Book website look? That link probably shouldn't show in the PDF version for print, or it should show in a useful way (like including the link in plain text).
 
-Buttons are trickier. Basically, buttons should be defined by adding a `.button` class to any element. Ideally the theme allows for [inline buttons](http://example.com){:.button} and block-level buttons:
+Buttons are trickier. Basically, buttons should be defined by adding a `.button` class to any element. The template allows for [inline buttons](http://example.com){:.button} and block-level buttons:
 
 [Example](http://example.com)
 {:.button}
