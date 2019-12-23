@@ -5,7 +5,7 @@ $epub-questions: true !default;
 
     .question {
         line-height: $line-height-default;
-        padding: ($line-height-default / 2);
+        padding: 0;
         margin: $line-height-default 0;
         p {
             text-indent: 0;
@@ -62,13 +62,13 @@ $epub-questions: true !default;
         }
         .question {
             counter-reset: question;
-            margin-left: $line-height-default; // with &:before margin-left, creates hanging indent
+            margin-left: $paragraph-indent; // with &:before margin-left, creates hanging indent
             &:before {
                 counter-increment: quiz;
                 content: counter(quiz) ".";
                 float: left;
                 margin-right: 0.25em;
-                margin-left: -($line-height-default); // with parent's margin-left, creates hanging indent
+                margin-left: -($paragraph-indent); // with parent's margin-left, creates hanging indent
             }
             &:only-of-type:before {
                 content: normal;
@@ -76,8 +76,8 @@ $epub-questions: true !default;
         }
         .question ol.sub-questions {
             list-style-type: none;
-            margin-left: $line-height-default * 1.5; // with &:before margin-left, creates hanging indent
-            text-indent: -($line-height-default * 1.5); // with parent's margin-left, creates hanging indent
+            margin-left: $paragraph-indent * 1.5; // with &:before margin-left, creates hanging indent
+            text-indent: -($paragraph-indent * 1.5); // with parent's margin-left, creates hanging indent
             li {
                 &:before {
                     counter-increment: question;
@@ -193,16 +193,16 @@ $epub-questions: true !default;
             border-radius: $box-border-radius;
             &:before {
                 display: block;
-                padding: $line-height-default / 2 0 $line-height-default / 2 $line-height-default * 2;
+                padding: ($line-height-default / 2) 0 ($line-height-default / 2) ($paragraph-indent * 2);
             }
             &:after {
                 // position: absolute; // not valid in epub
                 top: $line-height-default / 2;
-                left: $line-height-default;
+                left: $paragraph-indent;
             }
             li {
                 display: none;
-                padding: 0 $line-height-default / 2 $line-height-default / 2 $line-height-default * 2;
+                padding: 0 ($line-height-default/ 2) ($line-height-default / 2) ($line-height-default * 2);
             }
             .mcq-feedback-show {
                 display: block;

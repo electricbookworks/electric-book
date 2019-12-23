@@ -65,7 +65,7 @@ $epub-base-typography: true !default;
 
     ol, ul {
         list-style-position: outside;
-        margin: 0 0 $line-height-default $line-height-default;
+        margin: 0 0 $line-height-default $paragraph-indent;
     }
     ol {
         list-style-type: decimal;
@@ -85,7 +85,7 @@ $epub-base-typography: true !default;
 
     blockquote {
         margin: $line-height-default 0;
-        padding: 0 $line-height-default;
+        padding: 0 $paragraph-indent;
         p:first-of-type {
             text-indent: 0;
         }

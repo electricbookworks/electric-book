@@ -16,6 +16,7 @@ $epub-tables: true !default;
 	th, td {
 		border: $rule-thickness solid $color-mid;
 		padding: $line-height-default / 2;
+		text-align: left; // avoid gaps in narrow columns of text in ADE
 		p, ol, ul {
 			margin: 0;
 			padding: 0;

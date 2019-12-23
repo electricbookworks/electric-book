@@ -1,0 +1,11 @@
+# Image settings
+# --------------
+# This file sets non-default settings for specific images.
+#
+# E.g.
+# - file: "duckrabbit.jpg"
+#   print-pdf:
+#     colorspace: "gray"
+#
+# Possible values
+# - print-PDF colorspace: cmyk | gray

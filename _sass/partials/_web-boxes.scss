@@ -56,7 +56,7 @@ $web-boxes: true !default;
     // A list as a box
     ol.box,
     ul.box {
-        padding: ($line-height-default / 2) ($line-height-default);
+        padding: ($line-height-default / 2) ($line-height-default / 2) ($line-height-default / 2) ($line-height-default);
     }
     // A regular list item as a box
     li.box {}

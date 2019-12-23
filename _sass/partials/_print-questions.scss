@@ -113,13 +113,13 @@ $print-questions: true !default;
         }
         .question {
             counter-reset: question;
-            margin-left: $line-height-default; // with &:before margin-left, creates hanging indent
+            margin-left: $paragraph-indent; // with &:before margin-left, creates hanging indent
             &:before {
                 counter-increment: quiz;
                 content: counter(quiz) ".";
                 float: left;
                 margin-right: 0.25em;
-                margin-left: -($line-height-default); // with parent's margin-left, creates hanging indent
+                margin-left: -($paragraph-indent); // with parent's margin-left, creates hanging indent
                 page-break-after: avoid;
             }
             &:only-of-type:before {
@@ -129,8 +129,8 @@ $print-questions: true !default;
         .question ol.sub-questions {
             list-style-type: none;
             li {
-                margin-left: $line-height-default * 1.5; // with &:before margin-left, creates hanging indent
-                text-indent: -($line-height-default * 1.5); // with parent's margin-left, creates hanging indent
+                margin-left: $paragraph-indent * 1.5; // with &:before margin-left, creates hanging indent
+                text-indent: -($paragraph-indent * 1.5); // with parent's margin-left, creates hanging indent
                 &:before {
                     counter-increment: question;
                     content: counter(quiz) "." counter(question);
@@ -228,7 +228,7 @@ $print-questions: true !default;
                     border: 0.75pt solid $color-text-main;
                     width: $font-size-default / 2;
                     height: $font-size-default / 2;
-                    margin-left: -$line-height-default;
+                    margin-left: -$paragraph-indent;
                     margin-top: $line-height-default / 4;
                 }
             }

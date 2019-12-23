@@ -15,7 +15,7 @@ $epub-notes: true !default;
         ol {
             // Prevent footnote markers disappearing
             // into the left edge of the viewport.
-            margin-left: $line-height-default * 2;
+            margin-left: $paragraph-indent * 2;
         }
     }
 

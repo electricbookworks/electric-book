@@ -61,7 +61,7 @@ $web-annotator: true !default;
                 // Move controls left when iframe shows
                 ~ label.annotator-toggle-sidebar,
                 ~ label.annotator-show-annotations {
-                    width: $annotator-sidebar-width + $line-height-default;
+                    width: $annotator-sidebar-width + ($line-height-default * 2);
                     max-width: 80vw;
                     text-align: left;
                 }

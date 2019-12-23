@@ -248,9 +248,9 @@ $nav-bar-back-button-hide: false !default;
         border: none;
         color: $nav-bar-child-text-hover-color;
         font-size: 1.25em;
-        padding: 0 0.5em;
+        padding: 0.333em 0.5em; // centers expand buttons vertically
         margin: 0 0 0 -0.5em;
-        height: 1.65em; // This magic number may not always work
+        height: 1em;
         &:focus {
             outline: none;
         }

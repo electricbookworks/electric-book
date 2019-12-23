@@ -1,12 +1,12 @@
 // Boxes
 
-@mixin box() {
-    background-color: $color-light;
+@mixin box($color: $color-light, $border-color: $color-light) {
+    background-color: $color;
     box-sizing: border-box;
     color: inherit;
     font-weight: inherit;
     font-size: inherit;
-    border: $rule-thickness solid $color-light;
+    border: $rule-thickness solid $border-color;
     margin: $line-height-default 0;
     padding: ($line-height-default / 2);
     & p:last-of-type {
@@ -56,7 +56,7 @@ $epub-boxes: true !default;
     // A list as a box
     ol.box,
     ul.box {
-        padding: ($line-height-default / 2) ($line-height-default);
+        padding: ($line-height-default / 2) ($line-height-default / 2) ($line-height-default / 2) ($line-height-default);
     }
     // A regular list item as a box
     li.box {}

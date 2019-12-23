@@ -18,8 +18,8 @@ $print-verse: true !default;
 	}
 	// Hanging indent for runover lines.
 	ul.verse li {
-		text-indent: $line-height-default * (-2);
-		margin-left: $line-height-default * 2;
+		text-indent: $paragraph-indent * (-2);
+		margin-left: $paragraph-indent * 2;
 	}
 
 	// Indents for lines of verse. 
@@ -27,7 +27,9 @@ $print-verse: true !default;
 	// Note that indentation here includes the ul.verse li margin-left above.
 
 	@for $i from 1 through 60 {
-		ul.verse li.indent-#{$i} { margin-left: ($line-height-default * 2) + $i * $line-height-default; }
+		ul.verse li.indent-#{$i} {
+			margin-left: ($paragraph-indent * 2) + $i * $paragraph-indent;
+		}
 	}
 
 	// Verse in a blockquote centres on its longest line, which is best-practice poetry layout

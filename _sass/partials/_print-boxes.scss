@@ -18,7 +18,7 @@
     // But paragraphs after boxes floated out of the flow must still be indented
     &.float-top + p,
     &.float-bottom + p {
-        text-indent: $line-height-default;
+        text-indent: $paragraph-indent;
     }
     // No margin above the first headings in a box
     h1:first-of-type, 
@@ -66,7 +66,7 @@ $print-boxes: true !default;
     // A regular list item as a box
     li.box {
         padding: $line-height-default;
-        margin-left: $line-height-default;
+        margin-left: $paragraph-indent;
     }
 
 }
