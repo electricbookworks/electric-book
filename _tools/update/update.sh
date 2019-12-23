@@ -132,6 +132,11 @@ else
     echo "Copying files..."
 fi
 
-rsync "$option" --files-from="$fileList" "$source" "$destination"
+if [[ $preview == true ]]
+then
+    rsync -a "$option" --files-from="$fileList" "$source" "$destination"
+else
+    rsync -a --files-from="$fileList" "$source" "$destination"
+fi
 
 echo "Done."
