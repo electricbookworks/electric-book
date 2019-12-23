@@ -1,30 +1,30 @@
 ---
-title: Upgrading or updating a project
+title: Updating project files
 categories: setup
 order: 60
 ---
 
-# Upgrading or updating a project
+# Updating project files
 
 The Electric Book template is developing all the time. Sometimes you'll want to add features from later versions into a project built on an earlier version.
 
+Or if you're working on a family of projects with common files, you may want to update projects based on changes in another, to keep files in sync.
+
 This is rarely a simple exercise. Especially while the template is still at v0.x.x, fundamental features like `metadata`-generated tag names and folder structures might change.
 
-Also, if you're working on a family of projects with common files, you may want to update projects based on changes in another, to keep files in sync.
+## Updating manually
 
-## Upgrading manually
+So updating is a largely manual exercise of knitting your content, styles and templates into a new copy of the template.
 
-So upgrading is a largely manual exercise of knitting your content, styles and templates into a new copy of the template.
-
-Some tips for tackling an upgrade:
+Some tips for tackling an update:
 
 1. Back up everything.
-2. For the very simplest books, when upgrading between versions that are close together (e.g. from v0.10 to v0.11) you might be able to simply copy `book` folders and `_data/meta.yml` from the old project into a new copy of the template. Check the [changelog](https://github.com/electricbookworks/electric-book/blob/master/CHANGELOG.md) to see whether anything major changed that your project depends on.
+2. For the very simplest books, when updating between versions that are close together (e.g. from v0.10 to v0.11) you might be able to simply copy `book` folders and `_data/meta.yml` from the old project into a new copy of the template. Check the [changelog](https://github.com/electricbookworks/electric-book/blob/master/CHANGELOG.md) to see whether anything major changed that your project depends on.
 3. Your PDF outputs (`print-pdf` in particular) need special attention, because reflow could affect layouts that you've already carefully refined. You may want to use a tool like [diff-pdf](https://vslavik.github.io/diff-pdf/) or Acrobat Pro to compare old and new PDF outputs.
 
-You can read some discussion about upgrades, and see a checklist of possible things to look out for while upgrading, [in the repo's issues](https://github.com/electricbookworks/electric-book/issues/57#issuecomment-303998954).
+You can read some discussion about updates, and see a checklist of possible things to look out for while updating, [in the repo's issues](https://github.com/electricbookworks/electric-book/issues/57#issuecomment-303998954).
 
-Here is an example workflow for upgrading that you could adapt as follow for your upgrading projects:
+Here is an example workflow for updating that you could adapt as follow for your updating projects:
 
 1. Create a new repo from the latest Electric Book template.
 2. Unless you really need the built-in samples (aka demo content) for testing, delete the `samples` folder and the `samples` node from `meta.yml`.
@@ -38,7 +38,9 @@ Here is an example workflow for upgrading that you could adapt as follow for you
 
 ## Using the `update` script
 
-The process of upgrading or updating a project can be made much easier by using the `update.sh` script in `_tools/update`, together with `files.txt`, a list of files to update.
+The process of updating a project can be made much easier by using the `update.sh` script in `_tools/update`, together with `files.txt`, a list of files to update.
+
+**This is an experimental approach, so be careful.**
 
 The `update.sh` script copies all the files listed in `files.txt` to or from another project. As long as `files.txt` lists every file you need to update, running `update.sh` will work. After running the update, check all the changes to your files (e.g. in a Git diff) to be sure that they are expected changes.
 
