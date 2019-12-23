@@ -543,7 +543,7 @@ _docs/setup/settings.md
 _docs/setup/tocs.md
 _docs/setup/tracking-and-analytics.md
 _docs/setup/translations.md
-_docs/setup/upgrading.md
+_docs/setup/updates.md
 _docs/setup/variants.md
 _docs/troubleshooting/troubleshooting.md
 
