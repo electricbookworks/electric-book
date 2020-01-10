@@ -5,6 +5,7 @@ layout: null
 ---
 
 {% include_relative polyfills.js %}
+{% include_relative settings.js %}
 {% include_relative locales.js %}
 {% include_relative mark-parents.js %}
 
