@@ -1,5 +1,5 @@
 /*jslint browser */
-/*globals window, IntersectionObserver, SVGInject */
+/*globals window, IntersectionObserver, SVGInject, settings */
 
 // Add observer
 var ebImageObserverConfig = {
@@ -26,8 +26,10 @@ function ebLazyLoadImages() {
         .call(document.querySelectorAll('[data-src], [data-srcset]'));
 
     // If IntersectionObserver is supported,
+    // and lazyloading is on in settings.yml (loaded in settings.js),
     // create a new one that will use it on all the lazyImages.
-    if (window.hasOwnProperty('IntersectionObserver')) {
+    if (window.hasOwnProperty('IntersectionObserver')
+            && settings.web.images.lazyload === true) {
         var lazyImageObserver = new IntersectionObserver(function
                 (entries, lazyImageObserver) {
             entries.forEach(function (entry) {

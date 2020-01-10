@@ -103,6 +103,11 @@ web:
   # Set 'inject' to false to disable SVG injection.
   svg:
     inject: true
+  # -----------------
+  # Images management
+  # -----------------
+  images:
+    lazyload: true
 
 # ----------------------------------------------------------
 # Epub settings
