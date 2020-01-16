@@ -2,6 +2,10 @@
 
 ## Latest
 
+* [Enable turning image lazyloading on/off in settings.yml](https://github.com/electricbookworks/electric-book/pull/433)
+* [Implement better paragraph-indent](https://github.com/electricbookworks/electric-book/pull/432)
+* [Support visible URLs in e-ink epubs](https://github.com/electricbookworks/electric-book/pull/431)
+* [Generate separate web and app search indexes](https://github.com/electricbookworks/electric-book/pull/424)
 * [Allow fully translated landing pages](https://github.com/electricbookworks/electric-book/pull/423)
 * [Lazyload images to save user data](https://github.com/electricbookworks/electric-book/pull/419)
 * [Create TOCs outside of book files (and other nav fixes)](https://github.com/electricbookworks/electric-book/pull/413)
