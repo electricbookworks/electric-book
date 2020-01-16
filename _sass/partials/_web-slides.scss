@@ -220,7 +220,8 @@ $web-slides: true !default;
                 margin: 0;
                 max-width: none;
                 padding: $line-height-default / 4 0;
-                width: auto;
+                // width: auto; // previous value, worth testing against `100%`
+                width: 100%;
                 ol {
                     display: flex;
                 }
