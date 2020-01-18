@@ -1,3 +1,5 @@
+/*jslint for, this */
+
 // This gulpfile processes:
 // - images, optimising them for output formats
 // - Javascript, optionally, minifying scripts for performance
@@ -22,16 +24,20 @@ var gulp = require('gulp'),
     del = require('del'),
     cheerio = require('gulp-cheerio');
 
-// Get arrays of possible book and language paths
-if (fileExists.sync('_data/meta.yml')) {
-    var metadata = yaml.load(fs.readFileSync('_data/meta.yml', 'utf8'));
-    var works = metadata.works;
-    function loadMetadata() {
-        'use strict';
-        var paths = [];
-        var filePaths = [];
-        var books = [];
-        var languages = [];
+// A function for loading book metadata as an object
+function loadMetadata() {
+    'use strict';
+
+    var paths = [];
+    var filePaths = [];
+    var books = [];
+    var languages = [];
+
+    if (fileExists.sync('_data/meta.yml')) {
+
+        var metadata = yaml.load(fs.readFileSync('_data/meta.yml', 'utf8'));
+        var works = metadata.works;
+
         var i;
         var j;
         for (i = 0; i < works.length; i += 1) {
@@ -46,14 +52,14 @@ if (fileExists.sync('_data/meta.yml')) {
                 }
             }
         }
-        return {
-            books: books,
-            languages: languages,
-            paths: paths,
-            filePaths: filePaths
-        };
     }
-    loadMetadata();
+
+    return {
+        books: books,
+        languages: languages,
+        paths: paths,
+        filePaths: filePaths
+    };
 }
 
 // Load image settings if they exist
