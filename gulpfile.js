@@ -22,7 +22,8 @@ var gulp = require('gulp'),
     yaml = require('js-yaml'),
     debug = require('gulp-debug'),
     del = require('del'),
-    cheerio = require('gulp-cheerio');
+    cheerio = require('gulp-cheerio'),
+    tap = require('gulp-tap');
 
 // A function for loading book metadata as an object
 function loadMetadata() {
@@ -133,24 +134,220 @@ var filetypes = 'jpg,jpeg,gif,png';
 gulp.task('images:svg', function (done) {
     'use strict';
     console.log('Processing SVG images from ' + paths.img.source);
+    var prefix = '';
     gulp.src(paths.img.source + '*.svg')
         .pipe(debug({title: 'Processing SVG '}))
-        .pipe(svgmin({
-            plugins: [
-                {
-                    removeViewBox: false
-                },
-                {
-                    removeDimensions: true
-                },
-                {
-                    removeAttrs: {attrs: 'data.*'}
-                }, {
-                    removeUnknownsAndDefaults: {
-                        defaultAttrs: false
+        .pipe(tap(function (file) {
+            prefix = file.basename.replace('.', '').replace(' ', '');
+        }))
+        .pipe(svgmin(function getOptions() {
+            return {
+                plugins: [
+                    {
+                        // We definitely want a viewBox
+                        removeViewBox: false
+                    },
+                    {
+                        // With a viewBox, we can remove these
+                        removeDimensions: true
+                    },
+                    {
+                        // We can remove data- attributes
+                        removeAttrs: {
+                            attrs: 'data.*'
+                        }
+                    },
+                    {
+                        // Remove unknown elements, but not default values
+                        removeUnknownsAndDefaults: {
+                            defaultAttrs: false
+                        }
+                    },
+                    {
+                        // We want titles for accessibility
+                        removeTitle: false
+                    },
+                    {
+                        // We want descriptions for accessibility
+                        removeDesc: false
+                    },
+                    {
+                        // Default
+                        convertStyleToAttrs: true
+                    },
+                    {
+                        // Default
+                        removeUselessStrokeAndFill: true
+                    },
+                    {
+                        // Default
+                        inlineStyles: true
+                    },
+                    {
+                        // Default
+                        cleanupAttrs: true
+                    },
+                    {
+                        // Default
+                        removeDoctype: true
+                    },
+                    {
+                        // Default
+                        removeXMLProcInst: true
+                    },
+                    {
+                        // Default
+                        removeComments: true
+                    },
+                    {
+                        // Default
+                        removeMetadata: true
+                    },
+                    {
+                        // Default
+                        removeUselessDefs: true
+                    },
+                    {
+                        // Default
+                        removeXMLNS: false
+                    },
+                    {
+                        // Default
+                        removeEditorsNSData: true
+                    },
+                    {
+                        // Default
+                        removeEmptyAttrs: true
+                    },
+                    {
+                        // Default
+                        removeHiddenElems: true
+                    },
+                    {
+                        // Default
+                        removeEmptyText: true
+                    },
+                    {
+                        // Default
+                        removeEmptyContainers: true
+                    },
+                    {
+                        // Default
+                        cleanupEnableBackground: true
+                    },
+                    {
+                        // Default
+                        minifyStyles: true
+                    },
+                    {
+                        // Default
+                        convertColors: true
+                    },
+                    {
+                        // Default
+                        convertPathData: true
+                    },
+                    {
+                        // Default
+                        convertTransform: true
+                    },
+                    {
+                        // Default
+                        removeNonInheritableGroupAttrs: true
+                    },
+                    {
+                        // Default
+                        removeUselessStrokeAndFill: true
+                    },
+                    {
+                        // Default
+                        removeUnusedNS: true
+                    },
+                    {
+                        // Default
+                        prefixIds: false
+                    },
+                    {
+                        // Prefix and minify IDs
+                        cleanupIDs: {
+                            prefix: prefix + '-',
+                            minify: true
+                        }
+                    },
+                    {
+                        // Default
+                        cleanupNumericValues: true
+                    },
+                    {
+                        // Default
+                        cleanupListOfValues: true
+                    },
+                    {
+                        // Default
+                        moveElemsAttrsToGroup: true
+                    },
+                    {
+                        // Default
+                        collapseGroups: true
+                    },
+                    {
+                        // Default
+                        removeRasterImages: false
+                    },
+                    {
+                        // Default
+                        mergePaths: true
+                    },
+                    {
+                        // Default
+                        convertShapeToPath: false
+                    },
+                    {
+                        // Default
+                        convertEllipseToCircle: true
+                    },
+                    {
+                        // Default
+                        sortAttrs: false
+                    },
+                    {
+                        // Default
+                        sortDefsChildren: true
+                    },
+                    {
+                        // Default
+                        removeAttributesBySelector: false
+                    },
+                    {
+                        // Default
+                        removeElementsByAttr: false
+                    },
+                    {
+                        // Default
+                        addClassesToSVGElement: false
+                    },
+                    {
+                        // Default
+                        addAttributesToSVGElement: false
+                    },
+                    {
+                        // Default
+                        removeOffCanvasPaths: false
+                    },
+                    {
+                        // Default
+                        removeStyleElement: false
+                    },
+                    {
+                        // Default
+                        removeScriptElement: false
+                    },
+                    {
+                        // Default
+                        reusePaths: false
                     }
-                }
-            ]
+                ]
+            };
         }).on('error', function (e) {
             console.log(e);
         }))
