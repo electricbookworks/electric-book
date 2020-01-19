@@ -68,7 +68,7 @@ module.exports = function (uncompressedEpubDirectory) {
             // but is piped here in a writable stream which emits a "finish" event.
             console.log(uncompressedEpubDirectory + ".zip created.");
         });
-}
+};
 
 // Make this runnable from the command line
 // https://www.npmjs.com/package/make-runnable
