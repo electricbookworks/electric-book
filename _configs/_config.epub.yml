@@ -37,11 +37,16 @@ exclude:
   - /*/images/web
   - /*/images/app
   # Temporarily exclude book files for faster builds
+  # - assets
+  # - book
   # - samples
 # We deliberately empty the keep_files list here,
 # so that files we don't want don't end up in the epub
 # but not in the manifest.
-keep_files: []
+keep_files:
+  # - assets
+  # - book
+  # - samples
 # Map file extensions to media types for the opf
 media-types:
   html: "application/xhtml+xml"
