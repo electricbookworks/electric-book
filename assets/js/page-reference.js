@@ -1,3 +1,4 @@
+/*jslint */
 /*globals window, Prince, pageLanguage, locales */
 
 // Page cross-reference in print
@@ -17,12 +18,7 @@ var postPageNumberPhrase = locales[pageLanguage]['cross-references']['post-page-
 function addPageReferenceFunc() {
     'use strict';
 
-    // exit if we're in phantom; we only want Prince to do this
-    if (typeof window.callPhantom === 'function') {
-        return;
-    }
-
-    if (Prince) {
+    if (typeof Prince === 'object') {
         console.log('Adding page references in Prince.');
         Prince.addScriptFunc("pagereference", function (currentPage, targetPage) {
 
