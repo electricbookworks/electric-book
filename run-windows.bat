@@ -604,6 +604,7 @@ set /p process=Enter a number and hit return.
 
         :: If they exist, remove previous .zip and .epub files that we will replace.
         echo Removing any previous %epubFileName%.zip and %epubFileName%.epub files...
+        if exist "%location%\_output\%epubFileName%" rd /s /q "%location%\_output\%epubFileName%"
         if exist "%location%\_output\%epubFileName%.zip" del /q "%location%\_output\%epubFileName%.zip"
         if exist "%location%\_output\%epubFileName%.epub" del /q "%location%\_output\%epubFileName%.epub"
         echo Removed any previous zip and epub files.
@@ -635,40 +636,39 @@ set /p process=Enter a number and hit return.
 
         :: Now to zip the epub files. Important: mimetype first.
         :epubCompressing
-            echo Compressing files...
-            :: Uses Zip 3.0: http://www.info-zip.org/Zip.html
-            :: Temporarily put Zip in the PATH
-            path=%PATH%;%location%_tools\zip
-            :: mimetype: create zip, no compression, no extra fields
-            zip --compression-method store -0 -X --quiet "%location%_output/%epubFileName%.zip" mimetype
-            :: everything else: append to the zip with default compression
+            echo Assembling epub files...
 
-            :: Zip root folders
-            if exist "images\epub" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images\epub"
-            if exist "items" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "items"
-            if exist "fonts" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "fonts"
-            if exist "styles" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "styles"
-            if exist "mathjax" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "mathjax"
-            if exist "js" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "js"
+            :: Copy root folders
+            if exist "images\epub" robocopy "%location%\_site\epub\images\epub" "%location%_output\%epubFileName%\images\epub"
+            if exist "items" robocopy "%location%\_site\epub\items" "%location%\_output\%epubFileName%\items"
+            if exist "fonts" robocopy "%location%\_site\epub\fonts" "%location%\_output\%epubFileName%\fonts"
+            if exist "styles" robocopy "%location%\_site\epub\styles" "%location%\_output\%epubFileName%\styles"
+            if exist "mathjax" robocopy "%location%\_site\epub\mathjax" "%location%\_output\%epubFileName%\mathjax"
+            if exist "js" robocopy "%location%\_site\epub\js" "%location%\_output\%epubFileName%\js"
 
-            :: Zip text file if this is not a translation
+            :: Copy text file if this is not a translation
             if not "%subdirectory%"=="" goto epubZipSubdirectory
-            if exist "text" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "text"
+            if exist "text" robocopy "%location%\_site\epub\text" "%location%\_output\%epubFileName%\text"
             goto epubAddPackageFiles
 
             :: And if it is a translation, move the language's text subdirectory
             :epubZipSubdirectory
-                if not "%subdirectory%"=="" if exist "%subdirectory%" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "%subdirectory%"
+                if not "%subdirectory%"=="" if exist "%subdirectory%" if exist "text" robocopy "%location%\_site\epub\%subdirectory%" "%location%\_output\%epubFileName%\%subdirectory%"
                 goto epubAddPackageFiles
 
         :: Add the META-INF, package.opf and toc.ncx
         :epubAddPackageFiles
             :: Now add these admin files to the zip
-            if exist META-INF zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" META-INF
-            if exist package.opf zip --quiet "%location%_output/%epubFileName%.zip" package.opf
-            if exist toc.ncx zip --quiet "%location%_output/%epubFileName%.zip" toc.ncx
+            if exist META-INF robocopy "%location%\_site\epub\META-INF" "%location%\_output\%epubFileName%\META-INF"
+            if exist package.opf robocopy "%location%\_site\epub" "%location%\_output\%epubFileName%" package.opf
+            if exist toc.ncx robocopy "%location%\_site\epub" "%location%\_output\%epubFileName%" toc.ncx
 
-            :: Change file extension .zip to .epub
+        :: Zip the epub
+        echo Zipping with Node...
+		cd "%location%\_output"
+        node "%location%/_tools/zip/zip.js" "%epubFileName%"
+
+        :: Change file extension .zip to .epub
             cd %location%_output
             if exist %epubFileName%.zip ren %epubFileName%.zip %epubFileName%.epub
 
