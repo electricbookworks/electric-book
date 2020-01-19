@@ -11,7 +11,6 @@ $web-footer: true !default;
 		font-family: $font-text-secondary;
 		border-top: $rule-thickness solid $footer-border-color;
 		margin: ($line-height-default * 2) 0 0 0;
-		padding: $line-height-default / 2;
 		width: 100%; // Prevents floating when preceding elements float or flex
 		box-sizing: border-box; // prevents max-width from causing effective left padding
 	}
@@ -19,6 +18,7 @@ $web-footer: true !default;
 		clear: both;
 		max-width: $max-width-default;
 		margin: auto;
+		padding: $line-height-default 1em; // 1em to align with padding on #content
 	}
 	#footer p,
 	#footer ol,
