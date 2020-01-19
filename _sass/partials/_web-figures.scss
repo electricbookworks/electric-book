@@ -75,18 +75,19 @@ $web-figures: true !default;
             text-align: center;
             text-indent: 0;
         }
-        &.x-small, &.small, &.large {
-            p img, img {
-                max-height: inherit;
-            }
-        }
-        @media screen and (min-width: $break-width-small) {
-            &.large {
-                img, p img {
-                    max-height: $break-width-small;
-                }
-            }
-        }
+        // Deprecated classes commented out, here for reference
+        // &.x-small, &.small, &.large {
+        //     p img, img {
+        //         max-height: inherit;
+        //     }
+        // }
+        // @media screen and (min-width: $break-width-small) {
+        //     &.large {
+        //         img, p img {
+        //             max-height: $break-width-small;
+        //         }
+        //     }
+        // }
         // Thumbnail figures
         &.thumbnail {
             max-width: 25%;

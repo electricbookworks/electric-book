@@ -66,11 +66,12 @@ $epub-figures: true !default;
             text-align: center;
             text-indent: 0;
         }
-        &.x-small, &.small, &.large {
-            p img, img {
-                max-height: inherit;
-            }
-        }
+        // Deprecated classes commented out, here for reference
+        // &.x-small, &.small, &.large {
+        //     p img, img {
+        //         max-height: inherit;
+        //     }
+        // }
         // No media queries here as in web-figures, because older ereaders don't support them properly.
         // Thumbnail figures
         &.thumbnail {
