@@ -639,29 +639,29 @@ set /p process=Enter a number and hit return.
             echo Assembling epub files...
 
             :: Copy root folders
-            if exist "images\epub" robocopy "%location%\_site\epub\images\epub" "%location%_output\%epubFileName%\images\epub"
-            if exist "items" robocopy "%location%\_site\epub\items" "%location%\_output\%epubFileName%\items"
-            if exist "fonts" robocopy "%location%\_site\epub\fonts" "%location%\_output\%epubFileName%\fonts"
-            if exist "styles" robocopy "%location%\_site\epub\styles" "%location%\_output\%epubFileName%\styles"
-            if exist "mathjax" robocopy "%location%\_site\epub\mathjax" "%location%\_output\%epubFileName%\mathjax"
-            if exist "js" robocopy "%location%\_site\epub\js" "%location%\_output\%epubFileName%\js"
+            if exist "images\epub" robocopy "%location%\_site\epub\images\epub" "%location%_output\%epubFileName%\images\epub" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "items" robocopy "%location%\_site\epub\items" "%location%\_output\%epubFileName%\items" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "fonts" robocopy "%location%\_site\epub\fonts" "%location%\_output\%epubFileName%\fonts" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "styles" robocopy "%location%\_site\epub\styles" "%location%\_output\%epubFileName%\styles" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "mathjax" robocopy "%location%\_site\epub\mathjax" "%location%\_output\%epubFileName%\mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "js" robocopy "%location%\_site\epub\js" "%location%\_output\%epubFileName%\js" /E /NFL /NDL /NJH /NJS /NC /NS
 
             :: Copy text file if this is not a translation
             if not "%subdirectory%"=="" goto epubZipSubdirectory
-            if exist "text" robocopy "%location%\_site\epub\text" "%location%\_output\%epubFileName%\text"
+            if exist "text" robocopy "%location%\_site\epub\text" "%location%\_output\%epubFileName%\text" /E /NFL /NDL /NJH /NJS /NC /NS
             goto epubAddPackageFiles
 
             :: And if it is a translation, move the language's text subdirectory
             :epubZipSubdirectory
-                if not "%subdirectory%"=="" if exist "%subdirectory%" if exist "text" robocopy "%location%\_site\epub\%subdirectory%" "%location%\_output\%epubFileName%\%subdirectory%"
+                if not "%subdirectory%"=="" if exist "%subdirectory%\text" robocopy "%location%\_site\epub\%subdirectory%" "%location%\_output\%epubFileName%\%subdirectory%" /E /NFL /NDL /NJH /NJS /NC /NS
                 goto epubAddPackageFiles
 
         :: Add the META-INF, package.opf and toc.ncx
         :epubAddPackageFiles
             :: Now add these admin files to the zip
-            if exist META-INF robocopy "%location%\_site\epub\META-INF" "%location%\_output\%epubFileName%\META-INF"
-            if exist package.opf robocopy "%location%\_site\epub" "%location%\_output\%epubFileName%" package.opf
-            if exist toc.ncx robocopy "%location%\_site\epub" "%location%\_output\%epubFileName%" toc.ncx
+            if exist META-INF robocopy "%location%\_site\epub\META-INF" "%location%\_output\%epubFileName%\META-INF" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist package.opf robocopy "%location%\_site\epub" "%location%\_output\%epubFileName%" package.opf /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist toc.ncx robocopy "%location%\_site\epub" "%location%\_output\%epubFileName%" toc.ncx /E /NFL /NDL /NJH /NJS /NC /NS
 
         :: Zip the epub
         echo Zipping with Node...
