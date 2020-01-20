@@ -5,7 +5,7 @@ $web-language-select: true !default;
 
     .language-select {
         z-index: 100;
-        padding: ($line-height-default / 2) ($line-height-default / 2) 0 ($line-height-default / 2);
+        padding: 0.5em;
         text-align: right;
         color: $language-select-text-color;
         .language-select-list {
@@ -29,7 +29,7 @@ $web-language-select: true !default;
         &:hover {
             .language-select-list {
                 background-color: $language-select-background-color;
-                border-radius: $box-border-radius;
+                border-radius: $button-border-radius;
                 display: inline;
                 position: fixed;
                 right: 0;
@@ -38,7 +38,7 @@ $web-language-select: true !default;
         }
     }
 
-    // Globe icon (_includes/globe-icon)
+    // Icon (_includes/language-select-icon)
     svg.language-select-icon {
         // Avoid Firefox bug where tapping selects SVG as text
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
