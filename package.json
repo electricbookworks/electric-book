@@ -33,6 +33,7 @@
     "gulp-rename": "^1.4.0",
     "gulp-responsive-images": "github:electricbookworks/gulp-responsive-images",
     "gulp-svgmin": "^2.2.0",
+    "gulp-tap": "^2.0.0",
     "gulp-uglify": "^3.0.1",
     "js-yaml": "^3.13.1",
     "yargs": "^9.0.1"
