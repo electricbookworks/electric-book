@@ -1,0 +1,57 @@
+$web-bookmarks: true !default;
+@if $web-bookmarks {
+
+    // Bookmarks
+
+    .bookmarks {
+        z-index: 100;
+        padding: 0.5em;
+        text-align: right;
+        color: $bookmarks-text-color;
+        .bookmarks-list {
+            list-style-type: none;
+            padding: 0; // override default masthead padding
+            li {
+                display: block; // overrides masthead ul styles
+                a {
+                    color: $bookmarks-text-color;
+                }
+                // override inherited styles from masthead ul li:after
+                &:after {
+                    content: normal;
+                }
+            }
+        }
+        // Hide the list till hover on parent
+        .bookmarks-list {
+            display: none;
+        }
+        &:hover {
+            .bookmarks-list {
+                background-color: $bookmarks-background-color;
+                border-radius: $box-border-radius;
+                display: inline;
+                position: fixed;
+                right: 0;
+                padding: $line-height-default / 2;
+                &:empty {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    // Icon (_includes/bookmark-icon)
+    svg.bookmark-icon {
+        // Avoid Firefox bug where tapping selects SVG as text
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
+        -moz-user-select: none;
+        .bookmark-icon-outline {
+            fill: $bookmark-icon-outline-color;
+        }
+        .bookmark-icon-fill {
+            fill: $bookmark-icon-fill-color;
+        }
+    }
+
+}

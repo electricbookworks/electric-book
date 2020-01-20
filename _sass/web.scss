@@ -159,6 +159,12 @@ $annotator-icon-background-color-active: $color-accent !default;
 $annotator-icon-background-color-inactive: $color-background !default;
 $annotator-icon-thickness: 1.5px !default;
 
+// Bookmarks
+$bookmarks-text-color: $color-text-secondary !default;
+$bookmarks-background-color: $color-background !default;
+$bookmark-icon-outline-color: $color-accent !default;
+$bookmark-icon-fill-color: $color-background !default;
+
 // ---------------------------------
 // Set to false to turn partials off
 // ---------------------------------
@@ -225,6 +231,7 @@ $web-fitting: true !default;  // E.g. tracking and shrinking
 $web-controls: true !default;
 $web-language-select: true !default;
 $web-annotator: true !default;
+$web-bookmarks: true !default;
 
 // Logic (if this then that)
 $web-reset-sequences: true !default; // This should stay last in the @import list
@@ -305,6 +312,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-controls";
 @import "partials/web-annotator";
 @import "partials/web-language-select";
+@import "partials/web-bookmarks";
 
 // Logic (if this then that)
 @import "partials/web-reset-sequences"; // This should stay last in the @import list

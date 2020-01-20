@@ -1,0 +1,4 @@
+<svg class="bookmark-icon" width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+  <path class="bookmark-icon-fill" fill="#ce6565" d="M25 22.9h336v460.8l-168-96.6-180.5 96.6V22.9z"/>
+  <path class="bookmark-icon-outline" d="M336 0H48C21.5 0 0 21.5 0 48v464l192-112 192 112V48c0-26.5-21.5-48-48-48zm25 469l-168.4-94.6-167 94.6L25 54c6.2-23.2 6.2-23.2 29-31.1h276c27.5 4.2 27.5 4.2 31 31.1v415z"/>
+</svg>
