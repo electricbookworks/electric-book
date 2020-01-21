@@ -12,14 +12,14 @@ The Electric Book workflow is like a toolkit: it uses a range of great open-sour
 
 We recommend installing this software in this order (since some of these applications depend on others):
 
-|                                                                    Software                                                                   |                                 Reason                                |
-|-----------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| Software                                                                                                                                      | Reason                                                                |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | A Ruby version manager (e.g. [Homebrew](https://brew.sh/) on Mac or [Chocolatey](https://chocolatey.org/) for Windows)                        | Ensures you're using the right version of Ruby                        |
 | [Ruby 2.4 or later](https://www.ruby-lang.org/en/)                                                                                            | The language that Jekyll runs in                                      |
 | [Jekyll](https://jekyllrb.com/)                                                                                                               | Builds finished HTML from your content and the Electric Book template |
 | [Bundler](https://bundler.io/)                                                                                                                | Manages other Ruby applications ('gems') that Jekyll depends on       |
 | [PrinceXML](https://www.princexml.com/)                                                                                                       | Converts Jekyll's HTML into PDF                                       |
-| [PhantomJS](http://phantomjs.org/)                                                                                                            | Used for rendering maths for PDF and building website search indexes  |
+| [PhantomJS](http://phantomjs.org/)                                                                                                            | Used for building website search indexes                              |
 | [Pandoc](https://pandoc.org/)                                                                                                                 | Used for converting books to MS Word                                  |
 | [Git](https://git-scm.com/) (or a Git desktop app like [GitHub Desktop](https://desktop.github.com/))                                         | Used for version control                                              |
 | A code editor (e.g. [Sublime Text](https://www.sublimetext.com/), [VS Code](https://code.visualstudio.com/), [Brackets](http://brackets.io/)) | The best way to edit markdown and other content and style files       |
