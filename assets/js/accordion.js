@@ -134,27 +134,6 @@ function ebAccordionFillSections() {
     });
 }
 
-function ebMoveThemeKeys() {
-    'use strict';
-
-    // get the theme keys and the theme key links
-    var themeKeys = document.querySelectorAll('.theme-key');
-    var themeKeysLinks = document.querySelectorAll('.theme-key a');
-
-    themeKeysLinks.forEach(function (themeKeysLink) {
-        // up to themeKeys div, up to data-container, up to section,
-        // on to next section, down to heading, down to h2
-        themeKeysLink.parentNode.parentNode.parentNode
-            .nextElementSibling.firstChild.firstChild
-            .appendChild(themeKeysLink);
-    });
-
-    // remove now empty theme keys divs
-    themeKeys.forEach(function (themeKey) {
-        themeKey.parentNode.removeChild(themeKey);
-    });
-}
-
 function ebAccordionHideAll() {
     'use strict';
 
@@ -526,7 +505,6 @@ function ebAccordify() {
 
     ebAccordionSetUpSections(collapserButtons);
     ebAccordionFillSections();
-    ebMoveThemeKeys();
 
     if (searchTerm) {
         // loop through sections
