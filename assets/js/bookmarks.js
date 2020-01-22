@@ -21,11 +21,13 @@ function ebSetBookmark(name, description) {
         name: name,
         title: document.title,
         description: description,
-        pageID: ebSlugify(ebBookMarkRemoveScrollParameter(window.location.href)),
+        pageID: ebSlugify(window.location.href.split('#')[0]),
         location: window.location,
         scrollPosition: window.pageYOffset || document.documentElement.scrollTop
     };
-    localStorage.setItem(bookmark.type + '-' + bookmark.pageID, JSON.stringify(bookmark));
+    localStorage.setItem(bookmark.type
+            + '-' + bookmark.name
+            + '-' + bookmark.pageID, JSON.stringify(bookmark));
 }
 
 // Check if bookmark is on the current page
@@ -123,12 +125,13 @@ function ebBookmarksListenForClicks() {
 }
 
 
-
-
 // Check for bookmarks
 ebCheckForBookmarks();
 
 // Scroll if URLs contain scroll positions
+// TODO: wait for accordion to open before scrolling,
+// which may involve fixing accordions.js and
+// creating a state object that tracks events.
 ebBookmarkScrollToPosition();
 
 // Listen for clicks on internal bookmark links
