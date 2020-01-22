@@ -184,6 +184,8 @@ en:
     show-sidebar-tooltip-description: "Tap here to show the annotations sidebar. Select text to highlight and create notes on this page."
     show-annotated-text-tooltip-title: "Highlight annotations"
     show-annotated-text-tooltip-description: "Tap here to show or hide the annotation highlights on this page."
+  bookmarks:
+    last-location: "Last location"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -260,6 +262,8 @@ fr:
     show-sidebar-tooltip-description: "Cliquer ici pour afficher la barre latérale des annotations. Vous pouvez sélectionner le texte à surligner et à annoter sur cette page."
     show-annotated-text-tooltip-title: "Surligner les annotations"
     show-annotated-text-tooltip-description: "Cliquer ici pour afficher ou masquer les annotations surlignées sur cette page."
+  bookmarks:
+    last-location: "Dernier lieu"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
