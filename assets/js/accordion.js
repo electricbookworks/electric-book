@@ -149,7 +149,7 @@ function ebAccordionHideAll() {
 function ebAccordionShowAll() {
     'use strict';
 
-    console.log('expanding all');
+    // console.log('expanding all');
 
     var tabPanels = document.querySelectorAll('[role="tabpanel"]');
     tabPanels.forEach(function (current) {
@@ -330,6 +330,7 @@ function ebAccordionShow(targetID) {
             videoShow(sectionToShow);
         }
     }
+
 }
 
 function ebAccordionListenForAnchorClicks() {
@@ -354,26 +355,26 @@ function ebAccordionListenForAnchorClicks() {
             var targetID;
 
             // ignore target blank / rel noopener links
-            if (this.getAttribute('rel') === 'noopener') {
+            if (event.target.getAttribute('rel') === 'noopener') {
                 return;
             }
 
             // get the target ID by removing any file path and the #
-            if (this.hasAttribute('href')) {
-                targetID = this.getAttribute('href').replace(/.*#/, '');
+            if (event.target.hasAttribute('href')) {
+                targetID = event.target.getAttribute('href').replace(/\?.+/, '').replace(/.*#/, '');
                 // console.log('The targetID is: ' + targetID);
             } else {
                 return;
             }
             // if it's an open accordion, close it
-            if (this.parentNode.getAttribute('data-accordion') === 'open') {
+            if (event.target.parentNode.getAttribute('data-accordion') === 'open') {
                 ebAccordionHideAll();
                 return;
             }
 
             // did we click on a thing that wasn't an accordion?
             // which section / accordion is it inside?
-            if (!this.parentNode.getAttribute('data-accordion')) {
+            if (!event.target.parentNode.getAttribute('data-accordion')) {
 
                 // console.log('We clicked on something that is not an accordion. Now to find targetID ' + targetID + ' in the DOM...');
 
@@ -398,7 +399,7 @@ function ebAccordionListenForHeadingClicks() {
     allTheToggleHeaders.forEach(function (oneOfTheToggleHeaders) {
         oneOfTheToggleHeaders.addEventListener("click", function () {
             // simulate anchor click
-            this.querySelector('a').click();
+            event.target.querySelector('a').click();
         });
     });
 }
@@ -411,7 +412,7 @@ function ebAccordionListenForNavClicks() {
     navLinks.forEach(function (navLink) {
         navLink.addEventListener("click", function () {
             // get the section and click to open it if it's closed
-            var theSection = document.getElementById(this.hash.replace(/.*#/, ''));
+            var theSection = document.getElementById(event.target.hash.replace(/.*#/, ''));
             // simulate anchor click, if it's closed
             if (theSection) {
                 if (theSection.getAttribute('data-accordion') === 'closed') {
@@ -432,8 +433,9 @@ function ebAccordionListenForHashChange() {
         // Don't treat this like a normal click on a link
         event.preventDefault();
 
-        // get the target ID from the hash
-        var targetID = window.location.hash;
+        // get the target ID from the hash,
+        // removing any query parameters
+        var targetID = window.location.hash.replace(/\?.+/, '');
         // console.log('targetID encoded: ' + targetID);
 
         targetID = decodeURIComponent(targetID);
