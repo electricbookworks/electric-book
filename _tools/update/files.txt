@@ -1,0 +1,811 @@
+# Project files
+# =============
+
+# This file lists core files for this Electric Book project,
+# and is used by the update.sh script to update to or from
+# other Electric Book projects. Whenever you remove or create
+# a file in this project that should be updated like that,
+# add it to this list, which is sorted alphabetically.
+# And add or comment out files for your project as appropriate.
+
+
+# Dot files
+# ---------
+
+.gitignore
+
+
+# Sitewide font files
+# -------------------
+
+assets/fonts/Crimson-Bold.otf
+assets/fonts/Crimson-BoldItalic.otf
+assets/fonts/Crimson-Italic.otf
+assets/fonts/Crimson-OFL.txt
+assets/fonts/Crimson-Roman.otf
+assets/fonts/Crimson-Semibold.otf
+assets/fonts/Crimson-SemiboldItalic.otf
+assets/fonts/Source-OFL.txt
+assets/fonts/SourceSansPro-Black.ttf
+assets/fonts/SourceSansPro-BlackIt.ttf
+assets/fonts/SourceSansPro-Bold.ttf
+assets/fonts/SourceSansPro-BoldIt.ttf
+assets/fonts/SourceSansPro-ExtraLight.ttf
+assets/fonts/SourceSansPro-ExtraLightIt.ttf
+assets/fonts/SourceSansPro-It.ttf
+assets/fonts/SourceSansPro-Light.ttf
+assets/fonts/SourceSansPro-LightIt.ttf
+assets/fonts/SourceSansPro-Regular.ttf
+assets/fonts/SourceSansPro-Semibold.ttf
+assets/fonts/SourceSansPro-SemiboldIt.ttf
+assets/fonts/Ubuntu-LICENCE.txt
+assets/fonts/UbuntuMono-B.ttf
+assets/fonts/UbuntuMono-BI.ttf
+assets/fonts/UbuntuMono-R.ttf
+assets/fonts/UbuntuMono-RI.ttf
+
+
+# Sitewide images
+# ---------------
+
+# These are not usually upgraded or shared between projects.
+# So they are commented out here because generally they
+# should not be overwritten by updates.
+
+# assets/images/app/cover.jpg
+# assets/images/app/publisher-logo.jpg
+# assets/images/epub/cover.jpg
+# assets/images/epub/publisher-logo.jpg
+# assets/images/print-pdf/cover.jpg
+# assets/images/print-pdf/publisher-logo.jpg
+# assets/images/screen-pdf/cover.jpg
+# assets/images/screen-pdf/publisher-logo.jpg
+# assets/images/web/cover-1024.jpg
+# assets/images/web/cover-2048.jpg
+# assets/images/web/cover-320.jpg
+# assets/images/web/cover-640.jpg
+# assets/images/web/cover-max.jpg
+# assets/images/web/cover.jpg
+# assets/images/web/publisher-logo-1024.jpg
+# assets/images/web/publisher-logo-2048.jpg
+# assets/images/web/publisher-logo-320.jpg
+# assets/images/web/publisher-logo-640.jpg
+# assets/images/web/publisher-logo-max.jpg
+# assets/images/web/publisher-logo.jpg
+# assets/images/_source/cover.jpg
+# assets/images/_source/publisher-logo.jpg
+
+
+# Sitewide Javascript
+# -------------------
+
+assets/js/accordion.js
+assets/js/annotation.js
+assets/js/bundle.js
+assets/js/elasticlunr-setup.js
+assets/js/elasticlunr.min.js
+assets/js/footnote-popups.js
+assets/js/footnotes.js
+assets/js/heading-titles.js
+assets/js/lazyload.js
+assets/js/locales.js
+assets/js/mark-parents.js
+assets/js/mark.min.js
+assets/js/mathjax/extensions/a11y/accessibility-menu.js
+assets/js/mathjax/extensions/a11y/auto-collapse.js
+assets/js/mathjax/extensions/a11y/collapsible.js
+assets/js/mathjax/extensions/a11y/explorer.js
+assets/js/mathjax/extensions/a11y/invalid_keypress.mp3
+assets/js/mathjax/extensions/a11y/invalid_keypress.ogg
+assets/js/mathjax/extensions/a11y/mathjax-sre.js
+assets/js/mathjax/extensions/a11y/mathmaps/.htaccess
+assets/js/mathjax/extensions/a11y/mathmaps/en/functions/algebra.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/functions/elementary.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/functions/hyperbolic.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/functions/trigonometry.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/greek-capital.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/greek-mathfonts-bold.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/greek-mathfonts-italic.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/greek-mathfonts-sans-serif-bold.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/greek-scripts.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/greek-small.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/greek-symbols.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/hebrew_letters.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-lower-double-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-lower-normal.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-lower-phonetic.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-lower-single-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-bold-fraktur.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-bold-script.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-bold.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-double-struck.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-fraktur.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-italic.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-monospace.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-sans-serif-bold.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-sans-serif-italic.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-sans-serif.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-mathfonts-script.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-rest.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-upper-double-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-upper-normal.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/latin-upper-single-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_angles.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_arrows.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_characters.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_delimiters.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_digits.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_geometry.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_harpoons.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_non_characters.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_symbols.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/math_whitespace.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/symbols/other_stars.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/units/energy.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/units/length.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/units/memory.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/units/other.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/units/speed.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/units/temperature.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/units/time.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/units/volume.js
+assets/js/mathjax/extensions/a11y/mathmaps/en/units/weight.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/functions/algebra.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/functions/elementary.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/functions/hyperbolic.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/functions/trigonometry.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/greek-capital.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/greek-mathfonts-bold.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/greek-mathfonts-italic.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/greek-mathfonts-sans-serif-bold.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/greek-scripts.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/greek-small.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/greek-symbols.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/hebrew_letters.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-lower-double-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-lower-normal.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-lower-phonetic.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-lower-single-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-bold-fraktur.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-bold-script.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-bold.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-double-struck.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-fraktur.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-italic.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-monospace.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-sans-serif-bold.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-sans-serif-italic.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-sans-serif.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-mathfonts-script.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-rest.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-upper-double-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-upper-normal.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/latin-upper-single-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_angles.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_arrows.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_characters.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_delimiters.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_digits.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_geometry.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_harpoons.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_non_characters.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_symbols.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/math_whitespace.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/symbols/other_stars.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/units/energy.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/units/length.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/units/memory.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/units/other.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/units/speed.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/units/temperature.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/units/time.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/units/volume.js
+assets/js/mathjax/extensions/a11y/mathmaps/es/units/weight.js
+assets/js/mathjax/extensions/a11y/mathmaps/functions/algebra.js
+assets/js/mathjax/extensions/a11y/mathmaps/functions/elementary.js
+assets/js/mathjax/extensions/a11y/mathmaps/functions/functions_spanish.js
+assets/js/mathjax/extensions/a11y/mathmaps/functions/hyperbolic.js
+assets/js/mathjax/extensions/a11y/mathmaps/functions/trigonometry.js
+assets/js/mathjax/extensions/a11y/mathmaps/mathmaps_ie.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/greek-capital.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/greek-mathfonts.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/greek-scripts.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/greek-small.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/greek-symbols.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/hebrew_letters.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/latin-lower-double-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/latin-lower-normal.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/latin-lower-phonetic.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/latin-lower-single-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/latin-mathfonts.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/latin-rest.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/latin-upper-double-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/latin-upper-normal.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/latin-upper-single-accent.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_angles.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_arrows.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_characters.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_delimiters.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_digits.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_geometry.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_harpoons.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_non_characters.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_symbols.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_whitespace.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/other_stars.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/spanish.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/spanish_mathfonts.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/energy.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/length.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/memory.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/other.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/speed.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/temperature.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/time.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/units_spanish.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/volume.js
+assets/js/mathjax/extensions/a11y/mathmaps/units/weight.js
+assets/js/mathjax/extensions/a11y/semantic-enrich.js
+assets/js/mathjax/extensions/a11y/wgxpath.install.js
+assets/js/mathjax/extensions/AssistiveMML.js
+assets/js/mathjax/extensions/FontWarnings.js
+assets/js/mathjax/extensions/HelpDialog.js
+assets/js/mathjax/extensions/jsMath2jax.js
+assets/js/mathjax/extensions/MatchWebFonts.js
+assets/js/mathjax/extensions/MathEvents.js
+assets/js/mathjax/extensions/MathMenu.js
+assets/js/mathjax/extensions/MathZoom.js
+assets/js/mathjax/extensions/Safe.js
+assets/js/mathjax/extensions/TeX/action.js
+assets/js/mathjax/extensions/TeX/AMScd.js
+assets/js/mathjax/extensions/TeX/AMSmath.js
+assets/js/mathjax/extensions/TeX/AMSsymbols.js
+assets/js/mathjax/extensions/TeX/autobold.js
+assets/js/mathjax/extensions/TeX/autoload-all.js
+assets/js/mathjax/extensions/TeX/bbox.js
+assets/js/mathjax/extensions/TeX/begingroup.js
+assets/js/mathjax/extensions/TeX/boldsymbol.js
+assets/js/mathjax/extensions/TeX/cancel.js
+assets/js/mathjax/extensions/TeX/color.js
+assets/js/mathjax/extensions/TeX/enclose.js
+assets/js/mathjax/extensions/TeX/extpfeil.js
+assets/js/mathjax/extensions/TeX/HTML.js
+assets/js/mathjax/extensions/TeX/mathchoice.js
+assets/js/mathjax/extensions/TeX/mediawiki-texvc.js
+assets/js/mathjax/extensions/TeX/mhchem.js
+assets/js/mathjax/extensions/TeX/mhchem3/mhchem.js
+assets/js/mathjax/extensions/TeX/newcommand.js
+assets/js/mathjax/extensions/TeX/noErrors.js
+assets/js/mathjax/extensions/TeX/noUndefined.js
+assets/js/mathjax/extensions/TeX/unicode.js
+assets/js/mathjax/extensions/TeX/verb.js
+assets/js/mathjax/extensions/tex2jax.js
+assets/js/mathjax/extensions/toMathML.js
+assets/js/mathjax/jax/element/mml/jax.js
+assets/js/mathjax/jax/element/mml/optable/Arrows.js
+assets/js/mathjax/jax/element/mml/optable/BasicLatin.js
+assets/js/mathjax/jax/element/mml/optable/CombDiacritMarks.js
+assets/js/mathjax/jax/element/mml/optable/CombDiactForSymbols.js
+assets/js/mathjax/jax/element/mml/optable/Dingbats.js
+assets/js/mathjax/jax/element/mml/optable/GeneralPunctuation.js
+assets/js/mathjax/jax/element/mml/optable/GeometricShapes.js
+assets/js/mathjax/jax/element/mml/optable/GreekAndCoptic.js
+assets/js/mathjax/jax/element/mml/optable/Latin1Supplement.js
+assets/js/mathjax/jax/element/mml/optable/LetterlikeSymbols.js
+assets/js/mathjax/jax/element/mml/optable/MathOperators.js
+assets/js/mathjax/jax/element/mml/optable/MiscMathSymbolsA.js
+assets/js/mathjax/jax/element/mml/optable/MiscMathSymbolsB.js
+assets/js/mathjax/jax/element/mml/optable/MiscSymbolsAndArrows.js
+assets/js/mathjax/jax/element/mml/optable/MiscTechnical.js
+assets/js/mathjax/jax/element/mml/optable/SpacingModLetters.js
+assets/js/mathjax/jax/element/mml/optable/SupplementalArrowsA.js
+assets/js/mathjax/jax/element/mml/optable/SupplementalArrowsB.js
+assets/js/mathjax/jax/element/mml/optable/SuppMathOperators.js
+assets/js/mathjax/jax/input/TeX/config.js
+assets/js/mathjax/jax/input/TeX/jax.js
+assets/js/mathjax/jax/output/SVG/autoload/annotation-xml.js
+assets/js/mathjax/jax/output/SVG/autoload/maction.js
+assets/js/mathjax/jax/output/SVG/autoload/menclose.js
+assets/js/mathjax/jax/output/SVG/autoload/mglyph.js
+assets/js/mathjax/jax/output/SVG/autoload/mmultiscripts.js
+assets/js/mathjax/jax/output/SVG/autoload/ms.js
+assets/js/mathjax/jax/output/SVG/autoload/mtable.js
+assets/js/mathjax/jax/output/SVG/autoload/multiline.js
+assets/js/mathjax/jax/output/SVG/config.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Alphabets/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Arrows/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/DoubleStruck/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/fontdata-extra.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/fontdata.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Fraktur/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Latin/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Main/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Marks/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Misc/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Monospace/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/NonUnicode/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Normal/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Operators/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/SansSerif/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Script/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Shapes/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Size1/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Size2/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Size3/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Size4/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Size5/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Size6/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Symbols/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/fonts/Gyre-Pagella/Variants/Regular/Main.js
+assets/js/mathjax/jax/output/SVG/jax.js
+assets/js/mathjax/LICENSE
+assets/js/mathjax/MathJax.js
+assets/js/mcqs.js
+assets/js/nav.js
+assets/js/page-reference.js
+assets/js/polyfills.js
+assets/js/redact.js
+assets/js/render-mathjax.js
+assets/js/render-search-index.js
+assets/js/rotate.js
+assets/js/search-engine.js
+
+# Search indexes are not shared between projects,
+# so they are commented out here.
+
+# assets/js/search-index-app.js
+# assets/js/search-index-web.js
+
+assets/js/search-results.js
+assets/js/search-store.js
+assets/js/search-terms.js
+assets/js/select-list.js
+assets/js/shift-elements.js
+assets/js/show-hide.js
+assets/js/svg-inject.min.js
+assets/js/svg-management.js
+assets/js/tables.js
+assets/js/videos.js
+
+
+# Sitewide styles
+# ---------------
+
+assets/styles/app.scss
+assets/styles/web.scss
+
+
+# Book utility files
+# ------------------
+
+# Generally files inside book folders should
+# not be overwritten when updating or sharing files
+# between projects. These files, on the other hand,
+# are packaging/utility files taht are rarely customised.
+# So they can usually be safely updated.
+# When you rename or add new books to a project.
+# remember to add their equivalent files here as needed.
+
+book/fonts/.gitignore
+book/index.md
+book/package.opf
+book/text/file-list
+book/text/index.md
+book/toc.ncx
+
+
+# Ruby gems
+# ---------
+
+Gemfile
+Gemfile.lock
+
+
+# Gulpfile
+# --------
+
+gulpfile.js
+
+
+# Node
+# ----
+
+package-lock.json
+package.json
+
+
+# Output scripts
+# --------------
+
+run-linux.sh
+run-mac.command
+run-windows.bat
+
+
+# Repo search page
+# ----------------
+
+search.md
+
+
+# App files
+# ---------
+
+# This is a Jekyll collection of files required for apps.
+# Images are commented out, since they are
+# not usually shared between projects, but might be.
+
+_app/build.json
+_app/config.xml
+_app/hooks/README.md
+# _app/res/icon/android/icon-36-ldpi.png
+# _app/res/icon/android/icon-48-mdpi.png
+# _app/res/icon/android/icon-72-hdpi.png
+# _app/res/icon/android/icon-96-xhdpi.png
+# _app/res/icon/ios/icon-57-2x.png
+# _app/res/icon/ios/icon-57.png
+# _app/res/icon/ios/icon-72-2x.png
+# _app/res/icon/ios/icon-72.png
+# _app/res/icon.png
+_app/res/README.md
+# _app/res/screen/android/screen-hdpi-landscape.png
+# _app/res/screen/android/screen-hdpi-portrait.png
+# _app/res/screen/android/screen-ldpi-landscape.png
+# _app/res/screen/android/screen-ldpi-portrait.png
+# _app/res/screen/android/screen-mdpi-landscape.png
+# _app/res/screen/android/screen-mdpi-portrait.png
+# _app/res/screen/android/screen-xhdpi-landscape.png
+# _app/res/screen/android/screen-xhdpi-portrait.png
+# _app/res/screen/ios/screen-ipad-landscape-2x.png
+# _app/res/screen/ios/screen-ipad-landscape.png
+# _app/res/screen/ios/screen-ipad-portrait-2x.png
+# _app/res/screen/ios/screen-ipad-portrait.png
+# _app/res/screen/ios/screen-iphone-landscape-2x.png
+# _app/res/screen/ios/screen-iphone-landscape.png
+# _app/res/screen/ios/screen-iphone-portrait-2x.png
+# _app/res/screen/ios/screen-iphone-portrait-568h-2x.png
+# _app/res/screen/ios/screen-iphone-portrait.png
+_app/www/.gitignore
+
+
+# Config files
+# ------------
+
+# Most config files are not normally shared
+# between projects, and so are commented out here.
+
+# _config.yml
+# _configs/_config.app.yml
+# _configs/_config.epub.yml
+# _configs/_config.live.yml
+_configs/_config.math-disabled.yml
+_configs/_config.mathjax-enabled.yml
+# _configs/_config.print-pdf.yml
+# _configs/_config.screen-pdf.yml
+# _configs/_config.web.yml
+
+
+# Data files
+# ----------
+
+# Data files are mostly content, and are not normally shared,
+# but could be shared for some project families.
+
+# _data/locales.yml
+# _data/meta.yml
+# _data/settings.yml
+
+
+# Docs
+# ----
+
+_docs/about/intro.md
+_docs/about/technical-overview.md
+_docs/advanced/javascript.md
+_docs/editing/classes.md
+_docs/editing/figures.md
+_docs/editing/hyphenation.md
+_docs/editing/images.md
+_docs/editing/indexes.md
+_docs/editing/markdown.md
+_docs/editing/maths.md
+_docs/editing/notes.md
+_docs/editing/poetry.md
+_docs/editing/questions.md
+_docs/editing/redaction.md
+_docs/editing/show-hide-buttons.md
+_docs/editing/tables.md
+_docs/editing/video.md
+_docs/images/add-favicon.md
+_docs/images/adding-image-files.md
+_docs/images/external-media.md
+_docs/images/image-conversions.md
+_docs/images/preparing-images.md
+_docs/index.md
+_docs/layout/colour-profiles.md
+_docs/layout/content-accordion.md
+_docs/layout/design.md
+_docs/layout/page-numbers.md
+_docs/layout/web-pagination.md
+_docs/output/app-output.md
+_docs/output/epub-output.md
+_docs/output/pdf-output.md
+_docs/output/web-output.md
+_docs/output/word-output.md
+_docs/setup/file-lists.md
+_docs/setup/metadata.md
+_docs/setup/quick-start.md
+_docs/setup/repeatable-items.md
+_docs/setup/search-indexes.md
+_docs/setup/setting-up-a-book.md
+_docs/setup/setting-up-your-computer.md
+_docs/setup/settings.md
+_docs/setup/tocs.md
+_docs/setup/tracking-and-analytics.md
+_docs/setup/translations.md
+_docs/setup/updates.md
+_docs/setup/variants.md
+_docs/troubleshooting/troubleshooting.md
+
+
+# Epub files
+# ----------
+
+# This is a Jekyll collection of files used
+# when generating epub files.
+
+_epub/fonts/.gitignore
+_epub/js/.gitignore
+_epub/META-INF/com.apple.ibooks.display-options.xml
+_epub/META-INF/container.xml
+_epub/mimetype
+
+
+# Includes
+# --------
+
+# When editing/customising files in _includes,
+# try to abstract project-specific values
+# by storing them in _data files, so that
+# you can update these includes automatically,
+# wihtout overwriting book-specific values.
+
+_includes/annotate-icon
+_includes/annotate-show-icon
+_includes/annotator.html
+_includes/breadcrumbs
+_includes/close-body.html
+_includes/close-content.html
+_includes/contact-form
+_includes/cover
+_includes/docs-by-category
+_includes/end-elements
+_includes/epub-navmap.html
+_includes/epub-ncx
+_includes/epub-package
+_includes/figure
+_includes/file-list
+_includes/files-listed.html
+_includes/footer.html
+_includes/globe-icon
+_includes/head-elements
+_includes/head.html
+_includes/html-entities.html
+_includes/identifiers
+_includes/image
+_includes/item
+_includes/language-select
+_includes/language-select-icon
+_includes/masthead.html
+_includes/mathjax-config
+_includes/mathjax-manifest.xml
+_includes/mcq
+_includes/metadata
+_includes/nav-button.html
+_includes/nav-list
+_includes/nav.html
+_includes/page-info
+_includes/pagination
+_includes/question
+_includes/question-secret-code.html
+_includes/quiz
+_includes/random
+_includes/redirect
+_includes/search
+_includes/select
+_includes/start-content.html
+_includes/toc
+_includes/vimeo
+_includes/widgets
+_includes/youtube
+
+
+# Items collection
+# ----------------
+
+_items/.gitignore
+_items/images/_source/.gitignore
+_items/text/.gitignore
+
+
+# Layouts
+# -------
+
+_layouts/compress.html
+_layouts/default.html
+_layouts/min.html
+_layouts/trim.html
+
+
+# Output
+# ------
+
+_output/.gitignore
+
+
+# Prose/EBM settings
+# ------------------
+
+_prose.yml
+
+
+# Style templates/partials
+# ------------------------
+
+_sass/app.scss
+_sass/epub.scss
+_sass/partials/_epub-base-typography.scss
+_sass/partials/_epub-bibliographies.scss
+_sass/partials/_epub-boxes.scss
+_sass/partials/_epub-buttons.scss
+_sass/partials/_epub-code.scss
+_sass/partials/_epub-copyright-page.scss
+_sass/partials/_epub-cover.scss
+_sass/partials/_epub-cross-refs.scss
+_sass/partials/_epub-css-reset.scss
+_sass/partials/_epub-dedications.scss
+_sass/partials/_epub-dialogue.scss
+_sass/partials/_epub-epigraphs.scss
+_sass/partials/_epub-figures.scss
+_sass/partials/_epub-fitting.scss
+_sass/partials/_epub-glossaries.scss
+_sass/partials/_epub-helpers.scss
+_sass/partials/_epub-highlighter.scss
+_sass/partials/_epub-hyphenation.scss
+_sass/partials/_epub-index.scss
+_sass/partials/_epub-letters.scss
+_sass/partials/_epub-maths.scss
+_sass/partials/_epub-mixins--buttons.scss
+_sass/partials/_epub-mixins--show-url.scss
+_sass/partials/_epub-mixins--sidenotes.scss
+_sass/partials/_epub-notes.scss
+_sass/partials/_epub-openers.scss
+_sass/partials/_epub-previous-publications-page.scss
+_sass/partials/_epub-pullquotes.scss
+_sass/partials/_epub-questions.scss
+_sass/partials/_epub-reset-sequences.scss
+_sass/partials/_epub-select-questions.scss
+_sass/partials/_epub-smallcaps.scss
+_sass/partials/_epub-sources.scss
+_sass/partials/_epub-tables.scss
+_sass/partials/_epub-title-pages.scss
+_sass/partials/_epub-toc.scss
+_sass/partials/_epub-verse.scss
+_sass/partials/_epub-video.scss
+_sass/partials/_epub-wrappers.scss
+_sass/partials/_print-base-typography.scss
+_sass/partials/_print-baseline-grid.scss
+_sass/partials/_print-bibliographies.scss
+_sass/partials/_print-boxes.scss
+_sass/partials/_print-buttons.scss
+_sass/partials/_print-code.scss
+_sass/partials/_print-columns.scss
+_sass/partials/_print-copyright-page.scss
+_sass/partials/_print-cover.scss
+_sass/partials/_print-cross-refs.scss
+_sass/partials/_print-css-reset.scss
+_sass/partials/_print-dedications.scss
+_sass/partials/_print-dialogue.scss
+_sass/partials/_print-epigraphs.scss
+_sass/partials/_print-figures.scss
+_sass/partials/_print-fitting.scss
+_sass/partials/_print-font-faces.scss
+_sass/partials/_print-glossaries.scss
+_sass/partials/_print-helpers.scss
+_sass/partials/_print-hide-non-printing.scss
+_sass/partials/_print-highlighter.scss
+_sass/partials/_print-hyphenation.scss
+_sass/partials/_print-index.scss
+_sass/partials/_print-letters.scss
+_sass/partials/_print-maths.scss
+_sass/partials/_print-mixins--buttons.scss
+_sass/partials/_print-mixins--sidenotes.scss
+_sass/partials/_print-notes.scss
+_sass/partials/_print-openers.scss
+_sass/partials/_print-page-break-tools.scss
+_sass/partials/_print-page-headers-footers-content.scss
+_sass/partials/_print-page-headers-footers-style.scss
+_sass/partials/_print-page-setup-lightning-source.scss
+_sass/partials/_print-page-setup.scss
+_sass/partials/_print-page-start-depth.scss
+_sass/partials/_print-pdf-view.scss
+_sass/partials/_print-previous-publications-page.scss
+_sass/partials/_print-pullquotes.scss
+_sass/partials/_print-questions.scss
+_sass/partials/_print-reset-sequences.scss
+_sass/partials/_print-select-questions.scss
+_sass/partials/_print-sidebar.scss
+_sass/partials/_print-smallcaps.scss
+_sass/partials/_print-sources.scss
+_sass/partials/_print-start-on-recto-or-verso.scss
+_sass/partials/_print-tables.scss
+_sass/partials/_print-title-pages.scss
+_sass/partials/_print-toc.scss
+_sass/partials/_print-verse.scss
+_sass/partials/_print-video.scss
+_sass/partials/_web-accordion.scss
+_sass/partials/_web-annotator.scss
+_sass/partials/_web-base-typography.scss
+_sass/partials/_web-bibliographies.scss
+_sass/partials/_web-boxes.scss
+_sass/partials/_web-buttons.scss
+_sass/partials/_web-code.scss
+_sass/partials/_web-controls.scss
+_sass/partials/_web-copyright-page.scss
+_sass/partials/_web-cover.scss
+_sass/partials/_web-css-reset.scss
+_sass/partials/_web-dedications.scss
+_sass/partials/_web-dialogue.scss
+_sass/partials/_web-docs.scss
+_sass/partials/_web-epigraphs.scss
+_sass/partials/_web-figures.scss
+_sass/partials/_web-fitting.scss
+_sass/partials/_web-footer.scss
+_sass/partials/_web-glossaries.scss
+_sass/partials/_web-helpers.scss
+_sass/partials/_web-highlighter.scss
+_sass/partials/_web-hyphenation.scss
+_sass/partials/_web-index.scss
+_sass/partials/_web-language-select.scss
+_sass/partials/_web-letters.scss
+_sass/partials/_web-masthead.scss
+_sass/partials/_web-maths.scss
+_sass/partials/_web-mixins--buttons.scss
+_sass/partials/_web-mixins--sidenotes.scss
+_sass/partials/_web-nav-bar.scss
+_sass/partials/_web-notes.scss
+_sass/partials/_web-openers.scss
+_sass/partials/_web-pagination.scss
+_sass/partials/_web-previous-publications-page.scss
+_sass/partials/_web-pullquotes.scss
+_sass/partials/_web-questions.scss
+_sass/partials/_web-reset-sequences.scss
+_sass/partials/_web-search.scss
+_sass/partials/_web-select-questions.scss
+_sass/partials/_web-smallcaps.scss
+_sass/partials/_web-sources.scss
+_sass/partials/_web-tables.scss
+_sass/partials/_web-title-pages.scss
+_sass/partials/_web-toc.scss
+_sass/partials/_web-verse.scss
+_sass/partials/_web-video.scss
+_sass/partials/_web-wrappers.scss
+_sass/print-pdf.scss
+_sass/screen-pdf.scss
+_sass/web.scss
+
+
+# Tools
+# -----
+
+# Note that we include this files.txt file here.
+
+_tools/profiles/Grey_Fogra39L.icc
+_tools/profiles/Grey_Fogra52L.icc
+_tools/profiles/PSOcoated_v3.icc
+_tools/profiles/PSOuncoated_v3_FOGRA52.icc
+_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
+_tools/update/files.txt
+_tools/update/update.sh
+_tools/zip/LICENSE
+_tools/zip/zip.exe
