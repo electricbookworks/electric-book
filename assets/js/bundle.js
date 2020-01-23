@@ -17,7 +17,7 @@ layout: null
 {% if site.output == "web" or site.output == "app" %}
 
     {% comment %} This order is important. {% endcomment %}
-    {% include_relative mark.min.js %}
+    {% include_relative vendor/mark.min.js %}
     {% include_relative search-terms.js %}
     {% include_relative nav.js %}
     {% include_relative videos.js %}
@@ -29,7 +29,7 @@ layout: null
     {% include_relative bookmarks.js %}
 
     {% if site.data.settings.web.svg.inject == true %}
-        {% include_relative svg-inject.min.js %}
+        {% include_relative vendor/svg-inject.min.js %}
         {% include_relative svg-management.js %}
     {% endif %}
 
