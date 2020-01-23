@@ -550,9 +550,27 @@ function ebExpand() {
     }
 }
 
-ebAccordify();
-ebExpand();
-ebAccordionListenForAnchorClicks();
-ebAccordionListenForHeadingClicks();
-ebAccordionListenForNavClicks();
-ebAccordionListenForHashChange();
+function ebAssignIDs(callback) {
+    'use strict';
+
+    var elementsToID = document.querySelectorAll('#content p:not([id]), #content ol:not([id]), #content ul:not([id]), #content dl:not([id])');
+    var counter = 0;
+    elementsToID.forEach(function (element) {
+        element.id = 'id-' + counter;
+        counter += 1;
+    });
+    callback();
+}
+
+function ebLoadAccordion() {
+    'use strict';
+    ebAccordify();
+    ebExpand();
+    ebAccordionListenForAnchorClicks();
+    ebAccordionListenForHeadingClicks();
+    ebAccordionListenForNavClicks();
+    ebAccordionListenForHashChange();
+}
+
+// Assign IDs, then load the accordion
+ebAssignIDs(ebLoadAccordion);
