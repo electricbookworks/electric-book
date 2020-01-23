@@ -1,14 +1,82 @@
 /*jslint browser */
-/*globals window, locales, pageLanguage,
-    ebSlugify, ebGetParameterByName */
+/*globals window, IntersectionObserver, locales, pageLanguage,
+    ebSlugify */
 
 // A script for managing a user's bookmarks
 
-// Remove scroll parameter from URL
-function ebBookMarkRemoveScrollParameter(url) {
+
+// Options
+// --------------------------------------
+// Which elements should we make bookmarkable?
+// By default, paras and lists in the content area.
+// Use querySelector strings.
+var ebBookmarkableElements = '#content p, #content ul, #content ol, #content dl';
+
+
+// Mark elements in the viewport so we can bookmark them
+function ebBookMarkMarkVisibleElements(elements) {
     'use strict';
-    var hrefWithoutScrollParameter = url.replace(/[\?&]scroll=[^&]+/, '').replace(/^&/, '?');
-    return hrefWithoutScrollParameter;
+
+    var elementsWithIDs = Array.from(elements).filter(function (element) {
+        return element.id !== 'undefined';
+    });
+
+    // If IntersectionObserver is supported, create one.
+    if (window.hasOwnProperty('IntersectionObserver')) {
+        var bookmarkObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (element) {
+                if (element.isIntersecting) {
+                    element.target.setAttribute('data-bookmark', 'available');
+                } else {
+                    element.target.setAttribute('data-bookmark', 'unavailable');
+                }
+            });
+        });
+
+        // Observe each image
+        elementsWithIDs.forEach(function (element) {
+            bookmarkObserver.observe(element);
+        });
+    } else {
+        // If the browser doesn't support IntersectionObserver,
+        // maybe this will work -- largely untested code this.
+        // Test and fix it if we need old IE support.
+        var scrollTop = window.scrollTop;
+        var windowHeight = window.offsetHeight;
+        elementsWithIDs.forEach(function (element) {
+            if (scrollTop <= element.offsetTop
+                    && (element.offsetHeight + element.offsetTop) < (scrollTop + windowHeight)
+                    && element.dataset['in-view'] === 'false') {
+                element.target.setAttribute('data-bookmark', 'available');
+            } else {
+                element.target.setAttribute('data-bookmark', 'unavailable');
+            }
+        });
+    }
+}
+
+// Return the ID of a bookmarkable element
+function ebBookMarkLocation(element) {
+    'use strict';
+
+    // If we're bookmarking a specified element,
+    // i.e. an element was passed to this function,
+    // use its hash, otherwise use the first
+    // visible element in the viewport.
+    if (!element) {
+        element = document.querySelector('[data-bookmark="available"]');
+    }
+    if (element.id) {
+        return element.id;
+    } else if (window.location.hash) {
+        // If for some reason the element has no ID,
+        // return the hash of the current window location.
+        return window.location.hash;
+    } else {
+        // And in desperation, use the first element
+        // with an ID on the page.
+        return document.querySelector('id').id;
+    }
 }
 
 // Remember bookmark
@@ -22,8 +90,7 @@ function ebSetBookmark(name, description) {
         title: document.title,
         description: description,
         pageID: ebSlugify(window.location.href.split('#')[0]),
-        location: window.location,
-        scrollPosition: window.pageYOffset || document.documentElement.scrollTop
+        location: window.location.href.split('#')[0] + '#' + ebBookMarkLocation()
     };
     localStorage.setItem(bookmark.type
             + '-' + bookmark.name
@@ -51,17 +118,13 @@ function ebListBookmarks(bookmarks) {
     // Add all the bookmarks to it
     bookmarks.forEach(function (bookmark) {
 
-        // Remove any existing ?scroll= parameter
-        // from the bookmark URL, so that we can update that
-        var hrefWithoutScrollParameter = ebBookMarkRemoveScrollParameter(bookmark.location.href);
-
         // Create list item
         var listItem = document.createElement('li');
         listItem.setAttribute('data-bookmark-name', bookmark.name);
 
         // Add link
         var link = document.createElement('a');
-        link.href = hrefWithoutScrollParameter + '?scroll=' + bookmark.scrollPosition;
+        link.href = bookmark.location;
         link.innerHTML = bookmark.title + ': ' + bookmark.description;
         listItem.appendChild(link);
 
@@ -69,7 +132,7 @@ function ebListBookmarks(bookmarks) {
         list.appendChild(listItem);
 
         // Check if this bookmark is on the current page
-        ebBookmarksCheckForCurrentPage(bookmark.location.href);
+        ebBookmarksCheckForCurrentPage(bookmark.location);
     });
 }
 
@@ -96,43 +159,8 @@ window.addEventListener('beforeunload', function () {
     ebSetBookmark('lastLocation', locales[pageLanguage].bookmarks['last-location']);
 });
 
-// Scroll to scrollPosition if query string includes ?scroll
-function ebBookmarkScrollToPosition() {
-    'use strict';
-    var scrollParameter = ebGetParameterByName('scroll', window.location.href);
-
-    // Convert the string to an integer
-    // and scroll there if it's not zero.
-    var scrollPosition = Number(scrollParameter);
-    if (Number.isInteger(scrollPosition) && scrollPosition > 0) {
-        window.scrollTo(0, scrollPosition);
-    }
-}
-
-// Listen for clicks on bookmarks,
-// which is necessary when we're using a bookmark link
-// to go to our previous place on a page, rather than
-// navigating to a different page.
-function ebBookmarksListenForClicks() {
-    'use strict';
-    var bookmarksList = document.querySelector('.bookmarks-list');
-    bookmarksList.addEventListener('click', function (event) {
-        if (ebBookmarksCheckForCurrentPage(event.target.href) === true) {
-            event.preventDefault();
-            ebBookmarkScrollToPosition();
-        }
-    });
-}
-
+// Mark which elements are available for bookmarking
+ebBookMarkMarkVisibleElements(document.querySelectorAll(ebBookmarkableElements));
 
 // Check for bookmarks
 ebCheckForBookmarks();
-
-// Scroll if URLs contain scroll positions
-// TODO: wait for accordion to open before scrolling,
-// which may involve fixing accordions.js and
-// creating a state object that tracks events.
-ebBookmarkScrollToPosition();
-
-// Listen for clicks on internal bookmark links
-ebBookmarksListenForClicks();
