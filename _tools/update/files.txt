@@ -81,6 +81,7 @@ assets/fonts/UbuntuMono-RI.ttf
 
 assets/js/accordion.js
 assets/js/annotation.js
+assets/js/bookmarks.js
 assets/js/bundle.js
 assets/js/elasticlunr-setup.js
 assets/js/footnote-popups.js
@@ -366,6 +367,7 @@ assets/js/show-hide.js
 assets/js/svg-inject.min.js
 assets/js/svg-management.js
 assets/js/tables.js
+assets/js/utilities.js
 assets/js/videos.js
 
 
@@ -574,6 +576,8 @@ _epub/mimetype
 _includes/annotate-icon
 _includes/annotate-show-icon
 _includes/annotator.html
+_includes/bookmark-icon
+_includes/bookmarks.html
 _includes/breadcrumbs
 _includes/close-body.html
 _includes/close-content.html
@@ -748,6 +752,7 @@ _sass/partials/_web-accordion.scss
 _sass/partials/_web-annotator.scss
 _sass/partials/_web-base-typography.scss
 _sass/partials/_web-bibliographies.scss
+_sass/partials/_web-bookmarks.scss
 _sass/partials/_web-boxes.scss
 _sass/partials/_web-buttons.scss
 _sass/partials/_web-code.scss
