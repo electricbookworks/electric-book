@@ -12,49 +12,6 @@
 // Use querySelector strings.
 var ebBookmarkableElements = '#content p, #content ul, #content ol, #content dl';
 
-
-// Mark elements in the viewport so we can bookmark them
-function ebBookMarkMarkVisibleElements(elements) {
-    'use strict';
-
-    var elementsWithIDs = Array.from(elements).filter(function (element) {
-        return element.id !== 'undefined';
-    });
-
-    // If IntersectionObserver is supported, create one.
-    if (window.hasOwnProperty('IntersectionObserver')) {
-        var bookmarkObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (element) {
-                if (element.isIntersecting) {
-                    element.target.setAttribute('data-bookmark', 'available');
-                } else {
-                    element.target.setAttribute('data-bookmark', 'unavailable');
-                }
-            });
-        });
-
-        // Observe each image
-        elementsWithIDs.forEach(function (element) {
-            bookmarkObserver.observe(element);
-        });
-    } else {
-        // If the browser doesn't support IntersectionObserver,
-        // maybe this will work -- largely untested code this.
-        // Test and fix it if we need old IE support.
-        var scrollTop = window.scrollTop;
-        var windowHeight = window.offsetHeight;
-        elementsWithIDs.forEach(function (element) {
-            if (scrollTop <= element.offsetTop
-                    && (element.offsetHeight + element.offsetTop) < (scrollTop + windowHeight)
-                    && element.dataset['in-view'] === 'false') {
-                element.target.setAttribute('data-bookmark', 'available');
-            } else {
-                element.target.setAttribute('data-bookmark', 'unavailable');
-            }
-        });
-    }
-}
-
 // Return the ID of a bookmarkable element
 function ebBookMarkLocation(element) {
     'use strict';
@@ -80,7 +37,7 @@ function ebBookMarkLocation(element) {
 }
 
 // Remember bookmark
-function ebSetBookmark(name, description) {
+function ebSetBookmark(name, description, element) {
     'use strict';
 
     // Create a bookmark object
@@ -90,11 +47,102 @@ function ebSetBookmark(name, description) {
         title: document.title,
         description: description,
         pageID: ebSlugify(window.location.href.split('#')[0]),
-        location: window.location.href.split('#')[0] + '#' + ebBookMarkLocation()
+        location: window.location.href.split('#')[0] + '#' + ebBookMarkLocation(element)
     };
     localStorage.setItem(bookmark.type
             + '-' + bookmark.name
             + '-' + bookmark.pageID, JSON.stringify(bookmark));
+}
+
+// Mark an element that has been user-bookmarked
+function ebBookmarkMarkBookmarkedElement(element) {
+    'use strict';
+
+    // Remove any existing bookmarks
+    var bookmarkedElements = document.querySelectorAll('[data-bookmarked]');
+    bookmarkedElements.forEach(function (element) {
+        element.removeAttribute('data-bookmarked');
+    });
+
+    // Set the new bookmark
+    element.setAttribute('data-bookmarked', 'true');
+}
+
+// Listen for bookmark clicks
+function ebBookmarksListenForClicks(button) {
+    'use strict';
+    button.addEventListener('click', function () {
+        ebSetBookmark('userBookmark', locales[pageLanguage].bookmarks.bookmark, button.parentNode);
+        ebBookmarkMarkBookmarkedElement(button.parentNode);
+    });
+}
+
+// Add a bookmark button to bookmarkable elements
+function ebBookmarkToggleButtonOnElement(element) {
+    'use strict';
+
+    // Get the main bookmark icon from the page,
+    var icon = document.querySelector('.bookmark-icon');
+
+    // If the element has no button, add one.
+    if (!element.querySelector('button.bookmark-button')) {
+        // Copy the icon SVG code to our new button.
+        var button = document.createElement('button');
+        button.classList.add('bookmark-button');
+        button.innerHTML = icon.outerHTML;
+
+        // Append the button to the element
+        element.appendChild(button);
+
+        // Listen for clicks
+        ebBookmarksListenForClicks(button);
+    }
+}
+
+// Mark elements in the viewport so we can bookmark them
+function ebBookMarkMarkVisibleElements(elements) {
+    'use strict';
+
+    var elementsWithIDs = Array.from(elements).filter(function (element) {
+        return element.id !== 'undefined';
+    });
+
+    // If IntersectionObserver is supported, create one.
+    if (window.hasOwnProperty('IntersectionObserver')) {
+        var bookmarkObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.setAttribute('data-bookmark', 'available');
+                    ebBookmarkToggleButtonOnElement(entry.target);
+                } else {
+                    entry.target.setAttribute('data-bookmark', 'unavailable');
+                    ebBookmarkToggleButtonOnElement(entry.target);
+                }
+            });
+        });
+
+        // Observe each image
+        elementsWithIDs.forEach(function (element) {
+            bookmarkObserver.observe(element);
+        });
+    } else {
+        // If the browser doesn't support IntersectionObserver,
+        // maybe this will work -- largely untested code this.
+        // Test and fix it if we need old IE support.
+        var scrollTop = window.scrollTop;
+        var windowHeight = window.offsetHeight;
+        elementsWithIDs.forEach(function (element) {
+            if (scrollTop <= element.offsetTop
+                    && (element.offsetHeight + element.offsetTop) < (scrollTop + windowHeight)
+                    && element.dataset['in-view'] === 'false') {
+                element.target.setAttribute('data-bookmark', 'available');
+                ebBookmarkToggleButtonOnElement(element.target);
+            } else {
+                element.target.setAttribute('data-bookmark', 'unavailable');
+                ebBookmarkToggleButtonOnElement(element.target);
+            }
+        });
+    }
 }
 
 // Check if bookmark is on the current page

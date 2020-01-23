@@ -3,6 +3,7 @@ $web-bookmarks: true !default;
 
     // Bookmarks
 
+    // The bookmarks list
     .bookmarks {
         z-index: 100;
         padding: 0.5em;
@@ -47,11 +48,67 @@ $web-bookmarks: true !default;
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
         -moz-user-select: none;
         .bookmark-icon-outline {
-            fill: $bookmark-icon-outline-color;
+            fill: $bookmark-icon-outline-color-inactive;
         }
         .bookmark-icon-fill {
-            fill: $bookmark-icon-fill-color;
+            fill: $bookmark-icon-fill-color-inactive;
         }
     }
 
+    // Bookmark button
+    [data-bookmark="available"] {
+        .bookmark-button {
+            border: none;
+            background: none;
+            svg {
+                width: 1em;
+                height: 1em;
+            }
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: transparent;
+                svg {
+                    .bookmark-icon-outline {
+                        fill: $bookmark-icon-outline-color-active;
+                    }
+                    .bookmark-icon-fill {
+                        fill: $bookmark-icon-fill-color-active;
+                    }
+                }
+            }
+        }
+        // Hide all subsequent bookmark buttons...
+        & ~ [data-bookmark="available"] {
+            .bookmark-button {
+                display: none;
+            }
+            // ...unless they are bookmarked
+            &[data-bookmarked] {
+                .bookmark-button {
+                    display: inline;
+                }
+            }
+            // or hovered over
+            &:hover,
+            &:active,
+            &:focus {
+                .bookmark-button {
+                    display: inline;
+                }
+            }
+        }
+    }
+
+    // Bookmarkable elements
+    [data-bookmarked] {
+        svg {
+            .bookmark-icon-outline {
+                fill: $bookmark-icon-outline-color-active;
+            }
+            .bookmark-icon-fill {
+                fill: $bookmark-icon-fill-color-active;
+            }
+        }
+    }
 }
