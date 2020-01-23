@@ -26,7 +26,6 @@ layout: null
     {% include_relative tables.js %}
     {% include_relative footnote-popups.js %}
     {% include_relative show-hide.js %}
-    {% include_relative bookmarks.js %}
 
     {% if site.data.settings.web.svg.inject == true %}
         {% include_relative vendor/svg-inject.min.js %}
@@ -53,6 +52,14 @@ have different behaviour for web or app. {% endcomment %}
     {% include_relative accordion.js %}
 {% endif %}
 
+{% comment %} Enable bookmarks in _data settings.yml,
+and define options in assets/bookmarks.js. This lets us
+have different behaviour for web or app. {% endcomment %}
+{% if site.output == "web" and site.data.settings.web.bookmarks == true %}
+    {% include_relative bookmarks.js %}
+{% elsif site.output == "app" and site.data.settings.app.bookmarks == true %}
+    {% include_relative bookmarks.js %}
+{% endif %}
 
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
 

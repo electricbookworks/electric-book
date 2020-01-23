@@ -108,6 +108,10 @@ web:
   # -----------------
   images:
     lazyload: true
+  # -----------------
+  # Bookmarks
+  # -----------------
+  bookmarks: true
 
 # ----------------------------------------------------------
 # Epub settings
@@ -168,6 +172,10 @@ app:
   # particular heading level? Default h2, set in accordion.js.
   # Set this to true to enable, or false to disable.
   accordion: false
+  # -----------------
+  # Bookmarks
+  # -----------------
+  bookmarks: true
   # --------------
   # Expansion file
   # --------------
