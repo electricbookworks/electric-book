@@ -186,6 +186,7 @@ en:
     show-annotated-text-tooltip-description: "Tap here to show or hide the annotation highlights on this page."
   bookmarks:
     last-location: "Last location"
+    bookmark: "Bookmark"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -264,6 +265,7 @@ fr:
     show-annotated-text-tooltip-description: "Cliquer ici pour afficher ou masquer les annotations surlignées sur cette page."
   bookmarks:
     last-location: "Dernier lieu"
+    bookmark: "Signet"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
