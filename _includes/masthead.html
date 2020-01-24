@@ -9,6 +9,8 @@
 
     <div class="controls">
 
+        {% include bookmarks.html %}
+
         {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
             {% include annotator.html %}
         {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}

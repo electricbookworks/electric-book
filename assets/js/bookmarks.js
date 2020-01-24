@@ -58,7 +58,7 @@ function ebListBookmarks(bookmarks) {
         // Add link
         var link = document.createElement('a');
         link.href = bookmark.location;
-        link.innerHTML = bookmark.title + ': ' + bookmark.description;
+        link.innerHTML = bookmark.bookTitle + ': ' + bookmark.description;
         listItem.appendChild(link);
 
         // Add the list item to the list
@@ -95,7 +95,7 @@ function ebBookMarkLocation(element) {
     // use its hash, otherwise use the first
     // visible element in the viewport.
     if (!element) {
-        element = document.querySelector('[data-bookmark="available"]');
+        element = document.querySelector('[data-bookmark="onscreen"]');
     }
     if (element.id) {
         return element.id;
@@ -106,7 +106,7 @@ function ebBookMarkLocation(element) {
     } else {
         // And in desperation, use the first element
         // with an ID on the page.
-        return document.querySelector('id').id;
+        return document.querySelector('[id]').id;
     }
 }
 
@@ -117,7 +117,8 @@ function ebSetBookmark(type, description, element) {
     // Create a bookmark object
     var bookmark = {
         type: type,
-        title: document.title,
+        bookTitle: document.body.dataset.title,
+        pageTitle: document.title,
         description: description,
         pageID: ebSlugify(window.location.href.split('#')[0]),
         location: window.location.href.split('#')[0] + '#' + ebBookMarkLocation(element)
@@ -127,7 +128,7 @@ function ebSetBookmark(type, description, element) {
     // So there will only ever be one bookmark of each type saved.
     // To save more bookmarks, make the key more unique.
     // Note that the prefix 'bookmark-' is used in ebCheckForBookmarks().
-    localStorage.setItem('bookmark-' + bookmark.type, JSON.stringify(bookmark));
+    localStorage.setItem('bookmark-' + ebSlugify(bookmark.bookTitle) + '-' + bookmark.type, JSON.stringify(bookmark));
 
     // Refresh the bookmarks list
     ebCheckForBookmarks();
