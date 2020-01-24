@@ -56,7 +56,13 @@ $web-bookmarks: true !default;
     }
 
     // Bookmark button
-    [data-bookmark="available"] {
+    [data-bookmark="offscreen"] {
+        .bookmark-button {
+            display: none;
+        }
+    }
+    [data-bookmark="onscreen"],
+    * [data-bookmark="onscreen"] {
         .bookmark-button {
             border: none;
             background: none;
@@ -79,7 +85,8 @@ $web-bookmarks: true !default;
             }
         }
         // Hide all subsequent bookmark buttons...
-        & ~ [data-bookmark="available"] {
+        & ~ [data-bookmark="onscreen"],
+        & ~ * [data-bookmark="onscreen"] {
             .bookmark-button {
                 display: none;
             }
