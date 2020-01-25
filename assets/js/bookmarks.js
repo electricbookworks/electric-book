@@ -14,7 +14,7 @@ var ebBookmarkableElements = '#content p, #content ul, #content ol, #content dl'
 
 // Disable bookmarks on browsers that don't support
 // what we need to provide them.
-function ebBookmarkSupport() {
+function ebBookmarksSupport() {
     'use strict';
     if (window.hasOwnProperty('IntersectionObserver')
             && window.localStorage
@@ -38,8 +38,24 @@ function ebBookmarksCheckForCurrentPage(url) {
     }
 }
 
+// Mark bookmarks in the document
+function ebBookmarksMarkBookmarks(bookmarks) {
+    'use strict';
+    bookmarks.forEach(function (bookmark) {
+        var elementToMark = document.getElementById(bookmark.id);
+
+        // If this bookmark is on the current page,
+        // mark the relevant bookmarked element.
+        if (ebBookmarksCheckForCurrentPage(bookmark.location)) {
+            elementToMark.setAttribute('data-bookmarked', 'true');
+            elementToMark.setAttribute('data-bookmark-type', bookmark.type);
+            elementToMark.setAttribute('title', bookmark.description);
+        }
+    });
+}
+
 // List bookmarks for user
-function ebListBookmarks(bookmarks) {
+function ebBookmarksListBookmarks(bookmarks) {
     'use strict';
 
     // Get the bookmarks list
@@ -53,7 +69,7 @@ function ebListBookmarks(bookmarks) {
 
         // Create list item
         var listItem = document.createElement('li');
-        listItem.setAttribute('data-bookmark-name', bookmark.name);
+        listItem.setAttribute('data-bookmark-type', bookmark.type);
 
         // Add link
         var link = document.createElement('a');
@@ -63,31 +79,33 @@ function ebListBookmarks(bookmarks) {
 
         // Add the list item to the list
         list.appendChild(listItem);
-
-        // Check if this bookmark is on the current page
-        ebBookmarksCheckForCurrentPage(bookmark.location);
     });
 }
 
 // Check if a page has bookmarks
-function ebCheckForBookmarks() {
+function ebBookmarksCheckForBookmarks() {
     'use strict';
 
     // Create an empty array to write to
     // when we read the localStorage bookmarks strings
     var bookmarks = [];
+
+    // Loop through stored bookmarks and add them to the array.
     Object.keys(localStorage).forEach(function (key) {
         if (key.startsWith('bookmark-')) {
             bookmarks.push(JSON.parse(localStorage.getItem(key)));
         }
     });
 
+    // Mark them in the document
+    ebBookmarksMarkBookmarks(bookmarks);
+
     // List them for the user
-    ebListBookmarks(bookmarks);
+    ebBookmarksListBookmarks(bookmarks);
 }
 
 // Return the ID of a bookmarkable element
-function ebBookMarkLocation(element) {
+function ebBookmarksElementID(element) {
     'use strict';
 
     // If we're bookmarking a specified element,
@@ -111,7 +129,7 @@ function ebBookMarkLocation(element) {
 }
 
 // Remember bookmark
-function ebSetBookmark(type, description, element) {
+function ebBookmarksSetBookmark(type, description, element) {
     'use strict';
 
     // Create a bookmark object
@@ -120,18 +138,18 @@ function ebSetBookmark(type, description, element) {
         bookTitle: document.body.dataset.title,
         pageTitle: document.title,
         description: description,
-        pageID: ebSlugify(window.location.href.split('#')[0]),
-        location: window.location.href.split('#')[0] + '#' + ebBookMarkLocation(element)
+        id: ebBookmarksElementID(element),
+        location: window.location.href.split('#')[0] + '#' + ebBookmarksElementID(element)
     };
 
     // Set a bookmark named for its type only.
     // So there will only ever be one bookmark of each type saved.
     // To save more bookmarks, make the key more unique.
-    // Note that the prefix 'bookmark-' is used in ebCheckForBookmarks().
+    // Note that the prefix 'bookmark-' is used in ebBookmarksCheckForBookmarks().
     localStorage.setItem('bookmark-' + ebSlugify(bookmark.bookTitle) + '-' + bookmark.type, JSON.stringify(bookmark));
 
     // Refresh the bookmarks list
-    ebCheckForBookmarks();
+    ebBookmarksCheckForBookmarks();
 }
 
 // Mark an element that has been user-bookmarked
@@ -152,24 +170,32 @@ function ebBookmarkMarkBookmarkedElement(element) {
 function ebBookmarksListenForClicks(button) {
     'use strict';
     button.addEventListener('click', function () {
-        ebSetBookmark('userBookmark', locales[pageLanguage].bookmarks.bookmark, button.parentNode);
+        ebBookmarksSetBookmark('userBookmark', locales[pageLanguage].bookmarks.bookmark, button.parentNode);
         ebBookmarkMarkBookmarkedElement(button.parentNode);
     });
 }
 
 // Add a bookmark button to bookmarkable elements
-function ebBookmarkToggleButtonOnElement(element) {
+function ebBookmarksToggleButtonOnElement(element) {
     'use strict';
 
     // Get the main bookmark icon from the page,
-    var icon = document.querySelector('.bookmark-icon');
+    var bookmarkIcon = document.querySelector('.bookmark-icon');
+    var historyIcon = document.querySelector('.history-icon');
 
     // If the element has no button, add one.
     if (!element.querySelector('button.bookmark-button')) {
         // Copy the icon SVG code to our new button.
         var button = document.createElement('button');
         button.classList.add('bookmark-button');
-        button.innerHTML = icon.outerHTML;
+
+        // Set icon based on bookmark type
+        var bookmarkType = element.getAttribute('data-bookmark-type');
+        if (bookmarkType === 'lastLocation') {
+            button.innerHTML = historyIcon.outerHTML;
+        } else {
+            button.innerHTML = bookmarkIcon.outerHTML;
+        }
 
         // Append the button
         element.appendChild(button);
@@ -180,7 +206,7 @@ function ebBookmarkToggleButtonOnElement(element) {
 }
 
 // Mark elements in the viewport so we can bookmark them
-function ebBookMarkMarkVisibleElements(elements) {
+function ebBookmarksMarkVisibleElements(elements) {
     'use strict';
 
     var elementsWithIDs = Array.from(elements).filter(function (element) {
@@ -200,10 +226,10 @@ function ebBookMarkMarkVisibleElements(elements) {
                 // Count the elements we've marked 'on'
                 if (entry.isIntersecting) {
                     entry.target.setAttribute('data-bookmark', 'onscreen');
-                    ebBookmarkToggleButtonOnElement(entry.target);
+                    ebBookmarksToggleButtonOnElement(entry.target);
                 } else {
                     entry.target.setAttribute('data-bookmark', 'offscreen');
-                    ebBookmarkToggleButtonOnElement(entry.target);
+                    ebBookmarksToggleButtonOnElement(entry.target);
                 }
             });
         }, ebBookmarkObserverConfig);
@@ -223,33 +249,33 @@ function ebBookMarkMarkVisibleElements(elements) {
                     && (element.offsetHeight + element.offsetTop) < (scrollTop + windowHeight)
                     && element.dataset['in-view'] === 'false') {
                 element.target.setAttribute('data-bookmark', 'onscreen');
-                ebBookmarkToggleButtonOnElement(element.target);
+                ebBookmarksToggleButtonOnElement(element.target);
             } else {
                 element.target.setAttribute('data-bookmark', 'offscreen');
-                ebBookmarkToggleButtonOnElement(element.target);
+                ebBookmarksToggleButtonOnElement(element.target);
             }
         });
     }
 }
 
 // The main process
-function ebBookmarkProcess() {
+function ebBookmarksProcess() {
     'use strict';
 
     // Store the last location when user leaves page
     window.addEventListener('beforeunload', function () {
-        ebSetBookmark('lastLocation', locales[pageLanguage].bookmarks['last-location']);
+        ebBookmarksSetBookmark('lastLocation', locales[pageLanguage].bookmarks['last-location']);
     });
 
     // Mark which elements are available for bookmarking
-    ebBookMarkMarkVisibleElements(document.querySelectorAll(ebBookmarkableElements));
+    ebBookmarksMarkVisibleElements(document.querySelectorAll(ebBookmarkableElements));
 
     // Check for bookmarks
-    ebCheckForBookmarks();
+    ebBookmarksCheckForBookmarks();
 
 }
 
 // Check for support before running the main process
-if (ebBookmarkSupport()) {
-    ebBookmarkProcess();
+if (ebBookmarksSupport()) {
+    ebBookmarksProcess();
 }

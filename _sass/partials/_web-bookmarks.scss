@@ -8,14 +8,14 @@ $web-bookmarks: true !default;
         z-index: 100;
         padding: 0.5em;
         text-align: right;
-        color: $bookmarks-text-color;
+        color: $bookmark-text-color;
         .bookmarks-list {
             list-style-type: none;
             padding: 0; // override default masthead padding
             li {
                 display: block; // overrides masthead ul styles
                 a {
-                    color: $bookmarks-text-color;
+                    color: $bookmark-text-color;
                 }
                 // override inherited styles from masthead ul li:after
                 &:after {
@@ -23,13 +23,17 @@ $web-bookmarks: true !default;
                 }
             }
         }
+        // Hide history icon, we need it elsewhere, e.g. for JS
+        .history-icon {
+            display: none;
+        }
         // Hide the list till hover on parent
         .bookmarks-list {
             display: none;
         }
         &:hover {
             .bookmarks-list {
-                background-color: $bookmarks-background-color;
+                background-color: $bookmark-background-color;
                 border-radius: $box-border-radius;
                 display: inline;
                 position: fixed;
@@ -42,16 +46,20 @@ $web-bookmarks: true !default;
         }
     }
 
-    // Icon (_includes/bookmark-icon)
-    svg.bookmark-icon {
+    // Icons (_includes/bookmark-icon, _includes/history-icon)
+    svg[class*="icon"] {
         // Avoid Firefox bug where tapping selects SVG as text
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
         -moz-user-select: none;
-        .bookmark-icon-outline {
-            fill: $bookmark-icon-outline-color-inactive;
+        &.bookmark-icon {
+            path {
+                fill: $bookmark-icon-color-inactive;
+            }
         }
-        .bookmark-icon-fill {
-            fill: $bookmark-icon-fill-color-inactive;
+        &.history-icon {
+            path {
+                fill: $bookmark-icon-color-inactive;
+            }
         }
     }
 
@@ -75,11 +83,8 @@ $web-bookmarks: true !default;
             &:active {
                 background-color: transparent;
                 svg {
-                    .bookmark-icon-outline {
-                        fill: $bookmark-icon-outline-color-active;
-                    }
-                    .bookmark-icon-fill {
-                        fill: $bookmark-icon-fill-color-active;
+                    path {
+                        fill: $bookmark-icon-color-active;
                     }
                 }
             }
@@ -109,12 +114,9 @@ $web-bookmarks: true !default;
 
     // Bookmarkable elements
     [data-bookmarked] {
-        svg {
-            .bookmark-icon-outline {
-                fill: $bookmark-icon-outline-color-active;
-            }
-            .bookmark-icon-fill {
-                fill: $bookmark-icon-fill-color-active;
+        svg[class*="icon"].bookmark-icon {
+            path {
+                fill: $bookmark-icon-color-active;
             }
         }
     }
