@@ -299,4 +299,11 @@ function ebBookmarksInit() {
     }
 }
 
-ebBookmarksInit();
+// Load the bookmarks when IDs have been assigned
+var ebBookmarksCheckForIDs = window.setInterval(function () {
+    'use strict';
+    if (ebIDsAssigned === true) {
+        ebBookmarksInit();
+        clearInterval(ebBookmarksCheckForIDs);
+    }
+}, 500);
