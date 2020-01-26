@@ -8,9 +8,10 @@
 // Options
 // --------------------------------------
 // Which elements should we make bookmarkable?
-// By default, paras and lists in the content area.
+// By default, paras and lists in the content area,
+// but not deeply nested ones like footnotes in dialog boxes.
 // Use querySelector strings.
-var ebBookmarkableElements = '#content p, #content ul, #content ol, #content dl';
+var ebBookmarkableElements = '#content > p, #content > ul, #content > ol, #content > dl, #content > * > p, #content > * > ul, #content > * > ol, #content > * > dl, [data-container] > p, [data-container] > ul, [data-container] > ol, [data-container] > dl, [data-container] > * > p, [data-container] > * > ul, [data-container] > * > ol, [data-container] > * > dl';
 
 // Disable bookmarks on browsers that don't support
 // what we need to provide them.
@@ -61,6 +62,10 @@ function ebBookmarksListBookmarks(bookmarks) {
     // Get the bookmarks list
     var list = document.querySelector('.bookmarks-list');
 
+    // Get the icons
+    var bookmarkIcon = document.querySelector('.bookmark-icon');
+    var historyIcon = document.querySelector('.history-icon');
+
     // Clear the current list
     list.innerHTML = '';
 
@@ -70,12 +75,21 @@ function ebBookmarksListBookmarks(bookmarks) {
         // Create list item
         var listItem = document.createElement('li');
         listItem.setAttribute('data-bookmark-type', bookmark.type);
-
+        
         // Add link
         var link = document.createElement('a');
         link.href = bookmark.location;
-        link.innerHTML = bookmark.bookTitle + ': ' + bookmark.description;
+        link.innerHTML = bookmark.bookTitle;
         listItem.appendChild(link);
+
+        // Add the relevant icon
+        var icon;
+        if (bookmark.type === 'lastLocation') {
+            icon = historyIcon.outerHTML;
+        } else {
+            icon = bookmarkIcon.outerHTML;
+        }
+        listItem.innerHTML += icon;
 
         // Add the list item to the list
         list.appendChild(listItem);
@@ -179,7 +193,7 @@ function ebBookmarksListenForClicks(button) {
 function ebBookmarksToggleButtonOnElement(element) {
     'use strict';
 
-    // Get the main bookmark icon from the page,
+    // Get the main bookmark icons from the page,
     var bookmarkIcon = document.querySelector('.bookmark-icon');
     var historyIcon = document.querySelector('.history-icon');
 

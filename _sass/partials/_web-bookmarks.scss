@@ -21,9 +21,18 @@ $web-bookmarks: true !default;
                 &:after {
                     content: normal;
                 }
+                svg {
+                    display: inline-block;
+                    height: 0.75em;
+                    margin-left: 0.5em;
+                    width: 0.75em;
+                    path {
+                        fill: $bookmark-icon-color-active;
+                    }
+                }
             }
         }
-        // Hide history icon, we need it elsewhere, e.g. for JS
+        // Hide history icon here, we need it elsewhere, e.g. for JS
         .history-icon {
             display: none;
         }
@@ -33,12 +42,10 @@ $web-bookmarks: true !default;
         }
         &:hover {
             .bookmarks-list {
-                background-color: $bookmark-background-color;
-                border-radius: $box-border-radius;
+                @include dialog-styles();
                 display: inline;
                 position: fixed;
-                right: 0;
-                padding: $line-height-default / 2;
+                right: 0.5em;
                 &:empty {
                     display: none;
                 }
@@ -64,6 +71,27 @@ $web-bookmarks: true !default;
     }
 
     // Bookmark button
+    .bookmark-button {
+        background: none;
+        border: none;
+        padding: 0.333em;
+        position: absolute; // avoids messing up line-height
+        svg {
+            width: 1em;
+            height: 1em;
+        }
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: transparent;
+            svg {
+                path {
+                    fill: $bookmark-icon-color-active;
+                }
+            }
+        }
+    }
+    // Manage visibility of bookmark buttons
     [data-bookmark="offscreen"] {
         .bookmark-button {
             display: none;
@@ -71,24 +99,6 @@ $web-bookmarks: true !default;
     }
     [data-bookmark="onscreen"],
     * [data-bookmark="onscreen"] {
-        .bookmark-button {
-            border: none;
-            background: none;
-            svg {
-                width: 1em;
-                height: 1em;
-            }
-            &:hover,
-            &:focus,
-            &:active {
-                background-color: transparent;
-                svg {
-                    path {
-                        fill: $bookmark-icon-color-active;
-                    }
-                }
-            }
-        }
         // Hide all subsequent bookmark buttons...
         & ~ [data-bookmark="onscreen"],
         & ~ * [data-bookmark="onscreen"] {

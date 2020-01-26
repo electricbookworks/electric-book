@@ -53,10 +53,13 @@ $paragraph-indent: 1em !default;
 
 // Rounded corners
 $button-border-radius: 0.1em !default; // Roundness of button corners
-$box-border-radius: 0.5em !default; // Roundness of box corners
+$box-border-radius: 0.1em !default; // Roundness of box corners
+
+// Shadows
+$box-shadow: 1px 2px 7px grey !default;
 
 // Rules, lines
-$rule-thickness: 1px !default;
+$rule-thickness: 1.5px !default;
 
 // Colours
 $color-text-main: #222222 !default;
@@ -252,6 +255,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 // Load general-purpose mixins
 @import "partials/web-mixins--buttons";
 @import "partials/web-mixins--sidenotes";
+@import "partials/web-mixins--dialogs";
 
 // Structural HTML components
 @import "partials/web-wrappers";
