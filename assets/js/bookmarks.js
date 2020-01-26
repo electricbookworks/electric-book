@@ -76,7 +76,7 @@ function ebBookmarksListBookmarks(bookmarks) {
         // Create list item
         var listItem = document.createElement('li');
         listItem.setAttribute('data-bookmark-type', bookmark.type);
-        
+
         // Add link
         var link = document.createElement('a');
         link.href = bookmark.location;
@@ -290,7 +290,13 @@ function ebBookmarksProcess() {
 
 }
 
-// Check for support before running the main process
-if (ebBookmarksSupport()) {
-    ebBookmarksProcess();
+// Start bookmarking
+function ebBookmarksInit() {
+    'use strict';
+    // Check for support before running the main process
+    if (ebBookmarksSupport()) {
+        ebBookmarksProcess();
+    }
 }
+
+ebBookmarksInit();
