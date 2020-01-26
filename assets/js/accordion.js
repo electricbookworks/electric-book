@@ -550,18 +550,6 @@ function ebExpand() {
     }
 }
 
-function ebAssignIDs(callback) {
-    'use strict';
-
-    var elementsToID = document.querySelectorAll('#content p:not([id]), #content ol:not([id]), #content ul:not([id]), #content dl:not([id])');
-    var counter = 0;
-    elementsToID.forEach(function (element) {
-        element.id = 'id-' + counter;
-        counter += 1;
-    });
-    callback();
-}
-
 function ebLoadAccordion() {
     'use strict';
     ebAccordify();
@@ -572,5 +560,8 @@ function ebLoadAccordion() {
     ebAccordionListenForHashChange();
 }
 
-// Assign IDs, then load the accordion
-ebAssignIDs(ebLoadAccordion);
+// Load the accordion when IDs have been assigned
+document.body.addEventListener('idsAssigned', function () {
+    'use strict';
+    ebLoadAccordion();
+});

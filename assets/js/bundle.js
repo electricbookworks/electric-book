@@ -17,6 +17,7 @@ layout: null
 {% if site.output == "web" or site.output == "app" %}
 
     {% comment %} This order is important. {% endcomment %}
+    {% include_relative setup.js %}
     {% include_relative vendor/mark.min.js %}
     {% include_relative search-terms.js %}
     {% include_relative nav.js %}
