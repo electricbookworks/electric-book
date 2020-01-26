@@ -124,6 +124,10 @@ $web-bookmarks: true !default;
 
     // Bookmarkable elements
     [data-bookmarked] {
+        // Always show bookmarked buttons
+        .bookmark-button {
+            display: inline-block;
+        }
         svg[class*="icon"].bookmark-icon {
             path {
                 fill: $bookmark-icon-color-active;
