@@ -1,5 +1,5 @@
 ---
-title: Home
+title: The Electric Book workflow
 style: home
 ---
 
