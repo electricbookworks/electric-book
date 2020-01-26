@@ -3,8 +3,10 @@
 
 // Setup tasks on pages
 
+var ebIDsAssigned = false;
+
 // Assign IDs to text elements, e.g. for bookmarking
-function ebAssignIDs(callback) {
+function ebAssignIDs() {
     'use strict';
 
     var elementsToID = document.querySelectorAll('#content p:not([id]), #content ol:not([id]), #content ul:not([id]), #content dl:not([id])');
@@ -13,12 +15,9 @@ function ebAssignIDs(callback) {
         element.id = 'id-' + counter;
         counter += 1;
     });
-    callback();
+    ebIDsAssigned = true;
 }
 
 // Assign IDs, then emit an event,
 // e.g. for the accordion and bookmarking.
-ebAssignIDs(function () {
-    'use strict';
-    ebEmitEvent('idsAssigned', document.body);
-});
+ebAssignIDs();

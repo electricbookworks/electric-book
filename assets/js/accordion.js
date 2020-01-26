@@ -561,7 +561,10 @@ function ebLoadAccordion() {
 }
 
 // Load the accordion when IDs have been assigned
-document.body.addEventListener('idsAssigned', function () {
+var intervalIDsCheck = window.setInterval(function () {
     'use strict';
-    ebLoadAccordion();
-});
+    if (ebIDsAssigned === true) {
+        ebLoadAccordion()
+        intervalIDsCheck.clearInterval();
+    }
+}, 500);

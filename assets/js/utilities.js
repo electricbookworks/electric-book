@@ -53,25 +53,3 @@ function ebCheckForPage(url) {
     }
     return pageStatus;
 }
-
-// Create and emit an event
-function ebEmitEvent(name, element) {
-    'use strict';
-
-    // Create the event
-    var event = document.createEvent('Event');
-
-    // Define the event name
-    event.initEvent(name, true, true);
-
-    // Emit the event
-    element.dispatchEvent(event);
-
-    // Log for debugging
-    // console.log('Event dispatched: ' + event.type + ' on ' + element.tagName + '.');
-
-    // Listen for the event with:
-    // element.addEventListener(name, function (event) {
-    // // event.target matches element
-    // }, false);
-}
