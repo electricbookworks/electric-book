@@ -9,8 +9,8 @@ $web-language-select: true !default;
         text-align: right;
         color: $language-select-text-color;
         .language-select-list {
+            @include dialog-styles();
             list-style-type: none;
-            padding: 0; // override default masthead padding
             li {
                 display: block; // overrides masthead ul styles
                 a {
@@ -28,12 +28,9 @@ $web-language-select: true !default;
         }
         &:hover {
             .language-select-list {
-                background-color: $language-select-background-color;
-                border-radius: $button-border-radius;
                 display: inline;
                 position: fixed;
-                right: 0;
-                padding: $line-height-default / 2;
+                right: 0.5em;
             }
         }
     }
