@@ -31,10 +31,11 @@ function ebBookmarksSupport() {
 // Check if bookmark is on the current page
 function ebBookmarksCheckForCurrentPage(url) {
     'use strict';
-    var pageURL = window.location.href;
-    var pageURLWithoutHashAndQueries = pageURL.split(/[?#]/)[0];
 
-    if (url.includes(pageURLWithoutHashAndQueries)) {
+    var pageURL = window.location.href.split('#')[0];
+    var bookmarkURL = url.split('#')[0];
+
+    if (pageURL === bookmarkURL) {
         return true;
     }
 }
