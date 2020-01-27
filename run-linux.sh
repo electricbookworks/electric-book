@@ -443,119 +443,162 @@ You may need to reload the web page once this server is running."
 			# Now to create a compressed epub.
 			# First, though, if they exist, remove previous .zip and .epub files that we will replace.
 			echo "Removing previous zips or epubs..."
+			if [ -d "$location/_output/$epubfilename" ]; then
+				rm -r "$location/_output/$epubfilename"
+			fi
 			if [ -e "$location/_output/$epubfilename.zip" ]; then
 				rm "$location/_output/$epubfilename.zip"
 			fi
 			if [ -e "$location/_output/$epubfilename.epub" ]; then
 				rm "$location/_output/$epubfilename.epub"
 			fi
-			# Go into _site/epub to zip it to _output
+			# And create a new folder for the uncompressed epub
+			if [ "$epubsubdirectory" = "" ]; then
+				mkdir "$location/_output/$epubfilename"
+			else
+				mkdir "$location/_output/$epubfilename"
+				mkdir "$location/_output/$epubfilename/$epubsubdirectory"
+			fi
+			# Go into _site/epub
 			cd "$location"/_site/epub
-			# First, though, remove the fonts folder if we don't want it
+			# First, remove the fonts folder if we don't want it
 			if [ "$epubfonts" = "" ]; then
-				rm -r fonts
+				if [ -d fonts ]; then
+					rm -r fonts
+				fi
 			fi
 			# And remove the mathjax dir if we don't need it
 			if [ "$epubmathjax" = "" ]; then
-				rm -r mathjax
+				if [ -d mathjax ]; then
+					rm -r mathjax
+				fi
 			fi
-			# Now to compress the epub files, only selecting the ones we want in the final epub
-			echo "Compressing epub..."
-			# Add the mimetype first, with no compression and no extra fields (-X)
-			zip --compression-method store -0 -X --quiet "$location/_output/$epubfilename.zip" mimetype
+			# Before we compress the epub files, we assemble the uncompressed files
+			echo "Assembling epub..."
 			# Add either the text folder or the translation's text folder.
 			if [ "$epubsubdirectory" = "" ]; then
-					if [ -d text ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "text"
-					fi
-				else
-					if [ -d "$epubsubdirectory/text" ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$epubsubdirectory/text"
-					fi
+				if [ -d text ]; then
+					cp -a "text" "$location/_output/$epubfilename/"
+				fi
+			else
+				if [ -d "$epubsubdirectory/text" ]; then
+					cp -a "$epubsubdirectory/text" "$location/_output/$epubfilename/$epubsubdirectory/"
+				fi
 			fi
 			# Add either the parent images folder or the translation's images folder.
 			# If the translation has an images folder, use it. Otherwise, use the parent's
 			# images for the translation.
 			if [ "$epubsubdirectory" = "" ]; then
-					if [ -d images ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "images"
-					fi
-					if [ -e $location/_site/items/images/epub/. ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "items/images"
-					fi
+				if [ -d images ]; then
+					cp -a "images" "$location/_output/$epubfilename/"
+				fi
+				if [ -e $location/_site/items/images/epub/. ]; then
+					cp -a "items/images" "$location/_output/$epubfilename/"
+				fi
+			else
+				if [ -d "$epubsubdirectory/images" ]; then
+					cp -a "$epubsubdirectory/images" "$location/_output/$epubfilename/$epubsubdirectory/"
 				else
-					if [ -d "$epubsubdirectory/images" ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$epubsubdirectory/images"
-					else
-						if [ -d images ]; then
-							zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "images"
-						fi
+					if [ -d images ]; then
+						cp -a "images" "$location/_output/$epubfilename/"
 					fi
-					if [ -e "$location/_site/items/$epubsubdirectory/images/epub/." ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "items/$epubsubdirectory/images"
-					else
-						if [ -e "$location/_site/items/images/epub/." ]; then
-							zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "items/images"
-						fi
+				fi
+				if [ -e "$location/_site/items/$epubsubdirectory/images/epub/." ]; then
+					cp -a "items/$epubsubdirectory/images" "$location/_output/$epubfilename/$epubsubdirectory/"
+				else
+					if [ -e "$location/_site/items/images/epub/." ]; then
+						cp -a "items/images" "$location/_output/$epubfilename/"
 					fi
+				fi
 			fi
 			# Add either the parent fonts folder or the translation's fonts folder.
 			# If the translation has a fonts folder, use it. Otherwise, use the parent's
 			# fonts for the translation.
 			if [ "$epubsubdirectory" = "" ]; then
 					if [ -d fonts ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "fonts"
+						cp -a "fonts" "$location/_output/$epubfilename/"
 					fi
 				else
 					if [ -d "$epubsubdirectory/fonts" ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$epubsubdirectory/fonts"
+						cp -a "$epubsubdirectory/fonts" "$location/_output/$epubfilename/$epubsubdirectory/"
 					else
 						if [ -d fonts ]; then
-							zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "fonts"
+							cp -a "fonts" "$location/_output/$epubfilename/"
 						fi
 					fi
 			fi
 			# Add the parent styles folder and the translation's styles folder if it exists.
 			if [ "$epubsubdirectory" = "" ]; then
 					if [ -d styles ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "styles"
+						cp -a "styles" "$location/_output/$epubfilename/"
 					fi
 				else
 					if [ -d styles ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "styles"
+						cp -a "styles" "$location/_output/$epubfilename/"
 					fi
 					if [ -d "$epubsubdirectory/styles" ]; then
-						zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "$epubsubdirectory/styles"
+						cp -a "$epubsubdirectory/styles" "$location/_output/$epubfilename/$epubsubdirectory/"
 					fi
 			fi
 			# If MathJax is enabled, copy the MathJax folder.
 			# MathJax always goes to the same place in the epub root, even in translations.
 			if [ "$epubmathjax" = "y" ]; then
 				if [ -d mathjax ]; then
-					zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "mathjax"
+					cp -a "mathjax" "$location/_output/$epubfilename/"
 				fi
 			fi
 			# If there is a Javascript folder, add it to the epub.
 			# Scripts always go to the same place in the epub root, even in translations.
 			if [ -d js ]; then
-				zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" "js"
+				cp -a "js" "$location/_output/$epubfilename/"
+			fi
+			# Add the mimetype file
+			if [ -e mimetype ]; then
+				cp -a "mimetype" "$location/_output/$epubfilename/"
+			else
+				echo "No mimetype file found. Your epub will not be valid."
 			fi
 			# Add the package metadata files.
 			if [ -d META-INF ]; then
-				zip --recurse-paths --quiet "$location/_output/$epubfilename.zip" META-INF
+				cp -a "META-INF" "$location/_output/$epubfilename/"
 			fi
 			if [ -e package.opf ]; then
-				zip --quiet "$location/_output/$epubfilename.zip" package.opf
+				cp -a "package.opf" "$location/_output/$epubfilename/"
 			fi
 			if [ -e toc.ncx ]; then
-				zip --quiet "$location/_output/$epubfilename.zip" toc.ncx
+				cp -a "toc.ncx" "$location/_output/$epubfilename/"
 			fi
+			# Compress epub folder
+			echo "Compressing epub..."
+
+			# Choose zip method, zip or node
+			epubZipMethod="node"
+
+			if [ $epubZipMethod = "zip" ]; then
+				echo "Zipping with Zip..."
+				# To zip the contents and not the $epubfilename folder itself,
+				# we have to cd into the directory and zip from there.
+				cd "$location/_output/$epubfilename"
+				# Add the mimetype first, with no compression and no extra fields (-X)
+				zip --compression-method store -0 -X --quiet "../$epubfilename.zip" "mimetype"
+				zip --recurse-paths --quiet "../$epubfilename.zip" "*" --exclude "mimetype"
+				cd "$location/_output"
+			else
+				echo "Zipping with Node..."
+				cd "$location/_output"
+				node "$location/_tools/zip/zip.js" "$epubfilename"
+			fi
+
 			# Change file extension .zip to .epub
-			cd "$location"/_output
 			if [ -e "$epubfilename".zip ]; then
 				mv "$epubfilename".zip "$epubfilename".epub
 			fi
-			echo "Epub created!"
+			# Check if the epub exists and report back to the user
+			if [ -e "$epubfilename".epub ]; then
+				echo "Epub created!"
+			else
+				echo "Sorry, there was a problem and the epub was not created."
+			fi
 			# Validation
 			echo "To run validation, enter the path to the EpubCheck folder on your machine."
 			echo "Hit enter for the default: /usr/local/bin/epubcheck-4.2.2"
