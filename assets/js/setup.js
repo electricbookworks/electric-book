@@ -15,9 +15,9 @@ function ebAssignIDs() {
         element.id = 'id-' + counter;
         counter += 1;
     });
+    // Set new status,e.g. for the accordion and bookmarking
     ebIDsAssigned = true;
 }
 
-// Assign IDs, then emit an event,
-// e.g. for the accordion and bookmarking.
+// Assign IDs, then emit an event.
 ebAssignIDs();
