@@ -5,10 +5,10 @@ $web-bookmarks: true !default;
 
     // The bookmarks list
     .bookmarks {
-        z-index: 100;
+        color: $bookmark-text-color;
         padding: 0.55em; // aligns beneath language selector
         text-align: right;
-        color: $bookmark-text-color;
+        z-index: 100;
         .bookmarks-list {
             list-style-type: none;
             padding: 0; // override default masthead padding
@@ -80,43 +80,11 @@ $web-bookmarks: true !default;
             width: 1em;
             height: 1em;
         }
-        &:hover,
-        &:focus,
-        &:active {
+        &:hover {
             background-color: transparent;
             svg {
                 path {
                     fill: $bookmark-icon-color-active;
-                }
-            }
-        }
-    }
-    // Manage visibility of bookmark buttons
-    [data-bookmark="offscreen"] {
-        .bookmark-button {
-            display: none;
-        }
-    }
-    [data-bookmark="onscreen"],
-    * [data-bookmark="onscreen"] {
-        // Hide all subsequent bookmark buttons...
-        & ~ [data-bookmark="onscreen"],
-        & ~ * [data-bookmark="onscreen"] {
-            .bookmark-button {
-                display: none;
-            }
-            // ...unless they are bookmarked
-            &[data-bookmarked] {
-                .bookmark-button {
-                    display: inline;
-                }
-            }
-            // or hovered over
-            &:hover,
-            &:active,
-            &:focus {
-                .bookmark-button {
-                    display: inline;
                 }
             }
         }

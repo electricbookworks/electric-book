@@ -3,13 +3,16 @@
 
 // Setup tasks on pages
 
-var ebIDsAssigned = false;
+// Options
+// -------
+var ebElementsToGetIDs = '#content p:not([id]), #content li:not([id]), #content dt:not([id])';
 
 // Assign IDs to text elements, e.g. for bookmarking
+var ebIDsAssigned = false;
 function ebAssignIDs() {
     'use strict';
 
-    var elementsToID = document.querySelectorAll('#content p:not([id]), #content ol:not([id]), #content ul:not([id]), #content dl:not([id])');
+    var elementsToID = document.querySelectorAll(ebElementsToGetIDs);
     var counter = 0;
     elementsToID.forEach(function (element) {
         element.id = 'id-' + counter;

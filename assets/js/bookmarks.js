@@ -1,6 +1,6 @@
 /*jslint browser */
 /*globals window, IntersectionObserver, locales, pageLanguage,
-    ebSlugify */
+    ebSlugify, ebIDsAssigned */
 
 // A script for managing a user's bookmarks
 
@@ -8,10 +8,9 @@
 // Options
 // --------------------------------------
 // Which elements should we make bookmarkable?
-// By default, paras and lists in the content area,
-// but not deeply nested ones like footnotes in dialog boxes.
+// By default, anything in #content with an ID.
 // Use querySelector strings.
-var ebBookmarkableElements = '#content > p, #content > ul, #content > ol, #content > dl, #content > * > p, #content > * > ul, #content > * > ol, #content > * > dl, [data-container] > p, [data-container] > ul, [data-container] > ol, [data-container] > dl, [data-container] > * > p, [data-container] > * > ul, [data-container] > * > ol, [data-container] > * > dl';
+var ebBookmarkableElements = '#content p[id], #content li[id], #content dd[id]';
 
 // Disable bookmarks on browsers that don't support
 // what we need to provide them.
@@ -52,6 +51,7 @@ function ebBookmarksMarkBookmarks(bookmarks) {
             elementToMark.setAttribute('data-bookmarked', 'true');
             elementToMark.setAttribute('data-bookmark-type', bookmark.type);
             elementToMark.setAttribute('title', bookmark.description);
+            ebBookmarksToggleButtonOnElement(elementToMark);
         }
     });
 }
@@ -224,6 +224,7 @@ function ebBookmarksToggleButtonOnElement(element) {
 function ebBookmarksMarkVisibleElements(elements) {
     'use strict';
 
+    // Ensure we only use elements with IDs
     var elementsWithIDs = Array.from(elements).filter(function (element) {
         return element.id !== 'undefined';
     });
@@ -238,13 +239,10 @@ function ebBookmarksMarkVisibleElements(elements) {
     if (window.hasOwnProperty('IntersectionObserver')) {
         var bookmarkObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
-                // Count the elements we've marked 'on'
                 if (entry.isIntersecting) {
                     entry.target.setAttribute('data-bookmark', 'onscreen');
-                    ebBookmarksToggleButtonOnElement(entry.target);
                 } else {
                     entry.target.setAttribute('data-bookmark', 'offscreen');
-                    ebBookmarksToggleButtonOnElement(entry.target);
                 }
             });
         }, ebBookmarkObserverConfig);
@@ -273,9 +271,25 @@ function ebBookmarksMarkVisibleElements(elements) {
     }
 }
 
+// Listen for clicks and show bookmark button
+function ebBookmarksAddButtonOnSelect(elements) {
+    'use strict';
+    elements.forEach(function (element) {
+        element.addEventListener('click', function (event) {
+            // Toggle the button on the element, currentTarget,
+            // (not necessarily the clicked element, which might be a child).
+            ebBookmarksToggleButtonOnElement(event.currentTarget);
+        });
+    });
+}
+
 // The main process
 function ebBookmarksProcess() {
     'use strict';
+
+    // Show the bookmarks controls
+    var bookmarksControls = document.querySelector('.bookmarks');
+    bookmarksControls.classList.remove('visuallyhidden');
 
     // Store the last location when user leaves page
     window.addEventListener('beforeunload', function () {
@@ -284,6 +298,7 @@ function ebBookmarksProcess() {
 
     // Mark which elements are available for bookmarking
     ebBookmarksMarkVisibleElements(document.querySelectorAll(ebBookmarkableElements));
+    ebBookmarksAddButtonOnSelect(document.querySelectorAll(ebBookmarkableElements));
 
     // Check for bookmarks
     ebBookmarksCheckForBookmarks();
