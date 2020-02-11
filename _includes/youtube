@@ -14,6 +14,11 @@
     {% assign video-link = include.link %}
 {% endif %}
 
+{% comment %} Include the timestamp if there is one {% endcomment %}
+{% if include.start %}
+    {% capture video-timestamp %}&start={{ include.start }}{% endcapture %}
+{% endif %}
+
 {% comment %}Get an image for the video from YouTube,
 then let the user override it by setting an image parameter.
 Epubs and apps aren't online, so don't fetch an image automatically.{% endcomment %}
@@ -30,9 +35,9 @@ Epubs and apps aren't online, so don't fetch an image automatically.{% endcommen
     {% assign video-language = include.language %}
 {% endif %}
 
-<div class="video youtube{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles == "true" %}data-video-subtitles="true"{% endif %}>
+<div class="video youtube{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles == "true" %}data-video-subtitles="true"{% endif %}{% if include.start %} data-video-timestamp="{{ include.start }}"{% endif %}>
     <div class="video-wrapper{% unless video-image %} video-no-image{% endunless %}">
-        <a class="video-link" href="{{ video-link }}">
+        <a class="video-link" href="{{ video-link }}{{ video-timestamp }}">
             {% if video-image %}
                 <img src="{{ video-image }}">
             {% endif %}
@@ -41,7 +46,7 @@ Epubs and apps aren't online, so don't fetch an image automatically.{% endcommen
 
     {% if include.description %}
     <p class="video-description">
-        <a href="{{ video-link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
+        <a href="{{ video-link }}{{ video-timestamp }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
     </p>
     {% endif %}
 
