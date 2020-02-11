@@ -9,7 +9,8 @@
 $print-notes: true !default;
 @if $print-notes {
 
-    // Footnote reference in text
+    // Footnote reference in text, and see
+    // *::footnote-call below
     .footnote {
         line-height: inherit;
         // Ensure footnote refs in headings are small
@@ -45,14 +46,27 @@ $print-notes: true !default;
     // For styling see https://www.princexml.com/doc-prince/#footnote-calls
     .page-footnote {
         float: footnote;
+        font-size: $font-size-default * $font-size-smaller;
         footnote-style-position: inside;
-        text-indent: -($line-height-default * 1.5);
-        margin-left: $line-height-default * 1.5;
+        text-indent: -($line-height-default);
+        margin-left: $line-height-default;
+        // Rule above
+        &:first-of-type {
+            border-top: $rule-thickness solid $color-text-secondary;
+            padding-top: $line-height-default;
+        }
+        p {
+            margin-bottom: 0;
+            text-indent: 0;
+            &:first-of-type {
+            }
+        }
     }
         // The numbers in front of footnote text
         *::footnote-marker {
             float: left;
-            width: $line-height-default * 1.5;
+            font-size: $font-size-default * $font-size-smaller;
+            width: 0;
         }
 
     // Avoid page-footnotes created by footnotes.js
@@ -76,9 +90,12 @@ $print-notes: true !default;
     // _print-base-typography.scss
     *::footnote-call {
         content: counter(footnote);
-        font-size: $font-size-default * $font-size-smaller;
+        font-size: $font-size-default * 0.7;
         vertical-align: super;
         line-height: none;
+        // Shift down
+        top: $font-size-default / 4;
+        position: relative;
     }
 
 }
