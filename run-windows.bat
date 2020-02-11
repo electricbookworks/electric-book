@@ -22,6 +22,7 @@ set print-pdf-mathjax=
 set screen-pdf-mathjax=
 set webmathjax=
 set appmathjax=
+set searchIndexToRefresh=
 
 :: Ask what we're going to be doing.
 echo Electric Book options
