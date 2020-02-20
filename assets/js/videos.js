@@ -94,7 +94,7 @@ function ebVideoMakeIframe(host, videoId, videoLanguage, videoSubtitles, videoTi
     return iframe;
 }
 
-function ebVideoShow() {
+function ebVideoShow(video) {
     'use strict';
 
     // early exit for unsupported browsers
@@ -103,13 +103,20 @@ function ebVideoShow() {
         return;
     }
 
-    // get all the videos
-    var videos = document.querySelectorAll('.video');
+    // Create the list of videos, either from the supplied video
+    // or from all the videos on the page.
+    var videos = [];
+    if (video) {
+        videos.push(video);
+    } else {
+        videos = document.querySelectorAll('.video');
+    }
 
     videos.forEach(function (currentVideo) {
         // make the iframe
         var videoHost = ebGetVideoHost(currentVideo);
         var videoId = currentVideo.id;
+        var videoLink = currentVideo.querySelector('a');
         var videoLanguage = ebVideoLanguage(currentVideo);
         var videoSubtitles = ebVideoSubtitles(currentVideo);
         var videoTimestamp = ebVideoTimestamp(currentVideo);
@@ -119,8 +126,12 @@ function ebVideoShow() {
         // console.log('currentVideo: ' + currentVideo);
         // console.log('videoHost: ' + videoHost);
         // console.log('currentVideo ID: ' + videoId);
+        // console.log('videoLanguage: ' + videoLanguage);
+        // console.log('videoSubtitles: ' + videoSubtitles);
+        // console.log('videoTimestamp: ' + videoTimestamp);
+        // console.log('iframe:');
 
-        currentVideo.addEventListener("click", function (ev) {
+        videoLink.addEventListener('click', function (ev) {
             videoWrapper.classList.add('contains-iframe');
             ev.preventDefault();
             // replace the link with the generated iframe
