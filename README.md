@@ -1,4 +1,4 @@
-# The Electric Book Jekyll template
+# The Electric Book template
 
 A Jekyll template for creating books in multiple formats:
 
