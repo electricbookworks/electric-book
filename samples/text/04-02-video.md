@@ -6,7 +6,7 @@ title: "Video"
 
 The Electric Book template includes an include tag for easily inserting videos from YouTube and Vimeo. [See the docs for more]({{ site.canonical-url }}/docs/editing/video.html).
 
-In this example, we have a YouTube video, set to start 10 seconds in.
+In this example, we have a YouTube video, set to start 14 seconds in.
 
 {% include youtube id="OJWJE0x7T4Q" start="14" %}
 
