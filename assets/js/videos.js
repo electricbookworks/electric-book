@@ -1,5 +1,5 @@
 /* jslint browser */
-/*globals window, console, IntersectionObserver */
+/*globals window, IntersectionObserver */
 
 function ebVideoInit() {
     'use strict';
@@ -116,7 +116,6 @@ function ebVideoShow(video) {
         // make the iframe
         var videoHost = ebGetVideoHost(currentVideo);
         var videoId = currentVideo.id;
-        var videoLink = currentVideo.querySelector('a');
         var videoLanguage = ebVideoLanguage(currentVideo);
         var videoSubtitles = ebVideoSubtitles(currentVideo);
         var videoTimestamp = ebVideoTimestamp(currentVideo);
@@ -130,8 +129,9 @@ function ebVideoShow(video) {
         // console.log('videoSubtitles: ' + videoSubtitles);
         // console.log('videoTimestamp: ' + videoTimestamp);
         // console.log('iframe:');
+        // console.log(iframe);
 
-        videoLink.addEventListener('click', function (ev) {
+        videoWrapper.addEventListener('click', function (ev) {
             videoWrapper.classList.add('contains-iframe');
             ev.preventDefault();
             // replace the link with the generated iframe
