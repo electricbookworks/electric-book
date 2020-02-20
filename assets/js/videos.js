@@ -1,5 +1,5 @@
 /* jslint browser */
-/*globals window */
+/*globals window, console */
 
 function ebVideoInit() {
     'use strict';
@@ -45,19 +45,44 @@ function ebVideoLanguage(videoElement) {
     return language;
 }
 
-function ebVideoMakeIframe(host, videoId, videoLanguage, videoSubtitles) {
+function ebVideoTimestamp(videoElement) {
     'use strict';
+    if (videoElement.getAttribute('data-video-timestamp')) {
+        var timestamp = videoElement.getAttribute('data-video-timestamp');
+        return timestamp;
+    }
+}
+
+function ebVideoMakeIframe(host, videoId, videoLanguage, videoSubtitles, videoTimestamp) {
+    'use strict';
+
+    // Get which video host, e.g. YouTube or Vimeo
     var hostURL = ebVideoHosts[host];
 
+    // Set parameters, starting with autoplay on
     var parametersString = '?autoplay=1';
+
+    // Add a language, if any
     if (videoLanguage) {
         if (host === 'youtube') {
             parametersString += '&cc_lang_pref=' + videoLanguage;
         }
     }
+
+    // Add subtitles, if any
     if (videoSubtitles) {
         if (host === 'youtube') {
             parametersString += '&cc_load_policy=' + videoSubtitles;
+        }
+    }
+
+    // Add a timestamp, if any
+    if (videoTimestamp) {
+        if (host === 'youtube') {
+            parametersString += '&start=' + videoTimestamp;
+        }
+        if (host === 'vimeo') {
+            parametersString += '#t=' + videoTimestamp;
         }
     }
 
@@ -87,12 +112,13 @@ function ebVideoShow() {
         var videoId = currentVideo.id;
         var videoLanguage = ebVideoLanguage(currentVideo);
         var videoSubtitles = ebVideoSubtitles(currentVideo);
+        var videoTimestamp = ebVideoTimestamp(currentVideo);
         var videoWrapper = currentVideo.querySelector('.video-wrapper');
-        var iframe = ebVideoMakeIframe(videoHost, videoId, videoLanguage, videoSubtitles);
+        var iframe = ebVideoMakeIframe(videoHost, videoId, videoLanguage, videoSubtitles, videoTimestamp);
 
-        console.log('currentVideo: ' + currentVideo);
-        console.log('videoHost: ' + videoHost);
-        console.log('currentVideo ID: ' + videoId);
+        // console.log('currentVideo: ' + currentVideo);
+        // console.log('videoHost: ' + videoHost);
+        // console.log('currentVideo ID: ' + videoId);
 
         currentVideo.addEventListener("click", function (ev) {
             videoWrapper.classList.add('contains-iframe');
