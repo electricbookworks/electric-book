@@ -179,7 +179,7 @@ Enter a number and hit enter. "
 				echo "No MathJax required."
 			else
 				echo "Processing MathJax in HTML."
-				if [ "$printpdfsubdirectory" = "" ]; then
+				if [ "$screenpdfsubdirectory" = "" ]; then
 					gulp mathjax --book $bookfolder
 				else
 					gulp mathjax --book $bookfolder --language $screenpdfsubdirectory
