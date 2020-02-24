@@ -60,6 +60,7 @@ prose:
     - /*/*/images
     - /*/*/fonts
     - /*/*/package.opf
+    - /*/*/toc.ncx
     - /*/*/*/file-list
   media: "media"
   metadata:
