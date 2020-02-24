@@ -182,7 +182,7 @@ $verso-right-top: normal !default;
 $verso-right-bottom: normal !default;
 
 // Recto (right-hand-page)
-$recto-top: string(h2-text, last) !default;
+$recto-top: string(h2-title, last) !default;
 $recto-top-left: normal !default;
 $recto-top-right: normal !default;
 $recto-top-left-corner: normal !default;
@@ -218,7 +218,7 @@ $verso-right-top-frontmatter: normal !default;
 $verso-right-bottom-frontmatter: normal !default;
 
 // Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
-$recto-top-frontmatter: string(h2-text, last) !default;
+$recto-top-frontmatter: string(h2-title, last) !default;
 $recto-top-left-frontmatter: normal !default;
 $recto-top-right-frontmatter: normal !default;
 $recto-top-left-corner-frontmatter: normal !default;
