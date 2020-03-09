@@ -6,62 +6,70 @@
 # They are slower than the default preview and unreliable in multi-site repos.)
 prose:
   ignore:
+    # Root files
+    - _config.yml
     - .gitattributes
     - .gitignore
     - .htaccess
-    - _config.yml
-    - _config.epub.yml
-    - _config.print-pdf.yml
-    - _config.screen-pdf.yml
-    - _config.web.yml
-    - _prose.yml
+    - CHANGELOG.md
+    - CNAME
+    - eslint.json
+    - fonts
     - Gemfile
     - Gemfile.lock
-    - CNAME
-    - /_app
-    - /_docs
-    - /_epub
-    - /_configs
-    - /_html
-    - /_includes
-    - /_layouts
-    - /_output
-    - /_sass
-    - /_site
-    - /_tools
-    - /assets
-    - /node_modules
-    - eslint.json
     - gulpfile.js
-    - package.json
+    - LICENSE
     - package-lock.json
-    - search.md
-    - /*/search.md
-    - /*/.gitattributes
-    - /*/.gitignore
-    - /*/_config*
-    - /*/_prose.yml
-    - /*/_layouts
-    - /*/_includes
-    - /*/_site
-    - /*/css
-    - /*/*/0-0-cover.md
-    - /*/*/index.md
+    - package.json
+    - _prose.yml
     - run-linux.sh
     - run-mac.command
     - run-windows.bat
-    - /*/run-linux.sh
-    - /*/run-mac.command
-    - /*/run-windows.bat
-    - /*/*/file-list
-    - /*/images
+    - search.md
+
+    # Root folders
+    - _app
+    - _configs
+    - _docs
+    - _epub
+    - _html
+    - _includes
+    - _layouts
+    - _output
+    - _sass
+    - _site
+    - _tools
+    - assets
+    - node_modules
+
+    # Book folders and files
+    - /*/.gitignore
     - /*/fonts
+    - /*/images
+    - /*/index.md
     - /*/package.opf
-    - /*/*/images
+    - /*/search.md
+    - /*/toc.ncx
+
+    # Book subfolders and files
+    - /*/*/.gitignore
+    - /*/*/0-0-cover.md
+    - /*/*/file-list
+
+    # Translation folders and files
+    - /*/*/.gitignore
     - /*/*/fonts
+    - /*/*/images
+    - /*/*/index.md
     - /*/*/package.opf
+    - /*/*/search.md
     - /*/*/toc.ncx
+
+    # Translation subfolders and files
+    - /*/*/*/.gitignore
+    - /*/*/*/0-0-cover.md
     - /*/*/*/file-list
+
   media: "media"
   metadata:
     "":
