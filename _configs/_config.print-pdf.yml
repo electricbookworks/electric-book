@@ -26,8 +26,10 @@ exclude:
   # Included as-is in other files, no need to process
   - /assets/js/annotation.js
   - /assets/js/polyfills.js
+  - /assets/js/utilities.js
   - /assets/js/settings.js
   - /assets/js/locales.js
+  - /assets/js/setup.js
   - /assets/js/mark-parents.js
   - /assets/js/mark.min.js
   - /assets/js/redact.js
@@ -51,6 +53,7 @@ exclude:
   - /assets/js/footnotes.js
   - /assets/js/shift-elements.js
   - /assets/js/page-reference.js
+  - /assets/js/bookmarks.js
 
   # Exclude files we don't need for print-pdf
   - search*
