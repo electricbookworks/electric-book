@@ -584,7 +584,11 @@ _includes/close-content.html
 _includes/contact-form
 _includes/cover
 _includes/docs-by-category
-_includes/end-elements
+
+# Excluded because this is where you'd add
+# custom features that an EBT update should not overwrite.
+# _includes/end-elements
+
 _includes/epub-navmap.html
 _includes/epub-ncx
 _includes/epub-package
@@ -593,7 +597,11 @@ _includes/file-list
 _includes/files-listed.html
 _includes/footer.html
 _includes/globe-icon
-_includes/head-elements
+
+# Excluded because this is where you'd add
+# custom features that an EBT update should not overwrite.
+# _includes/head-elements
+
 _includes/head.html
 _includes/html-entities.html
 _includes/identifiers

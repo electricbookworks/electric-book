@@ -190,12 +190,12 @@ app:
 # If a large number of images makes your project too big,
 # you can store your images in a separate location.
 # See the docs for more information.
-remote-media:
-  development: ""
-  live: ""
-local-media:
-  development: ""
-  live: ""
+# Uncomment the following settings to activate remote media.
+# remote-media:
+#   development: ""
+#   live: ""
+# local-media:
+#   development: ""
 
 # ----------------------------------------------------------
 # General output options

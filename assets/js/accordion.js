@@ -1,5 +1,5 @@
 /*jslint browser */
-/*global window, ebLazyLoadImages, searchTerm, videoShow */
+/*global window, ebLazyLoadImages, searchTerm, ebVideoShow */
 
 // console.log('Debugging accordions.js');
 
@@ -326,8 +326,11 @@ function ebAccordionShow(targetID) {
             }
         });
 
-        if (typeof(videoShow) === 'function') {
-            videoShow(sectionToShow);
+        if (typeof(ebVideoShow) === 'function') {
+            var sectionVideos = sectionToShow.querySelectorAll('.video');
+            sectionVideos.forEach(function (video) {
+                ebVideoShow(video);
+            });
         }
     }
 

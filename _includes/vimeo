@@ -14,6 +14,16 @@
     {% assign video-link = include.link %}
 {% endif %}
 
+{% comment %} Include the timestamp if there is one {% endcomment %}
+{% if include.start %}
+
+    {% comment %} Convert the seconds to Vimeo's XmXs format {% endcomment %}
+    {% capture video-timestamp-minutes %}{{ include.start | divided_by: "60" }}{% endcapture %}
+    {% capture video-timestamp-seconds %}{{ include.start | modulo: "60" }}{% endcapture %}
+
+    {% capture video-timestamp %}#t={{ video-timestamp-minutes }}m{{ video-timestamp-seconds }}s{% endcapture %}
+{% endif %}
+
 {% comment %}Unlike YouTube, it's not simple to get a Vimeo thumbnail.
 So an image must be specified to get a placeholder image.{% endcomment %}
 
@@ -25,9 +35,9 @@ for when it can be.{% endcomment %}
     {% assign video-language = include.language %}
 {% endif %}
 
-<div class="video vimeo{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles %}data-video-subtitles="true"{% endif %}>
+<div class="video vimeo{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles %}data-video-subtitles="true"{% endif %}{% if include.start %} data-video-timestamp="{{ include.start }}"{% endif %}>
     <div class="video-wrapper{% unless include.image %} video-no-image{% endunless %}">
-        <a class="video-link" href="{{ video-link }}">
+        <a class="video-link" href="{{ video-link }}{{ video-timestamp }}">
             {% if include.image %}
                 <img src="{{ images }}/{{ include.image }}">
             {% endif %}
@@ -36,7 +46,7 @@ for when it can be.{% endcomment %}
 
     {% if include.description %}
     <p class="video-description">
-        <a href="{{ video-link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
+        <a href="{{ video-link }}{{ video-timestamp }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
     </p>
     {% endif %}
 

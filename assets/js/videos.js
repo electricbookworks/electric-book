@@ -1,5 +1,5 @@
 /* jslint browser */
-/*globals window */
+/*globals window, IntersectionObserver */
 
 function ebVideoInit() {
     'use strict';
@@ -45,19 +45,44 @@ function ebVideoLanguage(videoElement) {
     return language;
 }
 
-function ebVideoMakeIframe(host, videoId, videoLanguage, videoSubtitles) {
+function ebVideoTimestamp(videoElement) {
     'use strict';
+    if (videoElement.getAttribute('data-video-timestamp')) {
+        var timestamp = videoElement.getAttribute('data-video-timestamp');
+        return timestamp;
+    }
+}
+
+function ebVideoMakeIframe(host, videoId, videoLanguage, videoSubtitles, videoTimestamp) {
+    'use strict';
+
+    // Get which video host, e.g. YouTube or Vimeo
     var hostURL = ebVideoHosts[host];
 
+    // Set parameters, starting with autoplay on
     var parametersString = '?autoplay=1';
+
+    // Add a language, if any
     if (videoLanguage) {
         if (host === 'youtube') {
             parametersString += '&cc_lang_pref=' + videoLanguage;
         }
     }
+
+    // Add subtitles, if any
     if (videoSubtitles) {
         if (host === 'youtube') {
             parametersString += '&cc_load_policy=' + videoSubtitles;
+        }
+    }
+
+    // Add a timestamp, if any
+    if (videoTimestamp) {
+        if (host === 'youtube') {
+            parametersString += '&start=' + videoTimestamp;
+        }
+        if (host === 'vimeo') {
+            parametersString += '#t=' + videoTimestamp;
         }
     }
 
@@ -69,7 +94,7 @@ function ebVideoMakeIframe(host, videoId, videoLanguage, videoSubtitles) {
     return iframe;
 }
 
-function ebVideoShow() {
+function ebVideoShow(video) {
     'use strict';
 
     // early exit for unsupported browsers
@@ -78,8 +103,14 @@ function ebVideoShow() {
         return;
     }
 
-    // get all the videos
-    var videos = document.querySelectorAll('.video');
+    // Create the list of videos, either from the supplied video
+    // or from all the videos on the page.
+    var videos = [];
+    if (video) {
+        videos.push(video);
+    } else {
+        videos = document.querySelectorAll('.video');
+    }
 
     videos.forEach(function (currentVideo) {
         // make the iframe
@@ -87,14 +118,20 @@ function ebVideoShow() {
         var videoId = currentVideo.id;
         var videoLanguage = ebVideoLanguage(currentVideo);
         var videoSubtitles = ebVideoSubtitles(currentVideo);
+        var videoTimestamp = ebVideoTimestamp(currentVideo);
         var videoWrapper = currentVideo.querySelector('.video-wrapper');
-        var iframe = ebVideoMakeIframe(videoHost, videoId, videoLanguage, videoSubtitles);
+        var iframe = ebVideoMakeIframe(videoHost, videoId, videoLanguage, videoSubtitles, videoTimestamp);
 
-        console.log('currentVideo: ' + currentVideo);
-        console.log('videoHost: ' + videoHost);
-        console.log('currentVideo ID: ' + videoId);
+        // console.log('currentVideo: ' + currentVideo);
+        // console.log('videoHost: ' + videoHost);
+        // console.log('currentVideo ID: ' + videoId);
+        // console.log('videoLanguage: ' + videoLanguage);
+        // console.log('videoSubtitles: ' + videoSubtitles);
+        // console.log('videoTimestamp: ' + videoTimestamp);
+        // console.log('iframe:');
+        // console.log(iframe);
 
-        currentVideo.addEventListener("click", function (ev) {
+        videoWrapper.addEventListener('click', function (ev) {
             videoWrapper.classList.add('contains-iframe');
             ev.preventDefault();
             // replace the link with the generated iframe
@@ -104,4 +141,56 @@ function ebVideoShow() {
     });
 }
 
+// Sometimes the accordion script won't trigger ebVideoShow,
+// so we listen for the video on the page as a fallback.
+function ebVideoWatch() {
+    'use strict';
+
+    // console.log('Watching for videos...');
+
+    // Create an array and then populate it with images.
+    var videos = [];
+    videos = document.querySelectorAll('.video');
+
+    // If IntersectionObserver is supported,
+    // create a new one that will use it on all the videos.
+    if (window.hasOwnProperty('IntersectionObserver')) {
+
+        var ebVideoObserverConfig = {
+            rootMargin: '200px' // load when it's 200px from the viewport
+        };
+
+        var videoObserver = new IntersectionObserver(function
+                (entries, videoObserver) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+
+                    // console.log('Found video:');
+                    // console.log(entry.target);
+
+                    var video = entry.target;
+
+                    // Show the video iframe
+                    ebVideoShow(video);
+
+                    // Stop observing the image once loaded
+                    videoObserver.unobserve(video);
+                }
+            });
+        }, ebVideoObserverConfig);
+
+        // Observe each image
+        videos.forEach(function (video) {
+            videoObserver.observe(video);
+        });
+    } else {
+        // If the browser doesn't support IntersectionObserver,
+        // just load all the videos.
+        videos.forEach(function (video) {
+            ebVideoShow(video);
+        });
+    }
+}
+
 ebVideoShow();
+ebVideoWatch();

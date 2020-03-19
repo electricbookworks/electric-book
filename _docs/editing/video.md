@@ -121,6 +121,19 @@ If you want to specify that subtitles should show in a particular language (that
 
 These subtitles and language options currently only work with YouTube videos.
 
+## Start at a specific time
+
+You can set a video to start at a specific time by adding a `start=""` to the include tag, where you specify the number of seconds in to start. E.g. two minutes and seven seconds would be 127 seconds:
+
+{% raw %}
+```
+{% include youtube
+    id="MqlyxZiDoOA"
+    start="127"
+%}
+```
+{% endraw %}
+
 ## Other services
 
 If you're embedding from any other service, instead of using our `include` tags:

@@ -24,12 +24,12 @@ remote-media:
   development: "http://dev.superpotatoes.com/media"
 ```
 
-To disable external media, just comment out the relevant settings or leave the values blank:
+To disable external media, comment out the relevant settings, e.g. to only use remote media for development, but not for a live website:
 
 ``` yaml
 remote-media:
-  live: ""
-  development: ""
+  # live: ""
+  development: "http://dev.superpotatoes.com/media"
 ```
 
 ## Structuring external-media files
@@ -65,13 +65,10 @@ A relative filesystem path might look like this:
 
 ``` yaml
 local-media:
-  live: "../../superpotatoes-media"
   development: "../../superpotatoes-media"
 ```
 
-(Currently, the `live` local-media path is not used; but this might change in future. For example, the Electric Book Manager may use the `live` setting in future. So we recommend setting both for now.)
-
-Note: The `development` build is the default build type. A `live` build only really applies to web builds. We set `build: live` in `_config.live.yml`, which is generally only used for building live website packages.
+Note: Setting a `live` local-media path has no effect. Local, external media is only useful for development anyway. The `development` build is the default build type. A `live` build only applies to web builds. We set `build: live` in `_config.live.yml`, which is generally only used for building live websites.
 {:.box}
 
 We recommend that you store your local copy of the external-media directory alongside the main project repo directory, to make the filesystem path to the local images simple.
