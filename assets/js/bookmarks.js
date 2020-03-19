@@ -4,6 +4,15 @@
 
 // A script for managing a user's bookmarks
 
+// TODO
+// 1. Scope ids to children of #content, to limit misplaced
+//    bookmarks after content updates
+// 2. [DONE] To fix last-location behaviour, only show lastLocation of *previous* session:
+//    - create a session ID and store in sessionStorage
+//    - save lastLocation as session ID
+//    - show user most recent lastLocation whose session ID is *not* in sessionStorage
+// 3. Apply new click-for-modal bookmark UX.
+// 4. Allow multiple user bookmarks.
 
 // Options
 // --------------------------------------
@@ -25,6 +34,78 @@ function ebBookmarksSupport() {
         bookmarking.style.display = 'none';
         return false;
     }
+}
+
+// Create a session ID
+function ebBookmarksSessionDate() {
+    'use strict';
+    // If a sessionDate has been set,
+    // return the current sessionDate
+    if (sessionStorage.getItem('sessionDate')) {
+        return sessionStorage.getItem('sessionDate');
+    } else {
+        // create, set and return the session ID
+        var sessionDate = Date.now();
+        sessionStorage.setItem('sessionDate', sessionDate);
+        return sessionDate;
+    }
+}
+
+// Clean up last locations of a title
+function ebBookmarksCleanLastLocations(bookTitleToClean) {
+    'use strict';
+    var lastLocations = [];
+
+    // Loop through stored bookmarks and add them to the array.
+    Object.keys(localStorage).forEach(function (key) {
+        if (key.startsWith('bookmark-') && key.includes('-lastLocation-')) {
+            var bookmarkBookTitle = JSON.parse(localStorage.getItem(key)).bookTitle;
+            if (bookTitleToClean === bookmarkBookTitle) {
+                lastLocations.push(JSON.parse(localStorage.getItem(key)));
+            }
+        }
+    });
+
+    // Only keep the last two elements:
+    // the previous session's lastLocation, and this session's one
+    lastLocations = lastLocations.slice(Math.max(lastLocations.length - 2, 0));
+
+    // Sort the lastLocations ascending by the number in their sessionDate
+    lastLocations.sort(function (a, b) {
+        return parseFloat(a.sessionDate) - parseFloat(b.sessionDate);
+    });
+
+    // Get the number of lastLocations that are not the current session
+    var previousSessionLocations = lastLocations.filter(function (location) {
+        if (location.sessionDate !== ebBookmarksSessionDate()) {
+            return true;
+        }
+    }).length;
+    // If there are more than one, drop the first of the lastLocations
+    if (previousSessionLocations > 1) {
+        lastLocations.splice(0, 1);
+    }
+
+    // Remove all localStorage entries for this title except those in lastLocations
+    Object.keys(localStorage).forEach(function (key) {
+
+        // Assume we'll discard this item unless it's in lastLocations
+        var matches = 0;
+
+        if (key.startsWith('bookmark-') && key.includes('-lastLocation-')) {
+            var bookmarkBookTitle = JSON.parse(localStorage.getItem(key)).bookTitle;
+            if (bookTitleToClean === bookmarkBookTitle) {
+                lastLocations.forEach(function (lastLocation) {
+                    if (key.includes(lastLocation.sessionDate)) {
+                        matches += 1;
+                    }
+                });
+                if (matches === 0) {
+                    localStorage.removeItem(key);
+                }
+            }
+        }
+    });
 }
 
 // Check if bookmark is on the current page
@@ -73,6 +154,16 @@ function ebBookmarksListBookmarks(bookmarks) {
     // Add all the bookmarks to it
     bookmarks.forEach(function (bookmark) {
 
+        // Clean last locations
+        ebBookmarksCleanLastLocations(bookmark.bookTitle);
+
+        // If lastLocation and it's the same session, then
+        // quit, because we only want the previous session's last location
+        if (bookmark.type === 'lastLocation'
+                && bookmark.sessionDate === ebBookmarksSessionDate()) {
+            return;
+        }
+
         // Create list item
         var listItem = document.createElement('li');
         listItem.setAttribute('data-bookmark-type', bookmark.type);
@@ -105,7 +196,16 @@ function ebBookmarksCheckForBookmarks() {
     // when we read the localStorage bookmarks strings
     var bookmarks = [];
 
-    // Loop through stored bookmarks and add them to the array.
+    // Loop through stored bookmarks and clean out old ones.
+    Object.keys(localStorage).forEach(function (key) {
+        if (key.startsWith('bookmark-')) {
+            var entry = JSON.parse(localStorage.getItem(key));
+            var title = entry.bookTitle;
+            ebBookmarksCleanLastLocations(title);
+        }
+    });
+
+    // Now loop through the remaining stored bookmarks and add them to the array.
     Object.keys(localStorage).forEach(function (key) {
         if (key.startsWith('bookmark-')) {
             bookmarks.push(JSON.parse(localStorage.getItem(key)));
@@ -149,6 +249,7 @@ function ebBookmarksSetBookmark(type, description, element) {
 
     // Create a bookmark object
     var bookmark = {
+        sessionDate: ebBookmarksSessionDate(),
         type: type,
         bookTitle: document.body.dataset.title,
         pageTitle: document.title,
@@ -161,7 +262,21 @@ function ebBookmarksSetBookmark(type, description, element) {
     // So there will only ever be one bookmark of each type saved.
     // To save more bookmarks, make the key more unique.
     // Note that the prefix 'bookmark-' is used in ebBookmarksCheckForBookmarks().
-    localStorage.setItem('bookmark-' + ebSlugify(bookmark.bookTitle) + '-' + bookmark.type, JSON.stringify(bookmark));
+    var bookmarkKey;
+    if (bookmark.type === 'lastLocation') {
+        bookmarkKey = 'bookmark-'
+                + ebSlugify(bookmark.bookTitle)
+                + '-'
+                + bookmark.type
+                + '-'
+                + ebBookmarksSessionDate();
+    } else {
+        bookmarkKey = 'bookmark-'
+                + ebSlugify(bookmark.bookTitle)
+                + '-'
+                + bookmark.type;
+    }
+    localStorage.setItem(bookmarkKey, JSON.stringify(bookmark));
 
     // Refresh the bookmarks list
     ebBookmarksCheckForBookmarks();
@@ -286,6 +401,9 @@ function ebBookmarksAddButtonOnSelect(elements) {
 // The main process
 function ebBookmarksProcess() {
     'use strict';
+
+    // Set the sessionDate
+    ebBookmarksSessionDate();
 
     // Show the bookmarks controls
     var bookmarksControls = document.querySelector('.bookmarks');
