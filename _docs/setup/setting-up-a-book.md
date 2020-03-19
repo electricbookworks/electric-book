@@ -5,15 +5,21 @@ order: 7
 ---
 
 # Setting up a new book
+{:.no_toc}
 
 The process of setting up a new book is covered very briefly in our [quick-start section](quick-start.html#quick-new-book-setup). This is a slightly longer explanation. For much more detail, read the various sections [listed on the docs starting page](../).
 
 > Once you've followed the instructions below to set up your book (or at any point if you're curious), and you want to actually output a book, run the `run-` script for your operating system, which you'll find in the main project folder. In Windows and Mac, you can just double-click it. (On Mac and Linux, you do need to [give it permission first](http://stackoverflow.com/a/5126052/1781075).) The first time you run it, start with the 'Install or update dependencies' option.
 {:.box}
 
+* TOC
+{:toc}
+
+## Creating a new book
+
 To create a new book in a new project:
 
-1. The `electric-book` repo, or project folder, can hold one book or many, like a series of books that share similar metadata or features (e.g. they're all by the same author). Make a copy of the folder and, if you like, rename it for your project. E.g. `my-sci-fi`.
+1. An Electric Book repo, or project folder, can hold one book or many, like a series of books that share similar metadata or features (e.g. they're all by the same author). Make a copy of the folder and, if you like, rename it for your project. E.g. `my-sci-fi`.
 1. Inside `my-sci-fi`, open and edit these three files:
     *   `_config.yml`: Edit the values there for your Jekyll setup. The comments will guide you.
     *   `index.md`: Replace our template text with your own. Usually, a link to each book is useful, e.g. `[Space Potatoes](space-potatoes)`.
@@ -117,6 +123,11 @@ You can do this in two ways:
 ### File naming
 
 We recommend naming each book's markdown files in alphabetical order. This is easiest using a numbering system, where prelims (frontmatter) files start with `0` or `00`, e.g. `0-1-titlepage.md`, `0-2-copyright.md`, and chapter files are numbered for their chapter number, e.g. `01.md`, `02.md`, and so on. The alphabetical order makes it easy to see the documents in the right order at all times.
+
+We recommend adding a few descriptive words to your filenames after the numbers (or other alphabetising prefix). E.g. `02-growing-potatoes-on-saturn.md`. There are two reasons for this:
+
+- While editing, you'll find it easier to move between chapters with a human-readable phrase in the filename.
+- The filename will be part of the file's URL as a web page, and it's good for SEO and for end users if the URL contains some relevant key words.
 
 > Note: We recommend using leading zeros in file-name numbers – that is, `02.md` rather than `2.md` – because that sorts correctly in most file browsers. Otherwise, some file browsers will sort `10.md` before `2.md`. In the rare event that you have over 99 chapters, use two leading zeros: `001.md`.
 {:.box}
