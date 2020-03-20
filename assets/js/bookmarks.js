@@ -459,6 +459,25 @@ function ebBookmarksOpenOnClick() {
     });
 }
 
+// In addition to CSS hover, mark clicked list headers
+function ebBookmarkListsOpenOnClick() {
+    'use strict';
+    var listHeaders = document.querySelectorAll('.bookmarks-list-header, .last-locations-list-header');
+    listHeaders.forEach(function (header) {
+        header.addEventListener('click', function () {
+            if (document.querySelector('.bookmarks-list-header-open')) {
+                var alreadyClicked = document.querySelector('.bookmarks-list-header-open');
+                alreadyClicked.classList.remove('bookmarks-list-header-open')
+            }
+            header.classList.add('bookmarks-list-header-open');
+        });
+    });
+
+    // Set default view
+    var bookmarksListHeader = document.querySelector('.bookmarks-list-header');
+    bookmarksListHeader.classList.add('bookmarks-list-header-open');
+}
+
 // The main process
 function ebBookmarksProcess() {
     'use strict';
@@ -470,6 +489,7 @@ function ebBookmarksProcess() {
     var bookmarksControls = document.querySelector('.bookmarks');
     bookmarksControls.classList.remove('visuallyhidden');
     ebBookmarksOpenOnClick();
+    ebBookmarkListsOpenOnClick();
 
     // Store the last location when user leaves page
     window.addEventListener('beforeunload', function () {

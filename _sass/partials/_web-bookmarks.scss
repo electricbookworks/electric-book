@@ -3,6 +3,8 @@ $web-bookmarks: true !default;
 
     // Bookmarks
 
+    $bookmarks-modal-header-height: 2.7rem;
+
     // The bookmarks list
     .bookmarks {
         color: $bookmark-text-color;
@@ -14,7 +16,7 @@ $web-bookmarks: true !default;
             @include dialog-styles();
             background-color: $color-background;
 
-            // Hide the list till hover on parent
+            // Hide the list till click on parent
             display: none;
 
             // Appearance
@@ -34,25 +36,23 @@ $web-bookmarks: true !default;
                 .last-locations-list-header {
                     left: 50%!important;
                 }
-                &:hover {
+                &.bookmarks-list-header-open {
                     .last-locations-list-header {
                         color: $color-text-main;
                     }
                 }
                 ul {
-                    // Hide till this is hovered
+                    // Hide till this is shown
                     visibility: hidden;
                 }
                 .last-locations-list-tip {
-                    // Hide till this is hovered
+                    // Hide till this is shown
                     visibility: hidden;
                 }
             }
             .bookmarks-list {
-                &:hover {
-                    .bookmarks-list-header {
-                        color: $color-text-main;
-                    }
+                .bookmarks-list-header-open {
+                    color: $color-text-main;
                 }
             }
 
@@ -64,7 +64,7 @@ $web-bookmarks: true !default;
 
                 // Position
                 position: absolute;
-                top: 0;
+                top: $bookmarks-modal-header-height;
                 left: 0;
                 right: 0;
 
@@ -73,7 +73,7 @@ $web-bookmarks: true !default;
                     border-bottom: $rule-thickness solid $color-accent;
                     color: $color-links;
                     font-size: 0.8em;
-                    height: 2.7rem;
+                    height: $bookmarks-modal-header-height;
                     letter-spacing: 0.05em;
                     padding: 0.5em;
                     text-align: center;
@@ -82,13 +82,11 @@ $web-bookmarks: true !default;
 
                     // Position
                     position: absolute;
-                    top: 0;
+                    top: -$bookmarks-modal-header-height;
                     left: 0;
                     right: 50%;
 
-                    &:hover,
-                    &:active,
-                    &:focus {
+                    &.bookmarks-list-header-open {
                         color: $color-text-main;
 
                         & + ul,
@@ -110,22 +108,14 @@ $web-bookmarks: true !default;
                     text-align: center;
                 }
                 ul {
-                    margin: 2.7rem 0 0 0; // top must match header height
+                    margin: 0;
                     padding: 0.5em;
 
                     &:empty {
                         // Don't take up space if empty
                         margin: 0;
+                        min-height: 0;
                         padding: 0;
-                    }
-
-                    &:hover, &:active, &:focus {
-                        background-color: $color-background;
-                        visibility: visible;
-                        & + .last-locations-list-tip {
-                            background-color: $color-background;
-                            visibility: visible;
-                        }
                     }
 
                     li {
@@ -154,14 +144,6 @@ $web-bookmarks: true !default;
         .history-icon {
             display: none;
         }
-        // Show modal now done with JS
-        // &:hover,
-        // &:active,
-        // &:focus {
-        //     .bookmarks-modal {
-        //         display: flex;
-        //     }
-        // }
     }
 
     // Icons (_includes/bookmark-icon, _includes/history-icon)
