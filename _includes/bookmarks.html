@@ -3,7 +3,26 @@
     {% include bookmark-icon %}
 
     {% comment %} JS will insert bookmarks here {% endcomment %}
-    <ul class="bookmarks-list"></ul>
+    <div class="bookmarks-modal">
+        <div class="bookmarks-list">
+            <div class="bookmarks-list-header">
+                {{ locale.bookmarks.bookmarks }}
+            </div>
+            <ul></ul>
+            <div class="bookmarks-list-tip">
+                {{ locale.bookmarks.bookmarks-tip }}
+            </div>
+        </div>
+        <div class="last-locations-list">
+            <div class="last-locations-list-header">
+                {{ locale.bookmarks.last-locations }}
+            </div>
+            <ul></ul>
+            <div class="last-locations-list-tip">
+                {{ locale.bookmarks.last-locations-tip }}
+            </div>
+        </div>
+    </div>
 
     {% include history-icon %}
 

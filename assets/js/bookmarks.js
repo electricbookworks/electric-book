@@ -2,7 +2,24 @@
 /*globals window, IntersectionObserver, locales, pageLanguage,
     ebSlugify, ebIDsAssigned */
 
-// A script for managing a user's bookmarks
+// A script for managing a user's bookmarks.
+// This script waits for setup.js to give elements IDs.
+// Then it checks local storage for stored bookmarks,
+// and does some housekeeping (e.g. deleting old last-location bookmarks).
+// It then reads bookmarks from local storage, and marks the
+// relevant bookmarked elements on the page with attributes.
+// It then creates a list of bookmarks to show to the user,
+// and makes it possible for users to tap elements to bookmark them.
+// It listens for new user bookmarks, and updates the bookmark list
+// when a user places a new bookmark.
+// It also saves a 'last location' bookmark when a user leaves a page.
+// It gives each session an ID, which is a timestamp.
+// This 'sessionDate' is stored in session storage, and with each
+// bookmark in local storage. For the 'last location' bookmarks,
+// we only show the user the most recent last-location bookmark
+// whose sessionDate does *not* match the current session's sessionDate.
+// That way, the last location is always the last place the user
+// visited in their last/previous session.
 
 // TODO
 // 1. Scope ids to children of #content, to limit misplaced
@@ -13,6 +30,7 @@
 //    - show user most recent lastLocation whose session ID is *not* in sessionStorage
 // 3. Apply new click-for-modal bookmark UX.
 // 4. Allow multiple user bookmarks.
+// 5. Add ability to delete bookmarks, individually or all at once.
 
 // Options
 // --------------------------------------
@@ -141,15 +159,21 @@ function ebBookmarksMarkBookmarks(bookmarks) {
 function ebBookmarksListBookmarks(bookmarks) {
     'use strict';
 
-    // Get the bookmarks list
-    var list = document.querySelector('.bookmarks-list');
+    // Get the bookmarks lists
+    var bookmarksList = document.querySelector('.bookmarks-list ul');
+    var lastLocationsList = document.querySelector('.last-locations-list ul');
 
     // Get the icons
     var bookmarkIcon = document.querySelector('.bookmark-icon');
     var historyIcon = document.querySelector('.history-icon');
 
     // Clear the current list
-    list.innerHTML = '';
+    if (bookmarksList) {
+        bookmarksList.innerHTML = '';
+    }
+    if (lastLocationsList) {
+        lastLocationsList.innerHTML = '';
+    }
 
     // Add all the bookmarks to it
     bookmarks.forEach(function (bookmark) {
@@ -184,7 +208,11 @@ function ebBookmarksListBookmarks(bookmarks) {
         listItem.innerHTML += icon;
 
         // Add the list item to the list
-        list.appendChild(listItem);
+        if (bookmark.type === 'lastLocation') {
+            lastLocationsList.appendChild(listItem);
+        } else {
+            bookmarksList.appendChild(listItem);
+        }
     });
 }
 
@@ -300,7 +328,7 @@ function ebBookmarkMarkBookmarkedElement(element) {
 function ebBookmarksListenForClicks(button) {
     'use strict';
     button.addEventListener('click', function () {
-        ebBookmarksSetBookmark('userBookmark', locales[pageLanguage].bookmarks.bookmark, button.parentNode);
+        ebBookmarksSetBookmark('userBookmark', locales[pageLanguage].bookmarks.bookmarks, button.parentNode);
         ebBookmarkMarkBookmarkedElement(button.parentNode);
     });
 }
@@ -398,6 +426,39 @@ function ebBookmarksAddButtonOnSelect(elements) {
     });
 }
 
+// Open the modal when the bookmarks button is clicked
+function ebBookmarksOpenOnClick() {
+    'use strict';
+    var button = document.querySelector('.bookmarks');
+    var modal = document.querySelector('.bookmarks-modal');
+    button.addEventListener('click', function () {
+        modal.style.display = 'flex';
+        modal.style.zIndex = '100';
+
+        // Create a clickable area to remove modal
+        // First remove any existing clickOuts,
+        // then create a new one.
+        var clickOut;
+        if (document.getElementById('clickOut')) {
+            clickOut = document.getElementById('clickOut');
+            clickOut.remove();
+        }
+        clickOut = document.createElement('div');
+        clickOut.id = "clickOut";
+        clickOut.style.zIndex = '99';
+        clickOut.style.position = 'absolute';
+        clickOut.style.top = '0';
+        clickOut.style.right = '0';
+        clickOut.style.bottom = '0';
+        clickOut.style.left = '0';
+        document.body.insertAdjacentElement('afterbegin', clickOut);
+        clickOut.addEventListener('click', function () {
+            modal.style.display = 'none';
+            clickOut.remove();
+        });
+    });
+}
+
 // The main process
 function ebBookmarksProcess() {
     'use strict';
@@ -408,10 +469,11 @@ function ebBookmarksProcess() {
     // Show the bookmarks controls
     var bookmarksControls = document.querySelector('.bookmarks');
     bookmarksControls.classList.remove('visuallyhidden');
+    ebBookmarksOpenOnClick();
 
     // Store the last location when user leaves page
     window.addEventListener('beforeunload', function () {
-        ebBookmarksSetBookmark('lastLocation', locales[pageLanguage].bookmarks['last-location']);
+        ebBookmarksSetBookmark('lastLocation', locales[pageLanguage].bookmarks['last-locations']);
     });
 
     // Mark which elements are available for bookmarking

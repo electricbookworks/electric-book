@@ -9,25 +9,143 @@ $web-bookmarks: true !default;
         padding: 0.55em; // aligns beneath language selector
         text-align: right;
         z-index: 100;
-        .bookmarks-list {
+
+        .bookmarks-modal {
+            @include dialog-styles();
+            background-color: $color-background;
+
+            // Hide the list till hover on parent
+            display: none;
+
+            // Appearance
             list-style-type: none;
             padding: 0; // override default masthead padding
-            li {
-                display: block; // overrides masthead ul styles
-                a {
-                    color: $bookmark-text-color;
+
+            // Position
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 50vh;
+            max-width: 90vw;
+            transform: translate(-50%, -50%);
+            width: 20em;
+
+            .last-locations-list {
+                .last-locations-list-header {
+                    left: 50%!important;
                 }
-                // override inherited styles from masthead ul li:after
-                &:after {
-                    content: normal;
+                &:hover {
+                    .last-locations-list-header {
+                        color: $color-text-main;
+                    }
                 }
-                svg {
-                    display: inline-block;
-                    height: 0.75em;
-                    margin-left: 0.5em;
-                    width: 0.75em;
-                    path {
-                        fill: $bookmark-icon-color-active;
+                ul {
+                    // Hide till this is hovered
+                    visibility: hidden;
+                }
+                .last-locations-list-tip {
+                    // Hide till this is hovered
+                    visibility: hidden;
+                }
+            }
+            .bookmarks-list {
+                &:hover {
+                    .bookmarks-list-header {
+                        color: $color-text-main;
+                    }
+                }
+            }
+
+            .bookmarks-list,
+            .last-locations-list {
+                margin: 0;
+                padding: 0;
+                text-align: left;
+
+                // Position
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+
+                .bookmarks-list-header,
+                .last-locations-list-header {
+                    border-bottom: $rule-thickness solid $color-accent;
+                    color: $color-links;
+                    font-size: 0.8em;
+                    height: 2.7rem;
+                    letter-spacing: 0.05em;
+                    padding: 0.5em;
+                    text-align: center;
+                    text-transform: uppercase;
+                    width: 50%;
+
+                    // Position
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 50%;
+
+                    &:hover,
+                    &:active,
+                    &:focus {
+                        color: $color-text-main;
+
+                        & + ul,
+                        & + ul + .bookmarks-list-tip,
+                        & + ul + .last-locations-list-tip {
+                            background-color: $color-background;
+                            visibility: visible;
+                        }
+                    }
+                }
+                .bookmarks-list-header {
+                    border-right: $rule-thickness solid $color-accent;
+                }
+                .bookmarks-list-tip,
+                .last-locations-list-tip {
+                    color: $color-mid;
+                    font-size: 0.8em;
+                    padding: 0.5em;
+                    text-align: center;
+                }
+                ul {
+                    margin: 2.7rem 0 0 0; // top must match header height
+                    padding: 0.5em;
+
+                    &:empty {
+                        // Don't take up space if empty
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    &:hover, &:active, &:focus {
+                        background-color: $color-background;
+                        visibility: visible;
+                        & + .last-locations-list-tip {
+                            background-color: $color-background;
+                            visibility: visible;
+                        }
+                    }
+
+                    li {
+                        display: block; // overrides masthead ul styles
+                        a {
+                            color: $bookmark-text-color;
+                        }
+                        // override inherited styles from masthead ul li:after
+                        &:after {
+                            content: normal;
+                        }
+                        svg {
+                            display: inline-block;
+                            height: 0.75em;
+                            margin-left: 0.5em;
+                            width: 0.75em;
+                            path {
+                                fill: $bookmark-icon-color-active;
+                            }
+                        }
                     }
                 }
             }
@@ -36,21 +154,14 @@ $web-bookmarks: true !default;
         .history-icon {
             display: none;
         }
-        // Hide the list till hover on parent
-        .bookmarks-list {
-            display: none;
-        }
-        &:hover {
-            .bookmarks-list {
-                @include dialog-styles();
-                display: inline;
-                position: fixed;
-                right: 0.5em;
-                &:empty {
-                    display: none;
-                }
-            }
-        }
+        // Show modal now done with JS
+        // &:hover,
+        // &:active,
+        // &:focus {
+        //     .bookmarks-modal {
+        //         display: flex;
+        //     }
+        // }
     }
 
     // Icons (_includes/bookmark-icon, _includes/history-icon)
