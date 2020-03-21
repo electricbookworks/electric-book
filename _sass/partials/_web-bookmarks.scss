@@ -199,6 +199,14 @@ $web-bookmarks: true !default;
     }
 
     // Bookmarkable elements
+    // Hide bookmark button unless bookmarked
+    // or hovering a parent element.
+    .bookmark-button {
+        display: none;
+    }
+    #content *:hover > .bookmark-button {
+        display: inline-block;
+    }
     [data-bookmarked] {
         // Always show bookmarked buttons
         .bookmark-button {

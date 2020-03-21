@@ -151,8 +151,16 @@ function ebBookmarksMarkBookmarks(bookmarks) {
         // mark the relevant bookmarked element.
         if (ebBookmarksCheckForCurrentPage(bookmark.location)) {
             elementToMark.setAttribute('data-bookmarked', 'true');
-            elementToMark.setAttribute('data-bookmark-type', bookmark.type);
             elementToMark.setAttribute('title', bookmark.description);
+
+            // If the element has already been marked as a user bookmark,
+            // leave it a user bookmark. They trump last locations.
+            if (elementToMark.getAttribute('data-bookmark-type') === 'userBookmark') {
+                elementToMark.setAttribute('data-bookmark-type', 'userBookmark');
+            } else {
+                elementToMark.setAttribute('data-bookmark-type', bookmark.type);
+            }
+
             ebBookmarksToggleButtonOnElement(elementToMark);
         }
     });
@@ -386,8 +394,18 @@ function ebBookmarksToggleButtonOnElement(element) {
             && bookmarkType === 'userBookmark') {
         button = element.querySelector('button.bookmark-button');
         button.innerHTML = bookmarkIcon.outerHTML;
-    }
 
+    // Otherwise, if the element needs a user-bookmark button, add it
+    } else if (element.querySelector('button.bookmark-button')
+            && bookmarkType === 'userBookmark') {
+        button = element.querySelector('button.bookmark-button');
+        button.innerHTML = bookmarkIcon.outerHTML;
+
+    // Otherwise, add a last-location icon button
+    } else {
+        button = element.querySelector('button.bookmark-button');
+        button.innerHTML = historyIcon.outerHTML;
+    }
 }
 
 // Mark elements in the viewport so we can bookmark them
@@ -442,15 +460,25 @@ function ebBookmarksMarkVisibleElements(elements) {
 }
 
 // Listen for user interaction to show bookmark button
-function ebBookmarksAddButtonOnSelect(elements) {
+function ebBookmarksAddButtons(elements, action) {
     'use strict';
-    elements.forEach(function (element) {
-        element.addEventListener('click', function (event) {
-            // Toggle the button on the element, currentTarget,
-            // (not necessarily the clicked element, which might be a child).
-            ebBookmarksToggleButtonOnElement(event.currentTarget);
+
+    // If an action is specified e.g. 'click',
+    // add the button when an element is clicked.
+    // Otherwise, add the button to all bookmarkable elements.
+    if (action) {
+        elements.forEach(function (element) {
+            element.addEventListener(action, function (event) {
+                // Toggle the button on the element, currentTarget,
+                // (not necessarily the clicked element, which might be a child).
+                ebBookmarksToggleButtonOnElement(event.currentTarget);
+            });
         });
-    });
+    } else {
+        elements.forEach(function (element) {
+            ebBookmarksToggleButtonOnElement(element);
+        });
+    }
 }
 
 // Open the modal when the bookmarks button is clicked
@@ -473,7 +501,7 @@ function ebBookmarksOpenOnClick() {
         clickOut = document.createElement('div');
         clickOut.id = "clickOut";
         clickOut.style.zIndex = '99';
-        clickOut.style.position = 'absolute';
+        clickOut.style.position = 'fixed';
         clickOut.style.top = '0';
         clickOut.style.right = '0';
         clickOut.style.bottom = '0';
@@ -527,7 +555,7 @@ function ebBookmarksProcess() {
 
     // Mark which elements are available for bookmarking
     ebBookmarksMarkVisibleElements(document.querySelectorAll(ebBookmarkableElements));
-    ebBookmarksAddButtonOnSelect(document.querySelectorAll(ebBookmarkableElements));
+    ebBookmarksAddButtons(document.querySelectorAll(ebBookmarkableElements));
 
     // Check for bookmarks
     ebBookmarksCheckForBookmarks();
