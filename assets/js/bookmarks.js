@@ -31,6 +31,7 @@
 // 3. Apply new click-for-modal bookmark UX.
 // 4. Allow multiple user bookmarks.
 // 5. Add ability to delete bookmarks, individually or all at once.
+// 6. Change saving on from beforeunload, since mobile browsers don't support it.
 
 // Options
 // --------------------------------------
@@ -141,6 +142,8 @@ function ebBookmarksCheckForCurrentPage(url) {
 // Mark bookmarks in the document
 function ebBookmarksMarkBookmarks(bookmarks) {
     'use strict';
+
+    // Mark bookmarked elements
     bookmarks.forEach(function (bookmark) {
         var elementToMark = document.getElementById(bookmark.id);
 
@@ -228,8 +231,10 @@ function ebBookmarksCheckForBookmarks() {
     Object.keys(localStorage).forEach(function (key) {
         if (key.startsWith('bookmark-')) {
             var entry = JSON.parse(localStorage.getItem(key));
-            var title = entry.bookTitle;
-            ebBookmarksCleanLastLocations(title);
+            if (entry) {
+                var title = entry.bookTitle;
+                ebBookmarksCleanLastLocations(title);
+            }
         }
     });
 
@@ -310,15 +315,25 @@ function ebBookmarksSetBookmark(type, description, element) {
     ebBookmarksCheckForBookmarks();
 }
 
+function ebBookmarkUnmarkBookmarkedElements(element) {
+    'use strict';
+    // Remove any existing bookmarks
+    if (element && element.getAttribute('data-bookmarked')) {
+        element.removeAttribute('data-bookmarked');
+    } else {
+        var bookmarkedElements = document.querySelectorAll('[data-bookmarked]');
+        bookmarkedElements.forEach(function (element) {
+            element.removeAttribute('data-bookmarked');
+        });
+    }
+}
+
 // Mark an element that has been user-bookmarked
 function ebBookmarkMarkBookmarkedElement(element) {
     'use strict';
 
     // Remove any existing bookmarks
-    var bookmarkedElements = document.querySelectorAll('[data-bookmarked]');
-    bookmarkedElements.forEach(function (element) {
-        element.removeAttribute('data-bookmarked');
-    });
+    ebBookmarkUnmarkBookmarkedElements();
 
     // Set the new bookmark
     element.setAttribute('data-bookmarked', 'true');
@@ -372,6 +387,7 @@ function ebBookmarksToggleButtonOnElement(element) {
         button = element.querySelector('button.bookmark-button');
         button.innerHTML = bookmarkIcon.outerHTML;
     }
+
 }
 
 // Mark elements in the viewport so we can bookmark them
@@ -429,7 +445,7 @@ function ebBookmarksMarkVisibleElements(elements) {
 function ebBookmarksAddButtonOnSelect(elements) {
     'use strict';
     elements.forEach(function (element) {
-        element.addEventListener('mouseover', function (event) {
+        element.addEventListener('click', function (event) {
             // Toggle the button on the element, currentTarget,
             // (not necessarily the clicked element, which might be a child).
             ebBookmarksToggleButtonOnElement(event.currentTarget);
@@ -502,7 +518,9 @@ function ebBookmarksProcess() {
     ebBookmarksOpenOnClick();
     ebBookmarkListsOpenOnClick();
 
-    // Store the last location when user leaves page
+    // Store the last location.
+    // We would prefer to do this only on beforeunload, when user leaves page,
+    // but that isn't supported on many mobile browsers.
     window.addEventListener('beforeunload', function () {
         ebBookmarksSetBookmark('lastLocation', locales[pageLanguage].bookmarks['last-locations']);
     });

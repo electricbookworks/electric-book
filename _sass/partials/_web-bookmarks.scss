@@ -15,6 +15,7 @@ $web-bookmarks: true !default;
         .bookmarks-modal {
             @include dialog-styles();
             background-color: $color-background;
+            border-color: $color-light;
 
             // Hide the list till click on parent
             display: none;
@@ -43,16 +44,25 @@ $web-bookmarks: true !default;
                 }
                 ul {
                     // Hide till this is shown
+                    position: relative; // makes z-index work
                     visibility: hidden;
+                    z-index: -1;
                 }
                 .last-locations-list-tip {
                     // Hide till this is shown
+                    position: relative; // makes z-index work
                     visibility: hidden;
+                    z-index: -1;
                 }
             }
             .bookmarks-list {
                 .bookmarks-list-header-open {
                     color: $color-text-main;
+                }
+                ul {
+                    // Show over last-locations-list ul by default
+                    position: relative; // makes z-index work
+                    z-index: 1;
                 }
             }
 
@@ -70,8 +80,9 @@ $web-bookmarks: true !default;
 
                 .bookmarks-list-header,
                 .last-locations-list-header {
-                    border-bottom: $rule-thickness solid $color-accent;
+                    border-bottom: $rule-thickness solid $color-light;
                     color: $color-links;
+                    cursor: pointer;
                     font-size: 0.8em;
                     height: $bookmarks-modal-header-height;
                     letter-spacing: 0.05em;
@@ -87,23 +98,27 @@ $web-bookmarks: true !default;
                     right: 50%;
 
                     &.bookmarks-list-header-open {
+                        border-bottom-color: $color-background;
                         color: $color-text-main;
+                        cursor: auto;
 
                         & + ul,
                         & + ul + .bookmarks-list-tip,
                         & + ul + .last-locations-list-tip {
                             background-color: $color-background;
                             visibility: visible;
+                            z-index: 1;
                         }
                     }
                 }
                 .bookmarks-list-header {
-                    border-right: $rule-thickness solid $color-accent;
+                    border-right: $rule-thickness solid $color-light;
                 }
                 .bookmarks-list-tip,
                 .last-locations-list-tip {
                     color: $color-mid;
                     font-size: 0.8em;
+                    line-height: $line-height-default;
                     padding: 0.5em;
                     text-align: center;
                 }
