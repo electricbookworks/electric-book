@@ -271,7 +271,7 @@ function ebBookmarksElementID(element) {
     }
 }
 
-// Remember bookmark
+// Create and store bookmark
 function ebBookmarksSetBookmark(type, description, element) {
     'use strict';
 
@@ -341,14 +341,17 @@ function ebBookmarksToggleButtonOnElement(element) {
     var bookmarkIcon = document.querySelector('.bookmark-icon');
     var historyIcon = document.querySelector('.history-icon');
 
+    // Get the type of bookmark we're setting
+    var bookmarkType = element.getAttribute('data-bookmark-type');
+
     // If the element has no button, add one.
+    var button;
     if (!element.querySelector('button.bookmark-button')) {
         // Copy the icon SVG code to our new button.
-        var button = document.createElement('button');
+        button = document.createElement('button');
         button.classList.add('bookmark-button');
 
         // Set icon based on bookmark type
-        var bookmarkType = element.getAttribute('data-bookmark-type');
         if (bookmarkType === 'lastLocation') {
             button.innerHTML = historyIcon.outerHTML;
         } else {
@@ -360,6 +363,14 @@ function ebBookmarksToggleButtonOnElement(element) {
 
         // Listen for clicks
         ebBookmarksListenForClicks(button);
+
+    // Otherwise, if the element has a last-location icon
+    // the user it trying to set a user bookmark, so
+    // switch the icon for a user bookmark icon.
+    } else if (element.querySelector('button.bookmark-button .history-icon')
+            && bookmarkType === 'userBookmark') {
+        button = element.querySelector('button.bookmark-button');
+        button.innerHTML = bookmarkIcon.outerHTML;
     }
 }
 
@@ -414,11 +425,11 @@ function ebBookmarksMarkVisibleElements(elements) {
     }
 }
 
-// Listen for clicks and show bookmark button
+// Listen for user interaction to show bookmark button
 function ebBookmarksAddButtonOnSelect(elements) {
     'use strict';
     elements.forEach(function (element) {
-        element.addEventListener('click', function (event) {
+        element.addEventListener('mouseover', function (event) {
             // Toggle the button on the element, currentTarget,
             // (not necessarily the clicked element, which might be a child).
             ebBookmarksToggleButtonOnElement(event.currentTarget);
@@ -467,7 +478,7 @@ function ebBookmarkListsOpenOnClick() {
         header.addEventListener('click', function () {
             if (document.querySelector('.bookmarks-list-header-open')) {
                 var alreadyClicked = document.querySelector('.bookmarks-list-header-open');
-                alreadyClicked.classList.remove('bookmarks-list-header-open')
+                alreadyClicked.classList.remove('bookmarks-list-header-open');
             }
             header.classList.add('bookmarks-list-header-open');
         });
