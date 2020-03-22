@@ -27,7 +27,7 @@
 //    - create a session ID and store in sessionStorage
 //    - save lastLocation as session ID
 //    - show user most recent lastLocation whose session ID is *not* in sessionStorage
-// 3. Apply new click-for-modal bookmark UX.
+// 3. [DONE] Apply new click-for-modal bookmark UX.
 // 4. Allow multiple user bookmarks.
 // 5. Add ability to delete bookmarks, individually or all at once.
 // 6. Change saving on from beforeunload, since mobile browsers don't support it.
