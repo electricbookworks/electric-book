@@ -1,6 +1,6 @@
 /*jslint browser */
 /*globals window, IntersectionObserver, locales, pageLanguage,
-    ebSlugify, ebIDsAssigned */
+    ebSlugify, ebIDsAssigned, ebFingerprintsAssigned */
 
 // A script for managing a user's bookmarks.
 // This script waits for setup.js to give elements IDs.
@@ -22,8 +22,7 @@
 // visited in their last/previous session.
 
 // TODO
-// 1. Scope ids to children of #content, to limit misplaced
-//    bookmarks after content updates
+// 1. [DONE] In setup.js, fingerprint IDs for addressing misplaced bookmarks.
 // 2. [DONE] To fix last-location behaviour, only show lastLocation of *previous* session:
 //    - create a session ID and store in sessionStorage
 //    - save lastLocation as session ID
@@ -32,13 +31,16 @@
 // 4. Allow multiple user bookmarks.
 // 5. Add ability to delete bookmarks, individually or all at once.
 // 6. Change saving on from beforeunload, since mobile browsers don't support it.
+// 7. [DONE] Store and compare an index of latest IDs, so in future we can check
+//    if it's is missing any bookmarked IDs. If yes, we know bookmarks have moved.
+// 8. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
 
 // Options
 // --------------------------------------
 // Which elements should we make bookmarkable?
 // By default, anything in #content with an ID.
 // Use querySelector strings.
-var ebBookmarkableElements = '#content p[id], #content li[id], #content dd[id]';
+var ebBookmarkableElements = '#content [id]';
 
 // Disable bookmarks on browsers that don't support
 // what we need to provide them.
@@ -51,6 +53,56 @@ function ebBookmarksSupport() {
     } else {
         var bookmarking = document.querySelector('.bookmarks');
         bookmarking.style.display = 'none';
+        return false;
+    }
+}
+
+// Generate and store an index of fingerprints and IDs.
+function ebBookmarksCreateFingerprintIndex() {
+    'use strict';
+
+    var indexOfBookmarks = {};
+    var fingerprintedElements = document.querySelectorAll('[data-fingerprint');
+    fingerprintedElements.forEach(function (element) {
+        var elementFingerprint = element.getAttribute('data-fingerprint');
+        var elementID = element.id;
+        indexOfBookmarks[elementFingerprint] = elementID;
+    });
+    sessionStorage.setItem('index-of-bookmarks', JSON.stringify(indexOfBookmarks));
+}
+
+// Return the indexed ID of an element's fingerprint.
+function ebBookmarksFingerprintID(elementID) {
+    'use strict';
+
+    // If a bookmark's fingerprint isn't in the index,
+    // we know that the bookmarked element has moved,
+    // because the document has changed.
+
+    // Get the element
+    var element;
+    if (document.getElementById(elementID)) {
+        element = document.getElementById(elementID);
+    } else {
+        return false;
+    }
+
+    // If we have an element to check, the element has a data-fingerprint,
+    // and an index exists, return the ID. Otherwise return false.
+    if (element.getAttribute('data-fingerprint')
+            && sessionStorage.getItem('index-of-bookmarks')) {
+
+        // Fetch and return the ID for the fingerprint
+        var indexOfBookmarks = JSON.parse(sessionStorage.getItem('index-of-bookmarks'));
+        var fingerprintToCheck = element.getAttribute('data-fingerprint');
+        var indexedID = indexOfBookmarks[fingerprintToCheck];
+        if (elementID !== indexedID) {
+            console.log('The bookmarked ID does not match its element\'s fingerprint.');
+            console.log('Bookmarks may be inaccurate after page content changed.');
+        } else {
+            return indexedID;
+        }
+    } else {
         return false;
     }
 }
@@ -174,10 +226,6 @@ function ebBookmarksListBookmarks(bookmarks) {
     var bookmarksList = document.querySelector('.bookmarks-list ul');
     var lastLocationsList = document.querySelector('.last-locations-list ul');
 
-    // Get the icons
-    var bookmarkIcon = document.querySelector('.bookmark-icon');
-    var historyIcon = document.querySelector('.history-icon');
-
     // Clear the current list
     if (bookmarksList) {
         bookmarksList.innerHTML = '';
@@ -203,20 +251,45 @@ function ebBookmarksListBookmarks(bookmarks) {
         var listItem = document.createElement('li');
         listItem.setAttribute('data-bookmark-type', bookmark.type);
 
+        // Add title span
+        var title = document.createElement('span');
+        title.classList.add('bookmark-title');
+        listItem.appendChild(title);
+
         // Add link
         var link = document.createElement('a');
         link.href = bookmark.location;
         link.innerHTML = bookmark.bookTitle;
-        listItem.appendChild(link);
+        title.appendChild(link);
 
-        // Add the relevant icon
-        var icon;
-        if (bookmark.type === 'lastLocation') {
-            icon = historyIcon.outerHTML;
-        } else {
-            icon = bookmarkIcon.outerHTML;
-        }
-        listItem.innerHTML += icon;
+        // Format the bookmark date from sessionDate,
+        // then add it to the listItem. Leave locale undefined,
+        // so that the user gets their default locale's format.
+        var readableSessionDate = new Date(Number(bookmark.sessionDate))
+            .toLocaleDateString(undefined, {
+                // weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                // hour: 'numeric',
+                // minute: 'numeric'
+            });
+        var date = document.createElement('span');
+        date.classList.add('bookmark-date');
+        date.innerHTML = readableSessionDate;
+        listItem.appendChild(date);
+
+        // Add the page title
+        var page = document.createElement('span');
+        page.classList.add('bookmark-page');
+        page.innerHTML = bookmark.pageTitle;
+        listItem.appendChild(page);
+
+        // Add the description
+        var description = document.createElement('span');
+        description.classList.add('bookmark-description');
+        description.innerHTML = bookmark.description;
+        listItem.appendChild(description);
 
         // Add the list item to the list
         if (bookmark.type === 'lastLocation') {
@@ -285,8 +358,23 @@ function ebBookmarksElementID(element) {
 }
 
 // Create and store bookmark
-function ebBookmarksSetBookmark(type, description, element) {
+function ebBookmarksSetBookmark(type, element, description) {
     'use strict';
+
+    // Get fallback description text
+    if (!description) {
+
+        // Use the first 50 characters of the text
+        description = element.innerText.slice(0, 50);
+        // Remove from the last space, to end on a full word
+        var indexOfLastSpace = description.lastIndexOf(' ');
+        var indexOfLastFullStop = description.lastIndexOf('.');
+        var elideFrom = indexOfLastSpace;
+        if (indexOfLastFullStop > indexOfLastSpace) {
+            elideFrom = indexOfLastFullStop;
+        }
+        description = description.slice(0, elideFrom) + ' …';
+    }
 
     // Create a bookmark object
     var bookmark = {
@@ -294,8 +382,9 @@ function ebBookmarksSetBookmark(type, description, element) {
         type: type,
         bookTitle: document.body.dataset.title,
         pageTitle: document.title,
-        description: description,
+        description: description, // potential placeholder for a user-input description
         id: ebBookmarksElementID(element),
+        fingerprint: element.getAttribute('data-fingerprint'),
         location: window.location.href.split('#')[0] + '#' + ebBookmarksElementID(element)
     };
 
@@ -351,7 +440,7 @@ function ebBookmarkMarkBookmarkedElement(element) {
 function ebBookmarksListenForClicks(button) {
     'use strict';
     button.addEventListener('click', function () {
-        ebBookmarksSetBookmark('userBookmark', locales[pageLanguage].bookmarks.bookmarks, button.parentNode);
+        ebBookmarksSetBookmark('userBookmark', button.parentNode);
         ebBookmarkMarkBookmarkedElement(button.parentNode);
     });
 }
@@ -521,10 +610,13 @@ function ebBookmarkListsOpenOnClick() {
     listHeaders.forEach(function (header) {
         header.addEventListener('click', function () {
             if (document.querySelector('.bookmarks-list-header-open')) {
-                var alreadyClicked = document.querySelector('.bookmarks-list-header-open');
-                alreadyClicked.classList.remove('bookmarks-list-header-open');
+                var openHeader = document.querySelector('.bookmarks-list-header-open');
+                openHeader.classList.remove('bookmarks-list-header-open');
+                header.classList.add('bookmarks-list-header-open');
+                // Firefox doesn't repaint here, forcing users to reclick.
+                // Not sure how to handle that here yet.
             }
-            header.classList.add('bookmarks-list-header-open');
+
         });
     });
 
@@ -540,6 +632,9 @@ function ebBookmarksProcess() {
     // Set the sessionDate
     ebBookmarksSessionDate();
 
+    // Create the fingerprint index
+    ebBookmarksCreateFingerprintIndex();
+
     // Show the bookmarks controls
     var bookmarksControls = document.querySelector('.bookmarks');
     bookmarksControls.classList.remove('visuallyhidden');
@@ -550,7 +645,8 @@ function ebBookmarksProcess() {
     // We would prefer to do this only on beforeunload, when user leaves page,
     // but that isn't supported on many mobile browsers.
     window.addEventListener('beforeunload', function () {
-        ebBookmarksSetBookmark('lastLocation', locales[pageLanguage].bookmarks['last-locations']);
+        ebBookmarksSetBookmark('lastLocation',
+                document.getElementById(ebBookmarksElementID()));
     });
 
     // Mark which elements are available for bookmarking
@@ -574,7 +670,7 @@ function ebBookmarksInit() {
 // Load the bookmarks when IDs have been assigned
 var ebBookmarksCheckForIDs = window.setInterval(function () {
     'use strict';
-    if (ebIDsAssigned === true) {
+    if (ebIDsAssigned === true && ebFingerprintsAssigned === true) {
         ebBookmarksInit();
         clearInterval(ebBookmarksCheckForIDs);
     }

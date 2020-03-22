@@ -23,6 +23,7 @@ $web-bookmarks: true !default;
             // Appearance
             list-style-type: none;
             padding: 0; // override default masthead padding
+            overflow: auto;
 
             // Position
             position: fixed;
@@ -44,15 +45,15 @@ $web-bookmarks: true !default;
                 }
                 ul {
                     // Hide till this is shown
-                    position: relative; // makes z-index work
-                    visibility: hidden;
-                    z-index: -1;
+                    // position: relative; // makes z-index work
+                    // visibility: hidden;
+                    // z-index: -1;
                 }
                 .last-locations-list-tip {
                     // Hide till this is shown
-                    position: relative; // makes z-index work
-                    visibility: hidden;
-                    z-index: -1;
+                    // position: relative; // makes z-index work
+                    // visibility: hidden;
+                    // z-index: -1;
                 }
             }
             .bookmarks-list {
@@ -116,15 +117,28 @@ $web-bookmarks: true !default;
                 }
                 .bookmarks-list-tip,
                 .last-locations-list-tip {
+                    // Hide till this is shown
+                    position: relative; // makes z-index work
+                    visibility: hidden;
+                    z-index: -1;
+
+                    // Appearance
                     color: $color-mid;
                     font-size: 0.8em;
                     line-height: $line-height-default;
-                    padding: 0.5em;
+                    min-height: 4em; // helps last-location tip obscure bookmark tip
+                    padding: 1em;
                     text-align: center;
                 }
                 ul {
+                    // Hide till this is shown
+                    position: relative; // makes z-index work
+                    visibility: hidden;
+                    z-index: -1;
+
+                    // Appearance
                     margin: 0;
-                    padding: 0.5em;
+                    padding: 1em;
 
                     &:empty {
                         // Don't take up space if empty
@@ -135,8 +149,45 @@ $web-bookmarks: true !default;
 
                     li {
                         display: block; // overrides masthead ul styles
-                        a {
-                            color: $bookmark-text-color;
+                        font-size: 0.9em;
+                        line-height: 1.4;
+                        margin-bottom: 2em;
+                        &:last-child { margin-bottom: 0; }
+
+                        .bookmark-title {
+                            font-family: $font-text-secondary;
+                            font-size: 1.1em;
+                            font-style: italic;
+                            font-weight: 600;
+
+                            &::after {
+                                color: $color-mid;
+                                content: "\2022";
+                                font-size: 0.9em;
+                                font-style: normal;
+                                margin: 0 0.25em;
+                            }
+
+                            a {
+                                color: $color-links;
+                            }
+                        }
+                        .bookmark-date {
+                            color: $color-mid;
+                            font-family: $font-text-secondary;
+                            font-size: 0.8em;
+                            letter-spacing: 0.05em;
+                            text-transform: uppercase;
+                        }
+                        .bookmark-page {
+                            // color: $color-mid;
+                            display: block;
+                            font-family: $font-text-secondary;
+                        }
+                        .bookmark-description {
+                            // color: $color-mid;
+                            font-family: $font-text-main;
+                            font-size: 0.9em;
                         }
                         // override inherited styles from masthead ul li:after
                         &:after {
