@@ -5,7 +5,7 @@
 
 // Options
 // -------
-var ebElementsToGetIDs = 'p, li, dt, ul, ol, li';
+var ebElementsToGetIDs = 'p, li, dt, li';
 
 // Assign IDs and fingerprints to the ebElementsToGetIDs, e.g. for bookmarking.
 // IDs contain the number of the element in the doc, with an eb- prefix.

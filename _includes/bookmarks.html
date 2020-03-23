@@ -4,22 +4,26 @@
 
     {% comment %} JS will insert bookmarks here {% endcomment %}
     <div class="bookmarks-modal">
-        <div class="bookmarks-list">
+        <div class="bookmarks-list bookmarks-list-open">
             <div class="bookmarks-list-header bookmarks-list-header-open">
                 {{ locale.bookmarks.bookmarks }}
             </div>
-            <ul></ul>
-            <div class="bookmarks-list-tip">
-                {{ locale.bookmarks.bookmarks-tip }}
+            <div class="bookmarks-list-content">
+                <ul></ul>
+                <div class="bookmarks-list-tip">
+                    {{ locale.bookmarks.bookmarks-tip }}
+                </div>
             </div>
         </div>
         <div class="last-locations-list">
             <div class="last-locations-list-header">
                 {{ locale.bookmarks.last-locations }}
             </div>
-            <ul></ul>
-            <div class="last-locations-list-tip">
-                {{ locale.bookmarks.last-locations-tip }}
+            <div class="last-locations-list-content">
+                <ul></ul>
+                <div class="last-locations-list-tip">
+                    {{ locale.bookmarks.last-locations-tip }}
+                </div>
             </div>
         </div>
     </div>

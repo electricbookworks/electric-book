@@ -29,10 +29,32 @@ $web-bookmarks: true !default;
             position: fixed;
             top: 50%;
             left: 50%;
-            height: 50vh;
+            height: 25em;
+            max-height: 90vh;
             max-width: 90vw;
             transform: translate(-50%, -50%);
-            width: 20em;
+            width: 25em;
+
+            // Show/Hide
+            .bookmarks-list,
+            .last-locations-list {
+                .bookmarks-list-content,
+                .last-locations-list-content {
+                    // display: none;
+                    position: relative;
+                    visibility: hidden;
+                    z-index: -1;
+                }
+                &.bookmarks-list-open {
+                    .bookmarks-list-content,
+                    .last-locations-list-content {
+                        // display: block;
+                        position: relative;
+                        visibility: visible;
+                        z-index: 1;
+                    }
+                }
+            }
 
             .last-locations-list {
                 .last-locations-list-header {
@@ -43,27 +65,10 @@ $web-bookmarks: true !default;
                         color: $color-text-main;
                     }
                 }
-                ul {
-                    // Hide till this is shown
-                    // position: relative; // makes z-index work
-                    // visibility: hidden;
-                    // z-index: -1;
-                }
-                .last-locations-list-tip {
-                    // Hide till this is shown
-                    // position: relative; // makes z-index work
-                    // visibility: hidden;
-                    // z-index: -1;
-                }
             }
             .bookmarks-list {
                 .bookmarks-list-header-open {
                     color: $color-text-main;
-                }
-                ul {
-                    // Show over last-locations-list ul by default
-                    position: relative; // makes z-index work
-                    z-index: 1;
                 }
             }
 
@@ -102,14 +107,6 @@ $web-bookmarks: true !default;
                         border-bottom-color: $color-background;
                         color: $color-text-main;
                         cursor: auto;
-
-                        & + ul,
-                        & + ul + .bookmarks-list-tip,
-                        & + ul + .last-locations-list-tip {
-                            background-color: $color-background;
-                            visibility: visible;
-                            z-index: 1;
-                        }
                     }
                 }
                 .bookmarks-list-header {
@@ -117,10 +114,6 @@ $web-bookmarks: true !default;
                 }
                 .bookmarks-list-tip,
                 .last-locations-list-tip {
-                    // Hide till this is shown
-                    position: relative; // makes z-index work
-                    visibility: hidden;
-                    z-index: -1;
 
                     // Appearance
                     color: $color-mid;
@@ -131,10 +124,6 @@ $web-bookmarks: true !default;
                     text-align: center;
                 }
                 ul {
-                    // Hide till this is shown
-                    position: relative; // makes z-index work
-                    visibility: hidden;
-                    z-index: -1;
 
                     // Appearance
                     margin: 0;
@@ -188,6 +177,16 @@ $web-bookmarks: true !default;
                             // color: $color-mid;
                             font-family: $font-text-main;
                             font-size: 0.9em;
+                        }
+                        .bookmark-delete {
+                            float: right;
+                        }
+                        &.bookmarks-delete-all {
+                            text-align: center;
+                            // Don't show if there are no bookmarks listed
+                            &:only-child {
+                                display: none;
+                            }
                         }
                         // override inherited styles from masthead ul li:after
                         &:after {

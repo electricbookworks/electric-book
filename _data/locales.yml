@@ -189,6 +189,11 @@ en:
     bookmarks-tip: "Tap or hover text, and then tap its bookmark icon to save a bookmark."
     last-locations: "Your last visit"
     last-locations-tip: "The last time you visited, you stopped reading here."
+    delete-bookmark: "Delete"
+    delete-all: "Delete all"
+    delete-all-bookmarks-warning: "This will delete all your bookmarks. Continue?"
+    delete-all-last-locations-warning: "This will delete all your previous locations. Continue?"
+    bookmarks-shifted-warning: "A bookmark doesn't seem to match its original place exactly. The content on this page may have changed."
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -270,6 +275,11 @@ fr:
     bookmarks-tip: "Appuyez ou survolez le texte, puis appuyez sur son icône de signet pour enregistrer un signet."
     last-locations: "Dernier lieu"
     last-locations-tip: "La dernière fois que vous avez visité, vous avez arrêté de lire ici."
+    delete-bookmark: "Supprimer"
+    delete-all: "Supprimer tout"
+    delete-all-bookmarks-warning: "Cela supprimera tous vos signets. Continuer?"
+    delete-all-last-locations-warning: "Cela supprimera tous vos emplacements précédents. Continuer?"
+    bookmarks-shifted-warning: "Un signet ne semble pas correspondre exactement à son emplacement d'origine. Le contenu de cette page a peut-être changé."
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""

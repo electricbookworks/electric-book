@@ -97,8 +97,7 @@ function ebBookmarksFingerprintID(elementID) {
         var fingerprintToCheck = element.getAttribute('data-fingerprint');
         var indexedID = indexOfBookmarks[fingerprintToCheck];
         if (elementID !== indexedID) {
-            console.log('The bookmarked ID does not match its element\'s fingerprint.');
-            console.log('Bookmarks may be inaccurate after page content changed.');
+            window.alert(locales[pageLanguage].bookmarks['bookmarks-shifted-warning']);
         } else {
             return indexedID;
         }
@@ -195,6 +194,12 @@ function ebBookmarksCheckForCurrentPage(url) {
 function ebBookmarksMarkBookmarks(bookmarks) {
     'use strict';
 
+    // Clear existing bookmarks
+    var bookmarkedElements = document.querySelectorAll('[data-bookmarked]');
+    bookmarkedElements.forEach(function (element) {
+        element.removeAttribute('data-bookmarked');
+    });
+
     // Mark bookmarked elements
     bookmarks.forEach(function (bookmark) {
         var elementToMark = document.getElementById(bookmark.id);
@@ -268,11 +273,11 @@ function ebBookmarksListBookmarks(bookmarks) {
         var readableSessionDate = new Date(Number(bookmark.sessionDate))
             .toLocaleDateString(undefined, {
                 // weekday: 'long',
+                // hour: 'numeric',
+                // minute: 'numeric',
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric',
-                // hour: 'numeric',
-                // minute: 'numeric'
+                day: 'numeric'
             });
         var date = document.createElement('span');
         date.classList.add('bookmark-date');
@@ -291,6 +296,15 @@ function ebBookmarksListBookmarks(bookmarks) {
         description.innerHTML = bookmark.description;
         listItem.appendChild(description);
 
+        // Add a delete button and listen for clicks on it
+        var deleteButton = document.createElement('button');
+        deleteButton.classList.add('bookmark-delete');
+        deleteButton.innerHTML = locales[pageLanguage].bookmarks['delete-bookmark'];
+        listItem.appendChild(deleteButton);
+        deleteButton.addEventListener('click', function () {
+            ebBookmarksDeleteBookmark(bookmark);
+        });
+
         // Add the list item to the list
         if (bookmark.type === 'lastLocation') {
             lastLocationsList.appendChild(listItem);
@@ -298,6 +312,25 @@ function ebBookmarksListBookmarks(bookmarks) {
             bookmarksList.appendChild(listItem);
         }
     });
+
+    // Add button to delete all bookmarks
+    var deleteAllBookmarksListItem = document.createElement('li');
+    deleteAllBookmarksListItem.classList.add('bookmarks-delete-all');
+    var deleteAllBookmarksButton = document.createElement('button');
+    deleteAllBookmarksButton.innerHTML = locales[pageLanguage].bookmarks['delete-all'];
+    deleteAllBookmarksListItem.appendChild(deleteAllBookmarksButton);
+    bookmarksList.appendChild(deleteAllBookmarksListItem);
+    deleteAllBookmarksButton.addEventListener('click', function () {
+        ebBookmarksDeleteAllBookmarks('userBookmark');
+    });
+
+    // Copy to the last-locations list, too
+    var deleteAllBookmarksListItemLastLocations = deleteAllBookmarksListItem.cloneNode(true);
+    lastLocationsList.appendChild(deleteAllBookmarksListItemLastLocations);
+    deleteAllBookmarksListItemLastLocations.addEventListener('click', function () {
+        ebBookmarksDeleteAllBookmarks('lastLocation');
+    });
+
 }
 
 // Check if a page has bookmarks
@@ -331,6 +364,55 @@ function ebBookmarksCheckForBookmarks() {
 
     // List them for the user
     ebBookmarksListBookmarks(bookmarks);
+}
+
+// Delete a bookmark
+function ebBookmarksDeleteBookmark(bookmark) {
+    'use strict';
+
+    // Delete from local storage
+    localStorage.removeItem(bookmark.key);
+
+    // Remove the entry from the list
+    ebBookmarksCheckForBookmarks();
+}
+
+// Delete all bookmarks
+function ebBookmarksDeleteAllBookmarks(type) {
+    'use strict';
+
+    // Check with user
+    var deleteAllUserBookmarksMessage = locales[pageLanguage].bookmarks['delete-all-bookmarks-warning'];
+    var deleteAllLastLocationsMessage = locales[pageLanguage].bookmarks['delete-all-last-locations-warning'];
+    var deleteAllConfirmation = false;
+    if (type === 'lastLocation') {
+        deleteAllConfirmation = window.confirm(deleteAllLastLocationsMessage);
+    } else {
+        deleteAllConfirmation = window.confirm(deleteAllUserBookmarksMessage);
+    }
+
+    // Loop through stored bookmarks and delete
+    if (deleteAllConfirmation) {
+        Object.keys(localStorage).forEach(function (key) {
+            if (key.startsWith('bookmark-')) {
+
+                // If a type has been specified, only delete
+                // bookmarks of that type. Otherwise,
+                // delete all bookmarks of any type.
+                var bookmarkType = JSON.parse(localStorage[key]).type;
+                if (type) {
+                    if (type === bookmarkType) {
+                        localStorage.removeItem(key);
+                    }
+                } else {
+                    localStorage.removeItem(key);
+                }
+            }
+        });
+
+        // Refresh the bookmarks lists
+        ebBookmarksCheckForBookmarks();
+    }
 }
 
 // Return the ID of a bookmarkable element
@@ -406,6 +488,11 @@ function ebBookmarksSetBookmark(type, element, description) {
                 + '-'
                 + bookmark.type;
     }
+
+    // Add the key to the bookmark object for easy reference
+    bookmark.key = bookmarkKey;
+
+    // Save the bookmark
     localStorage.setItem(bookmarkKey, JSON.stringify(bookmark));
 
     // Refresh the bookmarks list
@@ -603,20 +690,26 @@ function ebBookmarksOpenOnClick() {
     });
 }
 
-// In addition to CSS hover, mark clicked list headers
+// In addition to CSS hover, mark clicked lists
 function ebBookmarkListsOpenOnClick() {
     'use strict';
     var listHeaders = document.querySelectorAll('.bookmarks-list-header, .last-locations-list-header');
     listHeaders.forEach(function (header) {
         header.addEventListener('click', function () {
             if (document.querySelector('.bookmarks-list-header-open')) {
+
+                // Mark the headers ...
                 var openHeader = document.querySelector('.bookmarks-list-header-open');
                 openHeader.classList.remove('bookmarks-list-header-open');
                 header.classList.add('bookmarks-list-header-open');
+
+                // ... and their parents
+                openHeader.parentElement.classList.remove('bookmarks-list-open');
+                header.parentElement.classList.add('bookmarks-list-open');
+
                 // Firefox doesn't repaint here, forcing users to reclick.
                 // Not sure how to handle that here yet.
             }
-
         });
     });
 
