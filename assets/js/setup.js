@@ -111,15 +111,19 @@ function ebAssignIDs(container) {
     }
 
     // Count from 1, giving an ID to every element without one
-    var counter = 1;
+    var elementCounter = 1;
+    var idCounter = 1;
     var elementsToID = container.querySelectorAll(ebElementsToGetIDs);
     elementsToID.forEach(function (element) {
+        elementCounter += 1;
         if (!element.id) {
-            element.id = 'eb-' + counter;
-            counter += 1;
+            element.id = 'eb-' + idCounter;
+            idCounter += 1;
         }
-        // Once done, set status, e.g. for the accordion and bookmarking
-        if (elementsToID.length === counter) {
+        // Once done, set status, e.g. for the accordion and bookmarking.
+        // elementsToID indexes from 0, and elementCounter starts at 1, so
+        // we're done when elementCounter > the number of elementsToID.
+        if (elementCounter > elementsToID.length) {
             ebIDsAssigned = true;
             ebAssignFingerprints();
         }
