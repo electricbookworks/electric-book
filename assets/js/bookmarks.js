@@ -29,7 +29,7 @@
 //    - show user most recent lastLocation whose session ID is *not* in sessionStorage
 // 3. [DONE] Apply new click-for-modal bookmark UX.
 // 4. Allow multiple user bookmarks.
-// 5. Add ability to delete bookmarks, individually or all at once.
+// 5. [DONE] Add ability to delete bookmarks, individually or all at once.
 // 6. Change saving on from beforeunload, since mobile browsers don't support it.
 // 7. [DONE] Store and compare an index of latest IDs, so in future we can check
 //    if it's is missing any bookmarked IDs. If yes, we know bookmarks have moved.
@@ -355,7 +355,15 @@ function ebBookmarksCheckForBookmarks() {
     // Now loop through the remaining stored bookmarks and add them to the array.
     Object.keys(localStorage).forEach(function (key) {
         if (key.startsWith('bookmark-')) {
-            bookmarks.push(JSON.parse(localStorage.getItem(key)));
+            var bookmark = JSON.parse(localStorage.getItem(key));
+
+            // Add any bookmark that isn't a last-location,
+            // only last-locations that are not from the current session.
+            if (bookmark.type !== 'lastLocation') {
+                bookmarks.push(bookmark);
+            } else if (bookmark.sessionDate !== ebBookmarksSessionDate()) {
+                bookmarks.push(bookmark);
+            }
         }
     });
 

@@ -3,7 +3,7 @@ $web-bookmarks: true !default;
 
     // Bookmarks
 
-    $bookmarks-modal-header-height: 2.7rem;
+    $bookmarks-modal-header-height: 2.7rem!default;
 
     // The bookmarks list
     .bookmarks {
@@ -12,10 +12,16 @@ $web-bookmarks: true !default;
         text-align: right;
         z-index: 100;
 
+        &, * {
+            // Already applied globally in EBT styles,
+            // but may be required for copy-pasting into other projects.
+            box-sizing: border-box;
+        }
+
         .bookmarks-modal {
             @include dialog-styles();
             background-color: $color-background;
-            border-color: $color-light;
+            border-color: $bookmark-border-color;
 
             // Hide the list till click on parent
             display: none;
@@ -30,8 +36,8 @@ $web-bookmarks: true !default;
             top: 50%;
             left: 50%;
             height: 25em;
-            max-height: 90vh;
-            max-width: 90vw;
+            max-height: 80vh; // allow space to tap out
+            max-width: 80vw; // allow space to tap out
             transform: translate(-50%, -50%);
             width: 25em;
 
@@ -62,13 +68,13 @@ $web-bookmarks: true !default;
                 }
                 &.bookmarks-list-header-open {
                     .last-locations-list-header {
-                        color: $color-text-main;
+                        color: $bookmark-text-color;
                     }
                 }
             }
             .bookmarks-list {
                 .bookmarks-list-header-open {
-                    color: $color-text-main;
+                    color: $bookmark-text-color;
                 }
             }
 
@@ -86,7 +92,14 @@ $web-bookmarks: true !default;
 
                 .bookmarks-list-header,
                 .last-locations-list-header {
-                    border-bottom: $rule-thickness solid $color-light;
+
+                    // Flex
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    // Appearance
+                    border-bottom: $rule-thickness solid $bookmark-border-color;
                     color: $color-links;
                     cursor: pointer;
                     font-size: 0.8em;
@@ -105,18 +118,18 @@ $web-bookmarks: true !default;
 
                     &.bookmarks-list-header-open {
                         border-bottom-color: $color-background;
-                        color: $color-text-main;
+                        color: $bookmark-text-color;
                         cursor: auto;
                     }
                 }
                 .bookmarks-list-header {
-                    border-right: $rule-thickness solid $color-light;
+                    border-right: $rule-thickness solid $bookmark-border-color;
                 }
                 .bookmarks-list-tip,
                 .last-locations-list-tip {
 
                     // Appearance
-                    color: $color-mid;
+                    color: $bookmark-text-color-secondary;
                     font-size: 0.8em;
                     line-height: $line-height-default;
                     min-height: 4em; // helps last-location tip obscure bookmark tip
@@ -146,11 +159,10 @@ $web-bookmarks: true !default;
                         .bookmark-title {
                             font-family: $font-text-secondary;
                             font-size: 1.1em;
-                            font-style: italic;
                             font-weight: 600;
 
                             &::after {
-                                color: $color-mid;
+                                color: $bookmark-text-color-secondary;
                                 content: "\2022";
                                 font-size: 0.9em;
                                 font-style: normal;
@@ -162,19 +174,17 @@ $web-bookmarks: true !default;
                             }
                         }
                         .bookmark-date {
-                            color: $color-mid;
+                            color: $bookmark-text-color-secondary;
                             font-family: $font-text-secondary;
                             font-size: 0.8em;
                             letter-spacing: 0.05em;
                             text-transform: uppercase;
                         }
                         .bookmark-page {
-                            // color: $color-mid;
                             display: block;
                             font-family: $font-text-secondary;
                         }
                         .bookmark-description {
-                            // color: $color-mid;
                             font-family: $font-text-main;
                             font-size: 0.9em;
                         }
@@ -182,6 +192,9 @@ $web-bookmarks: true !default;
                             float: right;
                         }
                         &.bookmarks-delete-all {
+                            position: fixed;
+                            bottom: 1em;
+                            right: 1em;
                             text-align: center;
                             // Don't show if there are no bookmarks listed
                             &:only-child {
@@ -217,8 +230,11 @@ $web-bookmarks: true !default;
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
         -moz-user-select: none;
         &.bookmark-icon {
-            path {
+            .bookmark-icon-fill {
                 fill: $bookmark-icon-color-inactive;
+            }
+            .bookmark-icon-outline {
+                fill: $bookmark-icon-outline-color-inactive;
             }
         }
         &.history-icon {
@@ -235,14 +251,17 @@ $web-bookmarks: true !default;
         padding: 0.333em;
         position: absolute; // avoids messing up line-height
         svg {
-            width: 1em;
-            height: 1em;
+            width: $bookmark-icon-text-size;
+            height: $bookmark-icon-text-size;
         }
         &:hover {
             background-color: transparent;
             svg {
-                path {
-                    fill: $bookmark-icon-color-active;
+                .bookmark-icon-fill {
+                    fill: $bookmark-icon-color-inactive;
+                }
+                .bookmark-icon-outline {
+                    fill: $bookmark-icon-outline-color-inactive;
                 }
             }
         }
@@ -263,8 +282,11 @@ $web-bookmarks: true !default;
             display: inline-block;
         }
         svg[class*="icon"].bookmark-icon {
-            path {
+            .bookmark-icon-fill {
                 fill: $bookmark-icon-color-active;
+            }
+            .bookmark-icon-outline {
+                fill: $bookmark-icon-outline-color-active;
             }
         }
     }

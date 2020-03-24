@@ -163,10 +163,15 @@ $annotator-icon-background-color-inactive: $color-background !default;
 $annotator-icon-thickness: 1.5px !default;
 
 // Bookmarks
-$bookmark-text-color: $color-text-secondary !default;
+$bookmark-border-color: $color-light !default;
+$bookmark-text-color: $color-text-main !default;
+$bookmark-text-color-secondary: $color-mid !default;
 $bookmark-background-color: $color-background !default;
-$bookmark-icon-color-inactive: $color-light !default;
+$bookmark-icon-color-inactive: $color-background !default;
 $bookmark-icon-color-active: $color-accent !default;
+$bookmark-icon-outline-color-inactive: $color-accent !default;
+$bookmark-icon-outline-color-active: $color-accent !default;
+$bookmark-icon-text-size: 1em !default;
 
 // ---------------------------------
 // Set to false to turn partials off
