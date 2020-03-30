@@ -13,7 +13,7 @@ project:
   # The name of the project of books in this folder.
   name: "Electric Book"
   # A one-liner about this project. Useful for Open Graph metadata.
-  description: "The Electric Book template in action."
+  description: "This is Electric Book template, a way to build websites, books and ebooks from the same master content. Created and maintained by Electric Book Works."
   # The logo of the organisation, saved web-ready in /assets
   logo: "publisher-logo.jpg"
   # An image in /assets that stands for the project
