@@ -531,14 +531,14 @@ set /p process=Enter a number and hit return.
 
         :: If original language, use the package.opf in the root
         :epubOriginalOPF
-            echo f | xcopy /e /q "package.opf" "../epub" > nul
+            echo f | xcopy /q "package.opf" "../epub" > nul
             echo Package file copied.
             goto epubOPFDone
 
         :: If translation language, use the package.opf in the subdirectory
         :: This will overwrite the original language OPF file
         :epubSubdirectoryOPF
-            echo f | xcopy /e /q "%subdirectory%\package.opf" "../epub" > nul
+            echo f | xcopy /q "%subdirectory%\package.opf" "../epub" > nul
             echo Package file copied.
             goto epubOPFDone
 
@@ -553,14 +553,14 @@ set /p process=Enter a number and hit return.
 
         :: If original language, use the package.opf in the root
         :epubOriginalNCX
-            echo f | xcopy /e /q "toc.ncx" "../epub" > nul
+            echo f | xcopy /q "toc.ncx" "../epub" > nul
             echo NCX copied.
             goto epubNCXDone
 
         :: If translation language, use the toc.ncx in the subdirectory
         :: This will overwrite the original language NCX file
         :epubSubdirectoryNCX
-            echo f | xcopy /e /q "%subdirectory%\toc.ncx" "../epub" > nul
+            echo f | xcopy /q "%subdirectory%\toc.ncx" "../epub" > nul
             echo NCX copied.
             goto epubNCXDone
 
