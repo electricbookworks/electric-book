@@ -132,6 +132,14 @@ var paths = {
     },
     yaml: {
         src: ['*.yml', '_configs/*.yml', '_data/*.yml']
+    },
+    // Arrays of globs to ignore from tasks
+    ignore: {
+        printpdf: ['**/favicon.*'],
+        web: [],
+        screenpdf: ['**/favicon.*'],
+        epub: ['**/favicon.*'],
+        app: ['**/favicon.*']
     }
 };
 
@@ -381,7 +389,8 @@ gulp.task('images:printpdf', function (done) {
 
     console.log('Processing print-PDF images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/' + printPDFColorProfile)) {
-        gulp.src(paths.img.source + '*.{' + filetypes + '}')
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.printpdf})
             .pipe(newer(paths.img.printpdf))
             .pipe(debug({title: 'Creating print-PDF version of '}))
             .pipe(gm(function (gmfile) {
@@ -416,18 +425,19 @@ gulp.task('images:printpdf', function (done) {
 
 // Convert and optimise source images
 // for screen-pdf, web, epub, and app
-gulp.task('images:optimise', function (done) {
+gulp.task('images:screenpdf', function (done) {
     'use strict';
 
     // Options
     var imagesOptimiseColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
     var imagesOptimiseColorSpace = 'rgb';
 
-    console.log('Processing screen-PDF, web, epub and app images from ' + paths.img.source);
+    console.log('Processing screen-PDF images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/' + imagesOptimiseColorProfile)) {
-        gulp.src(paths.img.source + '*.{' + filetypes + '}')
-            .pipe(newer(paths.img.web))
-            .pipe(debug({title: 'Optimising '}))
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.screenpdf})
+            .pipe(newer(paths.img.screenpdf))
+            .pipe(debug({title: 'Processing '}))
             .pipe(responsive({
                 '*': [{
                     width: 810,
@@ -442,10 +452,118 @@ gulp.task('images:optimise', function (done) {
             }).on('error', function (e) {
                 console.log(e);
             }))
-            .pipe(gulp.dest(paths.img.screenpdf))
-            .pipe(gulp.dest(paths.img.web))
-            .pipe(gulp.dest(paths.img.epub))
+            .pipe(gulp.dest(paths.img.screenpdf));
+    } else {
+        console.log('Colour profile _tools/profiles/' + imagesOptimiseColorProfile + ' not found. Exiting.');
+        return;
+    }
+    done();
+});
+
+// Convert and optimise source images
+// for screen-pdf, web, epub, and app
+gulp.task('images:epub', function (done) {
+    'use strict';
+
+    // Options
+    var imagesOptimiseColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+    var imagesOptimiseColorSpace = 'rgb';
+
+    console.log('Processing epub images from ' + paths.img.source);
+    if (fileExists.sync('_tools/profiles/' + imagesOptimiseColorProfile)) {
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.epub})
+            .pipe(newer(paths.img.epub))
+            .pipe(debug({title: 'Processing '}))
+            .pipe(responsive({
+                '*': [{
+                    width: 810,
+                    quality: 90,
+                    upscale: false
+                }]
+            }).on('error', function (e) {
+                console.log(e);
+            }))
+            .pipe(gm(function (gmfile) {
+                return gmfile.profile('_tools/profiles/' + imagesOptimiseColorProfile).colorspace(imagesOptimiseColorSpace);
+            }).on('error', function (e) {
+                console.log(e);
+            }))
+            .pipe(gulp.dest(paths.img.epub));
+    } else {
+        console.log('Colour profile _tools/profiles/' + imagesOptimiseColorProfile + ' not found. Exiting.');
+        return;
+    }
+    done();
+});
+
+// Convert and optimise source images
+// for screen-pdf, web, epub, and app
+gulp.task('images:app', function (done) {
+    'use strict';
+
+    // Options
+    var imagesOptimiseColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+    var imagesOptimiseColorSpace = 'rgb';
+
+    console.log('Processing app images from ' + paths.img.source);
+    if (fileExists.sync('_tools/profiles/' + imagesOptimiseColorProfile)) {
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.app})
+            .pipe(newer(paths.img.app))
+            .pipe(debug({title: 'Processing '}))
+            .pipe(responsive({
+                '*': [{
+                    width: 810,
+                    quality: 90,
+                    upscale: false
+                }]
+            }).on('error', function (e) {
+                console.log(e);
+            }))
+            .pipe(gm(function (gmfile) {
+                return gmfile.profile('_tools/profiles/' + imagesOptimiseColorProfile).colorspace(imagesOptimiseColorSpace);
+            }).on('error', function (e) {
+                console.log(e);
+            }))
             .pipe(gulp.dest(paths.img.app));
+    } else {
+        console.log('Colour profile _tools/profiles/' + imagesOptimiseColorProfile + ' not found. Exiting.');
+        return;
+    }
+    done();
+});
+
+// Convert and optimise source images
+// for screen-pdf, web, epub, and app
+gulp.task('images:web', function (done) {
+    'use strict';
+
+    // Options
+    var imagesOptimiseColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+    var imagesOptimiseColorSpace = 'rgb';
+
+    console.log('Processing web images from ' + paths.img.source);
+    if (fileExists.sync('_tools/profiles/' + imagesOptimiseColorProfile)) {
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.web})
+            .pipe(newer(paths.img.web))
+            .pipe(debug({title: 'Processing '}))
+            .pipe(responsive({
+                '*': [{
+                    width: 810,
+                    quality: 90,
+                    upscale: false
+                }]
+            }).on('error', function (e) {
+                console.log(e);
+            }))
+            .pipe(gm(function (gmfile) {
+                return gmfile.profile('_tools/profiles/' + imagesOptimiseColorProfile).colorspace(imagesOptimiseColorSpace);
+            }).on('error', function (e) {
+                console.log(e);
+            }))
+            .pipe(gulp.dest(paths.img.web));
     } else {
         console.log('Colour profile _tools/profiles/' + imagesOptimiseColorProfile + ' not found. Exiting.');
         return;
@@ -463,7 +581,8 @@ gulp.task('images:small', function (done) {
 
     console.log('Creating small web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/' + imagesSmallColorProfile)) {
-        gulp.src(paths.img.source + '*.{' + filetypes + '}')
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Creating small '}))
             .pipe(responsive({
@@ -499,7 +618,8 @@ gulp.task('images:medium', function (done) {
 
     console.log('Creating medium web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/' + imagesMediumColorProfile)) {
-        gulp.src(paths.img.source + '*.{' + filetypes + '}')
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Creating medium '}))
             .pipe(responsive({
@@ -535,7 +655,8 @@ gulp.task('images:large', function (done) {
 
     console.log('Creating large web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/' + imagesLargeColorProfile)) {
-        gulp.src(paths.img.source + '*.{' + filetypes + '}')
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Creating large '}))
             .pipe(responsive({
@@ -571,7 +692,8 @@ gulp.task('images:xlarge', function (done) {
 
     console.log('Creating extra-large web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/' + imagesXLargeColorProfile)) {
-        gulp.src(paths.img.source + '*.{' + filetypes + '}')
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Creating extra-large '}))
             .pipe(responsive({
@@ -607,7 +729,8 @@ gulp.task('images:max', function (done) {
 
     console.log('Creating max-quality web images from ' + paths.img.source);
     if (fileExists.sync('_tools/profiles/' + imagesMaxColorProfile)) {
-        gulp.src(paths.img.source + '*.{' + filetypes + '}')
+        gulp.src(paths.img.source + '*.{' + filetypes + '}',
+                {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
             .pipe(debug({title: 'Creating max-quality '}))
             .pipe(gm(function (gmfile) {
@@ -808,7 +931,10 @@ gulp.task('yaml', function (done) {
 gulp.task('default', gulp.series(
     'images:svg',
     'images:printpdf',
-    'images:optimise',
+    'images:screenpdf',
+    'images:epub',
+    'images:app',
+    'images:web',
     'images:small',
     'images:medium',
     'images:large',
