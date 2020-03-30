@@ -195,7 +195,7 @@
     {% endif %}
 
     {% comment %}Add favicon{% endcomment %}
-    <link rel="icon" type="image/png" href="{{ path-to-root-directory }}assets/favicon.png">
+    <link rel="icon" type="image/png" href="{{ path-to-root-directory }}assets/images/web/favicon.png">
 
     {% comment %}OpenGraph metadata{% endcomment %}
     <meta property="og:title" content="{{ page.title }}" />
@@ -220,18 +220,18 @@
     {% if page.image %}
         {% if is-homepage == true or is-project-search == true or is-translation-homepage == true %}
             {% comment %}If a page.image is specified on the home page, we still use the project image{% endcomment %}
-            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
+            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/images/web/{{ project-image }}" />
         {% else %}
             <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ page.image }}" />
         {% endif %}
     {% elsif is-homepage == true or is-project-search == true or is-translation-homepage == true %}
-        <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
+        <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/images/web/{{ project-image }}" />
     {% elsif web-image != "" %}
         <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ web-image }}" />
     {% elsif image != "" %}
         <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ image }}" />
     {% else %}
-        <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
+        <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/images/web/{{ project-image }}" />
     {% endif %}
 
     {% comment %}If we're not in a book subdirectory, load the project stylesheet.
