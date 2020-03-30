@@ -68,6 +68,12 @@ function loadMetadata() {
 var imageSettings = [];
 if (fs.existsSync('_data/images.yml')) {
     imageSettings = yaml.load(fs.readFileSync('_data/images.yml', 'utf8'));
+
+    // If the file is empty, imageSettings will be null.
+    // So we check for that and, if null, we create an array.
+    if (!imageSettings) {
+        imageSettings = [];
+    }
 }
 
 // Get the book we're processing
