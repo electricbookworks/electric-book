@@ -146,6 +146,13 @@ Here is an example of the translation section of the `meta.yml` file that includ
         title: Title in French
 ```
 
+### The language selector
+
+When a translation includes the same file names as the parent language, translated web and app pages will include a language-selector icon, to allow users to switch between languages. For this to work:
+
+- The parent-language and translated files must have the same filenames.
+- The files must be listed in the parent and translation `files` lists in `_data/meta.yml`.
+
 ### Epub-specific languages
 
 In some situations, you might want the language set in your epub's Dublin Core OPF metadata (`dc:language`) to be different to the language of the translation. For instance, Kindlegen will not convert epubs in languages it does not recognise. In this situation, you might need to set the epub's Dublin Core language tag to, say, English, even though your epub's content files are still in, say, Asanti Twi.
