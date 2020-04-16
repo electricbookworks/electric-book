@@ -31,7 +31,7 @@ Very broadly, this is how the Electric Book template works.
     * zip the finished HTML into an epub
     * pass the finished HTML to Cordova to wrap in an app
     * pass the finished HTML to Pandoc to convert to Word
-    * run the finished HTML through PhantomJS to build a search index.
+    * scrape the finished HTML to build a search index.
 *   The `run-` script also lets you choose to process images. It converts any images in a book's `_source` folder into variations for print-PDF, screen-PDF, web, epub and app outputs.
 
 ## Structure
