@@ -26,7 +26,6 @@ To use the Electric Book template on your machine, you need to have installed:
 
 - [Jekyll](https://jekyllrb.com/) (and which requires Ruby and Bundler)
 - [PrinceXML](http://www.princexml.com/) (for PDF output; the only proprietary requirement)
-- [PhantomJS](http://phantomjs.org/) (to generate search indexes for web and app outputs)
 - [Node.js](https://nodejs.org), [Gulp](https://gulpjs.com/) and [GraphicsMagick](http://www.graphicsmagick.org/) (to create multiformat images)
 - [Pandoc](http://pandoc.org/) (for Word export)
 - [Cordova](https://cordova.apache.org), [Android Studio](https://developer.android.com/studio), and (on OSX) [XCode](https://developer.apple.com/xcode/) (for building ebook apps)

@@ -345,7 +345,6 @@ assets/js/nav.js
 assets/js/page-reference.js
 assets/js/polyfills.js
 assets/js/redact.js
-assets/js/render-mathjax.js
 assets/js/render-search-index.js
 assets/js/rotate.js
 assets/js/search-engine.js

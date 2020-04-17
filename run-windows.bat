@@ -981,7 +981,6 @@ set /p process=Enter a number and hit return.
         :: Encouraging message
         echo Let's refresh the search index.
         echo We'll index the files in your web or app file lists defined in meta.yml
-        echo You need to have PhantomJS installed for this to work.
 
         :: Check if refreshing web or app index
         echo To refresh the website search index, press enter.
@@ -1008,20 +1007,19 @@ set /p process=Enter a number and hit return.
         :buildForWebSearchIndex
 
             call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,%searchIndexConfig%"
-            goto refreshSearchIndexRenderWithPhantom
+            goto refreshSearchIndexRendering
 
         :buildForAppSearchIndex
 
             call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%searchIndexConfig%"
-            goto refreshSearchIndexRenderWithPhantom
+            goto refreshSearchIndexRendering
 
-        :: Run phantomjs script from scripts directory
-        :refreshSearchIndexRenderWithPhantom
+        :: Run script from scripts directory
+        :refreshSearchIndexRendering
 
-            echo Generating index with PhantomJS...
-            cd _site/assets/js
-            phantomjs render-search-index.js
+            echo Generating index...
             cd %location%
+            node _site/assets/js/render-search-index.js
 
         :: Done
         :refreshSearchIndexDone
