@@ -767,9 +767,7 @@ the {{ images }} path should include the language subdirectory.{% endcomment %}
 
     {% comment %}If we are using external-media, we can't know
     if translated images exist, so let's assume that they do.{% endcomment %}
-    {% if site.data.settings.local-media.[build] and site.data.settings.local-media.[build] != "" %}
-        {% assign translated-images-exist = true %}
-    {% elsif site.data.settings.remote-media.[build] and site.data.settings.remote-media.[build] != "" %}
+    {% if site.data.settings.local-media or site.data.settings.remote-media %}
         {% assign translated-images-exist = true %}
     {% endif %}
 

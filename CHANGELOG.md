@@ -1,9 +1,11 @@
 # Changelog
 
-## Latest
+## 0.16.0
 
-* [Zip epubs with Node for better Windows compatibility](https://github.com/electricbookworks/electric-book/pull/441)
+* [Replace Phantom search-index dependency with Puppeteer](https://github.com/electricbookworks/electric-book/pull/464)
+* [Support starting YouTube and Vimeo videos at specific times](https://github.com/electricbookworks/electric-book/pull/448)
 * [Add script for faster updating across Electric Book projects](https://github.com/electricbookworks/electric-book/pull/442)
+* [Zip epubs with Node for better Windows compatibility](https://github.com/electricbookworks/electric-book/pull/441)
 * [Enable turning image lazyloading on/off in settings.yml](https://github.com/electricbookworks/electric-book/pull/433)
 * [Implement better paragraph-indent](https://github.com/electricbookworks/electric-book/pull/432)
 * [Support visible URLs in e-ink epubs](https://github.com/electricbookworks/electric-book/pull/431)

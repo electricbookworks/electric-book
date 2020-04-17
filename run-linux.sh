@@ -944,7 +944,6 @@ You may need to reload the web page once this server is running."
 		then
 		echo "Let's refresh the search index."
 		echo "We'll index the files in your web or app file lists defined in meta.yml"
-		echo "You need to have PhantomJS installed for this to work."
 
 		# Check if refreshing web or app index
 		echo "To refresh the website search index, press enter."
@@ -968,11 +967,10 @@ You may need to reload the web page once this server is running."
 			bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,$searchIndexConfig"
 		fi
 
-		# Run PhantomJS script from scripts directory
-		echo "Generating index with PhantomJS..."
-		cd _site/assets/js
-		phantomjs render-search-index.js
+		# Generate index
+		echo "Generating index ..."
 		cd "$location"
+		node _site/assets/js/render-search-index.js
 
 		# Done
 		echo "Index refreshed."

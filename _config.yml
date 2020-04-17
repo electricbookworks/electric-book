@@ -35,7 +35,8 @@ edition: "default"
 # To make absolute links work, e.g. in canonical links in <head>,
 # include the url where this site will live when it's live (production).
 # E.g. canonical-url: "http://example.com"
-canonical-url: "https://electricbookworks.github.io/electric-book"
+# In Open Graph metadata, the base URL will be appended.
+canonical-url: "https://electricbookworks.github.io"
 
 # Base URL
 # --------
@@ -220,7 +221,7 @@ compress_html:
 # Version of this Electric Book template.
 # This is the last release, not necessarily the current build
 # at github.com/electricbookworks/electric-book
-version: "0.15.0"
+version: "0.16.0"
 
 # Local-build URL
 # ---------------
