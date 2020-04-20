@@ -230,6 +230,7 @@ $web-bookmarks: true !default;
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
         -moz-user-select: none;
         &.bookmark-icon {
+            cursor: pointer;
             .bookmark-icon-fill {
                 fill: $bookmark-icon-color-inactive;
             }
@@ -248,6 +249,7 @@ $web-bookmarks: true !default;
     .bookmark-button {
         background: none;
         border: none;
+        cursor: pointer;
         padding: 0.333em;
         position: absolute; // avoids messing up line-height
         svg {

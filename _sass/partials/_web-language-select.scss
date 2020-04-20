@@ -4,10 +4,12 @@ $web-language-select: true !default;
     // Language selector
 
     .language-select {
-        z-index: 100;
+        color: $language-select-text-color;
+        cursor: pointer;
         padding: 0.5em;
         text-align: right;
-        color: $language-select-text-color;
+        z-index: 100;
+
         .language-select-list {
             @include dialog-styles();
             list-style-type: none;
