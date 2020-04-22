@@ -19,7 +19,11 @@ The process of setting up a new book is covered very briefly in our [quick-start
 
 To create a new book in a new project:
 
-1. An Electric Book repo, or project folder, can hold one book or many, like a series of books that share similar metadata or features (e.g. they're all by the same author). Make a copy of the folder and, if you like, rename it for your project. E.g. `my-sci-fi`.
+1. Download `electric-book.zip` from the [latest release](https://github.com/electricbookworks/electric-book/releases/latest) and extract it. This is now your project folder. You can rename it for your project. (We recommend avoiding spaces in the folder name.) Let's call our example project `my-sci-fi`.
+
+   > Technical note: the latest release may not contain the most recent changes to the template. If you want those, make a copy of the [template repo's master branch](https://github.com/electricbookworks/electric-book), and discard its Git history (i.e. delete the `.git` folder in your copy).
+
+1. An Electric Book repo, or project folder, can hold one book or many, like a series of books that share similar metadata or features (e.g. they're all by the same author).
 1. Inside `my-sci-fi`, open and edit these three files:
     *   `_config.yml`: Edit the values there for your Jekyll setup. The comments will guide you.
     *   `index.md`: Replace our template text with your own. Usually, a link to each book is useful, e.g. `[Space Potatoes](space-potatoes)`.
