@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.17.0
+
+* [Add ability to create a zip package of a project](https://github.com/electricbookworks/electric-book/pull/469)
+* [Improve horizontal scrolling of tables on narrow screens](https://github.com/electricbookworks/electric-book/pull/468)
+* [Add expand- and close-all buttons to content accordion](https://github.com/electricbookworks/electric-book/pull/467)
+
 ## 0.16.0
 
 * [Replace Phantom search-index dependency with Puppeteer](https://github.com/electricbookworks/electric-book/pull/464)

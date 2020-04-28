@@ -1,5 +1,6 @@
 /*jslint browser */
-/*global window, ebLazyLoadImages, searchTerm, ebVideoShow */
+/*global window, ebLazyLoadImages, searchTerm, videoShow
+    locales, pageLanguage, console, Element, HTMLDocument, ebIDsAssigned */
 
 // console.log('Debugging accordions.js');
 
@@ -8,9 +9,11 @@
 //
 // 1. Use CSS selectors to list the headings that will
 //    define each accordion section, e.g. '#content h2'
-var accordionHeads = '#content > h2';
+var accordionHeads = '#content h2';
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content > h2:first-of-type, #content header > h2:first-of-type';
+var defaultAccordionHead = '#content h2:first-of-type';
+// 3. Auto close last accordion when you open a new one?
+var autoCloseAccordionSections = false;
 // --------------------------------------------------------------
 
 function ebAccordionInit() {
@@ -132,6 +135,17 @@ function ebAccordionFillSections() {
         currentSection.querySelector('[data-container]')
             .appendChild(contentItem);
     });
+}
+
+function ebAccordionHideThisSection(targetID) {
+    'use strict';
+
+    console.log('Hiding only section ' + targetID);
+    var tabPanel = document.querySelector('[role="tabpanel"][aria-labelledby="' + targetID + '"]');
+    tabPanel.querySelector('[role="tab"]')
+        .setAttribute('data-accordion', 'closed');
+    tabPanel.querySelector('[data-container]')
+        .setAttribute('aria-expanded', 'false');
 }
 
 function ebAccordionHideAll() {
@@ -326,11 +340,8 @@ function ebAccordionShow(targetID) {
             }
         });
 
-        if (typeof(ebVideoShow) === 'function') {
-            var sectionVideos = sectionToShow.querySelectorAll('.video');
-            sectionVideos.forEach(function (video) {
-                ebVideoShow(video);
-            });
+        if (typeof(videoShow) === 'function') {
+            videoShow(sectionToShow);
         }
     }
 
@@ -350,9 +361,9 @@ function ebAccordionListenForAnchorClicks() {
             return;
         }
 
-        oneOfTheAnchors.addEventListener("click", function (ev) {
+        oneOfTheAnchors.addEventListener("click", function (event) {
 
-            ev.stopPropagation();
+            event.stopPropagation();
 
             // Declare targetID so JSLint knows it's coming in this function.
             var targetID;
@@ -371,7 +382,8 @@ function ebAccordionListenForAnchorClicks() {
             }
             // if it's an open accordion, close it
             if (event.target.parentNode.getAttribute('data-accordion') === 'open') {
-                ebAccordionHideAll();
+                event.preventDefault();
+                ebAccordionHideThisSection(targetID);
                 return;
             }
 
@@ -389,7 +401,9 @@ function ebAccordionListenForAnchorClicks() {
 
             // now open the right closed accordion
             ebAccordionShow(targetID);
-            ebAccordionHideAllExceptThisOne(targetID);
+            if (autoCloseAccordionSections === true) {
+                ebAccordionHideAllExceptThisOne(targetID);
+            }
         });
     });
 }
@@ -457,7 +471,7 @@ function ebAccordionListenForHashChange() {
         // console.log('targetInViewport of ' + targetOfLink + ": " + targetInViewport);
 
         // check if it's an accordion
-        var targetAccordionStatus = targetOfLink.parentNode.getAttribute('data-accordion');
+        var targetAccordionStatus = targetOfLink.getAttribute('data-accordion');
         // console.log('targetAccordionStatus: ' + targetAccordionStatus);
 
         // if it's in the viewport and it's not an accordion, then exit
@@ -475,7 +489,10 @@ function ebAccordionListenForHashChange() {
         var targetAccordionID = ebAccordionFindSection(targetOfLink);
 
         ebAccordionShow(targetAccordionID);
-        ebAccordionHideAllExceptThisOne(targetAccordionID);
+        if (autoCloseAccordionSections === true) {
+            console.log('Hiding other sections...');
+            ebAccordionHideAllExceptThisOne(targetAccordionID);
+        }
     });
 }
 
@@ -483,6 +500,54 @@ function ebAccordionShowDefaultSection() {
     'use strict';
     ebAccordionHideAllExceptThisOne(ebAccordionDefaultAccordionHeadID());
     ebAccordionShow(ebAccordionDefaultAccordionHeadID());
+}
+
+// Add a close-all button to close all sections
+function ebAccordionCloseAllButton() {
+    'use strict';
+    var button = document.querySelector('.accordion-show-all-button');
+    button.innerHTML = locales[pageLanguage].accordion['close-all'];
+
+    // Close all when clicked
+    button.addEventListener('click', function () {
+        ebAccordionHideAll();
+        ebAccordionShowAllButton();
+    });
+}
+
+// Add an expand-all button to open all sections
+function ebAccordionShowAllButton() {
+    'use strict';
+
+    var button;
+    if (document.querySelector('.accordion-show-all-button')) {
+        button = document.querySelector('.accordion-show-all-button');
+        button.innerHTML = locales[pageLanguage].accordion['show-all'];
+    } else {
+
+        var firstSection = document.querySelector(defaultAccordionHead);
+
+        if (firstSection) {
+            // Create a wrapper for the button
+            var buttonWrapper = document.createElement('div');
+            buttonWrapper.classList.add('accordion-show-all-button-wrapper');
+            firstSection.insertAdjacentElement('beforebegin', buttonWrapper);
+
+            // Create the button link
+            button = document.createElement('a');
+            button.classList.add('accordion-show-all-button');
+            button.innerHTML = locales[pageLanguage].accordion['show-all'];
+            buttonWrapper.insertAdjacentElement('afterbegin', button);
+        }
+    }
+
+    if (button instanceof Element || button instanceof HTMLDocument) {
+        // Show all when clicked
+        button.addEventListener('click', function () {
+            ebAccordionShowAll();
+            ebAccordionCloseAllButton();
+        });
+    }
 }
 
 function ebAccordify() {
@@ -500,11 +565,11 @@ function ebAccordify() {
         return;
     }
 
-    // exit if this shouldn't have an accordion
-    var thisIsNotAccordiable = (document.querySelector('body').getAttribute('class').indexOf('no-accordion') !== -1);
+    // exit if this isn't a chapter
+    var thisIsNotAChapter = (document.querySelector('body').getAttribute('class').indexOf('chapter') === -1);
     var thisHasNoH2s = (document.querySelector(accordionHeads) === null);
     var thisIsEndmatter = (document.querySelector('body').getAttribute('class').indexOf('endmatter') !== -1);
-    if (thisIsNotAccordiable || thisHasNoH2s || thisIsEndmatter) {
+    if (thisIsNotAChapter || thisHasNoH2s || thisIsEndmatter) {
         return;
     }
 
@@ -561,13 +626,14 @@ function ebLoadAccordion() {
     ebAccordionListenForHeadingClicks();
     ebAccordionListenForNavClicks();
     ebAccordionListenForHashChange();
+    ebAccordionShowAllButton();
 }
 
 // Load the accordion when IDs have been assigned
 var ebAccordionCheckForIDs = window.setInterval(function () {
     'use strict';
     if (ebIDsAssigned === true) {
-        ebLoadAccordion()
+        ebLoadAccordion();
         clearInterval(ebAccordionCheckForIDs);
     }
 }, 500);

@@ -14,9 +14,10 @@ A book chapter can be much too long for reasonable reading on screen. Also, a ch
 
 The content accordion breaks up your page into sections, and collapses them, showing only each section's heading. To open or close a section, a user just clicks on the heading (or the toggle icon beside it).
 
-In addition, images in [figures](../editing/figures.html) will only load when a section is opened. This way, if a user doesn't open a given section, their device won't download it, saving them data.
-
 The content accordion only works in chapter files (i.e. markdown files that do not have a `style` set in their YAML frontmatter, or have it set to something other than `chapter`, such as frontmatter).
+
+Technical note: By default, when you open an accordion section, other open sections stay open. If you would like only one accordion section to open at a time, so that opening a section closes the others, set `autoCloseAccordionSections` to `true` in `assets/js/accordion.js`.
+{:.box}
 
 ## Activating the content accordion
 

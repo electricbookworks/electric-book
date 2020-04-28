@@ -13,6 +13,11 @@ $web-tables: true !default;
 			display: block; // required for overflow-x: auto to work
 			overflow-x: auto;
 		}
+		// Do the same if JS has added a responsive-table class
+		&.scrolling-table {
+			display: block; // required for overflow-x: auto to work
+			overflow-x: auto;
+		}
 	}
 	thead, th, .table-subhead {
 		page-break-after: avoid;
