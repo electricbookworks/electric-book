@@ -8,11 +8,12 @@
 // and does some housekeeping (e.g. deleting old last-location bookmarks).
 // It then reads bookmarks from local storage, and marks the
 // relevant bookmarked elements on the page with attributes.
-// It then creates a list of bookmarks to show to the user,
-// and makes it possible for users to tap elements to bookmark them.
+// It then creates a list of bookmarks to show to the user.
+// It makes it possible for users to select text in elements to bookmark them.
 // It listens for new user bookmarks, and updates the bookmark list
 // when a user places a new bookmark.
 // It also saves a 'last location' bookmark when a user leaves a page.
+
 // It gives each session an ID, which is a timestamp.
 // This 'sessionDate' is stored in session storage, and with each
 // bookmark in local storage. For the 'last location' bookmarks,
@@ -47,6 +48,8 @@ var ebBookmarkableElements = '#content [id]';
 function ebBookmarksSupport() {
     'use strict';
     if (window.hasOwnProperty('IntersectionObserver')
+            && window.getSelection
+            && window.getSelection().toString
             && window.localStorage
             && Storage !== 'undefined') {
         return true;
@@ -549,7 +552,10 @@ function ebBookmarksToggleButtonOnElement(element) {
     var historyIcon = document.querySelector('.history-icon');
 
     // Get the type of bookmark we're setting
-    var bookmarkType = element.getAttribute('data-bookmark-type');
+    var bookmarkType = '';
+    if (element.getAttribute('data-bookmark-type')) {
+        bookmarkType = element.getAttribute('data-bookmark-type');
+    }
 
     // If the element has no button, add one.
     var button;
@@ -585,7 +591,12 @@ function ebBookmarksToggleButtonOnElement(element) {
         button = element.querySelector('button.bookmark-button');
         button.innerHTML = bookmarkIcon.outerHTML;
 
-    // Otherwise, add a last-location icon button
+    // Otherwise, if we are placing a bookmark (not jsut
+    // showing a pending bookmark icon) add a last-location icon button
+    } else if (element.querySelector('button.bookmark-button')
+            && bookmarkType === '') {
+        button = element.querySelector('button.bookmark-button');
+        button.innerHTML = bookmarkIcon.outerHTML;
     } else {
         button = element.querySelector('button.bookmark-button');
         button.innerHTML = historyIcon.outerHTML;
@@ -649,7 +660,6 @@ function ebBookmarksAddButtons(elements, action) {
 
     // If an action is specified e.g. 'click',
     // add the button when an element is clicked.
-    // Otherwise, add the button to all bookmarkable elements.
     if (action) {
         elements.forEach(function (element) {
             element.addEventListener(action, function (event) {
@@ -657,10 +667,6 @@ function ebBookmarksAddButtons(elements, action) {
                 // (not necessarily the clicked element, which might be a child).
                 ebBookmarksToggleButtonOnElement(event.currentTarget);
             });
-        });
-    } else {
-        elements.forEach(function (element) {
-            ebBookmarksToggleButtonOnElement(element);
         });
     }
 }
@@ -726,6 +732,44 @@ function ebBookmarkListsOpenOnClick() {
     bookmarksListHeader.classList.add('bookmarks-list-header-open');
 }
 
+// Always listen for and store user's text selection
+var ebCurrentSelection;
+var ebCurrentSelectionText;
+function ebBookmarksListenForTextSelection() {
+    'use strict';
+    document.onselectionchange = function () {
+        console.log('New selection made');
+        ebCurrentSelection = document.getSelection();
+        ebCurrentSelectionText = document.getSelection().toString();
+
+        // If the browser supports anchorNode, use that
+        // to get the starting element, otherwise second prize
+        // we use the focusNode, where the selection ends
+        // (IE supports focusNode but maybe not anchorNode)
+        var selectedElement;
+        if (window.getSelection().anchorNode) {
+            selectedElement = window.getSelection().anchorNode;
+        } else {
+            selectedElement = window.getSelection().focusNode;
+        }
+        if (typeof selectedElement === 'object') {
+            selectedElement = selectedElement.parentElement;
+        }
+        var bookmarkableElement = selectedElement.closest('[id]');
+
+        // Mark the element as pending a bookmark, so that
+        // in CSS we can show the bookmark button
+        if (document.querySelector('.bookmark-pending')) {
+            var previousBookmarkableElement = document.querySelector('.bookmark-pending');
+            previousBookmarkableElement.classList.remove('bookmark-pending');
+        }
+        bookmarkableElement.classList.add('bookmark-pending');
+
+        // Add the bookmark button
+        ebBookmarksToggleButtonOnElement(bookmarkableElement);
+    };
+}
+
 // The main process
 function ebBookmarksProcess() {
     'use strict';
@@ -756,6 +800,9 @@ function ebBookmarksProcess() {
 
     // Check for bookmarks
     ebBookmarksCheckForBookmarks();
+
+    // Listen for text selections for bookmarking
+    ebBookmarksListenForTextSelection();
 
 }
 

@@ -252,6 +252,8 @@ $web-bookmarks: true !default;
         cursor: pointer;
         padding: 0.333em;
         position: absolute; // avoids messing up line-height
+        top: -($line-height-default);
+        right: 0;
         svg {
             width: $bookmark-icon-text-size;
             height: $bookmark-icon-text-size;
@@ -269,13 +271,22 @@ $web-bookmarks: true !default;
         }
     }
 
+    // An element bookmarked or being bookmarked
+    [data-bookmarked="true"],
+    .bookmark-pending {
+
+        // Allow absolute positioning of bookmark button
+        // (is this going to muck up positioning elsewhere?)
+        position: relative;
+    }
+
     // Bookmarkable elements
     // Hide bookmark button unless bookmarked
     // or hovering a parent element.
     .bookmark-button {
         display: none;
     }
-    #content *:hover > .bookmark-button {
+    #content .bookmark-pending > .bookmark-button {
         display: inline-block;
     }
     [data-bookmarked] {
