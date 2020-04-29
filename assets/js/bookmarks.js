@@ -31,7 +31,7 @@
 // 3. [DONE] Apply new click-for-modal bookmark UX.
 // 4. [DONE] Allow multiple user bookmarks.
 // 5. [DONE] Add ability to delete bookmarks, individually or all at once.
-// 6. Change saving on from beforeunload, since mobile browsers don't support it.
+// 6. [DONE] Change saving on from beforeunload, since mobile browsers don't support it.
 // 7. [DONE] Store and compare an index of latest IDs, so in future we can check
 //    if it's is missing any bookmarked IDs. If yes, we know bookmarks have moved.
 // 8. [DONE] Use user-selected text as bookmark description
@@ -801,6 +801,15 @@ function ebBookmarksListenForTextSelection() {
     };
 }
 
+// Set the lastLocation bookmark
+function ebBookmarksSetLastLocation() {
+    'use strict';
+    if (ebBookmarksElementID()) {
+        ebBookmarksSetBookmark('lastLocation',
+                document.getElementById(ebBookmarksElementID()));
+    }
+}
+
 // The main process
 function ebBookmarksProcess() {
     'use strict';
@@ -817,20 +826,19 @@ function ebBookmarksProcess() {
     ebBookmarksOpenOnClick();
     ebBookmarkListsOpenOnClick();
 
-    // Store the last location.
-    // We would prefer to do this only on beforeunload, when user leaves page,
-    // but that isn't supported on many mobile browsers.
-    window.addEventListener('beforeunload', function () {
-        ebBookmarksSetBookmark('lastLocation',
-                document.getElementById(ebBookmarksElementID()));
-    });
-
     // Mark which elements are available for bookmarking
     ebBookmarksMarkVisibleElements(document.querySelectorAll(ebBookmarkableElements));
     ebBookmarksAddButtons(document.querySelectorAll(ebBookmarkableElements));
 
     // Check for bookmarks
     ebBookmarksCheckForBookmarks();
+
+    // Store the last location.
+    // We might have done this on beforeunload, when user leaves page,
+    // but that isn't supported on many mobile browsers, and may
+    // prevent browsers from using in-memory page navigation caches.
+    // So we set the lastLocation every 5 seconds.
+    window.setInterval(ebBookmarksSetLastLocation, 5000);
 
     // Listen for text selections for bookmarking
     ebBookmarksListenForTextSelection();
