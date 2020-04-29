@@ -34,7 +34,8 @@
 // 6. Change saving on from beforeunload, since mobile browsers don't support it.
 // 7. [DONE] Store and compare an index of latest IDs, so in future we can check
 //    if it's is missing any bookmarked IDs. If yes, we know bookmarks have moved.
-// 8. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
+// 8. [DONE] Use user-selected text as bookmark description
+// X. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
 
 // Options
 // --------------------------------------
@@ -42,6 +43,10 @@
 // By default, anything in #content with an ID.
 // Use querySelector strings.
 var ebBookmarkableElements = '#content [id]';
+
+// Initialise global variables for general use
+var ebCurrentSelection;
+var ebCurrentSelectionText;
 
 // Disable bookmarks on browsers that don't support
 // what we need to provide them.
@@ -538,7 +543,7 @@ function ebBookmarkMarkBookmarkedElement(element) {
 function ebBookmarksListenForClicks(button) {
     'use strict';
     button.addEventListener('click', function () {
-        ebBookmarksSetBookmark('userBookmark', button.parentNode);
+        ebBookmarksSetBookmark('userBookmark', button.parentNode, ebCurrentSelectionText);
         ebBookmarkMarkBookmarkedElement(button.parentNode);
     });
 }
@@ -546,6 +551,11 @@ function ebBookmarksListenForClicks(button) {
 // Add a bookmark button to bookmarkable elements
 function ebBookmarksToggleButtonOnElement(element) {
     'use strict';
+
+    // Exit if no element
+    if (!element) {
+        return;
+    }
 
     // Get the main bookmark icons from the page,
     var bookmarkIcon = document.querySelector('.bookmark-icon');
@@ -733,8 +743,6 @@ function ebBookmarkListsOpenOnClick() {
 }
 
 // Always listen for and store user's text selection
-var ebCurrentSelection;
-var ebCurrentSelectionText;
 function ebBookmarksListenForTextSelection() {
     'use strict';
     document.onselectionchange = function () {
@@ -763,7 +771,9 @@ function ebBookmarksListenForTextSelection() {
             var previousBookmarkableElement = document.querySelector('.bookmark-pending');
             previousBookmarkableElement.classList.remove('bookmark-pending');
         }
-        bookmarkableElement.classList.add('bookmark-pending');
+        if (bookmarkableElement) {
+            bookmarkableElement.classList.add('bookmark-pending');
+        }
 
         // Add the bookmark button
         ebBookmarksToggleButtonOnElement(bookmarkableElement);
