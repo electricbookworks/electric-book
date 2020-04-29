@@ -386,11 +386,17 @@ function ebBookmarksCheckForBookmarks() {
 function ebBookmarksDeleteBookmark(bookmark) {
     'use strict';
 
-    // Delete from local storage
-    localStorage.removeItem(bookmark.key);
+    // Ask user to confirm
+    var userConfirmsDelete =
+            window.confirm(locales[pageLanguage].bookmarks['delete-bookmark-warning']);
 
-    // Remove the entry from the list
-    ebBookmarksCheckForBookmarks();
+    if (userConfirmsDelete === true) {
+
+        // Delete from local storage
+        localStorage.removeItem(bookmark.key);
+        // Remove the entry from the list
+        ebBookmarksCheckForBookmarks();
+    }
 }
 
 // Delete all bookmarks
@@ -502,7 +508,9 @@ function ebBookmarksSetBookmark(type, element, description) {
         bookmarkKey = 'bookmark-'
                 + ebSlugify(bookmark.bookTitle)
                 + '-'
-                + bookmark.type;
+                + bookmark.type
+                + '-'
+                + Date.now(); // this makes each userBookmark unique
     }
 
     // Add the key to the bookmark object for easy reference
@@ -684,33 +692,47 @@ function ebBookmarksAddButtons(elements, action) {
 // Open the modal when the bookmarks button is clicked
 function ebBookmarksOpenOnClick() {
     'use strict';
-    var button = document.querySelector('.bookmarks');
+    var button = document.querySelector('.bookmarks > .bookmark-icon');
     var modal = document.querySelector('.bookmarks-modal');
     button.addEventListener('click', function () {
-        modal.style.display = 'flex';
-        modal.style.zIndex = '100';
 
-        // Create a clickable area to remove modal
-        // First remove any existing clickOuts,
-        // then create a new one.
-        var clickOut;
-        if (document.getElementById('clickOut')) {
-            clickOut = document.getElementById('clickOut');
-            clickOut.remove();
-        }
-        clickOut = document.createElement('div');
-        clickOut.id = "clickOut";
-        clickOut.style.zIndex = '99';
-        clickOut.style.position = 'fixed';
-        clickOut.style.top = '0';
-        clickOut.style.right = '0';
-        clickOut.style.bottom = '0';
-        clickOut.style.left = '0';
-        document.body.insertAdjacentElement('afterbegin', clickOut);
-        clickOut.addEventListener('click', function () {
+        // If the modal is open, close it
+        if (document.querySelector('[data-bookmark-modal="open"]')) {
             modal.style.display = 'none';
-            clickOut.remove();
-        });
+            modal.setAttribute('data-bookmark-modal', 'closed');
+            var clickOut;
+            if (document.getElementById('clickOut')) {
+                clickOut = document.getElementById('clickOut');
+                clickOut.remove();
+            }
+        // Otherwise, show it
+        } else {
+            modal.style.display = 'flex';
+            modal.style.zIndex = '100';
+            modal.setAttribute('data-bookmark-modal', 'open');
+
+            // Create a clickable area to remove modal
+            // First remove any existing clickOuts,
+            // then create a new one.
+            var clickOut;
+            if (document.getElementById('clickOut')) {
+                clickOut = document.getElementById('clickOut');
+                clickOut.remove();
+            }
+            clickOut = document.createElement('div');
+            clickOut.id = "clickOut";
+            clickOut.style.zIndex = '99';
+            clickOut.style.position = 'fixed';
+            clickOut.style.top = '0';
+            clickOut.style.right = '0';
+            clickOut.style.bottom = '0';
+            clickOut.style.left = '0';
+            document.body.insertAdjacentElement('afterbegin', clickOut);
+            clickOut.addEventListener('click', function () {
+                modal.style.display = 'none';
+                clickOut.remove();
+            });
+        }
     });
 }
 
@@ -813,7 +835,6 @@ function ebBookmarksProcess() {
 
     // Listen for text selections for bookmarking
     ebBookmarksListenForTextSelection();
-
 }
 
 // Start bookmarking

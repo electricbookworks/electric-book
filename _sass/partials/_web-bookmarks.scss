@@ -192,9 +192,6 @@ $web-bookmarks: true !default;
                             float: right;
                         }
                         &.bookmarks-delete-all {
-                            position: fixed;
-                            bottom: 1em;
-                            right: 1em;
                             text-align: center;
                             // Don't show if there are no bookmarks listed
                             &:only-child {
