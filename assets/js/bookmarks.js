@@ -35,6 +35,11 @@
 // 7. [DONE] Store and compare an index of latest IDs, so in future we can check
 //    if it's is missing any bookmarked IDs. If yes, we know bookmarks have moved.
 // 8. [DONE] Use user-selected text as bookmark description
+// 9. Prompt user to go last location on arrival
+// 10. Move set-bookmark button to beside selection (grab selection location)
+// 11. Make bookmarked text more prominent, title less so in list
+// 12. Add subheading option to bookmark description (e.g. h2)
+// 13. Add button to copy location to clipboard
 // X. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
 
 // Options
