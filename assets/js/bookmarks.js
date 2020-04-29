@@ -29,7 +29,7 @@
 //    - save lastLocation as session ID
 //    - show user most recent lastLocation whose session ID is *not* in sessionStorage
 // 3. [DONE] Apply new click-for-modal bookmark UX.
-// 4. Allow multiple user bookmarks.
+// 4. [DONE] Allow multiple user bookmarks.
 // 5. [DONE] Add ability to delete bookmarks, individually or all at once.
 // 6. Change saving on from beforeunload, since mobile browsers don't support it.
 // 7. [DONE] Store and compare an index of latest IDs, so in future we can check
@@ -697,10 +697,10 @@ function ebBookmarksOpenOnClick() {
     button.addEventListener('click', function () {
 
         // If the modal is open, close it
+        var clickOut;
         if (document.querySelector('[data-bookmark-modal="open"]')) {
             modal.style.display = 'none';
             modal.setAttribute('data-bookmark-modal', 'closed');
-            var clickOut;
             if (document.getElementById('clickOut')) {
                 clickOut = document.getElementById('clickOut');
                 clickOut.remove();
@@ -714,7 +714,6 @@ function ebBookmarksOpenOnClick() {
             // Create a clickable area to remove modal
             // First remove any existing clickOuts,
             // then create a new one.
-            var clickOut;
             if (document.getElementById('clickOut')) {
                 clickOut = document.getElementById('clickOut');
                 clickOut.remove();
@@ -768,7 +767,7 @@ function ebBookmarkListsOpenOnClick() {
 function ebBookmarksListenForTextSelection() {
     'use strict';
     document.onselectionchange = function () {
-        console.log('New selection made');
+        // console.log('New selection made');
         ebCurrentSelection = document.getSelection();
         ebCurrentSelectionText = document.getSelection().toString();
 
