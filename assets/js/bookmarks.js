@@ -815,7 +815,7 @@ function ebBookmarksListenForTextSelection() {
 
         var positionX = window.getSelection().getRangeAt(0).getBoundingClientRect().right
                 + window.pageXOffset;
-        var positionY = window.getSelection().getRangeAt(0).getBoundingClientRect().top
+        var positionY = window.getSelection().getRangeAt(0).getBoundingClientRect().bottom
                 + window.pageYOffset;
 
         // Add the bookmark button

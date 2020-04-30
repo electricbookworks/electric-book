@@ -314,11 +314,13 @@ $web-bookmarks: true !default;
 
         // While selecting text, show button at this position,
         // inserted as a property in the style attribute by JS.
+        // The position we get is to the *bottom* of the selection
+        // rectangle, so we move the button up by a $line-height-default.
         // Custom properties not supported by IE, so position
         // will remain static there.
         position: var(--bookmark-button-position);
         left: var(--bookmark-button-position-x);
-        top: var(--bookmark-button-position-y);
+        top: calc(var(--bookmark-button-position-y) - #{$line-height-default});
     }
 
     [data-bookmarked] {
