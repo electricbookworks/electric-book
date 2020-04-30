@@ -562,7 +562,7 @@ function ebBookmarksListenForClicks(button) {
 }
 
 // Add a bookmark button to bookmarkable elements
-function ebBookmarksToggleButtonOnElement(element) {
+function ebBookmarksToggleButtonOnElement(element, positionX, positionY) {
     'use strict';
 
     // Exit if no element
@@ -595,7 +595,7 @@ function ebBookmarksToggleButtonOnElement(element) {
         }
 
         // Append the button
-        element.appendChild(button);
+        element.insertAdjacentElement('afterbegin', button);
 
         // Listen for clicks
         ebBookmarksListenForClicks(button);
@@ -623,6 +623,18 @@ function ebBookmarksToggleButtonOnElement(element) {
     } else {
         button = element.querySelector('button.bookmark-button');
         button.innerHTML = historyIcon.outerHTML;
+    }
+
+    // Position the button after the selection,
+    // on browsers that support custom properties
+    if (positionX && positionY) {
+        button.setAttribute('style',
+                '--bookmark-button-position: absolute;' +
+                '--bookmark-button-position-x: ' + positionX + 'px;' +
+                '--bookmark-button-position-y: ' + positionY + 'px;');
+    } else {
+        // Remove prior position settings, e.g. on a second click
+        button.removeAttribute('style');
     }
 }
 
@@ -801,8 +813,17 @@ function ebBookmarksListenForTextSelection() {
             bookmarkableElement.classList.add('bookmark-pending');
         }
 
+        var positionX = window.getSelection().getRangeAt(0).getBoundingClientRect().right
+                + window.pageXOffset;
+        var positionY = window.getSelection().getRangeAt(0).getBoundingClientRect().top
+                + window.pageYOffset;
+
         // Add the bookmark button
-        ebBookmarksToggleButtonOnElement(bookmarkableElement);
+        if (window.getSelection().isCollapsed) {
+            ebBookmarksToggleButtonOnElement(bookmarkableElement);
+        } else {
+            ebBookmarksToggleButtonOnElement(bookmarkableElement, positionX, positionY);
+        }
     };
 }
 
