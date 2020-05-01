@@ -1,6 +1,6 @@
 /*jslint browser */
 /*globals window, IntersectionObserver, locales, pageLanguage,
-    ebSlugify, ebIDsAssigned, ebFingerprintsAssigned */
+    ebSlugify, ebIDsAssigned, ebFingerprintsAssigned, ebIsPositionRelative */
 
 // A script for managing a user's bookmarks.
 // This script waits for setup.js to give elements IDs.
@@ -40,6 +40,8 @@
 // 11. Make bookmarked text more prominent, title less so in list
 // 12. Add subheading option to bookmark description (e.g. h2)
 // 13. Add button to copy location to clipboard
+// X. Fix bug where button appears off screen on large selections on small screens
+// X. Fix bug where the first text in a list item that contains a list doesn't trigger a bookmark.
 // X. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
 
 // Options
@@ -524,8 +526,12 @@ function ebBookmarksSetBookmark(type, element, description) {
     // Save the bookmark
     localStorage.setItem(bookmarkKey, JSON.stringify(bookmark));
 
-    // Refresh the bookmarks list
-    ebBookmarksCheckForBookmarks();
+    // Refresh the bookmarks list.
+    // No need to refresh for a lastLocation,
+    // since that only applies to the next visit.
+    if (type !== 'lastLocation') {
+        ebBookmarksCheckForBookmarks();
+    }
 }
 
 function ebBookmarkUnmarkBookmarkedElements(element) {
@@ -580,6 +586,11 @@ function ebBookmarksToggleButtonOnElement(element, positionX, positionY) {
         bookmarkType = element.getAttribute('data-bookmark-type');
     }
 
+    // If the user is setting a bookmark, don't use history icon
+    if (element.classList.contains('bookmark-pending')) {
+        bookmarkType = 'userBookmark';
+    }
+
     // If the element has no button, add one.
     var button;
     if (!element.querySelector('button.bookmark-button')) {
@@ -590,8 +601,10 @@ function ebBookmarksToggleButtonOnElement(element, positionX, positionY) {
         // Set icon based on bookmark type
         if (bookmarkType === 'lastLocation') {
             button.innerHTML = historyIcon.outerHTML;
+            button.title = locales[pageLanguage].bookmarks['last-location'];
         } else {
             button.innerHTML = bookmarkIcon.outerHTML;
+            button.title = locales[pageLanguage].bookmarks.bookmark;
         }
 
         // Append the button
@@ -627,7 +640,13 @@ function ebBookmarksToggleButtonOnElement(element, positionX, positionY) {
 
     // Position the button after the selection,
     // on browsers that support custom properties
-    if (positionX && positionY) {
+    if (positionX !== undefined && positionY !== undefined) {
+
+        // If the vertical height is not zero, we have to deduct
+        // the height of the button, to align with the selected text.
+        if (positionY > 0) {
+            positionY = positionY - button.offsetHeight;
+        }
         button.setAttribute('style',
                 '--bookmark-button-position: absolute;' +
                 '--bookmark-button-position-x: ' + positionX + 'px;' +
@@ -745,6 +764,7 @@ function ebBookmarksOpenOnClick() {
             clickOut.style.left = '0';
             document.body.insertAdjacentElement('afterbegin', clickOut);
             clickOut.addEventListener('click', function () {
+                modal.setAttribute('data-bookmark-modal', 'closed');
                 modal.style.display = 'none';
                 clickOut.remove();
             });
@@ -813,15 +833,30 @@ function ebBookmarksListenForTextSelection() {
             bookmarkableElement.classList.add('bookmark-pending');
         }
 
-        var positionX = window.getSelection().getRangeAt(0).getBoundingClientRect().right
-                + window.pageXOffset;
-        var positionY = window.getSelection().getRangeAt(0).getBoundingClientRect().bottom
-                + window.pageYOffset;
-
-        // Add the bookmark button
+        // Add the bookmark button. If no text is selected,
+        // add the button in the default position. Otherwise,
+        // position it at the end of the text selection.
         if (window.getSelection().isCollapsed) {
             ebBookmarksToggleButtonOnElement(bookmarkableElement);
         } else {
+
+            // If the button has a position: relative parent,
+            // we want to set its absolute position based on that parent.
+            // Otherwise, we can set it relative to the page.
+            var positionX, positionY;
+            if (ebIsPositionRelative(bookmarkableElement)) {
+                var relativeParent = ebIsPositionRelative(bookmarkableElement);
+                positionX = window.getSelection().getRangeAt(0).getBoundingClientRect().right
+                        - relativeParent.getBoundingClientRect().left;
+                positionY = window.getSelection().getRangeAt(0).getBoundingClientRect().bottom
+                        - relativeParent.getBoundingClientRect().top;
+            } else {
+                positionX = window.getSelection().getRangeAt(0).getBoundingClientRect().right
+                        + window.pageXOffset;
+                positionY = window.getSelection().getRangeAt(0).getBoundingClientRect().bottom
+                        + window.pageYOffset;
+            }
+
             ebBookmarksToggleButtonOnElement(bookmarkableElement, positionX, positionY);
         }
     };

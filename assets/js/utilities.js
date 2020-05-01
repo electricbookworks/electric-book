@@ -53,3 +53,39 @@ function ebCheckForPage(url) {
     }
     return pageStatus;
 }
+
+// Check if an element has a particular computed style
+function ebHasComputedStyle(element, property, value) {
+    'use strict';
+    var style = getComputedStyle(element);
+
+    // The the element has the property, and no value is specified,
+    // return true. If a value is specified, and it matches, return true.
+    if (style[property]) {
+        if (!value) {
+            return true;
+        } else {
+            if (style[property] === value) {
+                return true;
+            }
+        }
+    }
+}
+
+// Check if an element or its ancestors are position: relative.
+// Useful when positioning an element absolutely.
+// Returns the first relatively positioned parent.
+// Effectively equivalent to HTMLElement.offsetParent,
+// but returns false, not BODY, if no relative parent.
+function ebIsPositionRelative(element) {
+    if (ebHasComputedStyle(element, 'position', 'relative')) {
+        return element;
+    } else {
+        if (element.tagName !== 'BODY') {
+            return ebIsPositionRelative(element.parentElement);
+        } else {
+            return false;
+        }
+    }
+}
+
