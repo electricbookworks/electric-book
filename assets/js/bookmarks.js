@@ -40,7 +40,6 @@
 // 11. Make bookmarked text more prominent, title less so in list
 // 12. Add subheading option to bookmark description (e.g. h2)
 // 13. Add button to copy location to clipboard
-// X. Fix bug where button appears off screen on large selections on small screens
 // X. Fix bug where the first text in a list item that contains a list doesn't trigger a bookmark.
 // X. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
 
@@ -643,10 +642,26 @@ function ebBookmarksToggleButtonOnElement(element, positionX, positionY) {
     if (positionX !== undefined && positionY !== undefined) {
 
         // If the vertical height is not zero, we have to deduct
-        // the height of the button, to align with the selected text.
+        // the height of the button, to align it with the selected text.
         if (positionY > 0) {
             positionY = positionY - button.offsetHeight;
         }
+
+        // To avoid letting the bookmark appear off screen,
+        // don't let the horizontal position exceed the width
+        // of its parent. The browser doesn't give us the button
+        // width in time for us to use it here. So we have to guess.
+        var buttonWidth = '30'; // px
+        if (button.clientWidth > 0) {
+            buttonWidth = button.clientWidth;
+        }
+        var maxHoritozontalPosition = button.parentElement.clientWidth
+                - buttonWidth;
+        if (positionX > maxHoritozontalPosition) {
+            positionX = maxHoritozontalPosition;
+        }
+
+        // Add the positions as CSS variables
         button.setAttribute('style',
                 '--bookmark-button-position: absolute;' +
                 '--bookmark-button-position-x: ' + positionX + 'px;' +
