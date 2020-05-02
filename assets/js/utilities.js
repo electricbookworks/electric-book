@@ -89,17 +89,39 @@ function ebIsPositionRelative(element) {
     }
 }
 
-// Get the nearest preceding sibling element
-function ebNearestPrecedingSibling(element, tagName) {
+// Get the nearest preceding sibling or cousin element
+function ebNearestPrecedingSibling(element, tagName, iterationTrue) {
     'use strict';
-    if (element.previousElementSibling
+
+    // If this is our second pass, and the element matches, return it.
+    if (iterationTrue && element.tagName === tagName) {
+        return element;
+    }
+
+    // Otherwise, if the element's previous sibling matches, return it
+    else if (element.previousElementSibling
                 && element.previousElementSibling.tagName === tagName) {
         return element.previousElementSibling;
-    } else {
+    }
+
+    // Otherwise, check the previous element and then its parents' siblings' children
+    else {
         if (element.previousElementSibling) {
-            return ebNearestPrecedingSibling(element.previousElementSibling, tagName);
+            return ebNearestPrecedingSibling(element.previousElementSibling, tagName, true);
         } else {
-            return false;
+            if (element.parentNode && element.parentNode.previousElementSibling) {
+                return ebNearestPrecedingSibling(element.parentNode.previousElementSibling.lastElementChild, tagName, true);
+            } else {
+                return false;
+            }
         }
     }
+}
+
+// Extend the String prototype to allow a regex lastIndexOf
+// https://stackoverflow.com/a/21420210/1781075
+String.prototype.lastIndexOfRegex = function (regex, fromIndex) {
+    var str = fromIndex ? this.substring(0, fromIndex) : this;
+    var match = str.match(regex);
+    return match ? str.lastIndexOf(match[match.length-1]) : -1;
 }

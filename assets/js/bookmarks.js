@@ -38,8 +38,8 @@
 // 8. [DONE] Use user-selected text as bookmark description
 // 9. [DONE] Move set-bookmark button to beside selection
 // 10. [DONE] Prompt user to go last location on arrival
-// 11. Make bookmarked text more prominent, title less so in list
-// 12. Add subheading option to bookmark description (e.g. h2)
+// 11. [DONE] Make bookmarked text more prominent, title less so in list
+// 12. [DONE] Add subheading option to bookmark description (e.g. h2)
 // 13. Add button to copy location to clipboard
 // X. Fix bug where the first text in a list item that contains a list doesn't trigger a bookmark.
 // X. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
@@ -316,7 +316,9 @@ function ebBookmarksListBookmarks(bookmarks) {
         if (bookmark.pageTitle) {
             var page = document.createElement('span');
             page.classList.add('bookmark-page');
-            page.innerHTML = bookmark.pageTitle;
+            page.innerHTML = '<a href="' + bookmark.location + '">'
+                    + bookmark.pageTitle
+                    + '</a>';
             listItem.appendChild(page);
         }
 
@@ -324,7 +326,9 @@ function ebBookmarksListBookmarks(bookmarks) {
         if (bookmark.sectionHeading) {
             var sectionHeading = document.createElement('span');
             sectionHeading.classList.add('bookmark-section');
-            sectionHeading.innerHTML = bookmark.sectionHeading;
+            sectionHeading.innerHTML = '<a href="' + bookmark.location + '">'
+                    + bookmark.sectionHeading
+                    + '</a>';
             listItem.appendChild(sectionHeading);
         }
 
@@ -336,17 +340,14 @@ function ebBookmarksListBookmarks(bookmarks) {
             listItem.appendChild(description);
         }
 
-        // Add title span
-        var title = document.createElement('span');
-        title.classList.add('bookmark-title');
-        listItem.appendChild(title);
-
-        // Add link
-        if (bookmark.location && bookmark.bookTitle) {
-            var link = document.createElement('a');
-            link.href = bookmark.location;
-            link.innerHTML = bookmark.bookTitle;
-            title.appendChild(link);
+        // Add title span with link
+        if (bookmark.bookTitle) {
+            var title = document.createElement('span');
+            title.classList.add('bookmark-title');
+            title.innerHTML = '<a href="' + bookmark.location + '">'
+                    + bookmark.bookTitle
+                    + '</a>';
+            listItem.appendChild(title);
         }
 
         // Format the bookmark date from sessionDate,
@@ -364,7 +365,9 @@ function ebBookmarksListBookmarks(bookmarks) {
                 });
             var date = document.createElement('span');
             date.classList.add('bookmark-date');
-            date.innerHTML = readableSessionDate;
+            date.innerHTML = '<a href="' + bookmark.location + '">'
+                    + readableSessionDate
+                    + '</a>';
             listItem.appendChild(date);
         }
 
@@ -538,18 +541,18 @@ function ebBookmarksSetBookmark(type, element, description) {
     'use strict';
 
     // Initialise some vars we'll use below
-    var indexOfLastSpace, indexOfLastFullStop, elideFrom;
+    var indexOfLastPunctuation, indexOfLastFullStop, elideFrom;
 
     // Get fallback description text
     if (!description) {
 
         // Use the first 50 characters of the text
-        description = element.innerText.slice(0, 50);
+        description = element.textContent.slice(0, 50);
         // Remove from the last space, to end on a full word
-        indexOfLastSpace = description.lastIndexOf(' ');
+        indexOfLastPunctuation = description.lastIndexOfRegex(/[\s:;,]/gi);
         indexOfLastFullStop = description.lastIndexOf('.');
-        elideFrom = indexOfLastSpace;
-        if (indexOfLastFullStop > indexOfLastSpace) {
+        elideFrom = indexOfLastPunctuation - 1;
+        if (indexOfLastFullStop > indexOfLastPunctuation) {
             elideFrom = indexOfLastFullStop;
         }
         description = description.slice(0, elideFrom) + ' …';
@@ -560,39 +563,51 @@ function ebBookmarksSetBookmark(type, element, description) {
     // If an h2, check for an h3, up to h4 sections. Otherwise no section heading.
     var pageTitle, sectionHeadingElement, sectionHeading;
     if (document.querySelector('h1')) {
-        pageTitle = document.querySelector('h1').innerText;
-        if (ebNearestPrecedingSibling(element, 'H2') || element.closest('h2')) {
-            sectionHeadingElement = ebNearestPrecedingSibling(element, 'H2')
-                    || element.closest('h2');
-            sectionHeading = sectionHeadingElement.innerText;
+        pageTitle = document.querySelector('h1').textContent;
+        if (ebNearestPrecedingSibling(element, 'H2')) {
+            sectionHeadingElement = ebNearestPrecedingSibling(element, 'H2');
+            sectionHeading = sectionHeadingElement.textContent;
+
+            // If the sectionHeading contains links (e.g. it's an accordion header)
+            // only grab the textContent of the first link
+            if (sectionHeadingElement.querySelector('a')) {
+                sectionHeadingElement = sectionHeadingElement.querySelector('a');
+                sectionHeading = sectionHeadingElement.textContent;
+            }
         }
     } else if (document.querySelector('h2')) {
-        pageTitle = document.querySelector('h2').innerText;
-        if (ebNearestPrecedingSibling(element, 'H3') || element.closest('h3')) {
-            sectionHeadingElement = ebNearestPrecedingSibling(element, 'H3')
-                    || element.closest('h3');
-            sectionHeading = sectionHeadingElement.innerText;
+        pageTitle = document.querySelector('h2').textContent;
+        if (ebNearestPrecedingSibling(element, 'H3')) {
+            sectionHeadingElement = ebNearestPrecedingSibling(element, 'H3');
+            sectionHeading = sectionHeadingElement.textContent;
+            if (sectionHeadingElement.querySelector('a')) {
+                sectionHeadingElement = sectionHeadingElement.querySelector('a');
+                sectionHeading = sectionHeadingElement.textContent;
+            }
         }
     } else if (document.querySelector('h3')) {
-        pageTitle = document.querySelector('h3').innerText;
-        if (ebNearestPrecedingSibling(element, 'H4') || element.closest('h4')) {
-            sectionHeadingElement = ebNearestPrecedingSibling(element, 'H4')
-                    || element.closest('h4');
-            sectionHeading = sectionHeadingElement.innerText;
+        pageTitle = document.querySelector('h3').textContent;
+        if (ebNearestPrecedingSibling(element, 'H4')) {
+            sectionHeadingElement = ebNearestPrecedingSibling(element, 'H4');
+            sectionHeading = sectionHeadingElement.textContent;
+            if (sectionHeadingElement.querySelector('a')) {
+                sectionHeadingElement = sectionHeadingElement.querySelector('a');
+                sectionHeading = sectionHeadingElement.textContent;
+            }
         }
     } else {
         pageTitle = document.title;
         sectionHeading = '';
     }
 
-    // Trim the section heading to 30 characters.
+    // Trim the section heading to 50 characters of textContent.
     // Remove from the last space, to end on a full word.
-    if (sectionHeading && sectionHeading.length > 30) {
-        sectionHeading = sectionHeading.slice(0, 30);
-        indexOfLastSpace = sectionHeading.lastIndexOf(' ');
+    if (sectionHeading && sectionHeading.length > 50) {
+        sectionHeading = sectionHeading.slice(0, 50);
+        indexOfLastPunctuation = sectionHeading.lastIndexOfRegex(/[\s:;,]/gi);
         indexOfLastFullStop = sectionHeading.lastIndexOf('.');
-        var elideFrom = indexOfLastSpace;
-        if (indexOfLastFullStop > indexOfLastSpace) {
+        elideFrom = indexOfLastPunctuation - 1;
+        if (indexOfLastFullStop > indexOfLastPunctuation) {
             elideFrom = indexOfLastFullStop;
         }
         sectionHeading = sectionHeading.slice(0, elideFrom) + ' …';

@@ -166,6 +166,10 @@ $web-bookmarks: true !default;
                         margin-bottom: 2em;
                         &:last-child { margin-bottom: 0; }
 
+                        a {
+                            color: $color-links;
+                        }
+
                         .bookmark-title {
                             color: $bookmark-text-color-secondary;
                             font-family: $font-text-secondary;
@@ -176,13 +180,9 @@ $web-bookmarks: true !default;
                             &::after {
                                 color: $bookmark-text-color-secondary;
                                 content: "\2022";
-                                font-size: 0.9em;
+                                font-size: 1rem;
                                 font-style: normal;
                                 margin: 0 0.25em;
-                            }
-
-                            a {
-                                color: $color-links;
                             }
                         }
 
@@ -207,7 +207,10 @@ $web-bookmarks: true !default;
                             font-weight: 600;
 
                             &::before {
+                                color: $bookmark-text-color-secondary;
                                 content: "\2022";
+                                font-size: 1rem;
+                                font-style: normal;
                                 margin: 0 0.25em;
                             }
                         }
