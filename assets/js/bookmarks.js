@@ -124,11 +124,21 @@ function ebBookmarksFingerprintID(elementID) {
 function ebBookmarksLastLocationPrompt(link) {
     'use strict';
 
-    // To show only on the first page, on arrival,
-    // we check if the history length is less than two.
-    // Some browsers start at 0, so the prompt will show
-    // on the first two pages on arrival.
-    if (link && window.history.length < 2
+    // We need to detect if the user has only just arrived.
+    // Checking the history length is unreliable, because
+    // browsers differ. So we use sessionStorage to store
+    // whether the user has just arrived.
+    var newSession;
+    if (sessionStorage.getItem('sessionUnderway')) {
+        newSession = false;
+    } else {
+        newSession = true;
+        sessionStorage.setItem('sessionUnderway', true)
+    }
+
+    // If there is a link to go to, this is a new session,
+    // and the prompt string has been set in locales, then prompt.
+    if (link && newSession
             && locales[pageLanguage].bookmarks['last-location-prompt']) {
 
 
