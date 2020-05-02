@@ -162,14 +162,16 @@ $web-bookmarks: true !default;
                     li {
                         display: block; // overrides masthead ul styles
                         font-size: 0.9em;
-                        line-height: 1.4;
+                        line-height: 1;
                         margin-bottom: 2em;
                         &:last-child { margin-bottom: 0; }
 
                         .bookmark-title {
+                            color: $bookmark-text-color-secondary;
                             font-family: $font-text-secondary;
-                            font-size: 1.1em;
-                            font-weight: 600;
+                            font-size: 0.7em;
+                            letter-spacing: 0.05em;
+                            text-transform: uppercase;
 
                             &::after {
                                 color: $bookmark-text-color-secondary;
@@ -187,19 +189,35 @@ $web-bookmarks: true !default;
                         .bookmark-date {
                             color: $bookmark-text-color-secondary;
                             font-family: $font-text-secondary;
-                            font-size: 0.8em;
+                            font-size: 0.7em;
                             letter-spacing: 0.05em;
                             text-transform: uppercase;
                         }
 
                         .bookmark-page {
-                            display: block;
+                            display: inline-block;
                             font-family: $font-text-secondary;
+                            font-size: 0.9em;
+                            font-weight: 600;
+                        }
+
+                        .bookmark-section {
+                            font-family: $font-text-secondary;
+                            font-size: 0.9em;
+                            font-weight: 600;
+
+                            &::before {
+                                content: "\2022";
+                                margin: 0 0.25em;
+                            }
                         }
 
                         .bookmark-description {
+                            display: block;
                             font-family: $font-text-main;
                             font-size: 0.9em;
+                            line-height: 1.2;
+                            margin: ($line-height-default * 0.25) 0;
                         }
 
                         .bookmark-delete {

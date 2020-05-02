@@ -1,6 +1,7 @@
 /*jslint browser */
 /*globals window, IntersectionObserver, locales, pageLanguage,
-    ebSlugify, ebIDsAssigned, ebFingerprintsAssigned, ebIsPositionRelative */
+    ebSlugify, ebIDsAssigned, ebFingerprintsAssigned, ebIsPositionRelative,
+    ebNearestPrecedingSibling */
 
 // A script for managing a user's bookmarks.
 // This script waits for setup.js to give elements IDs.
@@ -133,7 +134,7 @@ function ebBookmarksLastLocationPrompt(link) {
         newSession = false;
     } else {
         newSession = true;
-        sessionStorage.setItem('sessionUnderway', true)
+        sessionStorage.setItem('sessionUnderway', true);
     }
 
     // If there is a link to go to, this is a new session,
@@ -311,51 +312,61 @@ function ebBookmarksListBookmarks(bookmarks) {
         var listItem = document.createElement('li');
         listItem.setAttribute('data-bookmark-type', bookmark.type);
 
+        // Add the page title
+        if (bookmark.pageTitle) {
+            var page = document.createElement('span');
+            page.classList.add('bookmark-page');
+            page.innerHTML = bookmark.pageTitle;
+            listItem.appendChild(page);
+        }
+
+        // Add the section heading, if any
+        if (bookmark.sectionHeading) {
+            var sectionHeading = document.createElement('span');
+            sectionHeading.classList.add('bookmark-section');
+            sectionHeading.innerHTML = bookmark.sectionHeading;
+            listItem.appendChild(sectionHeading);
+        }
+
+        // Add the description
+        if (bookmark.description) {
+            var description = document.createElement('span');
+            description.classList.add('bookmark-description');
+            description.innerHTML = bookmark.description;
+            listItem.appendChild(description);
+        }
+
         // Add title span
         var title = document.createElement('span');
         title.classList.add('bookmark-title');
         listItem.appendChild(title);
 
         // Add link
-        var link = document.createElement('a');
-        link.href = bookmark.location;
-        link.innerHTML = bookmark.bookTitle;
-        title.appendChild(link);
-
-        // If the lastLocationLink isn't yet set, set it
-        // because this must be the most recent link.
-        if (bookmark.type === 'lastLocation' && lastLocationLink === undefined) {
-            lastLocationLink = link;
+        if (bookmark.location && bookmark.bookTitle) {
+            var link = document.createElement('a');
+            link.href = bookmark.location;
+            link.innerHTML = bookmark.bookTitle;
+            title.appendChild(link);
         }
 
         // Format the bookmark date from sessionDate,
         // then add it to the listItem. Leave locale undefined,
         // so that the user gets their default locale's format.
-        var readableSessionDate = new Date(Number(bookmark.sessionDate))
-            .toLocaleDateString(undefined, {
-                // weekday: 'long',
-                // hour: 'numeric',
-                // minute: 'numeric',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-        var date = document.createElement('span');
-        date.classList.add('bookmark-date');
-        date.innerHTML = readableSessionDate;
-        listItem.appendChild(date);
-
-        // Add the page title
-        var page = document.createElement('span');
-        page.classList.add('bookmark-page');
-        page.innerHTML = bookmark.pageTitle;
-        listItem.appendChild(page);
-
-        // Add the description
-        var description = document.createElement('span');
-        description.classList.add('bookmark-description');
-        description.innerHTML = bookmark.description;
-        listItem.appendChild(description);
+        if (bookmark.sessionDate) {
+            var readableSessionDate = new Date(Number(bookmark.sessionDate))
+                .toLocaleDateString(undefined, {
+                    // weekday: 'long',
+                    // hour: 'numeric',
+                    // minute: 'numeric',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            var date = document.createElement('span');
+            date.classList.add('bookmark-date');
+            date.innerHTML = readableSessionDate;
+            listItem.appendChild(date);
+        }
 
         // Add a delete button and listen for clicks on it
         var deleteButton = document.createElement('button');
@@ -371,6 +382,12 @@ function ebBookmarksListBookmarks(bookmarks) {
             lastLocationsList.appendChild(listItem);
         } else {
             bookmarksList.appendChild(listItem);
+        }
+
+        // If the lastLocationLink isn't yet set, set it because
+        // this iteration in the loop must be the most recent lastLocation.
+        if (bookmark.type === 'lastLocation' && lastLocationLink === undefined) {
+            lastLocationLink = bookmark.location;
         }
     });
 
@@ -520,19 +537,65 @@ function ebBookmarksElementID(element) {
 function ebBookmarksSetBookmark(type, element, description) {
     'use strict';
 
+    // Initialise some vars we'll use below
+    var indexOfLastSpace, indexOfLastFullStop, elideFrom;
+
     // Get fallback description text
     if (!description) {
 
         // Use the first 50 characters of the text
         description = element.innerText.slice(0, 50);
         // Remove from the last space, to end on a full word
-        var indexOfLastSpace = description.lastIndexOf(' ');
-        var indexOfLastFullStop = description.lastIndexOf('.');
-        var elideFrom = indexOfLastSpace;
+        indexOfLastSpace = description.lastIndexOf(' ');
+        indexOfLastFullStop = description.lastIndexOf('.');
+        elideFrom = indexOfLastSpace;
         if (indexOfLastFullStop > indexOfLastSpace) {
             elideFrom = indexOfLastFullStop;
         }
         description = description.slice(0, elideFrom) + ' …';
+    }
+
+    // Get the page heading and the most recent section heading, if any.
+    // If the page starts with an h1, check for an h2.
+    // If an h2, check for an h3, up to h4 sections. Otherwise no section heading.
+    var pageTitle, sectionHeadingElement, sectionHeading;
+    if (document.querySelector('h1')) {
+        pageTitle = document.querySelector('h1').innerText;
+        if (ebNearestPrecedingSibling(element, 'H2') || element.closest('h2')) {
+            sectionHeadingElement = ebNearestPrecedingSibling(element, 'H2')
+                    || element.closest('h2');
+            sectionHeading = sectionHeadingElement.innerText;
+        }
+    } else if (document.querySelector('h2')) {
+        pageTitle = document.querySelector('h2').innerText;
+        if (ebNearestPrecedingSibling(element, 'H3') || element.closest('h3')) {
+            sectionHeadingElement = ebNearestPrecedingSibling(element, 'H3')
+                    || element.closest('h3');
+            sectionHeading = sectionHeadingElement.innerText;
+        }
+    } else if (document.querySelector('h3')) {
+        pageTitle = document.querySelector('h3').innerText;
+        if (ebNearestPrecedingSibling(element, 'H4') || element.closest('h4')) {
+            sectionHeadingElement = ebNearestPrecedingSibling(element, 'H4')
+                    || element.closest('h4');
+            sectionHeading = sectionHeadingElement.innerText;
+        }
+    } else {
+        pageTitle = document.title;
+        sectionHeading = '';
+    }
+
+    // Trim the section heading to 30 characters.
+    // Remove from the last space, to end on a full word.
+    if (sectionHeading && sectionHeading.length > 30) {
+        sectionHeading = sectionHeading.slice(0, 30);
+        indexOfLastSpace = sectionHeading.lastIndexOf(' ');
+        indexOfLastFullStop = sectionHeading.lastIndexOf('.');
+        var elideFrom = indexOfLastSpace;
+        if (indexOfLastFullStop > indexOfLastSpace) {
+            elideFrom = indexOfLastFullStop;
+        }
+        sectionHeading = sectionHeading.slice(0, elideFrom) + ' …';
     }
 
     // Create a bookmark object
@@ -540,7 +603,8 @@ function ebBookmarksSetBookmark(type, element, description) {
         sessionDate: ebBookmarksSessionDate(),
         type: type,
         bookTitle: document.body.dataset.title,
-        pageTitle: document.title,
+        pageTitle: pageTitle,
+        sectionHeading: sectionHeading,
         description: description, // potential placeholder for a user-input description
         id: ebBookmarksElementID(element),
         fingerprint: element.getAttribute('data-fingerprint'),

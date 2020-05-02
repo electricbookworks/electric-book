@@ -89,3 +89,17 @@ function ebIsPositionRelative(element) {
     }
 }
 
+// Get the nearest preceding sibling element
+function ebNearestPrecedingSibling(element, tagName) {
+    'use strict';
+    if (element.previousElementSibling
+                && element.previousElementSibling.tagName === tagName) {
+        return element.previousElementSibling;
+    } else {
+        if (element.previousElementSibling) {
+            return ebNearestPrecedingSibling(element.previousElementSibling, tagName);
+        } else {
+            return false;
+        }
+    }
+}
