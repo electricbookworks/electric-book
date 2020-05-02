@@ -36,7 +36,7 @@
 //    if it's is missing any bookmarked IDs. If yes, we know bookmarks have moved.
 // 8. [DONE] Use user-selected text as bookmark description
 // 9. [DONE] Move set-bookmark button to beside selection
-// 10. Prompt user to go last location on arrival
+// 10. [DONE] Prompt user to go last location on arrival
 // 11. Make bookmarked text more prominent, title less so in list
 // 12. Add subheading option to bookmark description (e.g. h2)
 // 13. Add button to copy location to clipboard
@@ -117,6 +117,34 @@ function ebBookmarksFingerprintID(elementID) {
         }
     } else {
         return false;
+    }
+}
+
+// Prompt user to go to last location
+function ebBookmarksLastLocationPrompt(link) {
+    'use strict';
+
+    // To show only on the first page, on arrival,
+    // we check if the history length is less than two.
+    // Some browsers start at 0, so the prompt will show
+    // on the first two pages on arrival.
+    if (link && window.history.length < 2
+            && locales[pageLanguage].bookmarks['last-location-prompt']) {
+
+
+        var prompt = document.createElement('div');
+        prompt.classList.add('last-location-prompt');
+        prompt.innerHTML = '<a href="' + link + '">'
+                + locales[pageLanguage].bookmarks['last-location-prompt']
+                + '</a>';
+        var bookmarks = document.querySelector('div.bookmarks');
+        bookmarks.appendChild(prompt);
+
+        // Add class to animate by. Wait a few milliseconds
+        // so that CSS transitions will work.
+        window.setTimeout(function () {
+            prompt.classList.add('last-location-prompt-open');
+        }, 50);
     }
 }
 
@@ -253,6 +281,9 @@ function ebBookmarksListBookmarks(bookmarks) {
         lastLocationsList.innerHTML = '';
     }
 
+    // A variable to store the first, i.e. most recent, last-location link
+    var lastLocationLink;
+
     // Add all the bookmarks to it
     bookmarks.forEach(function (bookmark) {
 
@@ -280,6 +311,12 @@ function ebBookmarksListBookmarks(bookmarks) {
         link.href = bookmark.location;
         link.innerHTML = bookmark.bookTitle;
         title.appendChild(link);
+
+        // If the lastLocationLink isn't yet set, set it
+        // because this must be the most recent link.
+        if (bookmark.type === 'lastLocation' && lastLocationLink === undefined) {
+            lastLocationLink = link;
+        }
 
         // Format the bookmark date from sessionDate,
         // then add it to the listItem. Leave locale undefined,
@@ -345,6 +382,8 @@ function ebBookmarksListBookmarks(bookmarks) {
         ebBookmarksDeleteAllBookmarks('lastLocation');
     });
 
+    // Prompt the user about their last location
+    ebBookmarksLastLocationPrompt(lastLocationLink);
 }
 
 // Check if a page has bookmarks

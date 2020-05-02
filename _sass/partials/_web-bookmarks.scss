@@ -346,4 +346,33 @@ $web-bookmarks: true !default;
             }
         }
     }
+
+    .last-location-prompt {
+        align-items: center;
+        background: $color-background;
+        border: $rule-thickness solid $bookmark-icon-outline-color-active;
+        border-radius: $button-border-radius 0 0 $button-border-radius;
+        display: flex;
+        float: left;
+        font-size: 1rem;
+        height: $line-height-default;
+        line-height: $line-height-default;
+        margin: ($bookmark-icon-text-size / 8) -0.3em 0.25rem 0; // must touch icon, magic number
+        padding: 0.1rem 0.5rem;
+
+        a {
+            color: $color-links;
+            white-space: nowrap;
+        }
+
+        // Transition
+        transition: transform 0.5s, z-index 1.5s;
+        transform: translateX(100%);
+        z-index: -1; // behind bookmark till unfurled
+
+        &.last-location-prompt-open {
+            transform: translateX(0);
+            z-index: 0;
+        }
+    }
 }
