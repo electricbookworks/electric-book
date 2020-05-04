@@ -40,8 +40,9 @@
 // 10. [DONE] Prompt user to go last location on arrival
 // 11. [DONE] Make bookmarked text more prominent, title less so in list
 // 12. [DONE] Add subheading option to bookmark description (e.g. h2)
-// 13. Add button to copy location to clipboard
-// X. Fix bug where the first text in a list item that contains a list doesn't trigger a bookmark.
+// X. Add ability to share, e.g. button to copy location. Feature needs shaping.
+// X. [CAN'T REPLICATE] Fix bug where the first text in a list item that contains
+//    a list doesn't trigger a bookmark.
 // X. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
 
 // Options
