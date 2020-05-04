@@ -338,8 +338,11 @@ $web-bookmarks: true !default;
         // inserted as a property in the style attribute by JS.
         // Custom properties not supported by IE, so position
         // will remain static there.
+        // We add space to the left of the button because
+        // on mobile, the button is otherwise too close to the
+        // text-selection tool and can't be tapped.
         position: var(--bookmark-button-position);
-        left: var(--bookmark-button-position-x);
+        left: calc(var(--bookmark-button-position-x) + 1em);
         top: var(--bookmark-button-position-y);
 
         // While pending, make button larger for easier pressing
