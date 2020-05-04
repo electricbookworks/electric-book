@@ -93,29 +93,34 @@ function ebIsPositionRelative(element) {
 function ebNearestPrecedingSibling(element, tagName, iterationTrue) {
     'use strict';
 
-    // If this is our second pass, and the element matches, return it.
-    if (iterationTrue && element.tagName === tagName) {
-        return element;
-    }
+    if (element) {
+        // If this is our second pass, and the element matches, return it.
+        if (iterationTrue && element.tagName === tagName) {
+            return element;
+        }
 
-    // Otherwise, if the element's previous sibling matches, return it
-    else if (element.previousElementSibling
-                && element.previousElementSibling.tagName === tagName) {
-        return element.previousElementSibling;
-    }
+        // Otherwise, if the element's previous sibling matches, return it
+        else if (element.previousElementSibling
+                    && element.previousElementSibling.tagName === tagName) {
+            return element.previousElementSibling;
+        }
 
-    // Otherwise, check the previous element and then its parents' siblings' children
-    else {
-        if (element.previousElementSibling) {
-            return ebNearestPrecedingSibling(element.previousElementSibling, tagName, true);
-        } else {
-            if (element.parentNode && element.parentNode.previousElementSibling) {
-                return ebNearestPrecedingSibling(element.parentNode.previousElementSibling.lastElementChild, tagName, true);
+        // Otherwise, check the previous element and then its parents' siblings' children
+        else {
+            if (element.previousElementSibling) {
+                return ebNearestPrecedingSibling(element.previousElementSibling, tagName, true);
             } else {
-                return false;
+                if (element.parentNode && element.parentNode.previousElementSibling) {
+                    return ebNearestPrecedingSibling(element.parentNode.previousElementSibling.lastElementChild, tagName, true);
+                } else {
+                    return false;
+                }
             }
         }
+    } else {
+        return false;
     }
+
 }
 
 // Extend the String prototype to allow a regex lastIndexOf
