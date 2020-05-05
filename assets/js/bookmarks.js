@@ -157,6 +157,16 @@ function ebBookmarksLastLocationPrompt(link) {
         window.setTimeout(function () {
             prompt.classList.add('last-location-prompt-open');
         }, 50);
+
+        // Let users hide the prompt
+        var closeButton = document.createElement('button');
+        closeButton.innerHTML = '×';
+        prompt.appendChild(closeButton);
+
+        // Listen for clicks on close
+        closeButton.addEventListener('click', function () {
+            prompt.remove();
+        })
     }
 }
 

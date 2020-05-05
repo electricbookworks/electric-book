@@ -398,5 +398,12 @@ $web-bookmarks: true !default;
             transform: translateX(0);
             z-index: 0;
         }
+
+        // Close button
+        button {
+            background-color: transparent;
+            color: $color-links;
+            font-size: 1.5em;
+        }
     }
 }
