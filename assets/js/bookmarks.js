@@ -1,7 +1,7 @@
 /*jslint browser */
 /*globals window, IntersectionObserver, locales, pageLanguage,
     ebSlugify, ebIDsAssigned, ebFingerprintsAssigned, ebIsPositionRelative,
-    ebNearestPrecedingSibling */
+    ebNearestPrecedingSibling, ebTruncatedString */
 
 // A script for managing a user's bookmarks.
 // This script waits for setup.js to give elements IDs.
@@ -557,16 +557,9 @@ function ebBookmarksSetBookmark(type, element, description) {
     // Get fallback description text
     if (!description) {
 
-        // Use the first 50 characters of the text
-        description = element.textContent.slice(0, 50);
-        // Remove from the last space, to end on a full word
-        indexOfLastPunctuation = description.lastIndexOfRegex(/[\s:;,]/gi);
-        indexOfLastFullStop = description.lastIndexOf('.');
-        elideFrom = indexOfLastPunctuation - 1;
-        if (indexOfLastFullStop > indexOfLastPunctuation) {
-            elideFrom = indexOfLastFullStop;
-        }
-        description = description.slice(0, elideFrom) + ' …';
+        // Use the opening characters of the text.
+        // Note that textContent includes line breaks etc.
+        description = ebTruncatedString(element.textContent, 75, ' …');
     }
 
     // Get the page heading and the most recent section heading, if any.
@@ -614,14 +607,7 @@ function ebBookmarksSetBookmark(type, element, description) {
     // Trim the section heading to 50 characters of textContent.
     // Remove from the last space, to end on a full word.
     if (sectionHeading && sectionHeading.length > 50) {
-        sectionHeading = sectionHeading.slice(0, 50);
-        indexOfLastPunctuation = sectionHeading.lastIndexOfRegex(/[\s:;,]/gi);
-        indexOfLastFullStop = sectionHeading.lastIndexOf('.');
-        elideFrom = indexOfLastPunctuation - 1;
-        if (indexOfLastFullStop > indexOfLastPunctuation) {
-            elideFrom = indexOfLastFullStop;
-        }
-        sectionHeading = sectionHeading.slice(0, elideFrom) + ' …';
+        sectionHeading = ebTruncatedString(sectionHeading, 50, ' …');
     }
 
     // Create a bookmark object

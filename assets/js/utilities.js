@@ -130,3 +130,40 @@ String.prototype.lastIndexOfRegex = function (regex, fromIndex) {
     var match = str.match(regex);
     return match ? str.lastIndexOf(match[match.length-1]) : -1;
 }
+
+// Get a truncated string without cutting a word
+function ebTruncatedString(string, characters, suffix) {
+    'use strict';
+
+    // If the string is longer than the allowed characters,
+    // we'll do a careful job of truncating it neatly.
+    if (string.length > characters) {
+
+        // Get a truncated string
+        var truncatedString = string.slice(0, characters);
+
+        // Where is the last space in the truncated string?
+        // We want to elide from that space to get a whole word.
+        var indexOfLastSpace = truncatedString.lastIndexOfRegex(/\s/gi);
+        var elideFrom = indexOfLastSpace;
+        truncatedString = truncatedString.slice(0, elideFrom);
+
+        // We don't want certain punctuation marks at the
+        // end of our nice, neat string. If the neatened, truncated string
+        // ends in one of those characters, chop it off.
+        var unwantedTrailingPunctuation = new RegExp('[:;,]')
+        if (truncatedString.slice(-1).match(unwantedTrailingPunctuation)) {
+            truncatedString = truncatedString.slice(0, elideFrom - 1);
+        }
+
+        // If a suffix was passed to this functio (e.g. ' …')
+        // add it to the end of the string.
+        if (suffix) {
+            truncatedString = truncatedString + suffix;
+        }
+
+        return truncatedString;
+    } else {
+        return string;
+    }
+}
