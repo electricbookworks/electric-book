@@ -3,6 +3,7 @@
 @mixin box() {
     clear: both; // Don't let hanging sidenotes overlap over boxes
     background-color: inherit;
+    border-radius: $box-border-radius;
     box-decoration-break: slice; // no bottom border when box crosses page
     box-sizing: border-box;
     color: inherit;
