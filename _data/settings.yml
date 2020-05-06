@@ -79,7 +79,7 @@ web:
   # Do you want to collapse content sections in chapters on a
   # particular heading level? Default h2, set in accordion.js.
   # Set this to true to enable, or false to disable.
-  accordion: false
+  accordion: true
   # Enable annotation
   # You can have annotation on for development and/or for live.
   # Set each to either true or false

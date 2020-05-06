@@ -9,9 +9,9 @@
 //
 // 1. Use CSS selectors to list the headings that will
 //    define each accordion section, e.g. '#content h2'
-var accordionHeads = '#content h2';
+var accordionHeads = '#content h4';
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content h2:first-of-type';
+var defaultAccordionHead = '#content h4:first-of-type';
 // 3. Auto close last accordion when you open a new one?
 var autoCloseAccordionSections = false;
 // --------------------------------------------------------------
