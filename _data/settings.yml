@@ -84,8 +84,8 @@ web:
   # You can have annotation on for development and/or for live.
   # Set each to either true or false
   annotator:
-    development: false
-    live: false
+    development: true
+    live: true
   # MathJax is activated in _config.yml. Further settings here.
   # At `source` choose local (`local`) MathJax.js or the CDN (`cdn`).
   mathjax:
