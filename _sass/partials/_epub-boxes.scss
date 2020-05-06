@@ -2,6 +2,7 @@
 
 @mixin box($color: $color-light, $border-color: $color-light) {
     background-color: $color;
+    border-radius: $box-border-radius;
     box-sizing: border-box;
     color: inherit;
     font-weight: inherit;
