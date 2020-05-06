@@ -685,7 +685,12 @@ function ebBookmarkMarkBookmarkedElement(element) {
 // Listen for bookmark clicks
 function ebBookmarksListenForClicks(button) {
     'use strict';
-    button.addEventListener('click', function () {
+    button.addEventListener('click', function (event) {
+
+        // Don't let click on bookmark trigger accordion-close etc.
+        event.stopPropagation();
+
+        // Set the bookmark
         ebBookmarksSetBookmark('userBookmark', button.parentNode, ebCurrentSelectionText);
         ebBookmarkMarkBookmarkedElement(button.parentNode);
     });
