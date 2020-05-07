@@ -78,7 +78,7 @@ function ebBookmarksCreateFingerprintIndex() {
     'use strict';
 
     var indexOfBookmarks = {};
-    var fingerprintedElements = document.querySelectorAll('[data-fingerprint');
+    var fingerprintedElements = document.querySelectorAll('[data-fingerprint]');
     fingerprintedElements.forEach(function (element) {
         var elementFingerprint = element.getAttribute('data-fingerprint');
         var elementID = element.id;
