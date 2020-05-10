@@ -53,8 +53,10 @@ function ebNav() {
             // show the menu when we click the link
             menuLink.addEventListener("click", function (ev) {
                 ev.preventDefault();
-                menu.classList.toggle("visuallyhidden");
-                document.documentElement.classList.toggle('js-nav-open');
+                ebToggleClickout(menu, function () {
+                    menu.classList.toggle("visuallyhidden");
+                    document.documentElement.classList.toggle('js-nav-open');
+                });
             }, true);
 
             var ebHideMenu = function () {
