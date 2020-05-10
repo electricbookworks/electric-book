@@ -193,32 +193,45 @@ function ebTruncatedString(string, characters, suffix) {
 // The callback should be a function that toggles
 // the visibility of the modal itself.
 // It will be called on every click.
+var ebCurrentModalZIndex;
 function ebToggleClickout(modalElement, callback) {
     'use strict';
     var clickOut;
 
-    // If the clickout is present, remove it
-    if (document.getElementById('clickOut')) {
+    if (ebCurrentModalZIndex > 0) {
+        ebCurrentModalZIndex += 1;
+    } else {
+        ebCurrentModalZIndex = 1000;
+    }
+
+    // If the clickout is present, and this modal
+    // is visible (as opposed to another modal)
+    if (document.getElementById('clickOut')
+            && modalElement.getAttribute('data-modal-visible')) {
 
         // Don't set the z-index in the style attribute,
         // which should let stylesheets determine z-index again
         modalElement.style.zIndex = '';
+        modalElement.setAttribute('data-modal-visible', false);
 
         // Remove the clickOut element
         clickOut = document.getElementById('clickOut');
         clickOut.remove();
 
-        callback();
+        if (callback) {
+            callback();
+        }
 
     } else {
 
         // Bring the model to the front
-        modalElement.style.zIndex = '100';
+        modalElement.style.zIndex = ebCurrentModalZIndex;
+        modalElement.setAttribute('data-modal-visible', true);
 
         // Add a clickOut element
         clickOut = document.createElement('div');
         clickOut.id = 'clickOut';
-        clickOut.style.zIndex = '99';
+        clickOut.style.zIndex = ebCurrentModalZIndex - 1;
         clickOut.style.position = 'fixed';
         clickOut.style.top = '0';
         clickOut.style.right = '0';
@@ -226,12 +239,17 @@ function ebToggleClickout(modalElement, callback) {
         clickOut.style.left = '0';
         document.body.insertAdjacentElement('afterbegin', clickOut);
 
-        callback();
-
+        if (callback) {
+            callback();
+        }
         // Clicking on the clickOut should remove it
         clickOut.addEventListener('click', function () {
-            clickOut.remove();
-            callback();
+            ebToggleClickout(modalElement);
+
+            if (callback) {
+                callback();
+            }
+
         }, {once: true});
     }
 }
