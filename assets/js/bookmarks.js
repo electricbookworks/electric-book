@@ -1,7 +1,7 @@
 /*jslint browser */
 /*globals window, IntersectionObserver, locales, pageLanguage,
     ebSlugify, ebIDsAssigned, ebFingerprintsAssigned, ebIsPositionRelative,
-    ebNearestPrecedingSibling, ebTruncatedString */
+    ebNearestPrecedingSibling, ebTruncatedString, ebToggleClickout */
 
 // A script for managing a user's bookmarks.
 // This script waits for setup.js to give elements IDs.
@@ -166,7 +166,7 @@ function ebBookmarksLastLocationPrompt(link) {
         // Listen for clicks on close
         closeButton.addEventListener('click', function () {
             prompt.remove();
-        })
+        });
     }
 }
 
@@ -551,9 +551,6 @@ function ebBookmarksElementID(element) {
 function ebBookmarksSetBookmark(type, element, description) {
     'use strict';
 
-    // Initialise some vars we'll use below
-    var indexOfLastPunctuation, indexOfLastFullStop, elideFrom;
-
     // Get fallback description text
     if (!description) {
 
@@ -877,43 +874,19 @@ function ebBookmarksOpenOnClick() {
     var modal = document.querySelector('.bookmarks-modal');
     button.addEventListener('click', function () {
 
-        // If the modal is open, close it
-        var clickOut;
-        if (document.querySelector('[data-bookmark-modal="open"]')) {
-            modal.style.display = 'none';
-            modal.setAttribute('data-bookmark-modal', 'closed');
-            if (document.getElementById('clickOut')) {
-                clickOut = document.getElementById('clickOut');
-                clickOut.remove();
-            }
-        // Otherwise, show it
-        } else {
-            modal.style.display = 'flex';
-            modal.style.zIndex = '100';
-            modal.setAttribute('data-bookmark-modal', 'open');
-
-            // Create a clickable area to remove modal
-            // First remove any existing clickOuts,
-            // then create a new one.
-            if (document.getElementById('clickOut')) {
-                clickOut = document.getElementById('clickOut');
-                clickOut.remove();
-            }
-            clickOut = document.createElement('div');
-            clickOut.id = "clickOut";
-            clickOut.style.zIndex = '99';
-            clickOut.style.position = 'fixed';
-            clickOut.style.top = '0';
-            clickOut.style.right = '0';
-            clickOut.style.bottom = '0';
-            clickOut.style.left = '0';
-            document.body.insertAdjacentElement('afterbegin', clickOut);
-            clickOut.addEventListener('click', function () {
-                modal.setAttribute('data-bookmark-modal', 'closed');
+        // Toggle the clickable clickOut area
+        ebToggleClickout(modal, function () {
+            // If the modal is open, close it
+            if (document.querySelector('[data-bookmark-modal="open"]')) {
                 modal.style.display = 'none';
-                clickOut.remove();
-            });
-        }
+                modal.setAttribute('data-bookmark-modal', 'closed');
+
+            // Otherwise, show it
+            } else {
+                modal.style.display = 'flex';
+                modal.setAttribute('data-bookmark-modal', 'open');
+            }
+        });
     });
 }
 

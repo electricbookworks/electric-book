@@ -188,3 +188,50 @@ function ebTruncatedString(string, characters, suffix) {
         return string;
     }
 }
+
+// Toggle clickable area for exiting a modal.
+// The callback should be a function that toggles
+// the visibility of the modal itself.
+// It will be called on every click.
+function ebToggleClickout(modalElement, callback) {
+    'use strict';
+    var clickOut;
+
+    // If the clickout is present, remove it
+    if (document.getElementById('clickOut')) {
+
+        // Don't set the z-index in the style attribute,
+        // which should let stylesheets determine z-index again
+        modalElement.style.zIndex = '';
+
+        // Remove the clickOut element
+        clickOut = document.getElementById('clickOut');
+        clickOut.remove();
+
+        callback();
+
+    } else {
+
+        // Bring the model to the front
+        modalElement.style.zIndex = '100';
+
+        // Add a clickOut element
+        clickOut = document.createElement('div');
+        clickOut.id = 'clickOut';
+        clickOut.style.zIndex = '99';
+        clickOut.style.position = 'fixed';
+        clickOut.style.top = '0';
+        clickOut.style.right = '0';
+        clickOut.style.bottom = '0';
+        clickOut.style.left = '0';
+        document.body.insertAdjacentElement('afterbegin', clickOut);
+
+        callback();
+
+        // Clicking on the clickOut should remove it
+        clickOut.addEventListener('click', function () {
+            clickOut.remove();
+            callback();
+        }, {once: true});
+    }
+}
