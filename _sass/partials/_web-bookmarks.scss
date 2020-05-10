@@ -10,7 +10,7 @@ $web-bookmarks: true !default;
         color: $bookmark-text-color;
         padding: 0.55em; // aligns beneath language selector
         text-align: right;
-        z-index: 100;
+        z-index: 100; // note: may cause problems with stacking contexts
 
         &, * {
             // Already applied globally in EBT styles,

@@ -100,6 +100,22 @@ function ebIsPositionRelative(element) {
     }
 }
 
+// Check if an element or its ancestors are position: fixed.
+// Returns the first fixed positioned parent.
+function ebIsPositionFixed(element) {
+    'use strict';
+
+    if (ebHasComputedStyle(element, 'position', 'fixed')) {
+        return element;
+    } else {
+        if (element.tagName !== 'BODY') {
+            return ebIsPositionFixed(element.parentElement);
+        } else {
+            return false;
+        }
+    }
+}
+
 // Get the nearest preceding sibling or cousin element
 function ebNearestPrecedingSibling(element, tagName, iterationTrue) {
     'use strict';
@@ -224,9 +240,19 @@ function ebToggleClickout(modalElement, callback) {
 
     } else {
 
-        // Bring the model to the front
+        // Bring the modal to the front
         modalElement.style.zIndex = ebCurrentModalZIndex;
         modalElement.setAttribute('data-modal-visible', true);
+
+        // If the modal has a fixed position parent,
+        // we also must set the z-index there, since it
+        // creates a different stacking context that might
+        // fall below our clickOut
+        var fixedParent = ebIsPositionFixed(modalElement.parentElement);
+        if (fixedParent) {
+            fixedParent.style.zIndex = ebCurrentModalZIndex;
+            console.log(fixedParent);
+        }
 
         // Add a clickOut element
         clickOut = document.createElement('div');
@@ -237,7 +263,9 @@ function ebToggleClickout(modalElement, callback) {
         clickOut.style.right = '0';
         clickOut.style.bottom = '0';
         clickOut.style.left = '0';
-        document.body.insertAdjacentElement('afterbegin', clickOut);
+        clickOut.style.backgroundColor = 'black';
+        clickOut.style.opacity = '0.2';
+        document.body.insertAdjacentElement('beforeend', clickOut);
 
         if (callback) {
             callback();

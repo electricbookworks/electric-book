@@ -71,7 +71,9 @@ function ebNav() {
                 // hide the menu when we click the button
                 if (clickedElement.hasAttribute("data-nav-close")) {
                     ev.preventDefault();
-                    ebHideMenu();
+                    ebToggleClickout(menu, function () {
+                        ebHideMenu();
+                    });
                     return;
                 }
 
