@@ -1,4 +1,4 @@
-/*jslint browser */
+/*jslint browser, for */
 /*globals window */
 
 function ebNav() {
@@ -108,7 +108,6 @@ function ebNav() {
                 if (navBackButton) {
                     navBackButton.addEventListener('click', function (ev) {
                         ev.preventDefault();
-                        console.log('Going back...');
                         window.history.back();
                     });
                 }
