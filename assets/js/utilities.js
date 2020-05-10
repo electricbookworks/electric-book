@@ -1,5 +1,5 @@
 /*jslint browser */
-/*globals */
+/*globals window, ActiveXObject */
 
 // Utility functions
 
@@ -13,23 +13,32 @@ function ebSlugify(string) {
 
     return string.toString().toLowerCase()
         .replace(/\s+/g, '-') // Replace spaces with -
-        .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+        .replace(p, function (c) {
+            return b.charAt(a.indexOf(c));
+        }) // Replace special characters
         .replace(/&/g, '-and-') // Replace & with 'and'
         .replace(/[^\w\-]+/g, '') // Remove all non-word characters
-        .replace(/\-\-+/g, '-') // Replace multiple - with single -
+        .replace(/--+/g, '-') // Replace multiple - with single -
         .replace(/^-+/, '') // Trim - from start of text
-        .replace(/-+$/, '') // Trim - from end of text
+        .replace(/-+$/, ''); // Trim - from end of text
 }
 
 // Or get the language from a URL parameter
 // https://stackoverflow.com/a/901144/1781075
 function ebGetParameterByName(name, url) {
-    if (!url) url = window.location.href;
+    'use strict';
+    if (!url) {
+        url = window.location.href;
+    }
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
+    if (!results) {
+        return null;
+    }
+    if (!results[2]) {
+        return '';
+    }
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
@@ -57,17 +66,17 @@ function ebCheckForPage(url) {
 // Check if an element has a particular computed style
 function ebHasComputedStyle(element, property, value) {
     'use strict';
-    var style = getComputedStyle(element);
+    var style = window.getComputedStyle(element);
 
-    // The the element has the property, and no value is specified,
+    // If the element has the property, and no value is specified,
     // return true. If a value is specified, and it matches, return true.
-    if (style[property]) {
-        if (!value) {
-            return true;
-        } else {
+    if (property && style[property]) {
+        if (value) {
             if (style[property] === value) {
                 return true;
             }
+        } else {
+            return true;
         }
     }
 }
@@ -78,6 +87,8 @@ function ebHasComputedStyle(element, property, value) {
 // Effectively equivalent to HTMLElement.offsetParent,
 // but returns false, not BODY, if no relative parent.
 function ebIsPositionRelative(element) {
+    'use strict';
+
     if (ebHasComputedStyle(element, 'position', 'relative')) {
         return element;
     } else {
@@ -97,16 +108,14 @@ function ebNearestPrecedingSibling(element, tagName, iterationTrue) {
         // If this is our second pass, and the element matches, return it.
         if (iterationTrue && element.tagName === tagName) {
             return element;
-        }
 
         // Otherwise, if the element's previous sibling matches, return it
-        else if (element.previousElementSibling
-                    && element.previousElementSibling.tagName === tagName) {
+        } else if (element.previousElementSibling
+                && element.previousElementSibling.tagName === tagName) {
             return element.previousElementSibling;
-        }
 
-        // Otherwise, check the previous element and then its parents' siblings' children
-        else {
+            // Otherwise, check the previous element and then its parents' siblings' children
+        } else {
             if (element.previousElementSibling) {
                 return ebNearestPrecedingSibling(element.previousElementSibling, tagName, true);
             } else {
@@ -123,12 +132,24 @@ function ebNearestPrecedingSibling(element, tagName, iterationTrue) {
 
 }
 
-// Extend the String prototype to allow a regex lastIndexOf
-// https://stackoverflow.com/a/21420210/1781075
-String.prototype.lastIndexOfRegex = function (regex, fromIndex) {
-    var str = fromIndex ? this.substring(0, fromIndex) : this;
-    var match = str.match(regex);
-    return match ? str.lastIndexOf(match[match.length-1]) : -1;
+// A regex alternative to String.prototype.lastIndexOf().
+// Inspired by https://stackoverflow.com/a/21420210/1781075
+function ebLastIndexOfRegex(string, regex, fromIndex) {
+    'use strict';
+
+    if (fromIndex) {
+        string = string.substring(0, fromIndex);
+    } else {
+        string = string;
+    }
+
+    var match = string.match(regex);
+
+    if (match) {
+        return string.lastIndexOf(match[match.length - 1]);
+    } else {
+        return -1;
+    }
 }
 
 // Get a truncated string without cutting a word
@@ -144,14 +165,14 @@ function ebTruncatedString(string, characters, suffix) {
 
         // Where is the last space in the truncated string?
         // We want to elide from that space to get a whole word.
-        var indexOfLastSpace = truncatedString.lastIndexOfRegex(/\s/gi);
+        var indexOfLastSpace = ebLastIndexOfRegex(truncatedString, /\s/gi);
         var elideFrom = indexOfLastSpace;
         truncatedString = truncatedString.slice(0, elideFrom);
 
         // We don't want certain punctuation marks at the
         // end of our nice, neat string. If the neatened, truncated string
         // ends in one of those characters, chop it off.
-        var unwantedTrailingPunctuation = new RegExp('[:;,]')
+        var unwantedTrailingPunctuation = new RegExp('[:;,]');
         if (truncatedString.slice(-1).match(unwantedTrailingPunctuation)) {
             truncatedString = truncatedString.slice(0, elideFrom - 1);
         }
