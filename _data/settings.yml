@@ -123,8 +123,8 @@ epub:
   # If you're embedding fonts, uncomment and list the font-file names here
   # and put the font files in _epub/fonts, not book/fonts
   # fonts:
-  #   - Crimson-Roman.otf
-  #   - Crimson-Italic.otf
+  #   - CrimsonPro-Regular.otf
+  #   - CrimsonPro-Italic.otf
   # -----------
   # Nav element
   # -----------

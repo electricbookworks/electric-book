@@ -1,36 +1,91 @@
 $print-font-faces: true !default;
 @if $print-font-faces {
 
-    // Crimson https://github.com/skosch/Crimson
+    // Crimson Pro https://github.com/Fonthausen/CrimsonPro
     @font-face {
-        font-family: "Crimson";
-        src: url(../../assets/fonts/Crimson-Roman.otf);
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-ExtraLight.ttf);
+        font-weight: 200;
     }
     @font-face {
-        font-family: "Crimson";
-        src: url(../../assets/fonts/Crimson-Italic.otf);
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-ExtraLightItalic.ttf);
+        font-weight: 200;
         font-style: italic;
     }
     @font-face {
-        font-family: "Crimson";
-        src: url(../../assets/fonts/Crimson-Bold.otf);
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-Light.ttf);
+        font-weight: 300;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-LightItalic.ttf);
+        font-weight: 300;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-Regular.ttf);
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-Italic.ttf);
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-Medium.ttf);
+        font-weight: 500;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-MediumItalic.ttf);
+        font-weight: 500;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-SemiBold.ttf);
+        font-weight: 600;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-SemiBoldItalic.ttf);
+        font-weight: 600;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-Bold.ttf);
         font-weight: bold;
     }
     @font-face {
-        font-family: "Crimson";
-        src: url(../../assets/fonts/Crimson-BoldItalic.otf);
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-BoldItalic.ttf);
         font-weight: bold;
         font-style: italic;
     }
     @font-face {
-        font-family: "Crimson";
-        src: url(../../assets/fonts/Crimson-Semibold.otf);
-        font-weight: 600;
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-ExtraBold.ttf);
+        font-weight: 800;
     }
     @font-face {
-        font-family: "Crimson";
-        src: url(../../assets/fonts/Crimson-SemiboldItalic.otf);
-        font-weight: 600;
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-ExtraBoldItalic.ttf);
+        font-weight: 800;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-Black.otf);
+        font-weight: 900;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(../../assets/fonts/CrimsonPro-BlackItalic.otf);
+        font-weight: 900;
         font-style: italic;
     }
 
