@@ -160,7 +160,7 @@ function ebBookmarksLastLocationPrompt(link) {
 
         // Let users hide the prompt
         var closeButton = document.createElement('button');
-        closeButton.innerHTML = '×';
+        closeButton.innerHTML = '&#9587;'; // &#9587; is ╳
         prompt.appendChild(closeButton);
 
         // Listen for clicks on close

@@ -403,7 +403,8 @@ $web-bookmarks: true !default;
         button {
             background-color: transparent;
             color: $color-links;
-            font-size: 1.5em;
+            font-size: 0.9rem; // align in box
+            padding-bottom: 0.4rem; // align in box
         }
     }
 }
