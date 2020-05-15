@@ -30,7 +30,7 @@ Create a series or collection of books in one website or app. They can share com
 
 ### Share content across books
 
-If several books in a collection share content – e.g. disclaimers, questions, author bios, images – maintain them in one place and [include them in each book with a simple tag](https://electricbookworks.github.io/electric-book/docs/setup/repeatable-items.html).
+If several books in a collection share content – e.g. disclaimers, questions, author bios, images – maintain them in one place and [include them in each book with a simple tag]({{ site.baseurl }}/docs/setup/repeatable-items.html).
 
 ### Fast and mobile-friendly sites
 
