@@ -28,6 +28,10 @@ The Electric Book template produces **website, ebook, app and print books from a
 
 Create a series or collection of books in one website or app. They can share common designs, features, [metadata]({{ site.baseurl }}/docs/setup/metadata.html), and [content templates]({{ site.baseurl }}/docs/setup/repeatable-items.html).
 
+### Share content across books
+
+If several books in a collection share content – e.g. disclaimers, questions, author bios, images – maintain them in one place and [include them in each book with a simple tag](https://electricbookworks.github.io/electric-book/docs/setup/repeatable-items.html).
+
 ### Fast and mobile-friendly sites
 
 The template generates a static website, which is secure, easy to host, and lightning fast. It's also designed to be mobile-friendly throughout.
