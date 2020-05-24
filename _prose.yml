@@ -42,7 +42,9 @@ prose:
     - _sass
     - _site
     - _tools
-    - assets
+    - assets/js
+    - assets/fonts
+    - assets/images
     - node_modules
 
     # Book folders and files
