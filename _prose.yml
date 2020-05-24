@@ -8,9 +8,12 @@ prose:
   ignore:
     # Root files
     - _config.yml
+    - .bundle
     - .gitattributes
     - .gitignore
     - .htaccess
+    - .jekyll-metadata
+    - .sass-cache
     - CHANGELOG.md
     - CNAME
     - eslint.json
