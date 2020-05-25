@@ -17,6 +17,7 @@ The Electric Book template produces **website, ebook, app and print books from a
 - [a demo translation](samples/fr/), and
 - {% if site.output == "web" %}[how-to documentation](docs/){% else %}[online how-to documentation](http://electricbook.works/docs/index.html){% endif %}. {% if output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
 
+You'll find [the open-source repository on GitHub](https://github.com/electricbookworks/electric-book).
 
 ## Basic features
 
