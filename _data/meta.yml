@@ -140,14 +140,8 @@ works:
             file: "0-3-contents"
           - label: "Chapter One"
             file: "01"
-            id: "1-hello-world"
           - label: "Chapter Two"
             file: "02"
-            id: "2-goodbye-world"
-            children:
-              - label: "Subsection"
-                file: "02"
-                id: "example-id"
       screen-pdf:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
