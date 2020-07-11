@@ -358,6 +358,9 @@ assets/js/render-search-index.js
 assets/js/rotate.js
 assets/js/search-engine.js
 
+# This is usually project-specific, so not updated by default
+# assets/js/settings.js
+
 # Search indexes are not shared between projects,
 # so they are commented out here.
 
@@ -823,5 +826,3 @@ _tools/profiles/PSOuncoated_v3_FOGRA52.icc
 _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
 _tools/update/files.txt
 _tools/update/update.sh
-_tools/zip/LICENSE
-_tools/zip/zip.exe
