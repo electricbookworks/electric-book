@@ -1,5 +1,4 @@
 ---
-title: Cover
 style: cover
 ---
 

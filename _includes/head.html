@@ -198,7 +198,8 @@
     <link rel="icon" type="image/png" href="{{ path-to-root-directory }}assets/images/web/favicon.png">
 
     {% comment %}OpenGraph metadata{% endcomment %}
-    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:title"
+          content="{% if page.title and page.title != "" %}{{ page.title }}{% elsif title and title != "" %}{{ title }}{% else %}{{ project-name }}{% endif %}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
 
