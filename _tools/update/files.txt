@@ -358,6 +358,9 @@ assets/js/render-search-index.js
 assets/js/rotate.js
 assets/js/search-engine.js
 
+# This is usually project-specific, so not updated by default
+# assets/js/settings.js
+
 # Search indexes are not shared between projects,
 # so they are commented out here.
 
