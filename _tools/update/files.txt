@@ -826,5 +826,3 @@ _tools/profiles/PSOuncoated_v3_FOGRA52.icc
 _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
 _tools/update/files.txt
 _tools/update/update.sh
-_tools/zip/LICENSE
-_tools/zip/zip.exe
