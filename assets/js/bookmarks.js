@@ -947,6 +947,11 @@ function ebBookmarksListenForTextSelection() {
         }
         if (bookmarkableElement) {
             bookmarkableElement.classList.add('bookmark-pending');
+
+            // Remove pending icon soon if not clicked
+            setTimeout(function () {
+                bookmarkableElement.classList.remove('bookmark-pending');
+            }, 3000);
         }
 
         // Add the bookmark button. If no text is selected,
