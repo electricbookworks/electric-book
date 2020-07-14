@@ -46,8 +46,9 @@ function ebAssignFingerprints(element, ancestorTagNames) {
         element = document.getElementById('content');
     }
 
-    // Only fingerprint elements with IDs
-    if (!element.id) {
+    // Only fingerprint elements with IDs,
+    // and elements that contain elements with IDs
+    if (!element.id && element.querySelector('[id]') === null) {
         return;
     }
 
