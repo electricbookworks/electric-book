@@ -672,8 +672,6 @@ function ebBookmarkUnmarkBookmarkedElements(element) {
 function ebBookmarkMarkBookmarkedElement(element) {
     'use strict';
 
-    // Remove any existing bookmarks
-    ebBookmarkUnmarkBookmarkedElements();
 
     // Set the new bookmark
     element.setAttribute('data-bookmarked', 'true');
