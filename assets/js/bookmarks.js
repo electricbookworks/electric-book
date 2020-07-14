@@ -672,9 +672,25 @@ function ebBookmarkUnmarkBookmarkedElements(element) {
 function ebBookmarkMarkBookmarkedElement(element) {
     'use strict';
 
-
     // Set the new bookmark
     element.setAttribute('data-bookmarked', 'true');
+}
+
+// Remove a bookmark by clicking its icon
+function ebBookmarksRemoveByIconClick(button) {
+    'use strict';
+    var bookmarkID = button.parentElement.id;
+
+    // Loop through stored bookmarks,
+    // find this one, and delete it
+    Object.keys(localStorage).forEach(function (key) {
+        if (key.startsWith('bookmark-')) {
+            var entry = JSON.parse(localStorage.getItem(key));
+            if (entry.id === bookmarkID) {
+                ebBookmarksDeleteBookmark(entry);
+            }
+        }
+    });
 }
 
 // Listen for bookmark clicks
@@ -685,9 +701,15 @@ function ebBookmarksListenForClicks(button) {
         // Don't let click on bookmark trigger accordion-close etc.
         event.stopPropagation();
 
-        // Set the bookmark
-        ebBookmarksSetBookmark('userBookmark', button.parentNode, ebCurrentSelectionText);
-        ebBookmarkMarkBookmarkedElement(button.parentNode);
+        // If the bookmark is pending, set the bookmark
+        if (button.parentElement.classList.contains('bookmark-pending')) {
+            ebBookmarksSetBookmark('userBookmark',
+                    button.parentNode, ebCurrentSelectionText.trim());
+            ebBookmarkMarkBookmarkedElement(button.parentNode);
+            button.parentElement.classList.remove('bookmark-pending');
+        } else {
+            ebBookmarksRemoveByIconClick(button);
+        }
     });
 }
 
