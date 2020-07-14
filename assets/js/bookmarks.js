@@ -272,7 +272,6 @@ function ebBookmarksMarkBookmarks(bookmarks) {
         // mark the relevant bookmarked element.
         if (ebBookmarksCheckForCurrentPage(bookmark.location)) {
             elementToMark.setAttribute('data-bookmarked', 'true');
-            elementToMark.setAttribute('title', bookmark.description);
 
             // If the element has already been marked as a user bookmark,
             // leave it a user bookmark. They trump last locations.
