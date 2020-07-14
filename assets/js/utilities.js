@@ -251,7 +251,6 @@ function ebToggleClickout(modalElement, callback) {
         var fixedParent = ebIsPositionFixed(modalElement.parentElement);
         if (fixedParent) {
             fixedParent.style.zIndex = ebCurrentModalZIndex;
-            console.log(fixedParent);
         }
 
         // Add a clickOut element
