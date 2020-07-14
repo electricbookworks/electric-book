@@ -556,7 +556,8 @@ function ebBookmarksSetBookmark(type, element, description) {
 
         // Use the opening characters of the text.
         // Note that textContent includes line breaks etc.
-        description = ebTruncatedString(element.textContent, 75, ' …');
+        var descriptionText = element.textContent.trim().replace(/^[\n\s]+/, '');
+        description = ebTruncatedString(descriptionText, 120, ' …');
     }
 
     // Get the page heading and the most recent section heading, if any.
