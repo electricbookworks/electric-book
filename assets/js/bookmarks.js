@@ -679,14 +679,14 @@ function ebBookmarkMarkBookmarkedElement(element) {
 // Remove a bookmark by clicking its icon
 function ebBookmarksRemoveByIconClick(button) {
     'use strict';
-    var bookmarkID = button.parentElement.id;
+    var bookmarkLocation = window.location.href.split('#')[0] + '#' + button.parentElement.id;
 
     // Loop through stored bookmarks,
     // find this one, and delete it
     Object.keys(localStorage).forEach(function (key) {
         if (key.startsWith('bookmark-')) {
             var entry = JSON.parse(localStorage.getItem(key));
-            if (entry.id === bookmarkID) {
+            if (entry.location === bookmarkLocation) {
                 ebBookmarksDeleteBookmark(entry);
             }
         }
