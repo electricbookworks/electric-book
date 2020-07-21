@@ -195,10 +195,11 @@
     {% endif %}
 
     {% comment %}Add favicon{% endcomment %}
-    <link rel="icon" type="image/png" href="{{ path-to-root-directory }}assets/favicon.png">
+    <link rel="icon" type="image/png" href="{{ path-to-root-directory }}assets/images/web/favicon.png">
 
     {% comment %}OpenGraph metadata{% endcomment %}
-    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:title"
+          content="{% if page.title and page.title != "" %}{{ page.title }}{% elsif title and title != "" %}{{ title }}{% else %}{{ project-name }}{% endif %}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
 
@@ -217,22 +218,53 @@
 
     <meta property="og:description" content="{{ og-description }}" />
 
-    {% if page.image %}
-        {% if is-homepage == true or is-project-search == true or is-translation-homepage == true %}
-            {% comment %}If a page.image is specified on the home page, we still use the project image{% endcomment %}
-            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
+    {% comment %} Work out which image to use {% endcomment %}
+    {% capture og-image-relative %}
+
+        {% comment %} If the page has an image defined for it, use that... {% endcomment %}
+        {% if page.image %}
+
+            {% if is-homepage == true or is-project-search == true or is-translation-homepage == true %}
+                assets/images/web/{{ page.image }}
+            {% else %}
+                {{ book-directory }}/{{ site.image-set }}/{{ page.image }}
+            {% endif %}
+
+        {% comment %} If no page image is defined...
+
+        on non-book pages use the project image,
+        and the translated version for translated home pages.
+        We don't check for the existence of the translated image file,
+        to save build time. Onus on user to add it to assets/[language]. {% endcomment %}
+        {% elsif is-homepage == true or is-project-search == true or is-translation-homepage == true %}
+            {% if is-translation-homepage == true %}
+                assets/{{ language }}/images/web/{{ project-image }}
+            {% else %}
+                assets/images/web/{{ project-image }}
+            {% endif %}
+
+        {% comment %} Otherwise, if there is a web image, use that {% endcomment %}
+        {% elsif web-image != "" %}
+            {{ book-directory }}/{{ site.image-set }}/{{ web-image }}
+
+        {% comment %} Otherwise, if no web-image but there is an image defined
+        for the work or product, use that {% endcomment %}
+        {% elsif image != "" %}
+            {{ book-directory }}/{{ site.image-set }}/{{ image }}
+
+        {% comment %} Or fall back to the project image {% endcomment %}
         {% else %}
-            <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ page.image }}" />
+            assets/images/web/{{ project-image }}
         {% endif %}
-    {% elsif is-homepage == true or is-project-search == true or is-translation-homepage == true %}
-        <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
-    {% elsif web-image != "" %}
-        <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ web-image }}" />
-    {% elsif image != "" %}
-        <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ site.image-set }}/{{ image }}" />
-    {% else %}
-        <meta property="og:image" content="{{ site.canonical-url }}{{ site.baseurl }}/assets/{{ project-image }}" />
-    {% endif %}
+    {% endcapture %}
+
+    {% comment %} Add absolute-link prefix to the relative path {% endcomment %}
+    {% capture og-image %}
+        {{ site.canonical-url }}{{ site.baseurl }}/{{ og-image-relative | strip_newlines | strip }}
+    {% endcapture %}
+
+    <meta property="og:image" content="{{ og-image | strip_newlines | strip }}" />
+
 
     {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}

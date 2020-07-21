@@ -9,9 +9,27 @@
 // is excluded from the build, or has idiosyncratic styles.
 // This Sass file is project-wide CSS for non-book pages.
 
+
+// -------------
+// Set variables
+// -------------
+
 // Set variables specific to the project here
 // that override the defaults in _sass/app.scss
 
+
+// ------------
+// Import fonts
+// ------------
+
+// Add @font-face rules for fonts you specify here.
+// Add the actual font files to `../fonts`
+// For snippets, try https://github.com/arthurattwell/font-faces
+
+
+// -------------
+// Master theme
+// -------------
 
 // Import master styles
 @import 'app';

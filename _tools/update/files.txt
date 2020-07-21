@@ -18,13 +18,22 @@
 # Sitewide font files
 # -------------------
 
-assets/fonts/Crimson-Bold.otf
-assets/fonts/Crimson-BoldItalic.otf
-assets/fonts/Crimson-Italic.otf
-assets/fonts/Crimson-OFL.txt
-assets/fonts/Crimson-Roman.otf
-assets/fonts/Crimson-Semibold.otf
-assets/fonts/Crimson-SemiboldItalic.otf
+assets/fonts/CrimsonPro-Black.ttf
+assets/fonts/CrimsonPro-BlackItalic.ttf
+assets/fonts/CrimsonPro-Bold.ttf
+assets/fonts/CrimsonPro-BoldItalic.ttf
+assets/fonts/CrimsonPro-ExtraBold.ttf
+assets/fonts/CrimsonPro-ExtraBoldItalic.ttf
+assets/fonts/CrimsonPro-ExtraLight.ttf
+assets/fonts/CrimsonPro-ExtraLightItalic.ttf
+assets/fonts/CrimsonPro-Italic.ttf
+assets/fonts/CrimsonPro-Light.ttf
+assets/fonts/CrimsonPro-LightItalic.ttf
+assets/fonts/CrimsonPro-Medium.ttf
+assets/fonts/CrimsonPro-MediumItalic.ttf
+assets/fonts/CrimsonPro-Regular.ttf
+assets/fonts/CrimsonPro-SemiBold.ttf
+assets/fonts/CrimsonPro-SemiBoldItalic.ttf
 assets/fonts/Source-OFL.txt
 assets/fonts/SourceSansPro-Black.ttf
 assets/fonts/SourceSansPro-BlackIt.ttf
@@ -345,10 +354,12 @@ assets/js/nav.js
 assets/js/page-reference.js
 assets/js/polyfills.js
 assets/js/redact.js
-assets/js/render-mathjax.js
 assets/js/render-search-index.js
 assets/js/rotate.js
 assets/js/search-engine.js
+
+# This is usually project-specific, so not updated by default
+# assets/js/settings.js
 
 # Search indexes are not shared between projects,
 # so they are commented out here.
@@ -815,5 +826,3 @@ _tools/profiles/PSOuncoated_v3_FOGRA52.icc
 _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
 _tools/update/files.txt
 _tools/update/update.sh
-_tools/zip/LICENSE
-_tools/zip/zip.exe

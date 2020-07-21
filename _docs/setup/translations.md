@@ -146,6 +146,13 @@ Here is an example of the translation section of the `meta.yml` file that includ
         title: Title in French
 ```
 
+### The language selector
+
+When a translation includes the same file names as the parent language, translated web and app pages will include a language-selector icon, to allow users to switch between languages. For this to work:
+
+- The parent-language and translated files must have the same filenames.
+- The files must be listed in the parent and translation `files` lists in `_data/meta.yml`.
+
 ### Epub-specific languages
 
 In some situations, you might want the language set in your epub's Dublin Core OPF metadata (`dc:language`) to be different to the language of the translation. For instance, Kindlegen will not convert epubs in languages it does not recognise. In this situation, you might need to set the epub's Dublin Core language tag to, say, English, even though your epub's content files are still in, say, Asanti Twi.
@@ -172,11 +179,17 @@ The translate things like the navigation button and contact form, edit `_data/lo
 
 If your project is translated, it is best to create a landing page for each language. Create a folder in the root directory named after the relevant language code, e.g. `fr`. In that folder, create an `index.md` file. This is the landing page for that language. It's best to copy and then translate the existing `index.md` file in the root directory.
 
+Translated landing pages need their own translated image for open-graph metadata (i.e. social-media cards). The filename of this image is defined globally for all languages in `_data/meta.yml` as the `project` `image`. A file with that name must then be available for each language that has its own translated landing page.
+
+The parent language will use the project image in `assets/images/web`. A French landing page, for instance, will take its project image from `assets/fr/images/web`.
+
+So, for each translation, you need to create a folder in `assets` named for the language code, e.g. `fr`. In there, create an `images` folder, and in there a `web` folder. If you are using the output script (or `gulp`) to process images from `_source` folders into `web` and other image formats, then rather create a `_source` folder in `images`. The automated image-processing script will create the `web` folder and copy your image there from, say, `assets/fr/images/_source` to `assets/fr/images/web`.
+
 > ### Technical details
 >
 > By default, the home page (aka the landing page) is in the project's parent language. If the landing-page URL contains a query string defining a language (e.g `?lang=fr`), by default the `<title>` element and masthead will be translated by Javascript, using phrases set in `locales.yml`. However, the social-sharing (open graph) data will remain in the parent language, e.g. English.
 >
-> It is better to provide fully translated landing pages in each language. To do this, create a folder in the root directory named after the relevant language code. In that folder, create an `index.md` file. This is the landing page for that language. It's best to copy and then translate the existing `index.md` file in the root directory.
+> So for social-sharing purposes especially, it is better to provide fully translated landing pages in each language. To do this, create a folder in the root directory named after the relevant language code. In that folder, create an `index.md` file. This is the landing page for that language. It's best to copy and then translate the existing `index.md` file in the root directory.
 >
 > If that page exists, and a user navigates to a landing page containing a query string defining the language, they will be redirected to the actual, fully translated landing page for that language.
 {:.box}

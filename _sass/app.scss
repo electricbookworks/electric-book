@@ -31,18 +31,18 @@ $max-width-default: 40em !default;
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson", serif !default;
-$font-text-secondary: "Source Sans Pro", sans-serif !default;
-$font-display-main: "Source Sans Pro", sans-serif !default;
-$font-display-secondary: "Crimson", serif !default;
-$font-code: "Ubuntu Mono", monospace !default;
+$font-text-main: "Apple Garamond", "Baskerville", "Cambria", "Droid Serif", "Times","Source Serif Pro", serif !default;
+$font-text-secondary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !default;
+$font-display-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !default;
+$font-display-secondary: "Apple Garamond", "Baskerville", "Cambria", "Droid Serif", "Times","Source Serif Pro", serif !default;
+$font-code: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace !default;
 
 // Set font size and line-height in ems or px.
 // These values, especially $line-height-default, are used to compute vertical rhythm
 // for many features in this theme. So do not use a unitless value for line-height,
 // and don't use percentages, which will break layouts computed by multiplying this value.
 $font-size-default: 1.2em !default;
-$line-height-default: 1.5em !default;
+$line-height-default: 1.6em !default;
 $font-size-smaller: 0.7 !default; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
 
@@ -52,16 +52,16 @@ $spaced-paras: true !default;
 $paragraph-indent: 1em !default;
 
 // Rounded corners
-$button-border-radius: 0.1em !default; // Roundness of button corners
-$box-border-radius: 0.5em !default; // Roundness of box corners
+$button-border-radius: 0.1rem !default; // Roundness of button corners
+$box-border-radius: 0.1rem !default; // Roundness of box corners
 
 // Rules, lines
 $rule-thickness: 1px !default;
 
 // Colours
-$color-text-main: #222222 !default;
-$color-text-secondary: #222222 !default;
-$color-background: white !default;
+$color-text-main: #262626 !default;
+$color-text-secondary: #262626 !default;
+$color-background: #f9f9f9 !default;
 $color-light: #e0e0e0 !default;
 $color-mid: #9c9c9c !default;
 $color-accent: #009E7F !default;
@@ -154,7 +154,7 @@ $language-select-background-color: $color-background !default;
 // Annotator
 $annotator-sidebar-width: 16em !default;
 $annotator-icon-line-color-active: $color-light !default;
-$annotator-icon-line-color-inactive: $color-light !default;
+$annotator-icon-line-color-inactive: $color-mid !default;
 $annotator-icon-background-color-active: $color-accent !default;
 $annotator-icon-background-color-inactive: $color-background !default;
 $annotator-icon-thickness: 1.5px !default;

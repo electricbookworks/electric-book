@@ -108,7 +108,6 @@ function ebNav() {
                 if (navBackButton) {
                     navBackButton.addEventListener('click', function (ev) {
                         ev.preventDefault();
-                        console.log('Going back...');
                         window.history.back();
                     });
                 }

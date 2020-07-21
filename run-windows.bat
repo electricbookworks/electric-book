@@ -531,14 +531,14 @@ set /p process=Enter a number and hit return.
 
         :: If original language, use the package.opf in the root
         :epubOriginalOPF
-            echo f | xcopy /e /q "package.opf" "../epub" > nul
+            echo f | xcopy /q "package.opf" "../epub" > nul
             echo Package file copied.
             goto epubOPFDone
 
         :: If translation language, use the package.opf in the subdirectory
         :: This will overwrite the original language OPF file
         :epubSubdirectoryOPF
-            echo f | xcopy /e /q "%subdirectory%\package.opf" "../epub" > nul
+            echo f | xcopy /q "%subdirectory%\package.opf" "../epub" > nul
             echo Package file copied.
             goto epubOPFDone
 
@@ -553,14 +553,14 @@ set /p process=Enter a number and hit return.
 
         :: If original language, use the package.opf in the root
         :epubOriginalNCX
-            echo f | xcopy /e /q "toc.ncx" "../epub" > nul
+            echo f | xcopy /q "toc.ncx" "../epub" > nul
             echo NCX copied.
             goto epubNCXDone
 
         :: If translation language, use the toc.ncx in the subdirectory
         :: This will overwrite the original language NCX file
         :epubSubdirectoryNCX
-            echo f | xcopy /e /q "%subdirectory%\toc.ncx" "../epub" > nul
+            echo f | xcopy /q "%subdirectory%\toc.ncx" "../epub" > nul
             echo NCX copied.
             goto epubNCXDone
 
@@ -981,7 +981,6 @@ set /p process=Enter a number and hit return.
         :: Encouraging message
         echo Let's refresh the search index.
         echo We'll index the files in your web or app file lists defined in meta.yml
-        echo You need to have PhantomJS installed for this to work.
 
         :: Check if refreshing web or app index
         echo To refresh the website search index, press enter.
@@ -1008,20 +1007,19 @@ set /p process=Enter a number and hit return.
         :buildForWebSearchIndex
 
             call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,%searchIndexConfig%"
-            goto refreshSearchIndexRenderWithPhantom
+            goto refreshSearchIndexRendering
 
         :buildForAppSearchIndex
 
             call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%searchIndexConfig%"
-            goto refreshSearchIndexRenderWithPhantom
+            goto refreshSearchIndexRendering
 
-        :: Run phantomjs script from scripts directory
-        :refreshSearchIndexRenderWithPhantom
+        :: Run script from scripts directory
+        :refreshSearchIndexRendering
 
-            echo Generating index with PhantomJS...
-            cd _site/assets/js
-            phantomjs render-search-index.js
+            echo Generating index...
             cd %location%
+            node _site/assets/js/render-search-index.js
 
         :: Done
         :refreshSearchIndexDone
