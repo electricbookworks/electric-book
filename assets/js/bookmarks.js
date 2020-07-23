@@ -46,12 +46,24 @@
 //    a list doesn't trigger a bookmark.
 // X. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
 
-// Options
-// --------------------------------------
 // Which elements should we make bookmarkable?
-// By default, anything in #content with an ID.
-// Use querySelector strings.
-var ebBookmarkableElements = '#content [id]';
+function ebBookmarkableElements() {
+    'use strict';
+
+    // Include anything in #content with an ID...
+    var elementsWithIDs = document.querySelectorAll('#content [id]');
+
+    // .. and exclude elements with data-bookmarkable="no",
+    // or whose ancestors have data-bookmarkable="no".
+    var bookmarkableElements = Array.from(elementsWithIDs).filter(function (element) {
+        if (element.getAttribute('data-bookmarkable') !== 'no'
+                && !element.closest('[data-bookmarkable="no"]')) {
+            return true;
+        }
+    });
+
+    return bookmarkableElements;
+}
 
 // Initialise global variables for general use
 var ebCurrentSelection;
@@ -853,7 +865,7 @@ function ebBookmarksMarkVisibleElements(elements) {
             });
         }, ebBookmarkObserverConfig);
 
-        // Observe each image
+        // Observe each element
         elementsWithIDs.forEach(function (element) {
             bookmarkObserver.observe(element);
         });
@@ -968,6 +980,11 @@ function ebBookmarksListenForTextSelection() {
         }
         var bookmarkableElement = selectedElement.closest('[id]');
 
+        // Exit if the element isn't bookmarkable
+        if (!ebBookmarkableElements().includes(bookmarkableElement)) {
+            return;
+        }
+
         // Mark the element as pending a bookmark, so that
         // in CSS we can show the bookmark button
         if (document.querySelector('.bookmark-pending')) {
@@ -1038,8 +1055,8 @@ function ebBookmarksProcess() {
     ebBookmarkListsOpenOnClick();
 
     // Mark which elements are available for bookmarking
-    ebBookmarksMarkVisibleElements(document.querySelectorAll(ebBookmarkableElements));
-    ebBookmarksAddButtons(document.querySelectorAll(ebBookmarkableElements));
+    ebBookmarksMarkVisibleElements(ebBookmarkableElements());
+    ebBookmarksAddButtons(ebBookmarkableElements());
 
     // Check for bookmarks
     ebBookmarksCheckForBookmarks();
