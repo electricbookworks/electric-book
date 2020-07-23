@@ -347,13 +347,19 @@ function ebAccordionShow(targetID) {
 
 }
 
-function ebAccordionListenForAnchorClicks() {
+function ebAccordionListenForAnchorClicks(querySelectorString) {
     'use strict';
 
     // console.log('Starting ebAccordionListenForAnchorClicks...');
 
-    // listen for clicks on *all* the anchors (;_;)
-    var allTheAnchors = document.querySelectorAll('#content a');
+    // listen for clicks on *all* the anchors in #content by default
+    var allTheAnchors;
+    if (querySelectorString) {
+        allTheAnchors = document.querySelectorAll(querySelectorString);
+    } else {
+        allTheAnchors = document.querySelectorAll('#content a');
+    }
+
     allTheAnchors.forEach(function (oneOfTheAnchors) {
 
         // if it's an external link, exit

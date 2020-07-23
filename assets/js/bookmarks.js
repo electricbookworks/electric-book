@@ -1,7 +1,8 @@
 /*jslint browser */
 /*globals window, IntersectionObserver, locales, pageLanguage,
     ebSlugify, ebIDsAssigned, ebFingerprintsAssigned, ebIsPositionRelative,
-    ebNearestPrecedingSibling, ebTruncatedString, ebToggleClickout */
+    ebNearestPrecedingSibling, ebTruncatedString, ebToggleClickout,
+    ebAccordionListenForAnchorClicks */
 
 // A script for managing a user's bookmarks.
 // This script waits for setup.js to give elements IDs.
@@ -421,6 +422,12 @@ function ebBookmarksListBookmarks(bookmarks) {
     deleteAllBookmarksListItemLastLocations.addEventListener('click', function () {
         ebBookmarksDeleteAllBookmarks('lastLocation');
     });
+
+    // Listen for clicks on the new anchor links,
+    // if we're using the content accordion.
+    if (typeof ebAccordionListenForAnchorClicks === 'function') {
+        ebAccordionListenForAnchorClicks('.bookmarks-modal a');
+    }
 
     // Prompt the user about their last location
     ebBookmarksLastLocationPrompt(lastLocationLink);
