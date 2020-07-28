@@ -108,6 +108,15 @@ web:
   # -----------------
   images:
     lazyload: true
+  # --------------
+  # Navigation
+  # --------------
+  # On your landing page, should books in the nav expand
+  # to include chapters? Expanding many chapters can
+  # make your pages much bigger and slower. true/false
+  nav:
+    home:
+      expand-books: false
 
 # ----------------------------------------------------------
 # Epub settings
@@ -175,6 +184,15 @@ app:
   # in an expansion file, edit these settings.
   google-play-expansion-file-enabled: false
   google-play-public-api-key: ""
+  # --------------
+  # Navigation
+  # --------------
+  # On your landing page, should books in the nav expand
+  # to include chapters? Expanding many chapters can
+  # make your pages much bigger and slower. true/false
+  nav:
+    home:
+      expand-books: false
 
 # ----------------------------------------------------------
 # External media settings
