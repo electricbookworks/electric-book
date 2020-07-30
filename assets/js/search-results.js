@@ -1,5 +1,5 @@
 /*jslint browser */
-/*globals locales, pageLanguage, index, searchTerm, store, fillSearchBox */
+/*globals window, locales, pageLanguage, index, searchTerm, store, fillSearchBox */
 
 // Display the search results
 function displaySearchResults(results, store) {
@@ -36,6 +36,7 @@ function displaySearchResults(results, store) {
 
         appendString += '</ul>';
         appendString += '</div>';
+
     } else {
         localisedSearchResultsNumberSuffix = locales[pageLanguage].search['results-for-none'];
         appendString += '<p>' + localisedSearchResultsNumberSuffix + ' "' + searchTerm + '".</p>';
@@ -43,28 +44,11 @@ function displaySearchResults(results, store) {
 
     var searchForm = document.querySelector('#content .search');
     searchForm.parentNode.innerHTML += appendString;
-
-    // Hide the search-progress placeholder
-    var searchProgressPlaceholder = document.querySelector('.search-progress-placeholder');
-    if (searchProgressPlaceholder) {
-        searchProgressPlaceholder.classList.add('visuallyhidden');
-    }
 }
 
 function checkForSearchTerm() {
     'use strict';
     if (searchTerm) {
-
-        // display a 'Searching' progress placeholder
-        var searchProgress = document.createElement('div');
-        searchProgress.classList.add('search-progress-placeholder');
-        if (searchProgress) {
-            var searchBox = document.querySelector('#content #search-box');
-            if (searchBox) {
-                searchProgress.innerHTML = '<p>' + locales[pageLanguage].search['placeholder-searching'] + '</p>';
-                searchBox.insertAdjacentElement('afterEnd', searchProgress);
-            }
-        }
 
         // perform the search
         var results = index.search(searchTerm, {
@@ -73,9 +57,17 @@ function checkForSearchTerm() {
 
         // display the results
         displaySearchResults(results, store);
-
     }
 }
 
-checkForSearchTerm();
+var ebSearchIndexLoading;
+function ebSearchIndexLoadingCheck() {
+    'use strict';
+    if (store && store.length > 0) {
+        checkForSearchTerm();
+        window.clearInterval(ebSearchIndexLoading);
+    }
+}
+ebSearchIndexLoading = window.setInterval(ebSearchIndexLoadingCheck, 100);
+
 fillSearchBox();

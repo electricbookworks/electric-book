@@ -1,7 +1,27 @@
-/*jslint browser */
-/*globals locales, pageLanguage, Mark */
+/*jslint browser, for */
+/*globals window, locales, pageLanguage, Mark */
 
-// Fill the search boxes with the current search term
+// get query search term from GET query string
+function getQueryVariable(variable) {
+    'use strict';
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+
+    var i, pair;
+    for (i = 0; i < vars.length; i += 1) {
+        pair = vars[i].split('=');
+
+        if (pair[0] === variable) {
+            return decodeURIComponent(pair[1].replace(/\+/g, '%20'));
+        }
+    }
+}
+
+// Get some elements
+var searchTerm = getQueryVariable('query'),
+    searchBox = document.querySelectorAll('.search-box');
+
+    // Fill the search boxes with the current search term
 function fillSearchBox() {
     'use strict';
     if (searchTerm && searchBox) {
@@ -21,22 +41,6 @@ function isSearchPage() {
         return true;
     } else {
         return false;
-    }
-}
-
-// get query search term from GET query string
-function getQueryVariable(variable) {
-    'use strict';
-    var query = window.location.search.substring(1);
-    var vars = query.split('&');
-
-    var i, pair;
-    for (i = 0; i < vars.length; i += 1) {
-        pair = vars[i].split('=');
-
-        if (pair[0] === variable) {
-            return decodeURIComponent(pair[1].replace(/\+/g, '%20'));
-        }
     }
 }
 
@@ -90,10 +94,6 @@ function jumpToSearchResult() {
         return;
     }
 }
-
-// Get some elements
-var searchTerm = getQueryVariable('query'),
-    searchBox = document.querySelectorAll('.search-box');
 
 // Ask mark.js to mark all the search terms
 var markInstance = new Mark(document.querySelector("#wrapper"));
