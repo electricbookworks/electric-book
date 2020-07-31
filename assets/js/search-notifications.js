@@ -60,7 +60,12 @@ function ebSearchWaitingForResults() {
 function ebSearchResultsProcess() {
     'use strict';
     ebSearchCheckForResultsLoad = window.setInterval(ebSearchWaitingForResults, 500);
-    ebSearchLoadIndexAndResults();
+
+    // Let notification show before loading index and results
+    window.setTimeout(
+        ebSearchLoadIndexAndResults,
+        500
+    );
 }
 
 function ebSearchCheckForSearchString() {
