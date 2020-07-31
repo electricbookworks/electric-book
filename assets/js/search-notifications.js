@@ -33,8 +33,8 @@ function ebSearchLoadIndexAndResults() {
     'use strict';
 
     [
-        settings.site.baseurl + '/assets/js/search-index-' + settings.site.output + '.js',
-        settings.site.baseurl + '/assets/js/search-results.js'
+        'assets/js/search-index-' + settings.site.output + '.js',
+        'assets/js/search-results.js'
     ].forEach(function (src) {
         var script = document.createElement('script');
         script.src = src;
