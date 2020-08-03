@@ -2,6 +2,7 @@
 
 ## Latest
 
+* [Improve the reliability of search indexes and show 'Searching' notice in UX](https://github.com/electricbookworks/electric-book/pull/490)
 * [Don't expand books in home nav by default](https://github.com/electricbookworks/electric-book/pull/489)
 * [Exit the output script if Jekyll builds fail](https://github.com/electricbookworks/electric-book/pull/488)
 * [Create fallbacks for OG page title](https://github.com/electricbookworks/electric-book/pull/484)
