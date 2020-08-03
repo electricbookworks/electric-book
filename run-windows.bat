@@ -790,7 +790,7 @@ set /p process=Enter a number and hit return.
             )
 
             echo Opening folder containing app...
-            %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
+            %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\app\build\outputs\apk"
 
             :: Try to emulate
             echo "Attempting to run app in emulator..."

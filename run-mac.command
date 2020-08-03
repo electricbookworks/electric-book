@@ -733,7 +733,7 @@ You may need to reload the web page once this server is running."
 				cd .. && cd ..
 				echo "Done. Opening folder containing Android app..."
 				# (On Linux, this is xdg-open, not open.)
-				open _site/app/platforms/android/build/outputs/apk/
+				open _site/app/platforms/android/app/build/outputs/apk/
 				echo "Attempting to run app in emulator..."
 				cordova emulate android
 			# Building iOS not available on Linux, only newish Macs
