@@ -38,8 +38,12 @@ function displaySearchResults(results, store) {
         appendString += '</div>';
 
     } else {
+
         localisedSearchResultsNumberSuffix = locales[pageLanguage].search['results-for-none'];
+
+        appendString += '<div class="search-results" id="search-results">';
         appendString += '<p>' + localisedSearchResultsNumberSuffix + ' "' + searchTerm + '".</p>';
+        appendString += '</div>';
     }
 
     var searchForm = document.querySelector('#content .search');
