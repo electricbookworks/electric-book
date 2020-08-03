@@ -1,25 +1,13 @@
----
-# Jekyll processes this file to generate the array of URLs.
-# Then the output script runs this with Node,
-# which generates the search index as search-index-web.js
-# or search-index-app.js, depending on current output format.
-layout: null
----
-
 /*jslint node, browser */
 /*globals */
-
-{% comment %} Get the URLs to include in the index {% endcomment %}
-{% include files-listed.html %}
-
-var urls = [{% for url in array-of-files %}'{{ url }}'{% unless forloop.last %}, {% endunless %}{% endfor %}];
-
-{% comment %} From here, the Javascript that tells
-Puppeteer to generate a search index. {% endcomment %}
 
 var puppeteer = require('puppeteer');
 var fs = require('fs');
 var searchIndex = '';
+
+// Get the file list from search-store.js,
+// which is included in search-engine.js.
+var {store, output} = require('./search-engine.js');
 
 // The main process for generating a search index
 function generateIndex() {
@@ -33,7 +21,7 @@ function generateIndex() {
 
         var i;
         var count = 0;
-        for (i = 0; i < urls.length; i += 1) {
+        for (i = 0; i < store.length; i += 1) {
 
             // Make the URL path absolute, because
             // we might be indexing file system files,
@@ -41,7 +29,7 @@ function generateIndex() {
             // is run from the repo root, e.g as
             // node _site/assets/js/render-search-index.js
             // in which case the repo root is the current working directory (cwd)
-            var url = process.cwd() + '/_site' + urls[i];
+            var url = process.cwd() + '/_site/' + store[i].url;
 
             // User feedback
             console.log('Indexing ' + url);
@@ -96,13 +84,13 @@ function generateIndex() {
         }
 
         // If we've got all the pages, close the Puppeteer browser
-        if (count === urls.length) {
+        if (count === store.length) {
             browser.close();
         }
 
         // Write the search index file
-        fs.writeFile('assets/js/search-index-{{ site.output }}.js', searchIndex, function () {
-            console.log('Writing search-index-{{ site.output }}.js...');
+        fs.writeFile('assets/js/search-index-' + output + '.js', searchIndex, function () {
+            console.log('Writing search-index-' + output + '.js...');
             console.log('Done.');
         });
 

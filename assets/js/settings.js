@@ -10,6 +10,10 @@
 
 // Create default settings object
 var settings = {
+    site: {
+        baseurl: '',
+        output: 'web'
+    },
     web: {
         images: {
             lazyload: true
@@ -17,5 +21,18 @@ var settings = {
     }
 };
 
+// Override default settings from Jekyll config
+{% if site.baseurl %}
+settings.site.baseurl = '{{ site.baseurl }}';
+{% endif %}
+
+{% if site.output %}
+settings.site.output = '{{ site.output }}';
+{% endif %}
+
 // Override default settings from settings.yml
+{% if site.data.settings.web.images.lazyload %}
 settings.web.images.lazyload = {{ site.data.settings.web.images.lazyload }};
+{% else %}
+settings.web.images.lazyload = false;
+{% endif %}

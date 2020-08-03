@@ -1,6 +1,6 @@
 index.addDoc({
     id: 0,
-    title: "Template: Cover",
+    title: "Template",
     content: ""
 });
 index.addDoc({
@@ -30,7 +30,7 @@ index.addDoc({
 });
 index.addDoc({
     id: 6,
-    title: "Samples: Cover",
+    title: "Samples",
     content: ""
 });
 index.addDoc({
