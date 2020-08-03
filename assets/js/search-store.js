@@ -8,6 +8,10 @@ whether output-docs == true. {% endcomment %}
 {% comment %} Get the array-of-files to include in the index {% endcomment %}
 {% include files-listed.html %}
 
+{% comment %} Create an index number. This helps us check that
+the files in this store match those in the index. {% endcomment %}
+{% assign search-store-loop-index = -1 %}
+
 {% comment %} Add data to a store, which we need as search results,
 because since elasticlunr only returns (0-based indexed) `ref`.
 Only show excerpts if they do not include Liquid tags.
@@ -20,7 +24,8 @@ var store = [
                 {
                     'title': {% if page.title and page.title != "" %}{{ page.title | jsonify }}{% else %}{{ page.url | replace: "/"," " | jsonify }}{% endif %},
                     'excerpt': {% capture excerpt %}{{ page.content | markdownify | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify | replace: "\n", "" }}{% endcapture %}{% if excerpt contains "{%" or excerpt contains "{{" %}""{% else %}{{ excerpt }}{% endif %},
-                    'url': {{ page.url | replace_first: "/", "" | jsonify }}
+                    'url': {{ page.url | replace_first: "/", "" | jsonify }},
+                    'id': {% assign search-store-loop-index = search-store-loop-index | plus: 1 %}{{ search-store-loop-index }}
                 }{% unless forloop.last %},{% endunless %}
             {% elsif url-from-array contains '/text/index.html' %}
                 {% capture page-url-as-index %}{{ page.url }}index.html{% endcapture %}
@@ -28,7 +33,8 @@ var store = [
                 {
                     'title': {% if page.title and page.title != "" %}{{ page.title | jsonify }}{% else %}{{ page.url | replace: "/"," " | jsonify }}{% endif %},
                     'excerpt': {% capture excerpt %}{{ page.content | markdownify | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify | replace: "\n", "" }}{% endcapture %}{% if excerpt contains "{%" or excerpt contains "{{" %}""{% else %}{{ excerpt }}{% endif %},
-                    'url': {{ url-from-array | replace_first: "/", "" | jsonify }}
+                    'url': {{ url-from-array | replace_first: "/", "" | jsonify }},
+                    'id': {% assign search-store-loop-index = search-store-loop-index | plus: 1 %}{{ search-store-loop-index }}
                 }{% unless forloop.last %},{% endunless %}
                     {% endif %}
             {% endif %}
@@ -40,10 +46,19 @@ var store = [
                 {
                     'title': {% if page.title and page.title != "" %}{{ page.title | jsonify }}{% else %}{{ page.url | replace: "/"," " | jsonify }}{% endif %},
                     'excerpt': {% capture excerpt %}{{ page.content | markdownify | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify }}{% endcapture %}{% if excerpt contains "{%" or excerpt contains "{{" %}""{% else %}{{ excerpt }}{% endif %},
-                    'url': {{ page.url | replace_first: "/", "" | jsonify }}
+                    'url': {{ page.url | replace_first: "/", "" | jsonify }},
+                    'id': {% assign search-store-loop-index = search-store-loop-index | plus: 1 %}{{ search-store-loop-index }}
                 },
             {% endfor %}
         {% endif %}
 
 ];
 
+// Let us use the store when rendering the index.
+// This must only run in Node, hence the check.
+if (typeof window === 'undefined') {
+    module.exports = {
+        store: store,
+        output: 'app'
+    }
+}
