@@ -313,6 +313,13 @@ $web-bookmarks: true !default;
             // parent element is indented
             position: absolute;
             left: 0;
+
+            // On large screens, have the button just to the left of the text,
+            // in the margin (which doesn't exist on small screens).
+            @media only screen and (min-width: $break-width-medium) {
+                left: auto;
+                transform: translateX(-$bookmark-icon-text-size * 2);
+            }
         }
 
         &:hover {
