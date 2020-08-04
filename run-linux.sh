@@ -776,7 +776,7 @@ You may need to reload the web page once this server is running."
 				fi
 				echo "Done. Opening folder containing Android app..."
 				# (On OSX, this will be open, not xdg-open.)
-				xdg-open _site/app/platforms/android/build/outputs/apk/
+				xdg-open _site/app/platforms/android/app/build/outputs/apk/
 
 				echo "Attempting to run app in emulator..."
 				cordova emulate android
