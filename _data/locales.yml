@@ -187,7 +187,7 @@ en:
   bookmarks:
     bookmark: "Bookmark"
     bookmarks: "Bookmarks"
-    bookmarks-tip: "Select text, and then tap the bookmark icon to save a bookmark."
+    bookmarks-tip: "Tap or select text, and then tap the bookmark icon to save a bookmark. Bookmarks are saved in your browser cache. Clearing your cache will remove them."
     last-location: "Your last visit"
     last-locations-tip: "The last time you visited, you stopped reading here."
     last-location-prompt: "Continue from your last visit?"
@@ -279,7 +279,7 @@ fr:
   bookmarks:
     bookmark: "Signet"
     bookmarks: "Signets"
-    bookmarks-tip: "Sélectionnez du texte, puis appuyez sur l'icône de signet pour enregistrer un signet."
+    bookmarks-tip: "Appuyez ou sélectionnez du texte, puis appuyez sur l'icône de signet pour enregistrer un signet. Les signets sont enregistrés dans le cache de votre navigateur. Effacer votre cache les supprimera."
     last-location: "Dernier lieu"
     last-locations-tip: "La dernière fois que vous avez visité, vous avez arrêté de lire ici."
     last-location-prompt: "Continuez depuis votre dernière visite?"
