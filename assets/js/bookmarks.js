@@ -820,10 +820,11 @@ function ebBookmarksToggleButtonOnElement(element, positionX, positionY) {
         if (button.clientWidth > 0) {
             buttonWidth = button.clientWidth;
         }
-        var maxHoritozontalPosition = button.parentElement.clientWidth
+        var maxHorizontalPosition = button.parentElement.clientWidth
+                + button.parentElement.getBoundingClientRect().left
                 - buttonWidth;
-        if (positionX > maxHoritozontalPosition) {
-            positionX = maxHoritozontalPosition;
+        if (positionX > maxHorizontalPosition) {
+            positionX = maxHorizontalPosition;
         }
 
         // Add the positions as CSS variables
@@ -1003,8 +1004,11 @@ function ebBookmarksListenForTextSelection() {
             bookmarkableElement.classList.add('bookmark-pending');
 
             // Remove pending icon soon if not clicked
+            // and no text is currently selected
             setTimeout(function () {
-                bookmarkableElement.classList.remove('bookmark-pending');
+                if (window.getSelection().isCollapsed) {
+                    bookmarkableElement.classList.remove('bookmark-pending');
+                }
             }, 3000);
         }
 

@@ -320,6 +320,7 @@ $web-bookmarks: true !default;
 
             // On large screens, have the button just to the left of the text,
             // in the margin (which doesn't exist on small screens).
+            // Overridden for bookmark-pending below.
             @media only screen and (min-width: $break-width-medium) {
                 left: auto;
                 transform: translateX(-$bookmark-icon-text-size * 2);
@@ -360,6 +361,10 @@ $web-bookmarks: true !default;
         svg {
             width: $bookmark-icon-text-size * 2;
             height: $bookmark-icon-text-size * 2;
+
+            // Override large-screen positioning in media query above
+            left: 0;
+            transform: none;
         }
     }
 
