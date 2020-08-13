@@ -162,8 +162,7 @@ function ebBookmarksLastLocationPrompt(link) {
         prompt.innerHTML = '<a href="' + link + '">'
                 + locales[pageLanguage].bookmarks['last-location-prompt']
                 + '</a>';
-        var bookmarks = document.querySelector('div.bookmarks');
-        bookmarks.appendChild(prompt);
+        document.body.appendChild(prompt);
 
         // Add class to animate by. Wait a few milliseconds
         // so that CSS transitions will work.
