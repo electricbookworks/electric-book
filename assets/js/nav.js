@@ -1,5 +1,5 @@
 /*jslint browser, for */
-/*globals window */
+/*globals window, ebToggleClickout */
 
 function ebNav() {
     'use strict';

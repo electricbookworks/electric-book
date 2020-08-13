@@ -212,6 +212,7 @@ function ebTruncatedString(string, characters, suffix) {
 var ebCurrentModalZIndex;
 function ebToggleClickout(modalElement, callback) {
     'use strict';
+
     var clickOut;
 
     if (ebCurrentModalZIndex > 0) {
@@ -222,7 +223,7 @@ function ebToggleClickout(modalElement, callback) {
 
     // If the clickout is present, and this modal
     // is visible (as opposed to another modal)
-    if (document.getElementById('clickOut')
+    if (document.getElementById('clickOut-' + modalElement.id)
             && modalElement.getAttribute('data-modal-visible')) {
 
         // Don't set the z-index in the style attribute,
@@ -231,7 +232,7 @@ function ebToggleClickout(modalElement, callback) {
         modalElement.setAttribute('data-modal-visible', false);
 
         // Remove the clickOut element
-        clickOut = document.getElementById('clickOut');
+        clickOut = document.getElementById('clickOut-' + modalElement.id);
         clickOut.remove();
 
         if (callback) {
@@ -255,7 +256,7 @@ function ebToggleClickout(modalElement, callback) {
 
         // Add a clickOut element
         clickOut = document.createElement('div');
-        clickOut.id = 'clickOut';
+        clickOut.id = 'clickOut-' + modalElement.id;
         clickOut.style.zIndex = ebCurrentModalZIndex - 1;
         clickOut.style.position = 'fixed';
         clickOut.style.top = '0';

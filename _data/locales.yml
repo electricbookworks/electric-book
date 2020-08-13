@@ -139,7 +139,7 @@ en:
     credit: ""
   nav:
     home: "Home"
-    menu: "Contents"
+    menu: "Menu"
     next: "Next"
     previous: "Previous"
     back: "&larr;"
@@ -231,7 +231,7 @@ fr:
     credit: "Construit avec [l'Electric Book](http://electricbook.works)"
   nav:
     home: "Accueil"
-    menu: "Table des matières"
+    menu: "Menu"
     next: "Suivant"
     previous: "Précédent"
     back: "&larr;"

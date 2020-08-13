@@ -906,26 +906,35 @@ function ebBookmarksAddButtons(elements, action) {
     }
 }
 
+// Toggle the modal visibility
+function ebBookmarksToggleModal(modal) {
+    'use strict';
+
+    if (!modal) {
+        modal = document.getElementById('bookmarks-modal');
+    }
+
+    // Toggle the clickable clickOut area
+    ebToggleClickout(modal, function () {
+        // If the modal is open, close it
+        if (document.querySelector('[data-bookmark-modal="open"]')) {
+            modal.style.display = 'none';
+            modal.setAttribute('data-bookmark-modal', 'closed');
+
+        // Otherwise, show it
+        } else {
+            modal.style.display = 'flex';
+            modal.setAttribute('data-bookmark-modal', 'open');
+        }
+    });
+}
+
 // Open the modal when the bookmarks button is clicked
 function ebBookmarksOpenOnClick() {
     'use strict';
     var button = document.querySelector('.bookmarks > .bookmark-icon');
-    var modal = document.querySelector('.bookmarks-modal');
     button.addEventListener('click', function () {
-
-        // Toggle the clickable clickOut area
-        ebToggleClickout(modal, function () {
-            // If the modal is open, close it
-            if (document.querySelector('[data-bookmark-modal="open"]')) {
-                modal.style.display = 'none';
-                modal.setAttribute('data-bookmark-modal', 'closed');
-
-            // Otherwise, show it
-            } else {
-                modal.style.display = 'flex';
-                modal.setAttribute('data-bookmark-modal', 'open');
-            }
-        });
+        ebBookmarksToggleModal();
     });
 }
 
@@ -1038,6 +1047,13 @@ function ebBookmarksSetLastLocation() {
     }
 }
 
+// Move the modal HTML to an independent location
+function ebBookmarksMoveModal() {
+    'use strict';
+    var modal = document.getElementById('bookmarks-modal');
+    document.body.appendChild(modal);
+}
+
 // The main process
 function ebBookmarksProcess() {
     'use strict';
@@ -1047,6 +1063,9 @@ function ebBookmarksProcess() {
 
     // Create the fingerprint index
     ebBookmarksCreateFingerprintIndex();
+
+    // Move the modal
+    ebBookmarksMoveModal();
 
     // Show the bookmarks controls
     var bookmarksControls = document.querySelector('.bookmarks');
