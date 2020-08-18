@@ -425,4 +425,11 @@ $web-bookmarks: true !default;
             padding-bottom: 0.4rem; // align in box
         }
     }
+
+    // Don't show last-location icon on landing page
+    .home {
+        .history-icon {
+            visibility: hidden;
+        }
+    }
 }
