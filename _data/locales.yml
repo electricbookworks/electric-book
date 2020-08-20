@@ -200,6 +200,8 @@ en:
   accordion:
     show-all: "Expand all"
     close-all: "Close all"
+  controls:
+    language-select: "Select language"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -292,6 +294,8 @@ fr:
   accordion:
     show-all: "Montre tout"
     close-all: "Ferme tout"
+  controls:
+    language-select: "Choisir la langue"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""

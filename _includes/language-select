@@ -31,7 +31,7 @@ translation's file list in meta.yml.{% endcomment %}
 
 {% if translated-files-listed and translated-files-exist %}
 
-    <div class="language-select">
+    <div class="language-select" title="{{ locale.controls.language-select }}">
 
         {% include language-select-icon %}
 
