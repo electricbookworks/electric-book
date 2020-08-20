@@ -54,10 +54,12 @@ function ebBookmarkableElements() {
     var elementsWithIDs = document.querySelectorAll('#content [id]');
 
     // .. and exclude elements with data-bookmarkable="no",
-    // or whose ancestors have data-bookmarkable="no".
+    // or whose ancestors have data-bookmarkable="no",
+    // or who are MathJax elements
     var bookmarkableElements = Array.from(elementsWithIDs).filter(function (element) {
         if (element.getAttribute('data-bookmarkable') !== 'no'
-                && !element.closest('[data-bookmarkable="no"]')) {
+                && !element.closest('[data-bookmarkable="no"]')
+                && !element.id.startsWith('MathJax-')) {
             return true;
         }
     });
@@ -673,6 +675,7 @@ function ebBookmarksSetBookmark(type, element, description) {
     }
 }
 
+// Remove a bookmark from an element
 function ebBookmarkUnmarkBookmarkedElements(element) {
     'use strict';
     // Remove any existing bookmarks
@@ -844,7 +847,16 @@ function ebBookmarksMarkVisibleElements(elements) {
 
     // Ensure we only use elements with IDs
     var elementsWithIDs = Array.from(elements).filter(function (element) {
-        return element.id !== 'undefined';
+
+        // Reasons not to include an element, e.g.
+        // it is a MathJax element.
+        if (element.id && element.id.startsWith('MathJax-')) {
+            return false;
+        }
+        // Otherwise, if it has an ID, include it.
+        if (element.id !== 'undefined') {
+            return true;
+        }
     });
 
     // If IntersectionObserver is supported, create one.
