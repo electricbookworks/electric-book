@@ -343,28 +343,37 @@ $web-bookmarks: true !default;
         }
     }
 
-    #content .bookmark-pending > .bookmark-button {
-        display: flex;
+    #content .bookmark-pending {
+        & > .bookmark-button {
+            display: flex;
 
-        // While selecting text, show button at this position,
-        // inserted as a property in the style attribute by JS.
-        // Custom properties not supported by IE, so position
-        // will remain static there.
-        // We add space to the left of the button because
-        // on mobile, the button is otherwise too close to the
-        // text-selection tool and can't be tapped.
-        position: var(--bookmark-button-position);
-        left: calc(var(--bookmark-button-position-x) + 1em);
-        top: var(--bookmark-button-position-y);
+            // While selecting text, show button at this position,
+            // inserted as a property in the style attribute by JS.
+            // Custom properties not supported by IE, so position
+            // will remain static there.
+            // We add space to the left of the button because
+            // on mobile, the button is otherwise too close to the
+            // text-selection tool and can't be tapped.
+            position: var(--bookmark-button-position);
+            left: calc(var(--bookmark-button-position-x) + 1em);
+            top: var(--bookmark-button-position-y);
 
-        // While pending, make button larger for easier pressing
-        svg {
-            width: $bookmark-icon-text-size * 2;
-            height: $bookmark-icon-text-size * 2;
+            // While pending, make button larger for easier pressing
+            svg {
+                width: $bookmark-icon-text-size * 2;
+                height: $bookmark-icon-text-size * 2;
 
-            // Override large-screen positioning in media query above
-            left: 0;
-            transform: none;
+                // Override large-screen positioning in media query above
+                left: 0;
+                transform: none;
+            }
+        }
+
+        // While pending, remove visually hidden elements
+        // so that they don't get included in text selection
+        // (e.g. definition popups)
+        .visuallyhidden {
+            display: none;
         }
     }
 
