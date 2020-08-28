@@ -281,7 +281,7 @@ fr:
   bookmarks:
     bookmark: "Marque-page"
     bookmarks: "Marque-pages"
-    bookmarks-tip: "Sélectionnez le texte, et ensuite cliquez sur l'icône marque-page pour sauvegarder le texte."
+    bookmarks-tip: "Appuyez sur ou sélectionnez le texte, et après appuyez sur l'icône marque-page pour sauvegarder un marque-page. Les marque-pages sont sauvegardés dans la mémoire cache de votre navigateur. Effacer la mémoire cache entraînera leur suppression."
     last-location: "Votre dernière visite"
     last-locations-tip: "Lors de votre dernière visite, vous vous êtes arrêté(e) de lire ici."
     last-location-prompt: "Voulez-vous continuer à partir de votre dernière visite ?"
@@ -295,7 +295,7 @@ fr:
     show-all: "Montre tout"
     close-all: "Ferme tout"
   controls:
-    language-select: "Choisir la langue"
+    language-select: "Sélectionnez la langue"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
