@@ -280,11 +280,30 @@ function ebBookmarksMarkBookmarks(bookmarks) {
 
     // Mark bookmarked elements
     bookmarks.forEach(function (bookmark) {
-        var elementToMark = document.getElementById(bookmark.id);
 
         // If this bookmark is on the current page,
         // mark the relevant bookmarked element.
         if (ebBookmarksCheckForCurrentPage(bookmark.location)) {
+            // Find the element by bookmark ID.
+            // If the bookmark ID isn't on the page, try the fingerprint.
+            // If that doesn't work, mark the first element with an ID.
+            // If no element has an ID, return.
+            var elementToMark;
+            if (document.getElementById(bookmark.id)) {
+                elementToMark = document.getElementById(bookmark.id);
+            } else if (document
+                .querySelector('[data-fingerprint="' + bookmark.fingerprint + '"')) {
+                elementToMark = document
+                    .querySelector('[data-fingerprint="' + bookmark.fingerprint + '"');
+                // console.log('Bookmark ID %s not found on page, trying fingerprint.', bookmark.id);
+            } else if (document.querySelector('[id]')) {
+                elementToMark = document.querySelector('[id]');
+                // console.log('Bookmark fingerprint %s not found on page, using first ID on page.', bookmark.fingerprint);
+            } else {
+                // console.log('Could not identify element with bookmark ID %s', bookmark.id);
+                return;
+            }
+
             elementToMark.setAttribute('data-bookmarked', 'true');
 
             // If the element has already been marked as a user bookmark,
