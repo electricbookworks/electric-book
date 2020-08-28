@@ -855,10 +855,18 @@ function ebBookmarksToggleButtonOnElement(element, positionX, positionY) {
         }
 
         // Add the positions as CSS variables
+        var positionUnitX = '';
+        var positionUnitY = '';
+        if (positionX !== 'auto') {
+            positionUnitX = 'px';
+        }
+        if (positionY !== 'auto') {
+            positionUnitY = 'px';
+        }
         button.setAttribute('style',
                 '--bookmark-button-position: absolute;' +
-                '--bookmark-button-position-x: ' + positionX + 'px;' +
-                '--bookmark-button-position-y: ' + positionY + 'px;');
+                '--bookmark-button-position-x: ' + positionX + positionUnitX + ';' +
+                '--bookmark-button-position-y: ' + positionY + positionUnitY + ';');
     } else {
         // Remove prior position settings, e.g. on a second click
         button.removeAttribute('style');
@@ -1052,7 +1060,7 @@ function ebBookmarksListenForTextSelection() {
         // add the button in the default position. Otherwise,
         // position it at the end of the text selection.
         if (window.getSelection().isCollapsed) {
-            ebBookmarksToggleButtonOnElement(bookmarkableElement);
+            ebBookmarksToggleButtonOnElement(bookmarkableElement, 'auto', 'auto');
         } else {
 
             // If the button has a position: relative parent,
