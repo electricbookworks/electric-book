@@ -593,8 +593,13 @@ function ebBookmarksSetBookmark(type, element, description) {
     if (!description) {
 
         // Use the opening characters of the text.
-        // Note that textContent includes line breaks etc.
-        var descriptionText = element.textContent.trim().replace(/^[\n\s]+/, '');
+        // Note that textContent includes line breaks etc.,
+        // so we remove any at the starts and ends of the string
+        var descriptionText = element.textContent
+            .trim()
+            .replace(/^[\n]+/g, '')
+            .replace(/[\n]+$/g, '')
+            .trim();
         description = ebTruncatedString(descriptionText, 120, ' …');
     }
 
@@ -603,7 +608,7 @@ function ebBookmarksSetBookmark(type, element, description) {
     // If an h2, check for an h3, up to h4 sections. Otherwise no section heading.
     var pageTitle, sectionHeadingElement, sectionHeading;
     if (document.querySelector('h1')) {
-        pageTitle = document.querySelector('h1').textContent;
+        pageTitle = document.querySelector('h1').textContent.trim();
         if (ebNearestPrecedingSibling(element, 'H2')) {
             sectionHeadingElement = ebNearestPrecedingSibling(element, 'H2');
             sectionHeading = sectionHeadingElement.textContent;
@@ -616,7 +621,7 @@ function ebBookmarksSetBookmark(type, element, description) {
             }
         }
     } else if (document.querySelector('h2')) {
-        pageTitle = document.querySelector('h2').textContent;
+        pageTitle = document.querySelector('h2').textContent.trim();
         if (ebNearestPrecedingSibling(element, 'H3')) {
             sectionHeadingElement = ebNearestPrecedingSibling(element, 'H3');
             sectionHeading = sectionHeadingElement.textContent;
@@ -626,7 +631,7 @@ function ebBookmarksSetBookmark(type, element, description) {
             }
         }
     } else if (document.querySelector('h3')) {
-        pageTitle = document.querySelector('h3').textContent;
+        pageTitle = document.querySelector('h3').textContent.trim();
         if (ebNearestPrecedingSibling(element, 'H4')) {
             sectionHeadingElement = ebNearestPrecedingSibling(element, 'H4');
             sectionHeading = sectionHeadingElement.textContent;
@@ -636,7 +641,7 @@ function ebBookmarksSetBookmark(type, element, description) {
             }
         }
     } else {
-        pageTitle = document.title;
+        pageTitle = document.title.trim();
         sectionHeading = '';
     }
 
