@@ -35,7 +35,10 @@ function ebGetSiblingIndex(element) {
     return index + 1;
 }
 
-// Assign fingerprints to all elements with IDs
+// Assign fingerprints to all elements with IDs.
+// The fingerprint does not contain the ID, because
+// the point of the fingerprint is to be a substitute
+// for the ID when the ID changes.
 var ebFingerprintsAssigned = false;
 function ebAssignFingerprints(element, ancestorTagNames) {
     'use strict';
@@ -83,10 +86,7 @@ function ebAssignFingerprints(element, ancestorTagNames) {
 
     // Add them to the fingerprint
     fingerprint += openingString + '-';
-    fingerprint += closingString + '-';
-
-    // Add the element's current ID
-    fingerprint += element.id;
+    fingerprint += closingString;
 
     // Set the data-fingerprint attribute
     element.setAttribute('data-fingerprint', fingerprint);
