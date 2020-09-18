@@ -9,7 +9,7 @@
 * [Create fallbacks for OG page title](https://github.com/electricbookworks/electric-book/pull/484)
 * [Let EBM users edit non-book styles, eg landing page](https://github.com/electricbookworks/electric-book/pull/476)
 * [Improve landing-page presentation and default fonts](https://github.com/electricbookworks/electric-book/pull/473)
-* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/d5a51fc83a7da5e8c35c3cb22043987777ddae4d...master).
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/d5a51fc83a7da5e8c35c3cb22043987777ddae4d...1e2bc3a2f03a8087dcc6bc9f107456a026d7a4a6).
 
 ## 0.17.0
 
