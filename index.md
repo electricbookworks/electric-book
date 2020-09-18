@@ -97,6 +97,14 @@ Tag text and images for redaction, then instantly [output fully redacted PDFs]({
 
 ## Interactivity
 
+### Bookmarking
+
+Users can save their places, and the site will also automatically save their last location for the next time they visit.
+
+### Search
+
+Search functionality works out of the box. Easily [build and refresh search indexes]({{ site.baseurl }}/docs/setup/search-indexes.html) for websites and apps.
+
 ### Interactive questions
 
 Add self-marking [multiple-choice questions]({{ site.baseurl }}/docs/editing/multiple-choice-questions.html), and group them into quizzes. Add [fill-in-the-blank questions]({{ site.baseurl }}/docs/editing/questions.html#fill-in-the-blanks) to any text.
@@ -109,14 +117,6 @@ Easily [embed streaming video]({{ site.baseurl }}/docs/editing/video.html) from 
 
 Make long web pages [collapse on major headings]({{ site.baseurl }}/docs/layout/content-accordion.html) for easier reading. [See a demo here](https://deploy-preview-471--electric-book.netlify.app/samples/text/01-01-plain-text.html).
 
-### Search
-
-Search functionality works out of the box. Easily [build and refresh search indexes]({{ site.baseurl }}/docs/setup/search-indexes.html) for websites and apps.
-
-### Bookmarking ([coming soon](https://github.com/electricbookworks/electric-book/pull/444))
-
-Let users save their places, and automatically save their last location for the next time they visit.
-
 
 ## Extending and integrating
 
@@ -124,7 +124,7 @@ Let users save their places, and automatically save their last location for the 
 
 Do you already have a WordPress website? No problem. Electric Book websites are fully compatible with WordPress-driven servers.
 
-### Members-only option ([coming soon](https://github.com/electricbookworks/electric-book-wp/))
+### Members-only option
 
 Do you need to restrict book access to certain users on your WordPress site – like paying customers or authorised members? Use the [Electric Book WP plugin](https://github.com/electricbookworks/electric-book-wp/).
 
