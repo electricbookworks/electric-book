@@ -1,6 +1,6 @@
 # Changelog
 
-## Latest
+## 0.18.0
 
 * [Enable bookmarking](https://github.com/electricbookworks/electric-book/pull/444)
 * [Improve the reliability of search indexes and show 'Searching' notice in UX](https://github.com/electricbookworks/electric-book/pull/490)
