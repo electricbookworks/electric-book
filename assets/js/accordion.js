@@ -1,6 +1,6 @@
 /*jslint browser */
 /*global window, ebLazyLoadImages, searchTerm, videoShow
-    locales, pageLanguage, console, Element, HTMLDocument */
+    locales, pageLanguage, console, Element, HTMLDocument, ebIDsAssigned */
 
 // console.log('Debugging accordions.js');
 
@@ -137,27 +137,6 @@ function ebAccordionFillSections() {
     });
 }
 
-function ebMoveThemeKeys() {
-    'use strict';
-
-    // get the theme keys and the theme key links
-    var themeKeys = document.querySelectorAll('.theme-key');
-    var themeKeysLinks = document.querySelectorAll('.theme-key a');
-
-    themeKeysLinks.forEach(function (themeKeysLink) {
-        // up to themeKeys div, up to data-container, up to section,
-        // on to next section, down to heading, down to h2
-        themeKeysLink.parentNode.parentNode.parentNode
-            .nextElementSibling.firstChild.firstChild
-            .appendChild(themeKeysLink);
-    });
-
-    // remove now empty theme keys divs
-    themeKeys.forEach(function (themeKey) {
-        themeKey.parentNode.removeChild(themeKey);
-    });
-}
-
 function ebAccordionHideThisSection(targetID) {
     'use strict';
 
@@ -184,7 +163,7 @@ function ebAccordionHideAll() {
 function ebAccordionShowAll() {
     'use strict';
 
-    console.log('expanding all');
+    // console.log('expanding all');
 
     var tabPanels = document.querySelectorAll('[role="tabpanel"]');
     tabPanels.forEach(function (current) {
@@ -365,15 +344,22 @@ function ebAccordionShow(targetID) {
             videoShow(sectionToShow);
         }
     }
+
 }
 
-function ebAccordionListenForAnchorClicks() {
+function ebAccordionListenForAnchorClicks(querySelectorString) {
     'use strict';
 
     // console.log('Starting ebAccordionListenForAnchorClicks...');
 
-    // listen for clicks on *all* the anchors (;_;)
-    var allTheAnchors = document.querySelectorAll('#content a');
+    // listen for clicks on *all* the anchors in #content by default
+    var allTheAnchors;
+    if (querySelectorString) {
+        allTheAnchors = document.querySelectorAll(querySelectorString);
+    } else {
+        allTheAnchors = document.querySelectorAll('#content a');
+    }
+
     allTheAnchors.forEach(function (oneOfTheAnchors) {
 
         // if it's an external link, exit
@@ -395,7 +381,7 @@ function ebAccordionListenForAnchorClicks() {
 
             // get the target ID by removing any file path and the #
             if (event.target.hasAttribute('href')) {
-                targetID = event.target.getAttribute('href').replace(/.*#/, '');
+                targetID = event.target.getAttribute('href').replace(/\?.+/, '').replace(/.*#/, '');
                 // console.log('The targetID is: ' + targetID);
             } else {
                 return;
@@ -470,8 +456,9 @@ function ebAccordionListenForHashChange() {
         // Don't treat this like a normal click on a link
         event.preventDefault();
 
-        // get the target ID from the hash
-        var targetID = window.location.hash;
+        // get the target ID from the hash,
+        // removing any query parameters
+        var targetID = window.location.hash.replace(/\?.+/, '');
         // console.log('targetID encoded: ' + targetID);
 
         targetID = decodeURIComponent(targetID);
@@ -594,7 +581,6 @@ function ebAccordify() {
 
     ebAccordionSetUpSections(collapserButtons);
     ebAccordionFillSections();
-    ebMoveThemeKeys();
 
     if (searchTerm) {
         // loop through sections
@@ -638,10 +624,22 @@ function ebExpand() {
     }
 }
 
-ebAccordify();
-ebExpand();
-ebAccordionListenForAnchorClicks();
-ebAccordionListenForHeadingClicks();
-ebAccordionListenForNavClicks();
-ebAccordionListenForHashChange();
-ebAccordionShowAllButton();
+function ebLoadAccordion() {
+    'use strict';
+    ebAccordify();
+    ebExpand();
+    ebAccordionListenForAnchorClicks();
+    ebAccordionListenForHeadingClicks();
+    ebAccordionListenForNavClicks();
+    ebAccordionListenForHashChange();
+    ebAccordionShowAllButton();
+}
+
+// Load the accordion when IDs have been assigned
+var ebAccordionCheckForIDs = window.setInterval(function () {
+    'use strict';
+    if (ebIDsAssigned === true) {
+        ebLoadAccordion();
+        clearInterval(ebAccordionCheckForIDs);
+    }
+}, 500);

@@ -15,6 +15,9 @@
         <div class="nav-title">{{ title }}</div>
         {% endif %}
 
+        {% comment %} Add controls and settings {% endcomment %}
+        {% include controls.html %}
+
         {% comment %}Add the search box.{% endcomment %}
         <div class="search">
             {% include search %}

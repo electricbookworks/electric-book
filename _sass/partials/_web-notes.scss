@@ -32,14 +32,7 @@ $web-notes: true !default;
         margin-right: auto;
         left: $max-width-default * 0.25 / 3;
         right: $max-width-default * 0.25 / 3;
-        background-color: $color-background;
-        font-family: $font-text-secondary;
-        font-size: $font-size-default;
-        line-height: $line-height-default;
-        border: 0.2em solid $color-accent;
-        padding: ($line-height-default / 2);
-        box-shadow: 1px 2px 7px grey;
-        border-radius: $box-border-radius;
+        @include dialog-styles();
         p {
             margin-bottom: 0;
         }

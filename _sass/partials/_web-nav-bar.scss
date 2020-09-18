@@ -269,12 +269,17 @@ $nav-bar-back-button-hide: false !default;
     }
 
     [data-nav-close] {
+        background-color: transparent;
         &:after {
             content: $nav-bar-close;
+        }
+        &:hover {
+            background-color: transparent;
         }
     }
 
     [data-toggle-nav] {
+        background-color: transparent;
         left: $nav-bar-width * 0.7; // Keeps item text aligned in complex lists
         &:after {
             content: $nav-bar-children-prompt;
@@ -283,6 +288,9 @@ $nav-bar-back-button-hide: false !default;
             &:after {
                 content: $nav-bar-children-prompt-hide;
             }
+        }
+        &:hover {
+            background-color: transparent;
         }
     }
 

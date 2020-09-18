@@ -7,15 +7,11 @@
         <li class="masthead-project-name"><a href="{{ path-to-root-directory }}index.html">{{ project-name }}</a></li>
     </ul>
 
-    <div class="controls">
-
-        {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
-            {% include annotator.html %}
-        {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
-            {% include annotator.html %}
-        {% endif %}
-
-    </div>
+    {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
+        {% include annotator.html %}
+    {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
+        {% include annotator.html %}
+    {% endif %}
 
 {% comment %} Book pages {% endcomment %}
 {% else %}
@@ -73,17 +69,11 @@
 
     {% endif %}
 
-    <div class="controls">
-
-        {% include language-select %}
-
-        {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
-            {% include annotator.html %}
-        {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
-            {% include annotator.html %}
-        {% endif %}
-
-    </div>
+    {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
+        {% include annotator.html %}
+    {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
+        {% include annotator.html %}
+    {% endif %}
 
 {% endif %}
 

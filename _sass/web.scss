@@ -55,8 +55,11 @@ $paragraph-indent: 1em !default;
 $button-border-radius: 0.1rem !default; // Roundness of button corners
 $box-border-radius: 0.1rem !default; // Roundness of box corners
 
+// Shadows
+$box-shadow: 1px 2px 7px grey !default;
+
 // Rules, lines
-$rule-thickness: 1px !default;
+$rule-thickness: 1.5px !default;
 
 // Colours
 $color-text-main: #262626 !default;
@@ -133,20 +136,20 @@ $nav-bar-label-color: $color-light !default;
 $nav-bar-label-background-color: $masthead-background-color !default;
 $nav-bar-label-border-color: transparent !default;
 $nav-bar-border-color: $color-light !default;
-$nav-bar-background-color: white !default;
-$nav-bar-search-background-color: white !default;
-$nav-bar-parent-background-color: white !default;
-$nav-bar-parent-text-color: black !default;
+$nav-bar-background-color: $color-background !default;
+$nav-bar-search-background-color: $color-background !default;
+$nav-bar-parent-background-color: $color-background !default;
+$nav-bar-parent-text-color: $color-text-main !default;
 $nav-bar-parent-hover-color: $color-accent !default;
-$nav-bar-parent-text-hover-color: white !default;
+$nav-bar-parent-text-hover-color: $color-background !default;
 $nav-bar-children-prompt-color: $color-mid !default;
 $nav-bar-child-background-color: $color-light !default;
-$nav-bar-child-text-color: black !default;
+$nav-bar-child-text-color: $color-text-main !default;
 $nav-bar-child-hover-color: $color-accent !default;
-$nav-bar-child-text-hover-color: white !default;
+$nav-bar-child-text-hover-color: $color-background !default;
 
 // Language selector
-$language-select-icon-color: $color-light !default;
+$language-select-icon-color: $color-accent !default;
 $language-select-text-color: $color-text-secondary !default;
 $language-select-links-color: $color-links !default;
 $language-select-background-color: $color-background !default;
@@ -158,6 +161,17 @@ $annotator-icon-line-color-inactive: $color-mid !default;
 $annotator-icon-background-color-active: $color-accent !default;
 $annotator-icon-background-color-inactive: $color-background !default;
 $annotator-icon-thickness: 1.5px !default;
+
+// Bookmarks
+$bookmark-border-color: $color-light !default;
+$bookmark-text-color: $color-text-main !default;
+$bookmark-text-color-secondary: $color-mid !default;
+$bookmark-background-color: $color-background !default;
+$bookmark-icon-color-inactive: $color-background !default;
+$bookmark-icon-color-active: $color-accent !default;
+$bookmark-icon-outline-color-inactive: $color-accent !default;
+$bookmark-icon-outline-color-active: $color-accent !default;
+$bookmark-icon-text-size: 1em !default;
 
 // ---------------------------------
 // Set to false to turn partials off
@@ -225,6 +239,7 @@ $web-fitting: true !default;  // E.g. tracking and shrinking
 $web-controls: true !default;
 $web-language-select: true !default;
 $web-annotator: true !default;
+$web-bookmarks: true !default;
 
 // Logic (if this then that)
 $web-reset-sequences: true !default; // This should stay last in the @import list
@@ -245,6 +260,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 // Load general-purpose mixins
 @import "partials/web-mixins--buttons";
 @import "partials/web-mixins--sidenotes";
+@import "partials/web-mixins--dialogs";
 
 // Structural HTML components
 @import "partials/web-wrappers";
@@ -305,6 +321,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-controls";
 @import "partials/web-annotator";
 @import "partials/web-language-select";
+@import "partials/web-bookmarks";
 
 // Logic (if this then that)
 @import "partials/web-reset-sequences"; // This should stay last in the @import list

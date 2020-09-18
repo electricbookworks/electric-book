@@ -139,7 +139,7 @@ en:
     credit: ""
   nav:
     home: "Home"
-    menu: "Contents"
+    menu: "Menu"
     next: "Next"
     previous: "Previous"
     back: "&larr;"
@@ -184,9 +184,24 @@ en:
     show-sidebar-tooltip-description: "Tap here to show the annotations sidebar. Select text to highlight and create notes on this page."
     show-annotated-text-tooltip-title: "Highlight annotations"
     show-annotated-text-tooltip-description: "Tap here to show or hide the annotation highlights on this page."
+  bookmarks:
+    bookmark: "Bookmark"
+    bookmarks: "Bookmarks"
+    bookmarks-tip: "Tap or select text, and then tap the bookmark icon to save a bookmark. Bookmarks are saved in your browser cache. Clearing your cache will remove them."
+    last-location: "Your last visit"
+    last-locations-tip: "The last time you visited, you stopped reading here."
+    last-location-prompt: "Continue from your last visit?"
+    delete-bookmark: "Delete"
+    delete-bookmark-warning: "Are you sure you want to delete this bookmark?"
+    delete-all: "Delete all"
+    delete-all-bookmarks-warning: "This will delete all your bookmarks. Continue?"
+    delete-all-last-locations-warning: "This will delete all your previous locations. Continue?"
+    bookmarks-shifted-warning: "A bookmark doesn't seem to match its original place exactly. The content on this page may have changed."
   accordion:
     show-all: "Expand all"
     close-all: "Close all"
+  controls:
+    language-select: "Select language"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -218,7 +233,7 @@ fr:
     credit: "Construit avec [l'Electric Book](http://electricbook.works)"
   nav:
     home: "Accueil"
-    menu: "Table des matières"
+    menu: "Menu"
     next: "Suivant"
     previous: "Précédent"
     back: "&larr;"
@@ -263,9 +278,24 @@ fr:
     show-sidebar-tooltip-description: "Cliquer ici pour afficher la barre latérale des annotations. Vous pouvez sélectionner le texte à surligner et à annoter sur cette page."
     show-annotated-text-tooltip-title: "Surligner les annotations"
     show-annotated-text-tooltip-description: "Cliquer ici pour afficher ou masquer les annotations surlignées sur cette page."
+  bookmarks:
+    bookmark: "Marque-page"
+    bookmarks: "Marque-pages"
+    bookmarks-tip: "Appuyez sur ou sélectionnez le texte, et après appuyez sur l'icône marque-page pour sauvegarder un marque-page. Les marque-pages sont sauvegardés dans la mémoire cache de votre navigateur. Effacer la mémoire cache entraînera leur suppression."
+    last-location: "Votre dernière visite"
+    last-locations-tip: "Lors de votre dernière visite, vous vous êtes arrêté(e) de lire ici."
+    last-location-prompt: "Voulez-vous continuer à partir de votre dernière visite ?"
+    delete-bookmark: "Supprimer"
+    delete-bookmark-warning: "Êtes-vous sûr(e) de vouloir supprimer ce marque-page ?"
+    delete-all: "Tout supprimer"
+    delete-all-bookmarks-warning: "Ceci supprimera tous vos marque-pages. Voulez-vous continuer ?"
+    delete-all-last-locations-warning: "Ceci supprimera tous vos emplacements précédents. Voulez-vous continuer ?"
+    bookmarks-shifted-warning: "Un marque-page ne semble pas correspondre exactement à son emplacement initial. Le contenu de cette page a peut-être été modifié."
   accordion:
     show-all: "Montre tout"
     close-all: "Ferme tout"
+  controls:
+    language-select: "Sélectionnez la langue"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""

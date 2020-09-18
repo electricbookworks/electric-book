@@ -6,7 +6,7 @@ layout: trim
 allow elasticlunr to search the index. {% endcomment %}
 
 {% comment %} The third-party script that does the searching {% endcomment %}
-{% include_relative elasticlunr.min.js %}
+{% include_relative vendor/elasticlunr.min.js %}
 
 {% comment %} Our setup or initialisation of elasticlunr {% endcomment %}
 {% include_relative elasticlunr-setup.js %}
