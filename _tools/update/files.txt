@@ -593,6 +593,7 @@ _includes/breadcrumbs
 _includes/close-body.html
 _includes/close-content.html
 _includes/contact-form
+_includes/controls.html
 _includes/cover
 _includes/docs-by-category
 
@@ -614,6 +615,7 @@ _includes/globe-icon
 # _includes/head-elements
 
 _includes/head.html
+_includes/history-icon
 _includes/html-entities.html
 _includes/identifiers
 _includes/image
@@ -796,6 +798,7 @@ _sass/partials/_web-letters.scss
 _sass/partials/_web-masthead.scss
 _sass/partials/_web-maths.scss
 _sass/partials/_web-mixins--buttons.scss
+_sass/partials/_web-mixins--dialogs.scss
 _sass/partials/_web-mixins--sidenotes.scss
 _sass/partials/_web-nav-bar.scss
 _sass/partials/_web-notes.scss

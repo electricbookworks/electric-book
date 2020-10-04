@@ -79,11 +79,14 @@ function ebBookmarksSupport() {
             && window.getSelection
             && window.getSelection().toString
             && window.localStorage
-            && Storage !== 'undefined') {
+            && Storage !== 'undefined'
+            && document.querySelector('.bookmarks')) {
         return true;
     } else {
         var bookmarking = document.querySelector('.bookmarks');
-        bookmarking.style.display = 'none';
+        if (bookmarking !== null) {
+            bookmarking.style.display = 'none';
+        }
         return false;
     }
 }
@@ -977,9 +980,11 @@ function ebBookmarksToggleModal(modal) {
 function ebBookmarksOpenOnClick() {
     'use strict';
     var button = document.querySelector('.bookmarks > .bookmark-icon');
-    button.addEventListener('click', function () {
-        ebBookmarksToggleModal();
-    });
+    if (button !== null) {
+        button.addEventListener('click', function () {
+            ebBookmarksToggleModal();
+        });
+    }
 }
 
 // In addition to CSS hover, mark clicked lists
@@ -1007,7 +1012,9 @@ function ebBookmarkListsOpenOnClick() {
 
     // Set default view
     var bookmarksListHeader = document.querySelector('.bookmarks-list-header');
-    bookmarksListHeader.classList.add('bookmarks-list-header-open');
+    if (bookmarksListHeader !== null) {
+        bookmarksListHeader.classList.add('bookmarks-list-header-open');
+    }
 }
 
 // Always listen for and store user's text selection
@@ -1098,7 +1105,9 @@ function ebBookmarksSetLastLocation() {
 function ebBookmarksMoveModal() {
     'use strict';
     var modal = document.getElementById('bookmarks-modal');
-    document.body.appendChild(modal);
+    if (modal !== null) {
+        document.body.appendChild(modal);
+    }
 }
 
 // The main process
@@ -1116,7 +1125,9 @@ function ebBookmarksProcess() {
 
     // Show the bookmarks controls
     var bookmarksControls = document.querySelector('.bookmarks');
-    bookmarksControls.classList.remove('visuallyhidden');
+    if (bookmarksControls !== null) {
+        bookmarksControls.classList.remove('visuallyhidden');
+    }
     ebBookmarksOpenOnClick();
     ebBookmarkListsOpenOnClick();
 
