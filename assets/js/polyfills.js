@@ -144,24 +144,26 @@ if (!Element.prototype.closest) {
 
 // remove()
 // from:https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
-(function (arr) {
-  arr.forEach(function (item) {
-    if (item.hasOwnProperty('remove')) {
-      return;
-    }
-    Object.defineProperty(item, 'remove', {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: function remove() {
-        if (this.parentNode === null) {
-          return;
-        }
-        this.parentNode.removeChild(this);
+if (typeof CharacterData == 'function') {
+  (function (arr) {
+    arr.forEach(function (item) {
+      if (item.hasOwnProperty('remove')) {
+        return;
       }
+      Object.defineProperty(item, 'remove', {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: function remove() {
+          if (this.parentNode === null) {
+            return;
+          }
+          this.parentNode.removeChild(this);
+        }
+      });
     });
-  });
-})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+  })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+}
 
 // Array.from()
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from

@@ -67,6 +67,23 @@ $epub-video: true !default;
         & + p {
             text-indent: 0;
         }
-    }
 
+        .video-options {
+            color: $color-text-secondary;
+            font-size: 0.8em;
+            margin: ($line-height-default / 2) $paragraph-indent 0 $paragraph-indent;
+            position: relative;
+
+            .video-options-label {
+                font-weight: bold;
+            }
+
+            .video-options-content {
+
+                > :last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
 }
