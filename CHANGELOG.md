@@ -1,5 +1,11 @@
 # Changelog
 
+## Latest
+
+* [Enable video options, and a generic video include](https://github.com/electricbookworks/electric-book/pull/497)
+* Various minor fixes and refinements.
+
+
 ## 0.18.0
 
 * [Enable bookmarking](https://github.com/electricbookworks/electric-book/pull/444)
