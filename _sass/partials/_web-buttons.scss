@@ -33,7 +33,7 @@ $web-buttons: true !default;
         text-indent: 0;
         a {
             @include button();
-            padding: 0.5em;
+            padding: 0.4em 0.6em;
             margin: $line-height-default 0;
         }
         & + p {
