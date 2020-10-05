@@ -92,6 +92,7 @@ assets/js/accordion.js
 assets/js/annotation.js
 assets/js/bookmarks.js
 assets/js/bundle.js
+assets/js/bundle-check.js
 assets/js/elasticlunr-setup.js
 assets/js/footnote-popups.js
 assets/js/footnotes.js
@@ -356,6 +357,20 @@ assets/js/redact.js
 assets/js/render-search-index.js
 assets/js/rotate.js
 assets/js/search-engine.js
+assets/js/search-notifications.js
+assets/js/search-results.js
+assets/js/search-store.js
+assets/js/search-terms.js
+assets/js/select-list.js
+assets/js/setup.js
+assets/js/shift-elements.js
+assets/js/show-hide.js
+assets/js/svg-inject.min.js
+assets/js/svg-management.js
+assets/js/tables.js
+assets/js/utilities.js
+assets/js/videos.js
+
 assets/js/vendor/elasticlunr.min.js
 assets/js/vendor/mark.min.js
 assets/js/vendor/svg-inject.min.js
@@ -369,24 +384,13 @@ assets/js/vendor/svg-inject.min.js
 # assets/js/search-index-app.js
 # assets/js/search-index-web.js
 
-assets/js/search-results.js
-assets/js/search-store.js
-assets/js/search-terms.js
-assets/js/select-list.js
-assets/js/shift-elements.js
-assets/js/show-hide.js
-assets/js/svg-inject.min.js
-assets/js/svg-management.js
-assets/js/tables.js
-assets/js/utilities.js
-assets/js/videos.js
 
 
 # Sitewide styles
 # ---------------
 
-assets/styles/app.scss
-assets/styles/web.scss
+# assets/styles/app.scss
+# assets/styles/web.scss
 
 
 # Book utility files
@@ -395,7 +399,7 @@ assets/styles/web.scss
 # Generally files inside book folders should
 # not be overwritten when updating or sharing files
 # between projects. These files, on the other hand,
-# are packaging/utility files taht are rarely customised.
+# are packaging/utility files that are rarely customised.
 # So they can usually be safely updated.
 # When you rename or add new books to a project.
 # remember to add their equivalent files here as needed.
@@ -829,6 +833,7 @@ _sass/web.scss
 
 # Note that we include this files.txt file here.
 
+_tools/package/package.js
 _tools/profiles/Grey_Fogra39L.icc
 _tools/profiles/Grey_Fogra52L.icc
 _tools/profiles/PSOcoated_v3.icc
@@ -836,3 +841,4 @@ _tools/profiles/PSOuncoated_v3_FOGRA52.icc
 _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
 _tools/update/files.txt
 _tools/update/update.sh
+_tools/zip/zip.js
