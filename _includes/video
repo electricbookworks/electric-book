@@ -1,7 +1,7 @@
 {% capture video-html %}
 
 {% comment %}
-Currently suports youtube and vimeo only
+Currently supports youtube and vimeo only
 
 - default
     - show placeholder image
