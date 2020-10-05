@@ -641,6 +641,7 @@ _includes/search
 _includes/select
 _includes/start-content.html
 _includes/toc
+_includes/video
 _includes/vimeo
 _includes/widgets
 _includes/youtube

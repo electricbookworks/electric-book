@@ -8,16 +8,20 @@ $web-video: true !default;
         font-family: $font-text-secondary;
         margin: 0 0 1em 0;
         position: relative; // positions child element play button correctly
+
         img {
             width: 100%;
         }
+
         .video-link {}
         .video-description {
             margin-top: $line-height-default;
-            text-align: center;
+            text-align: left;
         }
+
         .video-wrapper {
             position: relative;
+
             // Add play button before iframe loads
             &:before {
                 content: "\25b6";
@@ -31,6 +35,7 @@ $web-video: true !default;
                 color: white;
                 opacity: 0.5;
             }
+
             // Create placeholder with 16:9 aspect ratio
             // when there is no image to display
             &.video-no-image {
@@ -39,17 +44,20 @@ $web-video: true !default;
                 background-color: $color-mid;
                 border-radius: $box-border-radius;
             }
+
             // JS will add an iframe here; when it does:
             &.contains-iframe {
-            float: none;
-            clear: both;
-            width: 100%;
-            // Give the iframe an intrinsic ratio on all screens
-            // Credit to https://alistapart.com/article/creating-intrinsic-ratios-for-video
-            position: relative;
-            padding-bottom: 56.25%;
-            padding-top: 25px;
-            height: 0;
+                float: none;
+                clear: both;
+                width: 100%;
+
+                // Give the iframe an intrinsic ratio on all screens
+                // Credit to https://alistapart.com/article/creating-intrinsic-ratios-for-video
+                position: relative;
+                padding-bottom: 56.25%;
+                padding-top: 25px;
+                height: 0;
+
                 iframe {
                     position: absolute;
                     top: 0;
@@ -59,10 +67,47 @@ $web-video: true !default;
                 }
             }
         }
+
         // Don't indent a paragraph after a video.
         & + p {
         	text-indent: 0;
         }
-    }
 
+        .video-options {
+            margin-top: 1rem;
+            position: relative;
+
+            .video-options-button {
+                @include button();
+                display: block;
+                margin: 0 auto;
+            }
+
+            .video-options-content {
+
+                // Always visible by default
+                @include dialog-styles();
+                background-color: $color-background;
+                margin-top: 1rem;
+
+                // When triggered by JS, display as 'dropdown'
+                &.js-video-options-content {
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    top: 1rem;
+                    visibility: hidden;
+
+                    &.js-video-options-content-visible {
+                        visibility: visible;
+                        z-index: 1;
+                    }
+                }
+
+                > :last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
 }

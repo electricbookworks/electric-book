@@ -1,4 +1,4 @@
-/* jslint browser */
+/*jslint browser */
 /*globals window, IntersectionObserver */
 
 function ebVideoInit() {
@@ -94,6 +94,26 @@ function ebVideoMakeIframe(host, videoId, videoLanguage, videoSubtitles, videoTi
     return iframe;
 }
 
+// Only show video options on button click
+function videoOptionsDropdown(video) {
+    'use strict';
+
+    var videoOptions = video.querySelector('.video-options');
+    if (videoOptions) {
+        var button = videoOptions.querySelector('button');
+        var options = videoOptions.querySelector('.video-options-content');
+
+        // Unless this listener has already been added,
+        // listen for clicks on the video-options button.
+        if (!options.classList.contains('js-video-options-content')) {
+            options.classList.add('js-video-options-content');
+            button.addEventListener('click', function (event) {
+                options.classList.toggle('js-video-options-content-visible');
+            });
+        }
+    }
+}
+
 function ebVideoShow(video) {
     'use strict';
 
@@ -137,7 +157,10 @@ function ebVideoShow(video) {
             // replace the link with the generated iframe
             videoWrapper.innerHTML = '';
             videoWrapper.appendChild(iframe);
-        });
+        }, {once: true});
+
+        // Scriptify the options dropdown
+        videoOptionsDropdown(currentVideo);
     });
 }
 

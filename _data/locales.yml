@@ -202,6 +202,8 @@ en:
     close-all: "Close all"
   controls:
     language-select: "Select language"
+  video:
+    options-button: "Other video options"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -296,6 +298,8 @@ fr:
     close-all: "Ferme tout"
   controls:
     language-select: "Sélectionnez la langue"
+  video:
+    options-button: "Autres options vidéo"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
