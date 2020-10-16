@@ -79,7 +79,7 @@ function ebBookmarksSupport() {
             && window.getSelection
             && window.getSelection().toString
             && window.localStorage
-            && Storage !== 'undefined'
+            && Storage !== undefined
             && document.querySelector('.bookmarks')) {
         return true;
     } else {
@@ -889,7 +889,7 @@ function ebBookmarksMarkVisibleElements(elements) {
             return false;
         }
         // Otherwise, if it has an ID, include it.
-        if (element.id !== 'undefined') {
+        if (element.id !== undefined) {
             return true;
         }
     });
