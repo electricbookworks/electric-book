@@ -28,8 +28,7 @@ function ebLazyLoadImages() {
     // If IntersectionObserver is supported,
     // and lazyloading is on in settings.yml (loaded in settings.js),
     // create a new one that will use it on all the lazyImages.
-    if (window.hasOwnProperty('IntersectionObserver')
-            && settings.web.images.lazyload === true) {
+    if (window.hasOwnProperty('IntersectionObserver')) {
         var lazyImageObserver = new IntersectionObserver(function
                 (entries, lazyImageObserver) {
             entries.forEach(function (entry) {
@@ -76,5 +75,7 @@ function ebLazyLoadImages() {
     }
 }
 
-// Go when the document is loaded
-document.addEventListener('DOMContentLoaded', ebLazyLoadImages());
+// Go when the document is loaded and if lazyLoad enabled
+if (settings.web.images.lazyload) {
+  document.addEventListener('DOMContentLoaded', ebLazyLoadImages());
+}
