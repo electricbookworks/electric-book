@@ -83,7 +83,7 @@ $nav-bar-back-button-hide: false !default;
         }
 
         .js-nav & {
-            width: $nav-bar-width;
+            max-width: $nav-bar-width;
             border-top: none;
             border-right: $rule-thickness solid $nav-bar-border-color;
             position: absolute;
@@ -280,7 +280,7 @@ $nav-bar-back-button-hide: false !default;
 
     [data-toggle-nav] {
         background-color: transparent;
-        left: $nav-bar-width * 0.7; // Keeps item text aligned in complex lists
+        right: 0;
         &:after {
             content: $nav-bar-children-prompt;
         }
