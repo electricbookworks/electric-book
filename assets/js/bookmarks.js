@@ -896,7 +896,7 @@ function ebBookmarksMarkVisibleElements(elements) {
             return false;
         }
         // Otherwise, if it has an ID, include it.
-        if (element.id !== undefined) {
+        if (element.id !== 'undefined') {
             return true;
         }
     });
