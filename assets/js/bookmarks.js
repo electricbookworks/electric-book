@@ -317,6 +317,50 @@ function ebBookmarksMarkBookmarks(bookmarks) {
     });
 }
 
+// Have user confirm a deletion
+function ebBookmarksConfirmDelete(button, bookmark) {
+    'use strict';
+
+    // Hide the existing button
+    button.style.display = 'none';
+    var confirmButton = document.createElement('button');
+    confirmButton.classList = button.classList;
+    confirmButton.id = 'bookmarkConfirmDelete';
+    button.parentElement.appendChild(confirmButton);
+
+    // If we've been passed a bookmark type as a string
+    // we want to delete all bookmarks. Otherwise,
+    // we want to delete a single bookmark.
+    if (typeof bookmark === 'string') {
+        confirmButton.innerHTML = locales[pageLanguage].bookmarks['delete-all-bookmarks-confirm'];
+    } else {
+        confirmButton.innerHTML = locales[pageLanguage].bookmarks['delete-bookmark-confirm'];
+    }
+
+    // Remove the confirmation after three seconds unclicked
+    window.setTimeout(function () {
+        confirmButton.remove();
+        button.style.display = 'inline-block';
+    }, 2000);
+
+    function confirmed() {
+        confirmButton.remove();
+        button.style.display = 'inline-block';
+
+        // If we've been passed a bookmark type as a string
+        // we want to delete all bookmarks of that type.
+        // Otherwise, delete the specific bookmark object.
+        if (typeof bookmark === 'string') {
+            ebBookmarksDeleteAllBookmarks(bookmark);
+        } else {
+            ebBookmarksDeleteBookmark(bookmark);
+        }
+    }
+
+    // If the confirmation button is clicked, return the original text
+    confirmButton.addEventListener('click', confirmed);
+}
+
 // List bookmarks for user
 function ebBookmarksListBookmarks(bookmarks) {
     'use strict';
@@ -417,8 +461,8 @@ function ebBookmarksListBookmarks(bookmarks) {
         deleteButton.classList.add('bookmark-delete');
         deleteButton.innerHTML = locales[pageLanguage].bookmarks['delete-bookmark'];
         listItem.appendChild(deleteButton);
-        deleteButton.addEventListener('click', function () {
-            ebBookmarksDeleteBookmark(bookmark);
+        deleteButton.addEventListener('click', function (event) {
+            ebBookmarksConfirmDelete(event.target, bookmark);
         });
 
         // Add the list item to the list
@@ -442,15 +486,15 @@ function ebBookmarksListBookmarks(bookmarks) {
     deleteAllBookmarksButton.innerHTML = locales[pageLanguage].bookmarks['delete-all'];
     deleteAllBookmarksListItem.appendChild(deleteAllBookmarksButton);
     bookmarksList.appendChild(deleteAllBookmarksListItem);
-    deleteAllBookmarksButton.addEventListener('click', function () {
-        ebBookmarksDeleteAllBookmarks('userBookmark');
+    deleteAllBookmarksButton.addEventListener('click', function (event) {
+        ebBookmarksConfirmDelete(event.target, 'userBookmark');
     });
 
     // Copy to the last-locations list, too
     var deleteAllBookmarksListItemLastLocations = deleteAllBookmarksListItem.cloneNode(true);
     lastLocationsList.appendChild(deleteAllBookmarksListItemLastLocations);
     deleteAllBookmarksListItemLastLocations.addEventListener('click', function () {
-        ebBookmarksDeleteAllBookmarks('lastLocation');
+        ebBookmarksConfirmDelete(event.target, 'lastLocation');
     });
 
     // Listen for clicks on the new anchor links,
@@ -508,55 +552,36 @@ function ebBookmarksCheckForBookmarks() {
 function ebBookmarksDeleteBookmark(bookmark) {
     'use strict';
 
-    // Ask user to confirm
-    var userConfirmsDelete =
-            window.confirm(locales[pageLanguage].bookmarks['delete-bookmark-warning']);
-
-    if (userConfirmsDelete === true) {
-
-        // Delete from local storage
-        localStorage.removeItem(bookmark.key);
-        // Remove the entry from the list
-        ebBookmarksCheckForBookmarks();
-    }
+    // Delete from local storage
+    localStorage.removeItem(bookmark.key);
+    // Remove the entry from the list
+    ebBookmarksCheckForBookmarks();
 }
 
 // Delete all bookmarks
 function ebBookmarksDeleteAllBookmarks(type) {
     'use strict';
 
-    // Check with user
-    var deleteAllUserBookmarksMessage = locales[pageLanguage].bookmarks['delete-all-bookmarks-warning'];
-    var deleteAllLastLocationsMessage = locales[pageLanguage].bookmarks['delete-all-last-locations-warning'];
-    var deleteAllConfirmation = false;
-    if (type === 'lastLocation') {
-        deleteAllConfirmation = window.confirm(deleteAllLastLocationsMessage);
-    } else {
-        deleteAllConfirmation = window.confirm(deleteAllUserBookmarksMessage);
-    }
-
     // Loop through stored bookmarks and delete
-    if (deleteAllConfirmation) {
-        Object.keys(localStorage).forEach(function (key) {
-            if (key.startsWith('bookmark-')) {
+    Object.keys(localStorage).forEach(function (key) {
+        if (key.startsWith('bookmark-')) {
 
-                // If a type has been specified, only delete
-                // bookmarks of that type. Otherwise,
-                // delete all bookmarks of any type.
-                var bookmarkType = JSON.parse(localStorage[key]).type;
-                if (type) {
-                    if (type === bookmarkType) {
-                        localStorage.removeItem(key);
-                    }
-                } else {
+            // If a type has been specified, only delete
+            // bookmarks of that type. Otherwise,
+            // delete all bookmarks of any type.
+            var bookmarkType = JSON.parse(localStorage[key]).type;
+            if (type) {
+                if (type === bookmarkType) {
                     localStorage.removeItem(key);
                 }
+            } else {
+                localStorage.removeItem(key);
             }
-        });
+        }
+    });
 
-        // Refresh the bookmarks lists
-        ebBookmarksCheckForBookmarks();
-    }
+    // Refresh the bookmarks lists
+    ebBookmarksCheckForBookmarks();
 }
 
 // Return the ID of a bookmarkable element
@@ -697,20 +722,6 @@ function ebBookmarksSetBookmark(type, element, description) {
     }
 }
 
-// Remove a bookmark from an element
-function ebBookmarkUnmarkBookmarkedElements(element) {
-    'use strict';
-    // Remove any existing bookmarks
-    if (element && element.getAttribute('data-bookmarked')) {
-        element.removeAttribute('data-bookmarked');
-    } else {
-        var bookmarkedElements = document.querySelectorAll('[data-bookmarked]');
-        bookmarkedElements.forEach(function (element) {
-            element.removeAttribute('data-bookmarked');
-        });
-    }
-}
-
 // Mark an element that has been user-bookmarked
 function ebBookmarkMarkBookmarkedElement(element) {
     'use strict';
@@ -725,7 +736,8 @@ function ebBookmarksRemoveByIconClick(button) {
     var bookmarkLocation = window.location.href.split('#')[0] + '#' + button.parentElement.id;
 
     // Loop through stored bookmarks,
-    // find this one, and delete it
+    // find this one, and delete it.
+    // Note there is no 'confirm delete' step here.
     Object.keys(localStorage).forEach(function (key) {
         if (key.startsWith('bookmark-')) {
             var entry = JSON.parse(localStorage.getItem(key));
