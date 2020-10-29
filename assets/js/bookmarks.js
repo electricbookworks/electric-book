@@ -4,19 +4,19 @@
     ebNearestPrecedingSibling, ebTruncatedString, ebToggleClickout,
     ebAccordionListenForAnchorClicks */
 
-// A script for managing a user's bookmarks.
+// This is a script for managing a user's bookmarks.
 // This script waits for setup.js to give elements IDs.
 // Then it checks local storage for stored bookmarks,
 // and does some housekeeping (e.g. deleting old last-location bookmarks).
+
 // It then reads bookmarks from local storage, and marks the
 // relevant bookmarked elements on the page with attributes.
 // It then creates a list of bookmarks to show to the user.
 // It makes it possible for users to select text in elements to bookmark them.
 // It listens for new user bookmarks, and updates the bookmark list
 // when a user places a new bookmark.
-// It also saves a 'last location' bookmark when a user leaves a page.
-
-// It gives each session an ID, which is a timestamp.
+// It also saves a 'last location' bookmark every few seconds.
+// It gives each session an ID, which is a 'sessionDate' timestamp.
 // This 'sessionDate' is stored in session storage, and with each
 // bookmark in local storage. For the 'last location' bookmarks,
 // we only show the user the most recent last-location bookmark
@@ -24,27 +24,22 @@
 // That way, the last location is always the last place the user
 // visited in their last/previous session.
 
-// TODO
-// 1. [DONE] In setup.js, fingerprint IDs for addressing misplaced bookmarks.
-// 2. [DONE] To fix last-location behaviour, only show lastLocation of *previous* session:
-//    - create a session ID and store in sessionStorage
-//    - save lastLocation as session ID
-//    - show user most recent lastLocation whose session ID is *not* in sessionStorage
-// 3. [DONE] Apply new click-for-modal bookmark UX.
-// 4. [DONE] Allow multiple user bookmarks.
-// 5. [DONE] Add ability to delete bookmarks, individually or all at once.
-// 6. [DONE] Change saving on from beforeunload, since mobile browsers don't support it.
-// 7. [DONE] Store and compare an index of latest IDs, so in future we can check
-//    if it's is missing any bookmarked IDs. If yes, we know bookmarks have moved.
-// 8. [DONE] Use user-selected text as bookmark description
-// 9. [DONE] Move set-bookmark button to beside selection
-// 10. [DONE] Prompt user to go last location on arrival
-// 11. [DONE] Make bookmarked text more prominent, title less so in list
-// 12. [DONE] Add subheading option to bookmark description (e.g. h2)
-// X. Add ability to share, e.g. button to copy location. Feature needs shaping.
-// X. [CAN'T REPLICATE] Fix bug where the first text in a list item that contains
-//    a list doesn't trigger a bookmark.
-// X. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
+// This script also creates a fingerprint index, which is a map,
+// stored in session storage, of IDs to element fingerprints.
+// Fingerprints are created in setup.js as attributes, and aim to identify
+// an element by its position in the DOM and its opening and closing strings,
+// so that if its ID changes, we might still find it by its fingerprint.
+// Each stored bookmark includes the bookmarked element's fingerprint.
+// This script checks whether the ID of a bookmark in localStorage
+// matches its fingerprint in session storage. If it doesn't, we know
+// that IDs have shifted, and that bookmarked locations may be inaccurate.
+// This script does not yet do anything about that inaccuracy.
+
+// In future, we might offer the user the option of updating bookmarks
+// using those fingerprints, in order to improve the accuracy of
+// their bookmarks, after shifted content has changed elements' IDs.
+
+// --
 
 // Which elements should we make bookmarkable?
 function ebBookmarkableElements() {
