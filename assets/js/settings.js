@@ -17,6 +17,13 @@ var settings = {
     web: {
         images: {
             lazyload: true
+        },
+        bookmarks: {
+            enabled: true,
+            elements: {
+                include: '#content [id]',
+                exclude: ''
+            }
         }
     }
 };
@@ -33,4 +40,8 @@ settings.site.output = '{{ site.output }}';
 // Override default settings from settings.yml
 {% if site.data.settings.web.images.lazyload != nil %}
 settings.web.images.lazyload = {{ site.data.settings.web.images.lazyload }};
+{% endif %}
+
+{% if site.data.settings.web.bookmarks != nil %}
+settings.web.bookmarks.enabled = {{ site.data.settings.web.bookmarks }};
 {% endif %}

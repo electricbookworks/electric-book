@@ -1,5 +1,5 @@
 /*jslint browser */
-/*globals window, IntersectionObserver, locales, pageLanguage,
+/*globals window, IntersectionObserver, Element, locales, pageLanguage, settings,
     ebSlugify, ebIDsAssigned, ebFingerprintsAssigned, ebIsPositionRelative,
     ebNearestPrecedingSibling, ebTruncatedString, ebToggleClickout,
     ebAccordionListenForAnchorClicks */
@@ -46,15 +46,18 @@ function ebBookmarkableElements() {
     'use strict';
 
     // Include anything in #content with an ID...
-    var elementsWithIDs = document.querySelectorAll('#content [id]');
-
-    // .. and exclude elements with data-bookmarkable="no",
+    var bookmarkableElements = document.querySelectorAll(settings.web.bookmarks.elements.include);
+    // ... but exclude elements with data-bookmarkable="no",
     // or whose ancestors have data-bookmarkable="no",
     // or who are MathJax elements
-    var bookmarkableElements = Array.from(elementsWithIDs).filter(function (element) {
+    // or those specified in settings.web.bookmarks.elements.exclude
+    // (We also check for '[data-bookmarkable="no"]' there,
+    // bacause settings.web.bookmarks.elements.exclude may be empty.)
+    bookmarkableElements = Array.from(bookmarkableElements).filter(function (element) {
         if (element.getAttribute('data-bookmarkable') !== 'no'
                 && !element.closest('[data-bookmarkable="no"]')
-                && !element.id.startsWith('MathJax-')) {
+                && !element.id.startsWith('MathJax-')
+                && !element.matches('[data-bookmarkable="no"]', settings.web.bookmarks.elements.exclude)) {
             return true;
         }
     });
@@ -101,6 +104,9 @@ function ebBookmarksCreateFingerprintIndex() {
 }
 
 // Return the indexed ID of an element's fingerprint.
+// This is not used now, but may be useful when
+// we extend this script to manage IDs that have moved
+// after content changes.
 function ebBookmarksFingerprintID(elementID) {
     'use strict';
 
@@ -1036,17 +1042,35 @@ function ebBookmarksListenForTextSelection() {
         // to get the starting element, otherwise second prize
         // we use the focusNode, where the selection ends
         // (IE supports focusNode but maybe not anchorNode)
-        var selectedElement;
-        if (window.getSelection().anchorNode) {
-            selectedElement = window.getSelection().anchorNode;
-        } else {
-            selectedElement = window.getSelection().focusNode;
-        }
-        if (typeof selectedElement === 'object') {
-            selectedElement = selectedElement.parentElement;
-        }
-        var bookmarkableElement = selectedElement.closest('[id]');
+        var selectionStartPoint = window.getSelection().anchorNode
+            ? window.getSelection().anchorNode
+            : false;
+        var selectionEndPoint = window.getSelection().focusNode;
 
+        // Check if an excluded element is being clicked/selected
+        // If not a DOM Element, assign to parent element
+        var clickedElement = selectionEndPoint instanceof Element
+            ? selectionEndPoint
+            : selectionEndPoint.parentElement;
+
+        // Exit if element is excluded in settings.js
+        // ebBookmarkableElements() can't be re-used here in its current form,
+        // because its approach requires testing the closest parent containing an ID,
+        // which we don't want to do here. We also check for '[data-bookmarkable="no"]'
+        // because settings.web.bookmarks.elements.exclude may be empty.
+        if (clickedElement.matches('[data-bookmarkable="no"]', settings.web.bookmarks.elements.exclude)) {
+            return;
+        }
+
+        // Try bookmark a valid selection
+        var selectedElement = selectionStartPoint
+            ? selectionStartPoint
+            : selectionEndPoint;
+        // If not a DOM Element, assign to parent element
+        selectedElement = selectedElement instanceof Element
+            ? selectedElement
+            : selectedElement.parentElement;
+        var bookmarkableElement = selectedElement.closest('[id]');
         // Exit if the element isn't bookmarkable
         if (!ebBookmarkableElements().includes(bookmarkableElement)) {
             return;
@@ -1166,10 +1190,12 @@ function ebBookmarksInit() {
 }
 
 // Load the bookmarks when IDs have been assigned
-var ebBookmarksCheckForIDs = window.setInterval(function () {
-    'use strict';
-    if (ebIDsAssigned === true && ebFingerprintsAssigned === true) {
-        ebBookmarksInit();
-        clearInterval(ebBookmarksCheckForIDs);
-    }
-}, 500);
+if (settings.web.bookmarks.enabled) {
+    var ebBookmarksCheckForIDs = window.setInterval(function () {
+        'use strict';
+        if (ebIDsAssigned === true && ebFingerprintsAssigned === true) {
+            ebBookmarksInit();
+            clearInterval(ebBookmarksCheckForIDs);
+        }
+    }, 500);
+}
