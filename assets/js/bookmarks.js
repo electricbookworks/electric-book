@@ -1,22 +1,22 @@
 /*jslint browser */
-/*globals window, IntersectionObserver, locales, pageLanguage,
+/*globals window, IntersectionObserver, Element, locales, pageLanguage, settings,
     ebSlugify, ebIDsAssigned, ebFingerprintsAssigned, ebIsPositionRelative,
     ebNearestPrecedingSibling, ebTruncatedString, ebToggleClickout,
     ebAccordionListenForAnchorClicks */
 
-// A script for managing a user's bookmarks.
+// This is a script for managing a user's bookmarks.
 // This script waits for setup.js to give elements IDs.
 // Then it checks local storage for stored bookmarks,
 // and does some housekeeping (e.g. deleting old last-location bookmarks).
+
 // It then reads bookmarks from local storage, and marks the
 // relevant bookmarked elements on the page with attributes.
 // It then creates a list of bookmarks to show to the user.
 // It makes it possible for users to select text in elements to bookmark them.
 // It listens for new user bookmarks, and updates the bookmark list
 // when a user places a new bookmark.
-// It also saves a 'last location' bookmark when a user leaves a page.
-
-// It gives each session an ID, which is a timestamp.
+// It also saves a 'last location' bookmark every few seconds.
+// It gives each session an ID, which is a 'sessionDate' timestamp.
 // This 'sessionDate' is stored in session storage, and with each
 // bookmark in local storage. For the 'last location' bookmarks,
 // we only show the user the most recent last-location bookmark
@@ -24,42 +24,40 @@
 // That way, the last location is always the last place the user
 // visited in their last/previous session.
 
-// TODO
-// 1. [DONE] In setup.js, fingerprint IDs for addressing misplaced bookmarks.
-// 2. [DONE] To fix last-location behaviour, only show lastLocation of *previous* session:
-//    - create a session ID and store in sessionStorage
-//    - save lastLocation as session ID
-//    - show user most recent lastLocation whose session ID is *not* in sessionStorage
-// 3. [DONE] Apply new click-for-modal bookmark UX.
-// 4. [DONE] Allow multiple user bookmarks.
-// 5. [DONE] Add ability to delete bookmarks, individually or all at once.
-// 6. [DONE] Change saving on from beforeunload, since mobile browsers don't support it.
-// 7. [DONE] Store and compare an index of latest IDs, so in future we can check
-//    if it's is missing any bookmarked IDs. If yes, we know bookmarks have moved.
-// 8. [DONE] Use user-selected text as bookmark description
-// 9. [DONE] Move set-bookmark button to beside selection
-// 10. [DONE] Prompt user to go last location on arrival
-// 11. [DONE] Make bookmarked text more prominent, title less so in list
-// 12. [DONE] Add subheading option to bookmark description (e.g. h2)
-// X. Add ability to share, e.g. button to copy location. Feature needs shaping.
-// X. [CAN'T REPLICATE] Fix bug where the first text in a list item that contains
-//    a list doesn't trigger a bookmark.
-// X. Offer to try to identify missing bookmarks, using data-fingerprint attributes.
+// This script also creates a fingerprint index, which is a map,
+// stored in session storage, of IDs to element fingerprints.
+// Fingerprints are created in setup.js as attributes, and aim to identify
+// an element by its position in the DOM and its opening and closing strings,
+// so that if its ID changes, we might still find it by its fingerprint.
+// Each stored bookmark includes the bookmarked element's fingerprint.
+// This script checks whether the ID of a bookmark in localStorage
+// matches its fingerprint in session storage. If it doesn't, we know
+// that IDs have shifted, and that bookmarked locations may be inaccurate.
+// This script does not yet do anything about that inaccuracy.
+
+// In future, we might offer the user the option of updating bookmarks
+// using those fingerprints, in order to improve the accuracy of
+// their bookmarks, after shifted content has changed elements' IDs.
+
+// --
 
 // Which elements should we make bookmarkable?
 function ebBookmarkableElements() {
     'use strict';
 
     // Include anything in #content with an ID...
-    var elementsWithIDs = document.querySelectorAll('#content [id]');
-
-    // .. and exclude elements with data-bookmarkable="no",
+    var bookmarkableElements = document.querySelectorAll(settings.web.bookmarks.elements.include);
+    // ... but exclude elements with data-bookmarkable="no",
     // or whose ancestors have data-bookmarkable="no",
     // or who are MathJax elements
-    var bookmarkableElements = Array.from(elementsWithIDs).filter(function (element) {
+    // or those specified in settings.web.bookmarks.elements.exclude
+    // (We also check for '[data-bookmarkable="no"]' there,
+    // bacause settings.web.bookmarks.elements.exclude may be empty.)
+    bookmarkableElements = Array.from(bookmarkableElements).filter(function (element) {
         if (element.getAttribute('data-bookmarkable') !== 'no'
                 && !element.closest('[data-bookmarkable="no"]')
-                && !element.id.startsWith('MathJax-')) {
+                && !element.id.startsWith('MathJax-')
+                && !element.matches('[data-bookmarkable="no"]', settings.web.bookmarks.elements.exclude)) {
             return true;
         }
     });
@@ -106,6 +104,9 @@ function ebBookmarksCreateFingerprintIndex() {
 }
 
 // Return the indexed ID of an element's fingerprint.
+// This is not used now, but may be useful when
+// we extend this script to manage IDs that have moved
+// after content changes.
 function ebBookmarksFingerprintID(elementID) {
     'use strict';
 
@@ -322,6 +323,50 @@ function ebBookmarksMarkBookmarks(bookmarks) {
     });
 }
 
+// Have user confirm a deletion
+function ebBookmarksConfirmDelete(button, bookmark) {
+    'use strict';
+
+    // Hide the existing button
+    button.style.display = 'none';
+    var confirmButton = document.createElement('button');
+    confirmButton.classList = button.classList;
+    confirmButton.id = 'bookmarkConfirmDelete';
+    button.parentElement.appendChild(confirmButton);
+
+    // If we've been passed a bookmark type as a string
+    // we want to delete all bookmarks. Otherwise,
+    // we want to delete a single bookmark.
+    if (typeof bookmark === 'string') {
+        confirmButton.innerHTML = locales[pageLanguage].bookmarks['delete-all-bookmarks-confirm'];
+    } else {
+        confirmButton.innerHTML = locales[pageLanguage].bookmarks['delete-bookmark-confirm'];
+    }
+
+    // Remove the confirmation after three seconds unclicked
+    window.setTimeout(function () {
+        confirmButton.remove();
+        button.style.display = 'inline-block';
+    }, 2000);
+
+    function confirmed() {
+        confirmButton.remove();
+        button.style.display = 'inline-block';
+
+        // If we've been passed a bookmark type as a string
+        // we want to delete all bookmarks of that type.
+        // Otherwise, delete the specific bookmark object.
+        if (typeof bookmark === 'string') {
+            ebBookmarksDeleteAllBookmarks(bookmark);
+        } else {
+            ebBookmarksDeleteBookmark(bookmark);
+        }
+    }
+
+    // If the confirmation button is clicked, return the original text
+    confirmButton.addEventListener('click', confirmed);
+}
+
 // List bookmarks for user
 function ebBookmarksListBookmarks(bookmarks) {
     'use strict';
@@ -422,8 +467,8 @@ function ebBookmarksListBookmarks(bookmarks) {
         deleteButton.classList.add('bookmark-delete');
         deleteButton.innerHTML = locales[pageLanguage].bookmarks['delete-bookmark'];
         listItem.appendChild(deleteButton);
-        deleteButton.addEventListener('click', function () {
-            ebBookmarksDeleteBookmark(bookmark);
+        deleteButton.addEventListener('click', function (event) {
+            ebBookmarksConfirmDelete(event.target, bookmark);
         });
 
         // Add the list item to the list
@@ -447,15 +492,15 @@ function ebBookmarksListBookmarks(bookmarks) {
     deleteAllBookmarksButton.innerHTML = locales[pageLanguage].bookmarks['delete-all'];
     deleteAllBookmarksListItem.appendChild(deleteAllBookmarksButton);
     bookmarksList.appendChild(deleteAllBookmarksListItem);
-    deleteAllBookmarksButton.addEventListener('click', function () {
-        ebBookmarksDeleteAllBookmarks('userBookmark');
+    deleteAllBookmarksButton.addEventListener('click', function (event) {
+        ebBookmarksConfirmDelete(event.target, 'userBookmark');
     });
 
     // Copy to the last-locations list, too
     var deleteAllBookmarksListItemLastLocations = deleteAllBookmarksListItem.cloneNode(true);
     lastLocationsList.appendChild(deleteAllBookmarksListItemLastLocations);
     deleteAllBookmarksListItemLastLocations.addEventListener('click', function () {
-        ebBookmarksDeleteAllBookmarks('lastLocation');
+        ebBookmarksConfirmDelete(event.target, 'lastLocation');
     });
 
     // Listen for clicks on the new anchor links,
@@ -513,55 +558,36 @@ function ebBookmarksCheckForBookmarks() {
 function ebBookmarksDeleteBookmark(bookmark) {
     'use strict';
 
-    // Ask user to confirm
-    var userConfirmsDelete =
-            window.confirm(locales[pageLanguage].bookmarks['delete-bookmark-warning']);
-
-    if (userConfirmsDelete === true) {
-
-        // Delete from local storage
-        localStorage.removeItem(bookmark.key);
-        // Remove the entry from the list
-        ebBookmarksCheckForBookmarks();
-    }
+    // Delete from local storage
+    localStorage.removeItem(bookmark.key);
+    // Remove the entry from the list
+    ebBookmarksCheckForBookmarks();
 }
 
 // Delete all bookmarks
 function ebBookmarksDeleteAllBookmarks(type) {
     'use strict';
 
-    // Check with user
-    var deleteAllUserBookmarksMessage = locales[pageLanguage].bookmarks['delete-all-bookmarks-warning'];
-    var deleteAllLastLocationsMessage = locales[pageLanguage].bookmarks['delete-all-last-locations-warning'];
-    var deleteAllConfirmation = false;
-    if (type === 'lastLocation') {
-        deleteAllConfirmation = window.confirm(deleteAllLastLocationsMessage);
-    } else {
-        deleteAllConfirmation = window.confirm(deleteAllUserBookmarksMessage);
-    }
-
     // Loop through stored bookmarks and delete
-    if (deleteAllConfirmation) {
-        Object.keys(localStorage).forEach(function (key) {
-            if (key.startsWith('bookmark-')) {
+    Object.keys(localStorage).forEach(function (key) {
+        if (key.startsWith('bookmark-')) {
 
-                // If a type has been specified, only delete
-                // bookmarks of that type. Otherwise,
-                // delete all bookmarks of any type.
-                var bookmarkType = JSON.parse(localStorage[key]).type;
-                if (type) {
-                    if (type === bookmarkType) {
-                        localStorage.removeItem(key);
-                    }
-                } else {
+            // If a type has been specified, only delete
+            // bookmarks of that type. Otherwise,
+            // delete all bookmarks of any type.
+            var bookmarkType = JSON.parse(localStorage[key]).type;
+            if (type) {
+                if (type === bookmarkType) {
                     localStorage.removeItem(key);
                 }
+            } else {
+                localStorage.removeItem(key);
             }
-        });
+        }
+    });
 
-        // Refresh the bookmarks lists
-        ebBookmarksCheckForBookmarks();
-    }
+    // Refresh the bookmarks lists
+    ebBookmarksCheckForBookmarks();
 }
 
 // Return the ID of a bookmarkable element
@@ -702,20 +728,6 @@ function ebBookmarksSetBookmark(type, element, description) {
     }
 }
 
-// Remove a bookmark from an element
-function ebBookmarkUnmarkBookmarkedElements(element) {
-    'use strict';
-    // Remove any existing bookmarks
-    if (element && element.getAttribute('data-bookmarked')) {
-        element.removeAttribute('data-bookmarked');
-    } else {
-        var bookmarkedElements = document.querySelectorAll('[data-bookmarked]');
-        bookmarkedElements.forEach(function (element) {
-            element.removeAttribute('data-bookmarked');
-        });
-    }
-}
-
 // Mark an element that has been user-bookmarked
 function ebBookmarkMarkBookmarkedElement(element) {
     'use strict';
@@ -730,7 +742,8 @@ function ebBookmarksRemoveByIconClick(button) {
     var bookmarkLocation = window.location.href.split('#')[0] + '#' + button.parentElement.id;
 
     // Loop through stored bookmarks,
-    // find this one, and delete it
+    // find this one, and delete it.
+    // Note there is no 'confirm delete' step here.
     Object.keys(localStorage).forEach(function (key) {
         if (key.startsWith('bookmark-')) {
             var entry = JSON.parse(localStorage.getItem(key));
@@ -889,7 +902,7 @@ function ebBookmarksMarkVisibleElements(elements) {
             return false;
         }
         // Otherwise, if it has an ID, include it.
-        if (element.id !== undefined) {
+        if (element.id !== 'undefined') {
             return true;
         }
     });
@@ -1029,17 +1042,35 @@ function ebBookmarksListenForTextSelection() {
         // to get the starting element, otherwise second prize
         // we use the focusNode, where the selection ends
         // (IE supports focusNode but maybe not anchorNode)
-        var selectedElement;
-        if (window.getSelection().anchorNode) {
-            selectedElement = window.getSelection().anchorNode;
-        } else {
-            selectedElement = window.getSelection().focusNode;
-        }
-        if (typeof selectedElement === 'object') {
-            selectedElement = selectedElement.parentElement;
-        }
-        var bookmarkableElement = selectedElement.closest('[id]');
+        var selectionStartPoint = window.getSelection().anchorNode
+            ? window.getSelection().anchorNode
+            : false;
+        var selectionEndPoint = window.getSelection().focusNode;
 
+        // Check if an excluded element is being clicked/selected
+        // If not a DOM Element, assign to parent element
+        var clickedElement = selectionEndPoint instanceof Element
+            ? selectionEndPoint
+            : selectionEndPoint.parentElement;
+
+        // Exit if element is excluded in settings.js
+        // ebBookmarkableElements() can't be re-used here in its current form,
+        // because its approach requires testing the closest parent containing an ID,
+        // which we don't want to do here. We also check for '[data-bookmarkable="no"]'
+        // because settings.web.bookmarks.elements.exclude may be empty.
+        if (clickedElement.matches('[data-bookmarkable="no"]', settings.web.bookmarks.elements.exclude)) {
+            return;
+        }
+
+        // Try bookmark a valid selection
+        var selectedElement = selectionStartPoint
+            ? selectionStartPoint
+            : selectionEndPoint;
+        // If not a DOM Element, assign to parent element
+        selectedElement = selectedElement instanceof Element
+            ? selectedElement
+            : selectedElement.parentElement;
+        var bookmarkableElement = selectedElement.closest('[id]');
         // Exit if the element isn't bookmarkable
         if (!ebBookmarkableElements().includes(bookmarkableElement)) {
             return;
@@ -1159,10 +1190,12 @@ function ebBookmarksInit() {
 }
 
 // Load the bookmarks when IDs have been assigned
-var ebBookmarksCheckForIDs = window.setInterval(function () {
-    'use strict';
-    if (ebIDsAssigned === true && ebFingerprintsAssigned === true) {
-        ebBookmarksInit();
-        clearInterval(ebBookmarksCheckForIDs);
-    }
-}, 500);
+if (settings.web.bookmarks.enabled) {
+    var ebBookmarksCheckForIDs = window.setInterval(function () {
+        'use strict';
+        if (ebIDsAssigned === true && ebFingerprintsAssigned === true) {
+            ebBookmarksInit();
+            clearInterval(ebBookmarksCheckForIDs);
+        }
+    }, 500);
+}
