@@ -1,4 +1,4 @@
- {% comment %}
+{% comment %}
 Loop through meta.yml and return this book's metadata
 as a set of Liquid variables that we can use on pages
 as output tags, e.g. {{ title }} for the current
