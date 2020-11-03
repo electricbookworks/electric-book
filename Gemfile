@@ -18,3 +18,6 @@ gem 'wdm', '>= 0.1.1' if Gem.win_platform?
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # For what ~> means, see https://robots.thoughtbot.com/rubys-pessimistic-operator
+
+# Update Kramdown parser, see https://stackoverflow.com/questions/63335953/jekyll-error-building-page-related-to-kramdown-parser
+gem "kramdown-parser-gfm"
