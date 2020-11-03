@@ -9,9 +9,10 @@ function monetizationCounter() {
 
     if (document.monetization) {
         if (typeof gtag === 'function') {
-            gtag('event', 'select_content', {
+            gtag('event', 'monetization_on', {
                 'event_category': 'Monetization',
-                'event_label': 'Monetization' + bookTitle
+                'event_label': 'Monetization' + bookTitle,
+                'non_interaction': true
             });
         }
     }
