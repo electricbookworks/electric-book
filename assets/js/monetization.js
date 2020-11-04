@@ -5,7 +5,9 @@
 function monetizationCounter() {
     'use strict';
 
-    var bookTitle = locales.en.project.name;
+    var bookTitle = locales['en']['project']['name'];
+
+    console.log(bookTitle);
 
     if (document.monetization) {
     	console.log('monetization is go');
