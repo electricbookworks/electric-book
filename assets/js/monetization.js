@@ -8,7 +8,9 @@ function monetizationCounter() {
     var bookTitle = locales.en.project.name;
 
     if (document.monetization) {
+    	console.log('monetization is go');
         if (typeof gtag === 'function') {
+        	console.log('gtag is go');
             gtag('event', 'monetization_on', {
                 'event_category': 'Monetization',
                 'event_label': 'Monetization: ' + bookTitle,
