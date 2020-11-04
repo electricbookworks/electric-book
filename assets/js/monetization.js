@@ -11,7 +11,7 @@ function monetizationCounter() {
         if (typeof gtag === 'function') {
             gtag('event', 'monetization_on', {
                 'event_category': 'Monetization',
-                'event_label': 'Monetization' + bookTitle,
+                'event_label': 'Monetization: ' + bookTitle,
                 'non_interaction': true
             });
         }
