@@ -19,3 +19,5 @@ function monetizationCounter() {
         }
     }
 }
+
+setTimeout(monetizationCounter, 10000);
