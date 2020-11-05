@@ -5,18 +5,36 @@
 function monetizationCounter() {
     'use strict';
 
+    var fs = require('fs');
+
     var bookTitle = locales['en']['project']['name'];
 
     console.log(bookTitle);
 
     if (document.monetization) {
-    	console.log('monetization is go');
-        if (typeof gtag === 'function') {
-        	console.log('gtag is go');
-            gtag('event', 'monetization_on', {
-                'event_category': 'Monetization',
-                'event_label': 'Monetization: ' + bookTitle,
-                'non_interaction': true
+        // When a user with monetization visits a page, we want to check whether
+        // this is the first page they are viewing in this session
+
+        repeatVisit = sessionStorage.getItem('repeatVisit');
+        console.log('repeatVisit: ' + repeatVisit);
+
+        // If this is the first page view in the session
+        if (repeatVisit !== 'true') {
+            sessionStorage.setItem('repeatVisit', 'true')
+            console.log('repeatVisit: ' + repeatVisit);
+
+            // We log information when it is the first page
+            var timestamp = new Date();
+            var logString = bookTitle + ' : ' +  timestamp.toUTCString();
+
+            console.log(logString);
+
+            fs.appendFile("../../monetization-counter.txt", logString, function(err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("The file was saved!");
+                }
             });
         }
     }
