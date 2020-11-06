@@ -7,12 +7,9 @@ $web-annotator: true !default;
     // is defined as .annotator in Hypothesis config
 
     .annotator {
-        // If language-select is not showing, move this down
-        // as if language-select was there.
-        &:nth-child(3) {
-            position: relative;
-            top: $line-height-default * 2; // magic number :(
-        }
+        position: fixed;
+        right: 0;
+
         label {
             display: block;
             padding: 0 ($line-height-default / 2);
