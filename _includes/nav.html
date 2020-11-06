@@ -15,6 +15,9 @@
         <div class="nav-title">{{ title }}</div>
         {% endif %}
 
+        {% comment %} Add controls and settings {% endcomment %}
+        {% include controls.html %}
+
         {% comment %}Add the search box.{% endcomment %}
         <div class="search">
             {% include search %}
@@ -63,20 +66,32 @@
 
                     <ol class="nav-book-list">
                     {% for work in site.data.meta.works | sort: "order" %}
-                    {% assign home-nav-work-directory = work.directory %}
+                        {% assign home-nav-work-directory = work.directory %}
 
-                    {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
-                    {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
-                        {% assign home-nav-work-tree = work.products[site.output].nav %}
-                    {% else %}
-                        {% assign home-nav-work-tree = work.products.web.nav %}
-                    {% endif %}
+                        {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
+                        {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
+                            {% assign home-nav-work-tree = work.products[site.output].nav %}
+                        {% else %}
+                            {% assign home-nav-work-tree = work.products.web.nav %}
+                        {% endif %}
 
-                        <li class="has-children">
+                        {% comment %} Get book start page, fallback to web {% endcomment %}
+                        {% if work.products[site.output].start-page and work.products[site.output].start-page != "" %}
+                            {% assign this-book-start-page = work.products[site.output].start-page %}
+                        {% else %}
+                            {% assign this-book-start-page = work.products.web.start-page %}
+                        {% endif %}
+
+                        <li
+                            {% if site.data.settings[site.output].nav.home.expand-books == true %}class="has-children"{% endif %}>
+
                             <a href="{{ path-to-root-directory }}{{ work.directory }}/text/{{ work.products[site.output].start-page }}.html">
                                 {{ work.title }}
                             </a>
-                            {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+
+                            {% if site.data.settings[site.output].nav.home.expand-books == true %}
+                                {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                            {% endif %}
                         </li>
                     {% endfor %}
                     </ol>

@@ -9,8 +9,9 @@ $print-pdf-view: true !default;
     	prince-pdf-paper-tray: auto; // auto | pick-tray-by-pdf-size
     	prince-pdf-print-scaling: auto; // auto | none
     	prince-pdf-script: ""; // Insert Javascript between the quotes if needed: http://www.princexml.com/doc/properties/prince-pdf-script/
-        prince-pdf-color-options: use-#{$black-ink}-black; //  takes two values, use-true-black (/DeviceGray black in the PDF) and use-rich-black (/DeviceRGB black in PDF)
+        prince-pdf-color-options: use-#{$black-ink}-black; // takes two values, use-true-black (/DeviceGray black in the PDF) and use-rich-black (/DeviceRGB black in PDF)
         prince-pdf-profile: $pdf-profile;
+        prince-pdf-display-doc-title: true; // only supported from Prince 13
         // Note colour profiles are stored in the non-generated Jekyll root, not in _site
         prince-pdf-output-intent: url("../../../_tools/profiles/#{$color-profile}");
         @if $output-format == "print-pdf" {

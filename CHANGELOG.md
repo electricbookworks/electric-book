@@ -1,10 +1,29 @@
 # Changelog
 
+## Latest
+
+* [Enable video options, and a generic video include](https://github.com/electricbookworks/electric-book/pull/497)
+* [Improve logic for setting the HTML title element](https://github.com/electricbookworks/electric-book/pull/507)
+* Various minor fixes and refinements.
+
+
+## 0.18.0
+
+* [Enable bookmarking](https://github.com/electricbookworks/electric-book/pull/444)
+* [Improve the reliability of search indexes and show 'Searching' notice in UX](https://github.com/electricbookworks/electric-book/pull/490)
+* [Don't expand books in home nav by default](https://github.com/electricbookworks/electric-book/pull/489)
+* [Exit the output script if Jekyll builds fail](https://github.com/electricbookworks/electric-book/pull/488)
+* [Create fallbacks for OG page title](https://github.com/electricbookworks/electric-book/pull/484)
+* [Let EBM users edit non-book styles, eg landing page](https://github.com/electricbookworks/electric-book/pull/476)
+* [Improve landing-page presentation and default fonts](https://github.com/electricbookworks/electric-book/pull/473)
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/d5a51fc83a7da5e8c35c3cb22043987777ddae4d...1e2bc3a2f03a8087dcc6bc9f107456a026d7a4a6).
+
 ## 0.17.0
 
 * [Add ability to create a zip package of a project](https://github.com/electricbookworks/electric-book/pull/469)
 * [Improve horizontal scrolling of tables on narrow screens](https://github.com/electricbookworks/electric-book/pull/468)
 * [Add expand- and close-all buttons to content accordion](https://github.com/electricbookworks/electric-book/pull/467)
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/014a476c0d0908c195ef5a3322c272344b25639f...d5a51fc83a7da5e8c35c3cb22043987777ddae4d).
 
 ## 0.16.0
 

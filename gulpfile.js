@@ -25,6 +25,7 @@ var gulp = require('gulp'),
     del = require('del'),
     cheerio = require('gulp-cheerio'),
     tap = require('gulp-tap');
+    Iconv = require('iconv').Iconv;
 
 // A function for loading book metadata as an object
 function loadMetadata() {
@@ -854,22 +855,30 @@ gulp.task('epub:xhtmlLinks', function (done) {
     gulp.src([paths.epub.src, '_site/epub/package.opf', '_site/epub/toc.ncx'], {base: './'})
         .pipe(cheerio({
             run: function ($) {
-                var target, newTarget;
-                $('[href*=".html"], [src*=".html"]').each(function () {
+                var target, asciiTarget, newTarget;
+                $('[href*=".html"], [src*=".html"], [id], [href^="#"]').each(function () {
                     if ($(this).attr('href')) {
                         target = $(this).attr('href');
                     } else if ($(this).attr('src')) {
                         target = $(this).attr('src');
+                    } else if  ($(this).attr('id')) {
+                        target = $(this).attr('id')
                     } else {
                         return;
                     }
 
-                    if (target.includes('.html') && !target.includes('http')) {
-                        newTarget = target.replace('.html', '.xhtml');
+                    // remove all non-ascii characters
+                    var iconv = new Iconv('UTF-8', 'ASCII//IGNORE');
+                    asciiTarget = iconv.convert(target).toString('utf-8');
+
+                    if (!asciiTarget.includes('http')) {
+                        newTarget = asciiTarget.replace('.html', '.xhtml');
                         if ($(this).attr('href')) {
                             $(this).attr('href', newTarget);
                         } else if ($(this).attr('src')) {
                             $(this).attr('src', newTarget);
+                        } else if ($(this).attr('id')) {
+                            $(this).attr('id', newTarget);
                         }
                     }
                 });

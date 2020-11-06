@@ -5,6 +5,7 @@ layout: null
 ---
 
 {% include_relative polyfills.js %}
+{% include_relative utilities.js %}
 {% include_relative settings.js %}
 {% include_relative locales.js %}
 {% include_relative mark-parents.js %}
@@ -16,7 +17,8 @@ layout: null
 {% if site.output == "web" or site.output == "app" %}
 
     {% comment %} This order is important. {% endcomment %}
-    {% include_relative mark.min.js %}
+    {% include_relative setup.js %}
+    {% include_relative vendor/mark.min.js %}
     {% include_relative search-terms.js %}
     {% include_relative nav.js %}
     {% include_relative videos.js %}
@@ -27,7 +29,7 @@ layout: null
     {% include_relative show-hide.js %}
 
     {% if site.data.settings.web.svg.inject == true %}
-        {% include_relative svg-inject.min.js %}
+        {% include_relative vendor/svg-inject.min.js %}
         {% include_relative svg-management.js %}
     {% endif %}
 
@@ -51,6 +53,14 @@ have different behaviour for web or app. {% endcomment %}
     {% include_relative accordion.js %}
 {% endif %}
 
+{% comment %} Enable bookmarks in _data settings.yml,
+and define options in assets/bookmarks.js. This lets us
+have different behaviour for web or app. {% endcomment %}
+{% if site.output == "web" and site.data.settings.web.bookmarks == true %}
+    {% include_relative bookmarks.js %}
+{% elsif site.output == "app" and site.data.settings.app.bookmarks == true %}
+    {% include_relative bookmarks.js %}
+{% endif %}
 
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
 

@@ -18,13 +18,22 @@
 # Sitewide font files
 # -------------------
 
-assets/fonts/Crimson-Bold.otf
-assets/fonts/Crimson-BoldItalic.otf
-assets/fonts/Crimson-Italic.otf
-assets/fonts/Crimson-OFL.txt
-assets/fonts/Crimson-Roman.otf
-assets/fonts/Crimson-Semibold.otf
-assets/fonts/Crimson-SemiboldItalic.otf
+assets/fonts/CrimsonPro-Black.ttf
+assets/fonts/CrimsonPro-BlackItalic.ttf
+assets/fonts/CrimsonPro-Bold.ttf
+assets/fonts/CrimsonPro-BoldItalic.ttf
+assets/fonts/CrimsonPro-ExtraBold.ttf
+assets/fonts/CrimsonPro-ExtraBoldItalic.ttf
+assets/fonts/CrimsonPro-ExtraLight.ttf
+assets/fonts/CrimsonPro-ExtraLightItalic.ttf
+assets/fonts/CrimsonPro-Italic.ttf
+assets/fonts/CrimsonPro-Light.ttf
+assets/fonts/CrimsonPro-LightItalic.ttf
+assets/fonts/CrimsonPro-Medium.ttf
+assets/fonts/CrimsonPro-MediumItalic.ttf
+assets/fonts/CrimsonPro-Regular.ttf
+assets/fonts/CrimsonPro-SemiBold.ttf
+assets/fonts/CrimsonPro-SemiBoldItalic.ttf
 assets/fonts/Source-OFL.txt
 assets/fonts/SourceSansPro-Black.ttf
 assets/fonts/SourceSansPro-BlackIt.ttf
@@ -81,16 +90,16 @@ assets/fonts/UbuntuMono-RI.ttf
 
 assets/js/accordion.js
 assets/js/annotation.js
+assets/js/bookmarks.js
 assets/js/bundle.js
+assets/js/bundle-check.js
 assets/js/elasticlunr-setup.js
-assets/js/elasticlunr.min.js
 assets/js/footnote-popups.js
 assets/js/footnotes.js
 assets/js/heading-titles.js
 assets/js/lazyload.js
 assets/js/locales.js
 assets/js/mark-parents.js
-assets/js/mark.min.js
 assets/js/mathjax/extensions/a11y/accessibility-menu.js
 assets/js/mathjax/extensions/a11y/auto-collapse.js
 assets/js/mathjax/extensions/a11y/collapsible.js
@@ -233,8 +242,8 @@ assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_non_characters.js
 assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_symbols.js
 assets/js/mathjax/extensions/a11y/mathmaps/symbols/math_whitespace.js
 assets/js/mathjax/extensions/a11y/mathmaps/symbols/other_stars.js
-assets/js/mathjax/extensions/a11y/mathmaps/symbols/spanish.js
 assets/js/mathjax/extensions/a11y/mathmaps/symbols/spanish_mathfonts.js
+assets/js/mathjax/extensions/a11y/mathmaps/symbols/spanish.js
 assets/js/mathjax/extensions/a11y/mathmaps/units/energy.js
 assets/js/mathjax/extensions/a11y/mathmaps/units/length.js
 assets/js/mathjax/extensions/a11y/mathmaps/units/memory.js
@@ -348,6 +357,26 @@ assets/js/redact.js
 assets/js/render-search-index.js
 assets/js/rotate.js
 assets/js/search-engine.js
+assets/js/search-notifications.js
+assets/js/search-results.js
+assets/js/search-store.js
+assets/js/search-terms.js
+assets/js/select-list.js
+assets/js/setup.js
+assets/js/shift-elements.js
+assets/js/show-hide.js
+assets/js/svg-inject.min.js
+assets/js/svg-management.js
+assets/js/tables.js
+assets/js/utilities.js
+assets/js/videos.js
+
+assets/js/vendor/elasticlunr.min.js
+assets/js/vendor/mark.min.js
+assets/js/vendor/svg-inject.min.js
+
+# This is usually project-specific, so not updated by default
+# assets/js/settings.js
 
 # Search indexes are not shared between projects,
 # so they are commented out here.
@@ -355,23 +384,13 @@ assets/js/search-engine.js
 # assets/js/search-index-app.js
 # assets/js/search-index-web.js
 
-assets/js/search-results.js
-assets/js/search-store.js
-assets/js/search-terms.js
-assets/js/select-list.js
-assets/js/shift-elements.js
-assets/js/show-hide.js
-assets/js/svg-inject.min.js
-assets/js/svg-management.js
-assets/js/tables.js
-assets/js/videos.js
 
 
 # Sitewide styles
 # ---------------
 
-assets/styles/app.scss
-assets/styles/web.scss
+# assets/styles/app.scss
+# assets/styles/web.scss
 
 
 # Book utility files
@@ -380,7 +399,7 @@ assets/styles/web.scss
 # Generally files inside book folders should
 # not be overwritten when updating or sharing files
 # between projects. These files, on the other hand,
-# are packaging/utility files taht are rarely customised.
+# are packaging/utility files that are rarely customised.
 # So they can usually be safely updated.
 # When you rename or add new books to a project.
 # remember to add their equivalent files here as needed.
@@ -572,10 +591,13 @@ _epub/mimetype
 _includes/annotate-icon
 _includes/annotate-show-icon
 _includes/annotator.html
+_includes/bookmark-icon
+_includes/bookmarks.html
 _includes/breadcrumbs
 _includes/close-body.html
 _includes/close-content.html
 _includes/contact-form
+_includes/controls.html
 _includes/cover
 _includes/docs-by-category
 
@@ -597,6 +619,7 @@ _includes/globe-icon
 # _includes/head-elements
 
 _includes/head.html
+_includes/history-icon
 _includes/html-entities.html
 _includes/identifiers
 _includes/image
@@ -622,6 +645,7 @@ _includes/search
 _includes/select
 _includes/start-content.html
 _includes/toc
+_includes/video
 _includes/vimeo
 _includes/widgets
 _includes/youtube
@@ -754,6 +778,7 @@ _sass/partials/_web-accordion.scss
 _sass/partials/_web-annotator.scss
 _sass/partials/_web-base-typography.scss
 _sass/partials/_web-bibliographies.scss
+_sass/partials/_web-bookmarks.scss
 _sass/partials/_web-boxes.scss
 _sass/partials/_web-buttons.scss
 _sass/partials/_web-code.scss
@@ -778,6 +803,7 @@ _sass/partials/_web-letters.scss
 _sass/partials/_web-masthead.scss
 _sass/partials/_web-maths.scss
 _sass/partials/_web-mixins--buttons.scss
+_sass/partials/_web-mixins--dialogs.scss
 _sass/partials/_web-mixins--sidenotes.scss
 _sass/partials/_web-nav-bar.scss
 _sass/partials/_web-notes.scss
@@ -807,6 +833,7 @@ _sass/web.scss
 
 # Note that we include this files.txt file here.
 
+_tools/package/package.js
 _tools/profiles/Grey_Fogra39L.icc
 _tools/profiles/Grey_Fogra52L.icc
 _tools/profiles/PSOcoated_v3.icc
@@ -814,5 +841,4 @@ _tools/profiles/PSOuncoated_v3_FOGRA52.icc
 _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
 _tools/update/files.txt
 _tools/update/update.sh
-_tools/zip/LICENSE
-_tools/zip/zip.exe
+_tools/zip/zip.js

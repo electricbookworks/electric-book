@@ -11,7 +11,7 @@ project:
   # The default contact email address
   email: "support@electricbook.works"
   # The name of the project of books in this folder.
-  name: "Electric Book"
+  name: "The Electric Book template"
   # A one-liner about this project. Useful for Open Graph metadata.
   description: "This is Electric Book template, a way to build websites, books and ebooks from the same master content. Created and maintained by Electric Book Works."
   # The logo of the organisation, saved web-ready in /assets
@@ -140,14 +140,8 @@ works:
             file: "0-3-contents"
           - label: "Chapter One"
             file: "01"
-            id: "1-hello-world"
           - label: "Chapter Two"
             file: "02"
-            id: "2-goodbye-world"
-            children:
-              - label: "Subsection"
-                file: "02"
-                id: "example-id"
       screen-pdf:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online

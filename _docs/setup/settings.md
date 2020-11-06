@@ -61,6 +61,14 @@ You can turn on open annotation with [Hypothes.is](https://hypothes.is) by setti
 
 By default, the template turns annotation for development, and off for live. This is because annotation can be useful during development for discussing changes within a team.
 
+## Bookmarks
+
+Web and app users can save their places in books using the bookmarks function.
+
+Bookmark locations are saved in their browser's local storage. Note that if they delete their browser's website data, they will lose their bookmarks.
+
+You can turn bookmarks on or off in `settings.yml` in the settings for `web` and `app` formats.
+
 ## Epub settings
 
 You'll need to adjust the epub settings if you want to embed fonts or hide the epub's nav element. See [Epub output](../output/epub-output.html) for details.

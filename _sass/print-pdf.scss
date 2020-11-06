@@ -86,10 +86,10 @@ $convert-images-to-color-profile: false !default; // 'true' may convert true bla
 // Using prince-no-fallback triggers a warning and aborts PDF creation
 // if any glyphs are not found in the specified font, instead of switching to another one.
 // This is recommended for books where perfect reproduction among users is important.
-$font-text-main: "Crimson", prince-no-fallback !default;
+$font-text-main: "Crimson Pro", prince-no-fallback !default;
 $font-text-secondary: "Source Sans Pro", prince-no-fallback !default;
 $font-display-main: "Source Sans Pro", prince-no-fallback !default;
-$font-display-secondary: "Crimson", prince-no-fallback !default;
+$font-display-secondary: "Crimson Pro", prince-no-fallback !default;
 $font-code: "Ubuntu Mono", prince-no-fallback !default;
 
 // Finally, we set variables related to text flow.

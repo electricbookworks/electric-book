@@ -103,12 +103,12 @@ set /p process=Enter a number and hit return.
             :: ...and run Jekyll to build new HTML
             :: with MathJax enabled if necessary
             if not "%print-pdf-mathjax%"=="y" goto printpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%" || exit /b
             goto printpdfjekylldone
 
             :: Build Jekyll without MathJax
             :printpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%" || exit /b
 
             :printpdfjekylldone
 
@@ -215,10 +215,10 @@ set /p process=Enter a number and hit return.
             :: ...and run Jekyll to build new HTML
             :: with MathJax enabled if necessary
             if not "%screen-pdf-mathjax%"=="y" goto screenpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%" || exit /b
             goto screenpdfjekylldone
             :screenpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%" || exit /b
             :screenpdfjekylldone
 
             :: Skip the next step if we're not using MathJax.
@@ -416,8 +416,8 @@ set /p process=Enter a number and hit return.
 
         :: ...and run Jekyll to build new HTML
         :epubJekyllBuild
-            if "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,%config%"
-            if not "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
+            if "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,%config%" || exit /b
+            if not "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%" || exit /b
             echo HTML generated.
             :epubJekyllDone
 
@@ -755,10 +755,10 @@ set /p process=Enter a number and hit return.
         :appbuildrepeat
             echo Building your HTML...
             if not "%appmathjax%"=="y" goto appbuildnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%" || exit /b
             goto apphtmlbuilt
             :appbuildnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%" || exit /b
             :apphtmlbuilt
 
             :: Put HTML into app/www by moving everything (/E) in _site
@@ -790,7 +790,7 @@ set /p process=Enter a number and hit return.
             )
 
             echo Opening folder containing app...
-            %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
+            %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\app\build\outputs\apk"
 
             :: Try to emulate
             echo "Attempting to run app in emulator..."
@@ -868,7 +868,7 @@ set /p process=Enter a number and hit return.
             :: ...and run Jekyll to build new HTML.
             :: We turn off the math engine so that we get raw TeX output,
             :: and because Pandoc does not support SVG output anyway.
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.math-disabled.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.math-disabled.yml,%config%" || exit /b
 
             :: Navigate to the HTML we just generated
             if "%subdirectory%"=="" cd _site\%bookfolder%\text
@@ -1006,12 +1006,12 @@ set /p process=Enter a number and hit return.
 
         :buildForWebSearchIndex
 
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,%searchIndexConfig%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,%searchIndexConfig%" || exit /b
             goto refreshSearchIndexRendering
 
         :buildForAppSearchIndex
 
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%searchIndexConfig%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%searchIndexConfig%" || exit /b
             goto refreshSearchIndexRendering
 
         :: Run script from scripts directory

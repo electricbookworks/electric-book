@@ -4,13 +4,14 @@ $web-language-select: true !default;
     // Language selector
 
     .language-select {
-        z-index: 100;
-        padding: ($line-height-default / 2) ($line-height-default / 2) 0 ($line-height-default / 2);
-        text-align: right;
         color: $language-select-text-color;
+        cursor: pointer;
+        text-align: right;
+        z-index: 100;
+
         .language-select-list {
+            @include dialog-styles();
             list-style-type: none;
-            padding: 0; // override default masthead padding
             li {
                 display: block; // overrides masthead ul styles
                 a {
@@ -28,17 +29,14 @@ $web-language-select: true !default;
         }
         &:hover {
             .language-select-list {
-                background-color: $language-select-background-color;
-                border-radius: $box-border-radius;
-                display: inline;
+                display: block;
+                left: 0;
                 position: fixed;
-                right: 0;
-                padding: $line-height-default / 2;
             }
         }
     }
 
-    // Globe icon (_includes/globe-icon)
+    // Icon (_includes/language-select-icon)
     svg.language-select-icon {
         // Avoid Firefox bug where tapping selects SVG as text
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882

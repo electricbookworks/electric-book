@@ -1,5 +1,5 @@
-/*jslint browser */
-/*globals window */
+/*jslint browser, for */
+/*globals window, ebToggleClickout */
 
 function ebNav() {
     'use strict';
@@ -53,8 +53,10 @@ function ebNav() {
             // show the menu when we click the link
             menuLink.addEventListener("click", function (ev) {
                 ev.preventDefault();
-                menu.classList.toggle("visuallyhidden");
-                document.documentElement.classList.toggle('js-nav-open');
+                ebToggleClickout(menu, function () {
+                    menu.classList.toggle("visuallyhidden");
+                    document.documentElement.classList.toggle('js-nav-open');
+                });
             }, true);
 
             var ebHideMenu = function () {
@@ -69,7 +71,9 @@ function ebNav() {
                 // hide the menu when we click the button
                 if (clickedElement.hasAttribute("data-nav-close")) {
                     ev.preventDefault();
-                    ebHideMenu();
+                    ebToggleClickout(menu, function () {
+                        ebHideMenu();
+                    });
                     return;
                 }
 
@@ -108,7 +112,6 @@ function ebNav() {
                 if (navBackButton) {
                     navBackButton.addEventListener('click', function (ev) {
                         ev.preventDefault();
-                        console.log('Going back...');
                         window.history.back();
                     });
                 }

@@ -5,39 +5,6 @@
 // as variables, use square brackets and quotes, e.g. search['search-placeholder'].
 var locales = {{ site.data.locales | jsonify }};
 
-// Or get the language from a URL parameter
-// https://stackoverflow.com/a/901144/1781075
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-// Check if a page exists
-// (Thanks https://stackoverflow.com/a/22097991/1781075)
-function ebCheckForPage(url) {
-    'use strict';
-    var request;
-    var pageStatus = false;
-    if (window.XMLHttpRequest) {
-        request = new XMLHttpRequest();
-    } else {
-        request = new ActiveXObject('Microsoft.XMLHTTP');
-    }
-    request.open('GET', url, false);
-    request.send(); // this will pause the page while we check for the response
-    if (request.status === 404) {
-        pageStatus = false;
-    } else {
-        pageStatus = true;
-    }
-    return pageStatus;
-}
-
 // Various content localisations
 
 function localiseText(pageLanguage) {
@@ -171,7 +138,7 @@ function ebCheckLanguageAndLocalise() {
     'use strict';
 
     // Get the language in the query string
-    var requestedPagePanguage = getParameterByName('lang');
+    var requestedPagePanguage = ebGetParameterByName('lang');
 
     // If the URL parameter specifies a language,
     // and that language is defined in locales,
@@ -188,7 +155,7 @@ function ebCheckLanguageAndLocalise() {
 // Get the page language and localise accordingly
 // (also check xml:lang for epub)
 
-var pageLanguage = getParameterByName('lang')
+var pageLanguage = ebGetParameterByName('lang')
         || document.documentElement.lang
         || document.documentElement.getAttribute('xml:lang');
 

@@ -19,7 +19,7 @@ $print-figures: true !default;
             clear: both;
             page-break-inside: avoid;
             page-break-before: avoid;
-            text-align: center;
+            text-align: left;
             text-indent: 0;
             hyphens: none;
             font-size: $font-size-default * $font-size-smaller;
@@ -43,7 +43,7 @@ $print-figures: true !default;
             }
             .caption {
                 margin: 0;
-                text-align: center;
+                text-align: left;
                 text-indent: 0;
                 .figure-reference {
                     font-weight: bold;
@@ -57,7 +57,7 @@ $print-figures: true !default;
         // Note doesn't allow for multi-para captions – have to use line breaks :(
         p:last-of-type {
             margin: 0;
-            text-align: center;
+            text-align: left;
             text-indent: 0;
         }
         // Other floats
@@ -199,7 +199,7 @@ $print-figures: true !default;
     .image-with-caption {
         font-size: $font-size-default * $font-size-smaller;
         margin: $line-height-default 0;
-        text-align: center;
+        text-align: left;
         page-break-inside: avoid;
         img {
             display: block;

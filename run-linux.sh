@@ -77,11 +77,19 @@ Enter a number and hit enter. "
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML
 			# with MathJax enabled if necessary
+
+			# Exit if the Jekyll build fails
+			set -e
+
 			if [ "$printpdfmathjax" = "" ]; then
 				bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,$config"
 			else
 				bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
 			fi
+
+			# Return to default error handling
+			set +e
+
 			# If using, MathJax, preprocess the HTML
 			if [ "$printpdfmathjax" = "" ]; then
 				echo "No MathJax required."
@@ -167,11 +175,19 @@ Enter a number and hit enter. "
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML
 			# with MathJax enabled if necessary
+
+			# Exit if the Jekyll build fails
+			set -e
+
 			if [ "$screenpdfmathjax" = "" ]; then
 				bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,$config"
 			else
 				bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,$config"
 			fi
+
+			# Return to default error handling
+			set +e
+
 			# If using MathJax, process the HTML
 			if [ "$screenpdfmathjax" = "" ]; then
 				echo "No MathJax required."
@@ -302,11 +318,19 @@ You may need to reload the web page once this server is running."
 			# let the user know we're on it!
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML
+
+			# Exit if the Jekyll build fails
+			set -e
+
 			if [ "$epubmathjax" = "y" ]; then
 				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,$config"
 			else
 				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$config"
 			fi
+
+			# Return to default error handling
+			set +e
+
 			# Now to assemble the epub
 			echo "Assembling epub..."
 			# Check if there are fonts to include
@@ -665,12 +689,20 @@ You may need to reload the web page once this server is running."
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML
 			# with MathJax enabled if necessary
+
+			# Exit if the Jekyll build fails
+			set -e
+
 			if [ "$appmathjax" = "" ]
 				then
 				bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,$config"
 			else
 				bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,$config"
 			fi
+
+			# Return to default error handling
+			set +e
+
 			# Put HTML into _site/app/www by moving everything in _site
 			# excluding the _site/app folder itself, into _site/app/www.
 			# (rsync lets us exclude, where cp does not)
@@ -744,7 +776,7 @@ You may need to reload the web page once this server is running."
 				fi
 				echo "Done. Opening folder containing Android app..."
 				# (On OSX, this will be open, not xdg-open.)
-				xdg-open _site/app/platforms/android/build/outputs/apk/
+				xdg-open _site/app/platforms/android/app/build/outputs/apk/
 
 				echo "Attempting to run app in emulator..."
 				cordova emulate android
@@ -840,9 +872,17 @@ You may need to reload the web page once this server is running."
 			# let the user know we're on it!
 			echo "Generating HTML..."
 			# ...and run Jekyll to build new HTML.
+
+			# Exit if the Jekyll build fails
+			set -e
+
 			# We turn off the math engine so that we get raw TeX output,
 			# and because Pandoc does not support SVG output anyway.
 			bundle exec jekyll build --config="_config.yml,_configs/_config.$fromformat.yml,_configs/_config.math-disabled.yml,$config"
+
+			# Return to default error handling
+			set +e
+
 			# Navigate into the book's text folder in _site
 			if [ "$wordsubdirectory" = "" ]; then
 				cd _site/$bookfolder/text
@@ -960,12 +1000,19 @@ You may need to reload the web page once this server is running."
 
 		# Generate HTML with Jekyll
 		echo "Generating HTML with Jekyll..."
+
+		# Exit if the Jekyll build fails
+		set -e
+
 		if [ "$searchIndexToRefresh" = "a" ]
 			then
 			bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,$searchIndexConfig"
 		else
 			bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,$searchIndexConfig"
 		fi
+
+		# Return to default error handling
+		set +e
 
 		# Generate index
 		echo "Generating index ..."

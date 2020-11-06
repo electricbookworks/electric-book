@@ -35,6 +35,7 @@ function ebFootnotePopups() {
         var footnoteContainer = document.createElement('div');
         footnoteContainer.classList.add('footnote-detail');
         footnoteContainer.classList.add('visuallyhidden');
+        footnoteContainer.setAttribute('data-bookmarkable', 'no');
         footnoteContainer.id = 'inline-' + targetID;
 
         // The a, up to the sup
