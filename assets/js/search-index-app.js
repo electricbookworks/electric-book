@@ -176,7 +176,7 @@ index.addDoc({
 index.addDoc({
     id: 35,
     title: "Samples: Video",
-    content: "Video The Electric Book template includes an include tag for easily inserting videos from YouTube and Vimeo. See the docs for more. In this example, we have a YouTube video, set to start 14 seconds in. And a Vimeo one, set to start 5 seconds in. The Hey Duggee series trailer"
+    content: "Video The Electric Book template includes a tag for easily inserting videos from YouTube and Vimeo. See the docs for more. In this example, we have a YouTube video, without a description, set to start 14 seconds in. There’s an option to watch it elsewhere, too, which won’t show on PDF by default. Other video options Watch on Bilibili And a Vimeo one, set to start 5 seconds in. The Hey Duggee series trailer Neither have thumbnail images specified. On the web, if an image hasn’t been specified here, when you’re online the page will fetch a thumbnail for YouTube videos automatically. For Vimeo and in other formats (PDF, epub, app), you’ll get a placeholder. Clicking the description will take you to the video online (except in print-PDF, where the print-ready PDF’s profile doesn’t allow clickable links)."
 });
 index.addDoc({
     id: 36,
