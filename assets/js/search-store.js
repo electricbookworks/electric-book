@@ -59,6 +59,6 @@ var store = [
 if (typeof window === 'undefined') {
     module.exports = {
         store: store,
-        output: 'app'
+        output: '{{ site.output }}'
     }
 }
