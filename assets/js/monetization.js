@@ -1,43 +1,34 @@
 /*jslint browser */
-/*globals window, gtag */
+/*globals window */
 
-// Use Google Analytics to users with monetization extension
-function monetizationCounter() {
-    'use strict';
+// Use tracking pixels in an AWS S3 bucket to track users with web monetization
+function ebMonetizationCounter() {
+    "use strict";
 
-    var fs = require('fs');
+    // First determine whether this is the beginning of a new session
+    let isContinuedSession = sessionStorage.getItem("isContinuedSession");
 
-    var bookTitle = locales['en']['project']['name'];
+    // If it is the beginning of a new session, let's log it
+    // so that we have a record of all new user sessions
+    if (isContinuedSession !== "true") {
+        sessionStorage.setItem("isContinuedSession", "true");
 
-    console.log(bookTitle);
+        // set up the tracking pixel information
+        const awsS3 = "https://monetization-images.s3.us-east-2.amazonaws.com/";
 
-    if (document.monetization) {
-        // When a user with monetization visits a page, we want to check whether
-        // this is the first page they are viewing in this session
+        // log it by loading the new user session tracking pixel
+        let visitImage = document.createElement("img");
+        visitImage.src = awsS3 + "staging.png";
+        document.body.append(visitImage);
 
-        repeatVisit = sessionStorage.getItem('repeatVisit');
-        console.log('repeatVisit: ' + repeatVisit);
-
-        // If this is the first page view in the session
-        if (repeatVisit !== 'true') {
-            sessionStorage.setItem('repeatVisit', 'true')
-            console.log('repeatVisit: ' + repeatVisit);
-
-            // We log information when it is the first page
-            var timestamp = new Date();
-            var logString = bookTitle + ' : ' +  timestamp.toUTCString();
-
-            console.log(logString);
-
-            fs.appendFile("../../monetization-counter.txt", logString, function(err) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("The file was saved!");
-                }
-            });
+        // now we track users with monetization
+        if (document.monetization !== undefined) {
+            // log it by loading the monetization tracking pixel
+            let monetizationImage = document.createElement("img");
+            monetizationImage.src = awsS3 + "staging2.png";
+            document.body.append(monetizationImage);
         }
     }
 }
 
-setTimeout(monetizationCounter, 10000);
+setTimeout(ebMonetizationCounter, 10000);
