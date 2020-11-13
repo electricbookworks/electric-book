@@ -23,6 +23,10 @@ $output-format: "epub" !default;
 // Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
 $edition-suffix: null !default;
 
+// The path to the project root, for settings paths to things like project assets.
+// Override this for translation styles, which need an extra leading ../
+$path-to-root-directory: "../.." !default;
+
 // We name font variables for two categories:
 // - 'text' fonts are used for body text and some page features;
 // - 'display' fonts are used for headings and similar short-string features.

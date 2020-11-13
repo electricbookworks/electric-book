@@ -26,6 +26,10 @@ $output-format: "print-pdf" !default;
 // If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.
 $edition-suffix: null !default;
 
+// The path to the project root, for settings paths to fonts and colour profiles.
+// Override this for translation styles, which need an extra leading ../
+$path-to-root-directory: "../.." !default;
+
 // First, we set several variables related to overall page setup.
 $page-width: 152mm !default;
 $page-height: 229mm !default;
@@ -350,6 +354,11 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 // ----------------------------------------------------
 
 // Default font-face rules added by print-font-faces partial below.
+// Or add @font-face rules for fonts you specify here.
+// Add the actual font files to `../fonts` or `../../assets/fonts`.
+// Use #{$path-to-root-directory} to allow overriding per translation. E.g.:
+// `src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Regular.ttf);`
+// For snippets, try https://github.com/arthurattwell/font-faces
 
 // ---------------------
 // Import theme partials
