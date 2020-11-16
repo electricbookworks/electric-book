@@ -23,7 +23,7 @@ By default, the screen PDF inherits its styles from the print PDF design, except
 
 Some aspects of design are easy for non-technical users to change. Some advanced design features need to be coded by an experienced CSS developer.
 
-Each project comes with a library of predefined styles in the `_sass` folder. That's where you set or change styles taht affect all books in a project.
+Each project comes with a library of predefined styles in the `_sass` folder. That's where you set or change styles that affect all books in a project.
 
 Then, each book's styles can build on or override those project-wide styles in the `.scss` files in its own `styles` folder (e.g. `book/styles/web.scss`).
 
