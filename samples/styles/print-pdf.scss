@@ -37,7 +37,9 @@ $edition-suffix: null;
 
 // Add @font-face rules for fonts you specify here.
 // Add the actual font files to `../fonts` or `../../assets/fonts`.
-// For snippets, try https://github.com/arthurattwell/font-faces.
+// Use #{$path-to-root-directory} to allow overriding per translation. E.g.:
+// `src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Regular.ttf);`
+// For snippets, try https://github.com/arthurattwell/font-faces
 // By default, a print-font-faces partial will include rules
 // for Crimson Pro, Source Sans Pro, and Ubuntu Mono.
 

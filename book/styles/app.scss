@@ -34,6 +34,8 @@ $edition-suffix: null;
 
 // Add @font-face rules for fonts you specify here.
 // Add the actual font files to `../fonts` or `../../assets/fonts`.
+// Use #{$path-to-root-directory} to allow overriding per translation. E.g.:
+// `src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Regular.ttf);`
 // For snippets, try https://github.com/arthurattwell/font-faces
 
 
