@@ -2,6 +2,7 @@
 
 ## Latest
 
+* [Match the GitHub Pages Jekyll version by default](https://github.com/electricbookworks/electric-book/pull/509)
 * [Improve the structure of styles for easier development](https://github.com/electricbookworks/electric-book/pull/514)
 * [Enable video options, and a generic video include](https://github.com/electricbookworks/electric-book/pull/497)
 * [Improve logic for setting the HTML title element](https://github.com/electricbookworks/electric-book/pull/507)
