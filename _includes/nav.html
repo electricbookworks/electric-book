@@ -109,6 +109,16 @@
 
             {% endif %}
 
+        {% comment %} Include the nav.yml items for this language, if any. {% endcomment %}
+        {% if site.data.nav[language] %}
+            {% assign project-nav-tree = site.data.nav[language] %}
+        {% else %}
+            {% assign project-nav-tree = site.data.nav[project-language] %}
+        {% endif %}
+        {% if project-nav-tree %}
+            {% include nav-list nav-tree=project-nav-tree project-nav=true %}
+        {% endif %}
+
         </div><!--.nav-list-->
 
         <div class="widgets">
