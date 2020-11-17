@@ -193,3 +193,9 @@ So, for each translation, you need to create a folder in `assets` named for the 
 >
 > If that page exists, and a user navigates to a landing page containing a query string defining the language, they will be redirected to the actual, fully translated landing page for that language.
 {:.box}
+
+## Translating project pages
+
+Project pages are pages that are common to your whole project, not just one book. Examples are the landing page, the search page, the contact page, and the about page.
+
+See 'Translating the landing page' above for how to translate that page. Then you can create translated versions of other project pages by adding them to a language directory in the project root in the same way. E.g. the French version of the 'About' page would be in `fr/about.md`.
