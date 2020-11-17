@@ -173,7 +173,7 @@ works:
 
 ## Localisation
 
-The translate things like the navigation button and contact form, edit `_data/locales.yml`.
+The translate things like the navigation button and bookmarks dialog, edit `_data/locales.yml`.
 
 ## Translating the landing page
 

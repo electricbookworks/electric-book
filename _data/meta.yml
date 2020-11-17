@@ -539,8 +539,6 @@ works:
               - label: "Dynamic index"
                 file: "10-02-dynamic-index"
                 id: "dynamic-index"
-          - label: "Contact"
-            file: "contact"
         start-page: "00-05-contents-page" # At which file should users start reading?
         contents-page: "00-05-contents-page" # Your contents-page file, if you have one.
       epub:
@@ -710,7 +708,6 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
-              - "contact"
             nav:
               - file: "00-00-cover"
                 label: "Couverture"
@@ -730,8 +727,6 @@ works:
                     label: "Images simples"
               - label: "Mathématiques"
                 file: "03-02-maths"
-              - label: "Contact"
-                file: "contact"
           screen-pdf:
             files:
               - "00-00-cover"
@@ -765,4 +760,3 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
-              - "contact"

@@ -596,7 +596,6 @@ _includes/bookmarks.html
 _includes/breadcrumbs
 _includes/close-body.html
 _includes/close-content.html
-_includes/contact-form
 _includes/controls.html
 _includes/cover
 _includes/docs-by-category
