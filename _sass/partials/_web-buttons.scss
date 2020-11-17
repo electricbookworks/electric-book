@@ -67,4 +67,12 @@ $web-buttons: true !default;
         margin-bottom: $line-height-default;
     }
 
+    button.copy-to-clipboard {
+        background-color: $color-background;
+        border: $rule-thickness solid $color-mid;
+        box-shadow: none;
+        color: $color-mid;
+        font-weight: normal;
+        margin-left: 1rem;
+    }
 }
