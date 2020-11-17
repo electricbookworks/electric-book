@@ -158,12 +158,6 @@ en:
     results-for-none: "No results found for"
     jump-to-first: "Jump to first result ↓"
     notice: ""
-  contact:
-    subject-line: "Enquiry"
-    placeholder:
-      name: "Name"
-      email: "Email address"
-      message: "Message"
   questions:
     check-answers-button: "Check my answers"
     feedback-correct: "Correct!"
@@ -253,12 +247,6 @@ fr:
     results-for-none: "Aucun résultat trouvé pour"
     jump-to-first: "Aller au premier résultat ↓"
     notice: ""
-  contact:
-    subject-line: "Enquête"
-    placeholder:
-      name: "Nom"
-      email: "L’adresse e-mail"
-      message: "Message"
   questions:
     check-answers-button: "Vérifier mes réponses"
     feedback-correct: "Correct!"
