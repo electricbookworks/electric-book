@@ -231,7 +231,7 @@ fr:
     name: ""
     description: "Livres créés avec le flux de travail Electric Book"
     image: ""
-    credit: "Construit avec [l'Electric Book](http://electricbook.works)"
+    credit: "Construit avec [l'Electric Book](https://ebw.co/template)"
   nav:
     home: "Accueil"
     menu: "Menu"
