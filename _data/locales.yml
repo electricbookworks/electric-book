@@ -203,6 +203,10 @@ en:
     language-select: "Select language"
   video:
     options-button: "Other video options"
+  copy:
+    copy: "Copy"
+    copied: "Copied"
+    copy-failed: "Sorry, try again"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -298,6 +302,10 @@ fr:
     language-select: "Sélectionnez la langue"
   video:
     options-button: "Autres options vidéo"
+  copy:
+    copy: "Copie"
+    copied: "Copié"
+    copy-failed: "Désolé, essayez encore"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
