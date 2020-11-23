@@ -122,15 +122,34 @@ It also includes any items in _data/nav.yml below the book entries.
   <ol class="project-nav">
 
     {% for item in include.nav-tree | sort: "order" %}
-        <li class="{% unless site-pages-page-list contains item.file %}no-file{% endunless %}
-        {% if item.children == nil %} no-children{% else %} has-children{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
-            <a {% if item.file != nil %}href="{{ path-to-root-directory }}{% if is-translation %}{{ language }}/{% endif %}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
-                {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
-            </a>
-            {% if item.children != nil %}
-              {% include nav-list nav-tree=item.children project-nav=true %}
+
+      <li class="{% unless site-pages-page-list contains item.file %}no-file{% endunless %}
+      {% if item.children == nil %} no-children{% else %} has-children{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
+
+        {% comment %} Check if a translation exists.
+        If not, use the project-language/project-language version. {% endcomment %}
+        {% if is-translation %}
+
+          {% assign translated-file-exists = false %}
+          {% capture translated-file-with-path %}{{ language }}/{{ item.file }}.md{% endcapture %}
+          {% for page in site.pages %}
+            {% if page.path == translated-file-with-path %}
+              {% assign translated-file-exists = true %}
             {% endif %}
-        </li>
+          {% endfor %}
+
+        {% endif %}
+
+        <a {% if item.file != nil %}href="{{ path-to-root-directory }}{% if is-translation and translated-file-exists %}{{ language }}/{% endif %}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
+            {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+        </a>
+
+        {% if item.children != nil %}
+          {% include nav-list nav-tree=item.children project-nav=true %}
+        {% endif %}
+
+      </li>
+
     {% endfor %}
 
   </ol>
