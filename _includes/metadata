@@ -335,6 +335,7 @@ e.g. this is fr/index.md
 {% for language in all-translated-languages %}
     {% if folder-depth == 1 and current-directory == language %}
         {% assign is-translation = true %}
+        {% assign is-translation-root-directory = true %}
         {% capture language %}{{ language }}{% endcapture %}
         {% if page.name == "index.md" %}
             {% assign is-translation-homepage = true %}

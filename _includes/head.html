@@ -167,7 +167,7 @@ we want the doc name to be the book title, not only the first doc's title.
 
     {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
-    {% if is-homepage == true or is-project-search == true or page.collection == "docs" or is-translation-homepage == true %}
+    {% if is-root-directory == true or page.collection == "docs" or is-translation-root-directory == true %}|
         <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-root-directory }}assets/styles/{{ app-stylesheet }}" />
     {% else %}
 
@@ -239,7 +239,7 @@ we want the doc name to be the book title, not only the first doc's title.
         {% comment %} If the page has an image defined for it, use that... {% endcomment %}
         {% if page.image %}
 
-            {% if is-homepage == true or is-project-search == true or is-translation-homepage == true %}
+            {% if is-root-directory == true or is-translation-root-directory == true %}
                 assets/images/web/{{ page.image }}
             {% else %}
                 {{ book-directory }}/{{ site.image-set }}/{{ page.image }}
@@ -251,7 +251,7 @@ we want the doc name to be the book title, not only the first doc's title.
         and the translated version for translated home pages.
         We don't check for the existence of the translated image file,
         to save build time. Onus on user to add it to assets/[language]. {% endcomment %}
-        {% elsif is-homepage == true or is-project-search == true or is-translation-homepage == true %}
+        {% elsif is-root-directory == true or is-translation-root-directory == true %}
             {% if is-translation-homepage == true %}
                 assets/{{ language }}/images/web/{{ project-image }}
             {% else %}
@@ -283,7 +283,7 @@ we want the doc name to be the book title, not only the first doc's title.
 
     {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
-    {% if is-homepage == true or is-project-search == true or page.collection == "docs" or is-translation-homepage == true %}
+    {% if is-root-directory == true or page.collection == "docs" or is-translation-root-directory == true %}|
         <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/assets/styles/{{ web-stylesheet }}" />
     {% else %}
 
