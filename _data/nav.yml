@@ -1,0 +1,13 @@
+# Nav items in the menu below the book titles, per language.
+# Add an entry for each translation language that has files in
+# a folder in the root directory named with that language code.
+en:
+  - label: "About us"
+    file: "about"
+  - label: "Contact us"
+    file: "contact"
+# fr:
+#   - label: "À propos de nous"
+#     file: "about"
+#   - label: "Nous contacter"
+#     file: "contact"
