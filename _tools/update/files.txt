@@ -93,6 +93,7 @@ assets/js/annotation.js
 assets/js/bookmarks.js
 assets/js/bundle.js
 assets/js/bundle-check.js
+assets/js/copy-to-clipboard.js
 assets/js/elasticlunr-setup.js
 assets/js/footnote-popups.js
 assets/js/footnotes.js
