@@ -84,10 +84,14 @@ mathjax-enabled: false
 #            turned on by those formats' _config files.
 # items:     Contains repeated items (e.g. text snippets) to be reused
 #            across books in this project.
+# api:       If your book's data should not be accessible by API,
+#            set this to false.
 collections:
   docs:
     output: true
   items:
+    output: true
+  api:
     output: true
 
 # --------------------------------------------

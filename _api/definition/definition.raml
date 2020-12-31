@@ -1,0 +1,28 @@
+---
+# Jekyll will output this as a RAML definition in _site/api
+# containing your project's name and URL.
+layout: trim
+---
+#%RAML 1.0
+title: {{ site.data.meta.project.name }} API
+baseUri: {{ site.canonical-url }}{{ site.baseurl }}/api
+version: 1.0
+description: An API for book content in {{ site.data.meta.project.name }}
+
+/meta:
+  description: A JSON object of project metadata
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include example-meta.json
+
+/content:
+  description: A list of HTML files of book content
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include example-content.json
