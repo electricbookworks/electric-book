@@ -1,20 +1,34 @@
 source 'https://rubygems.org'
 
 # This Jekyll version may not be what GitHub Pages supports.
-# If you must ensure the same behaviour as GitHub pages,
+# If you must ensure the same build behaviour as GitHub pages,
 # change this to match what it supports: https://pages.github.com/versions/
-gem 'jekyll', '~>3.8.4'
+# or use the github-pages gem below. To control your own Jekyll version,
+# uncomment the following line and comment out the github-pages gem below.
+# gem 'jekyll', '~>3.9'
 
-# GitHub Pages recommends using the github-pages gem instead,
-# but this injects unwanted files: https://github.com/github/pages-gem/issues/482
-# Uncomment the following line (and comment out the Jekyll version above)
-# to use this gem, e.g. to test how your site will build on GitHub Pages.
-# gem 'github-pages', group: :jekyll_plugins
+# GitHub Pages recommends using the github-pages gem to ensure
+# that your site will build exactly as it will on GitHub Pages.
+# This gem includes the current version of Jekyll used on GitHub Pages.
+# If you prefer to control your version of Jekyll (recommended if you
+# are not relying on GitHub Pages), then comment out the following line
+# and uncomment the Jekyll version above.
+gem 'github-pages', group: :jekyll_plugins
 
 # This is highly recommended if your team uses Windows.
+# If you don't, then comment it out to avoid Gemfile.lock inconsistencies.
 gem 'wdm', '>= 0.1.1' if Gem.win_platform?
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# Windows does not include zoneinfo files, so if you are on Windows,
+# this will include the tzinfo-data gem that you need.
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# This includes the kramdown parser, requires for Jekyll 3.9.
+# see https://jekyllrb.com/news/2020/08/05/jekyll-3-9-0-released/
+gem "kramdown-parser-gfm"
+
 # For what ~> means, see https://robots.thoughtbot.com/rubys-pessimistic-operator
+
+# Update Kramdown parser, see https://jekyllrb.com/news/2020/08/05/jekyll-3-9-0-released/
+# Uncomment the line below if you use Jekyll v3.9 or later
+# gem "kramdown-parser-gfm"

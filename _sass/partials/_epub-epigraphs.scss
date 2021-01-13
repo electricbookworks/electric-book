@@ -4,15 +4,15 @@ $epub-epigraphs: true !default;
     // Epigraphs
 
     .epigraph-page {
-    	margin-top: $start-depth;
+        margin-top: $start-depth;
     }
     .epigraph {
-    	text-indent: 0;
-    	padding: 0 ($line-height-default * 2);
+        text-indent: 0;
+        padding: 0 ($paragraph-indent * 2);
     }
     .epigraph-source {
-    	text-indent: 0;
-    	padding: 0 ($line-height-default * 2);
+        text-indent: 0;
+        padding: 0 ($paragraph-indent * 2);
         page-break-before: avoid;
         text-align: right;
         font-style: italic;
@@ -22,8 +22,8 @@ $epub-epigraphs: true !default;
     }
     // Paragraphs after epigraph sources
     .epigraph-source + p {
-    	text-indent: 0;
-    	margin-top: $line-height-default; 
+        text-indent: 0;
+        margin-top: $line-height-default;
     }
 
 }

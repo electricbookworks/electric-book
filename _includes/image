@@ -2,16 +2,26 @@
 
 {% include metadata %}
 
+{% comment %} Reset variables {% endcomment %}
+{% assign image = "" %}
+{% assign image-file-extension = "" %}
+{% assign image-alt = "" %}
+
 {% comment %} Get the image and its file extension.
 Let user use `file` or `src` for the image file,
 defaulting to src. {% endcomment %}
 {% if include.file %}
-	{% assign image = include.file | split: "." | first %}
-	{% assign file-extension = include.file | split: "." | last %}
-{% elsif include.src %}
-	{% assign image = include.src | split: "." | first %}
-	{% assign file-extension = include.src | split: "." | last %}
+    {% assign image = include.file %}
+{% else %}
+    {% assign image = include.src %}
 {% endif %}
+
+{% comment %} Get the file extension and the filename without it,
+in a way that allows for full stops in filenames. {% endcomment %}
+{% assign image-name-array = image | split: "." %}
+{% assign image-file-extension = image-name-array | last %}
+{% capture image-extension-with-full-stop %}.{{ image-file-extension }}{% endcapture %}
+{% assign image-without-file-extension = image | replace: image-extension-with-full-stop, "" %}
 
 {% comment %} Capture and clean any alt text. {% endcomment %}
 {% if include.alt %}
@@ -22,22 +32,58 @@ defaulting to src. {% endcomment %}
     | strip_html }}{% endcapture %}
 {% endif %}
 
+{% comment %} Allow tag to override default images location,
+where 'path=""' can specify a path relative to the site's
+root directory. {% endcomment %}
+{% if include.path and include.path != "" %}
+    {% capture images %}{{ path-to-root-directory }}{{ include.path }}{% endcapture %}
+{% endif %}
+
 {% comment %} Adjust the value of `sizes` if your site design does not need
 full-width images everywhere. Here is a guide:
 https://builtvisible.com/responsive-images-for-busy-people-a-quick-primer/ {% endcomment %}
+
+{% comment %} Provide no-JS fallback when lazyloading JS
+is not available in web output {% endcomment %}
+{% if site.output == "web" %}
+<noscript>
+
+    <img
+        src="{{ images }}/{{ image }}"
+
+        {% if site.output == "web" %}
+            {% unless image-file-extension == "svg" %}
+            sizes="auto"
+            srcset="{{ images }}/{{ image-without-file-extension }}-320.{{ image-file-extension }} 320w,
+            {{ images }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
+            {{ images }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
+            {{ images }}/{{ image-without-file-extension }}-2048.{{ image-file-extension }} 2048w"
+            {% endunless %}
+        {% endif %}
+
+        class="{% if include.class %}{{ include.class }}{% endif %}{% if image-file-extension == 'svg' %} inject-svg{% endif %}"
+        {% if include.id %} id="{{ include.id }}"{% endif %}
+        {% if image-alt %} alt="{{ image-alt }}"{% endif %} />
+
+</noscript>
+{% endif %}
+
 <img
-    src="{{ images }}/{{ image }}.{{ file-extension }}"
 
     {% if site.output == "web" %}
-    {% unless file-extension == "svg" %}
-    sizes="auto"
-    srcset="{{ images }}/{{ image }}-320.{{ file-extension }} 320w,
-    {{ images }}/{{ image }}-640.{{ file-extension }} 640w,
-    {{ images }}/{{ image }}-1024.{{ file-extension }} 1024w"
-    {% endunless %}
+        data-src="{{ images }}/{{ image }}"
+        {% unless image-file-extension == "svg" %}
+            sizes="auto"
+            data-srcset="{{ images }}/{{ image-without-file-extension }}-320.{{ image-file-extension }} 320w,
+            {{ images }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
+            {{ images }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
+            {{ images }}/{{ image-without-file-extension }}-2048.{{ image-file-extension }} 2048w"
+        {% endunless %}
+    {% else %}
+        src="{{ images }}/{{ image }}"
     {% endif %}
 
-    class="{% if include.class %}{{ include.class }}{% endif %}{% if file-extension == 'svg' %} inject-svg{% endif %}"
+    class="{% if include.class %}{{ include.class }}{% endif %}{% if image-file-extension == 'svg' %} inject-svg{% endif %}"
     {% if include.id %} id="{{ include.id }}"{% endif %}
     {% if image-alt %} alt="{{ image-alt }}"{% endif %} />
 

@@ -35,7 +35,8 @@ edition: "default"
 # To make absolute links work, e.g. in canonical links in <head>,
 # include the url where this site will live when it's live (production).
 # E.g. canonical-url: "http://example.com"
-canonical-url: "https://electricbookworks.github.io/electric-book"
+# In Open Graph metadata, the base URL will be appended.
+canonical-url: "https://electricbookworks.github.io"
 
 # Base URL
 # --------
@@ -125,40 +126,72 @@ image-set: "images/web"
 # This is useful for temporarily speeding up the build to output only certain files.
 # Include the file extension too. E.g. book/text/01.md
 exclude:
-# Build tools
-- run-linux.sh
-- run-mac.command
-- run-windows.bat
-- Gemfile
-- Gemfile.lock
-- README*
-- LICENSE*
-- CHANGELOG*
-- node_modules
-- eslint.json
-- gulpfile.js
-- package.json
-- package-lock.json
-- CNAME
-- .sass-cache
-# Included as-is in other files, no need to process
-- /assets/js/annotation.js
-# Files for formats we're not building here
-- /assets/profiles
-- /*/package.opf
-- /*/toc.ncx
-- /*/images/print-pdf
-- /*/images/screen-pdf
-- /*/images/epub
-- /*/images/app
-- /*/styles/print-pdf*
-- /*/styles/screen-pdf*
-- /*/styles/epub*
-- /*/styles/app*
-# Books
-# - book
-# - samples
-# - assets
+  # Build tools
+  - run-linux.sh
+  - run-mac.command
+  - run-windows.bat
+  - Gemfile
+  - Gemfile.lock
+  - README*
+  - LICENSE*
+  - CHANGELOG*
+  - node_modules
+  - eslint.json
+  - gulpfile.js
+  - package.json
+  - package-lock.json
+  - CNAME
+  - .sass-cache
+
+  # Included as-is in other files, no need to process
+  - /assets/js/annotation.js
+  - /assets/js/polyfills.js
+  - /assets/js/utilities.js
+  - /assets/js/settings.js
+  - /assets/js/locales.js
+  - /assets/js/setup.js
+  - /assets/js/mark-parents.js
+  - /assets/js/mark.min.js
+  - /assets/js/redact.js
+  - /assets/js/search-store.js
+  - /assets/js/search-terms.js
+  - /assets/js/nav.js
+  - /assets/js/videos.js
+  - /assets/js/mcqs.js
+  - /assets/js/select-list.js
+  - /assets/js/tables.js
+  - /assets/js/footnote-popups.js
+  - /assets/js/show-hide.js
+  - /assets/js/elasticlunr.min.js
+  - /assets/js/elasticlunr-setup.js
+  - /assets/js/svg-management.js
+  - /assets/js/svg-inject.min.js
+  - /assets/js/lazyload.js
+  - /assets/js/accordion.js
+  - /assets/js/heading-titles.js
+  - /assets/js/rotate.js
+  - /assets/js/footnotes.js
+  - /assets/js/shift-elements.js
+  - /assets/js/page-reference.js
+  - /assets/js/bookmarks.js
+
+  # Files for formats we're not building here
+  - /assets/profiles
+  - /*/package.opf
+  - /*/toc.ncx
+  - /*/images/print-pdf
+  - /*/images/screen-pdf
+  - /*/images/epub
+  - /*/images/app
+  - /*/styles/print-pdf*
+  - /*/styles/screen-pdf*
+  - /*/styles/epub*
+  - /*/styles/app*
+
+  # Books
+  # - book
+  # - samples
+  # - assets
 
 # Files to keep from the last Jekyll build
 # ----------------------------------------
@@ -167,9 +200,9 @@ exclude:
 # to make your build (i.e. output regeneration) faster.
 # The file path is relative to the _site directory.
 keep_files:
-# - book
-# - samples
-# - assets
+  # - book
+  # - samples
+  # - assets
 
 # HTML compression
 # ----------------
@@ -186,9 +219,9 @@ compress_html:
 # Electric Book template version
 # ------------------------------
 # Version of this Electric Book template.
-# This is the last release, not the current build
+# This is the last release, not necessarily the current build
 # at github.com/electricbookworks/electric-book
-version: "0.14.0"
+version: "0.18.0"
 
 # Local-build URL
 # ---------------

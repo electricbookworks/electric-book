@@ -36,6 +36,8 @@ function ebSVGFontFixes(svg) {
     var i, j;
     for (i = 0; i < ebFontFixElements.length; i += 1) {
         for (j = 0; j < fontsToChange.length; j += 1) {
+
+            // Change font-family attributes
             if (ebFontFixElements[i].getAttribute('font-family')
                     === fontsToChange[j].oldFontFace) {
                 ebFontFixElements[i].setAttribute('font-family',
@@ -43,6 +45,14 @@ function ebSVGFontFixes(svg) {
                 if (fontsToChange[j].newFontWeight) {
                     ebFontFixElements[i].setAttribute('font-weight',
                             fontsToChange[j].newFontWeight);
+                }
+            }
+
+            // Change font properties in style attributes
+            if (ebFontFixElements[i].style.fontFamily === fontsToChange[j].oldFontFace) {
+                ebFontFixElements[i].style.fontFamily = fontsToChange[j].newFontFace;
+                if (ebFontFixElements[i].style.fontWeight) {
+                    ebFontFixElements[i].style.fontWeight = fontsToChange[j].newFontWeight;
                 }
             }
         }
@@ -62,7 +72,7 @@ SVGInject.setOptions({
 // that have an 'inject-svg' class.
 function ebInjectSVGs() {
     'use strict';
-    var ebSVGsToInject = document.querySelectorAll('img.inject-svg');
+    var ebSVGsToInject = document.querySelectorAll('img.inject-svg:not(.no-inject-svg)');
     var i;
     for (i = 0; i < ebSVGsToInject.length; i += 1) {
         SVGInject(ebSVGsToInject[i]);

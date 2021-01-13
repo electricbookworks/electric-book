@@ -3,6 +3,13 @@ $web-base-typography: true !default;
 
     // General typography
 
+    html {
+        box-sizing: border-box;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+
     body {
         margin: 0;
         padding: 0;
@@ -49,7 +56,7 @@ $web-base-typography: true !default;
     p {
         margin: 0;
         & + p {
-            text-indent: $line-height-default;
+            text-indent: $paragraph-indent;
         }
     }
 
@@ -57,7 +64,7 @@ $web-base-typography: true !default;
 
     ol, ul {
         list-style-position: outside;
-        margin: 0 0 $line-height-default $line-height-default;
+        margin: 0 0 $line-height-default $paragraph-indent;
     }
     ol {
         list-style-type: decimal;
@@ -76,7 +83,7 @@ $web-base-typography: true !default;
 
     blockquote {
         margin: $line-height-default 0;
-        padding: 0 $line-height-default;
+        padding: 0 $paragraph-indent;
         p:first-of-type {
             text-indent: 0;
         }
@@ -164,7 +171,7 @@ $web-base-typography: true !default;
 
     // Forms
 
-    input,
+    input[type="text"],
     textarea {
         padding: 0.75em 0.75em;
         font-family: $font-text-secondary;
@@ -177,6 +184,27 @@ $web-base-typography: true !default;
         box-sizing: border-box;
         &[type="submit"] {
             width: auto;
+        }
+    }
+    select {
+        padding: 0.75em 0.75em;
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: inherit;
+        border: $rule-thickness solid $color-mid;
+        margin: $line-height-default 0;
+        box-sizing: border-box;
+        // Inline
+        p > &,
+        li > &,
+        dd > &,
+        td > &,
+        th > &,
+        span > & {
+            font-family: inherit;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
         }
     }
     textarea {

@@ -135,3 +135,15 @@ You can create a quiz group in one of two ways:
    </div>
     ```
     {% endraw %}
+
+## Fill-in-the-blanks
+
+A simple kind of question is a fill-in-the-blank or gap-fill, where users can select an answer from options in a dropdown list. You can add one anywhere with the `include select` tag, like this:
+
+{% raw %}
+``` liquid
+{% include select options="apples | pears | oranges" correct="apples" %}
+```
+{% endraw %}
+
+By default, in web and app outputs, users will get feedback on whether their selections are correct or not. In PDF, you will see an underlined space to represent the blank. In epub, the options should be visible (depending on the ereader) but will not get feedback unless you add the `select-list.js` script to your [epub scripts](../advanced/javascript.html#adding-scripts-to-epubs).

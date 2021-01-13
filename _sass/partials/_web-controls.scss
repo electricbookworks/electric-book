@@ -4,10 +4,11 @@ $web-controls: true !default;
     // Controls and settings
 
     .controls {
-        position: fixed;
-        top: 0;
-        right: 0;
-        z-index: 1000;
-    }
+        display: flex;
+        margin-left: 0.66rem;
 
+        & > div {
+            margin-right: 1em;
+        }
+    }
 }

@@ -10,12 +10,12 @@ $print-video: true !default;
         position: relative; // positions child element play button correctly
         img {
             width: 100%;
-            padding: 0 $line-height-default;
         }
         .video-link {}
         .video-description {
-            margin-top: $line-height-default;
-            text-align: center;
+            font-size: $font-size-default * 0.8;
+            margin: ($line-height-default / 2) 0;
+            text-align: left;
         }
         .video-wrapper {
             position: relative;
@@ -44,6 +44,29 @@ $print-video: true !default;
         & + p {
             text-indent: 0;
         }
-    }
 
+        .video-options {
+
+            // Hidden in PDF by default, but designed so that
+            // this can be overridden in custom CSS with
+            // .video .video-options { display: block; }
+            display: none;
+
+            color: $color-text-secondary;
+            font-size: $font-size-default * 0.8;
+            margin: ($line-height-default / 2) $paragraph-indent 0 $paragraph-indent;
+            position: relative;
+
+            .video-options-label {
+                font-weight: bold;
+            }
+
+            .video-options-content {
+
+                > :last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
 }

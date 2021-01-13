@@ -28,9 +28,58 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
 {% if include.image or include.images %}
 <div class="figure-images contains-{{ number-of-images }}">
-    {%for image in figure-images %}
+
+    {% for image in figure-images %}
+
+        {% comment %} Get the file extension and the filename without it,
+        in a way that allows for full stops in filenames. {% endcomment %}
+        {% assign image-name-array = image | split: "." %}
+        {% assign image-file-extension = image-name-array | last %}
+        {% capture image-extension-with-full-stop %}.{{ image-file-extension }}{% endcapture %}
+        {% assign image-without-file-extension = image | replace: image-extension-with-full-stop, "" %}
+
         {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ images }}/{{ image }}">{% endif %}
-            <img src="{{ images }}/{{ image }}" alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html }}" class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
+
+            {% if site.output == "web" %}
+
+                <noscript>
+                    <img src="{{ images }}/{{ image }}"
+
+                        {% unless image-file-extension == 'svg' %}
+                            srcset="{{ images }}/{{ image-without-file-extension }}-320.{{ image-file-extension }} 320w,
+                                    {{ images }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
+                                    {{ images }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
+                                    {{ images }}/{{ image-without-file-extension }}.{{ image-file-extension }} 1280w"
+                            sizes="(min-width: 600px) 1300px, 100vw"
+                        {% endunless %}
+
+                        alt="{% if include.title %}{{ include.title | markdownify | strip_html }}: {% endif %}{% if include.description %}{{ include.description | markdownify | strip_html }}{% else %}{{ include.caption | markdownify | strip_html }}{% endif %}"
+                        {% if include.image-height != nil %} class="height-{{ include.image-height }}"{% endif %} 
+                    />
+                </noscript>
+
+                <img data-src="{{ images }}/{{ image }}"
+
+                    {% unless image-file-extension == 'svg' %}
+                        data-srcset="{{ images }}/{{ image-without-file-extension }}-320.{{ image-file-extension }} 320w,
+                                    {{ images }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
+                                    {{ images }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
+                                    {{ images }}/{{ image-without-file-extension }}.{{ image-file-extension }} 1280w"
+                        sizes="(min-width: 600px) 1300px, 100vw"
+                    {% endunless %}
+
+                    alt="{% if include.title %}{{ include.title | markdownify | strip_html }}: {% endif %}{% if include.description %}{{ include.description | markdownify | strip_html }}{% else %}{{ include.caption | markdownify | strip_html }}{% endif %}"
+                    class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}"
+                />
+
+            {% else %}
+
+                <img src="{{ images }}/{{ image }}"
+                    alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if include.description %}{{ include.description }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html }}"
+                    class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
+
+            {% endif %}
+
         {% if include.link or site.output == "web" %}</a>{% endif %}
     {% endfor %}
 </div>

@@ -1,0 +1,33 @@
+<div class="bookmarks visuallyhidden" title="{{ locale.bookmarks.bookmarks }}">
+
+    {% include bookmark-icon %}
+
+    {% comment %} JS will insert bookmarks here {% endcomment %}
+    <div class="bookmarks-modal" id="bookmarks-modal">
+        <div class="bookmarks-list bookmarks-list-open">
+            <div class="bookmarks-list-header bookmarks-list-header-open">
+                {{ locale.bookmarks.bookmarks }}
+            </div>
+            <div class="bookmarks-list-content">
+                <ul></ul>
+                <div class="bookmarks-list-tip">
+                    {{ locale.bookmarks.bookmarks-tip }}
+                </div>
+            </div>
+        </div>
+        <div class="last-locations-list">
+            <div class="last-locations-list-header">
+                {{ locale.bookmarks.last-location }}
+            </div>
+            <div class="last-locations-list-content">
+                <ul></ul>
+                <div class="last-locations-list-tip">
+                    {{ locale.bookmarks.last-locations-tip }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include history-icon %}
+
+</div>

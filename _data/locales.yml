@@ -129,6 +129,7 @@ en:
   project:
     # Project items are set for the parent language
     # in meta.yml and can be overridden here.
+    # Project 'name' also sets the HTML title on the home page.
     organisation: ""
     url: ""
     email: ""
@@ -138,13 +139,15 @@ en:
     credit: ""
   nav:
     home: "Home"
-    menu: "Contents"
+    menu: "Menu"
     next: "Next"
     previous: "Previous"
     back: "&larr;"
   input:
     submit: "Submit"
     send: "Send"
+    show: "Show"
+    hide: "Hide"
   search:
     search-title: "Search"
     placeholder: "Search"
@@ -155,17 +158,13 @@ en:
     results-for-none: "No results found for"
     jump-to-first: "Jump to first result ↓"
     notice: ""
-  contact:
-    subject-line: "Enquiry"
-    placeholder:
-      name: "Name"
-      email: "Email address"
-      message: "Message"
   questions:
     check-answers-button: "Check my answers"
     feedback-correct: "Correct!"
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "You haven't selected all the correct answers."
+    mark-correct: "&#10003;" # check mark
+    mark-incorrect: "&#10007;" # ballot x
   quiz:
     total: "Total"
   cross-references:
@@ -179,6 +178,29 @@ en:
     show-sidebar-tooltip-description: "Tap here to show the annotations sidebar. Select text to highlight and create notes on this page."
     show-annotated-text-tooltip-title: "Highlight annotations"
     show-annotated-text-tooltip-description: "Tap here to show or hide the annotation highlights on this page."
+  bookmarks:
+    bookmark: "Bookmark"
+    bookmarks: "Bookmarks"
+    bookmarks-tip: "Tap or select text, and then tap the bookmark icon to save a bookmark. Bookmarks are saved in your browser cache. Clearing your cache will remove them."
+    last-location: "Your last visit"
+    last-locations-tip: "The last time you visited, you stopped reading here."
+    last-location-prompt: "Continue from your last visit?"
+    delete-bookmark: "Delete"
+    delete-all: "Delete all"
+    delete-bookmark-confirm: "Tap again to confirm"
+    delete-all-bookmarks-confirm: "Tap again to confirm"
+    bookmarks-shifted-warning: "A bookmark doesn't seem to match its original place exactly. The content on this page may have changed."
+  accordion:
+    show-all: "Expand all"
+    close-all: "Close all"
+  controls:
+    language-select: "Select language"
+  video:
+    options-button: "Other video options"
+  copy:
+    copy: "Copy"
+    copied: "Copied"
+    copy-failed: "Sorry, try again"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -207,16 +229,18 @@ fr:
     name: ""
     description: "Livres créés avec le flux de travail Electric Book"
     image: ""
-    credit: "Construit avec [l'Electric Book](http://electricbook.works)"
+    credit: "Construit avec [l'Electric Book](https://ebw.co/template)"
   nav:
     home: "Accueil"
-    menu: "Table des matières"
+    menu: "Menu"
     next: "Suivant"
     previous: "Précédent"
     back: "&larr;"
   input:
     submit: "Soumettre"
     send: "Envoyer"
+    show: "Montrer"
+    hide: "Cacher"
   search:
     search-title: "Recherche"
     placeholder: "Recherche"
@@ -227,17 +251,13 @@ fr:
     results-for-none: "Aucun résultat trouvé pour"
     jump-to-first: "Aller au premier résultat ↓"
     notice: ""
-  contact:
-    subject-line: "Enquête"
-    placeholder:
-      name: "Nom"
-      email: "L’adresse e-mail"
-      message: "Message"
   questions:
     check-answers-button: "Vérifier mes réponses"
     feedback-correct: "Correct!"
     feedback-incorrect: "Incorrect"
     feedback-unfinished: "Vous n'avez pas sélectionné toutes les bonnes réponses."
+    mark-correct: "&#10003;" # check mark
+    mark-incorrect: "&#10007;" # ballot x
   quiz:
     total: "Total"
   cross-references:
@@ -251,6 +271,29 @@ fr:
     show-sidebar-tooltip-description: "Cliquer ici pour afficher la barre latérale des annotations. Vous pouvez sélectionner le texte à surligner et à annoter sur cette page."
     show-annotated-text-tooltip-title: "Surligner les annotations"
     show-annotated-text-tooltip-description: "Cliquer ici pour afficher ou masquer les annotations surlignées sur cette page."
+  bookmarks:
+    bookmark: "Marque-page"
+    bookmarks: "Marque-pages"
+    bookmarks-tip: "Appuyez sur ou sélectionnez le texte, et après appuyez sur l'icône marque-page pour sauvegarder un marque-page. Les marque-pages sont sauvegardés dans la mémoire cache de votre navigateur. Effacer la mémoire cache entraînera leur suppression."
+    last-location: "Votre dernière visite"
+    last-locations-tip: "Lors de votre dernière visite, vous vous êtes arrêté(e) de lire ici."
+    last-location-prompt: "Voulez-vous continuer à partir de votre dernière visite ?"
+    delete-bookmark: "Supprimer"
+    delete-all: "Tout supprimer"
+    delete-bookmark-confirm: "Appuyez à nouveau pour confirmer"
+    delete-all-bookmarks-confirm: "Appuyez à nouveau pour confirmer"
+    bookmarks-shifted-warning: "Un marque-page ne semble pas correspondre exactement à son emplacement initial. Le contenu de cette page a peut-être été modifié."
+  accordion:
+    show-all: "Montre tout"
+    close-all: "Ferme tout"
+  controls:
+    language-select: "Sélectionnez la langue"
+  video:
+    options-button: "Autres options vidéo"
+  copy:
+    copy: "Copie"
+    copied: "Copié"
+    copy-failed: "Désolé, essayez encore"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""

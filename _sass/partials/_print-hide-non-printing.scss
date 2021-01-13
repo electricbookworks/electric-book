@@ -16,7 +16,7 @@ $print-hide-non-printing: true !default;
     p + .non-printing + p,
     p + .non-printing + .non-printing + p,
     p + .non-printing + .non-printing + .non-printing + p {
-        text-indent: $line-height-default;
+        text-indent: $paragraph-indent;
     }
     @if $spaced-paras {
         p + .non-printing + p,

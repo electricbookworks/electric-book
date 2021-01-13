@@ -1,43 +1,12 @@
-{% comment %}
-- default
-    - show placeholder image
-- js
-    - listen for in-viewport
-    - switch for iframe
-{% endcomment %}
-
-{% include metadata %}
-
-{% comment %}Create a link to the video{% endcomment %}
-{% assign video-link = include.id | prepend: "https://www.vimeo.com/" %}
-{% if include.link %}
-    {% assign video-link = include.link %}
-{% endif %}
-
-{% comment %}Unlike YouTube, it's not simple to get a Vimeo thumbnail.
-So an image must be specified to get a placeholder image.{% endcomment %}
-
-{% comment %}Get the language of the video, if subtitles are required.
-This isn't currently supported for Vimeo, but the code is ready here
-for when it can be.{% endcomment %}
-{% assign video-language = language %}
-{% if include.language %}
-    {% assign video-language = include.language %}
-{% endif %}
-
-<div class="video vimeo{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles %}data-video-subtitles="true"{% endif %}>
-    <div class="video-wrapper{% unless include.image %} video-no-image{% endunless %}">
-        <a class="video-link" href="{{ video-link }}">
-            {% if include.image %}
-                <img src="{{ images }}/{{ include.image }}">
-            {% endif %}
-        </a>
-    </div>
-
-    {% if include.description %}
-    <p class="video-description">
-        <a href="{{ video-link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
-    </p>
-    {% endif %}
-
-</div>
+{% include video
+    host="vimeo"
+    id=include.id
+    image=include.image
+    link=include.link
+    language=include.language
+    subtitles=include.subtitles
+    start=include.start
+    description=include.description
+    options=include.options
+    class=include.class
+%}

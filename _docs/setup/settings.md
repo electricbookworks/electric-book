@@ -61,6 +61,14 @@ You can turn on open annotation with [Hypothes.is](https://hypothes.is) by setti
 
 By default, the template turns annotation for development, and off for live. This is because annotation can be useful during development for discussing changes within a team.
 
+## Bookmarks
+
+Web and app users can save their places in books using the bookmarks function.
+
+Bookmark locations are saved in their browser's local storage. Note that if they delete their browser's website data, they will lose their bookmarks.
+
+You can turn bookmarks on or off in `settings.yml` in the settings for `web` and `app` formats.
+
 ## Epub settings
 
 You'll need to adjust the epub settings if you want to embed fonts or hide the epub's nav element. See [Epub output](../output/epub-output.html) for details.
@@ -91,7 +99,7 @@ web:
 ```
 
 {% raw %}
-When this is `true`, SVG injection happens automatically for all images added with `{% include figure %}` or `{% include image %}`, and to any image to which you apply the class `inject-svg`.
+When this is `true`, SVG injection happens automatically for all images added with `{% include figure %}` or `{% include image %}`, and to any image to which you apply the class `inject-svg`. To turn off SVG-injection for a specific image only, add the class `no-inject-svg` to it.
 {% endraw %}
 
 Injecting SVGs can have side-effects, depending how your SVGs are created and coded. If you are going to inject SVGs, we recommend:

@@ -1,6 +1,6 @@
 // What is this?
 // -------------
-// This is typography for the Electric Book Elements theme (see http://electricbook.works).
+// This is typography for the Electric Book template (see http://ebw.co/template).
 // It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
 // It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
 // 
@@ -9,9 +9,6 @@
 // Edit the default variables below.
 // Comment/uncomment or add font imports below.
 // Add your own custom CSS at the bottom.
-
-// First, let's set character encoding. Don't change this.
-@charset "utf-8";
 
 // -------------
 // Set variables
@@ -31,35 +28,40 @@ $max-width-default: 40em !default;
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
-$font-text-main: "Crimson", serif !default;
-$font-text-secondary: "Source Sans Pro", sans-serif !default;
-$font-display-main: "Source Sans Pro", sans-serif !default;
-$font-display-secondary: "Crimson", serif !default;
-$font-code: "Ubuntu Mono", monospace !default;
+$font-text-main: "Apple Garamond", "Baskerville", "Cambria", "Droid Serif", "Times","Source Serif Pro", serif !default;
+$font-text-secondary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !default;
+$font-display-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !default;
+$font-display-secondary: "Apple Garamond", "Baskerville", "Cambria", "Droid Serif", "Times","Source Serif Pro", serif !default;
+$font-code: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace !default;
 
 // Set font size and line-height in ems or px.
 // These values, especially $line-height-default, are used to compute vertical rhythm
 // for many features in this theme. So do not use a unitless value for line-height,
 // and don't use percentages, which will break layouts computed by multiplying this value.
 $font-size-default: 1.2em !default;
-$line-height-default: 1.5em !default;
+$line-height-default: 1.6em !default;
 $font-size-smaller: 0.7 !default; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
 
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: true !default;
+// If not spacing paras, how large is the first-line indent on paragraphs?
+$paragraph-indent: 1em !default;
 
 // Rounded corners
-$button-border-radius: 0.1em !default; // Roundness of button corners
-$box-border-radius: 0.5em !default; // Roundness of box corners
+$button-border-radius: 0.1rem !default; // Roundness of button corners
+$box-border-radius: 0.1rem !default; // Roundness of box corners
+
+// Shadows
+$box-shadow: 1px 2px 7px grey !default;
 
 // Rules, lines
-$rule-thickness: 1px !default;
+$rule-thickness: 1.5px !default;
 
 // Colours
-$color-text-main: #222222 !default;
-$color-text-secondary: #222222 !default;
-$color-background: white !default;
+$color-text-main: #262626 !default;
+$color-text-secondary: #262626 !default;
+$color-background: #f9f9f9 !default;
 $color-light: #e0e0e0 !default;
 $color-mid: #9c9c9c !default;
 $color-accent: #009E7F !default;
@@ -126,24 +128,25 @@ $nav-bar-scrollbar: true !default;
 $nav-bar-width: 15em !default;
 $nav-bar-fixed: true !default; // fixed is not fully supported on many mobile browsers
 $nav-bar-back-button-hide: true !default;
+$nav-bar-title-color: $color-text-secondary !default;
 $nav-bar-label-color: $color-light !default;
 $nav-bar-label-background-color: $masthead-background-color !default;
 $nav-bar-label-border-color: transparent !default;
 $nav-bar-border-color: $color-light !default;
-$nav-bar-background-color: white !default;
-$nav-bar-search-background-color: white !default;
-$nav-bar-parent-background-color: white !default;
-$nav-bar-parent-text-color: black !default;
+$nav-bar-background-color: $color-background !default;
+$nav-bar-search-background-color: $color-background !default;
+$nav-bar-parent-background-color: $color-background !default;
+$nav-bar-parent-text-color: $color-text-main !default;
 $nav-bar-parent-hover-color: $color-accent !default;
-$nav-bar-parent-text-hover-color: white !default;
+$nav-bar-parent-text-hover-color: $color-background !default;
 $nav-bar-children-prompt-color: $color-mid !default;
 $nav-bar-child-background-color: $color-light !default;
-$nav-bar-child-text-color: black !default;
+$nav-bar-child-text-color: $color-text-main !default;
 $nav-bar-child-hover-color: $color-accent !default;
-$nav-bar-child-text-hover-color: white !default;
+$nav-bar-child-text-hover-color: $color-background !default;
 
 // Language selector
-$language-select-icon-color: $color-light !default;
+$language-select-icon-color: $color-accent !default;
 $language-select-text-color: $color-text-secondary !default;
 $language-select-links-color: $color-links !default;
 $language-select-background-color: $color-background !default;
@@ -151,10 +154,21 @@ $language-select-background-color: $color-background !default;
 // Annotator
 $annotator-sidebar-width: 16em !default;
 $annotator-icon-line-color-active: $color-light !default;
-$annotator-icon-line-color-inactive: $color-light !default;
+$annotator-icon-line-color-inactive: $color-mid !default;
 $annotator-icon-background-color-active: $color-accent !default;
 $annotator-icon-background-color-inactive: $color-background !default;
 $annotator-icon-thickness: 1.5px !default;
+
+// Bookmarks
+$bookmark-border-color: $color-light !default;
+$bookmark-text-color: $color-text-main !default;
+$bookmark-text-color-secondary: $color-mid !default;
+$bookmark-background-color: $color-background !default;
+$bookmark-icon-color-inactive: $color-background !default;
+$bookmark-icon-color-active: $color-accent !default;
+$bookmark-icon-outline-color-inactive: $color-accent !default;
+$bookmark-icon-outline-color-active: $color-accent !default;
+$bookmark-icon-text-size: 1em !default;
 
 // ---------------------------------
 // Set to false to turn partials off
@@ -209,6 +223,7 @@ $web-verse: true !default;
 $web-video: true !default;
 $web-pagination: true !default;
 $web-questions: true !default;
+$web-select-questions: true !default;
 
 // Docs
 $web-docs: true !default;
@@ -220,7 +235,8 @@ $web-fitting: true !default;  // E.g. tracking and shrinking
 // Controls
 $web-controls: true !default;
 $web-language-select: true !default;
-$web-annotator: false !default;
+$web-annotator: true !default;
+$web-bookmarks: true !default;
 
 // Logic (if this then that)
 $web-reset-sequences: true !default; // This should stay last in the @import list
@@ -237,6 +253,11 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 
 // Reset browser CSS as best we can
 @import "partials/web-css-reset";
+
+// Load general-purpose mixins
+@import "partials/web-mixins--buttons";
+@import "partials/web-mixins--sidenotes";
+@import "partials/web-mixins--dialogs";
 
 // Structural HTML components
 @import "partials/web-wrappers";
@@ -284,6 +305,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-video";
 @import "partials/web-pagination";
 @import "partials/web-questions";
+@import "partials/web-select-questions";
 
 // Docs
 @import "partials/web-docs";
@@ -296,6 +318,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "partials/web-controls";
 @import "partials/web-annotator";
 @import "partials/web-language-select";
+@import "partials/web-bookmarks";
 
 // Logic (if this then that)
 @import "partials/web-reset-sequences"; // This should stay last in the @import list

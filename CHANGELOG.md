@@ -2,6 +2,63 @@
 
 ## Latest
 
+* [Remove Formspree, and allow site-wide pages in the project root](https://github.com/electricbookworks/electric-book/pull/517)
+* [Match the GitHub Pages Jekyll version by default](https://github.com/electricbookworks/electric-book/pull/509)
+* [Improve the structure of styles for easier development](https://github.com/electricbookworks/electric-book/pull/514)
+* [Enable video options, and a generic video include](https://github.com/electricbookworks/electric-book/pull/497)
+* [Improve logic for setting the HTML title element](https://github.com/electricbookworks/electric-book/pull/507)
+* Various minor fixes and refinements.
+
+
+## 0.18.0
+
+* [Enable bookmarking](https://github.com/electricbookworks/electric-book/pull/444)
+* [Improve the reliability of search indexes and show 'Searching' notice in UX](https://github.com/electricbookworks/electric-book/pull/490)
+* [Don't expand books in home nav by default](https://github.com/electricbookworks/electric-book/pull/489)
+* [Exit the output script if Jekyll builds fail](https://github.com/electricbookworks/electric-book/pull/488)
+* [Create fallbacks for OG page title](https://github.com/electricbookworks/electric-book/pull/484)
+* [Let EBM users edit non-book styles, eg landing page](https://github.com/electricbookworks/electric-book/pull/476)
+* [Improve landing-page presentation and default fonts](https://github.com/electricbookworks/electric-book/pull/473)
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/d5a51fc83a7da5e8c35c3cb22043987777ddae4d...1e2bc3a2f03a8087dcc6bc9f107456a026d7a4a6).
+
+## 0.17.0
+
+* [Add ability to create a zip package of a project](https://github.com/electricbookworks/electric-book/pull/469)
+* [Improve horizontal scrolling of tables on narrow screens](https://github.com/electricbookworks/electric-book/pull/468)
+* [Add expand- and close-all buttons to content accordion](https://github.com/electricbookworks/electric-book/pull/467)
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/014a476c0d0908c195ef5a3322c272344b25639f...d5a51fc83a7da5e8c35c3cb22043987777ddae4d).
+
+## 0.16.0
+
+* [Replace Phantom search-index dependency with Puppeteer](https://github.com/electricbookworks/electric-book/pull/464)
+* [Support starting YouTube and Vimeo videos at specific times](https://github.com/electricbookworks/electric-book/pull/448)
+* [Add script for faster updating across Electric Book projects](https://github.com/electricbookworks/electric-book/pull/442)
+* [Zip epubs with Node for better Windows compatibility](https://github.com/electricbookworks/electric-book/pull/441)
+* [Enable turning image lazyloading on/off in settings.yml](https://github.com/electricbookworks/electric-book/pull/433)
+* [Implement better paragraph-indent](https://github.com/electricbookworks/electric-book/pull/432)
+* [Support visible URLs in e-ink epubs](https://github.com/electricbookworks/electric-book/pull/431)
+* [Generate separate web and app search indexes](https://github.com/electricbookworks/electric-book/pull/424)
+* [Allow fully translated landing pages](https://github.com/electricbookworks/electric-book/pull/423)
+* [Lazyload images to save user data](https://github.com/electricbookworks/electric-book/pull/419)
+* [Create TOCs outside of book files (and other nav fixes)](https://github.com/electricbookworks/electric-book/pull/413)
+* [Convert .html to .xhtml on epub output](https://github.com/electricbookworks/electric-book/pull/398)
+* [Don't force a blank baseurl on web output](https://github.com/electricbookworks/electric-book/pull/397)
+* [Localise home-page title element in locales](https://github.com/electricbookworks/electric-book/pull/396)
+* [Add ability to hide content behind show-hide buttons](https://github.com/electricbookworks/electric-book/pull/394)
+* [Add ability to use gap-fill questions](https://github.com/electricbookworks/electric-book/pull/389)
+* [Add variables for content and style in side-margin boxes](https://github.com/electricbookworks/electric-book/pull/379)
+* [Enable setting relative size of maths in PDF as a variable](https://github.com/electricbookworks/electric-book/pull/378)
+* [Various minor fixes and refinements](https://github.com/electricbookworks/electric-book/compare/34f8038025a1df45b72f6e7fcdb1e066fdb6ee73...master).
+
+## 0.15.0
+
+* [Add PDF columns options](https://github.com/electricbookworks/electric-book/pull/372)
+* [Inject SVGs inline](https://github.com/electricbookworks/electric-book/pull/371)
+* [Add max-quality image output](https://github.com/electricbookworks/electric-book/pull/370)
+* [Add an option for creating a sidebar in PDF output](https://github.com/electricbookworks/electric-book/pull/368)
+* [Add classes for all PrinceXML-supported floats on figures in PDF](https://github.com/electricbookworks/electric-book/pull/367)
+* [Add shift-up- and shift-down- classes for page refinement](https://github.com/electricbookworks/electric-book/pull/366)
+* [Create a dedicated styles folder for non-book pages](https://github.com/electricbookworks/electric-book/pull/365)
 * [Add easy way to set favicon](https://github.com/electricbookworks/electric-book/pull/362).
 * [Improve use of images as text dividers](https://github.com/electricbookworks/electric-book/pull/361).
 * [Footnote references popup footnote text on web](https://github.com/electricbookworks/electric-book/pull/358).

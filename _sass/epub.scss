@@ -1,6 +1,6 @@
 // What is this?
 // -------------
-// This is typography for the Electric Book Elements theme (see http://electricbook.works).
+// This is typography for the Electric Book template (see http://ebw.co/template).
 // It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
 // It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
 // 
@@ -9,9 +9,6 @@
 // Edit the default variables below.
 // Comment/uncomment or add font imports below.
 // Add your own custom CSS at the bottom.
-
-// First, let's set character encoding. Don't change this.
-@charset "utf-8";
 
 // -------------
 // Set variables
@@ -22,6 +19,10 @@ $output-format: "epub" !default;
 
 // Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
 $edition-suffix: null !default;
+
+// The path to the project root, for settings paths to things like project assets.
+// Override this for translation styles, which need an extra leading ../
+$path-to-root-directory: "../.." !default;
 
 // We name font variables for two categories:
 // - 'text' fonts are used for body text and some page features;
@@ -45,6 +46,8 @@ $font-size-bigger: 2 !default; // How many times bigger than font-size-default f
 
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
+// If not spacing paras, how large is the first-line indent on paragraphs?
+$paragraph-indent: 1em !default;
 
 // Extra margin
 // Some epub readers don't add any margin to their viewport.
@@ -55,8 +58,8 @@ $spaced-paras: false !default;
 $epub-margin: 0.5em !default;
 
 // Rounded corners
-$button-border-radius: 0.1em !default; // Roundness of button corners
-$box-border-radius: 0.5em !default; // Roundness of box corners
+$button-border-radius: 0.1rem !default; // Roundness of button corners
+$box-border-radius: 0.1rem !default; // Roundness of box corners
 
 // Rules, lines
 $rule-thickness: 1px !default;
@@ -70,7 +73,14 @@ $color-mid: #9c9c9c !default;
 $color-accent: #000000 !default;
 $color-links: #5f738c !default;
 $color-buttons: #5f738c !default;
+$color-buttons-hover: darken( $color-buttons, 20% ) !default;
 $color-highlight: #ffd54d !default;
+$color-notification-low-text: $color-light !default;
+$color-notification-medium-text: $color-light !default;
+$color-notification-high-text: $color-light !default;
+$color-notification-low-background: #009E7F !default;
+$color-notification-medium-background: #ffe388 !default;
+$color-notification-high-background: #ff7c4d !default;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
@@ -140,6 +150,7 @@ $epub-letters: true !default;
 $epub-verse: true !default;
 $epub-video: true !default;
 $epub-questions: true !default;
+$epub-select-questions: true !default;
 
 // Type-control classes
 $epub-smallcaps: true !default;
@@ -160,6 +171,11 @@ $epub-reset-sequences: true !default;
 
 // Reset ereader CSS as best we can
 @import "partials/epub-css-reset";
+
+// Load general-purpose mixins
+@import "partials/epub-mixins--buttons";
+@import "partials/epub-mixins--sidenotes";
+@import "partials/epub-mixins--show-url";
 
 // Structural HTML components
 @import "partials/epub-wrappers";
@@ -186,8 +202,8 @@ $epub-reset-sequences: true !default;
 @import "partials/epub-code";
 @import "partials/epub-dialogue";
 @import "partials/epub-figures";
-@import "partials/epub-glossaries"; //
-@import "partials/epub-highlighter"; //
+@import "partials/epub-glossaries";
+@import "partials/epub-highlighter";
 @import "partials/epub-index";
 @import "partials/epub-maths";
 @import "partials/epub-notes";
@@ -197,8 +213,9 @@ $epub-reset-sequences: true !default;
 @import "partials/epub-tables";
 @import "partials/epub-letters";
 @import "partials/epub-verse";
-@import "partials/epub-video"; //
-@import "partials/epub-questions"; //
+@import "partials/epub-video";
+@import "partials/epub-questions";
+@import "partials/epub-select-questions";
 
 // Type-control classes
 @import "partials/epub-smallcaps";

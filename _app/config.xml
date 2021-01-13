@@ -52,7 +52,13 @@ layout: min
         <preference name="EnableViewportScale" value="true"/>
     </platform>
     <platform name="windows">
-        <icon src="res/icon.png" />
+        <icon src="res/icon/windows/storelogo.png" target="StoreLogo"/>
+        <icon src="res/icon/windows/smalllogo.png" target="Square30x30Logo"/>
+        <icon src="res/icon/windows/Square44x44Logo.png" target="Square44x44Logo"/>
+        <icon src="res/icon/windows/Square150x150Logo.png" target="Square150x150Logo"/>
+        <icon src="res/icon/windows/Square310x310Logo.png" target="Square310x310Logo"/>
+        <icon src="res/icon/windows/Wide310x150Logo.png" target="Wide310x150Logo" />
+        <splash src="res/screen/windows/splashscreen.png" target="SplashScreen"/>
         <preference name="windows-target-version" value="10.0" />
         <preference name="WindowsStoreIdentityName" value="{% if site.build-language and site.build-language != "" %}{{ site.data.secrets[site.build-language].windows.package-identity-name }}{% else %}{{ site.data.secrets.windows.package-identity-name }}{% endif %}" />
         <preference name="WindowsStorePublisherName" value="{% if site.build-language and site.build-language != "" %}{{ site.data.secrets[site.build-language].windows.publisher-display-name }}{% else %}{{ site.data.secrets.windows.publisher-display-name }}{% endif %}" />

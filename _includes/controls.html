@@ -1,0 +1,11 @@
+<div class="controls">
+    
+    {% comment %} Unless we're building a particular language, 
+    include the language selector. {% endcomment %}
+    {% unless site.build-language and site.build-language != "" %}
+        {% include language-select %}
+    {% endunless %}
+
+    {% include bookmarks.html %}
+
+</div>

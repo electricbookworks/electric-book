@@ -103,6 +103,24 @@ web:
   # Set 'inject' to false to disable SVG injection.
   svg:
     inject: true
+  # -----------------
+  # Images management
+  # -----------------
+  images:
+    lazyload: true
+  # -----------------
+  # Bookmarks
+  # -----------------
+  bookmarks: true
+  # --------------
+  # Navigation
+  # --------------
+  # On your landing page, should books in the nav expand
+  # to include chapters? Expanding many chapters can
+  # make your pages much bigger and slower. true/false
+  nav:
+    home:
+      expand-books: false
 
 # ----------------------------------------------------------
 # Epub settings
@@ -114,8 +132,8 @@ epub:
   # If you're embedding fonts, uncomment and list the font-file names here
   # and put the font files in _epub/fonts, not book/fonts
   # fonts:
-  #   - Crimson-Roman.otf
-  #   - Crimson-Italic.otf
+  #   - CrimsonPro-Regular.otf
+  #   - CrimsonPro-Italic.otf
   # -----------
   # Nav element
   # -----------
@@ -163,6 +181,10 @@ app:
   # particular heading level? Default h2, set in accordion.js.
   # Set this to true to enable, or false to disable.
   accordion: false
+  # -----------------
+  # Bookmarks
+  # -----------------
+  bookmarks: true
   # --------------
   # Expansion file
   # --------------
@@ -170,6 +192,15 @@ app:
   # in an expansion file, edit these settings.
   google-play-expansion-file-enabled: false
   google-play-public-api-key: ""
+  # --------------
+  # Navigation
+  # --------------
+  # On your landing page, should books in the nav expand
+  # to include chapters? Expanding many chapters can
+  # make your pages much bigger and slower. true/false
+  nav:
+    home:
+      expand-books: false
 
 # ----------------------------------------------------------
 # External media settings
@@ -177,12 +208,12 @@ app:
 # If a large number of images makes your project too big,
 # you can store your images in a separate location.
 # See the docs for more information.
-remote-media:
-  development: ""
-  live: ""
-local-media:
-  development: ""
-  live: ""
+# Uncomment the following settings to activate remote media.
+# remote-media:
+#   development: ""
+#   live: ""
+# local-media:
+#   development: ""
 
 # ----------------------------------------------------------
 # General output options

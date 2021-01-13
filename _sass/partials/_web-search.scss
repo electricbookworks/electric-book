@@ -16,7 +16,7 @@ $web-search: true !default;
                 // font-size: inherit;
                 overflow-x: hidden; // Prevents scroll bar popping up when very long searches are entered
                 background-color: $nav-bar-search-background-color;
-                color: $color-mid;
+                color: $color-text-secondary;
             }
         }
     }

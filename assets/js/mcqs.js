@@ -112,6 +112,9 @@ function ebMCQsMakeOptionCheckboxes(question) {
 
         // take the string version of checkbox and add to the option li
         option.innerHTML = '<label>' + checkbox.outerHTML + option.innerHTML + '<\label>';
+
+        // make the option non-bookmarkable
+        option.setAttribute('data-bookmarkable', 'no');
     });
 }
 
@@ -168,6 +171,9 @@ function ebMCQsShowSelectedOptions(mcqsToCheck, selectedOptions) {
             feedback.classList.add('mcq-feedback-show');
         }
 
+        // make the feedback non-bookmarkable
+        feedback.setAttribute('data-bookmarkable', 'no');
+
     });
 }
 
@@ -180,6 +186,9 @@ function ebMCQsShowSelectedIncorrectOptions(mcqsToCheck, selectedOptions, correc
                 selectedOptions[index + 1] !== correctAnswersForThisMCQs[index + 1]) {
             feedback.classList.add('mcq-feedback-show');
         }
+
+        // make the feedback non-bookmarkable
+        feedback.setAttribute('data-bookmarkable', 'no');
 
     });
 }

@@ -9,7 +9,7 @@ collections:
   epub:
     output: true
 exclude:
-  # the usual excludes from _config.yml
+  # The usual excludes from _config.yml
   - run-linux.sh
   - run-mac.command
   - run-windows.bat
@@ -24,7 +24,40 @@ exclude:
   - package.json
   - package-lock.json
   - CNAME
-  # exclude files we don't need for epub
+
+  # Included as-is in other files, no need to process
+  - /assets/js/annotation.js
+  - /assets/js/polyfills.js
+  - /assets/js/utilities.js
+  - /assets/js/settings.js
+  - /assets/js/locales.js
+  - /assets/js/setup.js
+  - /assets/js/mark-parents.js
+  - /assets/js/mark.min.js
+  - /assets/js/redact.js
+  - /assets/js/search-store.js
+  - /assets/js/search-terms.js
+  - /assets/js/nav.js
+  - /assets/js/videos.js
+  - /assets/js/mcqs.js
+  - /assets/js/select-list.js
+  - /assets/js/tables.js
+  - /assets/js/footnote-popups.js
+  - /assets/js/show-hide.js
+  - /assets/js/elasticlunr.min.js
+  - /assets/js/elasticlunr-setup.js
+  - /assets/js/svg-management.js
+  - /assets/js/svg-inject.min.js
+  - /assets/js/lazyload.js
+  - /assets/js/accordion.js
+  - /assets/js/heading-titles.js
+  - /assets/js/rotate.js
+  - /assets/js/footnotes.js
+  - /assets/js/shift-elements.js
+  - /assets/js/page-reference.js
+  - /assets/js/bookmarks.js
+
+  # Exclude files we don't need for epub
   - /assets/styles
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss
@@ -36,10 +69,20 @@ exclude:
   - /*/images/screen-pdf
   - /*/images/web
   - /*/images/app
+
+  # Temporarily exclude book files for faster builds
+  # - assets
+  # - book
+  # - samples
+
 # We deliberately empty the keep_files list here,
 # so that files we don't want don't end up in the epub
 # but not in the manifest.
-keep_files: []
+keep_files:
+  # - assets
+  # - book
+  # - samples
+
 # Map file extensions to media types for the opf
 media-types:
   html: "application/xhtml+xml"

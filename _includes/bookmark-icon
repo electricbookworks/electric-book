@@ -1,0 +1,5 @@
+<!-- Adapted from https://fontawesome.com/ CC BY 4.0 -->
+<svg class="bookmark-icon" width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+    <path class="bookmark-icon-fill" d="M0 512V48C0 21.49 21.49 0 48 0h288c26.51 0 48 21.49 48 48v464L192 400 0 512z"/>
+    <path class="bookmark-icon-outline" d="M336 0H48C21.5 0 0 21.5 0 48v464l192-112 192 112V48c0-26.5-21.5-48-48-48zm29.9 480.7L192 381.9 17.7 480.7V54.5c0-19.5 18.5-37.2 36.8-37.2h276c18.6 0 35.3 19.7 35.3 39.7v423.7z"/>
+</svg>

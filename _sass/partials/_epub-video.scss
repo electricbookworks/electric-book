@@ -14,10 +14,14 @@ $epub-video: true !default;
         .video-link {}
         .video-description {
             margin-top: $line-height-default;
-            text-align: center;
+            text-align: left;
         }
         .video-wrapper {
             position: relative;
+            a {
+                // Show URL on e-ink devices
+                @include show-url();
+            }
             // Add play button before iframe loads
             &:before {
                 content: "\25b6";
@@ -63,6 +67,23 @@ $epub-video: true !default;
         & + p {
             text-indent: 0;
         }
-    }
 
+        .video-options {
+            color: $color-text-secondary;
+            font-size: 0.8em;
+            margin: ($line-height-default / 2) $paragraph-indent 0 $paragraph-indent;
+            position: relative;
+
+            .video-options-label {
+                font-weight: bold;
+            }
+
+            .video-options-content {
+
+                > :last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
 }

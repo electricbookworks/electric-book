@@ -8,7 +8,7 @@ $nav-bar-back-button-hide: false !default;
         position: absolute;
         top: 0;
         left: 0;
-        margin: 0.5em;
+        margin: 0.5em 0.5em 0.5em 0.25em;
     }
 
     .nav-back-button {
@@ -83,7 +83,7 @@ $nav-bar-back-button-hide: false !default;
         }
 
         .js-nav & {
-            width: $nav-bar-width;
+            max-width: $nav-bar-width;
             border-top: none;
             border-right: $rule-thickness solid $nav-bar-border-color;
             position: absolute;
@@ -226,7 +226,11 @@ $nav-bar-back-button-hide: false !default;
             margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
         } // .widgets
 
-        h2 {
+        .nav-title {
+            color: $nav-bar-title-color;
+            font-size: $font-size-default * 1.5;
+            line-height: $line-height-default * 0.75;
+            margin: ($line-height-default) 0 ($line-height-default * 0.5) 0;
             padding-left: 0.4em;
         }
 
@@ -244,14 +248,15 @@ $nav-bar-back-button-hide: false !default;
         border: none;
         color: $nav-bar-child-text-hover-color;
         font-size: 1.25em;
-        padding: 0 0.5em;
+        padding: 0.333em 0.5em; // centers expand buttons vertically
         margin: 0 0 0 -0.5em;
-        height: 1.65em; // This magic number may not always work
+        height: 1em;
         &:focus {
             outline: none;
         }
         &:hover {
             cursor: pointer;
+            background-color: transparent;
         }
         &:after {
             color: $nav-bar-children-prompt-color;
@@ -264,13 +269,18 @@ $nav-bar-back-button-hide: false !default;
     }
 
     [data-nav-close] {
+        background-color: transparent;
         &:after {
             content: $nav-bar-close;
+        }
+        &:hover {
+            background-color: transparent;
         }
     }
 
     [data-toggle-nav] {
-        left: $nav-bar-width * 0.7; // Keeps item text aligned in complex lists
+        background-color: transparent;
+        right: 0;
         &:after {
             content: $nav-bar-children-prompt;
         }
@@ -278,6 +288,9 @@ $nav-bar-back-button-hide: false !default;
             &:after {
                 content: $nav-bar-children-prompt-hide;
             }
+        }
+        &:hover {
+            background-color: transparent;
         }
     }
 

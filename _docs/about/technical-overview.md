@@ -23,7 +23,7 @@ The technical team members who run the workflow need to be familiar with:
 
 Very broadly, this is how the Electric Book template works.
 
-*   The template is set up as a [Jekyll](https://jekyllrb.com/) project, with lots of predefined defaults in various files. When you run the template's `run-` script for your operating system, Jekyll builds those snippets and your content into HTML pages. (See ['Using the template'](#using-the-template) below for detail on the template's structure, and [Jekyll's docs on structure](https://jekyllrb.com/docs/structure/).)
+*   The template is set up as a [Jekyll](https://jekyllrb.com/) project, with lots of predefined defaults in various files. When you run the template's `run-` script for your operating system, Jekyll builds those snippets and your content into HTML pages. (See ['Structure'](#structure) below for detail on the template's structure, and [Jekyll's docs on structure](https://jekyllrb.com/docs/structure/).)
 *   You store your markdown content in a book's `text` folder, and images in its `images/_source` folder. You create your designs in the stylesheets in its `styles` folder. You store project settings in `_data/settings.yml` and book metadata in `_data/meta.yml`.
 *   Depending which options you select when you run the `run-` script, the script might:
     * pass the finished HTML to Prince to convert to PDF
@@ -31,7 +31,7 @@ Very broadly, this is how the Electric Book template works.
     * zip the finished HTML into an epub
     * pass the finished HTML to Cordova to wrap in an app
     * pass the finished HTML to Pandoc to convert to Word
-    * run the finished HTML through PhantomJS to build a search index.
+    * scrape the finished HTML to build a search index.
 *   The `run-` script also lets you choose to process images. It converts any images in a book's `_source` folder into variations for print-PDF, screen-PDF, web, epub and app outputs.
 
 ## Structure

@@ -1,0 +1,104 @@
+{% capture video-html %}
+
+{% comment %}
+Currently supports youtube and vimeo only
+
+- default
+    - show placeholder image
+- js
+    - listen for in-viewport
+    - switch for iframe
+{% endcomment %}
+
+{% include metadata %}
+
+{% comment %} Get video host; default is youtube {% endcomment %}
+{% assign video-host = "youtube" %}
+{% if include.host and include.host != "" %}
+    {% assign video-host = include.host %}
+{% endif %}
+
+{% comment %}Create a link to the video{% endcomment %}
+{% assign video-link = "" %}
+{% if video-host == "vimeo" %}
+    {% assign video-link = include.id | prepend: "https://vimeo.com/" %}
+{% else %}
+    {% assign video-link = include.id | prepend: "https://youtube.com/watch?v=" %}
+{% endif %}
+
+{% comment %} Let link parameter override defaults {% endcomment %}
+{% if include.link %}
+    {% assign video-link = include.link %}
+{% endif %}
+
+{% comment %} Include the timestamp if there is one {% endcomment %}
+{% if include.start %}
+    {% if video-host == "vimeo" %}
+        {% comment %} Convert the seconds to Vimeo's XmXs format {% endcomment %}
+        {% capture video-timestamp-minutes %}{{ include.start | divided_by: "60" }}{% endcapture %}
+        {% capture video-timestamp-seconds %}{{ include.start | modulo: "60" }}{% endcapture %}
+
+        {% capture video-timestamp %}#t={{ video-timestamp-minutes }}m{{ video-timestamp-seconds }}s{% endcapture %}
+    {% else %}
+        {% capture video-timestamp %}&start={{ include.start }}{% endcapture %}
+    {% endif %}
+{% endif %}
+
+{% comment %}If the host is YouTube, get an image for the video,
+then let the user override it by setting an image parameter.
+Epubs and apps aren't online, so don't fetch an image automatically.
+On Vimeo, it's not simple to get a Vimeo thumbnail.
+So an image must be specified to get a placeholder image.{% endcomment %}
+{% assign video-image = nil %}
+
+{% if video-host == "youtube" and site.output == "web" %}
+    {% capture video-image %}https://i1.ytimg.com/vi/{{ include.id }}/hqdefault.jpg{% endcapture %}
+{% endif %}
+
+{% if include.image %}
+    {% capture video-image %}{{ images }}/{{ include.image }}{% endcapture %}
+{% endif %}
+
+{% comment %}Get the language of the video, if subtitles are required.{% endcomment %}
+{% assign video-language = language %}
+{% if include.language %}
+    {% assign video-language = include.language %}
+{% endif %}
+
+<div class="video {{ video-host }}{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles == "true" %}data-video-subtitles="true"{% endif %}{% if include.start %} data-video-timestamp="{{ include.start }}"{% endif %}>
+    <div class="video-wrapper{% if video-image == nil or video-image == "" %} video-no-image{% endif %}">
+        <a class="video-link" href="{{ video-link }}{{ video-timestamp }}">
+            {% if video-image != nil and video=image != "" %}
+                <img src="{{ video-image }}">
+            {% endif %}
+        </a>
+    </div>
+
+    {% if include.options and include.options != "" %}
+        <div class="video-options">
+
+            {% if site.output == "web" or site.output == "app" %}
+                <button class="video-options-button" type="button">
+                    {{ locale.video.options-button }}
+                </button>
+            {% else %}
+                <div class="video-options-label">
+                    {{ locale.video.options-button }}
+                </div>
+            {% endif %}
+
+            <div class="video-options-content">
+                {{ include.options | markdownify }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if include.description %}
+    <p class="video-description">
+        <a href="{{ video-link }}{{ video-timestamp }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
+    </p>
+    {% endif %}
+
+</div>
+
+{% endcapture %}{{ video-html | strip_newlines | strip }}
