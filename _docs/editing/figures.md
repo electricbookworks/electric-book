@@ -72,14 +72,14 @@ In the tag for each figure, we can define the following information:
 * a link (clicking the image opens this link; without it, by default clicking the image opens the image file)
 * a caption (appears below the image)
 * a title (can be used to title descriptive text)
-* a description (hidden by default and used at `alt` text on the image; can be displayed and used with custom CSS)
+* alt text (a description of the image, e.g. for screen readers)
 * a source (appears below the figure)
 * the height of the image in lines
 * a [class](classes.html) (for styling the layout of a given figure).
 
-The template uses that information differently depending on the output format. For instance, on the web and in the epub, the description is the text that screen-readers will read aloud to visually impaired users who can't see an image; and we don't need to display it in print.
+The template uses that information differently depending on the output format. For instance, on the web and in the epub, the alt text is the text that screen-readers will read aloud to visually impaired users who can't see an image; and we don't need to display it in print.
 
-A caption and a description are similar, but not the same. A caption usually provides information about the figure, while a description describes its appearance.
+A caption and alt text are similar, but not the same. A caption usually provides information about the figure, while alt text describes its appearance for someone who can't see the image.
 
 We define these things in the tag using 'parameters'. For instance, we set the `image` parameter by writing `image='mydog.jpg'`. Below is a `figure` include with each parameter set. You can copy this and set the value in each parameter. Nothing is mandatory, so you only need to include the parameters that your figure needs defined.
 
@@ -95,8 +95,8 @@ Here is a full example:
    link="http://example.com"
    caption="This is the figure caption."
    title="My Example Figure"
-   description="This should describe what the images look like."
-   source="Fire and Lion, 2017"
+   alt-text="This should describe what the images look like."
+   source="Electric Book Works, 2017"
    image-height="10"
    class="featured"
 %}
