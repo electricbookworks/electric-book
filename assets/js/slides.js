@@ -106,9 +106,7 @@ var ebSlidesBuildNav = function (slidelines) {
 
             // if no image, use the figure title
             if (figure.querySelector('.figure-images img')) {
-                console.log('Adding thumbnail image for ' + figure.querySelector('.figure-reference').innerText);
                 var thumb = figure.querySelector('.figure-images img').cloneNode();
-                console.log('Thumbnail image found for ' + figure.querySelector('.figure-reference').innerText);
                 thumb.removeAttribute('srcset');
                 thumb.removeAttribute('sizes');
                 thumb.setAttribute('alt', '');
@@ -116,7 +114,6 @@ var ebSlidesBuildNav = function (slidelines) {
             } else {
                 console.log('Adding thumbnail image for ' + figure.querySelector('.figure-reference').innerText);
                 var thumbText = figure.querySelector('.figure-body .title').innerText;
-                console.log('Thumbnail text found for ' + figure.querySelector('.figure-reference').innerText + ': "' + thumbText + '"');
                 thumbText = ebTruncateText(thumbText, 8);
                 slideNavigationInsert += '<span class="slide-thumbnail-text">';
                 slideNavigationInsert += thumbText;
@@ -274,7 +271,6 @@ var ebSlidesAlreadyShown = function () {
         // listen for clicks on each nav slide link
         navSlide.addEventListener('click', function (ev) {
 
-            console.log('Slide clicked: ' + navSlide);
             var itsCurrentlyHidden = document.querySelector(this.getAttribute('href'))
                 .classList.contains('visuallyhidden');
 
