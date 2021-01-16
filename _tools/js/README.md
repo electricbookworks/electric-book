@@ -6,8 +6,8 @@ This is an attempt to replace our EB output scripts with a single node script. A
 
 So far, this script can do some options from the run-* shell scripts:
 
-- [ ]  Create a print PDF
-- [ ]  Create a screen PDF
+- [x]  Create a print PDF
+- [x]  Create a screen PDF
 - [x]  Run as a website
 - [ ]  Create an epub
 - [ ]  Create an app
@@ -24,7 +24,7 @@ Additional functions it provides:
 
 Run this at the command line with
 
-```
+```sh
 npm run electricbook
 ```
 
@@ -32,17 +32,23 @@ for the default output: a local web server.
 
 Add arguments for other tasks, e.g.
 
-```
+```sh
 npm run electricbook -- --task=output --format=print-pdf
 ```
 
-for print output of the default `book` (not working yet).
+for print output of the default `book`.
+
+Another example. This will generate a screen PDF of the Samples book with maths enabled:
+
+```sh
+npm run electricbook -- --task=output --format=screen-pdf --book=samples --mathjax=true
+```
 
 ### Project setup check
 
 The `checkProjectSetup` function checks that basic folders and files exist for the project and the book being output. To run it:
 
-```
+```sh
 npm run electricbook -- --task=check
 ```
 
