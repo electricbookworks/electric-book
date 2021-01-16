@@ -1,11 +1,11 @@
-$epub-quotations: true !default;
-@if $epub-quotations {
+$epub-sources: true !default;
+@if $epub-sources {
 
     // Styles not covered by the default blockquote element in base-typography
     // The source of a quotation, e.g. a name or book title, that appears after the quote
     p.source {
         font-style: italic;
-        margin: 0 $line-height-default $line-height-default $line-height-default;
+        margin: 0 $paragraph-indent $line-height-default $paragraph-indent;
         text-indent: 0;
         page-break-before: avoid;
     }
@@ -14,7 +14,7 @@ $epub-quotations: true !default;
     span.source {
         display: block;
         page-break-before: avoid;
-        margin: 0 $line-height-default $line-height-default $line-height-default;
+        margin: 0 $paragraph-indent $line-height-default $paragraph-indent;
         font-style: italic;
         font-weight: inherit;
     }

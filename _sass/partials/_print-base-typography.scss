@@ -1,10 +1,18 @@
 $print-base-typography: true !default;
+$convert-images-to-color-profile: false !default;
 @if $print-base-typography {
 
     // Base typography
 
     @page {
         background-color: $color-background;
+    }
+
+    html {
+        box-sizing: border-box;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
     }
 
     body {
@@ -58,7 +66,7 @@ $print-base-typography: true !default;
     p {
         margin: 0;
         & + p {
-            text-indent: $line-height-default;
+            text-indent: $paragraph-indent;
         }
     }
     a {
@@ -100,9 +108,9 @@ $print-base-typography: true !default;
     }
     li {
         list-style-position: outside;
-        margin-left: $line-height-default;
+        margin-left: $paragraph-indent;
         &::marker {
-            width: $line-height-default;
+            width: $paragraph-indent;
             text-align: left;
         }
     }
@@ -120,7 +128,7 @@ $print-base-typography: true !default;
 
     blockquote {
         margin: $line-height-default 0;
-        padding: 0 $line-height-default;
+        padding: 0 $paragraph-indent;
         p {
             margin: 0;
             padding: 0;
@@ -140,9 +148,10 @@ $print-base-typography: true !default;
     }
     dt {
         page-break-after: avoid;
+        font-weight: bold;
     }
     dd {
-        margin: 0 0 $line-height-default $line-height-default;
+        margin: 0 0 $line-height-default $paragraph-indent;
     }
 
     // Super and subscripts
@@ -162,16 +171,46 @@ $print-base-typography: true !default;
     // Horizontal rules
     // Using <hr> as a divider (in markdown created with ***)
 
-    $text-divider: "" !default;
+    $text-divider-text: "" !default;
+    $text-divider-image: "" !default;
+    $text-divider-image-height: $line-height-default !default;
 
     hr {
-        content: $text-divider;
+        content: $text-divider-text;
         border: 0;
         font-family: $font-display-main;
         text-align: center;
-        margin: $line-height-default 0;
+        margin: $line-height-default auto;
+        @if $text-divider-image != "" {
+            content: $text-divider-image;
+            height: $text-divider-image-height;
+        }
         & + p {
             text-indent: 0;
+        }
+    }
+
+    // Forms
+
+    select {
+        padding: ($line-height-default / 2) ($paragraph-indent / 2);
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: inherit;
+        border: $rule-thickness solid $color-mid;
+        margin: $line-height-default 0;
+        box-sizing: border-box;
+        // Inline
+        p > &,
+        li > &,
+        dd > &,
+        td > &,
+        th > &,
+        span > & {
+            font-family: inherit;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
         }
     }
 
@@ -180,6 +219,12 @@ $print-base-typography: true !default;
 
     img {
         max-width: 100%;
+        // Control colorspace conversion. See:
+        // https://www.princexml.com/forum/topic/3831/dont-convert-images
+        prince-image-magic: ignore-icc-profile;
+        @if $convert-images-to-color-profile {
+            prince-image-magic: none;
+        }
     }
 
     // An option to change the default text-indented paragraphs
@@ -190,7 +235,9 @@ $print-base-typography: true !default;
             text-indent: 0;
         }
         ul ul, ol ol, blockquote ul ul, blockquote ol ol {
-            margin-bottom: $line-height-default;
+            // Disabled, because on most real projects we remove this.
+            // margin-top: $line-height-default;
+            // margin-bottom: $line-height-default;
         }
     }
 

@@ -1,3 +1,6 @@
+/*jslint */
+/*globals window, Prince, pageLanguage, locales */
+
 // Page cross-reference in print
 // Use with css:
 // content: prince-script(pagereference);
@@ -13,18 +16,21 @@ var prePageNumberPhrase = locales[pageLanguage]['cross-references']['pre-page-nu
 var postPageNumberPhrase = locales[pageLanguage]['cross-references']['post-page-number'];
 
 function addPageReferenceFunc() {
+    'use strict';
 
-    // exit if we're in phantom; we only want Prince to do this
-    if (typeof window.callPhantom === 'function') return;
+    if (typeof Prince === 'object') {
+        console.log('Adding page references in Prince.');
+        Prince.addScriptFunc("pagereference", function (currentPage, targetPage) {
 
-    Prince.addScriptFunc("pagereference", function(currentPage, targetPage) {
+            // if the target is on this page, return blank
+            if (currentPage === targetPage) {
+                return '';
+            }
 
-        // if the target is on this page, return blank
-        if (currentPage === targetPage) return '';
-
-        // otherwise show a space and the page number in parentheses
-        return '\u00A0' + prePageNumberPhrase + targetPage + postPageNumberPhrase;
-    });
+            // otherwise show a space and the page number in parentheses
+            return '\u00A0' + prePageNumberPhrase + targetPage + postPageNumberPhrase;
+        });
+    }
 }
 
 addPageReferenceFunc();

@@ -13,6 +13,14 @@ To ensure EPUB2 compatibility (which requires valid XHTML 1.1), we don't use the
 * for very simple figures, a paragraph with an `image-with-caption` class that starts with an inline image followed by text; or
 * a div with a `figure` class containing both an image and its caption, created with our `figure` include.
 
+{% include figure
+   image="naples.svg"
+   caption="A map of Naples"
+   link="https://en.wikipedia.org/wiki/Naples"
+   description="A map showing the location of Naples."
+   reference="Figure 1"
+%}
+
 Old versions of the Electric Book template used a `blockquote` instead of a `div` for the figure, since a blockquote can be created with markdown `>` syntax.
 
 To show figures in context, here is an article from *The Comics Grid: Journal of comics scholarship* by [Chris Fradkin](10-02-dynamic-index.html#fradkin-1){:.indexed #fradkin-1}. The abstract, if you're curious:
@@ -33,9 +41,13 @@ A program that employs the pre-cloak stage of superheroes has been active in Rwa
 
 [^3]: Rwandan Orphans Project (2016).  Available at: http://www.rwandanorphansproject.org/ (Accessed 14 May 2016).
 
-![Figure 1](../{{ site.image-set }}/fradkin-1.jpg){:.height-15}
-**Figure 1**{:.figure-reference} The Rwandan Orphans Project (near Kigali, Rwanda) uses comic superheroes to empower orphaned children. Capes from old t-shirts, masks from cereal boxes. Published with permission from The Rwandan Orphans Project. Photo © Lisa Meaney, MFT, [Rwandan Orphans Project](http://www.rwandanorphansproject.org), 2016 (Accessed 14 May 2016).
-{:.image-with-caption #figure-1}
+{% include figure
+    image="fradkin-1.jpg"
+    image-height="15"
+    reference="Figure 2"
+    caption="The Rwandan Orphans Project (near Kigali, Rwanda) uses comic superheroes to empower orphaned children. Capes from old t-shirts, masks from cereal boxes. Published with permission from The Rwandan Orphans Project. Photo © Lisa Meaney, MFT, [Rwandan Orphans Project](http://www.rwandanorphansproject.org), 2016 (Accessed 14 May 2016)."
+    description="Children stand in a line wearing super-hero capes and masks made from cereal boxes, making bold super-hero poses."
+%}
 
 5,000 miles WSW of Rwanda is a program in São Paulo, Brazil. The ‘Superformula’ program at the A.C. Camargo Cancer Center (2016[^4]), attempts to raise the spirits of its pediatric patients using special comics, videos, and superhero plastic covers for IV bags ([Figure 2](#figure-2)). The children are encouraged to do battle with their cancer, as the comic superheroes battle evil. Their chemo drip is ‘Superformula.’ While this approach may first seem novel, over time it may wear thin, as many patients on the ward will lose their battle. The Superformula program instills hope upon the ward, through the premise of ‘invincibility suggestion.’
 
@@ -44,7 +56,7 @@ A program that employs the pre-cloak stage of superheroes has been active in Rwa
 {% include figure
     image="fradkin-2.jpg"
     image-height="15"
-    reference="Figure 2"
+    reference="Figure 3"
     caption="On the pediatric ward of the A.C. Camargo Cancer Center, superhero IV covers transform children’s chemo drip into _Superformula_. Design & Branding © J. Walter Thompson, Brazil, 2016 (Accessed 15&nbsp;May 2016)."
     description="A poster that describes _Superformula to fight cancer_ covers, which have superhero logos on the covers of chemo drips. There is a batman logo on the cover in the foreground. Photos and text explain how the cover is attached."
 %}

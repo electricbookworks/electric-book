@@ -1,0 +1,9 @@
+@mixin dialog-styles() {
+    background-color: $color-background;
+    font-family: $font-text-secondary;
+    line-height: $line-height-default;
+    border: $rule-thickness solid $color-accent;
+    padding: ($line-height-default / 2);
+    box-shadow: $box-shadow;
+    border-radius: $box-border-radius;
+}

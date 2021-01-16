@@ -1,0 +1,13 @@
+<!-- https://css-tricks.com/can-make-icon-system-accessible/ -->
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 55" aria-labelledby="annotate-icon-title annotate-icon-description">
+
+    <title id="annotate-icon-title">{{ locale.annotator.show-sidebar-tooltip-title }}</title>
+    <desc id="annotate-icon-description">{{ locale.annotator.show-sidebar-tooltip-description }}</desc>
+
+    <style>
+        path{stroke-miterlimit:10;stroke-linecap="round";stroke-linejoin="round"}
+    </style>
+    <path d="M6.852 1.264h36.24a5.778 5.778 0 0 1 5.791 5.79V42.84a5.778 5.778 0 0 1-5.79 5.79H20.28L8.775 53.85l.036-5.22H6.852a5.778 5.778 0 0 1-5.79-5.79V7.055a5.778 5.778 0 0 1 5.79-5.791z"/>
+    <path d="M9 37.8h31.6"/>
+    <path d="M33.3 10.4L13.7 30.1l-1.5 5.5 5.5-1.4 19.7-19.6c-.1-.1-4.1-4.2-4.1-4.2z"/>
+</svg>

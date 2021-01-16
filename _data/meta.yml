@@ -7,19 +7,19 @@ project:
   # The name of the organisation or entity that owns this project
   organisation: "Electric Book Works"
   # A live web address for the organisation
-  url: "http://electricbook.works/"
+  url: "http://electricbookworks.com"
   # The default contact email address
-  email: "support@electricbook.works"
+  email: "support@electricbookworks.com"
   # The name of the project of books in this folder.
-  name: "Electric Book"
+  name: "The Electric Book template"
   # A one-liner about this project. Useful for Open Graph metadata.
-  description: "The Electric Book template in action."
+  description: "This is Electric Book template, a way to build websites, books and ebooks from the same master content. Created and maintained by Electric Book Works."
   # The logo of the organisation, saved web-ready in /assets
   logo: "publisher-logo.jpg"
-  # An image in /assets that stands for the project
+  # An image in /assets/images/web that stands for the project
   image: "cover.jpg"
   # Credit line, by default in the footer, overidden in locales.yml
-  credit: "Built with the [Electric Book](http://electricbook.works)"
+  credit: "Built with the [Electric Book](https://ebw.co/template)"
   # Primary language code for this project as a whole
   language: "en"
   # App bundle ID unique across all app stores
@@ -140,14 +140,8 @@ works:
             file: "0-3-contents"
           - label: "Chapter One"
             file: "01"
-            id: "1-hello-world"
           - label: "Chapter Two"
             file: "02"
-            id: "2-goodbye-world"
-            children:
-              - label: "Subsection"
-                file: "02"
-                id: "example-id"
       screen-pdf:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication date or last revision
         format: "Digital download" # e.g. Paperback, Digital download, Digital online
@@ -245,7 +239,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -340,9 +334,9 @@ works:
               - label: "Poetry"
                 file: "01-09-poetry"
                 id: "poetry"
-              - label: "Multiple-choice questions"
-                file: "01-10-mcqs"
-                id: "multiple-choice-questions"
+              - label: "Questions and quizzes"
+                file: "01-10-questions"
+                id: "questions-and-quizzes"
           - label: "Images"
             children: 
               - label: "Plain images"
@@ -406,7 +400,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -504,9 +498,9 @@ works:
               - label: "Poetry"
                 file: "01-09-poetry"
                 id: "poetry"
-              - label: "Multiple-choice questions"
-                file: "01-10-mcqs"
-                id: "multiple-choice-questions"
+              - label: "Questions and quizzes"
+                file: "01-10-questions"
+                id: "questions-and-quizzes"
           - label: "Images"
             children: 
               - label: "Plain images"
@@ -545,8 +539,6 @@ works:
               - label: "Dynamic index"
                 file: "10-02-dynamic-index"
                 id: "dynamic-index"
-          - label: "Contact"
-            file: "contact"
         start-page: "00-05-contents-page" # At which file should users start reading?
         contents-page: "00-05-contents-page" # Your contents-page file, if you have one.
       epub:
@@ -577,7 +569,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -618,7 +610,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -658,7 +650,7 @@ works:
           - "01-07-notes"
           - "01-08-dividers"
           - "01-09-poetry"
-          - "01-10-mcqs"
+          - "01-10-questions"
           - "02-00-images"
           - "02-01-plain-images"
           - "02-02-figures"
@@ -693,14 +685,6 @@ works:
               - "02-01-plain-images"
               - "03-02-maths"
             toc:
-              - file: "00-00-cover"
-                label: "Couverture"
-              - file: "00-03-title-page"
-                label: "Titre"
-              - file: "00-04-copyright-page"
-                label: "Droits"
-              - file: "00-05-contents-page"
-                label: "Table des matières"
               - label: "Texte"
                 children:
                   - file: "01-01-plain-text"
@@ -724,7 +708,6 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
-              - "contact"
             nav:
               - file: "00-00-cover"
                 label: "Couverture"
@@ -744,8 +727,6 @@ works:
                     label: "Images simples"
               - label: "Mathématiques"
                 file: "03-02-maths"
-              - label: "Contact"
-                file: "contact"
           screen-pdf:
             files:
               - "00-00-cover"
@@ -779,4 +760,3 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
-              - "contact"

@@ -1,35 +1,12 @@
-{% comment %}
-- default
-    - show placeholder image
-- js
-    - listen for in-viewport
-    - switch for iframe
-{% endcomment %}
-
-{% comment %}Create a link to the video{% endcomment %}
-{% assign video-link = include.id | prepend: "https://www.vimeo.com/" %}
-{% if include.link %}
-    {% assign video-link = include.link %}
-{% endif %}
-
-{% comment %}Unlike YouTube, it's not simple to get a Vimeo thumbnail.
-So an image must be specified to get a placeholder image.{% endcomment %}
-
-<div class="video vimeo{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}">
-    <div class="video-wrapper">
-        <a class="video-link" href="{{ video-link }}">
-            {% if include.image %}
-                <img src="{{ images }}/{{ include.image }}">
-            {% else %}
-                <span class="video-no-image"></span>
-            {% endif %}
-        </a>
-    </div>
-
-    {% if include.description %}
-    <p class="video-description">
-        <a href="{{ video-link }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
-    </p>
-    {% endif %}
-
-</div>
+{% include video
+    host="vimeo"
+    id=include.id
+    image=include.image
+    link=include.link
+    language=include.language
+    subtitles=include.subtitles
+    start=include.start
+    description=include.description
+    options=include.options
+    class=include.class
+%}

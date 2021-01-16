@@ -1,0 +1,22 @@
+// We use white for the text, rather than using $color-background,
+// because in our epub styles $colour-background is transparent.
+// $color-buttons is likely to be a colour, not white.
+
+@mixin button($text-color: white, $button-color: $color-buttons, $button-hover-color: $color-buttons-hover) {
+    display: inline-block;
+    font-family: $font-text-secondary;
+    color: $text-color;
+    line-height: 100%;
+    text-decoration: none;
+    background-color: $button-color;
+    padding: 0.2em 0.4em;
+    margin: 0;
+    text-align: center;
+    text-indent: 0;
+    border-radius: $button-border-radius;
+    cursor: pointer;
+    border: none;
+    &:hover {
+        background-color: $button-hover-color;
+    }
+}

@@ -68,7 +68,7 @@ We're still working on the signing process, which is done in X Code.
 
 You must have Visual Studio installed with all requirements for Cordova Windows Apps installed. The basic process will be:
 
-1. Create a listing in the Windows app store. (Once-off.)
+1. Create a listing in the Microsoft app store. (Once-off.)
 1. Check that `google-play-expansion-file` is not enabled in `settings.yml`.
 1. Build app HTML with Jekyll.
 2. Add the Windows app platform files with Cordova.
@@ -76,9 +76,9 @@ You must have Visual Studio installed with all requirements for Cordova Windows 
 
 Here are the detailed steps:
 
-1. [Create a listing in the Windows app store](https://developer.microsoft.com/en-us/dashboard/). Some of the forms you need to complete may only work in Edge (!). If this is already done, perhaps check that it's up to date and add any release notes.
-1. Create or check that you have a `secrets.yml` file in `_data` with the `windows` `package-identity-name` and `publisher-id` filled in. (And remember *never* to commit secrets to version control.)
-   - You get the package identity name from the app dashboard on the Windows website, under 'App management > App identity'.
+1. [Create a listing in the Microsoft app store](https://developer.microsoft.com/en-us/dashboard/). Some of the forms you need to complete may only work in Edge (!). If this is already done, perhaps check that it's up to date and add any release notes.
+1. Create or check that you have a `secrets.yml` file in `_data` with the `windows` `package-identity-name`, `publisher-id` and `publisher-display-name` filled in. (And remember *never* to commit secrets to version control.)
+   - You get the package identity name from the Windows & Xbox dashboard on the Microsoft website, under 'Product management > Product identity'.
    - You can get the `publisher-id` value there from your Windows developer settings.
    - If you're creating a one-language translation app, this should have a section for the language. E.g.:
 
@@ -96,6 +96,7 @@ Here are the detailed steps:
         package-thumbprint: ""
         package-identity-name: "FireandLion.TheEconomybyCORE"
         publisher-id: "CN=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        publisher-display-name: "Electric Book Works"
       fr:
         android:
           app-path-to-keystore: "path/to/keystore"
@@ -110,6 +111,7 @@ Here are the detailed steps:
           package-thumbprint: ""
           package-identity-name: "FireandLion.LconomieparCORE"
           publisher-id: "CN=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+          publisher-display-name: "Electric Book Works"
       ```
 
 1. Ensure that `google-play-expansion-file-enabled` is not set in `_data/settings.yml` (that's only for Android).
@@ -120,7 +122,7 @@ Here are the detailed steps:
 4. We recommend building a Release version (not a Debug version) to test that the app works when fully signed. To do this:
     1. Associate the app with an app listing in the store. Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... (You may only have to do this once.)
     2. Under `CordovaApp.Windows10 (Universal Windows)` open `package.windows10.appxmanifest` and add the language code to the 'Default language' field. You can also correct the description, which Visual Studio or Cordova aren't getting right currently. Save the file.
-    3. In the toolbar, select 'Release' instead of 'Debug' and select your computer's architecture in the next box (usually 'x64'). Then click the '► Local machine' button in the toolbar.
+    3. In the toolbar, select 'Release' instead of 'Debug' and select your computer's architecture in the next box (usually 'x64'). Then click the '► Local machine' button in the toolbar. (Sometimes you get an error and have to enter the language again in the 'Default language' field. Then retry '► Local machine'.) If the process works and you're on Windows, it should install the app to your computer, where you should open and test it.
 5. To prepare for the Windows store, use Visual Studio following the guidance in [this article](https://docs.microsoft.com/en-us/windows/uwp/packaging/packaging-uwp-apps). In short, you will:
     1. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... and select the correct app that appears. This will sign the app with the correct certificate. (You may only have to do this once.)
     1. However, this unsets the default language that Cordova adds to non-release builds. So under `CordovaApp.Windows10 (Universal Windows)` open `package.windows10.appxmanifest` and add the language code to the 'Default language' field. You can also correct the description, which Visual Studio or Cordova aren't getting right currently.

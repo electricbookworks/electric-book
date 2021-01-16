@@ -1,0 +1,97 @@
+{% comment %} This includes an item in a markdown file. 
+It looks in the book's text folder first for the item. 
+If it doesn't find it there, it looks in the _items folder.
+{% endcomment %}
+
+{% comment %} Get page metadata. {% endcomment %}
+{% include metadata %}
+
+{% comment %} Reset variables set in previous passes. {% endcomment %}
+{% assign item-file-found-in-book = false %}
+{% assign item-file-found-in-items = false %}
+{% assign question-object = "" %}
+
+{% comment %} Let include define a folder other than 'text'
+to find the item in inside _items. {% endcomment %}
+{% assign item-file-content-type = "text" %}
+{% if include.content-type %}
+    {% assign item-file-content-type = include.content-type %}
+{% endif %}
+
+{% comment %} Get the name of the file we're using. {% endcomment %}
+{% assign item-file = include.file %}
+{% assign item-file-no-extension = include.file | split: "." | first %}
+
+{% comment %} If we're we're outputting an error when items are missing,
+check for the existence of the file. Otherwise, just assume it exists,
+and the Jekyll build will break if it doesn't. {% endcomment %}
+{% if site.data.settings.on-missing-item == "error" %}
+
+    {% comment %} First check whether the item-file exists in book... {% endcomment %}
+
+    {% comment %} Create an array of items to look through. {% endcomment %}
+    {% capture path-to-item-file-in-book %}{{ book-directory }}{% if is-translation %}/{{ language }}{% endif %}/text/{{ item-file }}{% endcapture %}
+    {% assign item-files-in-book = site.pages | where_exp: "page", "page.path contains path-to-item-file-in-book" %}
+    {% for book-file in item-files-in-book %}
+
+        {% assign generated-page = book-file.path | split: '/' | last | split: '.' | first %}
+
+        {% comment %} If item-file exists, set item-file-found to true. {% endcomment %}
+        {% if item-file-no-extension == generated-page %}
+            {% assign item-file-found-in-book = true %}
+            {% assign item-file-object = book-file %}
+        {% endif %}
+
+    {% endfor %}
+
+    {% unless item-file-found-in-book == true %}
+        
+        {% comment %} If the item wasn't found in the book folder,
+        check whether it exists in _items. {% endcomment %}
+
+        {% if is-translation %}
+            {% capture item-file-path %}_items/{{ language }}/{{ item-file-content-type }}/{{ item-file }}{% endcapture %}
+        {% else %}
+            {% capture item-file-path %}_items/{{ item-file-content-type }}/{{ item-file }}{% endcapture %}
+        {% endif %}
+
+        {% assign item-files-in-items = site.items | where_exp: "item", "item.path contains item-file-path" %}
+        {% for item in item-files-in-items %}
+            {% capture item-file-in-items %}{{ item.path | split: '/' | last | split: '.' | first }}{% endcapture %}
+            {% if item-file-in-items == item-file-no-extension %}
+                {% assign item-file-found-in-items = true %}
+                {% capture item-file-content %}{{ item.content }}{% endcapture %}
+                {% assign item-file-object = item %}
+            {% endif %}
+        {% endfor %}
+
+    {% endunless %}
+
+{% else %}
+
+    {% comment %} Otherwise, if we're not generating an error message
+    in the book output when the file is missing, pretend we found the file,
+    and the build will break when Jekyll doesn't find it. {% endcomment %}
+    {% assign item-file-found-in-book = true %}
+    {% assign item-file-found-in-items = true %}
+
+{% endif %}
+
+{% comment %} Output the item! {% endcomment %}
+
+{% if item-file-found-in-book == true or item-file-found-in-items == true %}
+
+{% comment %} Unless the include tag only asked for an object,
+output the content of the item file. {% endcomment %}
+{% unless include.return == "object" %}
+{{ item-file-object.content }}
+{% endunless %}
+
+{% comment %} If the item file is not found, output an error message. {% endcomment %}
+{% else %}
+
+<div class="item{% if include.class %} {{ include.class }}{% endif %}" markdown="1">
+<span class="highlighter"> The file '{{ item-file }}' could not be found.</span>
+</div>
+
+{% endif %}

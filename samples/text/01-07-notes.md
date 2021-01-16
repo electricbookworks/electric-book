@@ -2,7 +2,7 @@
 title: "Notes"
 ---
 
-# Notes
+## Notes
 
 In Electric Book themes, we aim to support three kinds of notes: footnotes, sidenotes, and (what we call) footer notes.
 
@@ -18,7 +18,7 @@ In Electric Book themes, we aim to support three kinds of notes: footnotes, side
 
 To show notes in action, we need a lot of text with a bunch of notes. For that, we'll use 'Principles of Network Architecture Emerging from Comparisons of the Cerebral Cortex in Large and Small Brains' by Barbara L. Finlay, which is [on PLOS](http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002556), licenced CC BY.
 
-## Principles of Network Architecture Emerging from Comparisons of the Cerebral Cortex in Large and Small Brains
+### Principles of Network Architecture Emerging from Comparisons of the Cerebral Cortex in Large and Small Brains
 {: title="Principles of Network Architecture" }
 
 Citation: Finlay BL (2016) Principles of Network Architecture Emerging from Comparisons of the Cerebral Cortex in Large and Small Brains. PLoS Biol 14(9): e1002556. doi:10.1371/journal.pbio.1002556
@@ -57,7 +57,7 @@ The authors point out that the low probability of long-distance connections may 
 
 Finally, how a computational device scales may take advantage of how it is made (or, be constrained by how it is made). The exponential distance rule points to a potential simple source of developmental scaffolding for cortical connections in the initial outgrowth of intracortical axons. Initial axon outgrowth, moreover, has some distinct features within and between species that should be investigated for their role in later network architecture. The frontal cortex is the first to send out axons as the cortex develops:[^6] does this cause its position in “cliques” of cortical connectivity and its core status? Is the duration of development, though much longer in monkeys than mice, the effective limiting factor that determines how far intracortical axons have time to extend?[^17] Evolution has likely filtered from the original range of developmental rules organizing the cortex those rules generating computational architectures robust to common challenges. Variation in the sizes of animals and all their parts is certainly one of those repeated challenges.
 
-### Endnotes
+#### Endnotes
 
 [^1]: Finlay BL, Darlington RB. Linked regularities in the development and evolution of mammalian brains. Science. 1995; 268(5217): 1578–1584. pmid:7777856 doi: 10.1126/science.7777856
 

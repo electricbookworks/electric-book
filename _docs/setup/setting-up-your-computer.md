@@ -12,14 +12,13 @@ The Electric Book workflow is like a toolkit: it uses a range of great open-sour
 
 We recommend installing this software in this order (since some of these applications depend on others):
 
-|                                                                    Software                                                                   |                                 Reason                                |
-|-----------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| Software                                                                                                                                      | Reason                                                                |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | A Ruby version manager (e.g. [Homebrew](https://brew.sh/) on Mac or [Chocolatey](https://chocolatey.org/) for Windows)                        | Ensures you're using the right version of Ruby                        |
 | [Ruby 2.4 or later](https://www.ruby-lang.org/en/)                                                                                            | The language that Jekyll runs in                                      |
 | [Jekyll](https://jekyllrb.com/)                                                                                                               | Builds finished HTML from your content and the Electric Book template |
 | [Bundler](https://bundler.io/)                                                                                                                | Manages other Ruby applications ('gems') that Jekyll depends on       |
 | [PrinceXML](https://www.princexml.com/)                                                                                                       | Converts Jekyll's HTML into PDF                                       |
-| [PhantomJS](http://phantomjs.org/)                                                                                                            | Used for rendering maths for PDF and building website search indexes  |
 | [Pandoc](https://pandoc.org/)                                                                                                                 | Used for converting books to MS Word                                  |
 | [Git](https://git-scm.com/) (or a Git desktop app like [GitHub Desktop](https://desktop.github.com/))                                         | Used for version control                                              |
 | A code editor (e.g. [Sublime Text](https://www.sublimetext.com/), [VS Code](https://code.visualstudio.com/), [Brackets](http://brackets.io/)) | The best way to edit markdown and other content and style files       |
@@ -40,11 +39,18 @@ Each of the tools listed above have their own installation guides. Nonetheless, 
 
 ### Mac
 
-For a detailed guide on installing all dependencies on a Mac, see [this guide by Arthur Attwell](https://gist.github.com/arthurattwell/88be57cc2f660e35ebade4d098d67e4b).
+For a detailed guide on installing all dependencies on a Mac, see [this guide](https://gist.github.com/arthurattwell/88be57cc2f660e35ebade4d098d67e4b).
 
 ### Windows
 
-For a detailed guide on installing Chocolatey, Ruby, Jekyll and Bundler on Windows, see [this guide by Arthur Attwell](https://gist.github.com/arthurattwell/281a5e1888ffd89b08b4861a2e3c1b35).
+See these detailed guides on setting up a Windows machine:
+
+- [installing Jekyll on Windows (including Chocolatey, Ruby, and Bundler)](https://gist.github.com/arthurattwell/281a5e1888ffd89b08b4861a2e3c1b35)
+- [installing the remaining Electric Book dependencies](https://gist.github.com/arthurattwell/0ada06e8398e4180cd985d1cb91309ad).
+
+### Linux
+
+We don't have a detailed guide for setting up on Linux yet. Ubuntu users who are familiar with shell scripts will find [this script](https://gist.github.com/arthurattwell/2684d50c286f3b005ea84eb61954458f) useful. It installs all the dependencies in one go. Don't run it as-is unless you know what you're doing. It may be better to read it as a guide to the commands you might run to install each Electric Book dependency in turn.
 
 ### Suggestions
 

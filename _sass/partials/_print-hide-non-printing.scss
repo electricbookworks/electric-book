@@ -12,5 +12,18 @@ $print-hide-non-printing: true !default;
         display: none;
     }
 
+    // Indent paras that appear consecutively after non-printing elements
+    p + .non-printing + p,
+    p + .non-printing + .non-printing + p,
+    p + .non-printing + .non-printing + .non-printing + p {
+        text-indent: $paragraph-indent;
+    }
+    @if $spaced-paras {
+        p + .non-printing + p,
+        p + .non-printing + .non-printing + p,
+        p + .non-printing + .non-printing + .non-printing + p {
+            text-indent: 0;
+        }
+    }
 
 }

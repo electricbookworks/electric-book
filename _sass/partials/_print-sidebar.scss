@@ -1,0 +1,124 @@
+$print-sidebar: false !default;
+@if $print-sidebar {
+
+    // -----------------------------------
+    // One-column page layout with sidebar
+    // -----------------------------------
+
+    // This is an optional partial that sets up your page design
+    // with an outer sidebar and a single text column. You can then
+    // place items in the sidebar with negative margin-inside and -outside.
+    // This partial should be imported immediately after the variables
+    // for page size and margins, and after setting these two variables:
+    // - $sidebar-margin-outside
+    // - $column-gap-ratio
+    // Further details below.
+
+    // Here is a diagram of the column-based grid for our page layout.
+    // This shows a left-hand page. The right hand page is its mirror image.
+
+    // _______________________________________________________________________
+    // |         |            |     |            |     |            |        |
+    // |         |            |     |            |     |            |        |
+    // |         |            |     |            |     |            |        |
+    // |    1    |      2     |  3  |     4      |  5  |      6     |    7   |
+    // |         |            |     |            |     |            |        |
+    // |         |            |     |                               |        |
+    // | sidebar |   sidebar  | gap |        main text area         | margin |
+    // | margin  |            |     |                               | inside |
+    // | outside |            |     |            |     |            |        |
+    // |         |            |     |            |     |            |        |
+    // _______________________________________________________________________
+    //
+    //           <---------------- $content-width ------------------>
+    //                              <------ $main-text-width ------->
+    //           <-----------> $sidebar-text-width
+    // <--------> $sidebar-margin-outside
+    //                        <----> $sidebar-margin-inside
+    // <--- $margin-outside ------->
+
+    // Our page has a main text area (4-6) and a sidebar (2).
+    // They are based on a multi-column grid, where the sidebar occupies
+    // the first column, and the main text area occupies the other columns,
+    // plus the notional column gap between them (5).
+
+    // We use variables to define the width of these areas.
+    // We need these variables to be set before importing this partial:
+    // - $page-width: the total width of the printed page.
+    // - $sidebar-margin-outside (1): the space between the edge of the page
+    //   and the content in the sidebar.
+    // - $margin-inside (7): the space between the main text area and the spine
+    //   of the book.
+    // - $column-gap-ratio value: more detail below
+    // - $grid-columns: the number of columns in your grid, keeping in mind
+    //   that your sidebar is one of them, and your main text area the rest.
+
+    // We set the ratio between the width of each column and the column-gap
+    // as a $column-gap-ratio value.
+    // By default, this ratio is 10:1: the column is 10 times the width of the gap.
+    // We set $column-gap-ratio as the first, bigger value in the ratio, e.g. '10'.
+    // A higher ratio (e.g. 11:1) will narrow the gap, and widen the columns.
+    // A lower ratio (e.g. 9:1) will widen the gap, and narrow the columns.
+
+    // This partial automatically calculates column and gap widths from that ratio,
+    // and stores them in these three variables that we can use in our Sass rules:
+    // - $sidebar-text-width (2): the width of the sidebar
+    // - $sidebar-margin-inside (3): the gap between the sidebar text and
+    //   the main text area.
+    // - $main-text-width (4-6): the width of the main text area.
+
+    // How does this automatic calculation work? It does the following:
+    // 1. Subtract the margins from the page width, to get the content-width.
+    // 2. Divide the content width into column-grid units, using your $column-gap-ratio
+    //    and the number of columns in your grid.
+    //    - If your $column-gap-ratio is 10 (the default), and your $grid-columns is 3,
+    //      then there are 32 column-grid units:
+    //      (10 × 3 columns) + 2 column gaps = 32 column-grid units.
+    //    - If your $column-gap-ratio were 9 (i.e. narrower columns, wider gap),
+    //      there would be 29 column-grid units:
+    //      (9 × 3 columns) + 2 column gaps = 29 column-grid units.
+    // 3. To get the width of a column-grid unit ($grid-unit-width)
+    //    divide the content width by the total number of column-grid units.
+    //    E.g. if the content-width is 160mm and there are 32 column-grid units,
+    //    then each column-grid unit is 5mm wide. Each gap (3 and 5 in the diagram)
+    //    is one column-grid unit, which is 5mm in this example.
+    // 4. To get the final $sidebar-text-width, multiply the $column-gap-ratio
+    //    value by the $grid-unit-width. E.g. 10 × 5mm = 50mm.
+    // 5. To get the final $main-text-width, multiply the $column-gap-ratio
+    //    by the remaining number of columns, plus a gap width for each column
+    //    except one: (10 × 5mm × 2) + 5mm = 105mm.
+
+    // ----------------------------------------------------------------------------
+    // Now we calculate various widths based on the above settings.
+    // Do not change these calculations or terrible things will happen to your layout.
+    $content-width: $page-width - $sidebar-margin-outside - $margin-inside !global;
+    $grid-unit-width: $content-width / ($column-gap-ratio * $grid-columns + ($grid-columns - 1)) !global;
+    $sidebar-text-width: $grid-unit-width * $column-gap-ratio !global;
+    $sidebar-margin-inside: $grid-unit-width !global;
+    $main-text-width: ($column-gap-ratio * $grid-unit-width * ($grid-columns - 1)) + $grid-unit-width !global;
+    // $margin-outside is the distance from the edge of the page to the main text area.
+    // The sidebar is outside the 'normal' margin.
+    // Move items into the sidebar with negative $margin-outside.
+    $margin-outside: $sidebar-text-width + $sidebar-margin-inside + $sidebar-margin-outside !global;
+    // Done calculating.
+    // ----------------------------------------------------------------------------
+
+}
+
+@mixin sidebar() {
+    // Include this mixin to move elements to the sidebar.
+    // You can add padding in other classes after including sidebar().
+    // This approach is necessary at least in Prince 11 and earlier.
+    // The concept is that the sidenote must be very slightly (0.01pt here)
+    // too big for the available space, so that sidebar elements don't overlap
+    // but not too big to push visibly into the main text area.
+    box-sizing: border-box;
+    clear: outside;
+    float: outside;
+    width: $sidebar-text-width + 0.01pt;
+    margin-bottom: $line-height-default; // cosmetic only
+    margin-inside: $sidebar-margin-inside;
+    margin-outside: -($sidebar-text-width + $sidebar-margin-inside);
+    margin-top: 0; // cosmetic only
+    max-width: none; // overrides inherited template .sidenote rules
+}

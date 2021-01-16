@@ -22,6 +22,7 @@ set print-pdf-mathjax=
 set screen-pdf-mathjax=
 set webmathjax=
 set appmathjax=
+set searchIndexToRefresh=
 
 :: Ask what we're going to be doing.
 echo Electric Book options
@@ -75,7 +76,7 @@ set /p process=Enter a number and hit return.
         :: Ask if we're outputting the files from a subdirectory
         :printpdfwhatsubdirectory
             set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
-            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto printpdfwhatsubdirectory
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. && goto printpdfwhatsubdirectory
             echo.
 
         :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
@@ -89,7 +90,7 @@ set /p process=Enter a number and hit return.
             set /p config=
             echo.
 
-        :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+        :: Ask if we're processing MathJax, so we know whether to process the HTML
             echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
             set /p print-pdf-mathjax=
 
@@ -102,26 +103,24 @@ set /p process=Enter a number and hit return.
             :: ...and run Jekyll to build new HTML
             :: with MathJax enabled if necessary
             if not "%print-pdf-mathjax%"=="y" goto printpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%" || exit /b
             goto printpdfjekylldone
 
             :: Build Jekyll without MathJax
             :printpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%" || exit /b
 
             :printpdfjekylldone
 
-            :: Skip PhantomJS if we're not using MathJax.
-            if not "%print-pdf-mathjax%"=="y" goto printpdfafterphantom
+            :: Skip the next step if we're not using MathJax.
+            if not "%print-pdf-mathjax%"=="y" goto printpdfaftermathjax
 
-            :: Run this through phantom for extra magic,
-            :: We have to run the PhantomJS script from the folder it's in
-            :: for the directory paths to work.
-            cd _site\assets\js
-            call phantomjs render-mathjax.js
+            :: Convert all MathJax LaTeX to MathML
+            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
             cd "%location%"
 
-            :printpdfafterphantom
+            :printpdfaftermathjax
 
             :: Navigate into the book's folder in _site output
             cd _site\%bookfolder%\"%subdirectory%\text"
@@ -189,7 +188,7 @@ set /p process=Enter a number and hit return.
         :: Ask if we're outputting the files from a subdirectory
         :screenpdfwhatsubdirectory
             set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
-            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. doesn't exist. && goto screenpdfwhatsubdirectory
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. && goto screenpdfwhatsubdirectory
             echo.
 
         :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-pdf.yml
@@ -203,7 +202,7 @@ set /p process=Enter a number and hit return.
             set /p config=
             echo.
 
-        :: Ask if we're processing MathJax, so we know whether to pass the HTML through PhantomJS first
+        :: Ask if we're processing MathJax, so we know whether to process the HTML
         echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
         set /p screen-pdf-mathjax=
 
@@ -216,23 +215,21 @@ set /p process=Enter a number and hit return.
             :: ...and run Jekyll to build new HTML
             :: with MathJax enabled if necessary
             if not "%screen-pdf-mathjax%"=="y" goto screenpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%" || exit /b
             goto screenpdfjekylldone
             :screenpdfnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%config%" || exit /b
             :screenpdfjekylldone
 
-            :: Skip PhantomJS if we're not using MathJax.
-            if not "%screen-pdf-mathjax%"=="y" goto screenpdfafterphantom
+            :: Skip the next step if we're not using MathJax.
+            if not "%screen-pdf-mathjax%"=="y" goto screenpdfaftermathjax
 
-            :: Run this through phantom for extra magic,
-            :: We have to run the PhantomJS script from the folder it's in
-            :: for the directory paths to work.
-            cd _site\assets\js
-            call phantomjs render-mathjax.js
+            :: Convert all MathJax LaTeX to MathML
+            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
             cd "%location%"
 
-            :screenpdfafterphantom
+            :screenpdfaftermathjax
 
             :: Navigate into the book's folder in _site output
             cd _site\%bookfolder%\"%subdirectory%\text"
@@ -291,7 +288,7 @@ set /p process=Enter a number and hit return.
         echo.
 
         :: Ask the user to set a baseurl if needed
-        echo Do you need a baseurl?
+        echo Do you need to set a baseurl?
         echo If yes, enter it with no slashes at the start or end, e.g.
         echo my/base
         echo.
@@ -339,10 +336,10 @@ set /p process=Enter a number and hit return.
 
                 :: Run Jekyll, with MathJax enabled if necessary
                 if not "%webmathjax%"=="y" goto webnomathjax
-                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%" --baseurl=""
+                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,_configs/_config.mathjax-enabled.yml,%config%"
                 goto webjekyllservednobaseurl
                 :webnomathjax
-                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%" --baseurl=""
+                call bundle exec jekyll serve --config="_config.yml,_configs/_config.web.yml,%config%"
 
                 :webjekyllservednobaseurl
 
@@ -419,8 +416,8 @@ set /p process=Enter a number and hit return.
 
         :: ...and run Jekyll to build new HTML
         :epubJekyllBuild
-            if "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,%config%"
-            if not "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%"
+            if "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,_configs/_config.mathjax-enabled.yml,%config%" || exit /b
+            if not "%epubIncludeMathJax%"=="y" call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%config%" || exit /b
             echo HTML generated.
             :epubJekyllDone
 
@@ -481,6 +478,7 @@ set /p process=Enter a number and hit return.
         :: Copy original images
         :epubOriginalImages
             xcopy /i /q "images\epub\*.*" "..\epub\images\epub" > nul
+            xcopy /i /q "%location%\_site\items\images\epub\*.*" "..\epub\items\images\epub"
             :: Done! Move along to moving the text folder
             echo Images copied.
             goto epubCopyText
@@ -490,6 +488,7 @@ set /p process=Enter a number and hit return.
             rd /s /q images
             mkdir "..\epub\%subdirectory%\images\epub"
             xcopy /i /q "%subdirectory%\images\epub\*.*" "..\epub\%subdirectory%\images\epub" > nul
+            xcopy /i /q "%location%\_site\items\%subdirectory%\images\epub\*.*" "..\epub\items\%subdirectory%\images\epub" > nul
             :: Done! Move along to moving the text folder
             echo Images copied.
             goto epubCopyText
@@ -532,14 +531,14 @@ set /p process=Enter a number and hit return.
 
         :: If original language, use the package.opf in the root
         :epubOriginalOPF
-            echo f | xcopy /e /q "package.opf" "../epub" > nul
+            echo f | xcopy /q "package.opf" "../epub" > nul
             echo Package file copied.
             goto epubOPFDone
 
         :: If translation language, use the package.opf in the subdirectory
         :: This will overwrite the original language OPF file
         :epubSubdirectoryOPF
-            echo f | xcopy /e /q "%subdirectory%\package.opf" "../epub" > nul
+            echo f | xcopy /q "%subdirectory%\package.opf" "../epub" > nul
             echo Package file copied.
             goto epubOPFDone
 
@@ -554,14 +553,14 @@ set /p process=Enter a number and hit return.
 
         :: If original language, use the package.opf in the root
         :epubOriginalNCX
-            echo f | xcopy /e /q "toc.ncx" "../epub" > nul
+            echo f | xcopy /q "toc.ncx" "../epub" > nul
             echo NCX copied.
             goto epubNCXDone
 
         :: If translation language, use the toc.ncx in the subdirectory
         :: This will overwrite the original language NCX file
         :epubSubdirectoryNCX
-            echo f | xcopy /e /q "%subdirectory%\toc.ncx" "../epub" > nul
+            echo f | xcopy /q "%subdirectory%\toc.ncx" "../epub" > nul
             echo NCX copied.
             goto epubNCXDone
 
@@ -606,6 +605,7 @@ set /p process=Enter a number and hit return.
 
         :: If they exist, remove previous .zip and .epub files that we will replace.
         echo Removing any previous %epubFileName%.zip and %epubFileName%.epub files...
+        if exist "%location%\_output\%epubFileName%" rd /s /q "%location%\_output\%epubFileName%"
         if exist "%location%\_output\%epubFileName%.zip" del /q "%location%\_output\%epubFileName%.zip"
         if exist "%location%\_output\%epubFileName%.epub" del /q "%location%\_output\%epubFileName%.epub"
         echo Removed any previous zip and epub files.
@@ -622,41 +622,54 @@ set /p process=Enter a number and hit return.
             :: Now step back into the folder before continuing
             cd %location%/_site/epub
 
+        :: Rename .html to .xhtml in files and links
+        :epubRenameHtmlXhtml
+            echo Renaming .html to .xhtml...
+
+            cd %location%
+            if "%subdirectory%"=="" call gulp epub:xhtmlLinks
+            if "%subdirectory%"=="" call gulp epub:xhtmlFiles
+            if "%subdirectory%"=="" call gulp epub:cleanHtmlFiles
+            if not "%subdirectory%"=="" call gulp epub:xhtmlLinks --language %subdirectory%
+            if not "%subdirectory%"=="" call gulp epub:xhtmlFiles --language %subdirectory%
+            if not "%subdirectory%"=="" call gulp epub:cleanHtmlFiles --language %subdirectory%
+            cd %location%/_site/epub
+
         :: Now to zip the epub files. Important: mimetype first.
         :epubCompressing
-            echo Compressing files...
-            :: Uses Zip 3.0: http://www.info-zip.org/Zip.html
-            :: Temporarily put Zip in the PATH
-            path=%PATH%;%location%_tools\zip
-            :: mimetype: create zip, no compression, no extra fields
-            zip --compression-method store -0 -X --quiet "%location%_output/%epubFileName%.zip" mimetype
-            :: everything else: append to the zip with default compression
+            echo Assembling epub files...
 
-            :: Zip root folders
-            if exist "images\epub" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "images\epub"
-            if exist "fonts" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "fonts"
-            if exist "styles" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "styles"
-            if exist "mathjax" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "mathjax"
-            if exist "js" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "js"
+            :: Copy root folders
+            if exist "images\epub" robocopy "%location%\_site\epub\images\epub" "%location%_output\%epubFileName%\images\epub" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "items" robocopy "%location%\_site\epub\items" "%location%\_output\%epubFileName%\items" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "fonts" robocopy "%location%\_site\epub\fonts" "%location%\_output\%epubFileName%\fonts" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "styles" robocopy "%location%\_site\epub\styles" "%location%\_output\%epubFileName%\styles" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "mathjax" robocopy "%location%\_site\epub\mathjax" "%location%\_output\%epubFileName%\mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "js" robocopy "%location%\_site\epub\js" "%location%\_output\%epubFileName%\js" /E /NFL /NDL /NJH /NJS /NC /NS
 
-            :: Zip text file if this is not a translation
+            :: Copy text file if this is not a translation
             if not "%subdirectory%"=="" goto epubZipSubdirectory
-            if exist "text" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "text"
+            if exist "text" robocopy "%location%\_site\epub\text" "%location%\_output\%epubFileName%\text" /E /NFL /NDL /NJH /NJS /NC /NS
             goto epubAddPackageFiles
 
             :: And if it is a translation, move the language's text subdirectory
             :epubZipSubdirectory
-                if not "%subdirectory%"=="" if exist "%subdirectory%" zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" "%subdirectory%"
+                if not "%subdirectory%"=="" if exist "%subdirectory%\text" robocopy "%location%\_site\epub\%subdirectory%" "%location%\_output\%epubFileName%\%subdirectory%" /E /NFL /NDL /NJH /NJS /NC /NS
                 goto epubAddPackageFiles
 
         :: Add the META-INF, package.opf and toc.ncx
         :epubAddPackageFiles
             :: Now add these admin files to the zip
-            if exist META-INF zip --recurse-paths --quiet "%location%_output/%epubFileName%.zip" META-INF
-            if exist package.opf zip --quiet "%location%_output/%epubFileName%.zip" package.opf
-            if exist toc.ncx zip --quiet "%location%_output/%epubFileName%.zip" toc.ncx
+            if exist META-INF robocopy "%location%\_site\epub\META-INF" "%location%\_output\%epubFileName%\META-INF" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist package.opf robocopy "%location%\_site\epub" "%location%\_output\%epubFileName%" package.opf /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist toc.ncx robocopy "%location%\_site\epub" "%location%\_output\%epubFileName%" toc.ncx /E /NFL /NDL /NJH /NJS /NC /NS
 
-            :: Change file extension .zip to .epub
+        :: Zip the epub
+        echo Zipping with Node...
+		cd "%location%\_output"
+        node "%location%/_tools/zip/zip.js" "%epubFileName%"
+
+        :: Change file extension .zip to .epub
             cd %location%_output
             if exist %epubFileName%.zip ren %epubFileName%.zip %epubFileName%.epub
 
@@ -680,7 +693,7 @@ set /p process=Enter a number and hit return.
             for /f "tokens=2-8 delims=.:/, " %%a in ("%date% %time%") do set timestamp=%%c-%%a-%%bT%%d-%%e-%%f
             set epubCheckLogFile=epubcheck-log-%timestamp%
             echo Found EpubCheck at %epubchecklocation%, running validation...
-            call java -jar %epubchecklocation% %epubFileName%.epub 2>> %epubCheckLogFile%.txt
+            call java -Xss1024k -jar %epubchecklocation% %epubFileName%.epub 2>> %epubCheckLogFile%.txt
             echo Opening EpubCheck log...
             start %epubCheckLogFile%.txt
 
@@ -742,10 +755,10 @@ set /p process=Enter a number and hit return.
         :appbuildrepeat
             echo Building your HTML...
             if not "%appmathjax%"=="y" goto appbuildnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,_configs/_config.mathjax-enabled.yml,%config%" || exit /b
             goto apphtmlbuilt
             :appbuildnomathjax
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%"
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%config%" || exit /b
             :apphtmlbuilt
 
             :: Put HTML into app/www by moving everything (/E) in _site
@@ -777,7 +790,7 @@ set /p process=Enter a number and hit return.
             )
 
             echo Opening folder containing app...
-            %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\build\outputs\apk"
+            %SystemRoot%\explorer.exe "%location%_site\app\platforms\android\app\build\outputs\apk"
 
             :: Try to emulate
             echo "Attempting to run app in emulator..."
@@ -810,19 +823,27 @@ set /p process=Enter a number and hit return.
         set location=%~dp0
 
         :: Ask user which folder to process
-        set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
-        if "%bookfolder%"=="" set bookfolder=book
+        :wordwhatdirectory
+            set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+            if "%bookfolder%"=="" set bookfolder=book
+            if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto wordwhatdirectory
+
+        :: Ask if we're outputting the files from a subdirectory
+        :wordwhatsubdirectory
+            set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. && goto wordwhatsubdirectory
+            echo.
 
         :: Ask user which output type to work from
-        echo Which format are we converting from? Enter a number or hit enter for the default:
-        echo 1. Print PDF (default)
-        echo 2. Screen PDF
+        echo Which format are we converting from? Enter a number or hit enter for the default (screen PDF):
+        echo 1. Print PDF
+        echo 2. Screen PDF (default)
         echo 3. Web
         echo 4. Epub
         set /p fromformat=
 
         :: Turn that choice into the name of an output format for our config
-        if "%fromformat%"=="" set fromformat=print-pdf
+        if "%fromformat%"=="" set fromformat=screen-pdf
         if "%fromformat%"=="1" set fromformat=print-pdf
         if "%fromformat%"=="2" set fromformat=screen-pdf
         if "%fromformat%"=="3" set fromformat=web
@@ -844,11 +865,14 @@ set /p process=Enter a number and hit return.
             :: let the user know we're on it!
             echo Generating HTML...
 
-            :: ...and run Jekyll to build new HTML
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,%config%"
+            :: ...and run Jekyll to build new HTML.
+            :: We turn off the math engine so that we get raw TeX output,
+            :: and because Pandoc does not support SVG output anyway.
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.math-disabled.yml,%config%" || exit /b
 
             :: Navigate to the HTML we just generated
-            cd _site\%bookfolder%\text
+            if "%subdirectory%"=="" cd _site\%bookfolder%\text
+            if not "%subdirectory%"=="" cd _site\%bookfolder%\%subdirectory%\text
 
             :: What're we doing?
             echo Converting %bookfolder% HTML to Word...
@@ -865,7 +889,7 @@ set /p process=Enter a number and hit return.
             :: and convert them each from .html to .docx.
             :: We end up with the same filenames, 
             :: with .docx extensions appended.
-            for /F "tokens=*" %%F in (file-list) do (
+            for /F "tokens=*" %%F in (file-list-pandoc) do (
                 pandoc %%F -f html -t docx -s -o %%F.docx
                 )
 
@@ -890,7 +914,8 @@ set /p process=Enter a number and hit return.
             echo Done, opening folder...
 
             :: Open file explorer to show the docx files.
-            %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text"
+            if "%subdirectory%"=="" %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\text"
+            if not "%subdirectory%"=="" %SystemRoot%\explorer.exe "%location%_site\%bookfolder%\%subdirectory%\text"
 
             :: Navigate back to where we began
             cd "%location%"
@@ -956,12 +981,24 @@ set /p process=Enter a number and hit return.
         :: Encouraging message
         echo Let's refresh the search index.
         echo We'll index the files in your web or app file lists defined in meta.yml
-        echo You need to have PhantomJS installed for this to work.
 
         :: Check if refreshing web or app index
         echo To refresh the website search index, press enter.
         echo To refresh the app search index, type a and press enter.
         set /p searchIndexToRefresh=
+
+
+        :: Ask the user to add any extra Jekyll config files,
+        :: e.g. _config.live.yml
+        :searchIndexOtherConfigs
+            echo.
+            echo Any extra config files?
+            echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+            echo _configs/_config.live.yml
+            echo If not, just hit return.
+            echo.
+            set /p searchIndexConfig=
+            echo.
 
         :: Generate HTML with Jekyll
         echo Generating HTML with Jekyll...
@@ -969,21 +1006,20 @@ set /p process=Enter a number and hit return.
 
         :buildForWebSearchIndex
 
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml"
-            goto refreshSearchIndexRenderWithPhantom
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,%searchIndexConfig%" || exit /b
+            goto refreshSearchIndexRendering
 
         :buildForAppSearchIndex
 
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml"
-            goto refreshSearchIndexRenderWithPhantom
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%searchIndexConfig%" || exit /b
+            goto refreshSearchIndexRendering
 
-        :: Run phantomjs script from scripts directory
-        :refreshSearchIndexRenderWithPhantom
+        :: Run script from scripts directory
+        :refreshSearchIndexRendering
 
-            echo Generating index with PhantomJS...
-            cd _site/assets/js
-            phantomjs render-search-index.js
+            echo Generating index...
             cd %location%
+            node _site/assets/js/render-search-index.js
 
         :: Done
         :refreshSearchIndexDone

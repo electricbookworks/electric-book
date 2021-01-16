@@ -5,47 +5,55 @@
 // as variables, use square brackets and quotes, e.g. search['search-placeholder'].
 var locales = {{ site.data.locales | jsonify }};
 
-// Or get the language from a URL parameter
-// https://stackoverflow.com/a/901144/1781075
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-// Get the page language
-if (getParameterByName('lang')) {
-    var pageLanguage = getParameterByName('lang');
-    var pageLanguageByURLParameter = true;
-    localiseText();
-} else {
-    var pageLanguage = document.documentElement.lang;
-    // If epub, this is xml:lang
-    if (!pageLanguage) {
-        var pageLanguage = document.documentElement.getAttribute('xml:lang');
-    }
-    localiseText();
-};
-
 // Various content localisations
 
-function localiseText() {
+function localiseText(pageLanguage) {
+
+    // Get the current URL, without any query strings or hashes
+    var currentURL = window.location.href.split('?')[0].split('#')[0];
+
+    // If this is a home page and we're redirecting to translated HTML,
+    // and the language concerned is defined in locales,
+    // and the page we're redirecting to exists, redirect.
+    // Otherwise return to quit localising.
+    if (document.body.classList.contains('home')) {
+
+        // Create a URL to redirect to, and remove possible duplicate slashes
+        // (i.e. currentURL may already end with a slash)
+        var proposedTranslatedLandingPage = currentURL + '/' + pageLanguage + '/';
+        var possibleDoubleSlashString = '//' + pageLanguage;
+        translatedLandingPage = proposedTranslatedLandingPage.replace(possibleDoubleSlashString, '/' + pageLanguage);
+
+        // If the translated landing page actually exists,
+        // redirect to it and exit here; do not continue localising.
+        if (ebCheckForPage(translatedLandingPage + 'index.html')) {
+            window.location.replace(translatedLandingPage);
+            // And don't continue localising
+            return;
+        }
+    }
+    // Localise HTML title element on home page
+    var titleElement = document.querySelector('title');
+    if (titleElement
+        && document.querySelector('body.home') !== 'undefined'
+        && locales[pageLanguage].project.name
+        && locales[pageLanguage].project.name !== '') {
+        titleElement.innerHTML = locales[pageLanguage].project.name;
+    }
 
     // Localise masthead
-    var mastheadProjectName = document.querySelector('.masthead .masthead-series-name a');
-    if (mastheadProjectName && 
-        locales[pageLanguage].project.name && 
+    var mastheadProjectName = document.querySelector('.masthead .masthead-project-name a');
+    if (mastheadProjectName &&
+        locales[pageLanguage].project.name &&
         locales[pageLanguage].project.name !== '') {
         mastheadProjectName.innerHTML = locales[pageLanguage].project.name;
     }
 
     // Localise search
     var searchPageHeading = document.querySelector('.search-page #content h1:first-of-type');
-    if (searchPageHeading) {
+    if (searchPageHeading
+            && locales[pageLanguage].search['search-title']
+            && locales[pageLanguage].search['search-title'] !== '') {
         searchPageHeading.innerHTML = locales[pageLanguage].search['search-title'];
     }
 
@@ -100,7 +108,6 @@ function localiseText() {
             searchNavButtonToReplace.innerHTML = locales[pageLanguage].nav.back;
             searchNavButtonToReplace.addEventListener('click', function(ev) {
                 ev.preventDefault();
-                console.log('Going back...');
                 window.history.back();
             });
         };
@@ -111,14 +118,13 @@ function localiseText() {
 
     // If no results with GSE, translate 'No results' phrase
     window.addEventListener("load", function (event) {
-        console.log("All loaded, checking for no-result.");
         var noResultsGSE = document.querySelector('.gs-no-results-result .gs-snippet');
         if (noResultsGSE) {
             noResultsGSE.innerHTML = locales[pageLanguage].search['results-for-none'] + ' ‘' + searchTerm + '’';
         }
     });
 
-    // localise questions
+    // Localise questions
     var questionButtons = document.querySelectorAll('.question .check-answer-button');
     function replaceText(button) {
         button.innerHTML= locales[pageLanguage].questions['check-answers-button'];
@@ -127,3 +133,30 @@ function localiseText() {
         questionButtons.forEach(replaceText);
     }
 }
+
+function ebCheckLanguageAndLocalise() {
+    'use strict';
+
+    // Get the language in the query string
+    var requestedPagePanguage = ebGetParameterByName('lang');
+
+    // If the URL parameter specifies a language,
+    // and that language is defined in locales,
+    // and it is not already the page language,
+    // localise the page with it.
+    if (requestedPagePanguage
+            && locales[requestedPagePanguage]) {
+        localiseText(requestedPagePanguage);
+    };
+}
+
+// Go
+
+// Get the page language and localise accordingly
+// (also check xml:lang for epub)
+
+var pageLanguage = ebGetParameterByName('lang')
+        || document.documentElement.lang
+        || document.documentElement.getAttribute('xml:lang');
+
+ebCheckLanguageAndLocalise();

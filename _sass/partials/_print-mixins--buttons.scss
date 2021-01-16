@@ -1,0 +1,20 @@
+@mixin button() {
+    text-indent: 0;
+        text-align: center;
+        a {
+            font-family: $font-text-secondary;
+            display: inline-block;
+            background-color: $color-light;
+            color: inherit;
+            padding: $line-height-default / 2;
+            margin: $line-height-default 0;
+            border-radius: $button-border-radius;
+            text-decoration: none;
+            &:after {
+                content: " (" attr(href) ")";
+            }
+        }
+        & + p {
+            text-indent: 0;
+        }
+}

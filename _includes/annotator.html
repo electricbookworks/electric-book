@@ -1,0 +1,64 @@
+{% comment %} Include annotator {% endcomment %}
+
+{% comment %} Config. See
+https://h.readthedocs.io/projects/client/en/latest/publishers/config/ 
+{% endcomment %}
+<script>
+    var hypothesisConfigOptions = {
+        openSidebar: false,
+        showHighlights: false,
+        theme: 'clean',
+        enableExperimentalNewNoteButton: true,
+        externalContainerSelector: '.annotator',
+        branding: {
+            accentColor: getComputedStyle(document.body,null).getPropertyValue("background-color"),
+            appBackgroundColor: 'white',
+            ctaBackgroundColor: getComputedStyle(document.body,null).getPropertyValue("background-color"),
+            ctaTextColor: 'white',
+            annotationFontFamily: 'sans-serif',
+            selectionFontFamily: 'serif'
+        }
+    };
+
+    window.hypothesisConfig = function () {
+        return hypothesisConfigOptions;
+    };
+</script>
+
+{% comment %} Embed script {% endcomment %}
+<script src="https://hypothes.is/embed.js" async></script>
+
+{% comment %} Controls {% endcomment %}
+<div class="annotator">
+
+    <input
+        type="checkbox"
+        name="annotator-toggle-sidebar"
+        class="annotator-toggle-sidebar"
+        id="annotator-toggle-sidebar"
+        aria-labelledby="annotator-toggle-sidebar-label">
+    <label
+        id="annotator-toggle-sidebar-label"
+        class="annotator-toggle-sidebar"
+        for="annotator-toggle-sidebar"
+        data-tooltip-title="{{ locale.annotator.show-sidebar-tooltip-title }}"
+        data-tooltip-description="{{ locale.annotator.show-sidebar-tooltip-description }}" >{% include annotate-icon %}</label>
+
+    <input
+        type="checkbox"
+        name="annotator-show-annotations"
+        class="annotator-show-annotations"
+        id="annotator-show-annotations"
+        aria-labelledby="annotator-show-annotations-label">
+    <label
+        id="annotator-show-annotations-label"
+        class="annotator-show-annotations"
+        for="annotator-show-annotations"
+        data-tooltip-title="{{ locale.annotator.show-annotated-text-tooltip-title }}"
+        data-tooltip-description="{{ locale.annotator.show-annotated-text-tooltip-description }}">{% include annotate-show-icon %}</label>
+
+    {% comment %} Hypothesis JS will insert the sidebar iframe here.
+    The iframe must remain a sibling of the checkboxes above
+    in order for the CSS-based show/hide to work. {% endcomment %}
+
+</div>

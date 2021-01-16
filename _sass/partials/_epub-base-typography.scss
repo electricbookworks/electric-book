@@ -1,8 +1,17 @@
 $epub-base-typography: true !default;
 @if $epub-base-typography {
 
+    // General typography
+
+    html {
+        box-sizing: border-box;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+
     body {
-        margin: 0;
+        margin: $epub-margin;
         padding: 0;
         background-color: $color-background;
         font-family: $font-text-main;
@@ -48,7 +57,7 @@ $epub-base-typography: true !default;
     p {
         margin: 0;
         & + p {
-            text-indent: $line-height-default;
+            text-indent: $paragraph-indent;
         }
     }
 
@@ -56,7 +65,7 @@ $epub-base-typography: true !default;
 
     ol, ul {
         list-style-position: outside;
-        margin: 0 0 $line-height-default $line-height-default;
+        margin: 0 0 $line-height-default $paragraph-indent;
     }
     ol {
         list-style-type: decimal;
@@ -76,7 +85,7 @@ $epub-base-typography: true !default;
 
     blockquote {
         margin: $line-height-default 0;
-        padding: 0 $line-height-default;
+        padding: 0 $paragraph-indent;
         p:first-of-type {
             text-indent: 0;
         }
@@ -90,29 +99,47 @@ $epub-base-typography: true !default;
     dl {
         margin: $line-height-default 0;
     }
-    dt {}
+    dt {
+        font-weight: bold;
+    }
     dd {
         margin: 0 0 $line-height-default 0;
     }
 
     // Horizontal rules used as text dividers (*** in markdown)
 
-    $text-divider: "" !default;
+    $text-divider-text: "" !default;
+    $text-divider-image: "" !default;
+    $text-divider-image-width: $line-height-default !default;
 
     hr {
         // Amazon Kindle supports very little creative hr styling, though you
         // might try border-colour and width in custom CSS.
         // Kindle ignores rgba. So this is the least-bad solution.
-        // We don't use background-image because of problems linking to the image.
         border: $rule-thickness solid rgba(255,255,255,0);
         margin: $line-height-default auto; // Adds space, esp. important for Kindle
         text-align: center; // Necessary for aligning :after content
         // Note: Amazon Kindle will ignore this :after content setting.
         // An hr in Amazon can be hidden by setting hr { margin-left: -200%; }
         // in a Kindle media query. See below for example code.
-        // We don't do that here because it is a case-by-case hack.
+        // We don't do that here because it is a case-by-case hack
+        // that some ereaders do not support.
         &:after {
-            content: $text-divider;
+            content: $text-divider-text;
+        }
+        @if $text-divider-image != "" {
+            @if not $spaced-paras {
+                margin-bottom: 0; // height will be added below
+            }
+            width: $text-divider-image-width;
+            &:after {
+                background-image: $text-divider-image;
+                background-repeat: no-repeat;
+                background-size: 100%;
+                display: inline-block;
+                height: $line-height-default;
+                width: 100%;
+            }
         }
         & + p {
             text-indent: 0;
@@ -176,6 +203,27 @@ $epub-base-typography: true !default;
             width: auto;
         }
     }
+    select {
+        padding: 0.75em 0.75em;
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: inherit;
+        border: $rule-thickness solid $color-mid;
+        margin: $line-height-default 0;
+        box-sizing: border-box;
+        // Inline
+        p > &,
+        li > &,
+        dd > &,
+        td > &,
+        th > &,
+        span > & {
+            font-family: inherit;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+    }
     textarea {
         min-height: $line-height-default * 3;
     }
@@ -188,7 +236,9 @@ $epub-base-typography: true !default;
             text-indent: 0;
         }
         ul ul, ol ol, blockquote ul ul, blockquote ol ol {
-            margin-bottom: $line-height-default;
+            // Disabled, because on most real projects we remove this.
+            // margin-top: $line-height-default;
+            // margin-bottom: $line-height-default;
         }
     }
 

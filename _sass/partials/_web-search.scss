@@ -16,7 +16,7 @@ $web-search: true !default;
                 // font-size: inherit;
                 overflow-x: hidden; // Prevents scroll bar popping up when very long searches are entered
                 background-color: $nav-bar-search-background-color;
-                color: $color-mid;
+                color: $color-text-secondary;
             }
         }
     }
@@ -56,15 +56,15 @@ $web-search: true !default;
     .search-results-summary {
         margin: $line-height-default 0;
         padding: $line-height-default / 2;
-        background-color: $color-notification-low;
-        border-radius: $button-border-radius;
+        background-color: $color-notification-low-background;
+        border-radius: $box-border-radius;
     }
 
     .search-page-notice {
         margin: $line-height-default 0;
         padding: $line-height-default / 2;
-        background-color: $color-notification-medium;
-        border-radius: $button-border-radius;
+        background-color: $color-notification-medium-background;
+        border-radius: $box-border-radius;
         *:last-child {
             margin-bottom: 0;
         }
@@ -73,8 +73,8 @@ $web-search: true !default;
     .search-progress-placeholder {
         margin: $line-height-default 0;
         padding: $line-height-default / 2;
-        background-color: $color-notification-low;
-        border-radius: $button-border-radius;
+        background-color: $color-notification-low-background;
+        border-radius: $box-border-radius;
         *:last-child {
             margin-bottom: 0;
         }

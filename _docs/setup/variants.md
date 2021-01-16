@@ -16,6 +16,26 @@ For most books, the default outputs (`print-pdf`, `screen-pdf`, `web`, `epub`, `
 
 To activate a variant, put its name as the `active-variant` in `settings.yml`. Make sure you deactivate it, for instance by commenting it out, to get your default output back.
 
+## Variants in markdown
+
+If you only want certain content to display in a specific variant, wrap that content in a `if variant` tag. For example:
+
+{% raw %}
+```md
+{% if variant == "myvariant" %}
+This content will only output when the active-variant is `myvariant`.
+{% endif %}
+```
+{% endraw %}
+
+For the `variant` tag to work, you must include the page's metadata at the start of the markdown document. After the YAML frontmatter (the `---`s), add:
+
+{% raw %}
+```md
+{% include metadata %}
+```
+{% endraw %}
+
 ## Variant stylesheets
 
 You can create new stylesheets in addition to our standard ones, and specify these in `_data/settings.yml` file, like this:
