@@ -16,6 +16,7 @@ exclude:
   - run-linux*
   - run-mac*
   - run-windows*
+  - run.js
   - Gemfile
   - Gemfile.lock
   - package.json

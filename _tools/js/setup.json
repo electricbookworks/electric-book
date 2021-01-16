@@ -75,12 +75,12 @@
         "description": "A folder of Javascript, font files and images that your whole project might use."
     },
     {
-        "path": "assets/cover.jpg",
+        "path": "assets/images/_source/cover.jpg",
         "type": "recommended",
         "description": "An image used as the default for the project as a whole."
     },
     {
-        "path": "assets/publisher-logo.jpg",
+        "path": "assets/images/_source/publisher-logo.jpg",
         "type": "optional",
         "description": "A logo (which you'll replace with your own) for the project and website as a whole."
     },
@@ -193,11 +193,6 @@
         "path": ".gitignore",
         "type": "required",
         "description": "The .gitignore file tells Git what files not to track. You shouldn't need to edit it."
-    },
-    {
-        "path": "eslint.json",
-        "type": "optional",
-        "description": "Advanced users might use this when processing Javascript with our Gulpfile. Most users can ignore it."
     },
     {
         "path": "Gemfile",

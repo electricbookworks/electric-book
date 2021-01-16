@@ -41,9 +41,10 @@
     "js-yaml": "^3.13.1",
     "jszip": "^3.2.2",
     "make-runnable": "github:electricbookworks/make-runnable",
+    "open": "^7.3.1",
     "path": "^0.12.7",
-    "puppeteer": "^2.1.1",
     "prince": "^1.5.0",
+    "puppeteer": "^2.1.1",
     "shelljs": "^0.8.2",
     "yargs": "^15.3.1"
   },
