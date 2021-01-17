@@ -20,6 +20,8 @@ Additional functions it provides:
 
 - [x] Basic check of folder and file structure
 
+This works alongside the prototyped Electric Book Builder, an Electron-based GUI for outputting Electric Book books.
+
 ## Usage
 
 Run this at the command line with
