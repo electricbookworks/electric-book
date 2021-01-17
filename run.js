@@ -6,7 +6,7 @@ var setup = require('./_tools/js/setup.json'); // defines the project setup we c
 var options = require('./_tools/js/options.json'); // options for argv
 var argv = require('yargs').options(options).argv; // for accepting arguments when calling this script
 var fs = require('fs'); // for working with the file-system
-var fsPath = require('path');
+var fsPath = require('path'); // Node's path tool, e.g. for normalizing paths cross-platform
 var spawn = require('cross-spawn'); // for spawning child processes like Jekyll across platforms
 var open = require('open'); // opens files in user's preferred app
 
