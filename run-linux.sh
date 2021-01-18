@@ -246,18 +246,7 @@ Enter a number and hit enter. "
 		echo "my/base"
 		read baseurl
 		# let the user know we're on it!
-		echo "Getting your site ready...
-You may need to reload the web page once this server is running."
-		# Open the web browser, without or, then, with the baseurl
-		# (This is before jekyll s, because jekyll s pauses the script.)
-		if [ "$baseurl" = "" ]
-		then
-			# (for OSX, this is open, not xdg-open)
-			xdg-open "http://127.0.0.1:4000/"
-		else
-			# (for OSX, this is open, not xdg-open)
-			xdg-open "http://127.0.0.1:4000/$baseurl/"
-		fi
+		echo "Getting your site ready..."
 		# We're going to let users run this over and over by pressing enter
 		repeat=""
 		while [ "$repeat" = "" ]

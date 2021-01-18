@@ -302,17 +302,12 @@ set /p process=Enter a number and hit return.
         :: let the user know we're on it!
         :webreadytoserve
         echo Getting your site ready...
-        echo You may need to reload the web page once this server is running.
 
         :: Two routes to go: with or without a baseurl
         if "%baseurl%"=="" goto servewithoutbaseurl
 
             :: Route 1, for serving with a baseurl
             :servewithbaseurl
-
-                :: Open the web browser
-                :: (This is before jekyll s, because jekyll s pauses the script.)
-                start "" "http://127.0.0.1:4000/%baseurl%/"
 
                 :: Run Jekyll, with MathJax enabled if necessary
                 if not "%webmathjax%"=="y" goto webnomathjax
@@ -329,10 +324,6 @@ set /p process=Enter a number and hit return.
 
             :: Route 2, for serving without a baseurl
             :servewithoutbaseurl
-
-                :: Open the web browser
-                :: (This is before jekyll s, because jekyll s pauses the script.)
-                start "" "http://127.0.0.1:4000/"
 
                 :: Run Jekyll, with MathJax enabled if necessary
                 if not "%webmathjax%"=="y" goto webnomathjax
