@@ -1,8 +1,6 @@
 /*jslint browser*/
 /*globals window*/
 
-console.log('Debugging slides.js');
-
 var ebSlideSupports = function () {
     'use strict';
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
@@ -15,8 +13,6 @@ var ebSlideSupports = function () {
 
 var ebSlidesMoveSummaryMeta = function (slidelines) {
     'use strict';
-
-    console.log('Moving summary meta for each slide...');
 
     slidelines.forEach(function (slideline) {
 
