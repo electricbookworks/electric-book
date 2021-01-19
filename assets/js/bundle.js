@@ -26,6 +26,7 @@ layout: null
     {% include_relative select-list.js %}
     {% include_relative tables.js %}
     {% include_relative footnote-popups.js %}
+    {% include_relative slides.js %}
     {% include_relative show-hide.js %}
     {% include_relative copy-to-clipboard.js %}
 

@@ -144,6 +144,7 @@ $epub-maths: true !default;
 $epub-notes: true !default;
 $epub-openers: true !default;
 $epub-pullquotes: true !default;
+$epub-slides: true !default;
 $epub-sources: true !default;
 $epub-tables: true !default;
 $epub-letters: true !default;
@@ -216,6 +217,7 @@ $epub-reset-sequences: true !default;
 @import "partials/epub-video";
 @import "partials/epub-questions";
 @import "partials/epub-select-questions";
+@import "partials/epub-slides";
 
 // Type-control classes
 @import "partials/epub-smallcaps";
