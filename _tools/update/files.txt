@@ -366,6 +366,7 @@ assets/js/select-list.js
 assets/js/setup.js
 assets/js/shift-elements.js
 assets/js/show-hide.js
+assets/js/slides.js
 assets/js/svg-inject.min.js
 assets/js/svg-management.js
 assets/js/tables.js
@@ -533,6 +534,7 @@ _docs/editing/poetry.md
 _docs/editing/questions.md
 _docs/editing/redaction.md
 _docs/editing/show-hide-buttons.md
+_docs/editing/slides.md
 _docs/editing/tables.md
 _docs/editing/video.md
 _docs/images/add-favicon.md
@@ -716,6 +718,7 @@ _sass/partials/_epub-pullquotes.scss
 _sass/partials/_epub-questions.scss
 _sass/partials/_epub-reset-sequences.scss
 _sass/partials/_epub-select-questions.scss
+_sass/partials/_epub-slides.scss
 _sass/partials/_epub-smallcaps.scss
 _sass/partials/_epub-sources.scss
 _sass/partials/_epub-tables.scss
@@ -766,6 +769,7 @@ _sass/partials/_print-questions.scss
 _sass/partials/_print-reset-sequences.scss
 _sass/partials/_print-select-questions.scss
 _sass/partials/_print-sidebar.scss
+_sass/partials/_print-slides.scss
 _sass/partials/_print-smallcaps.scss
 _sass/partials/_print-sources.scss
 _sass/partials/_print-start-on-recto-or-verso.scss
@@ -815,6 +819,7 @@ _sass/partials/_web-questions.scss
 _sass/partials/_web-reset-sequences.scss
 _sass/partials/_web-search.scss
 _sass/partials/_web-select-questions.scss
+_sass/partials/_web-slides.scss
 _sass/partials/_web-smallcaps.scss
 _sass/partials/_web-sources.scss
 _sass/partials/_web-tables.scss
