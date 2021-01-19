@@ -117,6 +117,10 @@ Easily [embed streaming video]({{ site.baseurl }}/docs/editing/video.html) from 
 
 Make long web pages [collapse on major headings]({{ site.baseurl }}/docs/layout/content-accordion.html) for easier reading. [See a demo here](https://deploy-preview-471--electric-book.netlify.app/samples/text/01-01-plain-text.html).
 
+### Clickable slides
+
+Let users click through [slideshows]({{ site.baseurl }}/samples/text/04-05-slides.html), with useful equivalents in offline epub and PDF versions.
+
 
 ## Extending and integrating
 
