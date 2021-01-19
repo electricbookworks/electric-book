@@ -1,0 +1,308 @@
+$web-slides: true !default;
+@if $web-slides {
+
+    $slides-current-pc: 20%;
+    $slides-focus-pc: 35%;
+    $slides-tint: 30%;
+    $color-slides: mix(white, $color-accent, $slides-tint);
+    $nav-slides-width: 8em;
+    $nav-slides-denominator: 2;
+    $nav-slides-many-width: 6em;
+    $nav-slides-many-denominator: 3;
+    $nav-slides-portrait-width: 3em;
+    $nav-slides-portrait-denominator: 4;
+    $slide-flex-basis: 80%;
+
+    .slides {
+        clear: both;
+        margin-bottom: 2em;
+        background-color: $color-background;
+
+        // Don't show the summary figure in a slides div,
+        // it's only for print output
+        .summary {
+            display: none;
+        }
+
+        .figure {
+            clear: none;
+            margin: 0 0 ($line-height-default * 0.5) 0; // default figures have margin-top
+            padding: $line-height-default / 2;
+            border: $rule-thickness solid $color-light;
+
+            .figure-body {
+
+                .figure-images {
+                    width: 100%; // centres figure image on small screens when display: inline-block
+                }
+
+                .description {
+                    display: none;
+                    margin-bottom: 0;
+                }
+
+                .title {
+                    display: block;
+                    font-weight: bold;
+                    color: $color-accent;
+                    margin-bottom: 0;
+                }
+
+                .caption {
+                    display: block;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .figure-source {
+            display: none;
+        }
+
+        .figure-summary-meta {
+            margin-top: $line-height-default * 0.5;
+            padding: ($line-height-default / 2) 0 0 0;
+            clear: both;
+
+            .figure-reference {
+                font-weight: bold;
+            }
+
+            .caption {
+                display: block; // these were hidden for slide figures, shown for the summary
+            }
+
+            .figure-source {
+                display: block;
+
+                p.source {
+                    margin: 0;
+                }
+            }
+        }
+
+        // When in boxes
+        .box & {
+
+            .figure-summary-meta {
+                background-color: inherit;
+            }        
+        }
+    }
+
+    // Slides nav
+
+    .slides:before,
+    .slides:after {
+        content: " ";
+        display: table;
+    }
+
+    .slides:after {
+        clear: both;
+    }
+
+    .nav-slides {
+        color: $nav-bar-label-color;
+        background-color: $color-slides;
+        padding: $line-height-default / 4 0;
+        // Let's work with border-box throughout
+        box-sizing: border-box;
+
+        * {
+            box-sizing: inherit;
+        }
+
+        a {
+            color: $nav-bar-label-color;
+            background-color: $color-background;
+            border: ($line-height-default / 8) solid $color-background;
+            display: block;
+            overflow: hidden; // for really wide or long images
+
+            &:hover, &:active, &:focus {
+                outline: $line-height-default / 4 solid darken($color-slides, $slides-focus-pc);
+            }
+        }
+
+        // on very large screens, place it in the margin
+        @media (min-width: $break-width-large) {
+            padding: 0;
+            max-width: $nav-slides-width;
+            width: $nav-slides-width; // required for Firefox to align with figure area
+            float: right;
+            margin-right: -$nav-slides-width;
+        }
+
+        ol {
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            list-style-type: none;
+            @media (min-width: $break-width-large) {
+                display: block;
+            }
+        }
+
+        li {
+            padding: 0 $line-height-default / 4;
+            flex-basis: 15%;
+            // fallback for browsers that don't support flex
+            max-width: 15%;
+            display: inline-block;
+
+            img {
+                background: $color-background; // important when image is transparent
+                max-width: 100%;
+                object-fit: contain; // for really wide images, only necessary when screen is resized
+                padding: 0.1em; // important when browser doesn't support flex
+                @supports (display: flex) {
+                    padding: 0;
+                }
+            }
+
+            @media (min-width: $break-width-large) {
+                padding: $line-height-default / $nav-slides-denominator;
+                max-width: 100%; // max-width: none doesn't work on IE
+                width: 100%; // required for Firefox
+                img {
+                    border: ($line-height-default / 4) solid $color-background;
+                    width: 100%; // important for SVGs
+                    max-width: 100%; // important for SVGs
+                }
+            }
+        }
+
+        .slide-current {
+
+            a {
+                outline: $line-height-default / 4 solid darken($color-slides, $slides-current-pc);
+                // background-color: darken($color-slides, $slides-current-pc);
+
+                @media (min-width: $break-width-large) {
+                    outline-width: $line-height-default / $nav-slides-denominator;
+                }
+            }
+        }
+
+        a {
+
+            @media (min-width: $break-width-large) {
+                &:hover, &:active, &:focus {
+                    outline-width: $line-height-default / $nav-slides-denominator;
+                }
+            }
+
+            .slide-thumbnail-text {
+                font-size: 0.75em;
+                font-family: $font-text-secondary;
+                display: inline-block;
+
+                @media (min-width: $break-width-large) {
+                    width: 8.65em; // aligns with width of nav-slides container
+                }
+            }
+        }
+
+        &.nav-slides-many {
+
+            @media (min-width: $break-width-large) {
+                max-width: $nav-slides-many-width;
+                margin-right: -$nav-slides-many-width;
+
+                li {
+                    padding: $line-height-default / $nav-slides-many-denominator;
+                }
+
+                a {
+                    &:hover, &:active, &:focus {
+                        outline-width: $line-height-default / $nav-slides-many-denominator;
+                    }
+                }
+
+                .slide-current a {
+                    outline-width: $line-height-default / $nav-slides-many-denominator;
+                }
+            }
+        }
+
+        &.nav-slides-portrait {
+            @media (min-width: $break-width-large) {
+                max-width: $nav-slides-portrait-width;
+                margin-right: -$nav-slides-portrait-width;
+
+                li {
+                    padding: $line-height-default / $nav-slides-portrait-denominator;
+                }
+
+                a {
+                    &:hover, &:active, &:focus {
+                        outline-width: $line-height-default / $nav-slides-portrait-denominator;
+                    }
+                }
+
+                .slide-current a {
+                    outline-width: $line-height-default / $nav-slides-portrait-denominator;
+                }
+            }
+        }
+
+        // If there are many, many slides (e.g over 6)
+        // then on large screens reset all that so that
+        // we don't put the thumbnails in the margin
+        @media (min-width: $break-width-large) {
+
+            &.nav-slides-many-many {
+                float: none;
+                margin: 0;
+                max-width: none;
+                padding: $line-height-default / 4 0;
+                width: 100%;
+
+                ol {
+                    display: flex;
+                }
+
+                li {
+                    padding: 0 $line-height-default / 4;
+                    max-width: 15%;
+                }
+
+                a {
+                    outline-width: medium;
+
+                    .slide-thumbnail-text {
+                        width: auto;
+                    }
+
+                    &:hover, &:active, &:focus {
+                        outline-width: medium;
+                    }
+                }
+
+                .slide-current, .slide-current a {
+                    outline-width: medium;
+                }
+
+                &.nav-slides-portrait {
+                    max-width: none;
+                    margin: 0;
+
+                    li {
+                        padding: 0 $line-height-default / 4;
+                    }
+
+                    a {
+                        &:hover, &:active, &:focus {
+                            outline-width: medium;
+                        }
+                    }
+
+                    .slide-current, .slide-current a {
+                        outline-width: medium;
+                    }
+                }
+            }
+        }
+    }
+}
