@@ -1,7 +1,7 @@
 ---
 title: "Slides"
 categories: editing
-order: 4
+order: 5
 ---
 
 # Slides
@@ -10,7 +10,7 @@ order: 4
 * toc
 {:toc}
 
-Figures in slide sets use the same syntax as regular [figures](02-02-figures.html), except:
+Figures in slide sets use the same syntax as regular [figures]({{ site.baseurl }}/docs/editing/figures.html), except:
 
 * each slide also has a title `title=""`
 * each slide has a `slide-caption` instead of a regular figure `caption`
