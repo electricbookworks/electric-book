@@ -2,6 +2,7 @@
 
 ## Latest
 
+* [Add interactive slide sequences](https://github.com/electricbookworks/electric-book/pull/523)
 * [Remove Formspree, and allow site-wide pages in the project root](https://github.com/electricbookworks/electric-book/pull/517)
 * [Match the GitHub Pages Jekyll version by default](https://github.com/electricbookworks/electric-book/pull/509)
 * [Improve the structure of styles for easier development](https://github.com/electricbookworks/electric-book/pull/514)
