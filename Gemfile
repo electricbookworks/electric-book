@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # change this to match what it supports: https://pages.github.com/versions/
 # or use the github-pages gem below. To control your own Jekyll version,
 # uncomment the following line and comment out the github-pages gem below.
-# gem 'jekyll', '~>3.9'
+# gem 'jekyll', '~>4.2'
 
 # GitHub Pages recommends using the github-pages gem to ensure
 # that your site will build exactly as it will on GitHub Pages.
