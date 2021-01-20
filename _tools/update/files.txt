@@ -520,6 +520,7 @@ _configs/_config.mathjax-enabled.yml
 _docs/about/intro.md
 _docs/about/technical-overview.md
 _docs/advanced/javascript.md
+_docs/advanced/packaging-the-project.md
 _docs/editing/classes.md
 _docs/editing/figures.md
 _docs/editing/hyphenation.md
