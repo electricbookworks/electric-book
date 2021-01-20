@@ -92,7 +92,6 @@ assets/js/accordion.js
 assets/js/annotation.js
 assets/js/bookmarks.js
 assets/js/bundle.js
-assets/js/bundle-check.js
 assets/js/copy-to-clipboard.js
 assets/js/elasticlunr-setup.js
 assets/js/footnote-popups.js
@@ -367,7 +366,6 @@ assets/js/setup.js
 assets/js/shift-elements.js
 assets/js/show-hide.js
 assets/js/slides.js
-assets/js/svg-inject.min.js
 assets/js/svg-management.js
 assets/js/tables.js
 assets/js/utilities.js
@@ -522,6 +520,7 @@ _configs/_config.mathjax-enabled.yml
 _docs/about/intro.md
 _docs/about/technical-overview.md
 _docs/advanced/javascript.md
+_docs/advanced/packaging-the-project.md
 _docs/editing/classes.md
 _docs/editing/figures.md
 _docs/editing/hyphenation.md
