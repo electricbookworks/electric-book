@@ -5,10 +5,12 @@ $nav-bar-back-button-hide: false !default;
     // Navigation
 
     .nav-buttons {
+        align-items: flex-end;
+        display: flex;
         position: absolute;
         top: 0;
         left: 0;
-        margin: 0.5em 0.5em 0.5em 0.25em;
+        margin: 0;
     }
 
     .nav-back-button {
@@ -18,8 +20,9 @@ $nav-bar-back-button-hide: false !default;
         background-color: $nav-bar-label-background-color;
         border: $rule-thickness solid $nav-bar-label-border-color;
         border-radius: $button-border-radius;
-        padding: 0.25em 0.5em;
+        padding: 0.25rem 0.5rem;
         cursor: pointer;
+
         @if $nav-bar-back-button-hide {
             display: none;
         }
@@ -32,7 +35,10 @@ $nav-bar-back-button-hide: false !default;
         background-color: $nav-bar-label-background-color;
         border: $rule-thickness solid $nav-bar-label-border-color;
         border-radius: $button-border-radius;
-        padding: 0.25em 0.5em;
+        padding: 0.25rem 0.5rem;
+        text-decoration: none;
+        margin: 0.5rem;
+
         .js-nav-open & {
             // Covers screen area, to let users click
             // anywhere on page to close nav bar
@@ -41,13 +47,16 @@ $nav-bar-back-button-hide: false !default;
             background-color: rgba(0,0,0,0.5);
         }
     }
+
     // Reset position to fixed if $nav-bar-fixed: true
     $nav-bar-fixed: false !default;
     @if $nav-bar-fixed {
+
         .nav-buttons {
             position: fixed;
             z-index: 1; // less than .js-nav #nav
         }
+
         [href="#nav"] {
              .js-nav-open & {
                  z-index: inherit;
@@ -58,41 +67,39 @@ $nav-bar-back-button-hide: false !default;
     // Reset position to fixed if $nav-bar-fixed: true
     $nav-bar-fixed: false !default;
     @if $nav-bar-fixed {
+
         .visuallyhidden {
-            // overrides default position: absolute
+            // Override default position: absolute
             position: fixed;
         }
     }
 
-    // For Webkit, this is the easy way to remove the scrollbar
-    // #nav::-webkit-scrollbar {
-    //     display: none;
-    // }
     #nav {
         font-family: $font-text-secondary;
         font-size: $nav-bar-text-size;
         width: 100%;
         height: 100%;
-        overflow-x: hidden; // Hides horizontal scrollbar
+        overflow-x: hidden; // hide horizontal scrollbar
         background-color: $nav-bar-background-color;
         border-top: $rule-thickness solid $nav-bar-border-color;
-        padding-right: 17px; // Hides scroll bar
 
         .js-nav-open & {
-            overflow-y: auto; // Must let this div scroll; we'll hide the scrollbar elsewhere
+            overflow-y: auto; // must let this div scroll
         }
 
         .js-nav & {
-            max-width: $nav-bar-width;
             border-top: none;
             border-right: $rule-thickness solid $nav-bar-border-color;
+            max-width: $nav-bar-width;
             position: absolute;
             top: 0;
             left: 0;
         }
+
         // Reset position to fixed if $nav-bar-fixed: true
         $nav-bar-fixed: false !default;
         @if $nav-bar-fixed {
+
             .js-nav & {
                 position: fixed;
                 z-index: 2; // greater than [href="#nav"]
@@ -102,59 +109,67 @@ $nav-bar-back-button-hide: false !default;
         // Search
         $search-enabled: true !default;
         @if $search-enabled {
+
             .search {
-                // padding: 0 17px 0 0;
-                margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
                 background-color: $nav-bar-search-background-color;
+
                 input {
-                    width: 90%; // Keeps input within nav-bar bounds
-                    padding: 0.75em 0.75em;
+                    width: 90%; // keep input within nav-bar bounds
+                    padding: 0.75rem 1rem;
                     border: 0;
                     font-family: $font-text-secondary;
                     font-size: inherit;
-                    overflow-x: hidden; // Prevents scroll bar popping up when very long searches are entered
+                    overflow-x: hidden; // prevent scroll bar on very long searches
                     background-color: $nav-bar-search-background-color;
                 }
             }
         } // if
         @else {
+
             .search {
                 display: none;
             }
         } // else
+
         .nav-list {
-            margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
+
             // First level parent navigation
             ol, ul {
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
                 background-color: $nav-bar-parent-background-color;
+
                 li {
                     padding: 0;
-                    width: 100%; // Use full width of li area
+                    width: 100%; // use full width of li area
                     color: $nav-bar-parent-text-color;
-                    a { // Make link fill entire li area
-                        display: block;
-                        // width: 100%;
-                        padding: 0.1em 0.75em;
-                        max-width: $nav-bar-width * 0.7; // Leaves space for child prompt
+
+                    a {
+                        // Make link fill entire li area
+                        display: inline-block;
+                        width: 100%;
+                        padding: 0 1rem;
                         color: $nav-bar-parent-text-color;
+                        text-decoration: none;
+
                         &:hover, &:focus, &:active {
                             color: inherit; // inherits from full-width, hover li
                         }
                     }
+
                     &:hover, &:focus, &:active { // Hovered, focused, tapped on touchscreen
                         color: $nav-bar-parent-text-hover-color;
                         background-color: $nav-bar-parent-hover-color;
-                        width: 100%; // extend right to edge
                     }
-                    &.active { // The active page
+
+                    &.active { // the active/current page
                         background-color: $nav-bar-child-hover-color;
-                        width: 100%; // extend right to edge
+
                         a {
                             color: $nav-bar-child-text-hover-color;
                         }
+
                         li {
                             a {
                                 color: $nav-bar-child-text-color;
@@ -162,46 +177,52 @@ $nav-bar-back-button-hide: false !default;
                         }
                     }
                 } // li
+
                 // Child navigation, after the parent, the rest of the nav-list
                 ol, ul {
+
+                    // Allow for optionally fixed nav bar
                     @if $nav-bar-item-collapse == true {
-                        max-height: 0; // Instead of display: none, because it works with transitions
+                        max-height: 0; // instead of display: none, because it works with transitions
                     } @else {
                         max-height: none;
                     }
-                    transition: max-height 0.5s ease-out; // See http://stackoverflow.com/a/8331169/1781075
+
+                    transition: max-height 0.5s ease-out; // http://stackoverflow.com/a/8331169/1781075 for why max-height
                     background-color: $nav-bar-child-background-color;
-                    width: 100%;
                     overflow-x: hidden;
                     overflow-y: hidden;
+
                     li {
-                        padding-left: 1em; // Indent sub lists, while keeping full-width background hover
-                        width: 100%; // Use full width of li area
-                        a { // Make link fill entire li area
-                            display: block;
+
+                        a {
+                            // Make link fill entire li area
+                            display: inline-block;
                             width: 100%;
                             color: $nav-bar-child-text-color;
+                            padding-left: 2rem;
+
                             &:hover, &:focus, &:active {
                                 color: inherit;
                             }
                         }
+
                         &:hover, &:focus, &:active {
                             color: $nav-bar-child-text-hover-color;
                             background-color: $nav-bar-child-hover-color;
-                            width: 100%; // extend right to edge
                         }
                     } // li
-                    // Indent sub-sub lists, while keeping full-width background hover
+
+                    // Sub-sub lists
                     ol, ul {
-                        margin-left: -1em;
-                        padding-left: 2em;
                         li {
-                            padding-left: 2em;
-                            position: relative;
-                            left: -2em;
+                            a {
+                                padding-left: 3rem;
+                            }
                         } // li
                     } // ol, ul
                 } // ol, ul
+
                 // Show sublist when preceding (i.e. parent) li is hovered
                 // and when the list contains the current page.
                 // Allow for direct li + ol siblings (deprecated HTML nested-list structure)
@@ -212,26 +233,27 @@ $nav-bar-back-button-hide: false !default;
                 li:hover > ul, li:active > ul, li:focus > ul,
                 ol.active, ul.active {
                     height: auto;
-                    max-height: 500em; // Bigger than it will ever be, for transition to work. See http://stackoverflow.com/a/8331169/1781075
                     transition: max-height 1s ease-in;
+
+                    // Bigger than it will ever be, for transition to work.
+                    // See http://stackoverflow.com/a/8331169/1781075
+                    max-height: 500em;
                 }
+
                 ol:hover, ul:hover, ol:active, ul:active, ol:focus, ul:focus,
                 ol.active, ul.active {
-                    height: auto; // Keep sublist visible once it's visible
-                    max-height: 500em; // Matches max-height above
+                    height: auto; // keep sublist visible once it's visible
+                    max-height: 500em; // match max-height above
                 }
             } // ol, ul
         } // .nav-list
-        .widgets {
-            margin: 0 -17px 0 0; // Fills width of container-with-hidden-scrollbar
-        } // .widgets
 
         .nav-title {
             color: $nav-bar-title-color;
             font-size: $font-size-default * 1.5;
             line-height: $line-height-default * 0.75;
-            margin: ($line-height-default) 0 ($line-height-default * 0.5) 0;
-            padding-left: 0.4em;
+            margin: 1rem 0;
+            padding: 0 1rem;
         }
 
     } // #nav
@@ -249,18 +271,23 @@ $nav-bar-back-button-hide: false !default;
         color: $nav-bar-child-text-hover-color;
         font-size: 1.25em;
         padding: 0.333em 0.5em; // centers expand buttons vertically
-        margin: 0 0 0 -0.5em;
+        margin: 0 0 0 -0.5rem;
         height: 1em;
+
         &:focus {
             outline: none;
         }
+
         &:hover {
+
             cursor: pointer;
             background-color: transparent;
         }
+
         &:after {
             color: $nav-bar-children-prompt-color;
         }
+
         &.show-children {
             &:after {
                 color: $nav-bar-children-prompt-color;
@@ -270,9 +297,11 @@ $nav-bar-back-button-hide: false !default;
 
     [data-nav-close] {
         background-color: transparent;
+
         &:after {
             content: $nav-bar-close;
         }
+
         &:hover {
             background-color: transparent;
         }
@@ -281,23 +310,27 @@ $nav-bar-back-button-hide: false !default;
     [data-toggle-nav] {
         background-color: transparent;
         right: 0;
+
         &:after {
             content: $nav-bar-children-prompt;
         }
+
         &.show-children {
+
             &:after {
                 content: $nav-bar-children-prompt-hide;
             }
         }
+
         &:hover {
             background-color: transparent;
         }
     }
 
-    // If link does not link to a file, make toggle cover entire link to expand children
-    .no-file [data-toggle-nav] {
-        margin-left: -($nav-bar-width * 0.7);
-        padding-left: $nav-bar-width * 0.7;
+    // If link does not link to a file,
+    // appear as a link to expand children.
+    .no-file.has-children {
+        cursor: pointer;
     }
 
 }

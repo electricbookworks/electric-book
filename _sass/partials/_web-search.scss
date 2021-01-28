@@ -71,10 +71,13 @@ $web-search: true !default;
     }
 
     .search-progress-placeholder {
-        margin: $line-height-default 0;
-        padding: $line-height-default / 2;
         background-color: $color-notification-low-background;
         border-radius: $box-border-radius;
+        color: $color-notification-low-text;
+        font-family: $font-text-secondary;
+        font-size: $font-size-default * $font-size-smaller;
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
         *:last-child {
             margin-bottom: 0;
         }
