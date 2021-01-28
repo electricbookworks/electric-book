@@ -17,7 +17,9 @@ $web-masthead: true !default;
         }
         a {
             color: $masthead-text-color;
+            text-decoration: none;
         }
+
         ul {
             list-style-type: none;
             margin: 0 auto;
