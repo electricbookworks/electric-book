@@ -25,9 +25,50 @@ To create an index you have to do two things:
 1. In the text, tag the words that their index entries will point to. 
 2. Create an index document with a list of entries.
 
-## How to tag indexed words
+## Creating the index [this method still being developed]
 
-To tag a word in the text, we make it a link, and we give that link:
+### How to tag indexed concepts
+
+We use HTML comments to note where indexed concepts or phrases appear in our text. The HTML comment must start with `index:`. An HTML comment between block elements (e.g. between paragraphs, lists, or blockquotes) can contain any number of index entries that appear in the element that follows the comment. E.g.:
+
+``` md
+<!--index:
+Holmes, Sherlock
+Adler, Irene
+-->
+
+To Sherlock Holmes she is always THE woman. I have seldom heard him mention her under any other name.
+```
+
+In the final index, the link in web, app and epub formats, and the page number in PDF, will point to the start of that following element. In the above example, to the point before the phrase 'To Sherlock'.
+
+This way of adding index entries in text is very neat in your markdown. The trade-off is that it's possible that, in PDF, the index could refer to the page number on which the paragraph starts, while the concept you intended to index actually appears later in the paragraph on the following page. Generally speaking, this trade-off will be worth it.
+
+However, if you absolutely must have the page number exactly right, then you can add your HTML comment inline, like this:
+
+``` md
+To Sherlock Holmes <!--index: Adler, Irene --> she is always THE woman. I have seldom heard him mention her under any other name.
+```
+
+### How to create the index list
+
+Then in the markdown file for the index itself, you create a list of entries, using exactly the phrases you used when tagging concepts in HTML comments. You do not need to add any links. E.g.:
+
+``` md
+- Adler, Irene
+- Holmes, Sherlock
+{:.reference-index}
+```
+
+Then, when you use the output script, choose the 'refresh indexes' option for each output format you're publishing. The script will populate your index list with links.
+
+When you then generate an ouput (e.g. a website or PDF), your book index will include links and/or page numbers, depending on the output format.
+
+## The legacy, manual method
+
+### How to tag indexed phrases
+
+To tag a phrase in the text, we make it a link, and we give that link:
 
 * a target that points to the index
 * a class (`.indexed`) to control what it looks like
@@ -49,7 +90,7 @@ Eventually, [Bob](reference-index.html#bob-2){:.indexed #bob-2} called her to co
 
 Note that the ID must be unique for every instance of Bob.
 
-## How to create the index list
+### How to create the index list
 
 Then in the index itself, you create a list of entries. After each entry, you add links to each instance of that entry you've tagged in the text. And you give each link the ID that you've pointed to in your tagged word's link target.
 
@@ -78,7 +119,3 @@ In this example, we've used numbers as the link text. On screen, these will stay
 Alice 1, 2
 
 The stylesheet will add the commas between entries (so you could globally replace with semicolons or otherwise). In print output (using PrinceXML), the stylesheet will replace those numbers with page references.
-
-## Future development
-
-We hope to find more concise ways to create indexes from tags in running text in future. We'd also like to align this work the [IDPF's recommendations on indexes in ebooks](http://www.idpf.org/epub/idx/#s1).

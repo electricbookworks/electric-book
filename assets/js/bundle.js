@@ -85,3 +85,5 @@ have different behaviour for web or app. {% endcomment %}
     {% include_relative page-reference.js %}
 
 {% endif %}
+
+{% include_relative index-targets.js %}

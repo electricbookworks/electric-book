@@ -101,6 +101,14 @@ Enter a number and hit enter. "
 					gulp mathjax --book $bookfolder --language $printpdfsubdirectory
 				fi
 			fi
+
+			echo "Prerendering HTML comments for indexing..."
+			if [ "$printpdfsubdirectory" = "" ]; then
+				gulp renderCommentsAsNodes --book $bookfolder
+			else
+				gulp renderCommentsAsNodes --book $bookfolder --language $printpdfsubdirectory
+			fi
+
 			# Navigate into the book's text folder in _site
 			if [ "$printpdfsubdirectory" = "" ]; then
 				cd _site/$bookfolder/text

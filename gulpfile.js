@@ -24,7 +24,7 @@ var gulp = require('gulp'),
     debug = require('gulp-debug'),
     del = require('del'),
     cheerio = require('gulp-cheerio'),
-    tap = require('gulp-tap');
+    tap = require('gulp-tap'),
     Iconv = require('iconv').Iconv;
 
 // A function for loading book metadata as an object
@@ -933,6 +933,34 @@ gulp.task('yaml', function (done) {
                 console.log(''); // empty line space
             }
         }));
+    done();
+});
+
+// Render HTML comments as element nodes,
+// so that PrinceXML can use index-targets.js.
+gulp.task('renderCommentsAsNodes', function (done) {
+    'use strict';
+    var files = [];
+    gulp.src(paths.text.src, {base: './'})
+        .pipe(cheerio({
+            run: function ($) {
+                $('*').contents().filter(function () {
+                    if (this.nodeType === 8 && (/^\s*index:/).test(this.nodeValue)) {
+                        console.log(this.nodeValue);
+                        var newElement = $('<span></span>')
+                            .addClass('index-comment')
+                            .attr('style', 'display: none')
+                            .attr('title', this.nodeValue);
+                        newElement.insertAfter(this);
+                    }
+                });
+            },
+            parserOptions: {
+                decodeEntities: false
+            }
+        }))
+        .pipe(debug({title: 'Rendering HTML comments as elements in '}))
+        .pipe(gulp.dest('./'));
     done();
 });
 
