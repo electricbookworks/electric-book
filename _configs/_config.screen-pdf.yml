@@ -68,7 +68,6 @@ exclude:
   - /assets/js/mcqs.js
   - /assets/js/nav.js
   - /assets/js/render-search-index.js
-  - /assets/js/search-engine.js
   - /assets/js/search-index.js
   - /assets/js/search-results.js
   - /assets/js/search-store.js

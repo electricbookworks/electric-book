@@ -26,7 +26,7 @@ Electric Book options
 5  Create an app
 6  Export to Word
 7  Convert source images to output formats
-8  Refresh search index
+8  Refresh search or book index
 9  Install or update dependencies
 x  Exit
 
@@ -974,17 +974,21 @@ Enter a number and hit enter. "
 		# Head back to the Electric Book options
 		process=0
 
-	########################
-	# REFRESH SEARCH INDEX #
-	########################
+	###################
+	# REFRESH INDEXES #
+	###################
 	elif [ "$process" = 8 ]
 		then
-		echo "Let's refresh the search index."
-		echo "We'll index the files in your web or app file lists defined in meta.yml"
+		echo "Let's refresh the index."
+		echo "We'll index the files in your file lists as defined in meta.yml"
 
 		# Check if refreshing web or app index
-		echo "To refresh the website search index, press enter."
-		echo "To refresh the app search index, type a and press enter."
+		echo "Choose a format to refresh:"
+		echo "1 Print PDF"
+		echo "2 Screen PDF"
+		echo "3 Web (default, hit enter)"
+		echo "4 Epub (not yet supported)"
+		echo "5 App"
 		searchIndexToRefresh=""
 		read searchIndexToRefresh
 
@@ -1001,7 +1005,16 @@ Enter a number and hit enter. "
 		# Exit if the Jekyll build fails
 		set -e
 
-		if [ "$searchIndexToRefresh" = "a" ]
+		if [ "$searchIndexToRefresh" = "1" ]
+			then
+			bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,$searchIndexConfig"
+		elif [ "$searchIndexToRefresh" = "2" ]
+			then
+			bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,$searchIndexConfig"
+		elif [ "$searchIndexToRefresh" = "4" ]
+			then
+			bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$searchIndexConfig"
+		elif [ "$searchIndexToRefresh" = "5" ]
 			then
 			bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,$searchIndexConfig"
 		else
@@ -1014,7 +1027,13 @@ Enter a number and hit enter. "
 		# Generate index
 		echo "Generating index ..."
 		cd "$location"
-		node _site/assets/js/render-search-index.js
+
+		if [ "$searchIndexToRefresh" = "1" ] || [ "$searchIndexToRefresh" = "2" ] || [ "$searchIndexToRefresh" = "4" ]
+			then
+			node _site/assets/js/render-book-index.js
+		else
+			node _site/assets/js/render-search-index.js
+		fi
 
 		# Done
 		echo "Index refreshed."

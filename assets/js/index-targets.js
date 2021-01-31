@@ -42,6 +42,10 @@ function ebIndexProcessComments(comments) {
     // Create an array to store IDs for uniqueness
     var entries = [];
 
+    if (comments.length < 1) {
+        document.body.setAttribute('data-index-targets', 'none');
+    }
+
     comments.forEach(function (comment) {
 
         // Parse each line: slugify and add to an array
@@ -111,6 +115,7 @@ function ebIndexProcessComments(comments) {
             var target = document.createElement('a');
             target.id = id;
             target.classList.add('index-target');
+            target.title = line;
 
             // Set a string we'll use for the target below.
             var targetElementString = target.outerHTML;
@@ -150,6 +155,9 @@ function ebIndexProcessComments(comments) {
                 comment.element.insertBefore(target, comment.element.firstChild);
             }
         });
+
+        // Add a selector to signal we're done
+        document.body.setAttribute('data-index-targets', 'loaded');
     });
 }
 
