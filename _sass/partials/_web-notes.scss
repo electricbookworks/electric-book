@@ -30,8 +30,8 @@ $web-notes: true !default;
         max-width: $max-width-default;
         margin-left: auto;
         margin-right: auto;
-        left: $max-width-default * 0.25 / 3;
-        right: $max-width-default * 0.25 / 3;
+        left: $paragraph-indent;
+        right: $paragraph-indent;
         @include dialog-styles();
         p {
             margin-bottom: 0;
@@ -40,6 +40,11 @@ $web-notes: true !default;
         .sidenote.contains-footnote & {
             left: 0;
             right: 0;
+        }
+
+        @media only screen and (min-width: $break-width-medium) {
+            left: $max-width-default * 0.25 / 3;
+            right: $max-width-default * 0.25 / 3;
         }
     }
 

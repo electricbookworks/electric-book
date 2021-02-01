@@ -36,7 +36,7 @@ edition: "default"
 # include the url where this site will live when it's live (production).
 # E.g. canonical-url: "http://example.com"
 # In Open Graph metadata, the base URL will be appended.
-canonical-url: "https://electricbookworks.github.io"
+canonical-url: "https://electricbookworks.github.io/electric-book"
 
 # Base URL
 # --------
