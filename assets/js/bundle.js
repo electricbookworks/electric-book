@@ -86,4 +86,7 @@ have different behaviour for web or app. {% endcomment %}
 
 {% endif %}
 
+{% comment %} Tools for generating and displaying book indexes {% endcomment %}
+{% include_relative index-loader.js %}
 {% include_relative index-targets.js %}
+{% include_relative index-lists.js %}

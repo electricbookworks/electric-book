@@ -18,6 +18,9 @@ $epub-index: true !default;
             a:after {
                 content: ", ";
             }
+            a:first-of-type:before {
+                content: " ";
+            }
             a:last-of-type:after {
                 content: "";
             }

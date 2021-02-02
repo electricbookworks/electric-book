@@ -19,6 +19,9 @@ $print-index: true !default;
 			&:after {
 				content: ", ";
 			}
+			&:first-of-type:before {
+				content: " ";
+			}
 			&:last-of-type:after {
 				content: "";
 			}

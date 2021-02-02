@@ -120,7 +120,9 @@ function generateTargetsIndex() {
         }
 
         // Write the search index file
-        fs.writeFile('assets/js/book-index-' + output + '.js', JSON.stringify(targetsIndex), function () {
+        fs.writeFile('assets/js/book-index-' + output + '.js',
+                'var ebIndexTargets = ' + JSON.stringify(targetsIndex) + ';',
+                function () {
             console.log('Writing book-index-' + output + '.js...');
             console.log('Done.');
         });

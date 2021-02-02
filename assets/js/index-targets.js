@@ -60,7 +60,7 @@ function ebIndexProcessComments(comments) {
             }
 
             // Strip white space at start and end of line
-            line.trim();
+            line = line.trim();
 
             // Exit if the line is now empty
             if (line === '') {
