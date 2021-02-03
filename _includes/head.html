@@ -36,6 +36,8 @@ we want the doc name to be the book title, not only the first doc's title.
     {% endif %}
 {% endif %}
 
+{% capture book-title %}{{ title }}{% endcapture %}
+
 
 {% if site.output == "print-pdf" %}
 <!DOCTYPE html>
@@ -61,7 +63,14 @@ we want the doc name to be the book title, not only the first doc's title.
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %} data-page-info="{% unless site.data.settings.redact == true %}{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first | truncate: 20 }} • {% endunless %}{{ site.time | date: "%-d %b %Y, %H:%M" }}"{% if site.data.settings.print-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
+      {% if page.header %}data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}
+      {% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}
+      {% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %}
+      data-page-info="{% unless site.data.settings.redact == true %}{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first | truncate: 20 }} • {% endunless %}{{ site.time | date: "%-d %b %Y, %H:%M" }}"
+      {% if site.data.settings.print-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}
+      data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+      {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 <div id="wrapper">
 
 
@@ -89,7 +98,14 @@ we want the doc name to be the book title, not only the first doc's title.
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"{% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}{% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}{% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %} data-page-info="{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first }} • {{ site.time | date: "%-d %b %Y, %H:%M" }}"{% if site.data.settings.screen-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}>
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
+      {% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}
+      {% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}
+      {% if page.header-right %} data-header-right="{{ page.header-right }}"{% else %} data-header-right="{{ page.title }}"{% endif %}
+      data-page-info="{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first }} • {{ site.time | date: "%-d %b %Y, %H:%M" }}"
+      {% if site.data.settings.screen-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}
+      data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+      {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 <div id="wrapper">
 
 
@@ -139,7 +155,9 @@ we want the doc name to be the book title, not only the first doc's title.
     {% include head-elements %}
 
 </head>
-<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}">
+<body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
+      data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+      {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 <div id="wrapper">
 
 
@@ -190,7 +208,8 @@ we want the doc name to be the book title, not only the first doc's title.
     </head>
     <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
     {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
-    data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}">
+    data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+    {% if is-translation %} data-translation="{{ language }}"{% endif %}>
         <div id="wrapper">
 
 
@@ -307,7 +326,8 @@ we want the doc name to be the book title, not only the first doc's title.
 </head>
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
 {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
-data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}">
+data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+{% if is-translation %} data-translation="{{ language }}"{% endif %}>
 <div id="wrapper">
 
 {% endif %}

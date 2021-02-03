@@ -75,7 +75,9 @@ function generateTargetsIndex() {
                     var entryObject = {
                         entrySlug: entry.id.split('--iid-')[0],
                         entryText: entry.title,
-                        id: entry.id
+                        id: entry.id,
+                        bookTitle: document.body.getAttribute('data-title'),
+                        translationLanguage: document.body.getAttribute('data-translation')
                     }
                     targetArray.push(entryObject);
                 });
@@ -98,7 +100,6 @@ function generateTargetsIndex() {
             indexEntries = JSON.parse(indexEntries);
             indexEntries.forEach(function (entry) {
                 entry.filename = filename;
-                entry.path = store[i].url;
             });
 
             // Add the entries to the master index,

@@ -19,18 +19,28 @@ function ebIndexAddLink(listItem, filename, id, index) {
 function ebIndexFindLinks(listItem) {
     'use strict';
 
-    var currentTextFolder = window.location.href.replace(/text\/.+\.html/, 'text');
+    var currentTitle = document.body.getAttribute('data-title');
+    var currentTranslation = document.body.getAttribute('data-translation');
     var listItemText = listItem.innerHTML;
 
     // Look through the index of targets
     ebIndexTargets.forEach(function (pageEntries) {
 
         // Check if the entries for this page
-        // are for files in the same text folder
-        // as the book index we're populating with links.
-        var pagePathTextFolder = pageEntries[0].path.replace(/text\/.+\.html/, 'text');
+        // are for files in the same book.
+        // We just check against the first entry for the page.
+        var titleMatches = false;
+        var languageMatches = false;
+        if (currentTitle === pageEntries[0].bookTitle) {
+            titleMatches = true;
+        }
+        // Note, both of these could be null,
+        // if this is not a translation.
+        if (currentTranslation === pageEntries[0].translationLanguage) {
+            languageMatches = true;
+        }
 
-        if (currentTextFolder.includes(pagePathTextFolder)) {
+        if (titleMatches && languageMatches) {
 
             // Find this entry's page numbers
             var index = 1;
