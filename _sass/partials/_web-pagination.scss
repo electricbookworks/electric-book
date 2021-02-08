@@ -8,6 +8,11 @@ $web-pagination: true !default;
         padding: $line-height-default;
         max-width: $max-width-default / 2;
         margin: auto;
+
+        a {
+            text-decoration: none;
+        }
+
         .pagination-previous {
             float: left;
             a {

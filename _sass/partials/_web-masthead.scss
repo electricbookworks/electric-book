@@ -19,7 +19,9 @@ $web-masthead: true !default;
 
         a {
             color: $masthead-text-color;
+            text-decoration: none;
         }
+
         ul {
             display: flex;
             justify-content: center;

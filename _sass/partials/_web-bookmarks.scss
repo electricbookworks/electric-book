@@ -178,6 +178,7 @@ $web-bookmarks: true !default;
 
                     a {
                         color: $color-links;
+                        text-decoration: none;
                     }
 
                     .bookmark-title {
@@ -415,6 +416,7 @@ $web-bookmarks: true !default;
 
         a {
             color: $color-links;
+            text-decoration: none;
             white-space: nowrap;
         }
 
