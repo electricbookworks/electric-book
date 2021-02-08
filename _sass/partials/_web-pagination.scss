@@ -16,15 +16,15 @@ $web-pagination: true !default;
         .pagination-previous {
             float: left;
             a {
-                padding: 0 1em;                
+                padding: 0 1em;
             }
         }
+
         .pagination-next {
             float: right;
             a {
-                padding: 0 1em;                
+                padding: 0 1em;
             }
         }
     }
-
 }

@@ -11,7 +11,7 @@ don't include it again to avoid unnecessary looping.{% endcomment %}
 {% endunless %}
 
 <form class="search" action="{{ path-to-root-directory }}search.html" method="get">
+  <input type="text" id="search-box{{ include.id-suffix }}" class="search-box" name="query" placeholder="{{ locale.search.placeholder }}">
   <label for="search-box"></label>
-  <input type="text" id="search-box" class="search-box" name="query" placeholder="{{ locale.search.placeholder }}">
   <input id="search-language" type="hidden" name="lang" value="{{ language }}">
 </form>
