@@ -50,6 +50,10 @@ $web-notes: true !default;
 
     .footnotes {
         color: $color-text-secondary;
+
+        .reversefootnote {
+            text-decoration: none;
+        }
     }
 
     .footnote-detail {
