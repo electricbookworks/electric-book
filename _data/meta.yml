@@ -43,7 +43,7 @@ works:
     subtitle: ""
     creator: "A. N. Author" # E.g. the author
     contributor: "" # E.g. other contributors
-    subject: "Fiction" # E.g. BISAC terms (https://bisg.org/page/BISACEdition) or BIC (http://editeur.dyndns.org/bic_categories)
+    subject: "Fiction" # E.g. BISAC terms (https://bisg.org/page/BISACEdition) or BIC (https://ns.editeur.org/bic_categories)
     description: "The Electric Book's blank template." # E.g. the blurb
     publisher: "EBW" # E.g. the publisher, imprint or brand name
     publisher-url: ""
@@ -200,7 +200,7 @@ works:
     subtitle: "Sample content for Electric Book print, epub and web output"
     creator: "Arthur Attwell" # E.g. the author
     contributor: "" # E.g. other contributors
-    subject: "Publishing" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
+    subject: "Publishing" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (https://ns.editeur.org/bic_categories)
     description: >
       Sample content demonstrating Electric Book support for a wide range of book features.
     publisher: "Electric Book Works" # E.g. the publisher, imprint or brand name
