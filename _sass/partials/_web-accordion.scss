@@ -10,6 +10,7 @@ $web-accordion: true !default;
         }
         a {
             color: $color-accent;
+            text-decoration: none;
             &:first-of-type {
                 margin-right: 0.4em;
             }
