@@ -13,7 +13,8 @@ $web-cover: true !default;
 			}
 		}
 	}
-	p.cover {
+	p.cover,
+	div.cover {
 		margin: 0 auto;
 		padding: 0;
 		text-indent: 0;
