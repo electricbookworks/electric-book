@@ -201,6 +201,8 @@ en:
     copy: "Copy"
     copied: "Copied"
     copy-failed: "Sorry, try again"
+  pdf:
+    cover: "Cover"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -294,6 +296,8 @@ fr:
     copy: "Copie"
     copied: "Copié"
     copy-failed: "Désolé, essayez encore"
+  pdf:
+    cover: "Couverture"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
