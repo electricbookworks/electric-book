@@ -85,3 +85,7 @@ have different behaviour for web or app. {% endcomment %}
     {% include_relative page-reference.js %}
 
 {% endif %}
+
+{% if site.output == "epub" %}
+    {% include_relative show-hide.js %}
+{% endif %}

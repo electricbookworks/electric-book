@@ -9,13 +9,11 @@ categories: advanced
 * Page contents
 {:toc}
 
-Unless there's a good reason to put them elsewhere, scripts should live in `assets/js`. In addition, scripts for epub output should be in `_epub/js`, [as described below](#adding-scripts-to-epubs).
+Unless there's a good reason to put them elsewhere, scripts should live in `assets/js`, and be included in `bundle.js`, and not added separately. This is especially important in epubs. (More on [scripts in epubs below](#adding-scripts-to-epubs).
 
-To add them to your `<head>` elements, add `<script>` tags to `_includes/head-elements`. 
+If you must add scripts that are not included in bundle.js, add them to your `<head>` elements by adding `<script>` tags to `_includes/head-elements`. And to add them just before the `</body>` tag, add `<script>` tags to `_includes/end-elements`.
 
-To add them just before the `</body>` tag, add `<script>` tags to `_includes/end-elements`. 
-
-You can also link to remote scripts here, without the need to place the actual scripts in the `js` folder.
+For web outputs, you can also link to remote scripts this way, without the need to save the actual scripts in the `js` folder.
 
 Keep in mind that anything you add to `head-elements` will be added to all books in the project folder, and to all their formats.
 
@@ -44,30 +42,8 @@ To limit a script to a given output format, use `site.output`:
 ```
 {% endraw %}
 
-## Adding scripts to epubs
+## Scripts in epub
 
-Scripts in epub are special. While web and PDF scripts should be in `/assets/js`, all scripts to be used in your epub should be in `_epub/js`. This is because you must not have any scripts in your epub that you aren't using, or it won't validate. By keeping epub scripts separate, only your epub scripts will end up in the epub package.
+All scripts to be used in your epub should be included in `assets/js/bundle/js`, and not added to pages as separate files. This is because you must not have any scripts in your epub that you aren't using, or it won't validate; and we only support including `bundle.js` in epub output.
 
-Also, epub scripts must have a YAML frontmatter block, and use a layout with no HTML:
-
-``` md
----
-layout: min
----
-```
-
-This block tells Jekyll to process the script, which means it knows about it, which the epub packager needs in order to include it in the epub manifest.
-
-### Linking to scripts for epub
-
-In the finished epub, these scripts will end up in a `js` folder alongside `text`, `styles`, `images` and `fonts`. So all links to scripts that you want to include in epub output should be in `site.output == "epub"` tags.
-
-To ensure that links to scripts work from both parent-language and translation-language files, use the {% raw %}`{{ path-to-book-directory }}`{% endraw %} tag in the path to the epub scripts:
-
-{% raw %}
-``` html
-{% if site.output == "epub" %}
-<script src="{{ path-to-book-directory }}js/foo.js"></script>
-{% endif %}
-```
-{% endraw %}
+If you don't want any Javsacript at all in your epub, you can disable it in `_data/settings.yml` by setting `epub` > `javascript` > `enabled` to `false`.You should then also exclude `assets/js/bundle.js` in the exclude list in `_configs/_config.epub.yml`.
