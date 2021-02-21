@@ -4,7 +4,7 @@ title: "Video"
 
 ## Video
 
-The Electric Book template includes a tag for easily inserting videos from YouTube and Vimeo. [See the docs for more]({{ site.canonical-url }}/docs/editing/video.html).
+The Electric Book template includes a tag for easily inserting videos from YouTube and Vimeo. [See the docs for more](https://electricbookworks.github.io/electric-book/docs/editing/video.html).
 
 In this example, we have a YouTube video, without a description, set to start 14 seconds in. There's an option to watch it elsewhere, too, which won't show on PDF by default.
 
