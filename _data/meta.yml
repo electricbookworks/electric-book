@@ -58,7 +58,7 @@ works:
     rights: "All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher." # e.g. a copyright statement
     image: "cover.jpg"
     products: # Metadata for each product for this title (only use values that override parent metadata)
-      print-pdf: 
+      print-pdf:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication or creation date
         format: "Print" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
@@ -76,7 +76,7 @@ works:
           - label: "Chapter 2"
             file: "02"
             id: "2-goodbye-world"
-            children: 
+            children:
               - label: "Subsection"
                 file: "02"
                 id: "example-id"
@@ -109,7 +109,7 @@ works:
           - label: "Chapter Two"
             file: "02"
             id: "2-goodbye-world"
-            children: 
+            children:
               - label: "Subsection"
                 file: "02"
                 id: "example-id"
@@ -183,7 +183,7 @@ works:
           - label: "Chapter Two"
             file: "02"
             id: "2-goodbye-world"
-            children: 
+            children:
               - label: "Subsection"
                 file: "02"
                 id: "example-id"
@@ -215,7 +215,7 @@ works:
     coverage: "" # e.g. geographic place or chronological time span
     rights: "This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use." # e.g. a copyright statement
     products: # Metadata for each product for this title (only use values that override parent metadata)
-      print-pdf: 
+      print-pdf:
         date: "2016-09-01" # YYYY-MM-DD e.g. publication or creation date
         format: "Print" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
@@ -284,7 +284,7 @@ works:
             file: "00-09-frontmatter"
             class: "frontmatter-entry"
           - label: "Text"
-            children: 
+            children:
               - label: "Plain text"
                 file: "01-01-plain-text"
                 id: "plain-text"
@@ -339,7 +339,7 @@ works:
                 file: "01-10-questions"
                 id: "questions-and-quizzes"
           - label: "Images"
-            children: 
+            children:
               - label: "Plain images"
                 file: "02-01-plain-images"
                 id: "plain-images"
@@ -355,7 +355,7 @@ works:
                 file: "03-02-maths"
                 id: "mathematics"
           - label: "Interactivity"
-            children: 
+            children:
               - label: "Links and buttons"
                 file: "04-01-links-buttons"
                 id: "links-and-buttons"
@@ -372,7 +372,7 @@ works:
                 file: "04-05-slides"
                 id: "slides"
           - label: "Indexes"
-            children: 
+            children:
               - label: "Traditional index"
                 file: "10-01-traditional-index"
                 id: "traditional-index"
@@ -452,7 +452,7 @@ works:
                 file: "00-09-frontmatter"
                 class: "frontmatter-entry"
           - label: "Text"
-            children: 
+            children:
               - label: "Plain text"
                 file: "01-01-plain-text"
                 id: "plain-text"
@@ -507,7 +507,7 @@ works:
                 file: "01-10-questions"
                 id: "questions-and-quizzes"
           - label: "Images"
-            children: 
+            children:
               - label: "Plain images"
                 file: "02-01-plain-images"
                 id: "plain-images"
@@ -523,7 +523,7 @@ works:
                 file: "03-02-maths"
                 id: "mathematics"
           - label: "Interactivity"
-            children: 
+            children:
               - label: "Links and buttons"
                 file: "04-01-links-buttons"
                 id: "links-and-buttons"
@@ -540,7 +540,7 @@ works:
                 file: "04-05-slides"
                 id: "slides"
           - label: "Indexes"
-            children: 
+            children:
               - label: "Traditional index"
                 file: "10-01-traditional-index"
                 id: "traditional-index"
