@@ -17,6 +17,11 @@
 // Provide a variable for site output
 $output-format: "print-pdf" !default;
 
+// Theme variables
+@import "theme/colors";
+@import "template/colors";
+@import "theme/print-variables";
+
 // Edition suffix: identifies this edition in page-fitting classes (in _print-fitting.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
 // A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
@@ -57,12 +62,12 @@ $column-gap-ratio: 10 !default;
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
-$color-text-main: cmyk(0,0,0,1) !default;
-$color-text-secondary: cmyk(0,0,0,0.8) !default;
+$color-text-main: $black !default;
+$color-text-secondary: $grey-dark !default;
 $color-background: transparent !default;
-$color-light: cmyk(0,0,0,0.2) !default;
-$color-mid: cmyk(0,0,0,0.4) !default;
-$color-accent: cmyk(0,0,0,1) !default;
+$color-light: $grey-light !default;
+$color-mid: $grey-mid !default;
+$color-accent: $template-green !default;
 $color-links: inherit !default;
 $color-highlight: #ffd54d !default;
 
@@ -351,6 +356,9 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
+// Theme imports
+@import "theme/print-imports";
+
 // Default font-face rules added by print-font-faces partial below.
 // Or add @font-face rules for fonts you specify here.
 // Add the actual font files to `../fonts` or `../../assets/fonts`.
@@ -363,66 +371,69 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 // ---------------------
 
 // Reset PrinceXML CSS
-@import "partials/print-css-reset";
+@import "template/partials/print-css-reset";
 
 // Load general-purpose mixins
-@import "partials/print-mixins--buttons";
-@import "partials/print-mixins--sidenotes";
+@import "template/partials/print-mixins--buttons";
+@import "template/partials/print-mixins--sidenotes";
 
 // Conventional helper classes
-@import "partials/print-helpers";
+@import "template/partials/print-helpers";
 
 // Add font-face rules
-@import "partials/print-font-faces";
+@import "template/partials/print-font-faces";
 
 // Page setup and control, avoid changing these
-@import "partials/print-pdf-view"; // Sets the default initial view on PDFs
-@import "partials/print-sidebar"; // redefines margins if $print-sidebar is true
-@import "partials/print-page-setup"; // Sets up the page from your variables
-@import "partials/print-page-break-tools"; // Provides classes for semantic page breaks
-@import "partials/print-hide-non-printing"; // Hides anything .non-printing
-@import "partials/print-fitting"; // Classes for floating, tracking, shrinking, etc.
-@import "partials/print-hyphenation"; // Sets hyphenation dictionary
-@import "partials/print-baseline-grid"; // Shows a baseline grid
+@import "template/partials/print-pdf-view"; // Sets the default initial view on PDFs
+@import "template/partials/print-sidebar"; // redefines margins if $print-sidebar is true
+@import "template/partials/print-page-setup"; // Sets up the page from your variables
+@import "template/partials/print-page-break-tools"; // Provides classes for semantic page breaks
+@import "template/partials/print-hide-non-printing"; // Hides anything .non-printing
+@import "template/partials/print-fitting"; // Classes for floating, tracking, shrinking, etc.
+@import "template/partials/print-hyphenation"; // Sets hyphenation dictionary
+@import "template/partials/print-baseline-grid"; // Shows a baseline grid
 
 // Book features
-@import "partials/print-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
-@import "partials/print-page-start-depth"; // Sets a top margin on opening pages
-@import "partials/print-base-typography"; // Default typography for HTML elements
-@import "partials/print-columns";
-@import "partials/print-buttons";
-@import "partials/print-verse"; // Default typography for verse, poetry, lyrics
-@import "partials/print-bibliographies";
-@import "partials/print-dialogue";
-@import "partials/print-epigraphs";
-@import "partials/print-dedications";
-@import "partials/print-glossaries"; // Including .glossary
-@import "partials/print-highlighter";
-@import "partials/print-pullquotes"; // Supports .pullquote
-@import "partials/print-boxes";
-@import "partials/print-code"; // For computer code and preformatted text
-@import "partials/print-tables";
-@import "partials/print-figures";
-@import "partials/print-notes"; // Footnotes, endnotes, sidenotes
-@import "partials/print-previous-publications-page"; // Also by the author page in frontmatter
-@import "partials/print-title-pages"; // Half-title and title pages
-@import "partials/print-copyright-page";
-@import "partials/print-toc"; // Tables of contents
-@import "partials/print-video";
-@import "partials/print-cover"; // Front-cover image for PDF ebooks
-@import "partials/print-smallcaps";
-@import "partials/print-maths";
-@import "partials/print-letters";
-@import "partials/print-sources";
-@import "partials/print-openers";
-@import "partials/print-index";
-@import "partials/print-questions";
-@import "partials/print-select-questions";
-@import "partials/print-cross-refs";
-@import "partials/print-slides";
-@import "partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
-@import "partials/print-page-headers-footers-content"; // Sets content for headers and footers
-@import "partials/print-page-headers-footers-style"; // Sets styling for headers and footers
+@import "template/partials/print-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
+@import "template/partials/print-page-start-depth"; // Sets a top margin on opening pages
+@import "template/partials/print-base-typography"; // Default typography for HTML elements
+@import "template/partials/print-columns";
+@import "template/partials/print-buttons";
+@import "template/partials/print-verse"; // Default typography for verse, poetry, lyrics
+@import "template/partials/print-bibliographies";
+@import "template/partials/print-dialogue";
+@import "template/partials/print-epigraphs";
+@import "template/partials/print-dedications";
+@import "template/partials/print-glossaries"; // Including .glossary
+@import "template/partials/print-highlighter";
+@import "template/partials/print-pullquotes"; // Supports .pullquote
+@import "template/partials/print-boxes";
+@import "template/partials/print-code"; // For computer code and preformatted text
+@import "template/partials/print-tables";
+@import "template/partials/print-figures";
+@import "template/partials/print-notes"; // Footnotes, endnotes, sidenotes
+@import "template/partials/print-previous-publications-page"; // Also by the author page in frontmatter
+@import "template/partials/print-title-pages"; // Half-title and title pages
+@import "template/partials/print-copyright-page";
+@import "template/partials/print-toc"; // Tables of contents
+@import "template/partials/print-video";
+@import "template/partials/print-cover"; // Front-cover image for PDF ebooks
+@import "template/partials/print-smallcaps";
+@import "template/partials/print-maths";
+@import "template/partials/print-letters";
+@import "template/partials/print-sources";
+@import "template/partials/print-openers";
+@import "template/partials/print-index";
+@import "template/partials/print-questions";
+@import "template/partials/print-select-questions";
+@import "template/partials/print-cross-refs";
+@import "template/partials/print-slides";
+@import "template/partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
+@import "template/partials/print-page-headers-footers-content"; // Sets content for headers and footers
+@import "template/partials/print-page-headers-footers-style"; // Sets styling for headers and footers
 
 // Lightning Source setup
-@import "partials/print-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
+@import "template/partials/print-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
+
+// Theme rules
+@import "theme/print-rules";
