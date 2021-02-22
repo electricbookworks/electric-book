@@ -335,6 +335,7 @@ e.g. this is fr/index.md
 {% for language in all-translated-languages %}
     {% if folder-depth == 1 and current-directory == language %}
         {% assign is-translation = true %}
+        {% assign is-translation-root-directory = true %}
         {% capture language %}{{ language }}{% endcapture %}
         {% if page.name == "index.md" %}
             {% assign is-translation-homepage = true %}
@@ -937,16 +938,10 @@ guarantee that the template is in a new state.{% endcomment %}
   {% assign is-docs-page = true %}
 {% endif %}
 
-{% comment %}Check for existence of scripts in _epub/js.
-Note that we can't do this for fonts, because fonts are not
-processed as documents by Jekyll, and aren't accessible that way.{% endcomment %}
-{% assign epub-scripts-exist = false %}
-{% for file in site.epub %}
-  {% if file.path contains "_epub/js/" %}
-    {% assign epub-scripts-exist = true %}
-  {% endif %}
-  {% break %}
-{% endfor %}
+{% comment %}Check if epub Javascript is disabled.{% endcomment %}
+{% if site.data.settings.epub.javascript.disabled == true %}
+    {% assign epub-scripts-disabled = true %}
+{% endif %}
 
 {% comment %} Localisation {% endcomment %}
 

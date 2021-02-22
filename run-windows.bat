@@ -302,17 +302,12 @@ set /p process=Enter a number and hit return.
         :: let the user know we're on it!
         :webreadytoserve
         echo Getting your site ready...
-        echo You may need to reload the web page once this server is running.
 
         :: Two routes to go: with or without a baseurl
         if "%baseurl%"=="" goto servewithoutbaseurl
 
             :: Route 1, for serving with a baseurl
             :servewithbaseurl
-
-                :: Open the web browser
-                :: (This is before jekyll s, because jekyll s pauses the script.)
-                start "" "http://127.0.0.1:4000/%baseurl%/"
 
                 :: Run Jekyll, with MathJax enabled if necessary
                 if not "%webmathjax%"=="y" goto webnomathjax
@@ -329,10 +324,6 @@ set /p process=Enter a number and hit return.
 
             :: Route 2, for serving without a baseurl
             :servewithoutbaseurl
-
-                :: Open the web browser
-                :: (This is before jekyll s, because jekyll s pauses the script.)
-                start "" "http://127.0.0.1:4000/"
 
                 :: Run Jekyll, with MathJax enabled if necessary
                 if not "%webmathjax%"=="y" goto webnomathjax
@@ -362,7 +353,7 @@ set /p process=Enter a number and hit return.
     :epub
 
         :: Encouraging message
-        echo Okay, let's make an epub.
+        echo Okay, let's make an epub of %bookfolder%...
         :: Remember where we are by assigning a variable to the current directory
         set location=%~dp0
         
@@ -569,13 +560,12 @@ set /p process=Enter a number and hit return.
         :: Go into _site/epub to move some more files and then zip to _output
         cd %location%_site/epub
 
-        :: If there is a js folder, and it has no contents, delete it.
-        :: Otherwise, copy the js folder into the epub folder.
+        :: Copy the bundle.js into the epub's js folder.
         :: (JS lives in the root directory even in translations.)
         :epubMoveJS
-            echo Checking for Javascript...
-            if exist "js" if not exist "js\*.*" rd /s /q "js"
-            echo Javascript checked.
+            echo Copying Javascript to epub...
+            robocopy "%location%_site/assets/js" "%location%_site/epub/js" bundle.js /E /NFL /NDL /NJH /NJS /NC /NS
+            echo Javascript copied.
 
         :: If there is a fonts folder, and it has no contents, delete it.
         :: Otherwise, if this is a translation, move the fonts folder
@@ -583,7 +573,6 @@ set /p process=Enter a number and hit return.
         :epubMoveFonts
             echo Checking for fonts...
             if exist "fonts" if not exist "fonts\*.ttf" if not exist "fonts\*.otf" if not exist "fonts\*.woff" if not exist "fonts\*.woff2" rd /s /q "fonts"
-            if not "%subdirectory%"=="" if exist "fonts\*.*" move "fonts" "%subdirectory%\fonts"
             echo Fonts checked.
 
         :: If MathJax required, fetch boilerplate mathjax directory from /assets/js
@@ -647,7 +636,7 @@ set /p process=Enter a number and hit return.
             if exist "mathjax" robocopy "%location%\_site\epub\mathjax" "%location%\_output\%epubFileName%\mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
             if exist "js" robocopy "%location%\_site\epub\js" "%location%\_output\%epubFileName%\js" /E /NFL /NDL /NJH /NJS /NC /NS
 
-            :: Copy text file if this is not a translation
+            :: Copy text directory if this is not a translation
             if not "%subdirectory%"=="" goto epubZipSubdirectory
             if exist "text" robocopy "%location%\_site\epub\text" "%location%\_output\%epubFileName%\text" /E /NFL /NDL /NJH /NJS /NC /NS
             goto epubAddPackageFiles

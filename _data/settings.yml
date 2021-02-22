@@ -152,6 +152,16 @@ epub:
     project-name: false
     # Override the language in epub OPF metadata (use a subtag, e.g. en)
     language: ""
+  # ----------
+  # Javascript
+  # ----------
+  # Javascript in bundle.js is included by default.
+  # If your epub should not include any Javascript,
+  # set disabled to true. This does not disable MathJax.
+  # Enable or disable MathJax in _config.
+  # You may also want to exclude js in _config.epub.yml.
+  javascript:
+    disabled: false
 
 # ----------------------------------------------------------
 # App settings

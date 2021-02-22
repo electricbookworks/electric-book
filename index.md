@@ -15,7 +15,7 @@ The Electric Book template produces **website, ebook, app and print books from a
 - [a blank book](book/text/0-3-contents.html) to start working into,
 - [a book of sample features](samples/) to learn from,
 - [a demo translation](samples/fr/), and
-- {% if site.output == "web" %}[how-to documentation](docs/){% else %}[online how-to documentation](http://electricbook.works/docs/index.html){% endif %}. {% if output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
+- {% if site.output == "web" %}[how-to documentation](docs/){% else %}[online how-to documentation](http://electricbookworks.github.io/electric-book/docs/index.html){% endif %}. {% if output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
 
 You'll find [the open-source repository on GitHub](https://github.com/electricbookworks/electric-book).
 
@@ -116,6 +116,10 @@ Easily [embed streaming video]({{ site.baseurl }}/docs/editing/video.html) from 
 ### Collapsible pages
 
 Make long web pages [collapse on major headings]({{ site.baseurl }}/docs/layout/content-accordion.html) for easier reading. [See a demo here](https://deploy-preview-471--electric-book.netlify.app/samples/text/01-01-plain-text.html).
+
+### Clickable slides
+
+Let users click through [slideshows]({{ site.baseurl }}/samples/text/04-05-slides.html), with useful equivalents in offline epub and PDF versions.
 
 
 ## Extending and integrating

@@ -1,0 +1,11 @@
+// Theme colours
+$example-blue: #009ACD !default;
+
+// CYMK values for print output
+
+@if $output-format == "print-pdf" {
+
+    // Theme colours
+    $example-blue: cmyk(80%, 20%, 0%, 20%) !default;
+
+}

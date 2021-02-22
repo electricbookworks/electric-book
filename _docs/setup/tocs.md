@@ -10,12 +10,14 @@ order: 30
 * Page contents
 {:toc}
 
-We create website navigation and tables of contents in the `_data/meta.yml` file of the Electric Book template. The data in the `meta.yml` file is written in a syntax called yaml, which is very strict (e.g. a slight error in indentation can prevent your whole book from building), but once you get the hang of it, adding your book's information for output will be easy enough.
+We create website navigation and tables of contents for books in the `_data/meta.yml` file of the Electric Book template. The data in the `meta.yml` file is written in a syntax called yaml, which is very strict (e.g. a slight error in indentation can prevent your whole book from building), but once you get the hang of it, adding your book's information for output will be easy enough.
 
 You can test whether your yaml is valid by pasting it into the box on [yamllint.com](http://www.yamllint.com/) and clicking ‘Go’. The yamllint validator will tell you whether it is valid or not, and will tell you on which lines errors appear with relative accuracy. 
 {:.sidenote}
 
 The `_data/meta.yml` file includes all of the metadata of your book, from the series name and ISBN to the names of each file for your contents page. By default, the title page, copyright page and contents page pull information from the `_data/meta.yml` file.
+
+For navigation to non-book pages like 'About us' and 'Contact us', see [Project-wide navigation](#project-wide-navigation) below.
 
 ## How to edit the nav and TOC
 
@@ -142,3 +144,21 @@ each dot or `[` means we're drilling down into the data by one level:
 - `.children` refers to the list of chapters inside that `toc[4]` part. That's what we want for our TOC!
 
 Finally, in `start=my-chapter-list` we're telling the TOC include to start listing chapters at `my-chapter-list`, which we just defined.
+
+## Project-wide navigation
+
+Websites and apps can also include pages that are not part of a book, like 'About us' and 'Contact us'. These are created as markdown files in the project's root directory.
+
+They are added to the nav by listing them in `_data/nav.yml`. That file is organised by language, since your project may include different languages.
+
+If you only include nav items for your project language (e.g. `en` for English), then all translated pages will include the English items, too.
+
+If you include translations in your `nav.yml`, you must include the relevant files that you point to in that language's folder in the project root. For example, if you have this entry in your `nav.yml`:
+
+``` yaml
+fr:
+  - label: "À propos de nous"
+    file: "about"
+```
+
+then you must have a `fr/about.md` file in your project, or the link in your navigation will not work.

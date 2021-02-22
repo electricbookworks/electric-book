@@ -17,8 +17,6 @@
 // 2. Add book-specific font imports below.
 // 3. Add your own custom CSS or Sass at the bottom.
 
-// First, let's set character encoding. Don't change this.
-@charset "utf-8";
 
 // -------------
 // Set variables
@@ -34,6 +32,8 @@ $edition-suffix: null;
 
 // Add @font-face rules for fonts you specify here.
 // Add the actual font files to `../fonts` or `../../assets/fonts`.
+// Use #{$path-to-root-directory} to allow overriding per translation. E.g.:
+// `src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Regular.ttf);`
 // For snippets, try https://github.com/arthurattwell/font-faces
 
 
@@ -42,7 +42,7 @@ $edition-suffix: null;
 // -------------
 
 // Import default project styles
-@import 'app';
+@import 'template/app';
 
 
 // -------------

@@ -1,118 +1,147 @@
 <div id="nav" class="non-printing">
 
-        {% comment %}If we're neither in a book or a docs page,
-        show the project name.{% endcomment %}
-        {% if is-book-subdirectory != true and is-docs-page != true %}
-        <div class="nav-title">{{ project-name }}</div>
-
-        {% comment %}If docs are generating, and we're on a docs page
-        show a docs heading and version number{% endcomment %}
-        {% elsif output-docs == true and is-docs-page == true %}
-        <div class="nav-title">Electric Book docs (v{{ site.version }})</div>
-
-        {% comment %}Otherwise show the book title{% endcomment %}
+    {% comment %}If we're neither in a book or a docs page,
+    show the nav-title or the project name.
+    The nav-title can be set by adding it to locales.yml.{% endcomment %}
+    {% if is-book-subdirectory != true and is-docs-page != true %}
+    <div class="nav-title">
+        {% if locale.nav.nav-title and locale.nav.nav-title != "" %}
+            {{ locale.nav.nav-title }}
         {% else %}
-        <div class="nav-title">{{ title }}</div>
+            {{ project-name }}
+        {% endif %}
+    </div>
+
+    {% comment %}If docs are generating, and we're on a docs page
+    show a docs heading and version number{% endcomment %}
+    {% elsif output-docs == true and is-docs-page == true %}
+    <div class="nav-title">Electric Book docs (v{{ site.version }})</div>
+
+    {% comment %}Otherwise show the nav title or book title.
+    The nav-title can be set by adding it to locales.yml.{% endcomment %}
+    {% else %}
+    <div class="nav-title">
+        {% if locale.nav.nav-title and locale.nav.nav-title != "" %}
+            {{ locale.nav.nav-title }}
+        {% else %}
+            {{ title }}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% comment %} Add controls and settings {% endcomment %}
+    {% include controls.html %}
+
+    {% comment %}Add the search box.{% endcomment %}
+    <div class="search">
+        {% include search %}
+    </div>
+    <!--.search-->
+
+    {% comment %}Create the nav list{% endcomment %}
+    <div class="nav-list">
+
+        {% comment %}If this is not the homepage,
+        include a link to the homepage.{% endcomment %}
+        {% if is-homepage != true %}
+        <ol class="nav-project-home">
+            <li><a href="{{ path-to-root-directory }}index.html">{{ locale.nav.home }}</a></li>
+        </ol>
         {% endif %}
 
-        {% comment %} Add controls and settings {% endcomment %}
-        {% include controls.html %}
+        {% comment %}If docs are on (i.e. output set to true in _config.yml),
+        show the docs nav.{% endcomment %}
+        {% if output-docs %}
+        <ul>
+            <li{% unless is-docs-page %} class="has-children" {% endunless %}><a
+                    href="{{ path-to-root-directory }}docs">Docs</a>
+                {% include docs-by-category %}
+                </li>
+        </ul>
+        {% endif %}
 
-        {% comment %}Add the search box.{% endcomment %}
-        <div class="search">
-            {% include search %}
-        </div><!--.search-->
+        {% comment %}If this is any non-book, non-docs page,
+        such as the home page or project search...{% endcomment %}
+        {% if is-book-subdirectory != true and is-docs-page != true %}
 
-        {% comment %}Create the nav list{% endcomment %}
-        <div class="nav-list">
+        {% comment %}If there is only one book, don't include its title{% endcomment %}
+        {% if number-of-works == 1 %}
 
-            {% comment %}If this is not the homepage,
-            include a link to the homepage.{% endcomment %}
-            {% if is-homepage != true %}
-                <ol class="nav-project-home">
-                    <li><a href="{{ path-to-root-directory }}index.html">{{ locale.nav.home }}</a></li>
-                </ol>
-            {% endif %}
+        {% for work in site.data.meta.works | sort: "order" %}
+        {% assign home-nav-work-directory = work.directory %}
+        {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
+        {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
+        {% assign home-nav-work-tree = work.products[site.output].nav %}
+        {% else %}
+        {% assign home-nav-work-tree = work.products.web.nav %}
+        {% endif %}
+        {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+        {% endfor %}
 
-            {% comment %}If docs are on (i.e. output set to true in _config.yml),
-            show the docs nav.{% endcomment %}
-            {% if output-docs %}
-                <ul>
-                    <li{% unless is-docs-page %} class="has-children"{% endunless %}><a href="{{ path-to-root-directory }}docs">Docs</a>
-                    {% include docs-by-category %}
-                    </li>
-                </ul>
-            {% endif %}
+        {% else %}
 
-            {% comment %}If this is any non-book, non-docs page,
-            such as the home page or project search...{% endcomment %}
-            {% if is-book-subdirectory != true and is-docs-page != true %}
+        <ol class="nav-book-list">
+            {% for work in site.data.meta.works | sort: "order" %}
+            {% assign home-nav-work-directory = work.directory %}
 
-                {% comment %}If there is only one book, don't include its title{% endcomment %}
-                {% if number-of-works == 1 %}
-
-                    {% for work in site.data.meta.works | sort: "order" %}
-                        {% assign home-nav-work-directory = work.directory %}
-                        {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
-                        {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
-                            {% assign home-nav-work-tree = work.products[site.output].nav %}
-                        {% else %}
-                            {% assign home-nav-work-tree = work.products.web.nav %}
-                        {% endif %}
-                        {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
-                    {% endfor %}
-
-                {% else %}
-
-                    <ol class="nav-book-list">
-                    {% for work in site.data.meta.works | sort: "order" %}
-                        {% assign home-nav-work-directory = work.directory %}
-
-                        {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
-                        {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
-                            {% assign home-nav-work-tree = work.products[site.output].nav %}
-                        {% else %}
-                            {% assign home-nav-work-tree = work.products.web.nav %}
-                        {% endif %}
-
-                        {% comment %} Get book start page, fallback to web {% endcomment %}
-                        {% if work.products[site.output].start-page and work.products[site.output].start-page != "" %}
-                            {% assign this-book-start-page = work.products[site.output].start-page %}
-                        {% else %}
-                            {% assign this-book-start-page = work.products.web.start-page %}
-                        {% endif %}
-
-                        <li
-                            {% if site.data.settings[site.output].nav.home.expand-books == true %}class="has-children"{% endif %}>
-
-                            <a href="{{ path-to-root-directory }}{{ work.directory }}/text/{{ work.products[site.output].start-page }}.html">
-                                {{ work.title }}
-                            </a>
-
-                            {% if site.data.settings[site.output].nav.home.expand-books == true %}
-                                {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                    </ol>
-
-                {% endif %}
-
+            {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
+            {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
+            {% assign home-nav-work-tree = work.products[site.output].nav %}
             {% else %}
-
-                {% comment %}Fetch recursive navigation{% endcomment %}
-                {% if site.output == "app" %}
-                    {% include nav-list nav-tree=app-nav-tree %}
-                {% else %}
-                    {% include nav-list nav-tree=web-nav-tree %}
-                {% endif %}
-
+            {% assign home-nav-work-tree = work.products.web.nav %}
             {% endif %}
 
-        </div><!--.nav-list-->
+            {% comment %} Get book start page, fallback to web {% endcomment %}
+            {% if work.products[site.output].start-page and work.products[site.output].start-page != "" %}
+            {% assign this-book-start-page = work.products[site.output].start-page %}
+            {% else %}
+            {% assign this-book-start-page = work.products.web.start-page %}
+            {% endif %}
 
-        <div class="widgets">
-            {% include widgets %}
-        </div><!--.widgets-->
+            <li {% if site.data.settings[site.output].nav.home.expand-books==true %}class="has-children" {% endif %}>
 
-</div><!--#nav-->
+                <a
+                    href="{{ path-to-root-directory }}{{ work.directory }}/text/{{ work.products[site.output].start-page }}.html">
+                    {{ work.title }}
+                </a>
+
+                {% if site.data.settings[site.output].nav.home.expand-books == true %}
+                {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ol>
+
+        {% endif %}
+
+        {% else %}
+
+        {% comment %}Fetch recursive navigation{% endcomment %}
+        {% if site.output == "app" %}
+        {% include nav-list nav-tree=app-nav-tree %}
+        {% else %}
+        {% include nav-list nav-tree=web-nav-tree %}
+        {% endif %}
+
+        {% endif %}
+
+        {% comment %} Include the nav.yml items for this language, if any. {% endcomment %}
+        {% if site.data.nav[language] %}
+        {% assign project-nav-tree = site.data.nav[language] %}
+        {% else %}
+        {% assign project-nav-tree = site.data.nav[project-language] %}
+        {% endif %}
+        {% if project-nav-tree %}
+        {% include nav-list nav-tree=project-nav-tree project-nav=true %}
+        {% endif %}
+
+    </div>
+    <!--.nav-list-->
+
+    <div class="widgets">
+        {% include widgets %}
+    </div>
+    <!--.widgets-->
+
+</div>
+<!--#nav-->

@@ -1,0 +1,78 @@
+$web-buttons: true !default;
+@if $web-buttons {
+
+    // Buttons
+
+    button {
+        font-size: initial; // override browsers that shrink button font sizes
+        @include button();
+    }
+
+    // Applied to inline elements
+    a.button,
+    em.button,
+    strong.button,
+    span.button, {
+        @include button();
+    }
+
+    // Applied to block-level elements
+    p.button,
+    ol.button,
+    ul.button,
+    li.button,
+    blockquote.button,
+    table.button,
+    div.button,
+    h1.button,
+    h2.button,
+    h3.button,
+    h4.button,
+    h5.button,
+    h6.button, {
+        text-indent: 0;
+        a {
+            @include button();
+            padding: 0.4em 0.6em;
+            margin: $line-height-default 0;
+        }
+        & + p {
+            text-indent: 0;
+        }
+    }
+
+    // An option to change the default text-indented paragraphs
+    // and close-up lists etc. to have space-between instead.
+    @if $spaced-paras {
+        p.button,
+        ol.button,
+        ul.button,
+        li.button,
+        blockquote.button,
+        table.button,
+        div.button,
+        h1.button,
+        h2.button,
+        h3.button,
+        h4.button,
+        h5.button,
+        h6.button, {
+            a {
+                margin: 0;
+            }
+        }
+    }
+
+    button.show-hide {
+        margin-bottom: $line-height-default;
+    }
+
+    button.copy-to-clipboard {
+        background-color: $color-background;
+        border: $rule-thickness solid $color-mid;
+        box-shadow: none;
+        color: $color-mid;
+        font-weight: normal;
+        margin-left: 1rem;
+    }
+}

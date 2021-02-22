@@ -1,6 +1,7 @@
-/*jslint browser */
+/*jslint browser, for */
 /*global window, ebLazyLoadImages, searchTerm, videoShow
-    locales, pageLanguage, console, Element, HTMLDocument, ebIDsAssigned */
+    locales, pageLanguage, console, Element, HTMLDocument,
+    Node, ebIDsAssigned */
 
 // console.log('Debugging accordions.js');
 
@@ -108,30 +109,54 @@ function ebAccordionSetUpSections(collapserButtons) {
         // add it to the section
         section.appendChild(container);
     });
+
+    ebAccordionFillSections();
+
+    // If there is more than one section,
+    // add an 'expand all/close all' button
+    if (collapserButtons.length > 1) {
+        ebAccordionShowAllButton();
+    }
 }
 
 function ebAccordionFillSections() {
     'use strict';
 
-    // grab the individual #contents elements of the page
-    var contentItems = document.querySelectorAll('#content > *');
+    // Grab the individual #contents elements of the page
+    var contentItems = document.getElementById('content').childNodes;
 
+    // Put all the items in an array, selecting only
+    // elements and text items that match the mathjax \[ pattern.
+    var j, contentItemsForSections = [];
+    for (j = 0; j < contentItems.length; j += 1) {
+        if (contentItems[j].nodeType === Node.ELEMENT_NODE) {
+            contentItemsForSections.push(contentItems[j]);
+        } else if (contentItems[j].nodeValue.includes('\[')) {
+            contentItemsForSections.push(contentItems[j]);
+        }
+    }
+
+    // We don't know where our first section is yet
     var currentSection = false;
-    // loop through it
-    contentItems.forEach(function (contentItem) {
 
+    // Loop through the content to accordify
+    contentItemsForSections.forEach(function (contentItem) {
+
+        // If this is an element (not a text or comment node), and
         // if this is a section, update currentSection, then move on
-        if (contentItem.getAttribute('role') === 'tabpanel') {
-            currentSection = contentItem;
-            return;
+        if (contentItem.nodeType === Node.ELEMENT_NODE) {
+            if (contentItem.getAttribute('role') === 'tabpanel') {
+                currentSection = contentItem;
+                return;
+            }
         }
 
-        // have we reached the first section yet? if not, move on
+        // Have we reached the first section yet? if not, move on
         if (!currentSection) {
             return;
         }
 
-        // otherwise, move it inside the currentSection's data-container
+        // Otherwise, move it inside the currentSection's data-container
         currentSection.querySelector('[data-container]')
             .appendChild(contentItem);
     });
@@ -580,7 +605,6 @@ function ebAccordify() {
     }
 
     ebAccordionSetUpSections(collapserButtons);
-    ebAccordionFillSections();
 
     if (searchTerm) {
         // loop through sections
@@ -632,7 +656,6 @@ function ebLoadAccordion() {
     ebAccordionListenForHeadingClicks();
     ebAccordionListenForNavClicks();
     ebAccordionListenForHashChange();
-    ebAccordionShowAllButton();
 }
 
 // Load the accordion when IDs have been assigned

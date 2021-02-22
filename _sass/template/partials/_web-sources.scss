@@ -1,0 +1,23 @@
+$web-quotations: true !default;
+@if $web-quotations {
+
+    // Styles not covered by the default blockquote element in base-typography
+    // The source of a quotation, e.g. a name or book title, that appears after the quote
+    p.source {
+        font-size: $font-size-default * $font-size-smaller;
+        line-height: $line-height-default;
+        margin: 0 0 $line-height-default 0;
+        text-indent: 0;
+        page-break-before: avoid;
+    }
+
+    em.source,
+    strong.strong,
+    span.source {
+        display: block;
+        page-break-before: avoid;
+        margin: 0 0 $line-height-default 0;
+        font-size: $font-size-default * $font-size-smaller;
+        font-weight: inherit;
+    }
+}

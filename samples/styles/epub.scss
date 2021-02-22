@@ -17,8 +17,6 @@
 // 2. Add book-specific font imports below.
 // 3. Add your own custom CSS or Sass at the bottom.
 
-// First, let's set character encoding. Don't change this.
-@charset "utf-8";
 
 // -------------
 // Set variables
@@ -43,7 +41,7 @@ $edition-suffix: null;
 // -------------
 
 // Import master styles
-@import 'epub';
+@import 'template/epub';
 
 
 // -------------

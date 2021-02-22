@@ -1,0 +1,56 @@
+// What is this?
+// -------------
+// This is typography for the Electric Book template (see http://ebw.co/template).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
+// 
+// How to use it
+// -------------
+// Edit the default variables below.
+// Comment/uncomment or add font imports below.
+// Add your own custom CSS at the bottom.
+
+// -------------
+// Set variables
+// -------------
+
+// Provide a variable for site output
+$output-format: "app" !default;
+
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+$edition-suffix: null !default;
+
+// The path to project-wide assets like fonts and colour profiles.
+// By default this is the assets folder in the project root directory.
+// Override this for translation styles, which need an extra leading ../
+$path-to-root-directory: "../.." !default;
+
+
+// ----------------------------------------------------
+// Import font files (@font-face) for fonts you specify
+// ----------------------------------------------------
+
+// For apps, load local fonts, and do not use
+// the web font loader that is used for the web.
+// Use #{$path-to-root-directory} to allow overriding per translation. E.g.:
+// `src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Regular.ttf);`
+
+// -------------
+// Master theme
+// -------------
+
+// By default, we assume apps look exactly like web versions.
+// So import and inherit master web styles.
+@import 'web';
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom app styles here.
+
+.nav-back-button {
+
+    // Hidden on web, shown in app
+    display: inline;
+}

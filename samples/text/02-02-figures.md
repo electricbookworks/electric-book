@@ -4,7 +4,7 @@ title: "Figures"
 
 ## Figures
 
-Also see the [docs on figures]({{ site.canonical-url }}/docs/editing/figures.html).
+Also see the [docs on figures](https://electricbookworks.github.io/electric-book/docs/editing/figures.html).
 
 Figures, as we refer to them, are images, or similar visual artifacts (including tables) accompanied by a caption.
 
@@ -17,7 +17,7 @@ To ensure EPUB2 compatibility (which requires valid XHTML 1.1), we don't use the
    image="naples.svg"
    caption="A map of Naples"
    link="https://en.wikipedia.org/wiki/Naples"
-   description="A map showing the location of Naples."
+   alt-text="A map showing the location of Naples."
    reference="Figure 1"
 %}
 
@@ -46,7 +46,7 @@ A program that employs the pre-cloak stage of superheroes has been active in Rwa
     image-height="15"
     reference="Figure 2"
     caption="The Rwandan Orphans Project (near Kigali, Rwanda) uses comic superheroes to empower orphaned children. Capes from old t-shirts, masks from cereal boxes. Published with permission from The Rwandan Orphans Project. Photo © Lisa Meaney, MFT, [Rwandan Orphans Project](http://www.rwandanorphansproject.org), 2016 (Accessed 14 May 2016)."
-    description="Children stand in a line wearing super-hero capes and masks made from cereal boxes, making bold super-hero poses."
+    alt-text="Children stand in a line wearing super-hero capes and masks made from cereal boxes, making bold super-hero poses."
 %}
 
 5,000 miles WSW of Rwanda is a program in São Paulo, Brazil. The ‘Superformula’ program at the A.C. Camargo Cancer Center (2016[^4]), attempts to raise the spirits of its pediatric patients using special comics, videos, and superhero plastic covers for IV bags ([Figure 2](#figure-2)). The children are encouraged to do battle with their cancer, as the comic superheroes battle evil. Their chemo drip is ‘Superformula.’ While this approach may first seem novel, over time it may wear thin, as many patients on the ward will lose their battle. The Superformula program instills hope upon the ward, through the premise of ‘invincibility suggestion.’
@@ -58,7 +58,7 @@ A program that employs the pre-cloak stage of superheroes has been active in Rwa
     image-height="15"
     reference="Figure 3"
     caption="On the pediatric ward of the A.C. Camargo Cancer Center, superhero IV covers transform children’s chemo drip into _Superformula_. Design & Branding © J. Walter Thompson, Brazil, 2016 (Accessed 15&nbsp;May 2016)."
-    description="A poster that describes _Superformula to fight cancer_ covers, which have superhero logos on the covers of chemo drips. There is a batman logo on the cover in the foreground. Photos and text explain how the cover is attached."
+    alt-text="A poster that describes _Superformula to fight cancer_ covers, which have superhero logos on the covers of chemo drips. There is a batman logo on the cover in the foreground. Photos and text explain how the cover is attached."
 %}
 
 So where to go? I pondered on the future of the project; an effort conceived in several stages. The Rwandans were standing in the background. Therapists were asking what to do…. The cart was put in motion; it was rolling down the hill; but still, the next step was elusive. Then, bang! the answer hit me: A compilation! A directory for the therapists; in particular, those who work with high-risk children. I envisioned a sleek database; a gold-foil embossed book. I celebrated, having settled on direction. My compass was following the course.

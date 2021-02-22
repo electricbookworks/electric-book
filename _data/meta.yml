@@ -7,9 +7,9 @@ project:
   # The name of the organisation or entity that owns this project
   organisation: "Electric Book Works"
   # A live web address for the organisation
-  url: "http://electricbook.works/"
+  url: "http://electricbookworks.com"
   # The default contact email address
-  email: "support@electricbook.works"
+  email: "support@electricbookworks.com"
   # The name of the project of books in this folder.
   name: "The Electric Book template"
   # A one-liner about this project. Useful for Open Graph metadata.
@@ -19,7 +19,7 @@ project:
   # An image in /assets/images/web that stands for the project
   image: "cover.jpg"
   # Credit line, by default in the footer, overidden in locales.yml
-  credit: "Built with the [Electric Book](http://electricbook.works)"
+  credit: "Built with the [Electric Book](https://ebw.co/template)"
   # Primary language code for this project as a whole
   language: "en"
   # App bundle ID unique across all app stores
@@ -43,7 +43,7 @@ works:
     subtitle: ""
     creator: "A. N. Author" # E.g. the author
     contributor: "" # E.g. other contributors
-    subject: "Fiction" # E.g. BISAC terms (https://bisg.org/page/BISACEdition) or BIC (http://editeur.dyndns.org/bic_categories)
+    subject: "Fiction" # E.g. BISAC terms (https://bisg.org/page/BISACEdition) or BIC (https://ns.editeur.org/bic_categories)
     description: "The Electric Book's blank template." # E.g. the blurb
     publisher: "EBW" # E.g. the publisher, imprint or brand name
     publisher-url: ""
@@ -58,7 +58,7 @@ works:
     rights: "All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher." # e.g. a copyright statement
     image: "cover.jpg"
     products: # Metadata for each product for this title (only use values that override parent metadata)
-      print-pdf: 
+      print-pdf:
         date: "2016-05-07" # YYYY-MM-DD e.g. publication or creation date
         format: "Print" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
@@ -76,7 +76,7 @@ works:
           - label: "Chapter 2"
             file: "02"
             id: "2-goodbye-world"
-            children: 
+            children:
               - label: "Subsection"
                 file: "02"
                 id: "example-id"
@@ -109,7 +109,7 @@ works:
           - label: "Chapter Two"
             file: "02"
             id: "2-goodbye-world"
-            children: 
+            children:
               - label: "Subsection"
                 file: "02"
                 id: "example-id"
@@ -183,7 +183,7 @@ works:
           - label: "Chapter Two"
             file: "02"
             id: "2-goodbye-world"
-            children: 
+            children:
               - label: "Subsection"
                 file: "02"
                 id: "example-id"
@@ -200,7 +200,7 @@ works:
     subtitle: "Sample content for Electric Book print, epub and web output"
     creator: "Arthur Attwell" # E.g. the author
     contributor: "" # E.g. other contributors
-    subject: "Publishing" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (http://editeur.dyndns.org/bic_categories)
+    subject: "Publishing" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (https://ns.editeur.org/bic_categories)
     description: >
       Sample content demonstrating Electric Book support for a wide range of book features.
     publisher: "Electric Book Works" # E.g. the publisher, imprint or brand name
@@ -215,7 +215,7 @@ works:
     coverage: "" # e.g. geographic place or chronological time span
     rights: "This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use." # e.g. a copyright statement
     products: # Metadata for each product for this title (only use values that override parent metadata)
-      print-pdf: 
+      print-pdf:
         date: "2016-09-01" # YYYY-MM-DD e.g. publication or creation date
         format: "Print" # e.g. Paperback, Digital download, Digital online
         identifier: "" # e.g. ISBN or UUID
@@ -251,6 +251,7 @@ works:
           - "04-02-video"
           - "04-03-audio"
           - "04-04-iframes"
+          - "04-05-slides"
           - "10-00-indexes"
           - "10-01-traditional-index"
           - "10-02-dynamic-index"
@@ -283,7 +284,7 @@ works:
             file: "00-09-frontmatter"
             class: "frontmatter-entry"
           - label: "Text"
-            children: 
+            children:
               - label: "Plain text"
                 file: "01-01-plain-text"
                 id: "plain-text"
@@ -338,7 +339,7 @@ works:
                 file: "01-10-questions"
                 id: "questions-and-quizzes"
           - label: "Images"
-            children: 
+            children:
               - label: "Plain images"
                 file: "02-01-plain-images"
                 id: "plain-images"
@@ -354,7 +355,7 @@ works:
                 file: "03-02-maths"
                 id: "mathematics"
           - label: "Interactivity"
-            children: 
+            children:
               - label: "Links and buttons"
                 file: "04-01-links-buttons"
                 id: "links-and-buttons"
@@ -367,8 +368,11 @@ works:
               - label: "iFrames"
                 file: "04-04-iframes"
                 id: "iframes"
+              - label: "Slides"
+                file: "04-05-slides"
+                id: "slides"
           - label: "Indexes"
-            children: 
+            children:
               - label: "Traditional index"
                 file: "10-01-traditional-index"
                 id: "traditional-index"
@@ -412,6 +416,7 @@ works:
           - "04-02-video"
           - "04-03-audio"
           - "04-04-iframes"
+          - "04-05-slides"
           - "10-00-indexes"
           - "10-01-traditional-index"
           - "10-02-dynamic-index"
@@ -447,7 +452,7 @@ works:
                 file: "00-09-frontmatter"
                 class: "frontmatter-entry"
           - label: "Text"
-            children: 
+            children:
               - label: "Plain text"
                 file: "01-01-plain-text"
                 id: "plain-text"
@@ -502,7 +507,7 @@ works:
                 file: "01-10-questions"
                 id: "questions-and-quizzes"
           - label: "Images"
-            children: 
+            children:
               - label: "Plain images"
                 file: "02-01-plain-images"
                 id: "plain-images"
@@ -518,7 +523,7 @@ works:
                 file: "03-02-maths"
                 id: "mathematics"
           - label: "Interactivity"
-            children: 
+            children:
               - label: "Links and buttons"
                 file: "04-01-links-buttons"
                 id: "links-and-buttons"
@@ -531,16 +536,17 @@ works:
               - label: "iFrames"
                 file: "04-04-iframes"
                 id: "iframes"
+              - label: "Slides"
+                file: "04-05-slides"
+                id: "slides"
           - label: "Indexes"
-            children: 
+            children:
               - label: "Traditional index"
                 file: "10-01-traditional-index"
                 id: "traditional-index"
               - label: "Dynamic index"
                 file: "10-02-dynamic-index"
                 id: "dynamic-index"
-          - label: "Contact"
-            file: "contact"
         start-page: "00-05-contents-page" # At which file should users start reading?
         contents-page: "00-05-contents-page" # Your contents-page file, if you have one.
       epub:
@@ -583,6 +589,7 @@ works:
           - "04-02-video"
           - "04-03-audio"
           - "04-04-iframes"
+          - "04-05-slides"
           - "10-00-indexes"
           - "10-01-traditional-index"
           - "10-02-dynamic-index"
@@ -624,6 +631,7 @@ works:
           - "04-02-video"
           - "04-03-audio"
           - "04-04-iframes"
+          - "04-05-slides"
           - "10-00-indexes"
           - "10-01-traditional-index"
           - "10-02-dynamic-index"
@@ -664,6 +672,7 @@ works:
           - "04-02-video"
           - "04-03-audio"
           - "04-04-iframes"
+          - "04-05-slides"
           - "10-00-indexes"
           - "10-01-traditional-index"
           - "10-02-dynamic-index"
@@ -710,7 +719,6 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
-              - "contact"
             nav:
               - file: "00-00-cover"
                 label: "Couverture"
@@ -730,8 +738,6 @@ works:
                     label: "Images simples"
               - label: "Mathématiques"
                 file: "03-02-maths"
-              - label: "Contact"
-                file: "contact"
           screen-pdf:
             files:
               - "00-00-cover"
@@ -765,4 +771,3 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
-              - "contact"

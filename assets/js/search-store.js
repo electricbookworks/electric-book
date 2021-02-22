@@ -23,7 +23,7 @@ var store = [
             {% if page.url == url-from-array %}
                 {
                     'title': {% if page.title and page.title != "" %}{{ page.title | jsonify }}{% else %}{{ page.url | replace: "/"," " | jsonify }}{% endif %},
-                    'excerpt': {% capture excerpt %}{{ page.content | markdownify | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify | replace: "\n", "" }}{% endcapture %}{% if excerpt contains "{%" or excerpt contains "{{" %}""{% else %}{{ excerpt }}{% endif %},
+                    'excerpt': {% capture excerpt %}{% if page.description and page.description != "" %}{{ page.description | markdownify | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify | replace: "\n", "" }}{% else %}{{ page.content | markdownify | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify | replace: "\n", "" }}{% endif %}{% endcapture %}{% if excerpt contains "{%" or excerpt contains "{{" %}""{% else %}{{ excerpt }}{% endif %},
                     'url': {{ page.url | replace_first: "/", "" | jsonify }},
                     'id': {% assign search-store-loop-index = search-store-loop-index | plus: 1 %}{{ search-store-loop-index }}
                 }{% unless forloop.last %},{% endunless %}
@@ -32,7 +32,7 @@ var store = [
                     {% if page-url-as-index == url-from-array %}
                 {
                     'title': {% if page.title and page.title != "" %}{{ page.title | jsonify }}{% else %}{{ page.url | replace: "/"," " | jsonify }}{% endif %},
-                    'excerpt': {% capture excerpt %}{{ page.content | markdownify | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify | replace: "\n", "" }}{% endcapture %}{% if excerpt contains "{%" or excerpt contains "{{" %}""{% else %}{{ excerpt }}{% endif %},
+                    'excerpt': {% capture excerpt %}{% if page.description and page.description != "" %}{{ page.description | markdownify | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify | replace: "\n", "" }}{% else %}{{ page.content | markdownify | split: "<p>" | shift | first | truncatewords: 20, "&hellip;" | strip_html | jsonify | replace: "\n", "" }}{% endif %}{% endcapture %}{% if excerpt contains "{%" or excerpt contains "{{" %}""{% else %}{{ excerpt }}{% endif %},
                     'url': {{ url-from-array | replace_first: "/", "" | jsonify }},
                     'id': {% assign search-store-loop-index = search-store-loop-index | plus: 1 %}{{ search-store-loop-index }}
                 }{% unless forloop.last %},{% endunless %}

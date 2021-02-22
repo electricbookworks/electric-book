@@ -1,0 +1,60 @@
+// What is this?
+// -------------
+// This is typography for the Electric Book template (see http://ebw.co/template).
+// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
+// 
+// How to use it
+// -------------
+// Edit the default variables below.
+// Comment/uncomment or add font imports below.
+// Add your own custom CSS at the bottom.
+
+// -------------
+// Set variables
+// -------------
+
+// In screen PDF, we inherit all defaults from print-pdf.scss
+// except for screen-PDF-specific ones overridden here.
+
+// Provide a variable for site output
+$output-format: "screen-pdf" !default;
+
+// Edition suffix: identifies this edition in page-fitting classes (in _print-fitting.scss).
+// For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
+// A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
+// If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.
+$edition-suffix: null !default;
+
+// First, we set several variables related to overall page setup.
+$bleed: 0 !default;
+$trim: 0 !default;
+$crop-marks: none !default; // crop | none
+
+// Colours
+$colorspace: rgb !default; // auto | none | rgb | cmyk | gray
+
+// PDF file setup options
+// Options for pdf-profile: PDF/A-1b, PDF/A-3b, PDF/X-1a:2001, PDF/X-1a:2003, PDF/X-3:2002, PDF/X-3:2003, PDF/X-4
+// Options for color profile:
+// - From eci.org: PSOcoated_v3.icc, PSOuncoated_v3_FOGRA52.icc
+// - From color.org: sRGB_v4_ICC_preference.icc, sRGB_v4_ICC_preference_displayclass.icc
+// Add other ICC profiles to /_tools/profiles.
+// If you set convert-images-to-color-profile to false, ensure your print-PDF images
+// are in the same colour space as the document for X-1a compliance.
+$pdf-profile: "PDF/A-3b" !default;
+$color-profile: "sRGB_v4_ICC_preference_displayclass.icc" !default;
+
+// -------------
+// Master theme
+// -------------
+
+// By default, we assume screen-PDFs look exactly like print-PDF versions,
+// Except for variables changes above. So import and inherit those styles.
+@import 'print-pdf';
+
+// -------------
+// Custom styles
+// -------------
+
+// Add any custom screen-PDF styles here.

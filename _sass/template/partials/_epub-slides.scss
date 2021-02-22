@@ -1,0 +1,63 @@
+$epub-slides: true !default;
+@if $epub-slides {
+
+    .slides {
+        clear: both;
+        margin-bottom: $line-height-default;
+        margin-top: $line-height-default;
+        display: inline-block; // keeps slideline together, not split over pages[^1]
+
+        .figure {
+            margin: 0 0 ($line-height-default * 0.5) 0; // default figures have margin-top
+            width: calc(100% - 1.6em); // even narrow figures fill the slide width
+            display: inline-block;  // keeps figure together, not split over pages[^1]
+            counter-increment: slide; // for numbering slides
+
+            .figure-body {
+
+                .figure-images {
+                    width: 100%; // centres figure image on small screens when display: inline-block
+                }
+
+                .slide-caption {
+                    display: block;
+                    margin-bottom: 0;
+                }
+
+                .title {
+                    display: block;
+                    font-weight: bold;
+                    color: $color-accent;
+                    margin-bottom: 0;
+
+                    &:before {
+                        content: counter(slide, decimal) ". ";
+                    }
+                }
+            }
+
+            // Show the summary figure with caption only and white background
+            &.summary {
+                display: inline-block; // to create page break before
+                counter-reset: slide -1; // we do not number the summary figure, only subsequent figures in .slides
+
+                .figure-body {
+
+                    .title, .description {
+                        display: none;
+                    }
+
+                    .caption {
+                        display: block;
+                    }
+
+                    .figure-source {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// [^1]: https://web.archive.org/web/20160930093725/http://www.pigsgourdsandwikis.com/2010/06/goodbye-widows-and-orphans-or-yes-you.html
