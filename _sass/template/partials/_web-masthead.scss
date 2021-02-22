@@ -1,0 +1,60 @@
+$web-masthead: true !default;
+@if $web-masthead {
+
+    // Masthead
+
+    .masthead {
+        font-family: $font-text-secondary;
+        background-color: $masthead-background-color;
+        border-bottom: $rule-thickness solid $masthead-border-color;
+        width: 100%;
+        text-align: center;
+        color: $masthead-text-color;
+
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        a {
+            color: $masthead-text-color;
+            text-decoration: none;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            margin: 0 auto;
+            padding: 0.5em;
+
+            // Keep masthead height when li is display:none
+            min-height: 3.5rem;
+
+            li {
+                display: none; // hide masthead breadcrumbs as mobile-first default
+
+                @media only screen and (min-width: $max-width-default) {
+                    align-items: center;
+                    display: inline-flex;
+                    margin: 0 0.5em 0 0;
+
+                    // The divider between project and book title
+                    // Should not show if there is only one work,
+                    // and therefore no project title in masthead.
+                    &:after {
+                        content: $masthead-breadcrumb-divider;
+                        color: $masthead-text-color;
+                        margin-left: 0.5em;
+                    }
+
+                    // No symbol after last item
+                    &:last-of-type:after {
+                        content: normal;
+                    }
+                }
+            }
+        }
+    } // .masthead
+}

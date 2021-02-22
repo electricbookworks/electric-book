@@ -246,18 +246,7 @@ Enter a number and hit enter. "
 		echo "my/base"
 		read baseurl
 		# let the user know we're on it!
-		echo "Getting your site ready...
-You may need to reload the web page once this server is running."
-		# Open the web browser, without or, then, with the baseurl
-		# (This is before jekyll s, because jekyll s pauses the script.)
-		if [ "$baseurl" = "" ]
-		then
-			# (for OSX, this is open, not xdg-open)
-			xdg-open "http://127.0.0.1:4000/"
-		else
-			# (for OSX, this is open, not xdg-open)
-			xdg-open "http://127.0.0.1:4000/$baseurl/"
-		fi
+		echo "Getting your site ready..."
 		# We're going to let users run this over and over by pressing enter
 		repeat=""
 		while [ "$repeat" = "" ]
@@ -291,7 +280,7 @@ You may need to reload the web page once this server is running."
 			then
 			bookfolder="book"
 		fi
-		echo "Okay, let's make epub-ready files using $bookfolder..."
+		echo "Okay, let's make an epub of $bookfolder..."
 		# Ask if we're outputting the files from a subdirectory (e.g. a translation)
 		echo "If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. "
 		read epubsubdirectory
@@ -333,31 +322,33 @@ You may need to reload the web page once this server is running."
 
 			# Now to assemble the epub
 			echo "Assembling epub..."
-			# Check if there are fonts to include
+			# Check if there are fonts to include.
+			# We check for font extensions to avoid false positives
+			# from files like .gitignore and font licences.
 			echo "Checking for fonts to include..."
 			epubfonts=""
-			countttf=`ls -1 fonts/*.ttf 2>/dev/null | wc -l`
-			if [ $countttf != 0 ]; then 
+			countttf=`ls -1 _epub/fonts/*.ttf 2>/dev/null | wc -l`
+			if [ $countttf != 0 ]; then
 				epubfonts="y"
 			fi
-			countotf=`ls -1 fonts/*.otf 2>/dev/null | wc -l`
-			if [ $countotf != 0 ]; then 
+			countotf=`ls -1 _epub/fonts/*.otf 2>/dev/null | wc -l`
+			if [ $countotf != 0 ]; then
 				epubfonts="y"
 			fi
-			countwoff=`ls -1 fonts/*.woff 2>/dev/null | wc -l`
-			if [ $countwoff != 0 ]; then 
+			countwoff=`ls -1 _epub/fonts/*.woff 2>/dev/null | wc -l`
+			if [ $countwoff != 0 ]; then
 				epubfonts="y"
 			fi
-			countwoff2=`ls -1 fonts/*.woff2 2>/dev/null | wc -l`
-			if [ $countwoff2 != 0 ]; then 
+			countwoff2=`ls -1 _epub/fonts/*.woff2 2>/dev/null | wc -l`
+			if [ $countwoff2 != 0 ]; then
 				epubfonts="y"
 			fi
 			# Check if there are scripts to include
 			echo "Checking for scripts to include..."
-			epubscripts=""
-			countjs=`ls -1 js/*.js 2>/dev/null | wc -l`
-			if [ $countjs != 0 ]; then 
-				epubscripts="y"
+			epubscripts="y"
+			countjs=`ls -1 "$location"/_site/assets/js/bundle.js 2>/dev/null | wc -l`
+			if [ $countjs = 0 ]; then
+				epubscripts=""
 			fi
 			# Copy text (files in file-list only), images, fonts, styles, package.opf and toc.ncx to epub
 			cd "$location"/_site/"$bookfolder"
@@ -373,10 +364,6 @@ You may need to reload the web page once this server is running."
 				if [ -d "$location"/_site/items/images/epub ]; then
 					echo "Found images in _items. Copying to epub..."
 					mkdir -p "$location"/_site/epub/items/images/epub && cp -a "$location"/_site/items/images/epub/. "$location"/_site/epub/items/images/epub/
-				fi
-				if [ "$epubfonts" = "y" ]; then
-					echo "Copying fonts..."
-					mkdir -p "$location"/_site/epub/fonts && cp -a "$location"/_site/$bookfolder/fonts/. "$location"/_site/epub/fonts/
 				fi
 				if [ -d "$location"/_site/$bookfolder/styles ]; then
 					echo "Copying styles..."
@@ -450,7 +437,7 @@ You may need to reload the web page once this server is running."
 			fi
 			if [ "$epubscripts" = "y" ]; then
 				echo "Copying Javascript..."
-				mkdir "$location"/_site/epub/js && cp -a "$location"/_site/js/. "$location"/_site/epub/js/
+				mkdir "$location"/_site/epub/js && cp -a "$location"/_site/assets/js/bundle.js "$location"/_site/epub/js/bundle.js
 			fi
 			# Convert all .html files and internal links to .xhtml
 			echo "Renaming .html to .xhtml..."
@@ -535,21 +522,9 @@ You may need to reload the web page once this server is running."
 					fi
 				fi
 			fi
-			# Add either the parent fonts folder or the translation's fonts folder.
-			# If the translation has a fonts folder, use it. Otherwise, use the parent's
-			# fonts for the translation.
-			if [ "$epubsubdirectory" = "" ]; then
-					if [ -d fonts ]; then
-						cp -a "fonts" "$location/_output/$epubfilename/"
-					fi
-				else
-					if [ -d "$epubsubdirectory/fonts" ]; then
-						cp -a "$epubsubdirectory/fonts" "$location/_output/$epubfilename/$epubsubdirectory/"
-					else
-						if [ -d fonts ]; then
-							cp -a "fonts" "$location/_output/$epubfilename/"
-						fi
-					fi
+			# Add the fonts folder.
+			if [ -d fonts ]; then
+				cp -a "fonts" "$location/_output/$epubfilename/"
 			fi
 			# Add the parent styles folder and the translation's styles folder if it exists.
 			if [ "$epubsubdirectory" = "" ]; then
@@ -571,10 +546,10 @@ You may need to reload the web page once this server is running."
 					cp -a "mathjax" "$location/_output/$epubfilename/"
 				fi
 			fi
-			# If there is a Javascript folder, add it to the epub.
+			# If there is a Javascript bundle, add it to the epub.
 			# Scripts always go to the same place in the epub root, even in translations.
 			if [ -d js ]; then
-				cp -a "js" "$location/_output/$epubfilename/"
+				mkdir "$location"/_output/$epubfilename/js && cp -a "js/bundle.js" "$location/_output/$epubfilename/js/bundle.js"
 			fi
 			# Add the mimetype file
 			if [ -e mimetype ]; then
@@ -855,7 +830,7 @@ You may need to reload the web page once this server is running."
 				then
 				fromformat="epub"
 				wordformatchoice="1"
-			else				
+			else
 				wordformatchoice=""
 			fi
 		done

@@ -26,6 +26,7 @@ layout: null
     {% include_relative select-list.js %}
     {% include_relative tables.js %}
     {% include_relative footnote-popups.js %}
+    {% include_relative slides.js %}
     {% include_relative show-hide.js %}
     {% include_relative copy-to-clipboard.js %}
 
@@ -83,4 +84,8 @@ have different behaviour for web or app. {% endcomment %}
     the relevant page cross-reference text as generated content.{% endcomment %}
     {% include_relative page-reference.js %}
 
+{% endif %}
+
+{% if site.output == "epub" %}
+    {% include_relative show-hide.js %}
 {% endif %}

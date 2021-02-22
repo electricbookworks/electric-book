@@ -10,10 +10,10 @@ var ebShowHideOptions = {
 };
 
 // Toggle visuallyhidden
-function ebToggleNextSiblingVisibility(event) {
+function ebTogglePreviousSiblingVisibility(event) {
     'use strict';
     var button = event.target;
-    var elementToHide = button.nextElementSibling;
+    var elementToHide = button.previousElementSibling;
     if (elementToHide.classList.contains('visuallyhidden')) {
         elementToHide.classList.remove('visuallyhidden');
         button.classList.remove('show-hide-hidden');
@@ -47,7 +47,7 @@ function ebShowHideAddButton(elementToHide) {
     var button = document.createElement('button');
     button.classList.add('show-hide');
     button.classList.add('show-hide-hidden');
-    elementToHide.insertAdjacentElement('beforebegin', button);
+    elementToHide.insertAdjacentElement('afterend', button);
 
     // If button text has been set in the HTML, use that,
     // otherwise use our default from ebShowHideOptions above.
@@ -58,7 +58,7 @@ function ebShowHideAddButton(elementToHide) {
     }
 
     // Add a listener to the button
-    button.addEventListener('click', ebToggleNextSiblingVisibility, false);
+    button.addEventListener('click', ebTogglePreviousSiblingVisibility, false);
 }
 
 // Hide element

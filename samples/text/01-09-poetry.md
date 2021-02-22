@@ -6,7 +6,7 @@ title: "Poetry"
 
 First, a bit of background about how we like to mark up poetry. This will help you understand what you're looking at when we get to the samples below.
 
-Also see the official [docs on poetry]({{ site.canonical-url }}/docs/editing/poetry.html).
+Also see the official [docs on poetry](https://electricbookworks.github.io/electric-book/docs/editing/poetry.html).
 
 Encoding poetry can be tricky. Usually, poetry in HTML is structured by tagging each stanza as a paragraph, with line breaks after each line. You can do this by adding markdown line breaks (with double spaces or `\\` at the end of each line) and tagging the paragraph with `{:.verse}`. However, this structure makes it impossible to have browsers, ereaders and PDF engines correctly indent runover lines (because there is no [`nth-line` selector](https://css-tricks.com/a-call-for-nth-everything/) in CSS, unless you resort to [a Javascript method](https://github.com/davatron5000/Lettering.js#letters-words-lines-and-more) that will bloat your code and won't run on many ereaders).
 
