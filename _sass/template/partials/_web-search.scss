@@ -1,0 +1,94 @@
+// Also see .search in web-nav-bar
+
+$web-search: true !default;
+@if $web-search {
+
+    // Search in nav bar
+
+    #nav {
+        .search {
+            input {
+                width: 90%; // Keeps input within nav-bar bounds
+                margin: 0; // Unlike default input
+                // padding: 0.75em 0.75em;
+                border: 0;
+                // font-family: $font-text-secondary;
+                // font-size: inherit;
+                overflow-x: hidden; // Prevents scroll bar popping up when very long searches are entered
+                background-color: $nav-bar-search-background-color;
+                color: $color-text-secondary;
+            }
+        }
+    }
+
+    // Search on search page
+
+    #content {
+        .search {
+            margin: $line-height-default 0;
+            input {
+                // padding: 0.75em 0.75em;
+                // border: $rule-thickness solid $color-light;
+                // font-family: $font-text-secondary;
+                // font-size: inherit;
+                // color: inherit;
+                width: 100%;
+            }
+        }
+    }
+
+    // Search results
+
+    .search-results {
+       ul {
+        list-style-type: none;
+        margin: $line-height-default 0;
+      }
+    }
+
+    // Marked search results (with mark.js)
+    mark {
+        background-color: $color-highlight;
+        color: inherit;
+        border-radius: $button-border-radius;
+    }
+
+    .search-results-summary {
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        background-color: $color-notification-low-background;
+        border-radius: $box-border-radius;
+    }
+
+    .search-page-notice {
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        background-color: $color-notification-medium-background;
+        border-radius: $box-border-radius;
+        *:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .search-progress-placeholder {
+        background-color: $color-notification-low-background;
+        border-radius: $box-border-radius;
+        color: $color-notification-low-text;
+        font-family: $font-text-secondary;
+        font-size: $font-size-default * $font-size-smaller;
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        *:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+} // @if $web-search
+
+@else {
+    #nav {
+        .search {
+            display: none;
+        }
+    }
+}

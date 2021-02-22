@@ -90,3 +90,7 @@ have different behaviour for web or app. {% endcomment %}
 {% include_relative index-loader.js %}
 {% include_relative index-targets.js %}
 {% include_relative index-lists.js %}
+
+{% if site.output == "epub" %}
+    {% include_relative show-hide.js %}
+{% endif %}

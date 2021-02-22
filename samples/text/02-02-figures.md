@@ -4,7 +4,7 @@ title: "Figures"
 
 ## Figures
 
-Also see the [docs on figures]({{ site.canonical-url }}/docs/editing/figures.html).
+Also see the [docs on figures](https://electricbookworks.github.io/electric-book/docs/editing/figures.html).
 
 Figures, as we refer to them, are images, or similar visual artifacts (including tables) accompanied by a caption.
 

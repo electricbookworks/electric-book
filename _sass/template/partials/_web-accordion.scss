@@ -1,0 +1,78 @@
+$web-accordion: true !default;
+@if $web-accordion {
+
+    // Accordions
+    [role="tab"] {
+        position: relative;
+        padding-right: $line-height-default;
+        &:hover {
+            cursor: pointer;
+        }
+        a {
+            color: $color-accent;
+            text-decoration: none;
+            &:first-of-type {
+                margin-right: 0.4em;
+            }
+        }
+        &:after {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    // Don't let floating elements from previous section
+    // overlap with next section.
+    [role="tabpanel"] {
+        clear: both;
+    }
+
+    [data-accordion="closed"] {
+        font-size: $font-size-default;
+        &:after {
+            content: $nav-bar-children-prompt;
+        }
+    }
+
+    [data-accordion="open"] {
+        margin-top: $line-height-default;
+        &:after {
+            content: $nav-bar-children-prompt-hide;
+        }
+    }
+
+    [aria-expanded="false"] {
+        display: none;
+    }
+
+    .accordion-show-all-button-wrapper {
+        margin-top: $line-height-default;
+        text-align: right;
+    }
+
+    a.accordion-show-all-button {
+        border-radius: $button-border-radius;
+        border: 1px solid $color-mid;
+        color: $color-mid;
+        cursor: pointer;
+        display: inline-block;
+        font-family: $font-text-secondary;
+        font-size: $font-size-default / 2;
+        letter-spacing: 0.05em;
+        line-height: 1;
+        padding: 0.2em 0.3em;
+        text-transform: uppercase;
+
+        // Shift closer to section header
+        // transform: translateY($line-height-default);
+        & + * {
+            clear: both;
+        }
+    }
+
+    // Don't show the button if the page accordion setting is 'none'
+    [data-accordion-page='none'] .accordion-show-all-button-wrapper {
+        display: none;
+    }
+}

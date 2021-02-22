@@ -1,0 +1,93 @@
+// Footnotes, endnotes and sidenotes
+// Note: Conventionally, HTML .footnotes are in a book context endnotes.
+
+$web-notes: true !default;
+@if $web-notes {
+
+    // Single sidenote
+    .sidenote {
+        @include sidenote();
+    }
+
+    // Footnotes section
+    .footnotes {
+      margin: ($line-height-default * 2) 0 0 0;
+      padding: $line-height-default 0;
+      border-top: $rule-thickness solid $color-light;
+      color: $color-mid;
+    }
+    .footnotes p {
+        text-indent: 0;
+    }
+
+    // Footnote popups
+    .footnote-detail {
+        // pull footnote-detail out of the doc flow so they hover above text
+        z-index: 1;
+        position: absolute;
+        // look and feel
+        margin-top: $line-height-default;
+        max-width: $max-width-default;
+        margin-left: auto;
+        margin-right: auto;
+        left: $paragraph-indent;
+        right: $paragraph-indent;
+        @include dialog-styles();
+        p {
+            margin-bottom: 0;
+        }
+        // When footnotes are in sidenotes, let them be wider
+        .sidenote.contains-footnote & {
+            left: 0;
+            right: 0;
+        }
+
+        @media only screen and (min-width: $break-width-medium) {
+            left: $max-width-default * 0.25 / 3;
+            right: $max-width-default * 0.25 / 3;
+        }
+    }
+
+    .footnotes {
+        color: $color-text-secondary;
+
+        .reversefootnote {
+            text-decoration: none;
+        }
+    }
+
+    .footnote-detail {
+        .reversefootnote {
+            @include button-close($color-accent);
+            border: 0;
+            color: white;
+            font-size: 1em;
+            line-height: 1;
+            padding: 0.15em 0.1em 0em 0.1em; // override button-close padding
+            position: absolute;
+            right: -($line-height-default / 2);
+            top: -($line-height-default / 2);
+            &:before {
+                content: $nav-bar-close;
+                display: inline-block;
+                width: 1em;
+                position: relative;
+                top: -0.1em;
+            }
+            // When a footnote is used twice in a doc,
+            // hide the second reverse footnote in popups, which
+            // breaks the 'close' action of footnote popups.
+            & + .reversefootnote {
+                display: none;
+            }
+        }
+    }
+
+    // Prevent footnote references from disappearing below the fixed nav bar when linked to.
+    sup:target {
+        padding-top: 3.5em; 
+    }
+
+    // .bottom {} // Only used for print output, ignored for screen.
+
+}

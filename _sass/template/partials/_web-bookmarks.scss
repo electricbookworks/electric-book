@@ -1,0 +1,447 @@
+$web-bookmarks: true !default;
+@if $web-bookmarks {
+
+    // Bookmarks
+
+    $bookmarks-modal-header-height: 2.7rem!default;
+
+    // The bookmarks list
+    .bookmarks {
+        color: $bookmark-text-color;
+        text-align: right;
+
+        &, * {
+            // Already applied globally in EBT styles,
+            // but may be required for copy-pasting into other projects.
+            box-sizing: border-box;
+        }
+
+        // Hide history icon here, we need it elsewhere, e.g. for JS
+        .history-icon {
+            display: none;
+        }
+    }
+
+    // The modal
+    .bookmarks-modal {
+        @include dialog-styles();
+        background-color: $color-background;
+        border-color: $bookmark-border-color;
+        &, * {
+            // Already applied globally in EBT styles,
+            // but may be required for copy-pasting into other projects.
+            box-sizing: border-box;
+        }
+
+        // Hide the list till click on parent
+        display: none;
+
+        // Appearance
+        list-style-type: none;
+        padding: 0; // override default masthead padding
+        overflow: auto;
+
+        // Position
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        height: 25em;
+        max-height: 80vh; // allow space to tap out
+        max-width: 80vw; // allow space to tap out
+        transform: translate(-50%, -50%);
+        width: 25em;
+
+        // Show/Hide
+        .bookmarks-list,
+        .last-locations-list {
+
+            .bookmarks-list-content,
+            .last-locations-list-content {
+                // display: none;
+                position: relative;
+                visibility: hidden;
+                z-index: -1;
+            }
+
+            &.bookmarks-list-open {
+                .bookmarks-list-content,
+                .last-locations-list-content {
+                    // display: block;
+                    position: relative;
+                    visibility: visible;
+                    z-index: 1;
+                }
+            }
+        }
+
+        .last-locations-list {
+
+            .last-locations-list-header {
+                left: 50%!important;
+            }
+
+            &.bookmarks-list-header-open {
+                .last-locations-list-header {
+                    color: $bookmark-text-color;
+                }
+            }
+        }
+
+        .bookmarks-list {
+
+            .bookmarks-list-header-open {
+                color: $bookmark-text-color;
+            }
+        }
+
+        .bookmarks-list,
+        .last-locations-list {
+            margin: 0;
+            padding: 0;
+            text-align: left;
+
+            // Position
+            position: absolute;
+            top: $bookmarks-modal-header-height;
+            left: 0;
+            right: 0;
+
+            .bookmarks-list-header,
+            .last-locations-list-header {
+
+                // Flex
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                // Appearance
+                border-bottom: $rule-thickness solid $bookmark-border-color;
+                color: $color-links;
+                cursor: pointer;
+                font-size: 0.8em;
+                height: $bookmarks-modal-header-height;
+                letter-spacing: 0.05em;
+                line-height: 1;
+                padding: 0.5em;
+                text-align: center;
+                text-transform: uppercase;
+                width: 50%;
+
+                // Position
+                position: absolute;
+                top: -$bookmarks-modal-header-height;
+                left: 0;
+                right: 50%;
+
+                &.bookmarks-list-header-open {
+                    border-bottom-color: $color-background;
+                    color: $bookmark-text-color;
+                    cursor: auto;
+                }
+            }
+
+            .bookmarks-list-header {
+                border-right: $rule-thickness solid $bookmark-border-color;
+            }
+
+            .bookmarks-list-tip,
+            .last-locations-list-tip {
+
+                // Appearance
+                color: $bookmark-text-color-secondary;
+                font-size: 0.8em;
+                line-height: $line-height-default;
+                min-height: 4em; // helps last-location tip obscure bookmark tip
+                padding: 1em;
+                text-align: center;
+            }
+
+            ul {
+
+                // Appearance
+                margin: 0;
+                padding: 1em;
+
+                &:empty {
+                    // Don't take up space if empty
+                    margin: 0;
+                    min-height: 0;
+                    padding: 0;
+                }
+
+                li {
+                    display: block; // overrides masthead ul styles
+                    font-size: 0.9em;
+                    line-height: 1;
+                    margin-bottom: 2em;
+                    &:last-child { margin-bottom: 0; }
+
+                    a {
+                        color: $color-links;
+                        text-decoration: none;
+                    }
+
+                    .bookmark-title {
+                        color: $bookmark-text-color-secondary;
+                        font-family: $font-text-secondary;
+                        font-size: 0.7em;
+                        letter-spacing: 0.05em;
+                        text-transform: uppercase;
+
+                        &::after {
+                            color: $bookmark-text-color-secondary;
+                            content: "\2022";
+                            font-size: 1rem;
+                            font-style: normal;
+                            margin: 0 0.25em;
+                        }
+                    }
+
+                    .bookmark-date {
+                        color: $bookmark-text-color-secondary;
+                        font-family: $font-text-secondary;
+                        font-size: 0.7em;
+                        letter-spacing: 0.05em;
+                        text-transform: uppercase;
+                    }
+
+                    .bookmark-page {
+                        display: inline-block;
+                        font-family: $font-text-secondary;
+                        font-size: 0.85em;
+                        font-weight: 600;
+                    }
+
+                    .bookmark-section {
+                        font-family: $font-text-secondary;
+                        font-size: 0.9em;
+                        font-weight: 600;
+
+                        &::before {
+                            color: $bookmark-text-color-secondary;
+                            content: "\2022";
+                            font-size: 1rem;
+                            font-style: normal;
+                            margin: 0 0.25em;
+                        }
+                    }
+
+                    .bookmark-description {
+                        display: block;
+                        font-family: $font-text-main;
+                        font-size: 0.9em;
+                        line-height: 1.2;
+                        margin: ($line-height-default * 0.25) 0;
+                    }
+
+                    .bookmark-delete {
+                        float: right;
+                    }
+
+                    &.bookmarks-delete-all {
+                        text-align: center;
+                        // Don't show if there are no bookmarks listed
+                        &:only-child {
+                            display: none;
+                        }
+                    }
+
+                    // override inherited styles from masthead ul li:after
+                    &:after {
+                        content: normal;
+                    }
+
+                    svg {
+                        display: inline-block;
+                        height: 0.75em;
+                        margin-left: 0.5em;
+                        width: 0.75em;
+
+                        path {
+                            fill: $bookmark-icon-color-active;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Icons (_includes/bookmark-icon, _includes/history-icon)
+    svg[class*="icon"] {
+        // Avoid Firefox bug where tapping selects SVG as text
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
+        -moz-user-select: none;
+
+        &.bookmark-icon {
+            cursor: pointer;
+
+            .bookmark-icon-fill {
+                fill: $bookmark-icon-color-inactive;
+            }
+
+            .bookmark-icon-outline {
+                fill: $bookmark-icon-outline-color-inactive;
+            }
+        }
+
+        &.history-icon {
+
+            path {
+                fill: $bookmark-icon-color-active;
+            }
+        }
+    }
+
+    // Bookmark button
+    .bookmark-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        float: left;
+        height: $line-height-default;
+        opacity: 0.8;
+        padding: 0;
+
+        // For when button is shown and flex is applied
+        flex-direction: column;
+        justify-content: center;
+
+        // Hide bookmark button unless bookmarked
+        // or hovering a parent element.
+        display: none;
+
+        svg {
+            width: $bookmark-icon-text-size;
+            height: $bookmark-icon-text-size;
+
+            // Keep in same place in margin even when
+            // parent element is indented
+            position: absolute;
+            left: 0;
+
+            // On large screens, have the button just to the left of the text,
+            // in the margin (which doesn't exist on small screens).
+            // Overridden for bookmark-pending below.
+            @media only screen and (min-width: $break-width-medium) {
+                left: auto;
+                transform: translateX(-$bookmark-icon-text-size * 2);
+            }
+        }
+
+        &:hover {
+            background-color: transparent;
+
+            svg {
+
+                .bookmark-icon-fill {
+                    fill: $bookmark-icon-color-inactive;
+                }
+
+                .bookmark-icon-outline {
+                    fill: $bookmark-icon-outline-color-inactive;
+                }
+            }
+        }
+    }
+
+    #content .bookmark-pending {
+        & > .bookmark-button {
+            display: flex;
+            z-index: 1; // helps ensure it's always clickable
+
+            // While selecting text, show button at this position,
+            // inserted as a property in the style attribute by JS.
+            // Custom properties not supported by IE, so position
+            // will remain static there.
+            // We add space to the left of the button because
+            // on mobile, the button is otherwise too close to the
+            // text-selection tool and can't be tapped.
+            position: var(--bookmark-button-position);
+            left: calc(var(--bookmark-button-position-x) + 1em);
+            top: var(--bookmark-button-position-y);
+
+            // While pending, make button larger for easier pressing
+            svg {
+                width: $bookmark-icon-text-size * 2;
+                height: $bookmark-icon-text-size * 2;
+
+                // Override large-screen positioning in media query above
+                left: 0;
+                transform: none;
+            }
+        }
+
+        // While pending, remove visually hidden elements
+        // so that they don't get included in text selection
+        // (e.g. definition popups)
+        .visuallyhidden {
+            display: none;
+        }
+    }
+
+    [data-bookmarked] {
+
+        // Always show bookmarked buttons
+        .bookmark-button {
+            display: flex;
+        }
+
+        svg[class*="icon"].bookmark-icon {
+
+            .bookmark-icon-fill {
+                fill: $bookmark-icon-color-active;
+            }
+
+            .bookmark-icon-outline {
+                fill: $bookmark-icon-outline-color-active;
+            }
+        }
+    }
+
+    .last-location-prompt {
+        align-items: center;
+        background: $color-background;
+        border: $rule-thickness solid $bookmark-icon-outline-color-active;
+        border-radius: $button-border-radius 0 0 $button-border-radius;
+        display: flex;
+        font-family: $font-text-secondary;
+        font-size: 1rem;
+        height: $line-height-default;
+        line-height: $line-height-default;
+        margin: ($bookmark-icon-text-size / 8) -0.3em 0.25rem 0; // must touch icon, magic number
+        padding: 0.1rem 0.5rem;
+        position: fixed;
+        top: 0.75rem;
+        right: 0;
+
+        a {
+            color: $color-links;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        // Transition
+        transition: transform 0.5s, z-index 1.5s;
+        transform: translateX(100%);
+
+        &.last-location-prompt-open {
+            transform: translateX(0);
+            z-index: 0;
+        }
+
+        // Close button
+        button {
+            background-color: transparent;
+            color: $color-links;
+            font-size: 0.9rem; // align in box
+            padding-bottom: 0.4rem; // align in box
+        }
+    }
+
+    // Don't show last-location icon on landing page
+    .home {
+        .history-icon {
+            visibility: hidden;
+        }
+    }
+}

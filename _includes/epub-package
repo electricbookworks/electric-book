@@ -85,12 +85,12 @@
             {% endfor %}
 
             {% capture properties %}
-                {% if site.mathjax-enabled == true or epub-scripts-exist == true %}scripted {% endif %}
+                {% if site.mathjax-enabled == true or epub-scripts-disabled != true %}scripted {% endif %}
                 {% if manifest-epub-file-name == epub-contents-page %}nav {% endif %}
             {% endcapture %}
             {% capture properties %}{{ properties | strip_newlines | strip }}{% endcapture %}
 
-            {% comment %}If the file starts with a number, 
+            {% comment %}If the file starts with a number,
             create a prefix for when we use it as an id,
             which can't start with a number.{% endcomment %}
             {% capture file-first-character %}{{ manifest-epub-file-name | strip | truncate: 1, "" }}{% endcapture %}
@@ -107,8 +107,8 @@
                   {% assign file-prefix = "file-" %}
             {% endif %}
 
-        <item id="{% if file-prefix %}{{ file-prefix }}{% endif %}{{ manifest-epub-file-name | strip }}" 
-              media-type="application/xhtml+xml" 
+        <item id="{% if file-prefix %}{{ file-prefix }}{% endif %}{{ manifest-epub-file-name | strip }}"
+              media-type="application/xhtml+xml"
               href="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ manifest-epub-file-name | strip }}.html"
               {% if properties != "" %}properties="{{ properties }}"{% endif %}
               />
@@ -117,14 +117,14 @@
 
         {% comment %}Add the stylesheet{% endcomment %}
 
-        <item id="epub-css" 
-              media-type="text/css" 
+        <item id="epub-css"
+              media-type="text/css"
               href="styles/{{ epub-stylesheet }}"
               />
 
         {% if is-translation and translation-styles-exist %}
-        <item id="epub-css-{{ book-subdirectory }}" 
-              media-type="text/css" 
+        <item id="epub-css-{{ book-subdirectory }}"
+              media-type="text/css"
               href="{{ book-subdirectory }}/styles/{{ epub-stylesheet }}"
               />
         {% endif %}
@@ -144,7 +144,7 @@
 
             {% assign file-extension = file.extname | remove: "." %}
 
-            <item id="image-{{ file.name | slugify }}" 
+            <item id="image-{{ file.name | slugify }}"
                   media-type="{{ site.media-types[file-extension] }}"
                   href="{% if is-translation and translated-images-exist %}{{ book-subdirectory }}/{% endif %}images/epub/{{ file.name }}"
                   {% if properties != "" %}properties="{{ properties }}"{% endif %}
@@ -174,31 +174,35 @@
 
         {% endfor %}
 
-        {% comment %}Add epub fonts listed in settings.{% endcomment %}
-        {% for font in site.data.settings.epub.fonts %}
+        {% comment %}Add epub font files in _epub/fonts.{% endcomment %}
+        {% for collection in site.collections %}
+            {% if collection.label == "epub" %}
+                {% for file in collection.files %}
+                    {% if file.path contains "_epub/fonts/" %}
 
-            {% capture file-name %}{{ font | split: "." | first }}{% endcapture %}
-            {% capture file-extension %}{{ font | split: "." | last }}{% endcapture %}
+                        {% capture file-basename %}{{ file.name | split: "." | first }}{% endcapture %}
+                        {% capture file-extension %}{{ file.name | split: "." | last }}{% endcapture %}
 
-            <item id="font-{{ file-name }}" 
-                  media-type="{{ site.media-types[file-extension] }}"
-                  href="{% if is-translation and translated-images-exist %}{{ book-subdirectory }}/{% endif %}fonts/{{ font }}"
-                  />
+                        <item id="font-{{ file-basename }}"
+                            media-type="{{ site.media-types[file-extension] }}"
+                            href="fonts/{{ file.name }}"
+                            />
 
-        {% endfor %}
-
-        {% comment %}Add scripts if any exist in _epub/js{% endcomment %}
-        {% for file in site.epub %}
-            {% capture file-extension %}{{ file.path | split: "." | last }}{% endcapture %}
-            {% if file-extension == "js" %}
-
-                <item id="script-{{ file.title | slugify }}"
-                      media-type="application/x-javascript"
-                      href="{% if is-translation %}{{ book-subdirectory }}/{% endif %}js/{{ file.path | split: "/" | last }}"
-                      />
-
+                    {% endif %}
+                {% endfor %}
             {% endif %}
         {% endfor %}
+
+        {% comment %} If this epub has JS enabled, include an entry for bundle.js. {% endcomment %}
+        {% unless site.data.settings.epub.javascript.disabled == true %}
+
+            {% comment %} Add the default bundle.js Javascript {% endcomment %}
+            <item id="script-bundle"
+                    media-type="application/x-javascript"
+                    href="js/bundle.js"
+                    />
+
+        {% endunless %}
 
         {% comment %}If we're using mathjax, add the mathjax-manifest{% endcomment %}
         {% if site.mathjax-enabled == true %}
@@ -230,7 +234,7 @@
                 {% endif %}
             {% endfor %}
 
-            {% comment %}If the file starts with a number, 
+            {% comment %}If the file starts with a number,
             create a prefix for when we use it as an id,
             which can't start with a number.{% endcomment %}
             {% capture file-first-character %}{{ epub-file-name | truncate: 1, "" }}{% endcapture %}
@@ -275,7 +279,7 @@
         {% for file in epub-file-list %}
 
             {% comment %}If the file list entry is a hash, add it to the guide,
-            with the hash value as the value.{% endcomment %} 
+            with the hash value as the value.{% endcomment %}
             {% for file-hash in file %}
 
                 {% if file-hash[0] %}
@@ -367,7 +371,7 @@
                     {% endif %}
 
                 {% if reference-type and reference-type != "" %}
-                <reference type="{{ reference-type }}" 
+                <reference type="{{ reference-type }}"
                            href="{% if is-translation %}{{ book-subdirectory }}/{% endif %}text/{{ file-href }}.html"
                            {% if reference-title and reference-title != "" %}title="{{ reference-title }}"{% endif %}
                 />

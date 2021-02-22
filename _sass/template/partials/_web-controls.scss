@@ -1,0 +1,14 @@
+$web-controls: true !default;
+@if $web-controls {
+
+    // Controls and settings
+
+    .controls {
+        display: flex;
+        margin-left: 1rem;
+
+        & > div {
+            margin-right: 1em;
+        }
+    }
+}

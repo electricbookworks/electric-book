@@ -1,0 +1,44 @@
+$epub-index: true !default;
+@if $epub-index {
+
+    // Index
+
+    ol.reference-index,
+    ul.reference-index {
+        margin-left: $paragraph-indent;
+        list-style-type: none;
+        ul, ol {
+            list-style-type: none;
+        }
+        li {
+            text-indent: -($paragraph-indent);
+            li {
+                margin: 0;
+            }
+
+            a {
+                text-decoration: none;
+
+                &:after {
+                    content: ", ";
+                }
+                &:last-of-type:after {
+                    content: "";
+                }
+                &.indexed {
+                    color: inherit;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    // We don't nest .duplicate under this ol/ul, because if we do
+    // then Kindlegen says we're hiding too much and errors out,
+    // even if we're not actually using the class. It seems Kindlegen
+    // freaks out just because we might use the class on 10000+
+    // characters, which is its display: none limit.
+    .duplicate {
+        display: none;
+    }
+
+}
