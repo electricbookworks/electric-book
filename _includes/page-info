@@ -217,4 +217,4 @@ See all the metadata gathered for a given page.
 
 |       Description       |              Source              |   Output tag   |   Current result   |   Type  |
 |-------------------------|----------------------------------|----------------|--------------------|---------|
-| Are there epub scripts? | Detected from path to `_epub/js` | `epub-scripts-exist` | {{ epub-scripts-exist }} | Boolean |
+| Is Javascript disabled in epub output? JS is enabled by default. | Set in `_data/settings.yml` | `epub-scripts-disabled` | {{ epub-scripts-disabled }} | Boolean |

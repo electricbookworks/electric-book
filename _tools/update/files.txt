@@ -575,7 +575,6 @@ _docs/troubleshooting/troubleshooting.md
 # when generating epub files.
 
 _epub/fonts/.gitignore
-_epub/js/.gitignore
 _epub/META-INF/com.apple.ibooks.display-options.xml
 _epub/META-INF/container.xml
 _epub/mimetype
