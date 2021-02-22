@@ -1,3 +1,5 @@
+{% comment %} The path to bundle.js differs in epub, because of how
+epubs are constructed after Jekyll processing. {% endcomment %}
 {% if site.output == "epub" %}
     {% unless site.data.settings.epub.javascript.disabled == true %}
         <script src="{{ path-to-book-directory }}js/bundle.js"></script>
