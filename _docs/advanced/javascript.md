@@ -44,6 +44,6 @@ To limit a script to a given output format, use `site.output`:
 
 ## Scripts in epub
 
-All scripts to be used in your epub should be included in `assets/js/bundle/js`, and not added to pages as separate files. This is because you must not have any scripts in your epub that you aren't using, or it won't validate; and we only support including `bundle.js` in epub output.
+All scripts to be used in your epub should be included in `assets/js/bundle.js`, and not added to pages as separate files. This is because you must not have any scripts in your epub that you aren't using, or it won't validate; and we only support including `bundle.js` in epub output.
 
 If you don't want any Javsacript at all in your epub, you can disable it in `_data/settings.yml` by setting `epub` > `javascript` > `enabled` to `false`.You should then also exclude `assets/js/bundle.js` in the exclude list in `_configs/_config.epub.yml`.
