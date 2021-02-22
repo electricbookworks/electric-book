@@ -1,0 +1,38 @@
+$web-footer: true !default;
+@if $web-footer {
+
+	// Footer
+
+	#footer {
+		// position: fixed; // Make this fixed to make footer always visible
+		clear: both;
+		bottom: 0;
+		background-color: $footer-background-color;
+		font-family: $font-text-secondary;
+		border-top: $rule-thickness solid $footer-border-color;
+		margin: ($line-height-default * 2) 0 0 0;
+		width: 100%; // Prevents floating when preceding elements float or flex
+		box-sizing: border-box; // prevents max-width from causing effective left padding
+		color: $footer-text-color;
+	}
+	.footer-content {
+		clear: both;
+		max-width: $max-width-default;
+		margin: auto;
+		padding: $line-height-default 1em; // 1em to align with padding on #content
+	}
+	#footer p,
+	#footer ol,
+	#footer ul {
+		color: $footer-text-color;
+		font-size: $font-size-default * $font-size-smaller;
+		line-height: $line-height-default;
+		margin: 0;
+		text-indent: 0;
+		a {
+			color: $footer-text-color;
+			text-decoration: underline;
+		}
+	}
+
+}

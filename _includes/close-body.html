@@ -1,6 +1,12 @@
-{% unless site.output == "epub" %}
-	<script src="{{ path-to-root-directory }}assets/js/bundle.js"></script>
-{% endunless %}
+{% comment %} The path to bundle.js differs in epub, because of how
+epubs are constructed after Jekyll processing. {% endcomment %}
+{% if site.output == "epub" %}
+    {% unless site.data.settings.epub.javascript.disabled == true %}
+        <script src="{{ path-to-book-directory }}js/bundle.js"></script>
+    {% endunless %}
+{% else %}
+    <script src="{{ path-to-root-directory }}assets/js/bundle.js"></script>
+{% endif %}
 
 {% if site.output == "web" or site.output == "app" %}
     {% if is-project-search or is-book-search %}

@@ -8,38 +8,46 @@
     {% capture image %}{{ include.image }}{% endcapture %}
 {% endif %}
 
+{% comment %} Get the alt for the cover {% endcomment %}
+{% assign cover-alt = title %}
+{% if include.alt %}
+	{% assign cover-alt = include.alt %}
+{% elsif cover-alt == "" %}
+	{% assign cover-alt = project-name %}
+{% endif %}
+
+{% comment %} Get the link {% endcomment %}
+{% if include.link %}
+	{% capture cover-link %}{{ include.link }}{% endcapture %}
+{% elsif site.output == "web" %}
+	{% capture cover-link %}{{ web-start-page }}{% unless web-start-page contains ".html" %}.html{% endunless %}{% endcapture %}
+{% elsif site.output== "app" %}
+	{% capture cover-link %}{{ app-start-page }}{% unless app-start-page contains ".html" %}.html{% endunless %}{% endcapture %}
+{% endif %}
+
 {% comment %}
 Adjust HTML based on output format.
 * For web, link the cover to the start page.
 * For other outputs use just the image.
 {% endcomment %}
 
-{% if site.output == "web" %}
+{% if site.output == "web" or site.output == "app" %}
 
-{% assign image-filetype = image | split: "." %}
-{% assign image-without-filetype = image | replace: image-filetype[1], "" | replace: ".", "" %}
-
-<p class="cover"><a href="{{ web-start-page }}{% unless web-start-page contains ".html" %}.html{% endunless %}"><img src="{{ images }}/{{ image }}"{% if site.output == "web" %} srcset="{{ images }}/{{ image-without-filetype }}-320.{{ image-filetype[1] }} 320w, {{ images }}/{{ image-without-filetype }}-640.{{ image-filetype[1] }} 640w, {{ images }}/{{ image-without-filetype }}-1024.{{ image-filetype[1] }} 1024w, {{ images }}/{{ image-without-filetype }}.{{ image-filetype[1] }} 1280w" sizes="(min-width: 40em) 40em, 100vw" {% endif %}alt="{{ title }}" class="cover"></a></p>
-
-{% elsif site.output == "screen-pdf" %}
-
-{% comment %}Add the cover to the PDF bookmarks without displaying it{% endcomment %}
-<h1 style="position: absolute; z-index: -1">Cover</h1>
-
-<p class="cover">
-	<img src="{{ images }}/{{ image }}" class="cover">
-</p>
-
-{% elsif site.output == "app" %}
-
-<p class="cover">
-	<a href="{{ app-start-page }}{% unless app-start-page contains ".html" %}.html{% endunless %}">
-		<img src="{{ images }}/{{ image }}" alt="{{ title }}" class="cover">
+<div class="cover">
+	<a href="{{ cover-link }}">
+		{% include image file=image class="cover" alt=cover-alt %}
 	</a>
-</p>
+</div>
 
 {% else %}
 
-<p class="cover"><img src="{{ images }}/{{ image }}" alt="{{ title }}" class="cover"></p>
+{% if site.output == "screen-pdf" %}
+{% comment %}Add the cover to the PDF bookmarks without displaying it{% endcomment %}
+<h1 style="position: absolute; z-index: -1">{{ locale.pdf.cover }}</h1>
+{% endif %}
+
+<div class="cover">
+	<img src="{{ images }}/{{ image }}" alt="{{ cover-alt }}" class="cover">
+</div>
 
 {% endif %}

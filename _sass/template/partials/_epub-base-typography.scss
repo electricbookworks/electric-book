@@ -1,0 +1,244 @@
+$epub-base-typography: true !default;
+@if $epub-base-typography {
+
+    // General typography
+
+    html {
+        box-sizing: border-box;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+
+    body {
+        margin: $epub-margin;
+        padding: 0;
+        background-color: $color-background;
+        font-family: $font-text-main;
+        font-size: $font-size-default;
+        color: $color-text-main;
+        line-height: $line-height-default;
+        overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-family: $font-text-secondary;
+        font-size: $font-size-default;
+        font-weight: bold;
+        line-height: $line-height-default;
+        page-break-after: avoid;
+        margin: $line-height-default 0 0 0;
+        text-align: left; // some epub readers justify headings unless we set this
+    }
+    h1 {
+        font-family: $font-display-main;
+        font-size: $font-size-default * $font-size-bigger;
+        line-height: 1;
+        margin: ($line-height-default) 0 ($line-height-default * 0.5) 0;
+    }
+    h2 {
+        font-size: $font-size-default * ($font-size-bigger * 0.75);
+        line-height: 1;
+        margin: ($line-height-default) 0 ($line-height-default * 0.5) 0;
+    }
+    h3 {}
+    h4 {
+        font-style: italic;
+        font-weight: inherit;
+    }
+    h5 {
+        font-family: $font-text-main;
+        font-style: italic;
+        font-weight: inherit;
+    }
+    h6 {
+        font-family: $font-text-main;
+        font-weight: inherit;
+    }
+    p {
+        margin: 0;
+        & + p {
+            text-indent: $paragraph-indent;
+        }
+    }
+
+    // Lists
+
+    ol, ul {
+        list-style-position: outside;
+        margin: 0 0 $line-height-default $paragraph-indent;
+    }
+    ol {
+        list-style-type: decimal;
+    }
+    ul {
+        list-style-type: disc;
+    }
+    ul ul, ol ol, blockquote ul ul, blockquote ol ol {
+        margin-bottom: 0; // See '@if spaced-paras' below
+    }
+    ol ol {
+        list-style-type: lower-alpha;
+    }
+
+
+    // Blockquotes
+
+    blockquote {
+        margin: $line-height-default 0;
+        padding: 0 $paragraph-indent;
+        p:first-of-type {
+            text-indent: 0;
+        }
+        p:last-child, & ol:last-child, & ul:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    // Definition lists
+
+    dl {
+        margin: $line-height-default 0;
+    }
+    dt {
+        font-weight: bold;
+    }
+    dd {
+        margin: 0 0 $line-height-default 0;
+    }
+
+    // Horizontal rules used as text dividers (*** in markdown)
+
+    $text-divider-text: "" !default;
+    $text-divider-image: "" !default;
+    $text-divider-image-width: $line-height-default !default;
+
+    hr {
+        // Amazon Kindle supports very little creative hr styling, though you
+        // might try border-colour and width in custom CSS.
+        // Kindle ignores rgba. So this is the least-bad solution.
+        border: $rule-thickness solid rgba(255,255,255,0);
+        margin: $line-height-default auto; // Adds space, esp. important for Kindle
+        text-align: center; // Necessary for aligning :after content
+        // Note: Amazon Kindle will ignore this :after content setting.
+        // An hr in Amazon can be hidden by setting hr { margin-left: -200%; }
+        // in a Kindle media query. See below for example code.
+        // We don't do that here because it is a case-by-case hack
+        // that some ereaders do not support.
+        &:after {
+            content: $text-divider-text;
+        }
+        @if $text-divider-image != "" {
+            @if not $spaced-paras {
+                margin-bottom: 0; // height will be added below
+            }
+            width: $text-divider-image-width;
+            &:after {
+                background-image: $text-divider-image;
+                background-repeat: no-repeat;
+                background-size: 100%;
+                display: inline-block;
+                height: $line-height-default;
+                width: 100%;
+            }
+        }
+        & + p {
+            text-indent: 0;
+        }
+    }
+
+    // Queries that target Kindle devices
+    // @media amzn-kf8 {
+    //     hr {
+    //         margin-left: -200%;
+    //     }
+    // }
+    // @media amzn-mobi7 {
+    //     hr {
+    //         margin-left: -200%;
+    //     }
+    // }
+
+    // Superscripts and subscripts
+
+    sup, sub {
+        line-height: 100%;
+        font-size: 1em * $font-size-smaller;
+    }
+    sup {
+        vertical-align: super;
+    }
+    sub {
+        vertical-align: sub;
+    }
+
+    // Links
+
+    a {
+        color: $color-links;
+    }
+
+    // Bold and italic
+    em {
+        font-style: italic;
+    }
+    strong {
+        font-weight: bold;
+    }
+
+    // Forms
+
+    input,
+    textarea {
+        padding: 0.75em 0.75em;
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: inherit;
+        border: $rule-thickness solid $color-mid;
+        display: block;
+        margin: $line-height-default 0;
+        width: 100%;
+        box-sizing: border-box;
+        &[type="submit"] {
+            width: auto;
+        }
+    }
+    select {
+        padding: 0.75em 0.75em;
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        color: inherit;
+        border: $rule-thickness solid $color-mid;
+        margin: $line-height-default 0;
+        box-sizing: border-box;
+        // Inline
+        p > &,
+        li > &,
+        dd > &,
+        td > &,
+        th > &,
+        span > & {
+            font-family: inherit;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+    }
+    textarea {
+        min-height: $line-height-default * 3;
+    }
+
+    // An option to change the default text-indented paragraphs
+    // and close-up lists etc. to have space-between instead.
+    @if $spaced-paras {
+        p, p + p {
+            margin-bottom: $line-height-default;
+            text-indent: 0;
+        }
+        ul ul, ol ol, blockquote ul ul, blockquote ol ol {
+            // Disabled, because on most real projects we remove this.
+            // margin-top: $line-height-default;
+            // margin-bottom: $line-height-default;
+        }
+    }
+
+}

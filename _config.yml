@@ -36,7 +36,7 @@ edition: "default"
 # include the url where this site will live when it's live (production).
 # E.g. canonical-url: "http://example.com"
 # In Open Graph metadata, the base URL will be appended.
-canonical-url: "https://electricbookworks.github.io"
+canonical-url: "https://electricbookworks.github.io/electric-book"
 
 # Base URL
 # --------
@@ -222,7 +222,7 @@ compress_html:
 # Version of this Electric Book template.
 # This is the last release, not necessarily the current build
 # at github.com/electricbookworks/electric-book
-version: "0.18.0"
+version: "0.19.0"
 
 # Local-build URL
 # ---------------

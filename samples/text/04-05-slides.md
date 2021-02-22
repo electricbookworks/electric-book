@@ -7,7 +7,7 @@ title: "Slides"
 You can gather a number of figures into a set of slides. On the web and in apps, you can click through the slides. In print, you'll see one summary slide, and step-by-step text below the image describing each stage in the slide sequence. In epub, you'll see the summary slide, then each slide in turn, with its slide caption.
 
 {% if site.output == "web" %}
-[See the docs]({{ site.baseurl }}/docs/editing/slides.html) for how to create a slide sequence like this.
+[See the docs](https://electricbookworks.github.io/electric-book/docs/editing/slides.html) for how to create a slide sequence like this.
 {% endif %}
 
 <div class="slides">

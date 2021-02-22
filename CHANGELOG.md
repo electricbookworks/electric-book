@@ -1,7 +1,10 @@
 # Changelog
 
-## Latest
+## 0.19.0
 
+* [New CSS structure for themeable design](https://github.com/electricbookworks/electric-book/pull/541)
+* [Easier Javascript in epubs](https://github.com/electricbookworks/electric-book/pull/540)
+* [Improve appearance of nested nav items](https://github.com/electricbookworks/electric-book/pull/533)
 * [Add interactive slide sequences](https://github.com/electricbookworks/electric-book/pull/523)
 * [Suggest Jekyll v4 when managing own Jekyll version](https://github.com/electricbookworks/electric-book/pull/524)
 * [Remove Formspree, and allow site-wide pages in the project root](https://github.com/electricbookworks/electric-book/pull/517)
