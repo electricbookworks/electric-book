@@ -5,7 +5,8 @@ $print-cover: true !default;
     @page cover {
     	margin: 0;
     }
-    body.cover, div.cover {
+    body.cover,
+    div.cover {
         margin: 0;
         padding: 0;
     }

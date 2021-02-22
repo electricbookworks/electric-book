@@ -17,6 +17,11 @@
 // Provide a variable for site output
 $output-format: "epub" !default;
 
+// Theme variables
+@import "theme/colors";
+@import "template/colors";
+@import "theme/epub-variables";
+
 // Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
 $edition-suffix: null !default;
 
@@ -68,19 +73,19 @@ $rule-thickness: 1px !default;
 $color-text-main: initial !default;
 $color-text-secondary: initial !default;
 $color-background: transparent !default;
-$color-light: #e0e0e0 !default;
-$color-mid: #9c9c9c !default;
-$color-accent: #000000 !default;
-$color-links: #5f738c !default;
-$color-buttons: #5f738c !default;
+$color-light: $grey-light !default;
+$color-mid: $grey-mid !default;
+$color-accent: $template-green !default;
+$color-links: $template-blue !default;
+$color-buttons: $color-accent !default;
 $color-buttons-hover: darken( $color-buttons, 20% ) !default;
-$color-highlight: #ffd54d !default;
+$color-highlight: $template-yellow !default;
 $color-notification-low-text: $color-light !default;
 $color-notification-medium-text: $color-light !default;
 $color-notification-high-text: $color-light !default;
-$color-notification-low-background: #009E7F !default;
-$color-notification-medium-background: #ffe388 !default;
-$color-notification-high-background: #ff7c4d !default;
+$color-notification-low-background: $template-green !default;
+$color-notification-medium-background: $template-yellow !default;
+$color-notification-high-background: $template-orange !default;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
@@ -164,64 +169,68 @@ $epub-reset-sequences: true !default;
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
-// Import fonts from book-specific CSS.
+// Theme imports
+@import "theme/epub-imports";
 
 // ---------------------
 // Theme modules
 // ---------------------
 
 // Reset ereader CSS as best we can
-@import "partials/epub-css-reset";
+@import "template/partials/epub-css-reset";
 
 // Load general-purpose mixins
-@import "partials/epub-mixins--buttons";
-@import "partials/epub-mixins--sidenotes";
-@import "partials/epub-mixins--show-url";
+@import "template/partials/epub-mixins--buttons";
+@import "template/partials/epub-mixins--sidenotes";
+@import "template/partials/epub-mixins--show-url";
 
 // Structural HTML components
-@import "partials/epub-wrappers";
+@import "template/partials/epub-wrappers";
 
 // Conventional helper classes
-@import "partials/epub-helpers";
+@import "template/partials/epub-helpers";
 
 // Default typography
-@import "partials/epub-base-typography";
+@import "template/partials/epub-base-typography";
 
 // Book parts
-@import "partials/epub-cover";
-@import "partials/epub-previous-publications-page";
-@import "partials/epub-title-pages";
-@import "partials/epub-copyright-page";
-@import "partials/epub-dedications";
-@import "partials/epub-epigraphs";
-@import "partials/epub-toc";
+@import "template/partials/epub-cover";
+@import "template/partials/epub-previous-publications-page";
+@import "template/partials/epub-title-pages";
+@import "template/partials/epub-copyright-page";
+@import "template/partials/epub-dedications";
+@import "template/partials/epub-epigraphs";
+@import "template/partials/epub-toc";
 
 // Book-feature classes
-@import "partials/epub-bibliographies";
-@import "partials/epub-boxes";
-@import "partials/epub-buttons";
-@import "partials/epub-code";
-@import "partials/epub-dialogue";
-@import "partials/epub-figures";
-@import "partials/epub-glossaries";
-@import "partials/epub-highlighter";
-@import "partials/epub-index";
-@import "partials/epub-maths";
-@import "partials/epub-notes";
-@import "partials/epub-openers";
-@import "partials/epub-pullquotes";
-@import "partials/epub-sources";
-@import "partials/epub-tables";
-@import "partials/epub-letters";
-@import "partials/epub-verse";
-@import "partials/epub-video";
-@import "partials/epub-questions";
-@import "partials/epub-select-questions";
-@import "partials/epub-slides";
+@import "template/partials/epub-bibliographies";
+@import "template/partials/epub-boxes";
+@import "template/partials/epub-buttons";
+@import "template/partials/epub-code";
+@import "template/partials/epub-dialogue";
+@import "template/partials/epub-figures";
+@import "template/partials/epub-glossaries";
+@import "template/partials/epub-highlighter";
+@import "template/partials/epub-index";
+@import "template/partials/epub-maths";
+@import "template/partials/epub-notes";
+@import "template/partials/epub-openers";
+@import "template/partials/epub-pullquotes";
+@import "template/partials/epub-sources";
+@import "template/partials/epub-tables";
+@import "template/partials/epub-letters";
+@import "template/partials/epub-verse";
+@import "template/partials/epub-video";
+@import "template/partials/epub-questions";
+@import "template/partials/epub-select-questions";
+@import "template/partials/epub-slides";
 
 // Type-control classes
-@import "partials/epub-smallcaps";
-@import "partials/epub-fitting";
+@import "template/partials/epub-smallcaps";
+@import "template/partials/epub-fitting";
 
 // Logic (if this then that)
-@import "partials/epub-reset-sequences";
+@import "template/partials/epub-reset-sequences";
+
+// Theme rules
+@import "theme/epub-rules";

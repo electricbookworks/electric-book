@@ -17,6 +17,11 @@
 // Provide a variable for site output
 $output-format: "web" !default;
 
+// Theme variables
+@import "theme/colors";
+@import "template/colors";
+@import "theme/web-variables";
+
 // Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
 $edition-suffix: null !default;
 
@@ -59,22 +64,22 @@ $box-shadow: 1px 2px 7px grey !default;
 $rule-thickness: 1.5px !default;
 
 // Colours
-$color-text-main: #262626 !default;
-$color-text-secondary: #262626 !default;
-$color-background: #f9f9f9 !default;
-$color-light: #e0e0e0 !default;
-$color-mid: #9c9c9c !default;
-$color-accent: #009E7F !default;
-$color-links: #5f738c !default;
+$color-text-main: $black !default;
+$color-text-secondary: $grey-dark !default;
+$color-background: $white-mid !default;
+$color-light: $grey-light !default;
+$color-mid: $grey-mid !default;
+$color-accent: $template-green !default;
+$color-links: $template-blue !default;
 $color-buttons: $color-accent !default;
 $color-buttons-hover: darken( $color-buttons, 20% ) !default;
-$color-highlight: #ffd54d !default;
+$color-highlight: $template-yellow !default;
 $color-notification-low-text: $color-light !default;
 $color-notification-medium-text: $color-light !default;
 $color-notification-high-text: $color-light !default;
-$color-notification-low-background: #009E7F !default;
-$color-notification-medium-background: #ffe388 !default;
-$color-notification-high-background: #ff7c4d !default;
+$color-notification-low-background: $template-green !default;
+$color-notification-medium-background: $template-yellow !default;
+$color-notification-high-background: $template-orange !default;
 
 // Some features rearrange at certain screen sizes.
 // What are your screen-width break points?
@@ -246,6 +251,9 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
+// Theme imports
+@import "theme/web-imports";
+
 // Import fonts from book-specific CSS.
 
 // ---------------------
@@ -253,74 +261,77 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 // ---------------------
 
 // Reset browser CSS as best we can
-@import "partials/web-css-reset";
+@import "template/partials/web-css-reset";
 
 // Load general-purpose mixins
-@import "partials/web-mixins--buttons";
-@import "partials/web-mixins--sidenotes";
-@import "partials/web-mixins--dialogs";
+@import "template/partials/web-mixins--buttons";
+@import "template/partials/web-mixins--sidenotes";
+@import "template/partials/web-mixins--dialogs";
 
 // Structural HTML components
-@import "partials/web-wrappers";
+@import "template/partials/web-wrappers";
 
 // Conventional helper classes
-@import "partials/web-helpers";
+@import "template/partials/web-helpers";
 
 // Default typography
-@import "partials/web-base-typography";
+@import "template/partials/web-base-typography";
 
 // Navigation
-@import "partials/web-masthead";
-@import "partials/web-nav-bar";
-@import "partials/web-search";
-@import "partials/web-footer";
-@import "partials/web-accordion";
+@import "template/partials/web-masthead";
+@import "template/partials/web-nav-bar";
+@import "template/partials/web-search";
+@import "template/partials/web-footer";
+@import "template/partials/web-accordion";
 
 // Book parts
-@import "partials/web-cover";
-@import "partials/web-previous-publications-page";
-@import "partials/web-title-pages";
-@import "partials/web-copyright-page";
-@import "partials/web-dedications";
-@import "partials/web-epigraphs";
-@import "partials/web-toc";
+@import "template/partials/web-cover";
+@import "template/partials/web-previous-publications-page";
+@import "template/partials/web-title-pages";
+@import "template/partials/web-copyright-page";
+@import "template/partials/web-dedications";
+@import "template/partials/web-epigraphs";
+@import "template/partials/web-toc";
 
 // Book-feature classes
-@import "partials/web-bibliographies";
-@import "partials/web-boxes";
-@import "partials/web-buttons";
-@import "partials/web-code";
-@import "partials/web-dialogue";
-@import "partials/web-figures";
-@import "partials/web-glossaries";
-@import "partials/web-highlighter";
-@import "partials/web-index";
-@import "partials/web-maths";
-@import "partials/web-notes";
-@import "partials/web-openers";
-@import "partials/web-pullquotes";
-@import "partials/web-sources";
-@import "partials/web-tables";
-@import "partials/web-letters";
-@import "partials/web-verse";
-@import "partials/web-video";
-@import "partials/web-pagination";
-@import "partials/web-questions";
-@import "partials/web-select-questions";
-@import "partials/web-slides";
+@import "template/partials/web-bibliographies";
+@import "template/partials/web-boxes";
+@import "template/partials/web-buttons";
+@import "template/partials/web-code";
+@import "template/partials/web-dialogue";
+@import "template/partials/web-figures";
+@import "template/partials/web-glossaries";
+@import "template/partials/web-highlighter";
+@import "template/partials/web-index";
+@import "template/partials/web-maths";
+@import "template/partials/web-notes";
+@import "template/partials/web-openers";
+@import "template/partials/web-pullquotes";
+@import "template/partials/web-sources";
+@import "template/partials/web-tables";
+@import "template/partials/web-letters";
+@import "template/partials/web-verse";
+@import "template/partials/web-video";
+@import "template/partials/web-pagination";
+@import "template/partials/web-questions";
+@import "template/partials/web-select-questions";
+@import "template/partials/web-slides";
 
 // Docs
-@import "partials/web-docs";
+@import "template/partials/web-docs";
 
 // Type-control classes
-@import "partials/web-smallcaps";
-@import "partials/web-fitting";  // E.g. tracking and shrinking
+@import "template/partials/web-smallcaps";
+@import "template/partials/web-fitting";  // E.g. tracking and shrinking
 
 // User features
-@import "partials/web-controls";
-@import "partials/web-annotator";
-@import "partials/web-language-select";
-@import "partials/web-bookmarks";
+@import "template/partials/web-controls";
+@import "template/partials/web-annotator";
+@import "template/partials/web-language-select";
+@import "template/partials/web-bookmarks";
 
 // Logic (if this then that)
-@import "partials/web-reset-sequences"; // This should stay last in the @import list
+@import "template/partials/web-reset-sequences"; // This should stay last in the @import list
+
+// Theme rules
+@import "theme/web-rules";

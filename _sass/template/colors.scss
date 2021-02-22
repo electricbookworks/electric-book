@@ -1,0 +1,33 @@
+// Colours
+$template-green: #009E7F !default;
+$template-blue: #5f738c !default;
+$template-yellow: #ffd54d !default;
+$template-orange: #ff7c4d !default;
+
+// Blacks
+$black: #262626 !default;
+$grey-dark: #333333 !default;
+$grey-mid: #999999 !default;
+$grey-light: #cccccc !default;
+$white: #FFF !default;
+$white-mid: #f9f9f9 !default;
+
+
+// CYMK values for print output
+
+@if $output-format == "print-pdf" {
+
+    // Colours
+    $template-green: cmyk(62%, 0%, 12%, 38%) !default;
+    $template-blue: cmyk(18%, 10%, 0%, 45%)  !default;
+    $template-yellow: cmyk(0%, 16%, 70%, 0% ) !default;
+    $template-orange: cmyk(0%, 51%, 70%, 0% ) !default;
+
+    // Blacks
+    $black: cmyk(0%, 0%, 0%, 100%) !default;
+    $grey-dark: cmyk(0%, 0%, 0%, 80%) !default;
+    $grey-mid: cmyk(0%, 0%, 0%, 40%) !default;
+    $grey-light: cmyk(0%, 0%, 0%, 20%) !default;
+    $white: cmyk(0%, 0%, 0%, 0%) !default;
+
+}
