@@ -100,18 +100,37 @@ function ebMCQsGetCorrectAnswers(question) {
 
 function ebMCQsMakeOptionCheckboxes(question) {
     'use strict';
+    var dataQuestion = question.getAttribute('data-question');
     // get all the options for this question
     var options = question.querySelectorAll('.mcq-options li');
 
     // loop over options
     options.forEach(function (option, index) {
+        // create a unique id for this mcq option
+        var optionLetter = String.fromCharCode(index + 65);
+        var id = dataQuestion + '-option-' + optionLetter;
+
         // make the checkbox
         var checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
         checkbox.setAttribute('data-index', index);
+        checkbox.setAttribute('id', id);
+        checkbox.setAttribute('name', dataQuestion);
 
-        // take the string version of checkbox and add to the option li
-        option.innerHTML = '<label>' + checkbox.outerHTML + option.innerHTML + '<\label>';
+        // make a label to put around the checkbox
+        var label = document.createElement('label');
+        label.setAttribute('for', id);
+
+        // the label gets the checkbox as a child
+        label.appendChild(checkbox);
+
+        // now the label gets the option text
+        label.innerHTML = label.innerHTML + option.innerHTML;
+
+        // remove the now-duplicate option text
+        // and put the label inside the option
+        option.innerHTML = '';
+        option.appendChild(label);
 
         // make the option non-bookmarkable
         option.setAttribute('data-bookmarkable', 'no');
@@ -130,6 +149,25 @@ function ebMCQsAddButton(question) {
     options.insertAdjacentElement('afterend', button);
 }
 
+var ebMCQsMakeQuestionAccessible = function(question) {
+    // wrap everything inside the div in a fieldset
+    var questionContents = question.innerHTML;
+    var fieldset = document.createElement('fieldset');
+
+    fieldset.innerHTML = questionContents;
+    question.innerHTML = '';
+    question.appendChild(fieldset);
+
+    // get the h3 and wrap the contents of the h3 in a legend
+    var questionHeading = question.querySelector('h3');
+    var questionHeadingContents = questionHeading.innerHTML;
+
+    var legend = document.createElement('legend');
+    legend.innerHTML = questionHeadingContents;
+
+    questionHeading.innerHTML = '';
+    questionHeading.appendChild(legend);
+}
 
 function ebMCQsGetAllSelected(mcqsToCheck) {
     'use strict';
@@ -400,7 +438,7 @@ function ebMCQsButtonClicks() {
         // listen for clicks on the buttons
         answerCheckingButton.addEventListener('click', function () {
             // get the mcq and it's ID
-            var mcqsToCheck = this.parentNode.parentNode; // 'this' is the button
+            var mcqsToCheck = this.parentNode.parentNode.parentNode; // 'this' is the button
             var mcqsToCheckName = mcqsToCheck.getAttribute('data-question');
             // var mcqsToCheckCode = mcqsToCheck.getAttribute('data-question-code'); // not used
 
@@ -468,6 +506,8 @@ function ebMCQs() {
         // add the interactive stuff: the checkboxes and the buttons
         ebMCQsMakeOptionCheckboxes(question);
         ebMCQsAddButton(question);
+        // add the extra elements needed for accessibility
+        ebMCQsMakeQuestionAccessible(question);
     });
 
     // mark the checked ones more clearly
