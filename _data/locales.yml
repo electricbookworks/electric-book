@@ -201,6 +201,9 @@ en:
     copy: "Copy"
     copied: "Copied"
     copy-failed: "Sorry, try again"
+  footnotes:
+    close-footnote: "Close footnote"
+    reversefootnote-alt: "Back to text"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -294,6 +297,9 @@ fr:
     copy: "Copie"
     copied: "Copié"
     copy-failed: "Désolé, essayez encore"
+  footnotes:
+    close-footnote: "Fermer la note de bas de page"
+    reversefootnote-alt: "Retour au texte"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""

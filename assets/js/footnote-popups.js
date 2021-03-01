@@ -77,7 +77,13 @@ function ebFootnotePopups() {
 
         // Remove the contents since we're using
         // CSS and :before to show a close button marker
-        reverseFootnote.innerText = '';
+        reverseFootnote.innerText = "";
+
+        // Add hidden link text for screen readers
+        var closeFootnoteLabel = document.createElement("span");
+        closeFootnoteLabel.classList.add("visuallyhidden");
+        closeFootnoteLabel.innerText = locales[pageLanguage].footnotes['close-footnote'];
+        reverseFootnote.appendChild(closeFootnoteLabel);
 
         reverseFootnote.addEventListener('click', function (ev) {
             ev.preventDefault();
@@ -88,6 +94,19 @@ function ebFootnotePopups() {
         current.removeAttribute('href');
 
     });
+    // Format the footnotes at the bottom of the page
+    var footnoteItems = document.querySelectorAll(".footnotes a.reversefootnote");
+    var reverseFootnoteAlt = locales[pageLanguage].footnotes['reversefootnote-alt'];
+
+    footnoteItems.forEach(function(reverseFootnoteLink) {
+        var reversefootnoteArrow = document.createElement("img");
+        reversefootnoteArrow.setAttribute("src", "{{ site.baseurl }}/assets/images/reversefootnote-arrow.svg");
+        reversefootnoteArrow.setAttribute("alt", reverseFootnoteAlt);
+        reverseFootnoteLink.innerHTML = "";
+        reverseFootnoteLink.appendChild(reversefootnoteArrow);
+        // Add a tooltip to the reversefootnote link
+        reverseFootnoteLink.setAttribute("title", reverseFootnoteAlt);
+    })
 }
 
 ebFootnotePopups();
