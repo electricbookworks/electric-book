@@ -111,6 +111,12 @@ function ebAccordionSetUpSections(collapserButtons) {
     });
 
     ebAccordionFillSections();
+
+    // If there is more than one section,
+    // add an 'expand all/close all' button
+    if (collapserButtons.length > 1) {
+        ebAccordionShowAllButton();
+    }
 }
 
 function ebAccordionFillSections() {
@@ -650,7 +656,6 @@ function ebLoadAccordion() {
     ebAccordionListenForHeadingClicks();
     ebAccordionListenForNavClicks();
     ebAccordionListenForHashChange();
-    ebAccordionShowAllButton();
 }
 
 // Load the accordion when IDs have been assigned

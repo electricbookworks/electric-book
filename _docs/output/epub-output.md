@@ -48,14 +48,13 @@ Your epub will build correctly only if you have provided sufficient, accurate in
 
 ## Fonts
 
-To embed fonts in an epub:
+To embed font files in an epub (for `@import`ing in your epub's CSS), add the font files to `_epub/fonts`.
 
-1. add the font files to `_epub/fonts`;
-2. list the font files in `_data/settings.yml` at `epub-fonts`.
+Font files stored anywhere else in your project (e.g. in `assets/fonts`) are not included in epub outputs. This ensures that the epub includes only those font files that are specifically required for your epub.
 
 ## Javascript
 
-Add any scripts to `_epub/js`. See the [Javascript](../advanced/javascript.html) section for more detail.
+See the [Javascript](../advanced/javascript.html) section for more detail.
 
 ## Validation
 

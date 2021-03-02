@@ -4,7 +4,7 @@ title: "Traditional index"
 
 ## Traditional index
 
-Also see the [docs on indexing]({{ site.canonical-url }}/docs/editing/indexes.html).
+Also see the [docs on indexing](https://electricbookworks.github.io/electric-book/docs/editing/indexes.html).
 
 A traditional index includes hard-coded page numbers. So the print edition must be finalised, and its pages fixed, before it is created.
 

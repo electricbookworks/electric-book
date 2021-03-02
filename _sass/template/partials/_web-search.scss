@@ -1,0 +1,117 @@
+// Also see .search in web-nav-bar
+
+$web-search: true !default;
+@if $web-search {
+
+    // Search in nav bar
+
+    #nav {
+        .search {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            input {
+                box-sizing: border-box; // means width 100% doesn't extend outside page
+                color: $color-text-secondary;
+                display: inline-block;
+                margin: 1em 0.375em 1em 0.75em;
+                width: auto;
+            }
+            input.search-box {
+                flex-grow: 2;
+                flex-shrink: 2;
+                border: 1pt solid $color-light;
+            }
+            input[type="submit"] {
+                background-color: $color-buttons;
+                color: white;
+                cursor: pointer;
+                margin: 1em -0.25em 1em 0.375em;
+            }
+        }
+    }
+
+    // Search on search page
+
+    #content {
+        .search {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            input {
+                box-sizing: border-box; // means width 100% doesn't extend outside page
+                color: $color-text-secondary;
+                display: inline-block;
+                margin: 1em 0.375em 1em 0.375em;
+                width: auto;
+            }
+            input.search-box {
+                flex-grow: 2;
+                flex-shrink: 2;
+                border: 1pt solid $color-light;
+            }
+            input[type="submit"] {
+                background-color: $color-buttons;
+                border: 0;
+                color: white;
+                cursor: pointer;
+                font-size: inherit;
+            }
+        }
+    }
+
+    // Search results
+
+    .search-results {
+       ul {
+        list-style-type: none;
+        margin: $line-height-default 0;
+      }
+    }
+
+    // Marked search results (with mark.js)
+    mark {
+        background-color: $color-highlight;
+        color: inherit;
+        border-radius: $button-border-radius;
+    }
+
+    .search-results-summary {
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        background-color: $color-notification-low-background;
+        border-radius: $box-border-radius;
+    }
+
+    .search-page-notice {
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        background-color: $color-notification-medium-background;
+        border-radius: $box-border-radius;
+        *:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .search-progress-placeholder {
+        background-color: $color-notification-low-background;
+        border-radius: $box-border-radius;
+        color: $color-notification-low-text;
+        font-family: $font-text-secondary;
+        font-size: $font-size-default * $font-size-smaller;
+        margin: $line-height-default 0;
+        padding: $line-height-default / 2;
+        *:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+} // @if $web-search
+
+@else {
+    #nav {
+        .search {
+            display: none;
+        }
+    }
+}

@@ -204,6 +204,8 @@ en:
   footnotes:
     close-footnote: "Close footnote"
     reversefootnote-alt: "Back to text"
+  pdf:
+    cover: "Cover"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -300,6 +302,8 @@ fr:
   footnotes:
     close-footnote: "Fermer la note de bas de page"
     reversefootnote-alt: "Retour au texte"
+  pdf:
+    cover: "Couverture"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
