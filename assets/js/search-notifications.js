@@ -12,8 +12,10 @@ function ebSearchShowSearchingNotice() {
         searchProgressPlaceholder = document.createElement('div');
         searchProgressPlaceholder.classList.add('search-progress-placeholder');
         searchProgressPlaceholder.innerHTML = '<p>' + locales[pageLanguage].search['placeholder-searching'] + '</p>';
-        var searchBox = document.getElementById('search-box');
-        searchBox.insertAdjacentElement('afterend', searchProgressPlaceholder);
+        // var searchBox = document.getElementById('search-box');
+        var searchForm = document.querySelector("form.search");
+        // searchBox.insertAdjacentElement('afterend', searchProgressPlaceholder);
+        searchForm.insertAdjacentElement('afterend', searchProgressPlaceholder);
     }
 }
 

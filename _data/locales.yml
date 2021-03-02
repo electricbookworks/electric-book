@@ -150,7 +150,7 @@ en:
     hide: "Hide"
   search:
     search-title: "Search"
-    placeholder: "Search"
+    placeholder: ""
     placeholder-searching: "Searching..."
     search-results: "Search results"
     results-for-singular: "result found for"
@@ -246,7 +246,7 @@ fr:
     hide: "Cacher"
   search:
     search-title: "Recherche"
-    placeholder: "Recherche"
+    placeholder: ""
     placeholder-searching: "Recherche..."
     search-results: "Résultats de la recherche"
     results-for-singular: "résultat trouvé pour"
