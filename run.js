@@ -39,10 +39,20 @@ function processOutput(process, processName, callback) {
         console.log(processName + ': ' + data);
     });
 
+    // Listen for an error event:
+    process.on('error', function (errorCode) {
+        console.log(processName + ' errored with: ' + errorCode);
+        if (callback) {
+            callback();
+        }
+    });
+
     // Listen for an exit event:
     process.on('exit', function (exitCode) {
-        console.log(processName + ' exited with code: ' + exitCode);
-        callback();
+        console.log(processName + ' exited with: ' + exitCode);
+        if (callback) {
+            callback();
+        }
     });
 }
 
@@ -173,11 +183,11 @@ function jekyll(command,
 
     // Create a child process
     var jekyllProcess = spawn(
-        'bundle exec jekyll ' +
-        command +
-        ' --config="' + configs + '"' +
-        ' --baseurl="' + baseurl + '"' +
-        ' ' + switches
+        'bundle',
+        ['exec', 'jekyll', command,
+                '--config', configs,
+                '--baseurl', baseurl,
+                switches]
     );
     processOutput(jekyllProcess, 'Jekyll', callback);
 }
@@ -191,14 +201,15 @@ function renderMathjax(callback) {
     var mathJaxProcess;
     if (argv.subdir) {
         mathJaxProcess = spawn(
-            'gulp mathjax ' +
-            '--book ' + argv.book +
-            ' --language ' + argv.subdir
+            'gulp',
+            ['mathjax',
+                    '--book', argv.book,
+                    '--language', argv.subdir]
         );
     } else {
         mathJaxProcess = spawn(
-            'gulp mathjax ' +
-            '--book ' + argv.book
+            'gulp',
+            ['mathjax', '--book', argv.book]
         );
     }
     processOutput(mathJaxProcess, 'Gulp', callback);
@@ -258,14 +269,14 @@ function prince(format) {
 
     console.log('Using files in ' + fsPath.normalize(pathToFiles));
 
-    var princeProcess = spawn('prince -v -l ' +
-            'file-list' +
-            ' -o ' +
-            projectRoot() +
-            '/_output/' +
-            outputFilename(format) +
-            ' --javascript',
-            {cwd: pathToFiles});
+    var princeProcess = spawn(
+        'prince',
+        ['-v', '-l', 'file-list', '-o',
+                projectRoot() + '/_output/' +
+                outputFilename(format),
+                '--javascript'],
+        {cwd: pathToFiles}
+    );
     processOutput(princeProcess, 'Prince', openOutputFile);
 }
 
@@ -356,7 +367,10 @@ function switches(switchesString) {
 function taskImages(book, subdir) {
     'use strict';
 
-    var gulpProcess = spawn('gulp --book ' + book + ' --language ' + subdir);
+    var gulpProcess = spawn(
+        'gulp',
+        ['--book', book, '--language', subdir]
+    );
     processOutput(gulpProcess, 'gulp');
 }
 
@@ -375,14 +389,20 @@ function taskInstall() {
         'Running Bundler to install Ruby gem dependencies...\n' +
         'If you get errors, check that Bundler is installed (https://bundler.io).'
     );
-    var bundleProcess = spawn('bundle install');
+    var bundleProcess = spawn(
+        'bundle',
+        ['install']
+    );
     processOutput(bundleProcess, 'Bundler');
 
     console.log(
         'Running npm to install Node modules...\n' +
         'If you get errors, check that Node.js is installed (https://nodejs.org).'
     );
-    var npmProcess = spawn('npm install');
+    var npmProcess = spawn(
+        'npm',
+        ['install']
+    );
     processOutput(npmProcess, 'npm');
 }
 
