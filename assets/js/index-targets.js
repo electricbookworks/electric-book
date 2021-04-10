@@ -30,45 +30,54 @@
 // not included in this list will not be targets.
 // Rather, index targets will be inserted inside them
 // where the index comment appears in the DOM.
+// Note that element names must be uppercase here.
 var ebIndexOptions = {
     blockLevelElements: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6',
             'P', 'BLOCKQUOTE', 'OL', 'UL', 'TABLE', 'DL']
 };
 
-// Process the comments
+// Process the comments, inserting anchor-tag targets
+// into the DOM, which we'll link to from the book index.
 function ebIndexProcessComments(comments) {
     'use strict';
 
-    // Create an array to store IDs for uniqueness
+    // Create an array to store IDs, which we'll test
+    // for uniqueness when we create anchor tags.
     var entries = [];
 
+    // If there are no comments, note that in the
+    // `data-index-targets` attribute.
     if (comments.length < 1) {
         document.body.setAttribute('data-index-targets', 'none');
     }
 
+    // Process each comment in the `comments` array.
     comments.forEach(function (comment) {
 
         // Parse each line: slugify and add to an array
+        // called `commentLines`, because each line in the comment
+        // will be a separate index target.
         var commentLines = comment.commentText.split('\n');
 
+        // Process each line, i.e. each index target in the comment.
         commentLines.forEach(function (line) {
 
-            // Remove the opening 'index:'
+            // Remove the opening 'index:' prefix.
             var indexKeywordRegex = /^\s*index:/;
             if (indexKeywordRegex.test(line)) {
                 line = line.replace(indexKeywordRegex, '');
             }
 
-            // Strip white space at start and end of line
+            // Strip white space at start and end of line.
             line = line.trim();
 
-            // Exit if the line is now empty
+            // Exit if the stripped line is now empty.
             if (line === '') {
                 return;
             }
 
             // Check for starting or ending hyphens.
-            // If one exists, flag it as from or to.
+            // If one exists, flag it as `from` or `to`.
             // Then strip the hyphen.
             // TO DO: actually use this. Note, startsWith
             // and endsWith don't seem to be supported in PrinceXML.
@@ -81,7 +90,8 @@ function ebIndexProcessComments(comments) {
             //     from = true;
             // }
 
-            // Slugify
+            // Slugify the target text to use in an ID
+            // and to check for duplicate instances.
             var entrySlug = ebSlugify(line);
 
             // Add the slug to the array of entries,
@@ -99,33 +109,35 @@ function ebIndexProcessComments(comments) {
                 return allEntries;
             }, {});
 
-            // Get the number of occurrences of this entry so far
+            // Get the number of occurrences of this entry so far.
             var occurrencesSoFar = entryOccurrences[entrySlug];
 
-            // Use that to add a unique index-ID suffix to the entry slug
+            // Use that to add a unique index-ID suffix to the entry slug.
             var id = entrySlug + '--iid-' + occurrencesSoFar;
 
-            // Create a target for each line
-            // Note, we can't use one target, because one
-            // target can't have multiple IDs. And we don't try to map
-            // entries in the index to IDs of existing elements
+            // Create a target for each line.
+            // Note: we can't use one target for several index entries,
+            // because one element can't have multiple IDs.
+            // And we don't try to link index entries to IDs of existing elements
             // because those elements' IDs could change, and sometimes
-            // we want our target at a specific point in a textnode.
+            // we want our target at a specific point inline in a textnode.
 
+            // Create a target element to link to from the index.
             var target = document.createElement('a');
             target.id = id;
             target.classList.add('index-target');
             target.title = line;
 
-            // Set a string we'll use for the target below.
-            var targetElementString = target.outerHTML;
-
-            // But Prince doesn't support outerHTML, so we have to use
-            // innerHTML by putting the target in a temporary container.
+            // Set a string that we'll use for the target below.
+            // It's easiest to use `outherTML` for this,
+            // but PrinceXML doesn't support `outerHTML`, so
+            // if this script is running in PrinceXML we have to use
+            // `innerHTML`, putting the target in a temporary container.
+            var targetElementString = '';
             if (typeof Prince === 'object') {
 
                 // Prince requires that the element contain a string
-                // in order for the target to be present at all.
+                // in order for the target to be present at all in the DOM.
                 // So we give it a zero-width space and keep it
                 // out of the flow with position: absolute.
                 target.innerHTML = '​'; // a zero-width space
@@ -134,6 +146,8 @@ function ebIndexProcessComments(comments) {
                 var temporaryContainer = document.createElement('div');
                 temporaryContainer.appendChild(target);
                 targetElementString = temporaryContainer.innerHTML;
+            } else {
+                targetElementString = target.outerHTML;
             }
 
             // If the comment is between elements (e.g. between two paras)
@@ -144,7 +158,7 @@ function ebIndexProcessComments(comments) {
             // the target exactly where it appears between those text nodes.
             // This way, a target can appear at any exact point in the text.
 
-            if (comment.targetType === 'inline') { // nodeType 3 is a text node
+            if (comment.targetType === 'inline') {
 
                 var positionOfTarget = comment.element.innerHTML.indexOf(comment.targetText);
                 var newInnerHTML = comment.element.innerHTML.slice(0, positionOfTarget)
@@ -156,12 +170,13 @@ function ebIndexProcessComments(comments) {
             }
         });
 
-        // Add a selector to signal we're done
+        // Add an attribute to flag that we're done.
         document.body.setAttribute('data-index-targets', 'loaded');
     });
 }
 
-// Get all the comments
+// Get all the comments and add them to an array.
+// Also see `ebIndexGetCommentsFromTitles`.
 function ebIndexGetComments() {
     'use strict';
 
@@ -290,6 +305,12 @@ function ebIndexGetComments() {
     ebIndexProcessComments(comments);
 }
 
+// This is the PrinceXML alternative to `ebIndexGetComments`.
+// This function relies on a preprocessing step,
+// `renderCommentsAsNodes` in the gulpfile,
+// which inserts title attributes into element tags.
+// This is because PrinceXML cannot see comment nodes.
+// The gulp process creates nodes that PrinceXML can see.
 function ebIndexGetCommentsFromTitles() {
     'use strict';
 
@@ -331,7 +352,7 @@ function ebIndexGetCommentsFromTitles() {
     ebIndexProcessComments(comments);
 }
 
-// Triage PrinceXML or otherwise
+// Triage for a PrinceXML environment or otherwise.
 function ebIndexInit() {
     'use strict';
 
