@@ -26,7 +26,7 @@ Electric Book options
 5  Create an app
 6  Export to Word
 7  Convert source images to output formats
-8  Refresh search or book index
+8  Refresh search and book index databases
 9  Install or update dependencies
 x  Exit
 
@@ -102,7 +102,7 @@ Enter a number and hit enter. "
 				fi
 			fi
 
-			echo "Prerendering HTML comments for indexing..."
+			echo "Creating targets for book index references..."
 			if [ "$printpdfsubdirectory" = "" ]; then
 				gulp renderCommentsAsNodes --book $bookfolder
 			else
@@ -208,11 +208,11 @@ Enter a number and hit enter. "
 				fi
 			fi
 
-			echo "Prerendering HTML comments for indexing..."
-			if [ "$printpdfsubdirectory" = "" ]; then
+			echo "Creating targets for book index references..."
+			if [ "$screenpdfsubdirectory" = "" ]; then
 				gulp renderCommentsAsNodes --book $bookfolder
 			else
-				gulp renderCommentsAsNodes --book $bookfolder --language $printpdfsubdirectory
+				gulp renderCommentsAsNodes --book $bookfolder --language $screenpdfsubdirectory
 			fi
 
 			# Navigate into the book's text folder in _site
@@ -973,15 +973,15 @@ Enter a number and hit enter. "
 	###################
 	elif [ "$process" = 8 ]
 		then
-		echo "Let's refresh the index."
-		echo "We'll index the files in your file lists as defined in meta.yml"
+		echo "Let's refresh search and index databases."
+		echo "We'll index the files in your file lists as defined in meta.yml."
 
 		# Check if refreshing web or app index
 		echo "Choose a format to refresh:"
 		echo "1 Print PDF"
 		echo "2 Screen PDF"
 		echo "3 Web (default, hit enter)"
-		echo "4 Epub (not yet supported)"
+		echo "4 Epub"
 		echo "5 App"
 		searchIndexToRefresh=""
 		read searchIndexToRefresh
@@ -1026,6 +1026,7 @@ Enter a number and hit enter. "
 			then
 			node _site/assets/js/render-book-index.js
 		else
+			node _site/assets/js/render-book-index.js
 			node _site/assets/js/render-search-index.js
 		fi
 

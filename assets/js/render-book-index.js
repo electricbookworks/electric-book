@@ -52,7 +52,7 @@ function generateTargetsIndex() {
 
             // Set debug to true to return any browser-console
             // messages to the Node console
-            var debug = false;
+            var debug = true;
             if (debug === true) {
                 page.on('console', function (consoleObj) {
                     console.log(consoleObj.text());
@@ -62,7 +62,7 @@ function generateTargetsIndex() {
             // Go to the page path
             await page.goto(path);
 
-            // Wait for index targets to load
+            // Wait for index targets to load.
             await page.waitForSelector('[data-index-targets]');
 
             // Get the page content. We can only pass serialized
@@ -72,10 +72,21 @@ function generateTargetsIndex() {
                 var targetArray = [];
                 var targets = document.querySelectorAll('.index-target');
                 targets.forEach(function (entry) {
+
+                    // Check if this target starts or ends a reference range
+                    var range = '';
+                    if (entry.classList.contains('index-target-from')) {
+                        range = 'from';
+                    }
+                    if (entry.classList.contains('index-target-to')) {
+                        range = 'to';
+                    }
+
                     var entryObject = {
                         entrySlug: entry.id.split('--iid-')[0],
                         entryText: entry.title,
                         id: entry.id,
+                        range: range,
                         bookTitle: document.body.getAttribute('data-title'),
                         translationLanguage: document.body.getAttribute('data-translation')
                     }

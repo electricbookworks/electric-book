@@ -37,6 +37,14 @@ $web-index: true !default;
                 &:first-of-type {
                     margin-left: .5em;
                 }
+
+                // If this starts a range, use an en dash not a comma
+                &.index-range-from {
+
+                    &:after {
+                        content: "\2013"
+                    }
+                }
             }
         }
 

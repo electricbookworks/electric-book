@@ -14,7 +14,7 @@ The text for this chapter is taken from Sir Arthur Conan Doyle's [*Adventures of
 
 <!--index:
 Holmes, Sherlock
-Adler, Irene
+Adler, Irene-
 -->
 
 To Sherlock Holmes she is always THE woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen, but as a lover he would have placed himself in a false position. He never spoke of the softer passions, save with a gibe and a sneer. They were admirable things for the observer--excellent for drawing the veil from men's motives and actions. But for the trained reasoner to admit such intrusions into his own delicate and finely adjusted temperament was to introduce a distracting factor which might throw a doubt upon all his mental results. Grit in a sensitive instrument, or a crack in one of his own high-power lenses, would not be more disturbing than a strong emotion in a nature such as his. And yet there was but one woman to him, and that woman was the late Irene Adler, of dubious and questionable memory.
@@ -251,6 +251,10 @@ Holmes scribbled a receipt upon a sheet of his note-book and handed it to him.
 
 "And Mademoiselle's address?" he asked.
 
+<!-- index:
+Briony Lodge
+-->
+
 "Is Briony Lodge, Serpentine Avenue, St. John's Wood."
 
 Holmes took a note of it. "One other question," said he. "Was the photograph a cabinet?"
@@ -274,17 +278,33 @@ It was close upon four before the door opened, and a drunken-looking groom, ill-
 
 "I can't imagine. I suppose that you have been watching the habits, and perhaps the house, of Miss Irene Adler."
 
+<!-- index:
+Briony Lodge
+-->
+
 "Quite so; but the sequel was rather unusual. I will tell you, however. I left the house a little after eight o'clock this morning in the character of a groom out of work. There is a wonderful sympathy and freemasonry among horsey men. Be one of them, and you will know all that there is to know. I soon found Briony Lodge. It is a bijou villa, with a garden at the back, but built out in front right up to the road, two stories. Chubb lock to the door. Large sitting-room on the right side, well furnished, with long windows almost to the floor, and those preposterous English window fasteners which a child could open. Behind there was nothing remarkable, save that the passage window could be reached from the top of the coach-house. I walked round it and examined it closely from every point of view, but without noting anything else of interest.
 
 "I then lounged down the street and found, as I expected, that there was a mews in a lane which runs down by one wall of the garden. I lent the ostlers a hand in rubbing down their horses, and received in exchange twopence, a glass of half and half, two fills of shag tobacco, and as much information as I could desire about Miss Adler, to say nothing of half a dozen other people in the neighbourhood in whom I was not in the least interested, but whose biographies I was compelled to listen to."
 
 "And what of Irene Adler?" I asked.
 
+<!-- index:
+Briony Lodge
+-->
+
 "Oh, she has turned all the men's heads down in that part. She is the daintiest thing under a bonnet on this planet. So say the Serpentine-mews, to a man. She lives quietly, sings at concerts, drives out at five every day, and returns at seven sharp for dinner. Seldom goes out at other times, except when she sings. Has only one male visitor, but a good deal of him. He is dark, handsome, and dashing, never calls less than once a day, and often twice. He is a Mr. Godfrey Norton, of the Inner Temple. See the advantages of a cabman as a confidant. They had driven him home a dozen times from Serpentine-mews, and knew all about him. When I had listened to all they had to tell, I began to walk up and down near Briony Lodge once more, and to think over my plan of campaign.
+
+<!-- index:
+Briony Lodge
+-->
 
 "This Godfrey Norton was evidently an important factor in the matter. He was a lawyer. That sounded ominous. What was the relation between them, and what the object of his repeated visits? Was she his client, his friend, or his mistress? If the former, she had probably transferred the photograph to his keeping. If the latter, it was less likely. On the issue of this question depended whether I should continue my work at Briony Lodge, or turn my attention to the gentleman's chambers in the Temple. It was a delicate point, and it widened the field of my inquiry. I fear that I bore you with these details, but I have to let you see my little difficulties, if you are to understand the situation."
 
 "I am following you closely," I answered.
+
+<!-- index:
+Briony Lodge
+-->
 
 "I was still balancing the matter in my mind when a hansom cab drove up to Briony Lodge, and a gentleman sprang out. He was a remarkably handsome man, dark, aquiline, and moustached--evidently the man of whom I had heard. He appeared to be in a great hurry, shouted to the cabman to wait, and brushed past the maid who opened the door with the air of a man who was thoroughly at home.
 
@@ -456,6 +476,10 @@ There were several people on the pavement at the time, but the greeting appeared
 
 #### III.
 
+<!-- index:
+King of Bohemia-
+-->
+
 I slept at Baker Street that night, and we were engaged upon our toast and coffee in the morning when the King of Bohemia rushed into the room.
 
 "You have really got it!" he cried, grasping Sherlock Holmes by either shoulder and looking eagerly into his face.
@@ -494,13 +518,26 @@ I slept at Baker Street that night, and we were engaged upon our toast and coffe
 
 "It is true. And yet--Well! I wish she had been of my own station! What a queen she would have made!" He relapsed into a moody silence, which was not broken until we drew up in Serpentine Avenue.
 
+<!-- index:
+-King of Bohemia
+Briony Lodge
+-->
+
 The door of Briony Lodge was open, and an elderly woman stood upon the steps. She watched us with a sardonic eye as we stepped from the brougham.
 
 "Mr. Sherlock Holmes, I believe?" said she.
 
 "I am Mr. Holmes," answered my companion, looking at her with a questioning and rather startled gaze.
 
+<!-- index:
+Charing Cross-
+-->
+
 "Indeed! My mistress told me that you were likely to call. She left this morning with her husband by the 5:15 train from Charing Cross for the Continent."
+
+<!-- index:
+-Charing Cross
+-->
 
 "What!" Sherlock Holmes staggered back, white with chagrin and surprise. "Do you mean that she has left England?"
 
@@ -519,10 +556,10 @@ Norton, Irene
 > 
 > "Well, I followed you to your door, and so made sure that I was really an object of interest to the celebrated Mr. Sherlock Holmes. Then I, rather imprudently, wished you good-night, and started for the Temple to see my husband.
 > 
-> "We both thought the best resource was flight, when pursued by so formidable an antagonist; so you will find the nest empty when you call to-morrow. As to the photograph, your client may rest in peace. I love and am loved by a better man than he. The King may do what he will without hindrance from one whom he has cruelly wronged. I keep it only to safeguard myself, and to preserve a weapon which will always secure me from any steps which he might take in the future. I leave a photograph which he might care to possess; and I remain, dear Mr. Sherlock Holmes,
+> "We both thought the best resource was flight, when pursued by so formidable an antagonist; so you will find the nest empty when you call to-morrow. As to the photograph, your client may rest in peace. I love and am loved by a better man than he. <!-- index: King of Bohemia -->The King may do what he will without hindrance from one whom he has cruelly wronged. I keep it only to safeguard myself, and to preserve a weapon which will always secure me from any steps which he might take in the future. I leave a photograph which he might care to possess; and I remain, dear Mr. Sherlock Holmes,
 > 
-> "Very truly yours,\\
-> <!-- index: Adler, Irene -->"IRENE NORTON, née ADLER."
+> <!-- index: -Adler, Irene -->"Very truly yours,\\
+> "IRENE NORTON, née ADLER."
 > {:.valediction}
 {:.letter #letter}
 

@@ -79,16 +79,19 @@ function ebIndexProcessComments(comments) {
             // Check for starting or ending hyphens.
             // If one exists, flag it as `from` or `to`.
             // Then strip the hyphen.
-            // TO DO: actually use this. Note, startsWith
-            // and endsWith don't seem to be supported in PrinceXML.
-            // var from = false;
-            // var to = false;
-            // if (line.startsWith('-')) {
-            //     to = true;
-            // }
-            // if (line.endsWith('-')) {
-            //     from = true;
-            // }
+            // Note, startsWith and endsWith are not supported
+            // in PrinceXML, so we can't use those.
+            var from = false;
+            var to = false;
+
+            if (line.substring(0, 1) === '-') {
+                to = true;
+                line = line.substring(1);
+            }
+            if (line.substring(line.length - 1) === '-') {
+                from = true;
+                line = line.substring(0, line.length - 1);
+            }
 
             // Slugify the target text to use in an ID
             // and to check for duplicate instances.
@@ -128,8 +131,17 @@ function ebIndexProcessComments(comments) {
             target.classList.add('index-target');
             target.title = line;
 
+            // If this target starts or ends an indexed range,
+            // add the relevant class.
+            if (to) {
+                target.classList.add('index-target-to');
+            }
+            if (from) {
+                target.classList.add('index-target-from');
+            }
+
             // Set a string that we'll use for the target below.
-            // It's easiest to use `outherTML` for this,
+            // It's easiest to use `outerHTML` for this,
             // but PrinceXML doesn't support `outerHTML`, so
             // if this script is running in PrinceXML we have to use
             // `innerHTML`, putting the target in a temporary container.
@@ -138,12 +150,12 @@ function ebIndexProcessComments(comments) {
 
                 // Prince requires that the element contain a string
                 // in order for the target to be present at all in the DOM.
-                // So we give it a zero-width space and keep it
+                // So we give it a zero-width space character and keep it
                 // out of the flow with position: absolute.
-                target.innerHTML = '​'; // a zero-width space
+                target.innerHTML = '​'; // contains zero-width space character
                 target.style.position = 'absolute';
 
-                var temporaryContainer = document.createElement('div');
+                var temporaryContainer = document.createElement('span');
                 temporaryContainer.appendChild(target);
                 targetElementString = temporaryContainer.innerHTML;
             } else {
@@ -180,15 +192,19 @@ function ebIndexProcessComments(comments) {
 function ebIndexGetComments() {
     'use strict';
 
+    console.log('Finding HTML comments for book index...');
+
     var comments = [];
 
     // Ad each comment node to the comments array
     var indexedElement, commentValue, previousElementSibling,
             nextElementSibling, nextSibling, targetType, targetText;
 
-    var debugging = true;
     // Check for TreeWalker support.
-    if (document.createTreeWalker && !debugging) {
+    var useTreeWalker = true; // debugging option
+    if (document.createTreeWalker && useTreeWalker) {
+
+        console.log('Using TreeWalker to find comments...');
 
         // https://www.bennadel.com/blog/2607-finding-html-comment-nodes-in-the-dom-using-treewalker.htm
         // By default, the TreeWalker will show all of the matching DOM nodes that it
@@ -222,7 +238,7 @@ function ebIndexGetComments() {
             previousElementSibling = treeWalker.currentNode.previousElementSibling;
             nextElementSibling = treeWalker.currentNode.nextElementSibling;
 
-            // The the previous or next sibling elements of the comment
+            // If the previous or next sibling elements of the comment
             // are elements, then this comment contains index entries
             // that should point to the start of the next element.
 
