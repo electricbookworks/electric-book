@@ -29,6 +29,11 @@ $epub-index: true !default;
                     color: inherit;
                     text-decoration: none;
                 }
+
+                // Space between entry and first reference number
+                &:first-of-type {
+                    margin-left: .5em;
+                }
             }
         }
     }

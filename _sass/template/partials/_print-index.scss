@@ -25,6 +25,11 @@ $print-index: true !default;
 			&:last-of-type:after {
 				content: "";
 			}
+
+			// Space between entry and first reference number
+			&:first-of-type {
+				margin-left: .5em;
+			}
 		}
 		// To hide but not delete duplicate entries.
 		.duplicate {
