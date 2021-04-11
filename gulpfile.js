@@ -959,7 +959,7 @@ gulp.task('renderCommentsAsNodes', function (done) {
                 decodeEntities: false
             }
         }))
-        .pipe(debug({title: 'Rendering HTML comments as elements in '}))
+        .pipe(debug({title: 'Rendering book-indexing HTML comments as elements in '}))
         .pipe(gulp.dest('./'));
     done();
 });
