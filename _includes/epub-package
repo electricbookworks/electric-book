@@ -109,7 +109,7 @@
 
         <item id="{% if file-prefix %}{{ file-prefix }}{% endif %}{{ manifest-epub-file-name | strip }}"
               media-type="application/xhtml+xml"
-              href="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ manifest-epub-file-name | strip }}.html"
+              href="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ manifest-epub-file-name | strip }}.html"
               {% if properties != "" %}properties="{{ properties }}"{% endif %}
               />
 
@@ -119,13 +119,13 @@
 
         <item id="epub-css"
               media-type="text/css"
-              href="styles/{{ epub-stylesheet }}"
+              href="{{ book-directory }}/styles/{{ epub-stylesheet }}"
               />
 
         {% if is-translation and translation-styles-exist %}
         <item id="epub-css-{{ book-subdirectory }}"
               media-type="text/css"
-              href="{{ book-subdirectory }}/styles/{{ epub-stylesheet }}"
+              href="{{ book-directory }}/{{ book-subdirectory }}/styles/{{ epub-stylesheet }}"
               />
         {% endif %}
 
@@ -146,7 +146,7 @@
 
             <item id="image-{{ file.name | slugify }}"
                   media-type="{{ site.media-types[file-extension] }}"
-                  href="{% if is-translation and translated-images-exist %}{{ book-subdirectory }}/{% endif %}images/epub/{{ file.name }}"
+                  href="{{ book-directory }}/{% if is-translation and translated-images-exist %}{{ book-subdirectory }}/{% endif %}images/epub/{{ file.name }}"
                   {% if properties != "" %}properties="{{ properties }}"{% endif %}
                   />
 
@@ -199,7 +199,7 @@
             {% comment %} Add the default bundle.js Javascript {% endcomment %}
             <item id="script-bundle"
                     media-type="application/x-javascript"
-                    href="js/bundle.js"
+                    href="assets/js/bundle.js"
                     />
 
         {% endunless %}
@@ -372,7 +372,7 @@
 
                 {% if reference-type and reference-type != "" %}
                 <reference type="{{ reference-type }}"
-                           href="{% if is-translation %}{{ book-subdirectory }}/{% endif %}text/{{ file-href }}.html"
+                           href="{{ book-directory }}/{% if is-translation %}{{ book-subdirectory }}/{% endif %}text/{{ file-href }}.html"
                            {% if reference-title and reference-title != "" %}title="{{ reference-title }}"{% endif %}
                 />
                 {% endif %}

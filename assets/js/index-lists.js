@@ -20,9 +20,6 @@ function ebIndexAddLink(listItem, filename, id, range, pageReferenceSequenceNumb
     } else {
         link.classList.add('index-range-none');
     }
-
-    // TO DO: if the from and to links are separated
-    // by another entry, we should omit the separating entry.
 }
 
 // Add a link for a specific entry
@@ -32,9 +29,16 @@ function ebIndexFindLinks(listItem) {
     var currentTitle = document.body.getAttribute('data-title');
     var currentTranslation = document.body.getAttribute('data-translation');
     var listItemText = listItem.innerHTML;
+    var targetsProcessed = 0;
 
     // Look through the index of targets
     ebIndexTargets.forEach(function (pageEntries) {
+
+        // Flag when we're done
+        targetsProcessed += 1;
+        if (targetsProcessed === ebIndexTargets.length) {
+            document.body.setAttribute('data-index-list', 'loaded');
+        }
 
         // Check if the entries for this page
         // are for files in the same book.
@@ -88,6 +92,13 @@ function ebIndexFindLinks(listItem) {
 // Get all the indexes and start processing them
 function ebIndexPopulate() {
     'use strict';
+
+    // Don't do this if the list is already loaded
+    // This prevents us doing this work if it's been pre-processed
+    // e.g. by gulp during PDF or epub output.
+    if (document.body.getAttribute('data-index-list') === 'loaded') {
+        return;
+    }
 
     var indexLists = document.querySelectorAll('ul.reference-index');
 

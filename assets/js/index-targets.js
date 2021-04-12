@@ -9,7 +9,7 @@
 // that precedes the comment, as slugs of the line.
 // Comment lines that start or end with a hyphen
 // start or end ranges of content that contain the
-// ongoing presence of a given term. Those targets
+// ongoing presence of a given concept. Those targets
 // take 'to' or 'from' classes, which are important
 // for the separate process that generates hyperlinks
 // in the final book index.
@@ -21,6 +21,12 @@
 // PrinceXML does not 'see' HTML comments at all.
 // So for PrinceXML output, we must prerender the HTML
 // to turn all comment nodes into something Prince can see.
+
+// In epub readers, the links don't work from the index
+// because the targets would only exist when the target
+// page is rendered. Browsers handle this fine, but not ereaders.
+// So for epub output, we don't use this script. Instead,
+// we pre-process the HTML with gulp and cheerio elsewhere.
 
 // Options
 // -------
@@ -192,19 +198,18 @@ function ebIndexProcessComments(comments) {
 function ebIndexGetComments() {
     'use strict';
 
-    console.log('Finding HTML comments for book index...');
-
     var comments = [];
 
     // Ad each comment node to the comments array
     var indexedElement, commentValue, previousElementSibling,
             nextElementSibling, nextSibling, targetType, targetText;
 
+    // Regex for testing if a comment is an indexing comment
+    var isAnIndexComment = /^\s*index:/;
+
     // Check for TreeWalker support.
     var useTreeWalker = true; // debugging option
     if (document.createTreeWalker && useTreeWalker) {
-
-        console.log('Using TreeWalker to find comments...');
 
         // https://www.bennadel.com/blog/2607-finding-html-comment-nodes-in-the-dom-using-treewalker.htm
         // By default, the TreeWalker will show all of the matching DOM nodes that it
@@ -234,38 +239,43 @@ function ebIndexGetComments() {
 
         while (treeWalker.nextNode()) {
 
-            nextSibling = treeWalker.currentNode.nextSibling;
-            previousElementSibling = treeWalker.currentNode.previousElementSibling;
-            nextElementSibling = treeWalker.currentNode.nextElementSibling;
+            if (isAnIndexComment.test(treeWalker.currentNode.nodeValue)) {
+                nextSibling = treeWalker.currentNode.nextSibling;
+                previousElementSibling = treeWalker.currentNode.previousElementSibling;
+                nextElementSibling = treeWalker.currentNode.nextElementSibling;
 
-            // If the previous or next sibling elements of the comment
-            // are elements, then this comment contains index entries
-            // that should point to the start of the next element.
+                // If the previous or next sibling elements of the comment
+                // are elements, then this comment contains index entries
+                // that should point to the start of the next element.
 
-            // If the next sibling node is a text node, and
-            // it actually contains text (isn't just space),
-            // then we know that the index target must be inline, i.e.
-            // inside a text element like a paragraph.
+                // If the next sibling node is a text node, and
+                // it actually contains text (isn't just space),
+                // then we know that the index target must be inline, i.e.
+                // inside a text element like a paragraph.
 
-            if (ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName)
-                    && ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
-                indexedElement = treeWalker.currentNode.nextElementSibling;
-                targetType = 'element';
-                targetText = '';
-            } else {
-                indexedElement = treeWalker.currentNode.parentElement;
-                targetType = 'inline';
-                targetText = nextSibling.nodeValue;
+                if (previousElementSibling !== null
+                        && nextElementSibling !== null
+                        && ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName)
+                        && ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
+                    indexedElement = treeWalker.currentNode.nextElementSibling;
+                    targetType = 'element';
+                    targetText = '';
+                } else {
+                    indexedElement = treeWalker.currentNode.parentElement;
+                    targetType = 'inline';
+                    targetText = nextSibling.nodeValue;
+                }
+
+                commentValue = treeWalker.currentNode.nodeValue;
+
+                comments.push({
+                    commentText: commentValue,
+                    element: indexedElement,
+                    targetText: targetText,
+                    targetType: targetType
+                });
             }
 
-            commentValue = treeWalker.currentNode.nodeValue;
-
-            comments.push({
-                commentText: commentValue,
-                element: indexedElement,
-                targetText: targetText,
-                targetType: targetType
-            });
         }
     } else {
 
@@ -279,8 +289,6 @@ function ebIndexGetComments() {
                 Node.COMMENT_NODE = 8;
             }
 
-            var isAnIndexComment = /^\s*index:/;
-
             for (thisNode = thisNode.firstChild; thisNode; thisNode = thisNode.nextSibling) {
 
                 // If it's a comment thisNode and it is not just whitespace
@@ -291,7 +299,9 @@ function ebIndexGetComments() {
                     previousElementSibling = thisNode.previousElementSibling;
                     nextElementSibling = thisNode.nextElementSibling;
 
-                    if (ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName)
+                    if (previousElementSibling !== null
+                            && nextElementSibling !== null
+                            && ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName)
                             && ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
                         indexedElement = thisNode.nextElementSibling;
                         targetType = 'element';
@@ -371,6 +381,12 @@ function ebIndexGetCommentsFromTitles() {
 // Triage for a PrinceXML environment or otherwise.
 function ebIndexInit() {
     'use strict';
+
+    // Don't run this if the targets are already loaded
+    // (e.g. by pre-processing)
+    if (document.body.getAttribute('data-index-targets') === 'loaded') {
+        return;
+    }
 
     if (typeof Prince === 'object') {
         ebIndexGetCommentsFromTitles();

@@ -25,7 +25,14 @@ var gulp = require('gulp'),
     del = require('del'),
     cheerio = require('gulp-cheerio'),
     tap = require('gulp-tap'),
-    Iconv = require('iconv').Iconv;
+    Iconv = require('iconv').Iconv
+
+    // Utilities copied from elsewhere in this repo
+    var { ebSlugify } = require('./assets/js/utilities.js');
+    var { printpdfIndexTargets } = require('./assets/js/book-index-print-pdf.js');
+    var { screenpdfIndexTargets } = require('./assets/js/book-index-screen-pdf.js');
+    var { epubIndexTargets } = require('./assets/js/book-index-epub.js');
+    var { appIndexTargets } = require('./assets/js/book-index-app.js');
 
 // A function for loading book metadata as an object
 function loadMetadata() {
@@ -106,6 +113,17 @@ if (language === '') {
     console.log('If processing a translation\'s images, use the --language argument, e.g. gulp --language fr');
 }
 
+// Get the output format we're working with
+var output = '';
+if (args.output && args.output.trim !== '') {
+    output = args.output;
+}
+
+// Reminder on usage
+if (output === '') {
+    console.log('If processing for a specific output, use the --output argument, e.g. gulp --output printpdf. No hyphens.');
+}
+
 // Set up paths.
 // Paths to text src must include the *.html extension.
 // Add paths to any JS files to minify to the src array, e.g.
@@ -124,8 +142,8 @@ var paths = {
         dest: '_site/' + book + language + '/text/'
     },
     epub: {
-        src: '_site/epub' + language + '/text/*.html',
-        dest: '_site/epub' + language + '/text/'
+        src: '_site/epub/' + book + language + '/text/*.html',
+        dest: '_site/epub/' + book + language + '/text/'
     },
     js: {
         src: [],
@@ -936,30 +954,299 @@ gulp.task('yaml', function (done) {
     done();
 });
 
-// Render HTML comments as element nodes,
-// so that PrinceXML can use index-targets.js.
-gulp.task('renderCommentsAsNodes', function (done) {
+// Turn HTML comments for book indexes into anchor tags.
+// This is a pre-processing alternative to assets/js/index-targets.js,
+// which dynamically adds index targets in webserver environments.
+// It duplicates much of what index-targets.js does. So, if you
+// update it, you may need to update index-targets.js as well.
+gulp.task('renderIndexCommentsAsTargets', function (done) {
     'use strict';
-    var files = [];
     gulp.src(paths.text.src, {base: './'})
         .pipe(cheerio({
             run: function ($) {
+
+                // Create an empty array to store entries
+                var entries = [];
+
                 $('*').contents().filter(function () {
-                    if (this.nodeType === 8 && (/^\s*index:/).test(this.nodeValue)) {
-                        console.log(this.nodeValue);
-                        var newElement = $('<span></span>')
-                            .addClass('index-comment')
-                            .attr('style', 'display: none')
-                            .attr('title', this.nodeValue);
-                        newElement.insertAfter(this);
+                    if (this.nodeType === 8 && (/^\s*index:/).test(this.data)) {
+
+                        // Remember the comment for inserting the link later
+                        var comment = this;
+
+                        // Split the lines into an array
+                        var commentText = this.data;
+                        var commentLines = commentText.split('\n');
+
+                        // Process each line, i.e. each index target in the comment.
+                        commentLines.forEach(function (line) {
+
+                            // Remove the opening 'index:' prefix.
+                            var indexKeywordRegex = /^\s*index:/;
+                            if (indexKeywordRegex.test(line)) {
+                                line = line.replace(indexKeywordRegex, '');
+                            }
+
+                            // Strip white space at start and end of line.
+                            line = line.trim();
+
+                            // Exit if the stripped line is now empty.
+                            if (line === '') {
+                                return;
+                            }
+
+                            // Check for starting or ending hyphens.
+                            // If one exists, flag it as `from` or `to`.
+                            // Then strip the hyphen.
+                            // Note, startsWith and endsWith are not supported
+                            // in PrinceXML, so we can't use those.
+                            var from = false;
+                            var to = false;
+                            var rangeClass = 'index-target-specific';
+
+                            if (line.substring(0, 1) === '-') {
+                                to = true;
+                                rangeClass = 'index-target-to';
+                                line = line.substring(1);
+                            } else if (line.substring(line.length - 1) === '-') {
+                                from = true;
+                                rangeClass = 'index-target-from';
+                                line = line.substring(0, line.length - 1);
+                            }
+
+                            // Slugify the target text to use in an ID
+                            // and to check for duplicate instances.
+                            var entrySlug = ebSlugify(line);
+
+                            // Add the slug to the array of entries,
+                            // where will we count occurrences of this entry.
+                            entries.push(entrySlug);
+
+                            // Create an object that counts occurrences
+                            // of this entry on the page so far.
+                            var entryOccurrences = entries.reduce(function (allEntries, entry) {
+                                if (entry in allEntries) {
+                                    allEntries[entry] += 1;
+                                } else {
+                                    allEntries[entry] = 1;
+                                }
+                                return allEntries;
+                            }, {});
+
+                            // Get the number of occurrences of this entry so far.
+                            var occurrencesSoFar = entryOccurrences[entrySlug];
+
+                            // Use that to add a unique index-ID suffix to the entry slug.
+                            var id = entrySlug + '--iid-' + occurrencesSoFar;
+
+                            // Create a target for each line.
+                            // Note: we can't use one target for several index entries,
+                            // because one element can't have multiple IDs.
+                            // And we don't try to link index entries to IDs of existing elements
+                            // because those elements' IDs could change, and sometimes
+                            // we want our target at a specific point inline in a textnode.
+
+                            //   - create an anchor tag for each line
+                            // note: this tag contains a zero-width space to appear in Prince,
+                            // which otherwise would strip empty elements.
+                            var newElement = $('<a>​</a>')
+                                .addClass('index-target')
+                                .addClass(rangeClass)
+                                .attr('id', id)
+                                .attr('title', line)
+                                .attr('style', 'position: absolute');
+                            newElement.insertAfter(comment);
+
+                        });
+
+                        $('body').attr('data-index-targets', 'loaded');
                     }
                 });
             },
             parserOptions: {
-                decodeEntities: false
+                // XML mode necessary for epub output
+                xmlMode: true
             }
         }))
         .pipe(debug({title: 'Rendering book-indexing HTML comments as elements in '}))
+        .pipe(gulp.dest('./'));
+    done();
+});
+
+// Turn HTML comments for book indexes into anchor tags.
+// This is a pre-processing alternative to assets/js/index-targets.js,
+// which dynamically adds index targets in webserver environments.
+// It duplicates much of what index-targets.js does. So, if you
+// update it, you may need to update index-targets.js as well.
+gulp.task('renderIndexListReferences', function (done) {
+    'use strict';
+    gulp.src(paths.text.src, {base: './'})
+        .pipe(cheerio({
+            run: function ($) {
+
+                // Largely a duplicate of assets/js/index-lists.js
+                // written to run in gulp-cheerio for
+                // pre-processing index lists for offline formats.
+
+                // It checks a page for reference indexes (.reference-index).
+                // If we find any, look up each list item
+                // in the book-index-*.js, and add a link.
+
+                // Add a link to an entry
+                function ebIndexAddLink(listItem, filename, id, range, pageReferenceSequenceNumber) {
+                    'use strict';
+
+                    var link = $('<a>​</a>')
+                        .attr('href', filename + '#' + id)
+                        .text(pageReferenceSequenceNumber)
+                    link.appendTo(listItem);
+
+                    // If this link starts a range
+                    if (range === 'from' || 'to') {
+                        link.addClass('index-range-' + range);
+                    } else {
+                        link.addClass('index-range-none');
+                    }
+                }
+
+                // Add a link for a specific entry
+                function ebIndexFindLinks(listItem, ebIndexTargets) {
+                    'use strict';
+
+                    var currentTitle = $('body').attr('data-title');
+                    var currentTranslation = $('body').attr('data-translation');
+                    var listItemText = listItem.children[0].data;
+                    var targetsProcessed = 0;
+                    var bookIsTranslation;
+                    var entryHasTranslationLanguage;
+
+                    // Look through the index of targets
+                    ebIndexTargets.forEach(function (pageEntries) {
+
+                        // Reset variables
+                        var titleMatches = false;
+                        var languageMatches = false;
+                        var bookIsTranslation = false;
+                        var entryHasTranslationLanguage = false;
+
+                        // Check if the entries for this page
+                        // are for files in the same book.
+                        // We just check against the first entry for the page.
+                        if (currentTitle === pageEntries[0].bookTitle) {
+                            titleMatches = true;
+                        }
+
+                        // Check if this is the same language.
+                        // If the book we're in has a translation language...
+                        if (currentTranslation) {
+                            bookIsTranslation = true;
+
+                            // ... and if the entry also has one
+                            if (pageEntries[0].translationLanguage) {
+                                entryHasTranslationLanguage = true;
+
+                                // ... and if they're the same, the language matches.
+                                if (bookIsTranslation && entryHasTranslationLanguage) {
+                                    if (currentTranslation === pageEntries[0].translationLanguage) {
+                                        languageMatches = true;
+                                    }
+                                }
+                            }
+                        } else {
+
+                            // Otherwise, if there was no translation language
+                            // for the book above, and there IS a language
+                            // noted for this entry, then there's no match.
+                            if (pageEntries[0].translationLanguage) {
+                                languageMatches = false;
+                            } else {
+
+                                // Finally, if there was neither a currentTranslation
+                                // above, nor a translation language for this entry,
+                                // then it must be a match, because no languages defined
+                                // means both are the default language for this project.
+                                languageMatches = true;
+                            }
+                        }
+
+                        if (titleMatches && languageMatches) {
+
+                            // Find this entry's page numbers
+                            var pageReferenceSequenceNumber = 1;
+                            var rangeOpen = false;
+                            pageEntries.forEach(function (entry) {
+
+                                if (entry.entrySlug === ebSlugify(listItemText)) {
+
+                                    // If a 'from' link has started a reference range,
+                                    // skip links till the next 'to' link that closes the range.
+                                    if (entry.range === 'from') {
+                                        rangeOpen = true;
+                                        ebIndexAddLink(listItem, entry.filename,
+                                                entry.id, entry.range, pageReferenceSequenceNumber);
+                                        pageReferenceSequenceNumber += 1;
+                                    }
+                                    if (rangeOpen) {
+                                        if (entry.range === 'to') {
+                                            ebIndexAddLink(listItem, entry.filename,
+                                                    entry.id, entry.range, pageReferenceSequenceNumber);
+                                            pageReferenceSequenceNumber += 1;
+                                            rangeOpen = false;
+                                        }
+                                    } else {
+                                        ebIndexAddLink(listItem, entry.filename, entry.id,
+                                                entry.range, pageReferenceSequenceNumber);
+                                        pageReferenceSequenceNumber += 1;
+                                    }
+                                }
+                            });
+                        }
+
+                        // Flag when we're done
+                        targetsProcessed += 1;
+                        if (targetsProcessed === ebIndexTargets.length) {
+                            $('body').attr('data-index-list', 'loaded');
+                        }
+                    });
+                }
+
+                // Get all the indexes and start processing them
+                function ebIndexPopulate(ebIndexTargets) {
+                    'use strict';
+
+                    // Don't do this if the list is already loaded
+                    // This prevents us doing this work if it's been pre-processed
+                    // e.g. by gulp during PDF or epub output.
+                    if ($('body').attr('data-index-list') === 'loaded') {
+                        return;
+                    }
+
+                    var listItems = $('.reference-index li');
+
+                    if (listItems.length > 0) {
+                        listItems.each(function () {
+                            ebIndexFindLinks(this, ebIndexTargets);
+                        });
+                    }
+                }
+
+                // Process for epub output by default
+                if (output === 'printpdf') {
+                    ebIndexPopulate(printpdfIndexTargets);
+                } else if (output === 'screenpdf') {
+                    ebIndexPopulate(screenpdfIndexTargets);
+                } else if (output === 'app') {
+                    ebIndexPopulate(appIndexTargets);
+                } else {
+                    ebIndexPopulate(epubIndexTargets);
+                }
+            },
+            parserOptions: {
+                // XML mode necessary for epub output
+                xmlMode: true
+            }
+        }))
+        .pipe(debug({title: 'Rendering book-index links in '}))
         .pipe(gulp.dest('./'));
     done();
 });

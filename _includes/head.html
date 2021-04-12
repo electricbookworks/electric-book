@@ -156,7 +156,7 @@ we want the doc name to be the book title, not only the first doc's title.
 
 </head>
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
-      data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+      data-title="{% if book-title %}{{ book-title }}{% else %}{{ page.title }}{% endif %}"
       {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 <div id="wrapper">
 

@@ -39,11 +39,6 @@ function generateTargetsIndex() {
             // Get the filename from the path
             var filename = path.split('/').pop();
 
-            // // Exit if the file is an index.html page
-            // if (filename === '' || filename === 'index.html') {
-            //     return;
-            // }
-
             // User feedback
             console.log('Indexing ' + path);
 
@@ -70,8 +65,8 @@ function generateTargetsIndex() {
             var indexEntries = await page.evaluate(function () {
 
                 var targetArray = [];
-                var targets = document.querySelectorAll('.index-target');
-                targets.forEach(function (entry) {
+                var indexLinkTargets = document.querySelectorAll('.index-target');
+                indexLinkTargets.forEach(function (entry) {
 
                     // Check if this target starts or ends a reference range
                     var range = '';
@@ -133,7 +128,9 @@ function generateTargetsIndex() {
 
         // Write the search index file
         fs.writeFile('assets/js/book-index-' + output + '.js',
-                'var ebIndexTargets = ' + JSON.stringify(targetsIndex) + ';',
+                'var ebIndexTargets = ' + JSON.stringify(targetsIndex) + ';'
+                + 'if (typeof window === "undefined")'
+                + '{module.exports.' + output.replace('-', '') + 'IndexTargets = ebIndexTargets;}',
                 function () {
             console.log('Writing book-index-' + output + '.js...');
             console.log('Done.');

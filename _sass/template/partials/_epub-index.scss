@@ -7,6 +7,16 @@ $epub-index: true !default;
     ul.reference-index {
         margin-left: $paragraph-indent;
         list-style-type: none;
+
+        // If we're not spacing paragraphs,
+        // and the index appears after a paragraph,
+        // then add some space above it.
+        @if not ($spaced-paras) {
+            p + & {
+                margin-top: $line-height-default;
+            }
+        }
+
         ul, ol {
             list-style-type: none;
         }

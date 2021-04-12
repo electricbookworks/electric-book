@@ -25,7 +25,6 @@ Old versions of the Electric Book template used a `blockquote` instead of a `div
 
 <!-- index:
 Fradkin, Chris
-*The Comics Grid: Journal of comics scholarship*
 -->
 
 To show figures in context, here is an article from *The Comics Grid: Journal of comics scholarship* by Chris Fradkin. The abstract, if you're curious:

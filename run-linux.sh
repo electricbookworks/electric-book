@@ -104,9 +104,9 @@ Enter a number and hit enter. "
 
 			echo "Creating targets for book index references..."
 			if [ "$printpdfsubdirectory" = "" ]; then
-				gulp renderCommentsAsNodes --book $bookfolder
+				gulp renderIndexCommentsAsTargets --book $bookfolder
 			else
-				gulp renderCommentsAsNodes --book $bookfolder --language $printpdfsubdirectory
+				gulp renderIndexCommentsAsTargets --book $bookfolder --language $printpdfsubdirectory
 			fi
 
 			# Navigate into the book's text folder in _site
@@ -210,9 +210,9 @@ Enter a number and hit enter. "
 
 			echo "Creating targets for book index references..."
 			if [ "$screenpdfsubdirectory" = "" ]; then
-				gulp renderCommentsAsNodes --book $bookfolder
+				gulp renderIndexCommentsAsTargets --book $bookfolder
 			else
-				gulp renderCommentsAsNodes --book $bookfolder --language $screenpdfsubdirectory
+				gulp renderIndexCommentsAsTargets --book $bookfolder --language $screenpdfsubdirectory
 			fi
 
 			# Navigate into the book's text folder in _site
@@ -336,6 +336,20 @@ Enter a number and hit enter. "
 			# Return to default error handling
 			set +e
 
+			echo "Creating targets for book index references..."
+			if [ "$epubsubdirectory" = "" ]; then
+				gulp renderIndexCommentsAsTargets --book $bookfolder
+			else
+				gulp renderIndexCommentsAsTargets --book $bookfolder --language $epubsubdirectory
+			fi
+
+			echo "Adding link references to book indexes..."
+			if [ "$epubsubdirectory" = "" ]; then
+				gulp renderIndexListReferences --book $bookfolder
+			else
+				gulp renderIndexListReferences --book $bookfolder --language $epubsubdirectory
+			fi
+
 			# Now to assemble the epub
 			echo "Assembling epub..."
 			# Check if there are fonts to include.
@@ -368,29 +382,40 @@ Enter a number and hit enter. "
 			fi
 			# Copy text (files in file-list only), images, fonts, styles, package.opf and toc.ncx to epub
 			cd "$location"/_site/"$bookfolder"
+			# Make a folder for the book
+			mkdir "$location"/_site/epub/"$bookfolder"
 			# If not a translation...
 			if [ "$epubsubdirectory" = "" ]; then
 				echo "Copying files to epub folder..."
-				mkdir "$location"/_site/epub/text && cd "$location"/_site/$bookfolder/text && cp `cat file-list` "$location"/_site/epub/text/
+				mkdir -p "$location"/_site/epub/"$bookfolder"/text
+				cd "$location"/_site/$bookfolder/text
+				cp `cat file-list` "$location"/_site/epub/"$bookfolder"/text/
 				cd "$location"
 				if [ -d "$location"/_site/$bookfolder/images/epub ]; then
 					echo "Copying images..."
-					mkdir -p "$location"/_site/epub/images/epub && cp -a "$location"/_site/$bookfolder/images/epub/. "$location"/_site/epub/images/epub/
+					mkdir -p "$location"/_site/epub/"$bookfolder"/images/epub
+					cp -a "$location"/_site/$bookfolder/images/epub/. "$location"/_site/epub/"$bookfolder"/images/epub/
 				fi
 				if [ -d "$location"/_site/items/images/epub ]; then
 					echo "Found images in _items. Copying to epub..."
-					mkdir -p "$location"/_site/epub/items/images/epub && cp -a "$location"/_site/items/images/epub/. "$location"/_site/epub/items/images/epub/
+					mkdir -p "$location"/_site/epub/items/images/epub
+					cp -a "$location"/_site/items/images/epub/. "$location"/_site/epub/items/images/epub/
 				fi
 				if [ -d "$location"/_site/$bookfolder/styles ]; then
 					echo "Copying styles..."
-					mkdir "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
+					mkdir -p "$location"/_site/epub/"$bookfolder"/styles
+					cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/"$bookfolder"/styles/
 				fi
 				if [ -e "$location"/_site/$bookfolder/package.opf ]; then
 					echo "Copying package.opf..."
+					# package.opf is best placed in the epub root directory,
+					# because we don't try to populate the link to it in
+					# container.xml with the book path.
 					cp "$location"/_site/$bookfolder/package.opf "$location"/_site/epub/package.opf
 				fi
 				if [ -e "$location"/_site/$bookfolder/toc.ncx ]; then
 					echo "Copying toc.ncx..."
+					# As with package.opf, we place this in the epub root.
 					cp "$location"/_site/$bookfolder/toc.ncx "$location"/_site/epub/toc.ncx
 				fi
 			# If a translation...
@@ -398,50 +423,62 @@ Enter a number and hit enter. "
 				echo "Copying translation files to epub folder..."
 
 				# Copy text folder
-				mkdir "$location"/_site/epub/$epubsubdirectory
-				mkdir "$location"/_site/epub/$epubsubdirectory/text
+				mkdir -p "$location"/_site/epub/$bookfolder/$epubsubdirectory/text
 				cd "$location"/_site/$bookfolder/$epubsubdirectory/text
-				cp `cat file-list` "$location"/_site/epub/$epubsubdirectory/text/
+				cp `cat file-list` "$location"/_site/epub/"$bookfolder"/$epubsubdirectory/text/
 
 				# Copy translation images if they exist, otherwise
 				# copy the parent-language images.
 				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/images/. ]; then
-					mkdir -p "$location"/_site/epub/$epubsubdirectory/images/epub && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/images/epub/. "$location"/_site/epub/$epubsubdirectory/images/epub/
+					mkdir -p "$location"/_site/epub/$bookfolder/$epubsubdirectory/images/epub
+					cp -a "$location"/_site/$bookfolder/$epubsubdirectory/images/epub/. "$location"/_site/epub/$bookfolder/$epubsubdirectory/images/epub/
 				else
-					mkdir -p "$location"/_site/epub/images/epub && cp -a "$location"/_site/$bookfolder/images/epub/. "$location"/_site/epub/images/epub/
+					mkdir -p "$location"/_site/epub/$bookfolder/images/epub
+					cp -a "$location"/_site/$bookfolder/images/epub/. "$location"/_site/epub/$bookfolder/images/epub/
 				fi
 				if [ -d "$location"/_site/items/$epubsubdirectory/images/epub ]; then
 					echo "Found translated images in _items. Copying them to epub..."
-					mkdir -p "$location"/_site/epub/items/$epubsubdirectory/images/epub && cp -a "$location"/_site/items/$epubsubdirectory/images/epub/. "$location"/_site/epub/items/$epubsubdirectory/images/epub/
+					mkdir -p "$location"/_site/epub/items/$epubsubdirectory/images/epub
+					cp -a "$location"/_site/items/$epubsubdirectory/images/epub/. "$location"/_site/epub/items/$epubsubdirectory/images/epub/
 				else
 					if [ -d "$location"/_site/items/images/epub ]; then
 						echo "Found images in _items. Copying them to epub..."
-						mkdir -p "$location"/_site/epub/items/images/epub && cp -a "$location"/_site/items/images/epub/. "$location"/_site/epub/items/images/epub/
+						mkdir -p "$location"/_site/epub/items/images/epub
+						cp -a "$location"/_site/items/images/epub/. "$location"/_site/epub/items/images/epub/
 					fi
 				fi
 				# Copy translation styles if they exist, and
 				# copy the parent-language styles.
 				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/styles/. ]; then
-					mkdir -p "$location"/_site/epub/$epubsubdirectory/styles && cd "$location"/_site/$bookfolder/$epubsubdirectory/styles && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/styles/. "$location"/_site/epub/$epubsubdirectory/styles/
-					mkdir -p "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
+					mkdir -p "$location"/_site/epub/$bookfolder/$epubsubdirectory/styles
+					cd "$location"/_site/$bookfolder/$epubsubdirectory/styles
+					cp -a "$location"/_site/$bookfolder/$epubsubdirectory/styles/. "$location"/_site/epub/$bookfolder/$epubsubdirectory/styles/
+					mkdir -p "$location"/_site/epub/$bookfolder/styles
+					cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/$bookfolder/styles/
 				else
-					mkdir -p "$location"/_site/epub/styles && cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/styles/
+					mkdir -p "$location"/_site/epub/$bookfolder/styles
+					cp -a "$location"/_site/$bookfolder/styles/. "$location"/_site/epub/$bookfolder/styles/
 				fi
 				# Copy translation fonts if they exist, otherwise
 				# copy the parent-language fonts.
 				if [ "$epubfonts" = "y" ]; then
 					if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/fonts/. ]; then
-						mkdir -p "$location"/_site/epub/$epubsubdirectory/fonts && cd "$location"/_site/$bookfolder/$epubsubdirectory/fonts && cp -a "$location"/_site/$bookfolder/$epubsubdirectory/fonts/. "$location"/_site/epub/$epubsubdirectory/fonts/
+						mkdir -p "$location"/_site/epub/$bookfolder/$epubsubdirectory/fonts
+						cd "$location"/_site/$bookfolder/$epubsubdirectory/fonts
+						cp -a "$location"/_site/$bookfolder/$epubsubdirectory/fonts/. "$location"/_site/epub/$bookfolder/$epubsubdirectory/fonts/
 					else
-						mkdir -p "$location"/_site/epub/fonts && cp -a "$location"/_site/$bookfolder/fonts/. "$location"/_site/epub/fonts/
+						mkdir -p "$location"/_site/epub/$bookfolder/fonts
+						cp -a "$location"/_site/$bookfolder/fonts/. "$location"/_site/epub/$bookfolder/fonts/
 					fi
 				fi
 				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/package.opf ]; then
 					echo "Copying translation package.opf..."
+					# package.opf goes in epub root (see note above)
 					cp "$location"/_site/$bookfolder/$epubsubdirectory/package.opf "$location"/_site/epub/package.opf
 				fi
 				if [ -e "$location"/_site/$bookfolder/$epubsubdirectory/toc.ncx ]; then
 					echo "Copying translation toc.ncx..."
+					# toc.ncx goes in epub root (see note above)
 					cp "$location"/_site/$bookfolder/$epubsubdirectory/toc.ncx "$location"/_site/epub/toc.ncx
 				fi
 				cd "$location"
@@ -449,27 +486,31 @@ Enter a number and hit enter. "
 			# Copy mathjax and other scripts
 			if [ "$epubmathjax" = "y" ]; then
 				echo "Copying MathJax..."
-				mkdir "$location"/_site/epub/mathjax && cp -a "$location"/_site/assets/js/mathjax/. "$location"/_site/epub/mathjax/
+				mkdir -p "$location"/_site/epub/assets/js/mathjax
+				cp -a "$location"/_site/assets/js/mathjax/. "$location"/_site/epub/assets/js/mathjax/
 			fi
 			if [ "$epubscripts" = "y" ]; then
 				echo "Copying Javascript..."
-				mkdir "$location"/_site/epub/js && cp -a "$location"/_site/assets/js/bundle.js "$location"/_site/epub/js/bundle.js
+				if [ ! -d "$location"/_site/epub/assets/js ]; then
+					mkdir -p "$location"/_site/epub/assets/js
+				fi
+				cp -a "$location"/_site/assets/js/bundle.js "$location"/_site/epub/assets/js/bundle.js
 			fi
 			# Convert all .html files and internal links to .xhtml
 			echo "Renaming .html to .xhtml..."
 			cd "$location"
 			if [ "$epubsubdirectory" = "" ]; then
-				gulp epub:xhtmlLinks
-				gulp epub:xhtmlFiles
-				gulp epub:cleanHtmlFiles
+				gulp epub:xhtmlLinks --book $bookfolder
+				gulp epub:xhtmlFiles --book $bookfolder
+				gulp epub:cleanHtmlFiles --book $bookfolder
 			else
-				gulp epub:xhtmlLinks --language $epubsubdirectory
-				gulp epub:xhtmlFiles --language $epubsubdirectory
-				gulp epub:cleanHtmlFiles --language $epubsubdirectory
+				gulp epub:xhtmlLinks --book $bookfolder --language $epubsubdirectory
+				gulp epub:xhtmlFiles --book $bookfolder --language $epubsubdirectory
+				gulp epub:cleanHtmlFiles --book $bookfolder --language $epubsubdirectory
 			fi
 			# Now to create a compressed epub.
 			# First, though, if they exist, remove previous .zip and .epub files that we will replace.
-			echo "Removing previous zips or epubs..."
+			echo "Removing previous epub-build folders, zips or epubs..."
 			if [ -d "$location/_output/$epubfilename" ]; then
 				rm -r "$location/_output/$epubfilename"
 			fi
@@ -483,12 +524,12 @@ Enter a number and hit enter. "
 			if [ "$epubsubdirectory" = "" ]; then
 				mkdir "$location/_output/$epubfilename"
 			else
-				mkdir "$location/_output/$epubfilename"
-				mkdir "$location/_output/$epubfilename/$epubsubdirectory"
+				mkdir -p "$location/_output/$epubfilename/$bookfolder/$epubsubdirectory"
 			fi
 			# Go into _site/epub
 			cd "$location"/_site/epub
 			# First, remove the fonts folder if we don't want it
+			# Note: this may be an unneccessary legacy step.
 			if [ "$epubfonts" = "" ]; then
 				if [ -d fonts ]; then
 					rm -r fonts
@@ -496,76 +537,79 @@ Enter a number and hit enter. "
 			fi
 			# And remove the mathjax dir if we don't need it
 			if [ "$epubmathjax" = "" ]; then
-				if [ -d mathjax ]; then
-					rm -r mathjax
+				if [ -d assets/js/mathjax ]; then
+					rm -r assets/js/mathjax
 				fi
 			fi
 			# Before we compress the epub files, we assemble the uncompressed files
+			# copying what we need from _site/epub to _output/epub.
 			echo "Assembling epub..."
 			# Add either the text folder or the translation's text folder.
 			if [ "$epubsubdirectory" = "" ]; then
-				if [ -d text ]; then
-					cp -a "text" "$location/_output/$epubfilename/"
+				if [ -d "$bookfolder/text" ]; then
+					mkdir -p $location/_output/$epubfilename/$bookfolder/text
+					cp -a "$bookfolder/text" "$location/_output/$epubfilename/$bookfolder/"
 				fi
 			else
-				if [ -d "$epubsubdirectory/text" ]; then
-					cp -a "$epubsubdirectory/text" "$location/_output/$epubfilename/$epubsubdirectory/"
+				if [ -d "$bookfolder/$epubsubdirectory/text" ]; then
+					mkdir -p $location/_output/$epubfilename/$bookfolder/$epubsubdirectory/text
+					cp -a "$bookfolder/$epubsubdirectory/text" "$location/_output/$epubfilename/$bookfolder/$epubsubdirectory/"
 				fi
 			fi
 			# Add either the parent images folder or the translation's images folder.
 			# If the translation has an images folder, use it. Otherwise, use the parent's
 			# images for the translation.
 			if [ "$epubsubdirectory" = "" ]; then
-				if [ -d images ]; then
-					cp -a "images" "$location/_output/$epubfilename/"
+				if [ -d $bookfolder/images ]; then
+					cp -a "$bookfolder/images" "$location/_output/$epubfilename/$bookfolder/"
 				fi
 				if [ -e $location/_site/items/images/epub/. ]; then
-					cp -a "items/images" "$location/_output/$epubfilename/"
+					cp -a "items/images/epub" "$location/_output/$epubfilename/items/images/"
 				fi
 			else
-				if [ -d "$epubsubdirectory/images" ]; then
-					cp -a "$epubsubdirectory/images" "$location/_output/$epubfilename/$epubsubdirectory/"
+				if [ -d "$bookfolder/$epubsubdirectory/images" ]; then
+					cp -a "$bookfolder/$epubsubdirectory/images" "$location/_output/$epubfilename/$bookfolder/$epubsubdirectory/"
 				else
-					if [ -d images ]; then
-						cp -a "images" "$location/_output/$epubfilename/"
+					if [ -d $bookfolder/images ]; then
+						cp -a "$bookfolder/images" "$location/_output/$epubfilename/$bookfolder/"
 					fi
 				fi
 				if [ -e "$location/_site/items/$epubsubdirectory/images/epub/." ]; then
-					cp -a "items/$epubsubdirectory/images" "$location/_output/$epubfilename/$epubsubdirectory/"
+					cp -a "items/$epubsubdirectory/images" "$location/_output/$epubfilename/items/$epubsubdirectory/"
 				else
 					if [ -e "$location/_site/items/images/epub/." ]; then
-						cp -a "items/images" "$location/_output/$epubfilename/"
+						cp -a "items/images/epub" "$location/_output/$epubfilename/items/images/"
 					fi
 				fi
 			fi
 			# Add the fonts folder.
-			if [ -d fonts ]; then
-				cp -a "fonts" "$location/_output/$epubfilename/"
+			if [ -d $bookfolder/fonts ]; then
+				cp -a "$bookfolder/fonts" "$location/_output/$epubfilename/$bookfolder/"
 			fi
 			# Add the parent styles folder and the translation's styles folder if it exists.
 			if [ "$epubsubdirectory" = "" ]; then
-					if [ -d styles ]; then
-						cp -a "styles" "$location/_output/$epubfilename/"
+					if [ -d $bookfolder/styles ]; then
+						cp -a "$bookfolder/styles" "$location/_output/$epubfilename/$bookfolder/"
 					fi
 				else
-					if [ -d styles ]; then
-						cp -a "styles" "$location/_output/$epubfilename/"
+					if [ -d $bookfolder/styles ]; then
+						cp -a "$bookfolder/styles" "$location/_output/$epubfilename/$bookfolder/"
 					fi
-					if [ -d "$epubsubdirectory/styles" ]; then
-						cp -a "$epubsubdirectory/styles" "$location/_output/$epubfilename/$epubsubdirectory/"
+					if [ -d "$bookfolder/$epubsubdirectory/styles" ]; then
+						cp -a "$bookfolder/$epubsubdirectory/styles" "$location/_output/$epubfilename/$bookfolder/$epubsubdirectory/"
 					fi
 			fi
 			# If MathJax is enabled, copy the MathJax folder.
-			# MathJax always goes to the same place in the epub root, even in translations.
 			if [ "$epubmathjax" = "y" ]; then
-				if [ -d mathjax ]; then
-					cp -a "mathjax" "$location/_output/$epubfilename/"
+				if [ -d assets/js/mathjax ]; then
+					mkdir -p "$location"/_output/$epubfilename/assets/js
+					cp -a "assets/js/mathjax" "$location/_output/$epubfilename/assets/js/"
 				fi
 			fi
 			# If there is a Javascript bundle, add it to the epub.
-			# Scripts always go to the same place in the epub root, even in translations.
-			if [ -d js ]; then
-				mkdir "$location"/_output/$epubfilename/js && cp -a "js/bundle.js" "$location/_output/$epubfilename/js/bundle.js"
+			if [ -d assets/js ]; then
+				mkdir -p "$location"/_output/$epubfilename/assets/js
+				cp -a "assets/js/bundle.js" "$location/_output/$epubfilename/assets/js/"
 			fi
 			# Add the mimetype file
 			if [ -e mimetype ]; then
@@ -586,7 +630,7 @@ Enter a number and hit enter. "
 			# Compress epub folder
 			echo "Compressing epub..."
 
-			# Choose zip method, zip or node
+			# Choose zip method: zip (for zip.exe) or node
 			epubZipMethod="node"
 
 			if [ $epubZipMethod = "zip" ]; then
@@ -1001,18 +1045,48 @@ Enter a number and hit enter. "
 
 		if [ "$searchIndexToRefresh" = "1" ]
 			then
-			bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,$searchIndexConfig"
+				# Create index files if they don't exist
+				if [ ! -f assets/js/book-index-print-pdf.js ]
+				then
+					touch assets/js/book-index-print-pdf.js
+				fi
+				# Build the HTML
+				bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,$searchIndexConfig"
 		elif [ "$searchIndexToRefresh" = "2" ]
 			then
-			bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,$searchIndexConfig"
+				# Create index files if they don't exist
+				if [ ! -f assets/js/book-index-screen-pdf.js ]
+				then
+					touch assets/js/book-index-screen-pdf.js
+				fi
+				# Build the HTML
+				bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,$searchIndexConfig"
 		elif [ "$searchIndexToRefresh" = "4" ]
 			then
-			bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$searchIndexConfig"
+				# Create index files if they don't exist
+				if [ ! -f assets/js/book-index-epub.js ]
+				then
+					touch assets/js/book-index-epub.js
+				fi
+				# Build the HTML
+				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$searchIndexConfig"
 		elif [ "$searchIndexToRefresh" = "5" ]
 			then
-			bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,$searchIndexConfig"
+				# Create index files if they don't exist
+				if [ ! -f assets/js/book-index-app.js ]
+				then
+					touch assets/js/book-index-app.js
+				fi
+				# Build the HTML
+				bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,$searchIndexConfig"
 		else
-			bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,$searchIndexConfig"
+				# Create index files if they don't exist
+				if [ ! -f assets/js/book-index-web.js ]
+				then
+					touch assets/js/book-index-web.js
+				fi
+				# Build the HTML
+				bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,$searchIndexConfig"
 		fi
 
 		# Return to default error handling
