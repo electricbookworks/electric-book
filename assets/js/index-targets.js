@@ -200,7 +200,6 @@ function ebIndexGetComments() {
 
     var comments = [];
 
-    // Ad each comment node to the comments array
     var indexedElement, commentValue, previousElementSibling,
             nextElementSibling, nextSibling, targetType, targetText;
 
