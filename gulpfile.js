@@ -968,11 +968,25 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                 // Create an empty array to store entries
                 var entries = [];
 
-                $('*').contents().filter(function () {
-                    if (this.nodeType === 8 && (/^\s*index:/).test(this.data)) {
+                $('*').contents()
+                    .filter(function () {
+                        return this.nodeType === 8
+                    })
+                    .filter(function () {
+                        return (/^\s*index:/).test(this.data)
+                    })
+                    .each(function (index, comment) {
 
-                        // Remember the comment for inserting the link later
-                        var comment = this;
+                        // Is this comment between elements ('block')
+                        // or inline (e.g. inside a paragraph)?
+                        var startsWithLinebreak = /^\n/;
+                        var position;
+                        if (startsWithLinebreak.test(comment.prev.data)
+                                && startsWithLinebreak.test(comment.next.data)) {
+                            position = 'block';
+                        } else {
+                            position = 'inline';
+                        }
 
                         // Split the lines into an array
                         var commentText = this.data;
@@ -1000,16 +1014,12 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                             // Then strip the hyphen.
                             // Note, startsWith and endsWith are not supported
                             // in PrinceXML, so we can't use those.
-                            var from = false;
-                            var to = false;
                             var rangeClass = 'index-target-specific';
 
                             if (line.substring(0, 1) === '-') {
-                                to = true;
                                 rangeClass = 'index-target-to';
                                 line = line.substring(1);
                             } else if (line.substring(line.length - 1) === '-') {
-                                from = true;
                                 rangeClass = 'index-target-from';
                                 line = line.substring(0, line.length - 1);
                             }
@@ -1046,22 +1056,39 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                             // because those elements' IDs could change, and sometimes
                             // we want our target at a specific point inline in a textnode.
 
-                            //   - create an anchor tag for each line
+                            // Create an anchor tag for each line
                             // note: this tag contains a zero-width space to appear in Prince,
                             // which otherwise would strip empty elements.
-                            var newElement = $('<a>​</a>')
+                            var newAnchorElement = $('<a>​</a>')
                                 .addClass('index-target')
                                 .addClass(rangeClass)
+                                .attr('data-target-type', position)
                                 .attr('id', id)
                                 .attr('title', line)
                                 .attr('style', 'position: absolute');
-                            newElement.insertAfter(comment);
+
+                            newAnchorElement.insertAfter(comment);
 
                         });
+                    });
 
-                        $('body').attr('data-index-targets', 'loaded');
-                    }
+                // If the comment was between blocks, it has `data-target-type=block`.
+                // So the anchor targets need to move inside the following block.
+                // Since I can't seem to get the element after a comment
+                // in Cheerio above, we must do a second pass here, after creating
+                // anchor targets above, to move them into position. To do this:
+                // we get the next element that is not an .index-target
+                // then prepend the link to it.
+
+                $('[data-target-type=block]').each(function (i, link) {
+
+                    var link = $(link); // wrap it for cheerio
+                    var indexedElement = $(link).nextAll(':not(.index-target)').first();
+                    indexedElement.prepend(link);
                 });
+
+                // Finally, flag that we're done.
+                $('body').attr('data-index-targets', 'loaded');
             },
             parserOptions: {
                 // XML mode necessary for epub output
