@@ -2,7 +2,13 @@ $print-index: true !default;
 @if $print-index {
 
 	// Index
-	.reference-index {
+
+	// .reference-index-manual is for indexes that
+	// are manually created, and should not be processed
+	// by our dynamic-indexing scripts to save build time.
+
+	.reference-index,
+	.reference-index-manual {
 		columns: 2;
 		font-size: $font-size-default * $font-size-smaller;
 		margin: $line-height-default 0 0 0;

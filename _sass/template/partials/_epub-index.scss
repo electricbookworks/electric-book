@@ -3,8 +3,13 @@ $epub-index: true !default;
 
     // Index
 
+    // .reference-index-manual is for indexes that
+    // are manually created, and should not be processed
+    // by our dynamic-indexing scripts to save build time.
+
     ol.reference-index,
-    ul.reference-index {
+    ul.reference-index,
+    .reference-index-manual {
         margin-left: $paragraph-indent;
         list-style-type: none;
 
