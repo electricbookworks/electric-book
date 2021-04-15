@@ -64,6 +64,19 @@ Then, when you use the output script, choose the 'refresh indexes' option for ea
 
 When you then generate an ouput (e.g. a website or PDF), your book index will include links and/or page numbers, depending on the output format.
 
+> ### Technical explanation
+>
+> To generate the dynamic 'page' references in a book index, we relay on a number of processing steps and scripts. These are a bit different, depending on the format we're generating. Broadly speaking, these are the steps:
+>
+> 1. A person must create a list of index entries. See the 'Dynamic indexes' section of the Samples book for an example. We think of each entry as a term that references a concept in the book. Let's call them 'concept terms'.
+> 2. A person must note in the book's content where each concept appears, using HTML comments that begin with `index:`. Where a single comment includes more than one concept term, each term should be on its own line. This is described in the guidance above.
+> 3. We use the concept terms in the book to generate a 'database' of concept terms. This is generated from the 'Refresh book index' option in the output script, which builds the book HTML and then uses Puppeteer (launched by `render-book-index.js`) to scrape the content, looking for `index:` comments. This generates a file for each book output, which contains a Javascript object containing all the concept terms (e.g. `book-index-print-pdf.js`) as a kind of concept 'database'. This is a similar process to that used to generate a search index for web and app outputs. The 'database' (we're avoiding using the word 'index' to avoid confusion) is loaded on each page as part of the `bundle.js` script.
+> 4. Next, we need to turn the HTML comments into anchor targets that we can link to. And we need to add links (clickable 'page' references) to each concept term in the book index. That is done in two different ways, depending on the output format:
+>    - For web and app output, we use client-side Javascript. The `index-targets.js` script finds all the `index:` comments on the page and creates `<a>` tags. And the `index-lists.js` script looks for `.reference-index` lists, and when it finds one, compares each item on the list with the concept terms in the `book-index-*.js` 'database'. When a concept term matches an entry in the database, it inserts a link to the relevant anchor-tag ID after the concept term.
+>    - For PDF and epub outputs, we can't use client-side Javascript. PrinceXML doesn't support some of the comment-handling required. And in epub, internal links that are dynamically generated client-side are not clickable for security reasons. So, for these outputs, we pre-process the HTML. After the output script runs Jekyll to build the HTML in `_site`, it processes each file in the book with gulp tasks. These tasks create anchor-tag targets in the book content from `index:` HTML comments, and populate the `.reference-index` with links. These tasks are logical equivalents of the client-side scripts mentioned for web and app above.
+> 5. In PDF output, we use Prince functions in CSS to generate page references. These Prince functions not only create the page ranges (e.g. '23–25') but also avoid adding duplicate page references. This is because, if a concept term appears twice on the same page, there will be two links pointing to that page, and we want only one instance of that page number to show in the book index.
+{:.box}
+
 ## The legacy, manual method
 
 ### How to tag indexed phrases
