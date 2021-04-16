@@ -82,6 +82,16 @@ function ebIndexProcessComments(comments) {
                 return;
             }
 
+            // Split the line into its entry components.
+            // It might be a nested entry, where each level
+            // of nesting appears after double hyphens --.
+            // e.g. software -- book-production
+            var rawEntriesByLevel = line.split('--');
+
+            // Trim whitespace from each entry
+            // https://stackoverflow.com/a/41183617/1781075
+            var entriesByLevel = rawEntriesByLevel.map(str => str.trim());
+
             // Check for starting or ending hyphens.
             // If one exists, flag it as `from` or `to`.
             // Then strip the hyphen.
@@ -135,7 +145,8 @@ function ebIndexProcessComments(comments) {
             var target = document.createElement('a');
             target.id = id;
             target.classList.add('index-target');
-            target.title = line;
+            target.setAttribute('data-index-entry', entriesByLevel.slice(-1).pop());
+            target.setAttribute('data-index-markup', line);
 
             // If this target starts or ends an indexed range,
             // add the relevant class.
@@ -330,52 +341,53 @@ function ebIndexGetComments() {
     ebIndexProcessComments(comments);
 }
 
-// This is the PrinceXML alternative to `ebIndexGetComments`.
-// This function relies on a preprocessing step,
-// `renderCommentsAsNodes` in the gulpfile,
-// which inserts title attributes into element tags.
-// This is because PrinceXML cannot see comment nodes.
-// The gulp process creates nodes that PrinceXML can see.
-function ebIndexGetCommentsFromTitles() {
-    'use strict';
+// TO DO: remove if no longer requried for pre-processed PDF HTML
+// // This is the PrinceXML alternative to `ebIndexGetComments`.
+// // This function relies on a preprocessing step,
+// // `renderCommentsAsNodes` in the gulpfile,
+// // which inserts title attributes into element tags.
+// // This is because PrinceXML cannot see comment nodes.
+// // The gulp process creates nodes that PrinceXML can see.
+// function ebIndexGetCommentsFromTitles() {
+//     'use strict';
 
-    var comments = [];
+//     var comments = [];
 
-    var indexCommentElements = document.querySelectorAll('.index-comment');
+//     var indexCommentElements = document.querySelectorAll('.index-comment');
 
-    indexCommentElements.forEach(function (element) {
+//     indexCommentElements.forEach(function (element) {
 
-        var indexedElement, commentValue, previousElementSibling,
-                nextElementSibling, nextSibling, targetType, targetText;
+//         var indexedElement, commentValue, previousElementSibling,
+//                 nextElementSibling, nextSibling, targetType, targetText;
 
-        previousElementSibling = element.previousElementSibling;
-        nextElementSibling = element.nextElementSibling;
-        nextSibling = element.nextSibling;
+//         previousElementSibling = element.previousElementSibling;
+//         nextElementSibling = element.nextElementSibling;
+//         nextSibling = element.nextSibling;
 
-        if (ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName)
-                && ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
-            indexedElement = element.nextElementSibling;
-            targetType = 'element';
-            targetText = '';
-        } else {
+//         if (ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName)
+//                 && ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
+//             indexedElement = element.nextElementSibling;
+//             targetType = 'element';
+//             targetText = '';
+//         } else {
 
-            // parentNode, because PrinceXML doesn't support parentElement
-            indexedElement = element.parentNode;
-            targetType = 'inline';
-            targetText = nextSibling.nodeValue;
-        }
+//             // parentNode, because PrinceXML doesn't support parentElement
+//             indexedElement = element.parentNode;
+//             targetType = 'inline';
+//             targetText = nextSibling.nodeValue;
+//         }
 
-        commentValue = element.title;
+//         commentValue = element.title;
 
-        comments.push({
-            commentText: commentValue,
-            element: indexedElement,
-            targetText: targetText,
-            targetType: targetType
-        });
-    });
-    ebIndexProcessComments(comments);
-}
+//         comments.push({
+//             commentText: commentValue,
+//             element: indexedElement,
+//             targetText: targetText,
+//             targetType: targetType
+//         });
+//     });
+//     ebIndexProcessComments(comments);
+// }
 
 // Triage for a PrinceXML environment or otherwise.
 function ebIndexInit() {
@@ -387,11 +399,14 @@ function ebIndexInit() {
         return;
     }
 
-    if (typeof Prince === 'object') {
-        ebIndexGetCommentsFromTitles();
-    } else {
-        ebIndexGetComments();
-    }
+    ebIndexGetComments();
+
+    // TO DO: remove if no longer requried for pre-processed PDF HTML
+    // if (typeof Prince === 'object') {
+    //     ebIndexGetCommentsFromTitles();
+    // } else {
+    //     ebIndexGetComments();
+    // }
 }
 
 // Go

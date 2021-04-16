@@ -27,25 +27,19 @@ function ebIndexFindLinks(listItem) {
     'use strict';
 
     var currentTitle = document.body.getAttribute('data-title');
+    var currentBookTitle = document.body.getAttribute('data-title');
     var currentTranslation = document.body.getAttribute('data-translation');
     var listItemText = listItem.innerHTML;
-    var targetsProcessed = 0;
 
     // Look through the index of targets
     ebIndexTargets.forEach(function (pageEntries) {
-
-        // Flag when we're done
-        targetsProcessed += 1;
-        if (targetsProcessed === ebIndexTargets.length) {
-            document.body.setAttribute('data-index-list', 'loaded');
-        }
 
         // Check if the entries for this page
         // are for files in the same book.
         // We just check against the first entry for the page.
         var titleMatches = false;
         var languageMatches = false;
-        if (currentTitle === pageEntries[0].bookTitle) {
+        if (currentBookTitle === pageEntries[0].bookTitle) {
             titleMatches = true;
         }
         // Note, both of these could be null,
@@ -101,8 +95,15 @@ function ebIndexPopulate() {
     }
 
     var indexLists = document.querySelectorAll('ul.reference-index');
+    var indexListsProcessed = 0;
 
     indexLists.forEach(function (indexList) {
+
+        // Flag when we're done
+        indexListsProcessed += 1;
+        if (indexListsProcessed === indexLists.length) {
+            document.body.setAttribute('data-index-list', 'loaded');
+        }
 
         var listItems = indexList.querySelectorAll('li');
 

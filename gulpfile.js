@@ -1009,6 +1009,16 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                                 return;
                             }
 
+                            // Split the line into its entry components.
+                            // It might be a nested entry, where each level
+                            // of nesting appears after double hyphens --.
+                            // e.g. software -- book-production
+                            var rawEntriesByLevel = line.split('--');
+
+                            // Trim whitespace from each entry
+                            // https://stackoverflow.com/a/41183617/1781075
+                            var entriesByLevel = rawEntriesByLevel.map(str => str.trim());
+
                             // Check for starting or ending hyphens.
                             // If one exists, flag it as `from` or `to`.
                             // Then strip the hyphen.
@@ -1064,7 +1074,8 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                                 .addClass(rangeClass)
                                 .attr('data-target-type', position)
                                 .attr('id', id)
-                                .attr('title', line)
+                                .attr('data-index-markup', line)
+                                .attr('data-index-entry', entriesByLevel.slice(-1).pop())
                                 .attr('style', 'position: absolute');
 
                             newAnchorElement.insertAfter(comment);
@@ -1140,10 +1151,9 @@ gulp.task('renderIndexListReferences', function (done) {
                 function ebIndexFindLinks(listItem, ebIndexTargets) {
                     'use strict';
 
-                    var currentTitle = $('body').attr('data-title');
+                    var currentBookTitle = $('body').attr('data-title');
                     var currentTranslation = $('body').attr('data-translation');
                     var listItemText = listItem.children[0].data;
-                    var targetsProcessed = 0;
                     var bookIsTranslation;
                     var entryHasTranslationLanguage;
 
@@ -1159,7 +1169,7 @@ gulp.task('renderIndexListReferences', function (done) {
                         // Check if the entries for this page
                         // are for files in the same book.
                         // We just check against the first entry for the page.
-                        if (currentTitle === pageEntries[0].bookTitle) {
+                        if (currentBookTitle === pageEntries[0].bookTitle) {
                             titleMatches = true;
                         }
 
@@ -1228,12 +1238,6 @@ gulp.task('renderIndexListReferences', function (done) {
                                 }
                             });
                         }
-
-                        // Flag when we're done
-                        targetsProcessed += 1;
-                        if (targetsProcessed === ebIndexTargets.length) {
-                            $('body').attr('data-index-list', 'loaded');
-                        }
                     });
                 }
 
@@ -1257,16 +1261,27 @@ gulp.task('renderIndexListReferences', function (done) {
                     }
                 }
 
-                // Process for epub output by default
-                if (output === 'printpdf') {
-                    ebIndexPopulate(printpdfIndexTargets);
-                } else if (output === 'screenpdf') {
-                    ebIndexPopulate(screenpdfIndexTargets);
-                } else if (output === 'app') {
-                    ebIndexPopulate(appIndexTargets);
-                } else {
-                    ebIndexPopulate(epubIndexTargets);
-                }
+                var indexLists = $('.reference-index');
+                var indexListsProcessed = 0;
+                indexLists.each(function () {
+
+                    // Flag when we're done
+                    indexListsProcessed += 1;
+                    if (indexListsProcessed === indexLists.length) {
+                        $('body').attr('data-index-list', 'loaded');
+                    }
+
+                    // Process for epub output by default
+                    if (output === 'printpdf') {
+                        ebIndexPopulate(printpdfIndexTargets);
+                    } else if (output === 'screenpdf') {
+                        ebIndexPopulate(screenpdfIndexTargets);
+                    } else if (output === 'app') {
+                        ebIndexPopulate(appIndexTargets);
+                    } else {
+                        ebIndexPopulate(epubIndexTargets);
+                    }
+                })
             },
             parserOptions: {
                 // XML mode necessary for epub output

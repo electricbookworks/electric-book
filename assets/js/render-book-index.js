@@ -77,9 +77,20 @@ function generateTargetsIndex() {
                         range = 'to';
                     }
 
+                    // Get the entry's nesting as an array.
+                    // It might be a nested entry, where each level
+                    // of nesting appears after double hyphens --.
+                    // e.g. software -- book-production
+                    var rawEntriesByLevel = entry.getAttribute('data-index-markup').split('--');
+
+                    // Trim whitespace from each entry
+                    // https://stackoverflow.com/a/41183617/1781075
+                    var entriesByLevel = rawEntriesByLevel.map(str => str.trim());
+
                     var entryObject = {
                         entrySlug: entry.id.split('--iid-')[0],
-                        entryText: entry.title,
+                        entryText: entry.getAttribute('data-index-entry'),
+                        entryTree: JSON.stringify(entriesByLevel),
                         id: entry.id,
                         range: range,
                         bookTitle: document.body.getAttribute('data-title'),
