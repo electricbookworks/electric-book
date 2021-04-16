@@ -60,13 +60,17 @@ Then in the markdown file for the index itself, you create a list of entries, us
 {:.reference-index}
 ```
 
-Then, when you use the output script, choose the 'refresh indexes' option for each output format you're publishing. The script will populate your index list with links.
+Then, when you use the output script, choose the 'refresh indexes' option for each output format you're publishing. The script will generate an 'index database', which will be used to populate your index list with links.
 
 When you then generate an ouput (e.g. a website or PDF), your book index will include links and/or page numbers, depending on the output format.
 
 > ### Technical explanation
 >
-> To generate the dynamic 'page' references in a book index, we relay on a number of processing steps and scripts. These are a bit different, depending on the format we're generating. Broadly speaking, these are the steps:
+> To generate the dynamic 'page' references in a book index, we relay on a number of processing steps and scripts. These are a bit different, depending on the format we're generating.
+>
+> Also, note that the word 'index' can cause confusion: an index can be the reference list at the back of a book, and it can be a kind of programming database: a structured list of items. We need both here, so we must be careful to be clear when we're talking about each one. In these docs, we will try to say 'book index' or 'reference index' for the back-of-the-book index. And sometimes we will call the programming index a 'database', even though it's not a database in the conventional programming sense.
+>
+> Broadly speaking, these are the steps:
 >
 > 1. A person must create a list of index entries. See the 'Dynamic indexes' section of the Samples book for an example. We think of each entry as a term that references a concept in the book. Let's call them 'concept terms'.
 > 2. A person must note in the book's content where each concept appears, using HTML comments that begin with `index:`. Where a single comment includes more than one concept term, each term should be on its own line. This is described in the guidance above.
