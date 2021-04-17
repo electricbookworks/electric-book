@@ -14,5 +14,13 @@ A dynamic index uses hyperlinks to the points in the text that it indexes, so th
 - Fradkin, Chris
 - Holmes, Sherlock
 - King of Bohemia
+- luxuries
+  - cigars
+    - self-lighting
+  - spirits
+  - gasogene
+- marriage
+  - unhappy
+  - secret
 - Norton, Irene
 {:.reference-index}
