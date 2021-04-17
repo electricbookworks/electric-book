@@ -109,6 +109,13 @@ Enter a number and hit enter. "
 				gulp renderIndexCommentsAsTargets --book $bookfolder --language $printpdfsubdirectory
 			fi
 
+			echo "Adding link references to book indexes..."
+			if [ "$printpdfsubdirectory" = "" ]; then
+				gulp renderIndexListReferences --book $bookfolder
+			else
+				gulp renderIndexListReferences --book $bookfolder --language $printpdfsubdirectory
+			fi
+
 			# Navigate into the book's text folder in _site
 			if [ "$printpdfsubdirectory" = "" ]; then
 				cd _site/$bookfolder/text
@@ -213,6 +220,13 @@ Enter a number and hit enter. "
 				gulp renderIndexCommentsAsTargets --book $bookfolder
 			else
 				gulp renderIndexCommentsAsTargets --book $bookfolder --language $screenpdfsubdirectory
+			fi
+
+			echo "Adding link references to book indexes..."
+			if [ "$screenpdfsubdirectory" = "" ]; then
+				gulp renderIndexListReferences --book $bookfolder
+			else
+				gulp renderIndexListReferences --book $bookfolder --language $screenpdfsubdirectory
 			fi
 
 			# Navigate into the book's text folder in _site

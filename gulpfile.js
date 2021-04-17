@@ -1012,8 +1012,8 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                             // Split the line into its entry components.
                             // It might be a nested entry, where each level
                             // of nesting appears after double hyphens --.
-                            // e.g. software -- book-production
-                            var rawEntriesByLevel = line.split('--');
+                            // e.g. software \\ book-production
+                            var rawEntriesByLevel = line.split('\\');
 
                             // Trim whitespace from each entry
                             // https://stackoverflow.com/a/41183617/1781075
@@ -1137,7 +1137,14 @@ gulp.task('renderIndexListReferences', function (done) {
                     var link = $('<a>​</a>')
                         .attr('href', filename + '#' + id)
                         .text(pageReferenceSequenceNumber)
-                    link.appendTo(listItem);
+
+                    // If the listItem has child lists, insert the link
+                    // before the first child list. Otherwise, append the link.
+                    if ($(listItem).find('ul').length > 0) {
+                        link.insertBefore($(listItem).find('ul'));
+                    } else {
+                        link.appendTo(listItem);
+                    }
 
                     // If this link starts a range
                     if (range === 'from' || 'to') {
@@ -1151,11 +1158,40 @@ gulp.task('renderIndexListReferences', function (done) {
                 function ebIndexFindLinks(listItem, ebIndexTargets) {
                     'use strict';
 
+                    listItem = $(listItem);
+                    var nestingLevel = listItem.parentsUntil('.reference-index').length / 2;
+
+                    // We're already looping through all list items, even children.
+                    // For each one, contruct its tree from its parent nodes.
+                    // When we look up this entry in the db, we'll compare
+                    // the constructed tree with the real one in the database/index.
+                    var listItemTree = [];
+
+                    // If a list item has a parent list item, and its
+                    // text value to the beginning of the tree array.
+                    // Iterate up the tree to each possible parent.
+                    listItemTree.push(listItem.contents()[0].data.trim());
+
+                    if (nestingLevel > 0) {
+
+                        function buildTree(listItem) {
+                            if (listItem.parent()
+                                    && listItem.parent().closest('li').contents()[0]) {
+
+                                var parentValue = listItem.parent().closest('li').contents()[0].data.trim();
+                                listItemTree.unshift(parentValue);
+
+                                buildTree(listItem.parent().closest('li'));
+                            }
+                        }
+                        buildTree(listItem);
+                    }
+
+                    // Reconstruct the reference's slug from the tree
+                    var listItemSlug = ebSlugify(listItemTree.join(' \\ '));
+
                     var currentBookTitle = $('body').attr('data-title');
                     var currentTranslation = $('body').attr('data-translation');
-                    var listItemText = listItem.children[0].data;
-                    var bookIsTranslation;
-                    var entryHasTranslationLanguage;
 
                     // Look through the index of targets
                     ebIndexTargets.forEach(function (pageEntries) {
@@ -1166,6 +1202,8 @@ gulp.task('renderIndexListReferences', function (done) {
                         var bookIsTranslation = false;
                         var entryHasTranslationLanguage = false;
 
+                        // Each item in the ebIndexTargets array represents
+                        // the index references on one HTML page.
                         // Check if the entries for this page
                         // are for files in the same book.
                         // We just check against the first entry for the page.
@@ -1213,7 +1251,7 @@ gulp.task('renderIndexListReferences', function (done) {
                             var rangeOpen = false;
                             pageEntries.forEach(function (entry) {
 
-                                if (entry.entrySlug === ebSlugify(listItemText)) {
+                                if (entry.entrySlug === listItemSlug) {
 
                                     // If a 'from' link has started a reference range,
                                     // skip links till the next 'to' link that closes the range.
@@ -1262,26 +1300,29 @@ gulp.task('renderIndexListReferences', function (done) {
                 }
 
                 var indexLists = $('.reference-index');
-                var indexListsProcessed = 0;
-                indexLists.each(function () {
+                if (indexLists.length > 0) {
+                    var indexListsProcessed = 0;
+                    indexLists.each(function () {
 
-                    // Flag when we're done
-                    indexListsProcessed += 1;
-                    if (indexListsProcessed === indexLists.length) {
-                        $('body').attr('data-index-list', 'loaded');
-                    }
+                        // Process for epub output by default
+                        if (output === 'printpdf') {
+                            ebIndexPopulate(printpdfIndexTargets);
+                        } else if (output === 'screenpdf') {
+                            ebIndexPopulate(screenpdfIndexTargets);
+                        } else if (output === 'app') {
+                            ebIndexPopulate(appIndexTargets);
+                        } else {
+                            ebIndexPopulate(epubIndexTargets);
+                        }
 
-                    // Process for epub output by default
-                    if (output === 'printpdf') {
-                        ebIndexPopulate(printpdfIndexTargets);
-                    } else if (output === 'screenpdf') {
-                        ebIndexPopulate(screenpdfIndexTargets);
-                    } else if (output === 'app') {
-                        ebIndexPopulate(appIndexTargets);
-                    } else {
-                        ebIndexPopulate(epubIndexTargets);
-                    }
-                })
+                        // Flag when we're done
+                        indexListsProcessed += 1;
+                        if (indexListsProcessed === indexLists.length
+                                || indexLists.length === 1) {
+                            $('body').attr('data-index-list', 'loaded');
+                        }
+                    })
+                }
             },
             parserOptions: {
                 // XML mode necessary for epub output

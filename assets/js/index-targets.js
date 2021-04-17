@@ -60,8 +60,8 @@ function ebIndexProcessComments(comments) {
     // Process each comment in the `comments` array.
     comments.forEach(function (comment) {
 
-        // Parse each line: slugify and add to an array
-        // called `commentLines`, because each line in the comment
+        // Parse each line: add to an array called
+        // `commentLines`, because each line in the comment
         // will be a separate index target.
         var commentLines = comment.commentText.split('\n');
 
@@ -84,9 +84,9 @@ function ebIndexProcessComments(comments) {
 
             // Split the line into its entry components.
             // It might be a nested entry, where each level
-            // of nesting appears after double hyphens --.
-            // e.g. software -- book-production
-            var rawEntriesByLevel = line.split('--');
+            // of nesting appears after double backslash \\.
+            // e.g. software \\ book-production
+            var rawEntriesByLevel = line.split('\\');
 
             // Trim whitespace from each entry
             // https://stackoverflow.com/a/41183617/1781075
