@@ -695,6 +695,7 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
             toc:
               - label: "Texte"
                 children:
@@ -708,6 +709,8 @@ works:
                     id: "images-simples"
               - label: "Mathématiques"
                 file: "03-02-maths"
+              - label: "Index dynamique"
+                file: "10-02-dynamic-index"
           web:
             files: # Required for translations to activate language-selector
               - "00-00-cover"
@@ -719,6 +722,7 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
             nav:
               - file: "00-00-cover"
                 label: "Couverture"
@@ -738,6 +742,8 @@ works:
                     label: "Images simples"
               - label: "Mathématiques"
                 file: "03-02-maths"
+              - label: "Index dynamique"
+                file: "10-02-dynamic-index"
           screen-pdf:
             files:
               - "00-00-cover"
@@ -749,6 +755,7 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
           epub:
             files: # add a value to any file to set any of the guide types listed in http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
               - "00-00-cover": "cover"
@@ -760,6 +767,7 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
           app:
             files: # Required for translations to activate language-selector
               - "00-00-cover"
@@ -771,3 +779,4 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
