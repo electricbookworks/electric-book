@@ -1011,7 +1011,7 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
 
                             // Split the line into its entry components.
                             // It might be a nested entry, where each level
-                            // of nesting appears after double hyphens --.
+                            // of nesting appears after double backslashes.
                             // e.g. software \\ book-production
                             var rawEntriesByLevel = line.split('\\');
 

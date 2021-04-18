@@ -10,6 +10,13 @@ A dynamic index uses hyperlinks to the points in the text that it indexes, so th
 
 - Adler, Irene 
 - Briony Lodge
+- cases
+  - Atkinson brothers
+  - Holland royal family
+  - Scandal in Bohemia
+    - letter
+  - Study in Scarlet
+  - Trepoff murder
 - Charing Cross
 - Fradkin, Chris
 - Holmes, Sherlock

@@ -206,7 +206,7 @@ index.addDoc({
 index.addDoc({
     id: 41,
     title: "Samples: Dynamic index",
-    content: "Dynamic index Also see the docs on indexing. A dynamic index uses hyperlinks to the points in the text that it indexes, so that in print the page numbers are always accurate even if the text reflows, and online links to text are clickable. Here is a very short sample. Adler, Irene12 Briony Lodge123456 Charing Cross12 Fradkin, Chris1 Holmes, Sherlock1 King of Bohemia123 luxuries cigars1 spirits1 gasogene1 marriage 12 unhappy1 secret1 Norton, Irene1 occupations clergy 1 fake1 Nonconformist1"
+    content: "Dynamic index Also see the docs on indexing. A dynamic index uses hyperlinks to the points in the text that it indexes, so that in print the page numbers are always accurate even if the text reflows, and online links to text are clickable. Here is a very short sample. Adler, Irene12 Briony Lodge123456 cases Atkinson brothers1 Holland royal family1 Scandal in Bohemia 1 letter1 Study in Scarlet1 Trepoff murder1 Charing Cross12 Fradkin, Chris1 Holmes, Sherlock12 King of Bohemia123 luxuries cigars1 spirits1 gasogene1 marriage 12 unhappy1 secret1 Norton, Irene1 occupations clergy 1 fake1 Nonconformist1"
 });
 index.addDoc({
     id: 42,

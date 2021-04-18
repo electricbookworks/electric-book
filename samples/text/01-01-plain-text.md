@@ -13,17 +13,24 @@ The text for this chapter is taken from Sir Arthur Conan Doyle's *Adventures of 
 #### I.
 
 <!--index:
-Holmes, Sherlock
+Holmes, Sherlock-
 Adler, Irene-
+cases \\ Scandal in Bohemia-
 -->
 
 To Sherlock Holmes she is always THE woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen, but as a lover he would have placed himself in a false position. He never spoke of the softer passions, save with a gibe and a sneer. They were admirable things for the observer--excellent for drawing the veil from men's motives and actions. But for the trained reasoner to admit such intrusions into his own delicate and finely adjusted temperament was to introduce a distracting factor which might throw a doubt upon all his mental results. Grit in a sensitive instrument, or a crack in one of his own high-power lenses, would not be more disturbing than a strong emotion in a nature such as his. And yet there was but one woman to him, and that woman was the late Irene Adler, of dubious and questionable memory.
 
 <!-- index:
 marriage
-marriage \\ unhappy -->
+marriage \\ unhappy
+cases \\ Trepoff murder
+cases \\ Atkinson brothers
+cases \\ Holland royal family -->
 
 I had seen little of Holmes lately. My marriage had drifted us away from each other. My own complete happiness, and the home-centred interests which rise up around the man who first finds himself master of his own establishment, were sufficient to absorb all my attention, while Holmes, who loathed every form of society with his whole Bohemian soul, remained in our lodgings in Baker Street, buried among his old books, and alternating from week to week between cocaine and ambition, the drowsiness of the drug, and the fierce energy of his own keen nature. He was still, as ever, deeply attracted by the study of crime, and occupied his immense faculties and extraordinary powers of observation in following out those clues, and clearing up those mysteries which had been abandoned as hopeless by the official police. From time to time I heard some vague account of his doings: of his summons to Odessa in the case of the Trepoff murder, of his clearing up of the singular tragedy of the Atkinson brothers at Trincomalee, and finally of the mission which he had accomplished so delicately and successfully for the reigning family of Holland. Beyond these signs of his activity, however, which I merely shared with all the readers of the daily press, I knew little of my former friend and companion.
+
+<!-- index:
+cases \\ Study in Scarlet -->
 
 One night--it was on the twentieth of March, 1888--I was returning from a journey to a patient (for I had now returned to civil practice), when my way led me through Baker Street. As I passed the well-remembered door, which must always be associated in my mind with my wooing, and with the dark incidents of the Study in Scarlet, I was seized with a keen desire to see Holmes again, and to know how he was employing his extraordinary powers. His rooms were brilliantly lit, and, even as I looked up, I saw his tall, spare figure pass twice in a dark silhouette against the blind. He was pacing the room swiftly, eagerly, with his head sunk upon his chest and his hands clasped behind him. To me, who knew his every mood and habit, his attitude and manner told their own story. He was at work again. He had risen out of his drug-created dreams and was hot upon the scent of some new problem. I rang the bell and was shown up to the chamber which had formerly been in part my own.
 
@@ -63,6 +70,9 @@ I could not help laughing at the ease with which he explained his process of ded
 "Then how many are there?"
 
 "How many? I don't know."
+
+<!-- index:
+cases \\ Scandal in Bohemia \\ letter- -->
 
 "Quite so! You have not observed. And yet you have seen. That is just my point. Now, I know that there are seventeen steps, because I have both seen and observed. By-the-way, since you are interested in these little problems, and since you are good enough to chronicle one or two of my trifling experiences, you may be interested in this." He threw over a sheet of thick, pink-tinted note-paper which had been lying open upon the table. "It came by the last post," said he. "Read it aloud."
 
@@ -113,6 +123,9 @@ A slow and heavy step, which had been heard upon the stairs and in the passage, 
 A man entered who could hardly have been less than six feet six inches in height, with the chest and limbs of a Hercules. His dress was rich with a richness which would, in England, be looked upon as akin to bad taste. Heavy bands of astrakhan were slashed across the sleeves and fronts of his double-breasted coat, while the deep blue cloak which was thrown over his shoulders was lined with flame-coloured silk and secured at the neck with a brooch which consisted of a single flaming beryl. Boots which extended halfway up his calves, and which were trimmed at the tops with rich brown fur, completed the impression of barbaric opulence which was suggested by his whole appearance. He carried a broad-brimmed hat in his hand, while he wore across the upper part of his face, extending down past the cheekbones, a black vizard mask, which he had apparently adjusted that very moment, for his hand was still raised to it as he entered. From the lower part of the face he appeared to be a man of strong character, with a thick, hanging lip, and a long, straight chin suggestive of resolution pushed to the length of obstinacy.
 
 "You had my note?" he asked with a deep harsh voice and a strongly marked German accent. "I told you that I would call." He looked from one to the other of us, as if uncertain which to address.
+
+<!-- index:
+-cases \\ Scandal in Bohemia \\ letter -->
 
 "Pray take a seat," said Holmes. "This is my friend and colleague, Dr. Watson, who is occasionally good enough to help me in my cases. Whom have I the honour to address?"
 
@@ -397,8 +410,8 @@ then?"
 "That is excellent. I think, perhaps, it is almost time that I prepare for the new role I have to play."
 
 <!-- index:
-occupations // clergy
-occupations // clergy // Nonconformist -->
+occupations \\ clergy
+occupations \\ clergy \\ Nonconformist -->
 
 He disappeared into his bedroom and returned in a few minutes in the character of an amiable and simple-minded Nonconformist clergyman. His broad black hat, his baggy trousers, his white tie, his sympathetic smile, and general look of peering and benevolent curiosity were such as Mr. John Hare alone could have equalled. It was not merely that Holmes changed his costume. His expression, his manner, his very soul seemed to vary with every fresh part that he assumed. The stage lost a fine actor, even as science lost an acute reasoner, when he became a specialist in crime.
 
@@ -567,7 +580,8 @@ Charing Cross-
 <!-- index:
 Adler, Irene
 Norton, Irene
-occupations // clergy // fake
+occupations \\ clergy \\ fake
+cases \\ Scandal in Bohemia \\ letter
 -->
 
 > "MY DEAR MR. SHERLOCK HOLMES,--You really did it very well. You took me in completely. Until after the alarm of fire, I had not a suspicion. But then, when I found how I had betrayed myself, I began to think. I had been warned against you months ago. I had been told that if the King employed an agent it would certainly be you. And your address had been given me. Yet, with all this, you made me reveal what you wanted to know. Even after I became suspicious, I found it hard to think evil of such a dear, kind old <!-- index: clergy -->clergyman. But, you know, *I have been trained* as an actress myself. Male costume is nothing new to me. I often take advantage of the freedom which it gives. I sent John, the coachman, to watch you, ran up stairs, got into my walking-clothes, as I call them, and came down just as you departed.
@@ -602,5 +616,9 @@ The King stared at him in amazement.
 "Irene's photograph!" he cried. "Certainly, if you wish it."
 
 "I thank your Majesty. Then there is no more to be done in the matter. I have the honour to wish you a very good-morning." He bowed, and, turning away without observing the hand which the King had stretched out to him, he set off in my company for his chambers.
+
+<!-- index:
+-Holmes, Sherlock
+-cases \\ Scandal in Bohemia -->
 
 And that was how a great scandal threatened to affect the kingdom of Bohemia, and how the best plans of Mr. Sherlock Holmes were beaten by a woman's wit. He used to make merry over the cleverness of women, but I have not heard him do it of late. And when he speaks of Irene Adler, or when he refers to her photograph, it is always under the honourable title of the woman. 

@@ -79,7 +79,7 @@ A few very big indexes might include sub-subentries. For instance:
 
 ``` md
 <!--index:
-luxuries \\ cigars \\ self-lighting
+occupations \\ clergy \\ Nonconformist
 -->
 ```
 
@@ -101,6 +101,14 @@ And you'd tag the end of the discussion like this:
 ``` md
 <!--index:
 -Camus, Albert
+-->
+```
+
+To end a range for a nested entry, the hyphen goes at the start of the entire line, not the subentry term:
+
+``` md
+<!--index:
+-cases \\ Scandal in Bohemia
 -->
 ```
 
