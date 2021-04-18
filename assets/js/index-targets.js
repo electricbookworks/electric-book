@@ -90,7 +90,9 @@ function ebIndexProcessComments(comments) {
 
             // Trim whitespace from each entry
             // https://stackoverflow.com/a/41183617/1781075
-            var entriesByLevel = rawEntriesByLevel.map(str => str.trim());
+            var entriesByLevel = rawEntriesByLevel.map(function (str) {
+                return str.trim();
+            });
 
             // Check for starting or ending hyphens.
             // If one exists, flag it as `from` or `to`.
