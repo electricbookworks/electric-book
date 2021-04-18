@@ -343,54 +343,6 @@ function ebIndexGetComments() {
     ebIndexProcessComments(comments);
 }
 
-// TO DO: remove if no longer requried for pre-processed PDF HTML
-// // This is the PrinceXML alternative to `ebIndexGetComments`.
-// // This function relies on a preprocessing step,
-// // `renderCommentsAsNodes` in the gulpfile,
-// // which inserts title attributes into element tags.
-// // This is because PrinceXML cannot see comment nodes.
-// // The gulp process creates nodes that PrinceXML can see.
-// function ebIndexGetCommentsFromTitles() {
-//     'use strict';
-
-//     var comments = [];
-
-//     var indexCommentElements = document.querySelectorAll('.index-comment');
-
-//     indexCommentElements.forEach(function (element) {
-
-//         var indexedElement, commentValue, previousElementSibling,
-//                 nextElementSibling, nextSibling, targetType, targetText;
-
-//         previousElementSibling = element.previousElementSibling;
-//         nextElementSibling = element.nextElementSibling;
-//         nextSibling = element.nextSibling;
-
-//         if (ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName)
-//                 && ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
-//             indexedElement = element.nextElementSibling;
-//             targetType = 'element';
-//             targetText = '';
-//         } else {
-
-//             // parentNode, because PrinceXML doesn't support parentElement
-//             indexedElement = element.parentNode;
-//             targetType = 'inline';
-//             targetText = nextSibling.nodeValue;
-//         }
-
-//         commentValue = element.title;
-
-//         comments.push({
-//             commentText: commentValue,
-//             element: indexedElement,
-//             targetText: targetText,
-//             targetType: targetType
-//         });
-//     });
-//     ebIndexProcessComments(comments);
-// }
-
 // Triage for a PrinceXML environment or otherwise.
 function ebIndexInit() {
     'use strict';
@@ -402,13 +354,6 @@ function ebIndexInit() {
     }
 
     ebIndexGetComments();
-
-    // TO DO: remove if no longer requried for pre-processed PDF HTML
-    // if (typeof Prince === 'object') {
-    //     ebIndexGetCommentsFromTitles();
-    // } else {
-    //     ebIndexGetComments();
-    // }
 }
 
 // Go
