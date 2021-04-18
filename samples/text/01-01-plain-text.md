@@ -386,9 +386,6 @@ then?"
 
 "Entirely."
 
-<!-- index:
-luxuries \\ cigars \\ self-lighting -->
-
 "It is nothing very formidable," he said, taking a long cigar-shaped roll from his pocket. "It is an ordinary plumber's smoke-rocket, fitted with a cap at either end to make it self-lighting. Your task is confined to that. When you raise your cry of fire, it will be taken up by quite a number of people. You may then walk to the end of the street, and I will rejoin you in ten minutes. I hope that I have made myself clear?"
 
 "I am to remain neutral, to get near the window, to watch you, and at the signal to throw in this object, then to raise the cry of fire, and to wait you at the corner of the street."
@@ -398,6 +395,10 @@ luxuries \\ cigars \\ self-lighting -->
 "Then you may entirely rely on me."
 
 "That is excellent. I think, perhaps, it is almost time that I prepare for the new role I have to play."
+
+<!-- index:
+occupations // clergy
+occupations // clergy // Nonconformist -->
 
 He disappeared into his bedroom and returned in a few minutes in the character of an amiable and simple-minded Nonconformist clergyman. His broad black hat, his baggy trousers, his white tie, his sympathetic smile, and general look of peering and benevolent curiosity were such as Mr. John Hare alone could have equalled. It was not merely that Holmes changed his costume. His expression, his manner, his very soul seemed to vary with every fresh part that he assumed. The stage lost a fine actor, even as science lost an acute reasoner, when he became a specialist in crime.
 
@@ -566,6 +567,7 @@ Charing Cross-
 <!-- index:
 Adler, Irene
 Norton, Irene
+occupations // clergy // fake
 -->
 
 > "MY DEAR MR. SHERLOCK HOLMES,--You really did it very well. You took me in completely. Until after the alarm of fire, I had not a suspicion. But then, when I found how I had betrayed myself, I began to think. I had been warned against you months ago. I had been told that if the King employed an agent it would certainly be you. And your address had been given me. Yet, with all this, you made me reveal what you wanted to know. Even after I became suspicious, I found it hard to think evil of such a dear, kind old <!-- index: clergy -->clergyman. But, you know, *I have been trained* as an actress myself. Male costume is nothing new to me. I often take advantage of the freedom which it gives. I sent John, the coachman, to watch you, ran up stairs, got into my walking-clothes, as I call them, and came down just as you departed.

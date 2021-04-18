@@ -12,6 +12,8 @@ var targetsIndex = [];
 // for generating search indexes.
 // Get the file list from search-store.js,
 // which is included in search-engine.js.
+// The store includes a list of all pages
+// that Jekyll parsed when building.
 var {store, output} = require('./search-engine.js');
 
 // The main process for generating an index of targets
