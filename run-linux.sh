@@ -1038,9 +1038,10 @@ Enter a number and hit enter. "
 		echo "Choose a format to refresh:"
 		echo "1 Print PDF"
 		echo "2 Screen PDF"
-		echo "3 Web (default, hit enter)"
+		echo "3 Web"
 		echo "4 Epub"
 		echo "5 App"
+		echo "Or hit enter for all formats"
 		searchIndexToRefresh=""
 		read searchIndexToRefresh
 
@@ -1057,7 +1058,7 @@ Enter a number and hit enter. "
 		# Exit if the Jekyll build fails
 		set -e
 
-		if [ "$searchIndexToRefresh" = "1" ]
+		if [ "$searchIndexToRefresh" = "1" ] || [ "$searchIndexToRefresh" = "" ]
 			then
 				# Create index files if they don't exist
 				if [ ! -f assets/js/book-index-print-pdf.js ]
@@ -1066,7 +1067,9 @@ Enter a number and hit enter. "
 				fi
 				# Build the HTML
 				bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,$searchIndexConfig"
-		elif [ "$searchIndexToRefresh" = "2" ]
+				node _site/assets/js/render-book-index.js
+		fi
+		if [ "$searchIndexToRefresh" = "2" ] || [ "$searchIndexToRefresh" = "" ]
 			then
 				# Create index files if they don't exist
 				if [ ! -f assets/js/book-index-screen-pdf.js ]
@@ -1075,7 +1078,21 @@ Enter a number and hit enter. "
 				fi
 				# Build the HTML
 				bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,$searchIndexConfig"
-		elif [ "$searchIndexToRefresh" = "4" ]
+				node _site/assets/js/render-book-index.js
+		fi
+		if [ "$searchIndexToRefresh" = "3" ] || [ "$searchIndexToRefresh" = "" ]
+			then
+				# Create index files if they don't exist
+				if [ ! -f assets/js/book-index-web.js ] || [ "$searchIndexToRefresh" = "" ]
+				then
+					touch assets/js/book-index-web.js
+				fi
+				# Build the HTML
+				bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,$searchIndexConfig"
+				node _site/assets/js/render-book-index.js
+				node _site/assets/js/render-search-index.js
+		fi
+		if [ "$searchIndexToRefresh" = "4" ] || [ "$searchIndexToRefresh" = "" ]
 			then
 				# Create index files if they don't exist
 				if [ ! -f assets/js/book-index-epub.js ]
@@ -1084,7 +1101,9 @@ Enter a number and hit enter. "
 				fi
 				# Build the HTML
 				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$searchIndexConfig"
-		elif [ "$searchIndexToRefresh" = "5" ]
+				node _site/assets/js/render-book-index.js
+		fi
+		if [ "$searchIndexToRefresh" = "5" ] || [ "$searchIndexToRefresh" = "" ]
 			then
 				# Create index files if they don't exist
 				if [ ! -f assets/js/book-index-app.js ]
@@ -1093,33 +1112,19 @@ Enter a number and hit enter. "
 				fi
 				# Build the HTML
 				bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,$searchIndexConfig"
-		else
-				# Create index files if they don't exist
-				if [ ! -f assets/js/book-index-web.js ]
-				then
-					touch assets/js/book-index-web.js
-				fi
-				# Build the HTML
-				bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,$searchIndexConfig"
+				node _site/assets/js/render-book-index.js
+				node _site/assets/js/render-search-index.js
 		fi
 
 		# Return to default error handling
 		set +e
 
-		# Generate index
-		echo "Generating index ..."
-		cd "$location"
-
-		if [ "$searchIndexToRefresh" = "1" ] || [ "$searchIndexToRefresh" = "2" ] || [ "$searchIndexToRefresh" = "4" ]
+		if [ "$searchIndexToRefresh" = "" ]
 			then
-			node _site/assets/js/render-book-index.js
+			echo "Indexes refreshed."
 		else
-			node _site/assets/js/render-book-index.js
-			node _site/assets/js/render-search-index.js
+			echo "Index refreshed."
 		fi
-
-		# Done
-		echo "Index refreshed."
 
 		# Head back to the Electric Book options
 		process=0
