@@ -956,7 +956,7 @@ gulp.task('yaml', function (done) {
 
 // Turn HTML comments for book indexes into anchor tags.
 // This is a pre-processing alternative to assets/js/index-targets.js,
-// which dynamically adds index targets in webserver environments.
+// which dynamically adds index targets in web clients.
 // It duplicates much of what index-targets.js does. So, if you
 // update it, you may need to update index-targets.js as well.
 gulp.task('renderIndexCommentsAsTargets', function (done) {
@@ -965,7 +965,7 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
         .pipe(cheerio({
             run: function ($) {
 
-                // Create an empty array to store entries
+                // Create an empty array to store entries.
                 var entries = [];
 
                 $('*').contents()
@@ -988,7 +988,7 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                             position = 'inline';
                         }
 
-                        // Split the lines into an array
+                        // Split the lines into an array.
                         var commentText = this.data;
                         var commentLines = commentText.split('\n');
 
@@ -1005,6 +1005,7 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                             line = line.trim();
 
                             // Exit if the stripped line is now empty.
+                            // We only want to process actual book-index terms.
                             if (line === '') {
                                 return;
                             }
@@ -1020,10 +1021,10 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                             var entriesByLevel = rawEntriesByLevel.map(str => str.trim());
 
                             // Check for starting or ending hyphens.
-                            // If one exists, flag it as `from` or `to`.
-                            // Then strip the hyphen.
-                            // Note, startsWith and endsWith are not supported
-                            // in PrinceXML, so we can't use those.
+                            // If one exists, flag the target as `from` or `to`,
+                            // starting or ending a reference range. Then strip the hyphen.
+                            // Note, JS's `startsWith` and `endsWith` are not supported
+                            // in PrinceXML, so we didn't use those in case using this in Prince.
                             var rangeClass = 'index-target-specific';
 
                             if (line.substring(0, 1) === '-') {
@@ -1035,7 +1036,7 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                             }
 
                             // Slugify the target text to use in an ID
-                            // and to check for duplicate instances.
+                            // and to check for duplicate instances later.
                             var entrySlug = ebSlugify(line);
 
                             // Add the slug to the array of entries,
@@ -1060,15 +1061,15 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                             var id = entrySlug + '--iid-' + occurrencesSoFar;
 
                             // Create a target for each line.
-                            // Note: we can't use one target for several index entries,
+                            // Note: we can't use one target element for several index entries,
                             // because one element can't have multiple IDs.
                             // And we don't try to link index entries to IDs of existing elements
                             // because those elements' IDs could change, and sometimes
                             // we want our target at a specific point inline in a textnode.
 
-                            // Create an anchor tag for each line
-                            // note: this tag contains a zero-width space to appear in Prince,
-                            // which otherwise would strip empty elements.
+                            // Create an anchor tag for each line.
+                            // Note: this tag contains a zero-width space, so that it
+                            // actually appears in Prince, which doesn't render empty elements.
                             var newAnchorElement = $('<a>​</a>')
                                 .addClass('index-target')
                                 .addClass(rangeClass)
@@ -1085,7 +1086,7 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
 
                 // If the comment was between blocks, it has `data-target-type=block`.
                 // So the anchor targets need to move inside the following block.
-                // Since I can't seem to get the element after a comment
+                // Since this noob can't seem to get the element after a comment
                 // in Cheerio above, we must do a second pass here, after creating
                 // anchor targets above, to move them into position. To do this:
                 // we get the next element that is not an .index-target
@@ -1111,26 +1112,20 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
     done();
 });
 
-// Turn HTML comments for book indexes into anchor tags.
-// This is a pre-processing alternative to assets/js/index-targets.js,
-// which dynamically adds index targets in webserver environments.
-// It duplicates much of what index-targets.js does. So, if you
-// update it, you may need to update index-targets.js as well.
+// Check HTML pages for reference indexes. If we find any,
+// look up each list item in the book-index-*.js, and add a link.
+// This is a pre-processing alternative to assets/js/index-lists.js,
+// which dynamically adds links to reference indexes client-side.
+// This pre-processing alternative is necessary for offline formats.
+// It duplicates much of what index-lists.js does. So, if you
+// update it, you may need to update index-lists.js as well.
 gulp.task('renderIndexListReferences', function (done) {
     'use strict';
     gulp.src(paths.text.src, {base: './'})
         .pipe(cheerio({
             run: function ($) {
 
-                // Largely a duplicate of assets/js/index-lists.js
-                // written to run in gulp-cheerio for
-                // pre-processing index lists for offline formats.
-
-                // It checks a page for reference indexes (.reference-index).
-                // If we find any, look up each list item
-                // in the book-index-*.js, and add a link.
-
-                // Add a link to an entry
+                // Add a link to an entry in a reference index
                 function ebIndexAddLink(listItem, filename, id, range, pageReferenceSequenceNumber) {
                     'use strict';
 
@@ -1146,7 +1141,8 @@ gulp.task('renderIndexListReferences', function (done) {
                         link.appendTo(listItem);
                     }
 
-                    // If this link starts a range
+                    // Add a class to flag whether this link starts
+                    // or ends a reference range.
                     if (range === 'from' || 'to') {
                         link.addClass('index-range-' + range);
                     } else {
@@ -1154,20 +1150,20 @@ gulp.task('renderIndexListReferences', function (done) {
                     }
                 }
 
-                // Add a link for a specific entry
+                // Add a link to a specific reference-index entry
                 function ebIndexFindLinks(listItem, ebIndexTargets) {
                     'use strict';
 
                     listItem = $(listItem);
                     var nestingLevel = listItem.parentsUntil('.reference-index').length / 2;
 
-                    // We're already looping through all list items, even children.
+                    // We're already looping through all `li`, even descendants.
                     // For each one, contruct its tree from its parent nodes.
                     // When we look up this entry in the db, we'll compare
-                    // the constructed tree with the real one in the database/index.
+                    // the constructed tree with the real one in the index 'database'.
                     var listItemTree = [];
 
-                    // If a list item has a parent list item, and its
+                    // If a list item has a parent list item, add its
                     // text value to the beginning of the tree array.
                     // Iterate up the tree to each possible parent.
                     listItemTree.push(listItem.contents()[0].data.trim());
@@ -1187,13 +1183,18 @@ gulp.task('renderIndexListReferences', function (done) {
                         buildTree(listItem);
                     }
 
-                    // Reconstruct the reference's slug from the tree
+                    // Reconstruct the reference's text value from the tree
+                    // and save its slug.
                     var listItemSlug = ebSlugify(listItemTree.join(' \\ '));
 
+                    // Get the book title and translation language (if any)
+                    // for the HTML page we're processing.
                     var currentBookTitle = $('body').attr('data-title');
                     var currentTranslation = $('body').attr('data-translation');
 
-                    // Look through the index of targets
+                    // Look through the index 'database' of targets
+                    // Each child in the ebIndexTargets array represents
+                    // the index anchor targets on one HTML page.
                     ebIndexTargets.forEach(function (pageEntries) {
 
                         // Reset variables
@@ -1202,10 +1203,8 @@ gulp.task('renderIndexListReferences', function (done) {
                         var bookIsTranslation = false;
                         var entryHasTranslationLanguage = false;
 
-                        // Each item in the ebIndexTargets array represents
-                        // the index references on one HTML page.
-                        // Check if the entries for this page
-                        // are for files in the same book.
+                        // First, check if the entries for this page
+                        // of entries are for files in the same book.
                         // We just check against the first entry for the page.
                         if (currentBookTitle === pageEntries[0].bookTitle) {
                             titleMatches = true;
@@ -1279,13 +1278,11 @@ gulp.task('renderIndexListReferences', function (done) {
                     });
                 }
 
-                // Get all the indexes and start processing them
+                // Get all the indexes on the page, and start processing them.
                 function ebIndexPopulate(ebIndexTargets) {
                     'use strict';
 
-                    // Don't do this if the list is already loaded
-                    // This prevents us doing this work if it's been pre-processed
-                    // e.g. by gulp during PDF or epub output.
+                    // Don't do this if the list links are already loaded.
                     if ($('body').attr('data-index-list') === 'loaded') {
                         return;
                     }
@@ -1334,7 +1331,7 @@ gulp.task('renderIndexListReferences', function (done) {
     done();
 });
 
-// when running `gulp`, do the image tasks
+// When running `gulp`, do the image tasks by default.
 gulp.task('default', gulp.series(
     'images:svg',
     'images:printpdf',

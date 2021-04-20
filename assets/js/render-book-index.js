@@ -4,26 +4,26 @@
 var puppeteer = require('puppeteer');
 var fs = require('fs');
 
-// Initialise an array that will an index
-// of the book-index targets
+// Initialise an array that will store an index
+// or 'database' of the book-index targets.
 var targetsIndex = [];
 
 // We'll piggyback on the same code used
 // for generating search indexes.
 // Get the file list from search-store.js,
 // which is included in search-engine.js.
-// The store includes a list of all pages
+// The `store` includes a list of all pages
 // that Jekyll parsed when building.
 var {store, output} = require('./search-engine.js');
 
-// The main process for generating an index of targets
+// The main process for generating an index of targets.
 function generateTargetsIndex() {
     'use strict';
 
-    // Start an async function to scrape all URLs
+    // Start an async function to scrape all URLs.
     (async function () {
 
-        // Launch the browser
+        // Launch the browser.
         var browser = await puppeteer.launch({headless: true});
 
         var i;
@@ -31,24 +31,24 @@ function generateTargetsIndex() {
         for (i = 0; i < store.length; i += 1) {
 
             // Make the URL path absolute, because
-            // we might be indexing file system files,
+            // we might be indexing file-system files,
             // not web-served pages. Assume this script
             // is run from the repo root, e.g as
             // node _site/assets/js/render-book-index.js
             // in which case the repo root is the current working directory (cwd)
             var path = process.cwd() + '/_site/' + store[i].url;
 
-            // Get the filename from the path
+            // Get the filename from the path.
             var filename = path.split('/').pop();
 
             // User feedback
             console.log('Indexing ' + path);
 
-            // Open a new tab
+            // Open a new tab.
             var page = await browser.newPage();
 
             // Set debug to true to return any browser-console
-            // messages to the Node console
+            // messages to the Node console.
             var debug = true;
             if (debug === true) {
                 page.on('console', function (consoleObj) {
@@ -56,14 +56,15 @@ function generateTargetsIndex() {
                 });
             }
 
-            // Go to the page path
+            // Go to the page path.
             await page.goto(path);
 
-            // Wait for index targets to load.
+            // Check that any index targets for the page have been processed.
+            // This is done by assets/js/index-targets.js (in bundle.js).
             await page.waitForSelector('[data-index-targets]');
 
-            // Get the page content. We can only pass serialized
-            // data back to the parent process.
+            // Get the page content. Note: we can only pass serialized data
+            // back to the parent process.
             var indexEntries = await page.evaluate(function () {
 
                 var targetArray = [];
@@ -81,9 +82,9 @@ function generateTargetsIndex() {
 
                     // Get the entry's nesting as an array.
                     // It might be a nested entry, where each level
-                    // of nesting appears after double hyphens --.
-                    // e.g. software -- book-production
-                    var rawEntriesByLevel = entry.getAttribute('data-index-markup').split('--');
+                    // of nesting appears after double back slashes \\.
+                    // e.g. software \\ book-production
+                    var rawEntriesByLevel = entry.getAttribute('data-index-markup').split('\\');
 
                     // Trim whitespace from each entry
                     // https://stackoverflow.com/a/41183617/1781075
@@ -127,19 +128,21 @@ function generateTargetsIndex() {
                 targetsIndex.push(indexEntries);
             }
 
-            // Increment counter
+            // Increment counter.
             count += 1;
 
-            // Close the page when we're done
+            // Close the page when we're done.
             await page.close();
         }
 
-        // If we've got all the pages, close the Puppeteer browser
+        // If we've got all the pages, close the Puppeteer browser.
         if (count === store.length) {
             browser.close();
         }
 
-        // Write the search index file
+        // Write the book index 'database' file.
+        // We add module.exports so that we can use indexTargets
+        // in Node processes (i.e. gulp with cheerio).
         fs.writeFile('assets/js/book-index-' + output + '.js',
                 'var ebIndexTargets = ' + JSON.stringify(targetsIndex) + ';'
                 + 'if (typeof window === "undefined")'
@@ -152,5 +155,5 @@ function generateTargetsIndex() {
     })();
 }
 
-// Run the rendering process
+// Run the rendering process.
 generateTargetsIndex();

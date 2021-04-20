@@ -88,17 +88,22 @@ have different behaviour for web or app. {% endcomment %}
 
 {% comment %} Tools for generating and displaying book indexes {% endcomment %}
 
-{% comment %} Load the ebIndexTargets 'database'. {% endcomment %}
-{% include_relative index-loader.js %}
-{% include_relative index-targets.js %}
+    {% comment %} Load the ebIndexTargets 'database'. {% endcomment %}
+    {% include_relative index-loader.js %}
 
-{% comment %} Script that adds index-reference links.
-This is done client-side in web and app, and pre-processed by gulp
-in PDF and epub outputs. {% endcomment %}
-{% if site.output == "web" or site.output == "app" %}
-    {% include_relative index-lists.js %}
-{% endif %}
+    {% comment %} Script to turn HTML comments into anchor targets.
+    Also handled by gulp in PDF, epub; but included
+    in all outputs so that Puppeteer can index. {% endcomment %}
+    {% include_relative index-targets.js %}
 
+    {% comment %} Script that adds index-reference links.
+    This is done client-side in web and app, and pre-processed by gulp
+    in PDF and epub outputs. {% endcomment %}
+    {% if site.output == "web" or site.output == "app" %}
+        {% include_relative index-lists.js %}
+    {% endif %}
+
+{% comment %} Scripts for epub output. {% endcomment %}
 {% if site.output == "epub" %}
     {% include_relative show-hide.js %}
 {% endif %}

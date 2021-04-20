@@ -6,7 +6,7 @@
 // <!-- index or <!--index and parses each line,
 // assuming each line represents an entry in the index.
 // It then adds <a> targets to the start of the element
-// that precedes the comment, as slugs of the line.
+// that follows the comment, using slugs of the line.
 // Comment lines that start or end with a hyphen
 // start or end ranges of content that contain the
 // ongoing presence of a given concept. Those targets
@@ -15,18 +15,18 @@
 // in the final book index.
 
 // Notes on development:
-// To find comment nodes, ideally we use TreeWalker.
+// To find comment nodes, TreeWalker is fastest.
 // If the browser doesn't support TreeWalker, we iterate
-// over the entire DOM ourselves, which is very slow.
-// PrinceXML does not 'see' HTML comments at all.
-// So for PrinceXML output, we must prerender the HTML
-// to turn all comment nodes into something Prince can see.
+// over the entire DOM ourselves, which is slower.
 
+// This script is not used for PDF and epub outputs.
+// PrinceXML does not 'see' HTML comments at all.
+// So for PrinceXML output, we prerender the HTML with gulp/cheerio.
 // In epub readers, the links don't work from the index
 // because the targets would only exist when the target
 // page is rendered. Browsers handle this fine, but not ereaders.
-// So for epub output, we don't use this script. Instead,
-// we pre-process the HTML with gulp and cheerio elsewhere.
+// So if you change this script, you may need to make similar
+// changes to `renderIndexCommentsAsTargets` in gulpfile.js.
 
 // Options
 // -------
@@ -37,6 +37,8 @@
 // Rather, index targets will be inserted inside them
 // where the index comment appears in the DOM.
 // Note that element names must be uppercase here.
+// (Note: our gulp equivalent uses a different logic
+// that may be more reliable than this.)
 var ebIndexOptions = {
     blockLevelElements: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6',
             'P', 'BLOCKQUOTE', 'OL', 'UL', 'TABLE', 'DL']
@@ -97,8 +99,12 @@ function ebIndexProcessComments(comments) {
             // Check for starting or ending hyphens.
             // If one exists, flag it as `from` or `to`.
             // Then strip the hyphen.
-            // Note, startsWith and endsWith are not supported
-            // in PrinceXML, so we can't use those.
+            // Note, JS's `startsWith` and `endsWith` are not
+            // supported in PrinceXML, so we didn't use those
+            // in early dev. Prince output is now handled by
+            // our alternative gulp/cheerio process. So, we could
+            // use them now. But this code isn't broken, so doesn't
+            // need fixing.
             var from = false;
             var to = false;
 
@@ -112,7 +118,7 @@ function ebIndexProcessComments(comments) {
             }
 
             // Slugify the target text to use in an ID
-            // and to check for duplicate instances.
+            // and to check for duplicate instances later.
             var entrySlug = ebSlugify(line);
 
             // Add the slug to the array of entries,
@@ -137,7 +143,7 @@ function ebIndexProcessComments(comments) {
             var id = entrySlug + '--iid-' + occurrencesSoFar;
 
             // Create a target for each line.
-            // Note: we can't use one target for several index entries,
+            // Note: we can't use one target element for several index entries,
             // because one element can't have multiple IDs.
             // And we don't try to link index entries to IDs of existing elements
             // because those elements' IDs could change, and sometimes
@@ -162,8 +168,10 @@ function ebIndexProcessComments(comments) {
             // Set a string that we'll use for the target below.
             // It's easiest to use `outerHTML` for this,
             // but PrinceXML doesn't support `outerHTML`, so
-            // if this script is running in PrinceXML we have to use
+            // if this script ever runs in PrinceXML we have to use
             // `innerHTML`, putting the target in a temporary container.
+            // This could be refactored now that we handle Prince
+            // output in pre-processing with gulp/cheerio.
             var targetElementString = '';
             if (typeof Prince === 'object') {
 
@@ -182,9 +190,8 @@ function ebIndexProcessComments(comments) {
             }
 
             // If the comment is between elements (e.g. between two paras)
-            // then we insert the target as the first child of the next element,
-            // to reduce causing problems for CSS sibling selectors.
-            // (Look out for CSS issues anyway, they may require CSS tweaks.)
+            // then we insert the target as the first child of the next element.
+            // (Look out for CSS problems caused by this. You may need CSS tweaks.)
             // Otherwise, if it's *inline* between two text nodes, we insert
             // the target exactly where it appears between those text nodes.
             // This way, a target can appear at any exact point in the text.
@@ -207,7 +214,6 @@ function ebIndexProcessComments(comments) {
 }
 
 // Get all the comments and add them to an array.
-// Also see `ebIndexGetCommentsFromTitles`.
 function ebIndexGetComments() {
     'use strict';
 
@@ -235,7 +241,7 @@ function ebIndexGetComments() {
         }
 
         // IE and other browsers differ in how the filter method is passed into the
-        // TreeWalker. Mozilla takes an object with an "acceptNode" key. IE takes the
+        // TreeWalker. Mozilla takes an object with an 'acceptNode' key. IE takes the
         // filter method directly. To work around this difference, we will define the
         // acceptNode function a property of itself.
         filter.acceptNode = filter;
@@ -303,7 +309,7 @@ function ebIndexGetComments() {
 
             for (thisNode = thisNode.firstChild; thisNode; thisNode = thisNode.nextSibling) {
 
-                // If it's a comment thisNode and it is not just whitespace
+                // If it's a comment node and it is not just whitespace
                 if (thisNode.nodeType === Node.COMMENT_NODE
                         && isAnIndexComment.test(thisNode.nodeValue)) {
 
@@ -343,7 +349,7 @@ function ebIndexGetComments() {
     ebIndexProcessComments(comments);
 }
 
-// Triage for a PrinceXML environment or otherwise.
+// Triage before processing comments.
 function ebIndexInit() {
     'use strict';
 

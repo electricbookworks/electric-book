@@ -5,7 +5,7 @@
 // If we find any, look up each list item
 // in the book-index-*.js, and add a link.
 
-// Add a link to an entry
+// Add a link to a specific reference-index entry
 function ebIndexAddLink(listItem, filename, id, range, pageReferenceSequenceNumber) {
     'use strict';
 
@@ -21,7 +21,8 @@ function ebIndexAddLink(listItem, filename, id, range, pageReferenceSequenceNumb
         listItem.appendChild(link);
     }
 
-    // If this link starts a range
+    // Add a class to flag whether this link starts
+    // or ends a reference range.
     if (range === 'from' || 'to') {
         link.classList.add('index-range-' + range);
     } else {
@@ -29,19 +30,19 @@ function ebIndexAddLink(listItem, filename, id, range, pageReferenceSequenceNumb
     }
 }
 
-// Add a link for a specific entry
+// Look up an entry's anchor targets to link to
 function ebIndexFindLinks(listItem) {
     'use strict';
 
-    // We're already looping through all list items, even children.
+    // We're already looping through all `li`s`, even descendants.
     // For each one, contruct its tree from its parent nodes.
     // When we look up this entry in the db, we'll compare
-    // the constructed tree with the real one in the database/index.
+    // the constructed tree with the one stored in the index 'database'.
     var listItemTree = [];
 
-    // If a list item has a parent list item, and its
+    // If a list item has a parent list item, add its
     // text value to the beginning of the tree array.
-    // Iterate up the tree to each possible parent.
+    // Iterate up the tree to add each possible parent.
     listItemTree.push(listItem.firstChild.nodeValue.trim());
     function buildTree(listItem) {
         if (listItem.parentElement
@@ -53,19 +54,22 @@ function ebIndexFindLinks(listItem) {
     }
     buildTree(listItem);
 
-    // Reconstruct the reference's slug from the tree
+    // Reconstruct the reference's text value from the tree
+    // and save its slug.
     var listItemSlug = ebSlugify(listItemTree.join(' \\ '));
 
+    // Get the book title and translation language (if any)
+    // for the HTML page we're processing.
     var currentBookTitle = document.body.getAttribute('data-title');
     var currentTranslation = document.body.getAttribute('data-translation');
 
-    // Look through the index of targets
+    // Look through the index 'database' of targets
+    // Each child in the ebIndexTargets array represents
+    // the index anchor targets on one HTML page.
     ebIndexTargets.forEach(function (pageEntries) {
 
-        // Each item in the ebIndexTargets array represents
-        // the index references on one HTML page.
-        // Check if the entries for this page
-        // are for files in the same book.
+        // First, check if the entries for this page
+        // of entries are for files in the same book.
         // We just check against the first entry for the page.
         var titleMatches = false;
         var languageMatches = false;
@@ -74,6 +78,9 @@ function ebIndexFindLinks(listItem) {
         }
         // Note, both of these could be null,
         // if this is not a translation.
+        // (Note we're being lazy here, so this code might need work.
+        // Technically one could be undefined and the other null.
+        // The gulp alternative in `renderIndexListReferences` has better logic.)
         if (currentTranslation === pageEntries[0].translationLanguage) {
             languageMatches = true;
         }
@@ -87,8 +94,8 @@ function ebIndexFindLinks(listItem) {
 
                 if (entry.entrySlug === listItemSlug) {
 
-                    // If a 'from' link has started a reference range,
-                    // skip links till the next 'to' link that closes the range.
+                    // If a 'from' link has started a reference range, skip
+                    // adding links till the next 'to' link that closes the range.
                     if (entry.range === 'from') {
                         rangeOpen = true;
                         ebIndexAddLink(listItem, entry.filename,
@@ -113,18 +120,18 @@ function ebIndexFindLinks(listItem) {
     });
 }
 
-// Get all the indexes and start processing them
+// Get all the indexes on the page, and start processing them.
 function ebIndexPopulate() {
     'use strict';
 
-    // Don't do this if the list is already loaded
-    // This prevents us doing this work if it's been pre-processed
-    // e.g. by gulp during PDF or epub output.
+    // Don't do this if the list links are already loaded.
+    // This prevents us doing this work if the page has been
+    // pre-processed. E.g. by gulp during PDF or epub output.
     if (document.body.getAttribute('data-index-list') === 'loaded') {
         return;
     }
 
-    var indexLists = document.querySelectorAll('ul.reference-index');
+    var indexLists = document.querySelectorAll('.reference-index');
     var indexListsProcessed = 0;
 
     indexLists.forEach(function (indexList) {
