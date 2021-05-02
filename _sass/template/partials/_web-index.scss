@@ -57,4 +57,10 @@ $web-index: true !default;
         }
     }
 
+    .index-target {
+
+        // Avoid index anchors from adding line breaks
+        float: left;
+    }
+
 }

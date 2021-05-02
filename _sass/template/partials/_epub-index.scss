@@ -68,4 +68,10 @@ $epub-index: true !default;
         display: none;
     }
 
+    .index-target {
+
+        // Avoid index anchors from adding line breaks
+        float: left;
+    }
+
 }
