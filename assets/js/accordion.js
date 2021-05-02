@@ -129,11 +129,7 @@ function ebAccordionFillSections() {
     // elements and text items that match the mathjax \[ pattern.
     var j, contentItemsForSections = [];
     for (j = 0; j < contentItems.length; j += 1) {
-        if (contentItems[j].nodeType === Node.ELEMENT_NODE) {
-            contentItemsForSections.push(contentItems[j]);
-        } else if (contentItems[j].nodeValue.includes('\[')) {
-            contentItemsForSections.push(contentItems[j]);
-        }
+        contentItemsForSections.push(contentItems[j]);
     }
 
     // We don't know where our first section is yet
