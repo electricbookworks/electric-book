@@ -6,11 +6,11 @@
 // in the book-index-*.js, and add a link.
 
 // Add a link to a specific reference-index entry
-function ebIndexAddLink(listItem, filename, id, range, pageReferenceSequenceNumber) {
+function ebIndexAddLink(listItem, pageReferenceSequenceNumber, entry) {
     'use strict';
 
     var link = document.createElement('a');
-    link.href = filename + '#' + id;
+    link.href = entry.filename + '#' + entry.id;
     link.innerHTML = pageReferenceSequenceNumber;
 
     // If the listItem has child lists, insert the link
@@ -23,8 +23,8 @@ function ebIndexAddLink(listItem, filename, id, range, pageReferenceSequenceNumb
 
     // Add a class to flag whether this link starts
     // or ends a reference range.
-    if (range === 'from' || 'to') {
-        link.classList.add('index-range-' + range);
+    if (entry.range === 'from' || entry.range === 'to') {
+        link.classList.add('index-range-' + entry.range);
     } else {
         link.classList.add('index-range-none');
     }
@@ -43,12 +43,27 @@ function ebIndexFindLinks(listItem) {
     // If a list item has a parent list item, add its
     // text value to the beginning of the tree array.
     // Iterate up the tree to add each possible parent.
-    listItemTree.push(listItem.firstChild.nodeValue.trim());
+
+    // Get the text value of an li without its li children
+    function getListItemText(li) {
+        var listItemClone = li.cloneNode(true);
+        listItemClone.querySelectorAll('li').forEach(function (childListItem) {
+            childListItem.remove();
+        });
+
+        // If page refs have already been added to the li,
+        // we don't want those in the text. They appear after
+        // a line break, so we regex everything from that \n.
+        var text = listItemClone.textContent.trim().replace(/\n.*/, '');
+        return text;
+    }
+
+    listItemTree.push(getListItemText(listItem));
+
     function buildTree(listItem) {
         if (listItem.parentElement
                 && listItem.parentElement.closest('li')) {
-            listItemTree.unshift(listItem.parentElement.closest('li')
-                .firstChild.nodeValue.trim());
+            listItemTree.unshift(getListItemText(listItem.parentElement.closest('li')));
             buildTree(listItem.parentElement.closest('li'));
         }
     }
@@ -98,20 +113,17 @@ function ebIndexFindLinks(listItem) {
                     // adding links till the next 'to' link that closes the range.
                     if (entry.range === 'from') {
                         rangeOpen = true;
-                        ebIndexAddLink(listItem, entry.filename,
-                                entry.id, entry.range, pageReferenceSequenceNumber);
+                        ebIndexAddLink(listItem, pageReferenceSequenceNumber, entry);
                         pageReferenceSequenceNumber += 1;
                     }
                     if (rangeOpen) {
                         if (entry.range === 'to') {
-                            ebIndexAddLink(listItem, entry.filename,
-                                    entry.id, entry.range, pageReferenceSequenceNumber);
+                            ebIndexAddLink(listItem, pageReferenceSequenceNumber, entry);
                             pageReferenceSequenceNumber += 1;
                             rangeOpen = false;
                         }
                     } else {
-                        ebIndexAddLink(listItem, entry.filename, entry.id,
-                                entry.range, pageReferenceSequenceNumber);
+                        ebIndexAddLink(listItem, pageReferenceSequenceNumber, entry);
                         pageReferenceSequenceNumber += 1;
                     }
                 }

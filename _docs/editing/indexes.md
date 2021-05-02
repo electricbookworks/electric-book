@@ -62,6 +62,13 @@ Then, if you absolutely must have the page number exactly right, then you can ad
 To <!--index: Holmes, Sherlock --> Sherlock Holmes <!--index: Adler, Irene --> she is always THE woman. I have seldom heard him mention her under any other name.
 ```
 
+If the entry in the actual index contains italics, do not add any italic markup to your `index:` comments. For example, if your index contains an italic entry for the ship *HMS Queen Elizabeth*, your index entry would still just be:
+
+```md
+<!-- index:
+HMS Queen Elizabeth -->
+```
+
 
 ### Nested entries
 

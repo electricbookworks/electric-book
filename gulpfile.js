@@ -1126,12 +1126,20 @@ gulp.task('renderIndexListReferences', function (done) {
             run: function ($) {
 
                 // Add a link to an entry in a reference index
-                function ebIndexAddLink(listItem, filename, id, range, pageReferenceSequenceNumber) {
+                function ebIndexAddLink(listItem, pageReferenceSequenceNumber, entry) {
                     'use strict';
 
                     var link = $('<a>​</a>')
-                        .attr('href', filename + '#' + id)
+                        .attr('href', entry.filename + '#' + entry.id)
                         .text(pageReferenceSequenceNumber)
+
+                    // Add a class to flag whether this link starts
+                    // or ends a reference range.
+                    if (entry.range === 'from' || entry.range === 'to') {
+                        link.addClass('index-range-' + entry.range);
+                    } else {
+                        link.addClass('index-range-none');
+                    }
 
                     // If the listItem has child lists, insert the link
                     // before the first child list. Otherwise, append the link.
@@ -1139,14 +1147,6 @@ gulp.task('renderIndexListReferences', function (done) {
                         link.insertBefore($(listItem).find('ul'));
                     } else {
                         link.appendTo(listItem);
-                    }
-
-                    // Add a class to flag whether this link starts
-                    // or ends a reference range.
-                    if (range === 'from' || 'to') {
-                        link.addClass('index-range-' + range);
-                    } else {
-                        link.addClass('index-range-none');
                     }
                 }
 
@@ -1166,17 +1166,31 @@ gulp.task('renderIndexListReferences', function (done) {
                     // If a list item has a parent list item, add its
                     // text value to the beginning of the tree array.
                     // Iterate up the tree to each possible parent.
-                    listItemTree.push(listItem.contents()[0].data.trim());
+
+                    // If the list item has a first child that contains text
+                    // use that text; otherwise use the entire list item's text.
+
+                    // Get the text value of an li without its li children
+                    function getListItemText(li) {
+
+                        var listItemClone = li.clone();
+                        listItemClone.find('li').remove();
+
+                        // If page refs have already been added to the li,
+                        // we don't want those in the text. They appear after
+                        // a line break, so we regex everything from that \n.
+                        var text = listItemClone.text().trim().replace(/\n.*/, '');
+                        return text;
+                    }
+
+                    listItemTree.push(getListItemText(listItem));
 
                     if (nestingLevel > 0) {
 
                         function buildTree(listItem) {
                             if (listItem.parent()
                                     && listItem.parent().closest('li').contents()[0]) {
-
-                                var parentValue = listItem.parent().closest('li').contents()[0].data.trim();
-                                listItemTree.unshift(parentValue);
-
+                                listItemTree.unshift(getListItemText(listItem.parent().closest('li')));
                                 buildTree(listItem.parent().closest('li'));
                             }
                         }
@@ -1250,26 +1264,24 @@ gulp.task('renderIndexListReferences', function (done) {
                             var rangeOpen = false;
                             pageEntries.forEach(function (entry) {
 
+
                                 if (entry.entrySlug === listItemSlug) {
 
                                     // If a 'from' link has started a reference range,
                                     // skip links till the next 'to' link that closes the range.
                                     if (entry.range === 'from') {
                                         rangeOpen = true;
-                                        ebIndexAddLink(listItem, entry.filename,
-                                                entry.id, entry.range, pageReferenceSequenceNumber);
+                                        ebIndexAddLink(listItem, pageReferenceSequenceNumber, entry);
                                         pageReferenceSequenceNumber += 1;
                                     }
                                     if (rangeOpen) {
                                         if (entry.range === 'to') {
-                                            ebIndexAddLink(listItem, entry.filename,
-                                                    entry.id, entry.range, pageReferenceSequenceNumber);
+                                            ebIndexAddLink(listItem, pageReferenceSequenceNumber, entry);
                                             pageReferenceSequenceNumber += 1;
                                             rangeOpen = false;
                                         }
                                     } else {
-                                        ebIndexAddLink(listItem, entry.filename, entry.id,
-                                                entry.range, pageReferenceSequenceNumber);
+                                        ebIndexAddLink(listItem, pageReferenceSequenceNumber, entry);
                                         pageReferenceSequenceNumber += 1;
                                     }
                                 }
