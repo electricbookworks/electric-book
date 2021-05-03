@@ -969,9 +969,11 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                 var entries = [];
 
                 $('*').contents()
+                    // Return only text nodes...
                     .filter(function () {
                         return this.nodeType === 8
                     })
+                    // .. that start with `index:`
                     .filter(function () {
                         return (/^\s*index:/).test(this.data)
                     })
@@ -1018,7 +1020,10 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
 
                             // Trim whitespace from each entry
                             // https://stackoverflow.com/a/41183617/1781075
-                            var entriesByLevel = rawEntriesByLevel.map(str => str.trim());
+                            // and remove any leading or trailing hyphens.
+                            var entriesByLevel = rawEntriesByLevel.map(function (str) {
+                                return str.trim().replace(/^-+|-+$/, '');
+                            });
 
                             // Check for starting or ending hyphens.
                             // If one exists, flag the target as `from` or `to`,
@@ -1080,7 +1085,6 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                                 .attr('style', 'position: absolute');
 
                             newAnchorElement.insertAfter(comment);
-
                         });
                     });
 
