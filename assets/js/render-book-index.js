@@ -102,6 +102,12 @@ function generateTargetsIndex() {
                     targetArray.push(entryObject);
                 });
 
+                // Note that we do not sort the entries in the targetArray.
+                // The items are added in order of appearance in the DOM,
+                // even if their ID numbers don't run in order. Their array order
+                // which should match the order they're used for page
+                // references at each entry in the book index.
+
                 return JSON.stringify(targetArray);
             });
 
