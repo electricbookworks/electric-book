@@ -41,7 +41,7 @@
 // that may be more reliable than this.)
 var ebIndexOptions = {
     blockLevelElements: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6',
-            'P', 'BLOCKQUOTE', 'OL', 'UL', 'TABLE', 'DL']
+            'P', 'BLOCKQUOTE', 'OL', 'UL', 'TABLE', 'DL', 'DIV']
 };
 
 // Process the comments, inserting anchor-tag targets
@@ -92,8 +92,9 @@ function ebIndexProcessComments(comments) {
 
             // Trim whitespace from each entry
             // https://stackoverflow.com/a/41183617/1781075
+            // and remove any leading or trailing hyphens.
             var entriesByLevel = rawEntriesByLevel.map(function (str) {
-                return str.trim();
+                return str.trim().replace(/^-+|-+$/, '');
             });
 
             // Check for starting or ending hyphens.
