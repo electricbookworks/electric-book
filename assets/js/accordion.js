@@ -125,8 +125,7 @@ function ebAccordionFillSections() {
     // Grab the individual #contents elements of the page
     var contentItems = document.getElementById('content').childNodes;
 
-    // Put all the items in an array, selecting only
-    // elements and text items that match the mathjax \[ pattern.
+    // Put all the items in an array.
     var j, contentItemsForSections = [];
     for (j = 0; j < contentItems.length; j += 1) {
         contentItemsForSections.push(contentItems[j]);
