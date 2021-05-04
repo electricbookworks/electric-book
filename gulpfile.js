@@ -34,6 +34,12 @@ var gulp = require('gulp'),
     var { epubIndexTargets } = require('./assets/js/book-index-epub.js');
     var { appIndexTargets } = require('./assets/js/book-index-app.js');
 
+    // Get the file list from search-store.js,
+    // which is included in search-engine.js.
+    // The store includes a list of all pages
+    // that Jekyll parsed when last building.
+    var { store } = require('./_site/assets/js/search-engine.js');
+
 // A function for loading book metadata as an object
 function loadMetadata() {
     'use strict';
@@ -86,13 +92,13 @@ if (fs.existsSync('_data/images.yml')) {
 
 // Get the book we're processing
 var book = 'book';
-if (args.book && args.book.trim !== '') {
+if (args.book && args.book.trim() !== '') {
     book = args.book;
 }
 
 // let '--folder' be an alias for '--book',
 // to make sense for gulping 'assets' and '_items'
-if (args.folder && args.folder.trim !== '') {
+if (args.folder && args.folder.trim() !== '') {
     book = args.folder;
 }
 
@@ -104,7 +110,7 @@ if (book === 'book') {
 
 // Get the language we're processing
 var language = '';
-if (args.language && args.language.trim !== '') {
+if (args.language && args.language.trim() !== '') {
     language = '/' + args.language;
 }
 
@@ -115,7 +121,7 @@ if (language === '') {
 
 // Get the output format we're working with
 var output = '';
-if (args.output && args.output.trim !== '') {
+if (args.output && args.output.trim() !== '') {
     output = args.output;
 }
 
@@ -961,7 +967,7 @@ gulp.task('yaml', function (done) {
 // update it, you may need to update index-targets.js as well.
 gulp.task('renderIndexCommentsAsTargets', function (done) {
     'use strict';
-    gulp.src(paths.text.src, {base: './'})
+    gulp.src(allTextPaths(store), {base: './'})
         .pipe(cheerio({
             run: function ($) {
 

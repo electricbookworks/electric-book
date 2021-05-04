@@ -111,9 +111,9 @@ Enter a number and hit enter. "
 
 			echo "Adding link references to book indexes..."
 			if [ "$printpdfsubdirectory" = "" ]; then
-				gulp renderIndexListReferences --book $bookfolder
+				gulp renderIndexListReferences --book $bookfolder --output printpdf
 			else
-				gulp renderIndexListReferences --book $bookfolder --language $printpdfsubdirectory
+				gulp renderIndexListReferences --book $bookfolder --language $printpdfsubdirectory --output printpdf
 			fi
 
 			# Navigate into the book's text folder in _site
@@ -224,9 +224,9 @@ Enter a number and hit enter. "
 
 			echo "Adding link references to book indexes..."
 			if [ "$screenpdfsubdirectory" = "" ]; then
-				gulp renderIndexListReferences --book $bookfolder
+				gulp renderIndexListReferences --book $bookfolder --output screenpdf
 			else
-				gulp renderIndexListReferences --book $bookfolder --language $screenpdfsubdirectory
+				gulp renderIndexListReferences --book $bookfolder --language $screenpdfsubdirectory --output screenpdf
 			fi
 
 			# Navigate into the book's text folder in _site
@@ -359,9 +359,9 @@ Enter a number and hit enter. "
 
 			echo "Adding link references to book indexes..."
 			if [ "$epubsubdirectory" = "" ]; then
-				gulp renderIndexListReferences --book $bookfolder
+				gulp renderIndexListReferences --book $bookfolder --output epub
 			else
-				gulp renderIndexListReferences --book $bookfolder --language $epubsubdirectory
+				gulp renderIndexListReferences --book $bookfolder --language $epubsubdirectory --output epub
 			fi
 
 			# Now to assemble the epub
@@ -995,7 +995,7 @@ Enter a number and hit enter. "
 		fi
 		while [ ! -d $bookimagestoconvert ]
 		do
-			echo "Sorry, there is no $bookimagestoconvert folder. Please try again."
+		echo "Sorry, there is no $bookimagestoconvert folder. Please try again."
 			read bookimagestoconvert
 		done
 
@@ -1067,6 +1067,11 @@ Enter a number and hit enter. "
 				fi
 				# Build the HTML
 				bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,$searchIndexConfig"
+
+				# Use gulp to render targets, so that Puppeteer does not,
+				# because we need targets added by the same engine (cheerio) that
+				# will populate the index list with links.
+				gulp renderIndexCommentsAsTargets
 				node _site/assets/js/render-book-index.js
 		fi
 		if [ "$searchIndexToRefresh" = "2" ] || [ "$searchIndexToRefresh" = "" ]
@@ -1078,6 +1083,7 @@ Enter a number and hit enter. "
 				fi
 				# Build the HTML
 				bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,$searchIndexConfig"
+				gulp renderIndexCommentsAsTargets
 				node _site/assets/js/render-book-index.js
 		fi
 		if [ "$searchIndexToRefresh" = "3" ] || [ "$searchIndexToRefresh" = "" ]
@@ -1101,6 +1107,7 @@ Enter a number and hit enter. "
 				fi
 				# Build the HTML
 				bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,$searchIndexConfig"
+				gulp renderIndexCommentsAsTargets
 				node _site/assets/js/render-book-index.js
 		fi
 		if [ "$searchIndexToRefresh" = "5" ] || [ "$searchIndexToRefresh" = "" ]
