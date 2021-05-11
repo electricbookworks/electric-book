@@ -25,7 +25,7 @@ var gulp = require('gulp'),
     del = require('del'),
     cheerio = require('gulp-cheerio'),
     tap = require('gulp-tap'),
-    Iconv = require('iconv').Iconv
+    iconv = require('iconv-lite');
 
     // Utilities copied from elsewhere in this repo
     var { ebSlugify } = require('./assets/js/utilities.js');
@@ -901,9 +901,14 @@ gulp.task('epub:xhtmlLinks', function (done) {
                         return;
                     }
 
-                    // remove all non-ascii characters
-                    var iconv = new Iconv('UTF-8', 'ASCII//IGNORE');
-                    asciiTarget = iconv.convert(target).toString('utf-8');
+                    // remove all non-ascii characters using iconv-lite
+                    // by converting the target from utf-8 to ascii.
+                    var iconvLiteBuffer = iconv.encode(target, 'utf-8');
+                    var asciiTarget = iconv.decode(iconvLiteBuffer, 'ascii');
+                    // Note that this doesn't remove illegal characters,
+                    // which must then be replaced.
+                    // (See https://github.com/ashtuchkin/iconv-lite/issues/81)
+                    var asciiTarget = asciiTarget.replace(/[�?]/g, '');
 
                     if (!asciiTarget.includes('http')) {
                         newTarget = asciiTarget.replace('.html', '.xhtml');
