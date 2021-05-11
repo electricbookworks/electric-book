@@ -130,6 +130,16 @@ if (output === '') {
     console.log('If processing for a specific output, use the --output argument, e.g. gulp --output printpdf. No hyphens.');
 }
 
+// Create array of all text files in all books
+var allTextPaths = function (store) {
+    'use strict';
+    var paths = [];
+    store.forEach(function (entry) {
+        paths.push('_site/' + entry.url);
+    })
+    return paths;
+}
+
 // Set up paths.
 // Paths to text src must include the *.html extension.
 // Add paths to any JS files to minify to the src array, e.g.
