@@ -1,7 +1,7 @@
 /*jslint browser, for */
 /*global window, ebLazyLoadImages, searchTerm, videoShow
-    locales, pageLanguage, console, Element, HTMLDocument,
-    Node, ebIDsAssigned */
+    locales, pageLanguage, console, Element, HTMLDocument, Node,
+    Node, MutationObserver */
 
 // console.log('Debugging accordions.js');
 
@@ -584,6 +584,9 @@ function ebAccordify() {
         return;
     }
 
+    // Signal that we're loading the accordion
+    document.body.setAttribute('data-accordion-active', 'true');
+
     // exit if there aren't any headings
     var collapserTargets = accordionHeads;
     var collapserButtons = document.querySelectorAll(collapserTargets);
@@ -653,11 +656,27 @@ function ebLoadAccordion() {
     ebAccordionListenForHashChange();
 }
 
-// Load the accordion when IDs have been assigned
-var ebAccordionCheckForIDs = window.setInterval(function () {
+// Wait for data-index-targets to be loaded
+// and IDs to be assigned
+// before applying the accordion.
+function ebPrepareForAccordion() {
     'use strict';
-    if (ebIDsAssigned === true) {
-        ebLoadAccordion();
-        clearInterval(ebAccordionCheckForIDs);
-    }
-}, 500);
+
+    var accordionObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            if (mutation.type === "attributes") {
+                if (document.body.getAttribute('data-accordion-active') !== 'true'
+                        && document.body.getAttribute('data-index-targets')
+                        && document.body.getAttribute('data-ids-assigned')) {
+                    ebLoadAccordion();
+                }
+            }
+        });
+    });
+
+    accordionObserver.observe(document.body, {
+        attributes: true // listen for attribute changes
+    });
+}
+
+window.onload = ebPrepareForAccordion();
