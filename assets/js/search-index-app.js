@@ -256,5 +256,5 @@ index.addDoc({
 index.addDoc({
     id: 51,
     title: "Échantillons: Index dynamique",
-    content: "Index dynamique Adler, Irene affaires Un scandale en Bohème lettre Holmes, Sherlock"
+    content: "Index dynamique Adler, Irene12 affaires Un scandale en Bohème 12 lettre123 Holmes, Sherlock12"
 });
