@@ -26,7 +26,7 @@ Electric Book options
 5  Create an app
 6  Export to Word
 7  Convert source images to output formats
-8  Refresh search and book index databases
+8  Refresh search and book-index databases
 9  Install or update dependencies
 x  Exit
 
@@ -1034,7 +1034,7 @@ Enter a number and hit enter. "
 		echo "Let's refresh search and index databases."
 		echo "We'll index the files in your file lists as defined in meta.yml."
 
-		# Check if refreshing web or app index
+		# Check which format(s) to refresh
 		echo "Choose a format to refresh:"
 		echo "1 Print PDF"
 		echo "2 Screen PDF"
