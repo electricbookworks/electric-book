@@ -84,9 +84,14 @@
                 {% endif %}
             {% endfor %}
 
+            {% comment %} Get file content for detecting SVGs. {% endcomment %}
+            {% capture path-to-page %}{{ book-directory }}/text/{{ manifest-epub-file-name }}{% endcapture %}
+            {% assign this-page = site.pages | where_exp: "file", "file.path contains path-to-page" %}
+
             {% capture properties %}
                 {% if site.mathjax-enabled == true or epub-scripts-disabled != true %}scripted {% endif %}
                 {% if manifest-epub-file-name == epub-contents-page %}nav {% endif %}
+                {% if this-page.contains-svg == true %}svg {% endif %}
             {% endcapture %}
             {% capture properties %}{{ properties | strip_newlines | strip }}{% endcapture %}
 
@@ -152,6 +157,22 @@
 
         {% endfor %}
 
+        {% comment %}Add images from assets by looping through static files whose path
+        contains the path to epub images in assets.{% endcomment %}
+
+        {% assign image-files = site.static_files | where_exp: "file", "file.path contains '/assets/images/epub'" %}
+
+        {% for file in image-files %}
+
+            {% assign file-extension = file.extname | remove: "." %}
+
+            <item id="asset-image-{{ file.name | slugify }}"
+                  media-type="{{ site.media-types[file-extension] }}"
+                  href="assets/images/epub/{{ file.name }}"
+                  />
+
+        {% endfor %}
+
         {% comment %} Add images in items. Note we have to list
         all images in items even if they are not used in the epub,
         because we can't know if they've been used or not. {% endcomment %}
@@ -185,7 +206,7 @@
 
                         <item id="font-{{ file-basename }}"
                             media-type="{{ site.media-types[file-extension] }}"
-                            href="fonts/{{ file.name }}"
+                            href="assets/fonts/{{ file.name }}"
                             />
 
                     {% endif %}

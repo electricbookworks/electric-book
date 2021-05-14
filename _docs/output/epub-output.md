@@ -24,7 +24,7 @@ Your epub will build correctly only if you have provided sufficient, accurate in
 
 1. File list: you must list all the files to be included in your epub in the epub `files` section of `meta.yml`.
 2. Optionally, add guide names to key files in that list, e.g. `"0-0-cover": "cover"`.
-3. There must be a `nav` section in `meta.yml` that points to at least one of your epub's files. For epubs, every item in the `nav` must include a file (unlike web output, where label-only items are allowed). 
+3. There must be a `nav` section in `meta.yml` that points to at least one of your epub's files. For epubs, every item in the `nav` must include a file (unlike web output, where label-only items are allowed).
 4. To tell the epub package where to find navigation, you must either:
 	1. Define the epub's `contents-page` item, as the content file that contains {% raw %}`{% include toc %}`{% endraw %}, e.g. `- contents-page: "0-3-contents"`, and/or
 	2. Add the guide name `"toc"` to the relevant file in the `files` list (e.g. `- "0-3-contents": "toc"`).
@@ -56,6 +56,27 @@ Font files stored anywhere else in your project (e.g. in `assets/fonts`) are not
 
 See the [Javascript](../advanced/javascript.html) section for more detail.
 
+## SVG images
+
+If you include SVG images *inline* in an epub file – that is, the `<svg>` markup itself is in the final HTML, not just linked in an `<img src="*.svg">` element, you need to indicate that the file includes an inline SVG. This is because for an epub to be valid, the `package.opf` file must flag when a file includes inline SVGs.
+
+In order to do this, you must add this to the file's YAML frontmatter:
+
+```yaml
+contains-svg: true
+```
+
+If you have many files that contain SVGs, you can set this value as a frontmatter default in `_config.yml`. E.g. if all your projects' title pages include inline SVG, you might include this in `_config.yml`:
+
+```yaml
+defaults:
+  -
+    scope:
+      path: "*/text/01-title-page.html"
+    values:
+      contains-svg: true
+```
+
 ## Validation
 
 If you want the output script to run EpubCheck (recommended), [download it from the IDPF](https://github.com/IDPF/epubcheck/releases).
@@ -77,19 +98,19 @@ Epubs are notoriously hard to make, largely because validation is so strict. Her
 4. Make sure your book has a `package.opf` file in its book directory. You can copy this from the Electric Book template. (It uses the `epub-package` include to generate the epub's metadata and manifest.)
 
 > ## How epubs are generated
-> 
+>
 > This is technical background on how we generate Electric Book epubs. It's a two-step process.
-> 
+>
 > 1. In Jekyll, using an epub config file (`_configs/_config.epub.yml`), we generate:
-> 
+>
 >    1. the books, with each translation in a subfolder. Each book and translation has a `package.opf` file.
 >    2. an `epub` folder (as a Jekyll collection) containing a boilerplate `META-INF` folder, `mimetype` file, and `mathjax` folder; and optional `js` and `fonts` folders.
-> 
+>
 > 2. In our output script:
-> 
+>
 >    1. We copy the relevant book or translation folders from `_site/book` (or whatever folder `book` has been renamed to) into `_site/epub`. We retain the subdirectory structure of translations, except for the `package.opf`, which goes to the root of `epub`.
 >    2. We zip the contents of `epub` to `_output/book.zip` (where `book` may be a renamed book folder), and change the file extension to `.epub`
-> 
+>
 > The output script does a lot of work. It asks the user some questions, it has to check for the existence of files (e.g. `styles` in a translation, which are optional), and it removes the `mathjax` folder from `epub` if mathjax is not included.
 {:.box}
 
@@ -185,7 +206,7 @@ Note: To get the metadata to import to Sigil, you must *open* one of your book's
 	*	key HTML files
 	*	the cover JPG.
 1.	{:#adding-the-epub-toc}**Generate the epub's table of contents** (Tools > Table Of Contents…). This TOC is generated only from the headings (`h1` to `h6`) in the text. So it does not include the cover, which has no heading, or any other files without a heading (e.g. sometimes the copyright page). If you need to add a cover to the TOC:
-	1. Go to Tools > Table Of Contents > Edit Table Of Contents… 
+	1. Go to Tools > Table Of Contents > Edit Table Of Contents…
 	2. Click on the first entry in the TOC list.
 	3. Click 'Add Above'.
 	4. Click 'Select Target' and select the cover HTML file (usually `0-0-cover.html`).

@@ -510,6 +510,22 @@ Enter a number and hit enter. "
 				fi
 				cp -a "$location"/_site/assets/js/bundle.js "$location"/_site/epub/assets/js/bundle.js
 			fi
+			# Copy images, fonts and styles in assets
+			if [ -e "$location"/_site/assets/images/epub/. ]; then
+				echo "Found images in assets. Copying them to epub..."
+				mkdir -p "$location"/_site/epub/assets/images/epub
+				cp -a "$location"/_site/assets/images/epub/. "$location"/_site/epub/assets/images/epub/
+			fi
+			if [ -e "$location"/_site/assets/fonts/. ]; then
+				echo "Found fonts in assets. Copying them to epub..."
+				mkdir -p "$location"/_site/epub/assets/fonts
+				cp -a "$location"/_site/assets/fonts/. "$location"/_site/epub/assets/fonts/
+			fi
+			if [ -e "$location"/_site/assets/styles/. ]; then
+				echo "Found styles in assets. Copying them to epub..."
+				mkdir -p "$location"/_site/epub/assets/styles
+				cp -a "$location"/_site/assets/styles/. "$location"/_site/epub/assets/styles/
+			fi
 			# Convert all .html files and internal links to .xhtml
 			echo "Renaming .html to .xhtml..."
 			cd "$location"
@@ -624,6 +640,26 @@ Enter a number and hit enter. "
 			if [ -d assets/js ]; then
 				mkdir -p "$location"/_output/$epubfilename/assets/js
 				cp -a "assets/js/bundle.js" "$location/_output/$epubfilename/assets/js/"
+			fi
+			# Add fonts, images and styles from assets
+			# Copy images, fonts and styles in assets
+			if [ -e "$location"/_site/assets/images/epub/. ]; then
+				echo "Found images in assets. Copying them to epub..."
+				mkdir -p "$location"/_site/epub/assets/images/epub
+				mkdir -p "$location"/_output/$epubfilename/assets/images/epub
+				cp -a "$location"/_site/epub/assets/images/epub/. "$location"/_output/$epubfilename/assets/images/epub/
+			fi
+			if [ -e "$location"/_site/assets/fonts/. ]; then
+				echo "Found fonts in assets. Copying them to epub..."
+				mkdir -p "$location"/_site/epub/assets/fonts
+				mkdir -p "$location"/_output/$epubfilename/assets/fonts
+				cp -a "$location"/_site/epub/assets/fonts/. "$location"/_output/$epubfilename/assets/fonts/
+			fi
+			if [ -e "$location"/_site/assets/styles/. ]; then
+				echo "Found styles in assets. Copying them to epub..."
+				mkdir -p "$location"/_site/epub/assets/styles
+				mkdir -p "$location"/_output/$epubfilename/assets/styles
+				cp -a "$location"/_site/epub/assets/styles/. "$location"/_output/$epubfilename/assets/styles/
 			fi
 			# Add the mimetype file
 			if [ -e mimetype ]; then
