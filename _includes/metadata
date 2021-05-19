@@ -219,6 +219,7 @@ and book content as a Liquid output tag e.g. {{ title }}
     {% capture parent-language %}{{ work.language }}{% endcapture %}
     {% capture relation %}{{ work.relation }}{% endcapture %}
     {% capture coverage %}{{ work.coverage }}{% endcapture %}
+    {% capture rightsholder %}{{ work.rightsholder }}{% endcapture %}
     {% capture rights %}{{ work.rights }}{% endcapture %}
     {% capture image %}{{ work.image }}{% endcapture %}
 
@@ -371,6 +372,7 @@ defined in meta.yml for the given translation.
             {% if work.language %}{% capture language %}{{ work.language }}{% endcapture %}{% endif %}
             {% if work.relation %}{% capture relation %}{{ work.relation }}{% endcapture %}{% endif %}
             {% if work.coverage %}{% capture coverage %}{{ work.coverage }}{% endcapture %}{% endif %}
+            {% if work.rightsholder %}{% capture rightsholder %}{{ work.rightsholder }}{% endcapture %}{% endif %}
             {% if work.rights %}{% capture rights %}{{ work.rights }}{% endcapture %}{% endif %}
             {% if work.image %}{% capture image %}{{ work.image }}{% endcapture %}{% endif %}
 
@@ -494,6 +496,7 @@ override any metadata set for that variant.{% endcomment %}
             {% if data.language %}{% capture language %}{{ data.language }}{% endcapture %}{% endif %}
             {% if data.relation %}{% capture relation %}{{ data.relation }}{% endcapture %}{% endif %}
             {% if data.coverage %}{% capture coverage %}{{ data.coverage }}{% endcapture %}{% endif %}
+            {% if data.rightsholder %}{% capture rightsholder %}{{ data.rightsholder }}{% endcapture %}{% endif %}
             {% if data.rights %}{% capture rights %}{{ data.rights }}{% endcapture %}{% endif %}
             {% if data.image %}{% capture image %}{{ data.image }}{% endcapture %}{% endif %}
 

@@ -77,6 +77,7 @@ See all the metadata gathered for a given page.
 | Book language                         | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `language`      | {{ language }}              | String |
 | Book's relation (i.e. a related work) | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `relation`      | {{ relation }}              | String |
 | Book's coverage                       | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `coverage`      | {{ coverage }}              | String |
+| Book rightsholder                     | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `rightsholder`  | {{ rightsholder }}          | String |
 | Book rights statement                 | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `rights`        | {{ rights }}                | String |
 | Book's image                          | Defined in `meta.yml` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `image`         | {{ image }}                 | String |
 
