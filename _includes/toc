@@ -114,7 +114,7 @@ Now we'll use all that to output the toc list.
 {% comment %}If we're making an epub, and we're starting
 at the top of the toc, put this in a nav element.{% endcomment %}
 {% if site.output == "epub" and toc-branch == epub-toc or toc-branch == print-pdf-toc or toc-branch == web-nav-tree %}
-<nav epub:type="toc" id="toc"{% if site.data.settings.epub.hide-nav == true %} hidden=""{% endif %}>
+<nav epub:type="toc" role="doc-toc" id="toc"{% if site.data.settings.epub.hide-nav == true %} hidden=""{% endif %}>
 {% endif %}
 
 <ol class="toc-list{% if include.class %} {{ include.class }}{% endif %}{% if toc-branch contains current-file %} active{% endif %}">
