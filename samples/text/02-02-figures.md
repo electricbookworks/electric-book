@@ -23,7 +23,11 @@ To ensure EPUB2 compatibility (which requires valid XHTML 1.1), we don't use the
 
 Old versions of the Electric Book template used a `blockquote` instead of a `div` for the figure, since a blockquote can be created with markdown `>` syntax.
 
-To show figures in context, here is an article from *The Comics Grid: Journal of comics scholarship* by [Chris Fradkin](10-02-dynamic-index.html#fradkin-1){:.indexed #fradkin-1}. The abstract, if you're curious:
+<!-- index:
+Fradkin, Chris
+-->
+
+To show figures in context, here is an article from *The Comics Grid: Journal of comics scholarship* by Chris Fradkin. The abstract, if you're curious:
 
 > This note explores the notion of comic superheroes as tools for the empowerment of children. The author details interventions in Rwanda and Brazil, and their different usages of superheroes. With a focus on the superhero’s pre-cloak stage—the stage prior to their employing superpowers—the author offers glimpses of current work in progress to help therapists empower orphaned children. While this area of research is at an early stage, its potential among health professionals is growing. Thus the comic superhero may be more than celluloid, as health professionals learn to use his superpowers.
 

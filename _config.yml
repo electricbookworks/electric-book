@@ -273,3 +273,8 @@ defaults:
     values:
       layout: "default"
       style: "chapter"
+  -
+    scope: # Sets default page frontmatter for all files in this project (an empty string "" for path means all files).
+      path: "_items"
+    values:
+      layout: "min"

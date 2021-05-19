@@ -97,6 +97,9 @@ assets/js/elasticlunr-setup.js
 assets/js/footnote-popups.js
 assets/js/footnotes.js
 assets/js/heading-titles.js
+assets/js/index-lists.js
+assets/js/index-loader.js
+assets/js/index-targets.js
 assets/js/lazyload.js
 assets/js/locales.js
 assets/js/mark-parents.js
@@ -354,6 +357,7 @@ assets/js/nav.js
 assets/js/page-reference.js
 assets/js/polyfills.js
 assets/js/redact.js
+assets/js/render-book-index.js
 assets/js/render-search-index.js
 assets/js/rotate.js
 assets/js/search-engine.js
