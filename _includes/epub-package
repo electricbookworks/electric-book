@@ -62,6 +62,23 @@
     {% if type and type != "" %}
         <dc:type>{{ type | escape }}</dc:type>
     {% endif %}
+
+    {% comment %} Accessibility metadata.
+    Note that these values might not apply to your projects. {% endcomment %}
+        <meta property="schema:accessibilitySummary">
+            This publication conforms to WCAG 2.0 Level AA.
+        </meta>
+        <meta property="schema:accessMode">textual</meta>
+        <meta property="schema:accessMode">visual</meta>
+        <meta property="schema:accessModeSufficient">textual,visual</meta>
+        <meta property="schema:accessModeSufficient">textual</meta>
+        <meta property="schema:accessibilityFeature">structuralNavigation</meta>
+        <meta property="schema:accessibilityFeature">alternativeText</meta>
+        <meta property="schema:accessibilityFeature">longDescription</meta>
+        <meta property="schema:accessibilityHazard">noFlashingHazard</meta>
+        <meta property="schema:accessibilityHazard">noSoundHazard</meta>
+        <meta property="schema:accessibilityHazard">noMotionSimulationHazard</meta>
+
     </metadata>
 
     <manifest>
