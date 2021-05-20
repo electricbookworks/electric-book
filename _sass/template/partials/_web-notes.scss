@@ -9,6 +9,11 @@ $web-notes: true !default;
         @include sidenote();
     }
 
+    // Superscript footnote reference
+    .footnote {
+        cursor: pointer;
+    }
+
     // Footnotes section
     .footnotes {
       margin: ($line-height-default * 2) 0 0 0;

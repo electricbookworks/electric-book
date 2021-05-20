@@ -53,7 +53,7 @@ function ebFootnotePopups() {
         footnoteContainer.innerHTML = targetReference.innerHTML;
 
         // Show on hover
-        theSup.addEventListener('mouseover', function (ev) {
+        theSup.addEventListener('click', function (ev) {
             if (ev.target.classList.contains('footnote')) {
                 footnoteContainer.classList.remove('visuallyhidden');
             }
