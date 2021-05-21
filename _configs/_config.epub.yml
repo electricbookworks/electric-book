@@ -58,7 +58,6 @@ exclude:
   - /assets/js/bookmarks.js
 
   # Exclude files we don't need for epub
-  - /assets/styles
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss
   - /*/styles/web.scss

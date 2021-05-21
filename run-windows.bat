@@ -466,6 +466,7 @@ set /p process=Enter a number and hit return.
         :: Copy original styles
         :epubOriginalStyles
             xcopy /i /q "styles\*.css" "..\epub\%bookfolder%\styles" > nul
+            xcopy /i /q "%location%\_site\assets\styles\*.css" "..\epub\%bookfolder%\assets\styles" > nul
             :: Done! Move along to moving the text folder
             echo Styles copied.
             goto epubCopyImages
@@ -476,7 +477,7 @@ set /p process=Enter a number and hit return.
             mkdir "..\epub\%subdirectory%\styles"
             if exist "%subdirectory%\styles\*.css" xcopy /i /q "%bookfolder%\%subdirectory%\styles\*.css" "..\epub\%bookfolder%\%subdirectory%\styles" > nul
             :: Done! Move along to moving the text folder
-            echo Styles copied.
+            echo Translation styles copied.
             goto epubCopyImages
 
 
@@ -497,6 +498,7 @@ set /p process=Enter a number and hit return.
         :epubOriginalImages
             xcopy /i /q "images\epub\*.*" "..\epub\%bookfolder%\images\epub" > nul
             xcopy /i /q "%location%\_site\items\images\epub\*.*" "..\epub\items\images\epub"
+            xcopy /i /q "%location%\_site\assets\images\epub\*.*" "..\epub\assets\images\epub" > nul
             :: Done! Move along to moving the text folder
             echo Images copied.
             goto epubCopyText
@@ -597,8 +599,11 @@ set /p process=Enter a number and hit return.
         :: Otherwise, if this is a translation, move the fonts folder
         :: into the subdirectory alongside text, images, styles.
         :epubMoveFonts
-            echo Checking for fonts...
+            echo Checking for epub fonts...
             if exist "fonts" if not exist "fonts\*.ttf" if not exist "fonts\*.otf" if not exist "fonts\*.woff" if not exist "fonts\*.woff2" rd /s /q "fonts"
+
+            :: Copy only *epub* fonts to assets/fonts
+            xcopy /i /q "%location%\_site\epub\fonts\*.*" "%location%\_site\epub\assets\fonts" > nul
             echo Fonts checked.
 
         :: If MathJax required, fetch boilerplate mathjax directory from /assets/js
@@ -657,8 +662,9 @@ set /p process=Enter a number and hit return.
             :: Copy root folders
             if exist "%bookfolder%\images\epub" robocopy "%location%\_site\epub\%bookfolder%\images\epub" "%location%_output\%epubFileName%\%bookfolder%\images\epub" /E /NFL /NDL /NJH /NJS /NC /NS
             if exist "items" robocopy "%location%\_site\epub\items" "%location%\_output\%epubFileName%\items" /E /NFL /NDL /NJH /NJS /NC /NS
-            if exist "%bookfolder%\fonts" robocopy "%location%\_site\epub\%bookfolder%\fonts" "%location%\_output\%epubFileName%\%bookfolder%\fonts" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "fonts" robocopy "%location%\_site\epub\fonts" "%location%\_output\%epubFileName%\assets\fonts" /E /NFL /NDL /NJH /NJS /NC /NS
             if exist "%bookfolder%\styles" robocopy "%location%\_site\epub\%bookfolder%\styles" "%location%\_output\%epubFileName%\%bookfolder%\styles" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "assets\images\epub\*.*" robocopy "%location%\_site\epub\assets\images" "%location%\_output\%epubFileName%\assets\images" /E /NFL /NDL /NJH /NJS /NC /NS
             if exist "assets\js\mathjax" robocopy "%location%\_site\epub\assets\js\mathjax" "%location%\_output\%epubFileName%\assets\js\mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
             if exist "assets\js" robocopy "%location%\_site\epub\assets\js" "%location%\_output\%epubFileName%\assets\js" /E /NFL /NDL /NJH /NJS /NC /NS
 
