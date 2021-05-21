@@ -66,16 +66,6 @@ function ebFootnotePopups() {
         // Add a class to the parent
         theContainingElement.parentNode.classList.add('contains-footnote');
 
-        // If we mouseleave footnoteContainer, hide it
-        // (mouseout also fires on mouseout of children, so we use mouseleave)
-        footnoteContainer.addEventListener('mouseleave', function (ev) {
-            if (ev.target === this) {
-                setTimeout(function () {
-                    footnoteContainer.classList.add('visuallyhidden');
-                }, 1000);
-            }
-        });
-
         // Clicking on the reverseFootnote link closes the footnote
         var reverseFootnote = footnoteContainer.querySelector('.reversefootnote');
 
