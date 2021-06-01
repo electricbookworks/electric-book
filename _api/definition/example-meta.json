@@ -1,0 +1,258 @@
+{
+    "project": {
+        "organisation": "Electric Book Works",
+        "url": "http://electricbookworks.com",
+        "email": "support@electricbookworks.com",
+        "name": "The Electric Book template",
+        "description": "This is Electric Book template, a way to build websites, books and ebooks from the same master content. Created and maintained by Electric Book Works.",
+        "logo": "publisher-logo.jpg",
+        "image": "cover.jpg",
+        "credit": "Built with the [Electric Book](https://ebw.co/template)",
+        "language": "en",
+        "app-id": "com.example.myapp",
+        "version": "1.0.0"
+    },
+    "works": [
+        {
+            "directory": "book",
+            "title": "Template",
+            "subtitle": "",
+            "creator": "A. N. Author",
+            "contributor": "",
+            "subject": "Fiction",
+            "description": "The Electric Book's blank template.",
+            "publisher": "EBW",
+            "publisher-url": "",
+            "date": "2015-12-31",
+            "modified": "2016-06-09",
+            "type": "Novel",
+            "identifier": "",
+            "source": "",
+            "language": "en",
+            "relation": "",
+            "coverage": "",
+            "rights": "All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher.",
+            "image": "cover.jpg",
+            "products": {
+                "print-pdf": {
+                    "date": "2016-05-07",
+                    "format": "Print",
+                    "identifier": "",
+                    "image": "cover.jpg",
+                    "files": [
+                        "0-1-titlepage",
+                        "0-2-copyright",
+                        "0-3-contents",
+                        "01",
+                        "02"
+                    ],
+                    "toc": [
+                        {
+                            "label": "Chapter 1",
+                            "file": "01",
+                            "id": "1-hello-world"
+                        },
+                        {
+                            "label": "Chapter 2",
+                            "file": "02",
+                            "id": "2-goodbye-world",
+                            "children": [
+                                {
+                                    "label": "Subsection",
+                                    "file": "02",
+                                    "id": "example-id"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "web": {
+                    "date": "2016-05-07",
+                    "format": "Digital online",
+                    "identifier": "",
+                    "image": "cover.jpg",
+                    "files": [
+                        "index",
+                        "0-1-titlepage",
+                        "0-2-copyright",
+                        "0-3-contents",
+                        {
+                            "01": "Chapter One"
+                        },
+                        {
+                            "02": "Chapter Two"
+                        }
+                    ],
+                    "nav": [
+                        {
+                            "label": "Frontmatter",
+                            "children": [
+                                {
+                                    "label": "Cover",
+                                    "file": "index"
+                                },
+                                {
+                                    "label": "Title page",
+                                    "file": "0-1-titlepage"
+                                },
+                                {
+                                    "label": "Copyright",
+                                    "file": "0-2-copyright"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Contents",
+                            "file": "0-3-contents"
+                        },
+                        {
+                            "label": "Chapter One",
+                            "file": "01",
+                            "id": "1-hello-world"
+                        },
+                        {
+                            "label": "Chapter Two",
+                            "file": "02",
+                            "id": "2-goodbye-world",
+                            "children": [
+                                {
+                                    "label": "Subsection",
+                                    "file": "02",
+                                    "id": "example-id"
+                                }
+                            ]
+                        }
+                    ],
+                    "start-page": "0-3-contents",
+                    "contents-page": "0-3-contents"
+                },
+                "epub": {
+                    "date": "2016-05-07",
+                    "format": "Digital download",
+                    "identifier": "9780000000000",
+                    "image": "cover.jpg",
+                    "start-page": "0-3-contents",
+                    "contents-page": "0-3-contents",
+                    "files": [
+                        {
+                            "0-0-cover": "cover"
+                        },
+                        {
+                            "0-1-titlepage": "title-page"
+                        },
+                        {
+                            "0-2-copyright": "copyright-page"
+                        },
+                        {
+                            "0-3-contents": "toc"
+                        },
+                        {
+                            "01": "text"
+                        },
+                        "02"
+                    ],
+                    "toc": [
+                        {
+                            "label": "Cover",
+                            "file": "0-0-cover"
+                        },
+                        {
+                            "label": "Title page",
+                            "file": "0-1-titlepage"
+                        },
+                        {
+                            "label": "Copyright",
+                            "file": "0-2-copyright"
+                        },
+                        {
+                            "label": "Contents",
+                            "file": "0-3-contents"
+                        },
+                        {
+                            "label": "Chapter One",
+                            "file": "01"
+                        },
+                        {
+                            "label": "Chapter Two",
+                            "file": "02"
+                        }
+                    ]
+                },
+                "screen-pdf": {
+                    "date": "2016-05-07",
+                    "format": "Digital download",
+                    "identifier": "",
+                    "image": "cover.jpg",
+                    "files": [
+                        "0-0-cover",
+                        "0-1-titlepage",
+                        "0-2-copyright",
+                        "0-3-contents",
+                        "01",
+                        "02"
+                    ]
+                },
+                "app": {
+                    "date": "2016-05-07",
+                    "format": "Digital download",
+                    "identifier": "",
+                    "image": "cover.jpg",
+                    "files": [
+                        "index",
+                        "0-1-titlepage",
+                        "0-2-copyright",
+                        "0-3-contents",
+                        {
+                            "01": "Chapter One"
+                        },
+                        {
+                            "02": "Chapter Two"
+                        }
+                    ],
+                    "nav": [
+                        {
+                            "label": "Frontmatter",
+                            "children": [
+                                {
+                                    "label": "Cover",
+                                    "file": "index"
+                                },
+                                {
+                                    "label": "Title page",
+                                    "file": "0-1-titlepage"
+                                },
+                                {
+                                    "label": "Copyright",
+                                    "file": "0-2-copyright"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Contents",
+                            "file": "0-3-contents"
+                        },
+                        {
+                            "label": "Chapter One",
+                            "file": "01",
+                            "id": "1-hello-world"
+                        },
+                        {
+                            "label": "Chapter Two",
+                            "file": "02",
+                            "id": "2-goodbye-world",
+                            "children": [
+                                {
+                                    "label": "Subsection",
+                                    "file": "02",
+                                    "id": "example-id"
+                                }
+                            ]
+                        }
+                    ],
+                    "start-page": "0-3-contents",
+                    "contents-page": "0-3-contents"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,53 @@
+---
+# Jekyll will populate this JSON file
+# with a list of published HTML files.
+# If your book's content should be private,
+# disable the api in a _config file.
+layout: trim
+excerpt: ""
+---
+
+{
+    {% for work in site.data.meta.works %}
+        "{{ work.directory }}": {
+            "products": {
+                "web": {
+                    {% for file in work.products.web.files %}
+
+                        {% for hash in file %}
+                            {% if hash[0] %}
+                                {% capture file-name %}{{ hash[0] }}{% endcapture %}
+                            {% else %}
+                                {% capture file-name %}{{ hash }}{% endcapture %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        "{{ file-name }}": "{{ site.baseurl }}/{{ work.directory }}/text/{{ file-name }}.html"{% unless forloop.last %},{% endunless %}
+                    {% endfor %}
+                }
+            },
+            "translations": {
+                {% for translation in work.translations %}
+                    "{{ translation.language }}": {
+                        "products": {
+                            "web": {
+                                {% for file in translation.products.web.files %}
+
+                                    {% for hash in file %}
+                                        {% if hash[0] %}
+                                            {% capture file-name %}{{ hash[0] }}{% endcapture %}
+                                        {% else %}
+                                            {% capture file-name %}{{ hash }}{% endcapture %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    
+                                    "{{ file-name }}": "{{ site.baseurl }}/{{ work.directory }}/{{ translation.directory }}/text/{{ file-name }}.html"{% unless forloop.last %},{% endunless %}
+                                {% endfor %}
+                            }
+                        }
+                    }
+                {% endfor %}
+            }
+        }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+}

@@ -1,0 +1,16 @@
+{
+    "book": {
+        "products": {
+            "web": {
+                    "index": "/electric-book/book/text/index.html",
+                    "0-1-titlepage": "/electric-book/book/text/0-1-titlepage.html",
+                    "0-2-copyright": "/electric-book/book/text/0-2-copyright.html",
+                    "0-3-contents": "/electric-book/book/text/0-3-contents.html",
+                    "01": "/electric-book/book/text/01.html",
+                    "02": "/electric-book/book/text/02.html"
+            }
+        },
+        "translations": {
+        }
+    }
+}
