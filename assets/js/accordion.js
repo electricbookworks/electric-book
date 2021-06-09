@@ -336,7 +336,7 @@ function ebAccordionShow(targetID) {
         tabContents.setAttribute('aria-expanded', 'true');
 
         // lazyload the images inside
-        var lazyimages = sectionToShow.querySelectorAll('[data-srcset]');
+        var lazyimages = sectionToShow.querySelectorAll('[data-src]');
 
         // console.log('lazyimages: ' + lazyimages.innerHTML);
 
