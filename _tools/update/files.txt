@@ -559,7 +559,6 @@ _docs/output/word-output.md
 _docs/setup/file-lists.md
 _docs/setup/metadata.md
 _docs/setup/quick-start.md
-_docs/setup/repeatable-items.md
 _docs/setup/search-indexes.md
 _docs/setup/setting-up-a-book.md
 _docs/setup/setting-up-your-computer.md
@@ -653,14 +652,6 @@ _includes/video
 _includes/vimeo
 _includes/widgets
 _includes/youtube
-
-
-# Items collection
-# ----------------
-
-_items/.gitignore
-_items/images/_source/.gitignore
-_items/text/.gitignore
 
 
 # Layouts

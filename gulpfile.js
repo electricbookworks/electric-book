@@ -97,7 +97,7 @@ if (args.book && args.book.trim() !== '') {
 }
 
 // let '--folder' be an alias for '--book',
-// to make sense for gulping 'assets' and '_items'
+// to make sense for gulping 'assets'
 if (args.folder && args.folder.trim() !== '') {
     book = args.folder;
 }
@@ -105,7 +105,7 @@ if (args.folder && args.folder.trim() !== '') {
 // Reminder on usage
 if (book === 'book') {
     console.log('If processing images for a book that\'s not in the /book directory, use the --book argument, e.g. gulp --book potatoes');
-    console.log('To process images in _items, use gulp --book _items');
+    console.log('To process images in assets, use gulp --folder assets');
 }
 
 // Get the language we're processing
