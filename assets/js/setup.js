@@ -39,7 +39,6 @@ function ebGetSiblingIndex(element) {
 // The fingerprint does not contain the ID, because
 // the point of the fingerprint is to be a substitute
 // for the ID when the ID changes.
-var ebFingerprintsAssigned = false;
 function ebAssignFingerprints(element, ancestorTagNames) {
     'use strict';
 
@@ -98,11 +97,10 @@ function ebAssignFingerprints(element, ancestorTagNames) {
         ebAssignFingerprints(child, descendantTagNames);
     });
 
-    // Set ebFingerprintsAssigned to true
-    ebFingerprintsAssigned = true;
+    // Flag that fingerprints are assigned
+    document.body.setAttribute('data-fingerprints-assigned', 'true');
 }
 
-var ebIDsAssigned = false;
 function ebAssignIDs(container) {
     'use strict';
 
@@ -125,11 +123,11 @@ function ebAssignIDs(container) {
         // elementsToID indexes from 0, and elementCounter starts at 1, so
         // we're done when elementCounter > the number of elementsToID.
         if (elementCounter > elementsToID.length) {
-            ebIDsAssigned = true;
+            document.body.setAttribute('data-ids-assigned', 'true');
             ebAssignFingerprints();
         }
     });
 }
 
-// Assign IDs and data-fingerprint attributes, set ebIDsAssigned to true
+// Assign IDs and data-fingerprint attributes
 ebAssignIDs();

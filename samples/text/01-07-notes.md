@@ -16,12 +16,10 @@ In Electric Book themes, we aim to support three kinds of notes: footnotes, side
 
 	On screen, these might just be regular sidenotes.
 
-To show notes in action, we need a lot of text with a bunch of notes. For that, we'll use 'Principles of Network Architecture Emerging from Comparisons of the Cerebral Cortex in Large and Small Brains' by Barbara L. Finlay, which is [on PLOS](http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002556), licenced CC BY.
-
 ### Principles of Network Architecture Emerging from Comparisons of the Cerebral Cortex in Large and Small Brains
 {: title="Principles of Network Architecture" }
 
-Citation: Finlay BL (2016) Principles of Network Architecture Emerging from Comparisons of the Cerebral Cortex in Large and Small Brains. PLoS Biol 14(9): e1002556. doi:10.1371/journal.pbio.1002556
+To show notes in action, we need a lot of text with a bunch of notes. For that, we'll use 'Principles of Network Architecture Emerging from Comparisons of the Cerebral Cortex in Large and Small Brains' by Barbara L. Finlay, which is [on PLOS](http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002556), licenced CC BY.
 {:.sidenote}
 
 Copyright: © 2016 Barbara L. Finlay. This is an open access article distributed under the terms of the [Creative Commons Attribution License](http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.

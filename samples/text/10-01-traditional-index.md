@@ -1615,4 +1615,4 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	Young, Bob, 213
 -	
 -	Zittrain, Jonathan, 129, 130
-{:.reference-index}
+{:.reference-index-manual}

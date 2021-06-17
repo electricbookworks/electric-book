@@ -35,7 +35,7 @@ echo 4  Create an epub
 echo 5  Create an app
 echo 6  Export to Word
 echo 7  Convert source images to output formats
-echo 8  Refresh search index
+echo 8  Refresh search and book-index databases
 echo 9  Install or update dependencies
 echo x  Exit
 echo.
@@ -121,6 +121,15 @@ set /p process=Enter a number and hit return.
             cd "%location%"
 
             :printpdfaftermathjax
+
+            :: Pre-process HTML for book indexes
+            echo Creating targets for book-index references...
+            if "%subdirectory%"=="" call gulp renderIndexCommentsAsTargets --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp renderIndexCommentsAsTargets --book %bookfolder% --language %printpdfsubdirectory%
+
+            echo Adding link references to book indexes...
+            if "%subdirectory%"=="" call gulp renderIndexListReferences --book %bookfolder% --output printpdf
+            if not "%subdirectory%"=="" call gulp renderIndexListReferences --book %bookfolder% --language %printpdfsubdirectory% --output printpdf
 
             :: Navigate into the book's folder in _site output
             cd _site\%bookfolder%\"%subdirectory%\text"
@@ -230,6 +239,15 @@ set /p process=Enter a number and hit return.
             cd "%location%"
 
             :screenpdfaftermathjax
+
+            :: Pre-process HTML for book indexes
+            echo Creating targets for book-index references...
+            if "%subdirectory%"=="" call gulp renderIndexCommentsAsTargets --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp renderIndexCommentsAsTargets --book %bookfolder% --language %screenpdfsubdirectory%
+
+            echo Adding link references to book indexes...
+            if "%subdirectory%"=="" call gulp renderIndexListReferences --book %bookfolder% --output screenpdf
+            if not "%subdirectory%"=="" call gulp renderIndexListReferences --book %bookfolder% --language %screenpdfsubdirectory% --output screenpdf
 
             :: Navigate into the book's folder in _site output
             cd _site\%bookfolder%\"%subdirectory%\text"
@@ -412,6 +430,15 @@ set /p process=Enter a number and hit return.
             echo HTML generated.
             :epubJekyllDone
 
+        :: Pre-process HTML for book indexes
+        echo Creating targets for book-index references...
+        if "%subdirectory%"=="" call gulp renderIndexCommentsAsTargets --book %bookfolder%
+        if not "%subdirectory%"=="" call gulp renderIndexCommentsAsTargets --book %bookfolder% --language %epubsubdirectory%
+
+        echo Adding link references to book indexes...
+        if "%subdirectory%"=="" call gulp renderIndexListReferences --book %bookfolder% --output epub
+        if not "%subdirectory%"=="" call gulp renderIndexListReferences --book %bookfolder% --language %epubsubdirectory% --output epub
+
         :: What's next?
         echo Assembling epub...
 
@@ -438,18 +465,19 @@ set /p process=Enter a number and hit return.
 
         :: Copy original styles
         :epubOriginalStyles
-            xcopy /i /q "styles\*.css" "..\epub\styles" > nul
+            xcopy /i /q "styles\*.css" "..\epub\%bookfolder%\styles" > nul
+            xcopy /i /q "%location%\_site\assets\styles\*.css" "..\epub\%bookfolder%\assets\styles" > nul
             :: Done! Move along to moving the text folder
             echo Styles copied.
             goto epubCopyImages
         
         :: Copy translated styles, in addition to original styles
         :epubTranslationStyles
-            xcopy /i /q "styles\*.css" "..\epub\styles" > nul
+            xcopy /i /q "styles\*.css" "..\epub\%bookfolder%\styles" > nul
             mkdir "..\epub\%subdirectory%\styles"
-            if exist "%subdirectory%\styles\*.css" xcopy /i /q "%subdirectory%\styles\*.css" "..\epub\%subdirectory%\styles" > nul
+            if exist "%subdirectory%\styles\*.css" xcopy /i /q "%bookfolder%\%subdirectory%\styles\*.css" "..\epub\%bookfolder%\%subdirectory%\styles" > nul
             :: Done! Move along to moving the text folder
-            echo Styles copied.
+            echo Translation styles copied.
             goto epubCopyImages
 
 
@@ -468,8 +496,9 @@ set /p process=Enter a number and hit return.
 
         :: Copy original images
         :epubOriginalImages
-            xcopy /i /q "images\epub\*.*" "..\epub\images\epub" > nul
+            xcopy /i /q "images\epub\*.*" "..\epub\%bookfolder%\images\epub" > nul
             xcopy /i /q "%location%\_site\items\images\epub\*.*" "..\epub\items\images\epub"
+            xcopy /i /q "%location%\_site\assets\images\epub\*.*" "..\epub\assets\images\epub" > nul
             :: Done! Move along to moving the text folder
             echo Images copied.
             goto epubCopyText
@@ -478,14 +507,14 @@ set /p process=Enter a number and hit return.
         :epubTranslationImages
             rd /s /q images
             mkdir "..\epub\%subdirectory%\images\epub"
-            xcopy /i /q "%subdirectory%\images\epub\*.*" "..\epub\%subdirectory%\images\epub" > nul
+            xcopy /i /q "%subdirectory%\images\epub\*.*" "..\epub\%bookfolder%\%subdirectory%\images\epub" > nul
             xcopy /i /q "%location%\_site\items\%subdirectory%\images\epub\*.*" "..\epub\items\%subdirectory%\images\epub" > nul
             :: Done! Move along to moving the text folder
             echo Images copied.
             goto epubCopyText
 
 
-        :: Copy contents of text or text/subdirectory to epub/text.
+        :: Copy contents of text or text/subdirectory to epub/bookfolder/text.
         :: We don't want all the files in text, we only want the ones
         :: in the epub file list.
         :epubCopyText
@@ -497,9 +526,9 @@ set /p process=Enter a number and hit return.
         :: Copy the contents of the subdirectory
         :epubSubdirectoryText
             rd /s /q "text"
-            mkdir "..\epub\%subdirectory%\text"
+            mkdir "..\epub\%bookfolder%\%subdirectory%\text"
             cd %subdirectory%\text
-            for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\..\epub\%subdirectory%\text\" > nul
+            for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\..\epub\%bookfolder%\%subdirectory%\text\" > nul
             cd ..
             cd ..
             echo Text copied.
@@ -508,7 +537,7 @@ set /p process=Enter a number and hit return.
         :: Copy the files in file-list from the original text folder
         :epubOriginalText
             cd text
-            for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\epub\text\" > nul
+            for /F "tokens=* skip=1" %%i in (file-list) do xcopy /q %%i "..\..\epub\%bookfolder%\text\" > nul
             cd ..
             echo Text copied.
             goto epubCopyOPF
@@ -560,19 +589,21 @@ set /p process=Enter a number and hit return.
         :: Go into _site/epub to move some more files and then zip to _output
         cd %location%_site/epub
 
-        :: Copy the bundle.js into the epub's js folder.
-        :: (JS lives in the root directory even in translations.)
+        :: Copy the bundle.js into the epub folder
         :epubMoveJS
             echo Copying Javascript to epub...
-            robocopy "%location%_site/assets/js" "%location%_site/epub/js" bundle.js /E /NFL /NDL /NJH /NJS /NC /NS
+            robocopy "%location%_site/assets/js" "%location%_site/epub/assets/js" bundle.js /E /NFL /NDL /NJH /NJS /NC /NS
             echo Javascript copied.
 
         :: If there is a fonts folder, and it has no contents, delete it.
         :: Otherwise, if this is a translation, move the fonts folder
         :: into the subdirectory alongside text, images, styles.
         :epubMoveFonts
-            echo Checking for fonts...
+            echo Checking for epub fonts...
             if exist "fonts" if not exist "fonts\*.ttf" if not exist "fonts\*.otf" if not exist "fonts\*.woff" if not exist "fonts\*.woff2" rd /s /q "fonts"
+
+            :: Copy only *epub* fonts to assets/fonts
+            xcopy /i /q "%location%\_site\epub\fonts\*.*" "%location%\_site\epub\assets\fonts" > nul
             echo Fonts checked.
 
         :: If MathJax required, fetch boilerplate mathjax directory from /assets/js
@@ -585,7 +616,7 @@ set /p process=Enter a number and hit return.
             :: Copy mathjax folder from /assets/js to _site/epub
             :: Suppress the console output with /NFL /NDL /NJH /NJS /NC /NS
             :: Adding /NP will also suppress progress bar.
-            robocopy "%location%_site/assets/js/mathjax" "%location%_site/epub/mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
+            robocopy "%location%_site/assets/js/mathjax" "%location%_site/epub/assets/js/mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
 
         :: Set the filename of the epub, sans file extension
         :epubSetFilename
@@ -593,7 +624,7 @@ set /p process=Enter a number and hit return.
             if not "%subdirectory%"=="" set epubFileName=%bookfolder%-%subdirectory%
 
         :: If they exist, remove previous .zip and .epub files that we will replace.
-        echo Removing any previous %epubFileName%.zip and %epubFileName%.epub files...
+        echo Removing any previous epub-build, %epubFileName%.zip and %epubFileName%.epub files...
         if exist "%location%\_output\%epubFileName%" rd /s /q "%location%\_output\%epubFileName%"
         if exist "%location%\_output\%epubFileName%.zip" del /q "%location%\_output\%epubFileName%.zip"
         if exist "%location%\_output\%epubFileName%.epub" del /q "%location%\_output\%epubFileName%.epub"
@@ -616,12 +647,12 @@ set /p process=Enter a number and hit return.
             echo Renaming .html to .xhtml...
 
             cd %location%
-            if "%subdirectory%"=="" call gulp epub:xhtmlLinks
-            if "%subdirectory%"=="" call gulp epub:xhtmlFiles
-            if "%subdirectory%"=="" call gulp epub:cleanHtmlFiles
-            if not "%subdirectory%"=="" call gulp epub:xhtmlLinks --language %subdirectory%
-            if not "%subdirectory%"=="" call gulp epub:xhtmlFiles --language %subdirectory%
-            if not "%subdirectory%"=="" call gulp epub:cleanHtmlFiles --language %subdirectory%
+            if "%subdirectory%"=="" call gulp epub:xhtmlLinks --book %bookfolder%
+            if "%subdirectory%"=="" call gulp epub:xhtmlFiles --book %bookfolder%
+            if "%subdirectory%"=="" call gulp epub:cleanHtmlFiles --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp epub:xhtmlLinks --book %bookfolder% --language %subdirectory%
+            if not "%subdirectory%"=="" call gulp epub:xhtmlFiles --book %bookfolder% --language %subdirectory%
+            if not "%subdirectory%"=="" call gulp epub:cleanHtmlFiles --book %bookfolder% --language %subdirectory%
             cd %location%/_site/epub
 
         :: Now to zip the epub files. Important: mimetype first.
@@ -629,21 +660,22 @@ set /p process=Enter a number and hit return.
             echo Assembling epub files...
 
             :: Copy root folders
-            if exist "images\epub" robocopy "%location%\_site\epub\images\epub" "%location%_output\%epubFileName%\images\epub" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "%bookfolder%\images\epub" robocopy "%location%\_site\epub\%bookfolder%\images\epub" "%location%_output\%epubFileName%\%bookfolder%\images\epub" /E /NFL /NDL /NJH /NJS /NC /NS
             if exist "items" robocopy "%location%\_site\epub\items" "%location%\_output\%epubFileName%\items" /E /NFL /NDL /NJH /NJS /NC /NS
-            if exist "fonts" robocopy "%location%\_site\epub\fonts" "%location%\_output\%epubFileName%\fonts" /E /NFL /NDL /NJH /NJS /NC /NS
-            if exist "styles" robocopy "%location%\_site\epub\styles" "%location%\_output\%epubFileName%\styles" /E /NFL /NDL /NJH /NJS /NC /NS
-            if exist "mathjax" robocopy "%location%\_site\epub\mathjax" "%location%\_output\%epubFileName%\mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
-            if exist "js" robocopy "%location%\_site\epub\js" "%location%\_output\%epubFileName%\js" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "fonts" robocopy "%location%\_site\epub\fonts" "%location%\_output\%epubFileName%\assets\fonts" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "%bookfolder%\styles" robocopy "%location%\_site\epub\%bookfolder%\styles" "%location%\_output\%epubFileName%\%bookfolder%\styles" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "assets\images\epub\*.*" robocopy "%location%\_site\epub\assets\images" "%location%\_output\%epubFileName%\assets\images" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "assets\js\mathjax" robocopy "%location%\_site\epub\assets\js\mathjax" "%location%\_output\%epubFileName%\assets\js\mathjax" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "assets\js" robocopy "%location%\_site\epub\assets\js" "%location%\_output\%epubFileName%\assets\js" /E /NFL /NDL /NJH /NJS /NC /NS
 
             :: Copy text directory if this is not a translation
             if not "%subdirectory%"=="" goto epubZipSubdirectory
-            if exist "text" robocopy "%location%\_site\epub\text" "%location%\_output\%epubFileName%\text" /E /NFL /NDL /NJH /NJS /NC /NS
+            if exist "%bookfolder%\text" robocopy "%location%\_site\epub\%bookfolder%\text" "%location%\_output\%epubFileName%\%bookfolder%\text" /E /NFL /NDL /NJH /NJS /NC /NS
             goto epubAddPackageFiles
 
             :: And if it is a translation, move the language's text subdirectory
             :epubZipSubdirectory
-                if not "%subdirectory%"=="" if exist "%subdirectory%\text" robocopy "%location%\_site\epub\%subdirectory%" "%location%\_output\%epubFileName%\%subdirectory%" /E /NFL /NDL /NJH /NJS /NC /NS
+                if not "%subdirectory%"=="" if exist "%bookfolder%\%subdirectory%\text" robocopy "%location%\_site\epub\%bookfolder%\%subdirectory%" "%location%\_output\%epubFileName%\%bookfolder%\%subdirectory%" /E /NFL /NDL /NJH /NJS /NC /NS
                 goto epubAddPackageFiles
 
         :: Add the META-INF, package.opf and toc.ncx
@@ -968,14 +1000,18 @@ set /p process=Enter a number and hit return.
         set location=%~dp0
 
         :: Encouraging message
-        echo Let's refresh the search index.
-        echo We'll index the files in your web or app file lists defined in meta.yml
+        echo Let's refresh search and index databases.
+        echo We'll index the files in your web or app file lists as defined in meta.yml.
 
-        :: Check if refreshing web or app index
-        echo To refresh the website search index, press enter.
-        echo To refresh the app search index, type a and press enter.
+        :: Check which format(s) to refresh
+        echo Choose a format to refresh:
+		echo 1 Print PDF
+		echo 2 Screen PDF
+		echo 3 Web
+		echo 4 Epub
+		echo 5 App
+		echo Or hit enter for all formats
         set /p searchIndexToRefresh=
-
 
         :: Ask the user to add any extra Jekyll config files,
         :: e.g. _config.live.yml
@@ -989,19 +1025,75 @@ set /p process=Enter a number and hit return.
             set /p searchIndexConfig=
             echo.
 
+        :: Create blank index files if they don't exist
+        :: Credit https://stackoverflow.com/a/211045/1781075
+        if not exist "assets/js/book-index-print-pdf.js" copy /y NUL "assets/js/book-index-print-pdf.js" >NUL
+        if not exist "assets/js/book-index-screen-pdf.js" copy /y NUL "assets/js/book-index-screen-pdf.js" >NUL
+        if not exist "assets/js/book-index-web.js" copy /y NUL "assets/js/book-index-web.js" >NUL
+        if not exist "assets/js/book-index-epub.js" copy /y NUL "assets/js/book-index-epub.js" >NUL
+        if not exist "assets/js/book-index-app.js" copy /y NUL "assets/js/book-index-app.js" >NUL
+
         :: Generate HTML with Jekyll
         echo Generating HTML with Jekyll...
-        if "%searchIndexToRefresh%"=="a" goto buildForAppSearchIndex
+        if "%searchIndexToRefresh%"=="" goto buildAllIndexes
+        if "%searchIndexToRefresh%"=="1" goto buildPrintPDFIndex
+        if "%searchIndexToRefresh%"=="2" goto buildScreenPDFIndex
+        if "%searchIndexToRefresh%"=="3" goto buildWebIndex
+        if "%searchIndexToRefresh%"=="4" goto buildEpubIndex
+        if "%searchIndexToRefresh%"=="5" goto buildAppIndex
 
-        :buildForWebSearchIndex
+        :buildAllIndexes
+        :buildPrintPDFIndex
+
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%searchIndexConfig%" || exit /b
+
+			:: Use gulp to render targets, so that Puppeteer does not,
+			:: because we need targets added by the same engine (cheerio) that
+			:: will populate the index list with links.
+            call gulp renderIndexCommentsAsTargets
+            call node _site/assets/js/render-book-index.js
+
+            if not "%searchIndexToRefresh%"=="" goto refreshSearchIndexRendering
+
+        :buildScreenPDFIndex
+
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.screen-pdf.yml,%searchIndexConfig%" || exit /b
+
+			:: Use gulp to render targets, so that Puppeteer does not,
+			:: because we need targets added by the same engine (cheerio) that
+			:: will populate the index list with links.
+            call gulp renderIndexCommentsAsTargets
+            call node _site/assets/js/render-book-index.js
+
+            if not "%searchIndexToRefresh%"=="" goto refreshSearchIndexRendering
+
+        :buildWebIndex
 
             call bundle exec jekyll build --config="_config.yml,_configs/_config.web.yml,%searchIndexConfig%" || exit /b
-            goto refreshSearchIndexRendering
+            call node _site/assets/js/render-book-index.js
+            call node _site/assets/js/render-search-index.js
 
-        :buildForAppSearchIndex
+            if not "%searchIndexToRefresh%"=="" goto refreshSearchIndexRendering
+
+        :buildEpubIndex
+
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.epub.yml,%searchIndexConfig%" || exit /b
+
+			:: Use gulp to render targets, so that Puppeteer does not,
+			:: because we need targets added by the same engine (cheerio) that
+			:: will populate the index list with links.
+            call gulp renderIndexCommentsAsTargets
+            call node _site/assets/js/render-book-index.js
+
+            if not "%searchIndexToRefresh%"=="" goto refreshSearchIndexRendering
+
+        :buildAppIndex
 
             call bundle exec jekyll build --config="_config.yml,_configs/_config.app.yml,%searchIndexConfig%" || exit /b
-            goto refreshSearchIndexRendering
+            call node _site/assets/js/render-book-index.js
+            call node _site/assets/js/render-search-index.js
+
+            if not "%searchIndexToRefresh%"=="" goto refreshSearchIndexRendering
 
         :: Run script from scripts directory
         :refreshSearchIndexRendering
@@ -1013,7 +1105,7 @@ set /p process=Enter a number and hit return.
         :: Done
         :refreshSearchIndexDone
 
-            echo Index refreshed.
+            echo Indexing done.
             goto begin
 
     :: :: :: :: :: ::

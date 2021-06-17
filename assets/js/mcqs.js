@@ -438,7 +438,7 @@ function ebMCQsButtonClicks() {
         // listen for clicks on the buttons
         answerCheckingButton.addEventListener('click', function () {
             // get the mcq and it's ID
-            var mcqsToCheck = this.parentNode.parentNode.parentNode; // 'this' is the button
+            var mcqsToCheck = this.closest('[data-question]'); // 'this' is the button
             var mcqsToCheckName = mcqsToCheck.getAttribute('data-question');
             // var mcqsToCheckCode = mcqsToCheck.getAttribute('data-question-code'); // not used
 
