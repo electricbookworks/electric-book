@@ -19,9 +19,10 @@ $web-notes: true !default;
     .footnotes p {
         text-indent: 0;
     }
+
+    // the hook arrow in the footnotes section
     .footnotes .reverse-footnote-arrow path {
-        // the hook arrow in the footnotes section
-        fill: $color-mid;
+        fill: $color-links;
     }
 
     // Footnote popups
