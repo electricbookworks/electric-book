@@ -34,7 +34,7 @@ edition: "default"
 # -------------
 # To make absolute links work, e.g. in canonical links in <head>,
 # include the url where this site will live when it's live (production).
-# E.g. canonical-url: "http://example.com"
+# E.g. canonical-url: "https://example.com"
 # In Open Graph metadata, the base URL will be appended.
 canonical-url: "https://electricbookworks.github.io/electric-book"
 

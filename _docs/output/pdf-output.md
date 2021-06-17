@@ -12,7 +12,7 @@ order: 2
 
 ## Introduction
 
-We use [PrinceXML](http://princexml.com/) to turn Jekyll's HTML into beautiful, print-ready book files. We haven't found anything as good as Prince, so we reckon it's worth its price tag. And you can use the trial version to get your print output perfect before committing to the price. So our CSS files for print are designed specifically for Prince.
+We use [PrinceXML](https://princexml.com/) to turn Jekyll's HTML into beautiful, print-ready book files. We haven't found anything as good as Prince, so we reckon it's worth its price tag. And you can use the trial version to get your print output perfect before committing to the price. So our CSS files for print are designed specifically for Prince.
 
 You can output print PDFs for sending to high-end printers, or screen PDFs, for digital distribution and reading on screen.
 
@@ -116,9 +116,9 @@ To speed this up:
 
 2.  We should now only pass Prince the file(s) we're actually generating. In the `files` list in `_data/meta.yml`, comment out the lines listing files you're not working on.
 3.  If you've used Javascript not required for PDF, make sure it's wrapped in a `if site.output == ""` tag that doesn't include it in `print-pdf` output.
-4.  Use a PDF Viewer that [doesn't lock the file](http://superuser.com/questions/599442/pdf-viewer-that-handles-live-updating-of-pdf-doesnt-lock-the-file). 
-	*	On Windows, [Sumatra](http://www.sumatrapdfreader.org/free-pdf-reader.html) is perfect for this, unlike Acrobat and Windows Preview, which locks the file. If you edit/regenerate a PDF it has open, Sumatra will allow that to happen and will automatically reload the new file, at the same page you had open.
-	*	On Mac OSX, Preview does the same, though we've found it doesn't open the regenerated file to the page you were on, sending you back to the start of the book, which is a pain. A much better alternative on OSX is [Skim](http://skim-app.sourceforge.net/), an open-source PDF reader. In its Preferences > Sync, set Skim to watch for file changes and update automatically. Also set PDFs to open to the last viewed page in Preferences > General.
+4.  Use a PDF Viewer that [doesn't lock the file](https://superuser.com/questions/599442/pdf-viewer-that-handles-live-updating-of-pdf-doesnt-lock-the-file). 
+	*	On Windows, [Sumatra](https://www.sumatrapdfreader.org/free-pdf-reader.html) is perfect for this, unlike Acrobat and Windows Preview, which locks the file. If you edit/regenerate a PDF it has open, Sumatra will allow that to happen and will automatically reload the new file, at the same page you had open.
+	*	On Mac OSX, Preview does the same, though we've found it doesn't open the regenerated file to the page you were on, sending you back to the start of the book, which is a pain. A much better alternative on OSX is [Skim](https://skim-app.sourceforge.io/), an open-source PDF reader. In its Preferences > Sync, set Skim to watch for file changes and update automatically. Also set PDFs to open to the last viewed page in Preferences > General.
 
 > ## Technical background: The output-to-PDF process
 > 
@@ -127,5 +127,5 @@ To speed this up:
 > 3.    Prince will use your book's print CSS file for the design, which Jekyll creates from the `print-pdf.scss` or `screenpdf.scss` files in your book's folder.
 > 4.  Prince will save the PDF is creates to the `_output` folder.
 > 
-> If you want to learn about using CSS to control print output using Prince, [this is a great tutorial](http://www.smashingmagazine.com/2015/01/designing-for-print-with-css/).
+> If you want to learn about using CSS to control print output using Prince, [this is a great tutorial](https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/).
 {:.box}

@@ -14,7 +14,7 @@ Kramdown (and most markdown variants) can only handle very simple tables. For th
 
 You can also use online tools to convert tables into a markdown format.
 
-* [Senseful](http://www.sensefulsolutions.com/2010/10/format-text-as-table.html). For instance, working from InDesign:
+* [Senseful](https://senseful.github.io/text-table/). For instance, working from InDesign:
     - Click and drag over some cells in the InDesign table (not the header row). Then Ctrl+A to select the whole table.
     - Ctrl+C to copy, then paste into a blank spreadsheet.
     - Select all the relevant cells in your spreadsheet, and copy. The table text is now on your clipboard, with the cells separated by tabs.

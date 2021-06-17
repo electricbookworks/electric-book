@@ -33,29 +33,29 @@ To show figures in context, here is an article from *The Comics Grid: Journal of
 
 ### Pre-Cloak Comic Superheroes: Tools for the Empowerment of Children
 
-Fradkin, C., (2016). [Pre-Cloak Comic Superheroes: Tools for the Empowerment of Children.](http://www.comicsgrid.com/articles/10.16995/cg.85/) The Comics Grid: Journal of Comics Scholarship. 6, p.13. DOI: http://doi.org/10.16995/cg.85. [Creative Commons Attribution](http://creativecommons.org/licenses/by/4.0)
+Fradkin, C., (2016). [Pre-Cloak Comic Superheroes: Tools for the Empowerment of Children.](https://www.comicsgrid.com/articles/10.16995/cg.85/) The Comics Grid: Journal of Comics Scholarship. 6, p.13. DOI: https://doi.org/10.16995/cg.85. [Creative Commons Attribution](https://creativecommons.org/licenses/by/4.0)
 {:.sidenote}
 
 The idea of using pre-cloak comic superheroes as tools for the empowerment of children has drawn notice from a multitude of corners: e.g., documentary filmmakers, a journalist from Forbes, the Joseph Campbell Foundation (2016).[^1] It has predictably drawn interest from adoption networks and support groups, as well as agencies that deal with foster children. I say ‘predictably’ because these groups of at-risk children were the groups a recent study (Fradkin et al. 2016[^2]) aimed to serve. As the findings in the ‘pre-cloak’ study noted: of the top-20 comic superheroes, 86% were orphaned or abandoned, in addition to enduring other woes. My co-authors and I stressed that this shared history has potential for empowerment: When these children hear of hardships overcome by superheroes, that may strengthen their resolve to carry on.
 
 [^1]: Joseph Campbell Foundation (2016).  Available at: [https://www.jcf.org](https://www.jcf.org) (Accessed 26 March 2016).
-[^2]: Fradkin, C, Weschenfelder, G V and Yunes, M A M (2016). Shared adversities of children and comic superheroes as resources for promoting resilience: Comic superheroes are an untapped resource for empowering vulnerable children. Child abuse & neglect 51: 407–415, DOI: http://dx.doi.org/10.1016/j.chiabu.2015.10.010
+[^2]: Fradkin, C, Weschenfelder, G V and Yunes, M A M (2016). Shared adversities of children and comic superheroes as resources for promoting resilience: Comic superheroes are an untapped resource for empowering vulnerable children. Child abuse & neglect 51: 407–415, DOI: https://dx.doi.org/10.1016/j.chiabu.2015.10.010
 
 A program that employs the pre-cloak stage of superheroes has been active in Rwanda for some time. At the Rwandan Orphans Project (a center that serves former street children) (2016[^3]), a life-skills group implemented by Lisa Meaney, MFT, has used superhero origin stories to inspire its orphaned boys ([Figure 1](#figure-1)). “For these boys,” Meaney writes (2016, pers comm., 3 May), “childhood trauma can be a catalyst for positive change … Just like it is for superheroes.” For two years Meaney has incorporated superhero origin stories into her group-work with Rwandan boys. On Meaney’s watch, superhero capes were made from old t-shirts, masks from cereal boxes. “Over and over again,” she says, “the boys have made statements such as, ‘If Batman can be an orphan and be a superhero then so can I’” (2016, pers comm., 22 April). When asked about the boys’ openness to the disproportionately large percentage of Caucasian superheroes (~90%), Meaney reassured me that for her boys, the notion of a superhero role model is stronger than the color lines of race.
 
-[^3]: Rwandan Orphans Project (2016).  Available at: http://www.rwandanorphansproject.org/ (Accessed 14 May 2016).
+[^3]: Rwandan Orphans Project (2016).  Available at: https://www.rwandanorphansproject.org/ (Accessed 14 May 2016).
 
 {% include figure
     image="fradkin-1.jpg"
     image-height="15"
     reference="Figure 2"
-    caption="The Rwandan Orphans Project (near Kigali, Rwanda) uses comic superheroes to empower orphaned children. Capes from old t-shirts, masks from cereal boxes. Published with permission from The Rwandan Orphans Project. Photo © Lisa Meaney, MFT, [Rwandan Orphans Project](http://www.rwandanorphansproject.org), 2016 (Accessed 14 May 2016)."
+    caption="The Rwandan Orphans Project (near Kigali, Rwanda) uses comic superheroes to empower orphaned children. Capes from old t-shirts, masks from cereal boxes. Published with permission from The Rwandan Orphans Project. Photo © Lisa Meaney, MFT, [Rwandan Orphans Project](https://www.rwandanorphansproject.org), 2016 (Accessed 14 May 2016)."
     alt-text="Children stand in a line wearing super-hero capes and masks made from cereal boxes, making bold super-hero poses."
 %}
 
 5,000 miles WSW of Rwanda is a program in São Paulo, Brazil. The ‘Superformula’ program at the A.C. Camargo Cancer Center (2016[^4]), attempts to raise the spirits of its pediatric patients using special comics, videos, and superhero plastic covers for IV bags ([Figure 2](#figure-2)). The children are encouraged to do battle with their cancer, as the comic superheroes battle evil. Their chemo drip is ‘Superformula.’ While this approach may first seem novel, over time it may wear thin, as many patients on the ward will lose their battle. The Superformula program instills hope upon the ward, through the premise of ‘invincibility suggestion.’
 
-[^4]: A. C. Camargo Cancer Center (2016).  Available at: [http://www.accamargo.org.br/english/](http://www.accamargo.org.br/english/) (Accessed 14 May 2016).
+[^4]: A. C. Camargo Cancer Center (2016).  Available at: [https://www.accamargo.org.br](https://www.accamargo.org.br) (Accessed 14 May 2016).
 
 {% include figure
     image="fradkin-2.jpg"
