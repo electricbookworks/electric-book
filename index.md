@@ -27,11 +27,7 @@ You'll find [the open-source repository on GitHub](https://github.com/electricbo
 
 ### Series and collections
 
-Create a series or collection of books in one website or app. They can share common designs, features, [metadata]({{ site.baseurl }}/docs/setup/metadata.html), and [content templates]({{ site.baseurl }}/docs/setup/repeatable-items.html).
-
-### Share content across books
-
-If several books in a collection share content – e.g. disclaimers, questions, author bios, images – maintain them in one place and [include them in each book with a simple tag]({{ site.baseurl }}/docs/setup/repeatable-items.html).
+Create a series or collection of books in one website or app. They can share common designs, features and [metadata]({{ site.baseurl }}/docs/setup/metadata.html).
 
 ### Fast and mobile-friendly sites
 
