@@ -19,13 +19,9 @@ $web-notes: true !default;
     .footnotes p {
         text-indent: 0;
     }
-    .footnotes a.reversefootnote img {
+    .footnotes .reverse-footnote-arrow path {
         // the hook arrow in the footnotes section
-        display: inline-block;
-        height: 0.8em;
-        margin: 0;
-        // color converted from hex here https://codepen.io/sosuke/pen/Pjoqqp
-        filter: invert(41%) sepia(37%) saturate(320%) hue-rotate(173deg) brightness(97%) contrast(86%);
+        fill: $color-mid;
     }
 
     // Footnote popups
