@@ -9,7 +9,7 @@ order: 7
 
 The process of setting up a new book is covered very briefly in our [quick-start section](quick-start.html#quick-new-book-setup). This is a slightly longer explanation. For much more detail, read the various sections [listed on the docs starting page](../).
 
-> Once you've followed the instructions below to set up your book (or at any point if you're curious), and you want to actually output a book, run the `run-` script for your operating system, which you'll find in the main project folder. In Windows and Mac, you can just double-click it. (On Mac and Linux, you do need to [give it permission first](http://stackoverflow.com/a/5126052/1781075).) The first time you run it, start with the 'Install or update dependencies' option.
+> Once you've followed the instructions below to set up your book (or at any point if you're curious), and you want to actually output a book, run the `run-` script for your operating system, which you'll find in the main project folder. In Windows and Mac, you can just double-click it. (On Mac and Linux, you do need to [give it permission first](https://stackoverflow.com/a/5126052/1781075).) The first time you run it, start with the 'Install or update dependencies' option.
 {:.box}
 
 * TOC

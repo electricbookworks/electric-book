@@ -11,7 +11,7 @@ There are various techniques for managing hyphenation in PDF output.
 
 You can change the basic hyphenation settings (variables) in your book's `print-pdf.scss` or `screen-pdf.scss` files. Our default stylesheets can ask Prince to hyphenate paragraphs and lists (`p, ul, ol, dl`), with a few exceptions (such as text on the title and contents pages). Prince includes a range of hyphenation dictionaries for major languages by default, which do a good job. However, you might need to add dictionaries or lists of specific words that Prince doesn't support.
 
-You can find `.dic` files online for [various languages](http://www.ctan.org/tex-archive/language/hyph-utf8/tex/generic/hyph-utf8/patterns/txt) and specialities, or you can compile your own.
+You can find `.dic` files online for [various languages](https://www.ctan.org/tex-archive/language/hyph-utf8/tex/generic/hyph-utf8/patterns/txt) and specialities, or you can compile your own.
 
 A `.dic` file is a plain-text file with one word or word-fragment on each line. Each one is called a pattern.
 
@@ -25,7 +25,7 @@ To show where a word or word-fragment can hyphenate, you add digits (1 to 9) to 
 *	Insert even digits (2, 4, 6, 8) where the word should not hyphenate.
 *	The higher the number, the more important the rule. That is, a `1` says 'hyphenate here if you must', but a `9` says 'this is the best place to hyphenate'. A 2 says 'don't hyphenate here if you can help it', but an `8` says 'Do not, not, not hyphenate here.'
 
-For user discussion, see [the Prince forums here](http://www.princexml.com/forum/topic/542/prince-hyphenate-patterns-none-url-patterns-url): If you need to hack Prince's built-in hyphenation dictionaries more deeply, see [this forum post](http://www.princexml.com/forum/topic/1474/prince-and-hyphenation).
+For user discussion, see [the Prince forums here](https://www.princexml.com/forum/topic/542/prince-hyphenate-patterns-none-url-patterns-url): If you need to hack Prince's built-in hyphenation dictionaries more deeply, see [this forum post](https://www.princexml.com/forum/topic/1474/prince-and-hyphenation).
 
 ## Use a custom dictionary
 

@@ -213,7 +213,7 @@
 * Simpler, better way to [create book-cover files](https://github.com/electricbookworks/electric-book/pull/81)
 * Linux and Mac scripts fixed and updated
 * Javascript in Prince activated by default in scripts
-* HTML compressed with [compress.html](http://jch.penibelst.de/)
+* HTML compressed with [compress.html](https://jch.penibelst.de/)
 * Minor fixes and improvements (including base typography, nav buttons, TOC layout, default font, Prose config, gitignore, output scripts)
 
 ## 0.6.3
