@@ -14,18 +14,19 @@ $web-search: true !default;
                 box-sizing: border-box; // means width 100% doesn't extend outside page
                 color: $color-text-secondary;
                 display: inline-block;
-                margin: 1em 0.375em 1em 0.75em;
                 width: auto;
             }
             input.search-box {
                 flex-grow: 2;
                 flex-shrink: 2;
                 border: 1pt solid $color-light;
+                margin: 1em 0.5rem 1em 1em;
             }
             input[type="submit"] {
                 background-color: $color-buttons;
                 color: white;
                 cursor: pointer;
+                margin: 1em 1rem 1em 0.5rem
             }
         }
     }
@@ -41,20 +42,23 @@ $web-search: true !default;
                 box-sizing: border-box; // means width 100% doesn't extend outside page
                 color: $color-text-secondary;
                 display: inline-block;
-                margin: 1em 0.375em 1em 0.375em;
+                margin: 1rem 0;
                 width: auto;
             }
             input.search-box {
                 flex-grow: 2;
                 flex-shrink: 2;
                 border: 1pt solid $color-light;
+                margin-right: 1rem;
             }
             input[type="submit"] {
                 background-color: $color-buttons;
                 border: 0;
                 color: white;
                 cursor: pointer;
+                font-family: $font-text-secondary;
                 font-size: inherit;
+                padding: 0 0.5rem;
             }
         }
     }
