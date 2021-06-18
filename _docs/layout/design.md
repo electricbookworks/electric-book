@@ -54,4 +54,4 @@ This is for when you want one book in your project to have different styles to t
 2. Many of a book's design features are set as variables, which start with `$` signs. E.g. `$page-width`. Set your desired values by defining variables. For instance, you can change the values for page size, colours, running heads, and so on. All available variables are defined, with defaults, in `_sass/template/print-pdf.scss` (and similarly for other output formats).
 3. If you know how to write CSS or Sass, add your own custom styles at the bottom of the book's relevant `.scss` file.
 
-Output the relevant format to see how your changes look. If the output fails, you may have used invalid CSS or Sass syntax. For more on editing Sass, see [sass-lang.com/guide](http://sass-lang.com/guide).
+Output the relevant format to see how your changes look. If the output fails, you may have used invalid CSS or Sass syntax. For more on editing Sass, see [sass-lang.com/guide](https://sass-lang.com/guide).

@@ -81,7 +81,7 @@ defaults:
 
 If you want the output script to run EpubCheck (recommended), [download it from the IDPF](https://github.com/IDPF/epubcheck/releases).
 
-On Windows, extract the zip file and save the contents somewhere easy to find, like `C:\EpubCheck\`. Then [add that folder to your PATH](http://windowsitpro.com/systems-management/how-can-i-add-new-folder-my-system-path).
+On Windows, extract the zip file and save the contents somewhere easy to find, like `C:\EpubCheck\`. Then [add that folder to your PATH](https://stackoverflow.com/a/44272417/1781075).
 
 On Mac or Linux, extract the zip file and save the contents somewhere sensible like `/usr/local/bin`. The output script will ask for the path to the EpubCheck `.jar` file.
 
@@ -194,7 +194,7 @@ Note: To get the metadata to import to Sigil, you must *open* one of your book's
 
 		This will replace the entire wrapper with a link to the same iframe URL it memorised (at `\2`). Replace `Watch` with whatever phrase you want to be the clickable text.
 
-1.  If your book includes endnotes (kramdown footnotes), replace `fnref:` with `fnref-` and `fn:` with `fn-`. ( Background: If you have a colon in any element ID – for instance if you've used [kramdown's footnote syntax](http://kramdown.gettalong.org/quickref.html#footnotes) – EpubCheck will return an 'invalid NCName' error. You need to replace those colons with another character. If your invalid IDs follow a set pattern (as kramdown's footnote references do), you can replace-all quickly.)
+1.  If your book includes endnotes (kramdown footnotes), replace `fnref:` with `fnref-` and `fn:` with `fn-`. ( Background: If you have a colon in any element ID – for instance if you've used [kramdown's footnote syntax](https://kramdown.gettalong.org/quickref.html#footnotes) – EpubCheck will return an 'invalid NCName' error. You need to replace those colons with another character. If your invalid IDs follow a set pattern (as kramdown's footnote references do), you can replace-all quickly.)
 1.	**Check your epub's metadata** using Sigil's Metadata Editor, and edit if necessary. Include at least:
 	*	title: subtitle
 	*	author
@@ -215,14 +215,14 @@ Note: To get the metadata to import to Sigil, you must *open* one of your book's
 	7. Use the same process for adding any other files you need to add to the TOC.
 1.	If fonts are important (you've either embedded fonts or the difference between serif and sans-serif is semantically significant), add iBooks XML. ([See below for detail](#adding-ibooks-display-options-file).)
 1.	{:#validate-the-epub}Validate the epub in Sigil and fix any validation errors. Sigil let's some things past that EpubCheck flags, so also validate with EpubCheck directly. You can use:
-	*	the [IDPF's online version of EpubCheck](http://validator.idpf.org/)
+	*	the [IDPF's online version of EpubCheck](https://validator.idpf.org/)
 	*	[epubcheck](https://github.com/IDPF/epubcheck/wiki/Running) installed locally, and run from the command line; or
-	*	[pagina EPUB-Checker](http://www.pagina-online.de/produkte/epub-checker/).
+	*	[pagina EPUB-Checker](https://www.pagina.gmbh/produkte/epub-checker/).
 
 > Tip: If you get validation errors about images, check that your paths to images are correct and case-sensitive. For instance, Sigil needs images to be in `Images` not `images`.
 {:.box}
 
-For general guidance on creating epubs with Sigil, check out [EBW's training material](http://electricbookworks.github.io/ebw-training/) and the [Sigil user guide](https://github.com/Sigil-Ebook/Sigil/tree/master/docs).
+For general guidance on creating epubs with Sigil, check out [EBW's training material](https://electricbookworks.github.io/ebw-training/) and the [Sigil user guide](https://github.com/Sigil-Ebook/Sigil/tree/master/docs).
 
 ### Splitting large files
 
@@ -253,17 +253,17 @@ Sigil will then split the HTML file into separate HTML files at the markers, and
 
 A common use case for this is books with end-of-book endnotes. To create end-of-book endnotes using kramdown footnotes you must put all content with endnotes in one markdown (and therefore HTML) file. This file is too large for sensible epub use, so splitting is important. Sigil is smart enough to update your internal links when you run 'Split At Markers'.
 
-> **NB: Before running Split At Markers: save, close, and reopen your epub.** At least till Sigil 0.9.3, there is [an issue with updating internal links when using Split At Markers](http://www.mobileread.com/forums/showthread.php?p=3277498#post3277498). In order for internal links to update correctly, Sigil must *first* have rewritten all link paths to HTML files according to its `../Text/` folder structure (e.g. the links to chapters in a Table of Contents file). Sigil only rewrites all these paths when an epub file is opened. So to make sure links are updated when running Split At Markers, you need to save, close, and reopen the epub first. This [may be fixed from Sigil 0.9.5](http://www.mobileread.com/forums/showpost.php?p=3277552&postcount=11).
+> **NB: Before running Split At Markers: save, close, and reopen your epub.** At least till Sigil 0.9.3, there is [an issue with updating internal links when using Split At Markers](https://www.mobileread.com/forums/showthread.php?p=3277498#post3277498). In order for internal links to update correctly, Sigil must *first* have rewritten all link paths to HTML files according to its `../Text/` folder structure (e.g. the links to chapters in a Table of Contents file). Sigil only rewrites all these paths when an epub file is opened. So to make sure links are updated when running Split At Markers, you need to save, close, and reopen the epub first. This [may be fixed from Sigil 0.9.5](https://www.mobileread.com/forums/showpost.php?p=3277552&postcount=11).
 
 ### Mobi conversion
 
 These days, you should not need to create a mobi file for Amazon. It's better to upload an epub and let Amazon convert it. This is largely because Amazon will convert to several formats for different user devices, and it's best that Amazon has your original epub to convert from.
 
-If you really do need a mobi file, we recommend putting your EPUB into the [Kindle Previewer](http://www.amazon.com/gp/feature.html?docId=1000765261), which automatically converts to mobi using Kindlegen and saves the mobi file to a folder beside your epub.
+If you really do need a mobi file, we recommend putting your EPUB into the [Kindle Previewer](https://www.amazon.com/gp/feature.html?docId=1000765261), which automatically converts to mobi using Kindlegen and saves the mobi file to a folder beside your epub.
 
-If Previewer cannot convert the epub, we've found that adding it to [Calibre](http://calibre-ebook.com/) first, then (without converting) give Calibre's version to Kindle Previewer. Calibre gives you greater control over specific ebook conversions, but we've found Kindle Previewer converts some CSS better (e.g. floats and borders).
+If Previewer cannot convert the epub, we've found that adding it to [Calibre](https://calibre-ebook.com/) first, then (without converting) give Calibre's version to Kindle Previewer. Calibre gives you greater control over specific ebook conversions, but we've found Kindle Previewer converts some CSS better (e.g. floats and borders).
 
-> If you need to dig into a mobi file's code to troubleshoot, try the [KindleUnpack plugin for Calibre](http://www.mobileread.com/forums/showthread.php?t=171529).
+> If you need to dig into a mobi file's code to troubleshoot, try the [KindleUnpack plugin for Calibre](https://www.mobileread.com/forums/showthread.php?t=171529).
 {:.box}
 
 ### EPUB3 conversion
@@ -282,7 +282,7 @@ When adding file semantics, we have found that setting `cover.jpg` to 'Cover ima
 
 Some ereaders (such as iBooks) need to be told explicitly to respect your serif/sans-serif font choices and other settings. This is done with as `com.apple.ibooks.display-options.xml` file.
 
-If you need to add the `com.apple.ibooks.display-options.xml` file to your epub for iBooks display options, you can use the [AddiBooksXML](http://www.mobileread.com/forums/showthread.php?t=272241) plugin in Sigil.
+If you need to add the `com.apple.ibooks.display-options.xml` file to your epub for iBooks display options, you can use the [AddiBooksXML](https://www.mobileread.com/forums/showthread.php?t=272241) plugin in Sigil.
 
 A very basic display-options file contains this XML:
 
@@ -303,7 +303,7 @@ The file should be in the epub's META-INF folder, which Sigil does not let you e
 
 To install the plugin:
 
-*	[Download the zip file](http://www.mobileread.com/forums/showthread.php?t=272241).
+*	[Download the zip file](https://www.mobileread.com/forums/showthread.php?t=272241).
 *	In Sigil, go to Plugins > Manage Plugins.
 *	Click Add Plugin and locate and select the zip file you downloaded.
 

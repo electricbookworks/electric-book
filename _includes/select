@@ -9,16 +9,13 @@ turn it into an array.{% endcomment %}
 <span class="select-list-wrapper">
     <select class="select-list">
 
-        {% comment %}Blank option to start the list{% endcomment %}
-        <option>
+        {% comment %}Blank option to start the list.
+        Do not show placeholders in PDF output – only show blank space.{% endcomment %}
+        <option class="select-list-placeholder">
             {% if include.placeholder and include.placeholder != "" %}
-                {{ include.placeholder }}
-            {% else %}
-                {% comment %}Use at least a no-break space
-                so that Prince gives the select box its width,
-                and does not collapse the empty element.
-                Use a decimal entity for valid EPUB3.{% endcomment %}
-                &#160;
+                {% unless site.output == "print-pdf" or site.output == "screen-pdf" %}
+                    {{ include.placeholder }}
+                {% endunless %}
             {% endif %}
         </option>
 

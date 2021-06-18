@@ -71,7 +71,13 @@ function ebFootnotePopups() {
 
         // Remove the contents since we're using
         // CSS and :before to show a close button marker
-        reverseFootnote.innerText = '';
+        reverseFootnote.innerText = "";
+
+        // Add hidden link text for screen readers
+        var closeFootnoteLabel = document.createElement("span");
+        closeFootnoteLabel.classList.add("visuallyhidden");
+        closeFootnoteLabel.innerText = locales[pageLanguage].footnotes['close-footnote'];
+        reverseFootnote.appendChild(closeFootnoteLabel);
 
         reverseFootnote.addEventListener('click', function (ev) {
             ev.preventDefault();
@@ -82,6 +88,25 @@ function ebFootnotePopups() {
         current.removeAttribute('href');
 
     });
+    // Format the footnotes at the bottom of the page
+    var footnoteItems = document.querySelectorAll(".footnotes a.reversefootnote");
+    var reverseFootnoteAlt = locales[pageLanguage].footnotes['reversefootnote-alt'];
+
+    function reverseFootnoteSVGElement() {
+        var reversefootnoteArrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        reversefootnoteArrow.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        reversefootnoteArrow.setAttribute('viewBox', '0 0 28 15');
+        reversefootnoteArrow.setAttribute('width', '28');
+        reversefootnoteArrow.setAttribute('height', '25');
+        reversefootnoteArrow.setAttribute('class', 'reverse-footnote-arrow');
+        reversefootnoteArrow.innerHTML = '<title>' + reverseFootnoteAlt + '</title><path d="M2.69 14L8.6 8.09V13h10.28A4.21 4.21 0 0022 11.7a4.24 4.24 0 001.28-3.1A4.24 4.24 0 0022 5.5a4.21 4.21 0 00-3.11-1.29h-.33v-2h.33a6.14 6.14 0 014.54 1.88 6.17 6.17 0 011.86 4.51 6.17 6.17 0 01-1.87 4.53A6.14 6.14 0 0118.88 15H8.6v4.9z" fill="gray"/>';
+        return reversefootnoteArrow;
+    }
+
+    footnoteItems.forEach(function(reverseFootnoteLink) {
+        reverseFootnoteLink.innerHTML = "";
+        reverseFootnoteLink.appendChild(reverseFootnoteSVGElement());
+    })
 }
 
 ebFootnotePopups();

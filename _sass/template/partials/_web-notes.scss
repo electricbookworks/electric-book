@@ -25,6 +25,11 @@ $web-notes: true !default;
         text-indent: 0;
     }
 
+    // the hook arrow in the footnotes section
+    .footnotes .reverse-footnote-arrow path {
+        fill: $color-links;
+    }
+
     // Footnote popups
     .footnote-detail {
         // pull footnote-detail out of the doc flow so they hover above text

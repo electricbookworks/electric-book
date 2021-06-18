@@ -53,7 +53,7 @@ Here is a full example:
    html="<table></table>"
    markdown="A *bad* example."
    reference="Figure 1.2a"
-   link="http://example.com"
+   link="https://example.com"
    caption="This is the figure caption."
    title="My Example Figure"
    alt-text="This should describe what the images look like."
