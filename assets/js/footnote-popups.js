@@ -53,7 +53,11 @@ function ebFootnotePopups() {
         footnoteContainer.innerHTML = targetReference.innerHTML;
 
         // Show on hover
-        theSup.addEventListener('mouseover', function (ev) {
+        // Note: 'click' event does not work here.
+        theSup.addEventListener('mouseup', function (ev) {
+
+            // If this is indeed a footnote, show the
+            // footnote-detail container.
             if (ev.target.classList.contains('footnote')) {
                 footnoteContainer.classList.remove('visuallyhidden');
             }
@@ -61,16 +65,6 @@ function ebFootnotePopups() {
 
         // Add a class to the parent
         theContainingElement.parentNode.classList.add('contains-footnote');
-
-        // If we mouseleave footnoteContainer, hide it
-        // (mouseout also fires on mouseout of children, so we use mouseleave)
-        footnoteContainer.addEventListener('mouseleave', function (ev) {
-            if (ev.target === this) {
-                setTimeout(function () {
-                    footnoteContainer.classList.add('visuallyhidden');
-                }, 1000);
-            }
-        });
 
         // Clicking on the reverseFootnote link closes the footnote
         var reverseFootnote = footnoteContainer.querySelector('.reversefootnote');
