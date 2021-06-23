@@ -155,6 +155,8 @@ $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see
 //
 // * For no content: normal
 // * For a page number: counter(page)
+// * For the book's title: string(book-title)
+// * For the book's creator (usually the author): string(book-creator)
 // * For the body element's title attribute: string(page-header)
 //   Set this body title attribute with `header: Your Title` in a file's YAML frontmatter.
 //   If you don't set a page header in YAML, string(page-header) will fallback to the page title.
