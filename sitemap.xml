@@ -1,7 +1,4 @@
 ---
-layout: null
-sitemap:
-  exclude: 'yes'
+layout: trim
 ---
-
 {% include sitemap %}
