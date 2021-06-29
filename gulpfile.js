@@ -438,7 +438,7 @@ gulp.task('images:printpdf', function (done) {
 
                 // Look up image colour settings
                 imageSettings.forEach(function (image) {
-                    if (image.file === thisFilename) {
+                    if (image.file === thisFilename || image.file == "all") {
                         if (image['print-pdf'].colorspace === 'gray') {
                             thisColorProfile = printPDFColorProfileGrayscale;
                             thisColorSpace = printPDFColorSpaceGrayscale;
