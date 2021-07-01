@@ -214,7 +214,7 @@
 
             {% comment %} Add the default bundle.js Javascript {% endcomment %}
             <item id="script-bundle"
-                    media-type="application/x-javascript"
+                    media-type="application/javascript"
                     href="assets/js/bundle.js"
                     />
 
