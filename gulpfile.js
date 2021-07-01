@@ -193,6 +193,62 @@ gulp.task('images:svg', function (done) {
         .pipe(tap(function (file) {
             prefix = file.basename.replace('.', '').replace(' ', '');
         }))
+        .pipe(svgmin({
+            plugins: [
+                // This first pass only runs minifyStyles, to remove CDATA from
+                // <style> elements and give later access to inlineStyles.
+                { minifyStyles: true },
+                { removeDoctype: false },
+                { removeXMLProcInst: false },
+                { removeComments: false },
+                { removeMetadata: false },
+                { removeXMLNS: false },
+                { removeEditorsNSData: false },
+                { cleanupAttrs: false },
+                { mergeStyles: false },
+                { inlineStyles: false },
+                { convertStyleToAttrs: false },
+                { cleanupIDs: false },
+                { prefixIds: false },
+                { removeRasterImages: false },
+                { removeUselessDefs: false },
+                { cleanupNumericValues: false },
+                { cleanupListOfValues: false },
+                { convertColors: false },
+                { removeUnknownsAndDefaults: false },
+                { removeNonInheritableGroupAttrs: false },
+                { removeUselessStrokeAndFill: false },
+                { removeViewBox: false },
+                { cleanupEnableBackground: false },
+                { removeHiddenElems: false },
+                { removeEmptyText: false },
+                { convertShapeToPath: false },
+                { convertEllipseToCircle: false },
+                { moveElemsAttrsToGroup: false },
+                { moveGroupAttrsToElems: false },
+                { collapseGroups: false },
+                { convertPathData: false },
+                { convertTransform: false },
+                { removeEmptyAttrs: false },
+                { removeEmptyContainers: false },
+                { mergePaths: false },
+                { removeUnusedNS: false },
+                { sortAttrs: false },
+                { sortDefsChildren: false },
+                { removeTitle: false },
+                { removeDesc: false },
+                { removeDimensions: false },
+                { removeAttrs: false },
+                { removeAttributesBySelector: false },
+                { removeElementsByAttr: false },
+                { addClassesToSVGElement: false },
+                { removeStyleElement: false },
+                { removeScriptElement: false },
+                { addAttributesToSVGElement: false },
+                { removeOffCanvasPaths: false },
+                { reusePaths: false }
+            ]
+        }))
         .pipe(svgmin(function getOptions() {
             return {
                 plugins: [
@@ -233,8 +289,9 @@ gulp.task('images:svg', function (done) {
                         removeUselessStrokeAndFill: true
                     },
                     {
-                        // Default
-                        inlineStyles: true
+                        inlineStyles: {
+                            onlyMatchedOnce: false
+                        }
                     },
                     {
                         // Default
