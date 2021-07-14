@@ -58,6 +58,7 @@ exclude:
   # Exclude files we don't need for print-pdf
   - search*
   - index*
+  - sitemap.xml
   - /assets/styles
   - /assets/*.jpg
   - /assets/js/accordion.js
