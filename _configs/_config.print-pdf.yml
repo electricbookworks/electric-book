@@ -56,8 +56,11 @@ exclude:
   - /assets/js/bookmarks.js
 
   # Exclude files we don't need for print-pdf
-  - search*
+  - about.md
+  - contact.md
   - index*
+  - search*
+  - sitemap.xml
   - /assets/styles
   - /assets/*.jpg
   - /assets/js/accordion.js
