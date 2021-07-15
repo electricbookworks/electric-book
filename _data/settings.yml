@@ -121,6 +121,12 @@ web:
   nav:
     home:
       expand-books: false
+  # --------------
+  # Monetization
+  # --------------
+  monetization:
+    enabled: true
+    ilp-pointer: "$ilp.uphold.com/FkrLkiL7yDBd"
 
 # ----------------------------------------------------------
 # Epub settings

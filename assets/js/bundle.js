@@ -30,6 +30,10 @@ layout: null
     {% include_relative show-hide.js %}
     {% include_relative copy-to-clipboard.js %}
 
+    {% if site.data.settings.web.monetization.enabled == true %}
+        {% include_relative monetization.js %}
+    {% endif %}
+
     {% if site.data.settings.web.svg.inject == true %}
         {% include_relative vendor/svg-inject.min.js %}
         {% include_relative svg-management.js %}
