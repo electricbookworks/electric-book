@@ -9,6 +9,7 @@ $web-annotator: true !default;
     .annotator {
         position: fixed;
         right: 0;
+        z-index: 1;
 
         label {
             display: block;
@@ -25,7 +26,7 @@ $web-annotator: true !default;
                 fill: $annotator-icon-background-color-inactive;
                 stroke: $annotator-icon-line-color-inactive;
                 stroke-width: $annotator-icon-thickness;
-                width: $line-height-default;
+                width: 2rem;
                 // Avoid Firefox bug where tapping selects SVG as text
                 // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
                 -moz-user-select: none;
@@ -121,14 +122,13 @@ $web-annotator: true !default;
                 }
             }
         }
-
     }
 
     // For Hypothesis default UI
 
     .annotator-frame {
         .annotator-toolbar {
-            top: 5em;
+            top: 5rem;
             button {
                 border-style: solid!important; // important to override inline styles from Hypothesis JS
             }
