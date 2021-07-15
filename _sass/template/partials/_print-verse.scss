@@ -54,6 +54,12 @@ $print-verse: true !default;
 	// If verse is in a list, we can preserve line breaks and white space
 	ul.verse li {
 		white-space: pre-wrap;
+
+		// When a footnote is inside verse, do not let
+		// it inherit the pre-wrap
+		.page-footnote {
+			white-space: normal;
+		}
 	}
 	ul.verse li h1,
 	ul.verse li h2,

@@ -13,7 +13,9 @@ $print-page-headers-footers-content: true !default;
       page-header attr(data-header),
       page-header-left attr(data-header-left),
       page-header-right attr(data-header-right),
-      page-info attr(data-page-info);
+      page-info attr(data-page-info),
+      book-creator attr(data-creator),
+      book-title attr(data-title);
   }
 
   // Assign strings to use in headers and footers for each level of heading (h1-h6),

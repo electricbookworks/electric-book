@@ -6,6 +6,12 @@ title: "Texte brut"
 
 ### Un scandale en Bohème
 
+<!--index:
+Holmes, Sherlock-
+Adler, Irene-
+affaires \\ Un scandale en Bohème-
+-->
+
 Pour Sherlock Holmes c’est toujours « la femme ». Il ne parle jamais d’elle que sous cette dénomination ; à ses yeux elle éclipse le sexe faible tout entier. Ne croyez pourtant pas qu’il ait eu de l’amour, voire même de l’affection pour Irène Adler. Tous les sentiments violents et celui-là en particulier sont contraires à son caractère froid, méthodique et admirablement équilibré. Holmes est bien la machine animée et observatrice la plus parfaite qu’on puisse rencontrer, mais je ne vois pas mon personnage dans le rôle d’amoureux. Il ne m’a jamais parlé d’amour qu’avec un geste de mépris et un sourire railleur. Pour lui qui a mission d’observer et de déduire, la passion chez les autres est un secours puissant ; elle détermine sans cesse les mobiles secrets qui ont porté l’accusé à son crime ; mais le logicien de profession aurait grand tort de se laisser envahir par le sentiment ; cela équivaudrait à introduire dans des rouages fins et délicats un facteur étranger qui y porterait la plus grande perturbation ; le sentiment pourrait influer sur ses déductions. Une émotion violente pour une nature comme la sienne équivaudrait à un grain de sable dans un instrument de précision ou à une fêlure sur un de ses microscopes les plus puissants. Et cependant pour lui il n’y avait qu’une femme au monde et cette femme était feue Irène Adler, de mémoire douteuse.
 
 Je n’avais pas vu Holmes depuis quelque temps. Mon mariage nous avait forcément séparés l’un de l’autre ; le bonheur parfait dont je jouissais, les nouveaux devoirs et les occupations inséparables d’une entrée en ménage absorbaient tous mes instants. De son côté, Holmes, dont la nature bohème répugnait à tout ce qui avait l’apparence du monde, continuait à résider dans son appartement de Baker street, enfoui sous ses vieux bouquins, étudiant sur lui-même les effets de la cocaïne ou se livrant à des rêves d’ambition ; en somme tantôt engourdi par le poison et tantôt dévoré par l’activité extraordinaire de son ardente nature. Il était comme toujours particulièrement attiré par les enquêtes criminelles et il mettait ses merveilleuses facultés d’observation au service de ces crimes mystérieux que la police renonçait à éclaircir. De temps en temps les échos de ses exploits me parvenaient vaguement ; je savais qu’il avait été appelé à Odessa pour étudier le meurtre de Trepoff, qu’il avait jeté la lumière sur la singulière tragédie des frères Atkinson à Trincomalee et enfin qu’il s’était acquitté avec beaucoup de tact et de succès d’une mission délicate pour le compte de la maison régnante de Hollande. À part ces nouvelles que me donnaient du reste les feuilles publiques et qui me prouvaient qu’il était encore en vie, je ne savais presque rien de mon vieux camarade et ami.
@@ -45,6 +51,9 @@ Je ne pus m’empêcher de rire en l’entendant développer si naturellement so
 — Combien y a-t-il de marches ?
 
 — Combien ? Je n’en sais rien.
+
+<!-- index:
+affaires \\ Un scandale en Bohème \\ lettre- -->
 
 — Parfaitement. Vous n’avez pas observé. Et cependant vous avez vu ; c’est bien ce que je vous disais. Moi, par contre, je sais qu’il y a dix-sept marches, parce que je ne me suis pas contenté de voir, j’ai observé. À propos, puisque vous vous plaisez à étudier mes problèmes et que vous avez même eu la bonté de publier quelques-uns de mes succès, tout insignifiants qu’ils fussent, ceci vous intéressera peut-être. »
 
@@ -107,6 +116,9 @@ C’était un homme d’au moins six pieds six pouces qui se présenta devant no
 — Vous avez reçu mon billet, demanda-t-il d’une voix grave et rude empreinte d’un fort accent allemand. Je vous y prévenais de ma visite. »
 
 Il nous regardait alternativement, ne sachant auquel de nous deux il devait s’adresser.
+
+<!-- index:
+-affaires \\ Un scandale en Bohème \\ lettre -->
 
 — Je vous en prie, prenez un siège, dit Holmes. Je vous présente mon collègue et ami le D<small><small><sup>r</sup></small></small> Watson, qui veut bien à l’occasion m’assister dans les enquêtes que j’ai à faire. À qui ai-je l’honneur de parler ?
 
@@ -530,6 +542,9 @@ Holmes chancela, blême de chagrin et de surprise.
 
 — Nous verrons.
 
+<!-- index:
+affaires \\ Un scandale en Bohème \\ lettre -->
+
 Holmes bouscula la servante et se précipita dans le salon, suivi du roi et de moi-même. Les meubles étaient sens dessus dessous, avec des étagères démontées, des tiroirs ouverts, comme si la dame avait tout saccagé avant de partir. Mon ami courut vers le cordon de sonnette, ouvrit nerveusement un panneau à coulisse et y plongeant la main en tira une photographie et une lettre. La photographie était Irène Adler elle-même en robe de soie ; la lettre était adressée : « À M. Sherlock Holmes. À garder jusqu’à ce qu’on vienne la prendre. » Il l’ouvrit et nous la lûmes tous les trois ensemble. Elle était datée de la veille à minuit et en voici le texte :
 
 « Mon cher monsieur Sherlock Holmes,
@@ -566,6 +581,12 @@ Le roi le regarda stupéfait.
 — Je remercie Votre Majesté. Alors il n’y a plus rien à faire ? J’ai l’honneur de vous saluer. »
 
 Il s’inclina et, s’éloignant sans voir la main que le roi lui tendait, il partit avec moi pour rejoindre son domicile.
+
+<!--index:
+-Holmes, Sherlock
+-Adler, Irene
+-affaires \\ Un scandale en Bohème
+-->
 
 Et voilà comment un grand scandale menaça le royaume de Bohême et comment les plans les plus savants de Sherlock Holmes furent déjoués par la finesse et l’intelligence d’une femme. Il se moquait auparavant de l’habileté des femmes, mais depuis il y a renoncé. Et quand il parle d’Irène Adler, ou quand il fait allusion à sa photographie, c’est toujours sous cette dénomination dont il a fait un titre honorable : « La femme. »
 

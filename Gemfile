@@ -23,12 +23,8 @@ gem 'wdm', '>= 0.1.1' if Gem.win_platform?
 # this will include the tzinfo-data gem that you need.
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# This includes the kramdown parser, requires for Jekyll 3.9.
+# This includes the kramdown parser, required for Jekyll 3.9.
 # see https://jekyllrb.com/news/2020/08/05/jekyll-3-9-0-released/
 gem "kramdown-parser-gfm"
 
 # For what ~> means, see https://robots.thoughtbot.com/rubys-pessimistic-operator
-
-# Update Kramdown parser, see https://jekyllrb.com/news/2020/08/05/jekyll-3-9-0-released/
-# Uncomment the line below if you use Jekyll v3.9 or later
-# gem "kramdown-parser-gfm"

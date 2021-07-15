@@ -58,7 +58,7 @@ exclude:
   - /assets/js/bookmarks.js
 
   # Exclude files we don't need for epub
-  - /assets/styles
+  - /assets/fonts
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss
   - /*/styles/web.scss
@@ -101,7 +101,7 @@ media-types:
   mp4: "audio/mp4"
   ncx: "application/x-dtbncx+xml"
   txt: "text/plain"
-  js: "application/x-javascript"
+  js: "application/javascript"
   unknown: "application/octet-stream"
 
 # Since some books in this project might not use MathJax,

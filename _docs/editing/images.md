@@ -96,7 +96,7 @@ The more accurate way: use a class tag to specify the exact height of the image 
 {:.figure}
 ~~~
 
-> CSS tip: [If you're having trouble with SVGs having space around them](http://stackoverflow.com/questions/24626908/how-to-get-rid-of-extra-space-below-svg-in-div-element), in your CSS make sure you set the height of the `img` element. SVGs are inline elements by default, and will add white space around them.
+> CSS tip: [If you're having trouble with SVGs having space around them](https://stackoverflow.com/questions/24626908/how-to-get-rid-of-extra-space-below-svg-in-div-element), in your CSS make sure you set the height of the `img` element. SVGs are inline elements by default, and will add white space around them.
 
 ## Images over a double-page-spread
 

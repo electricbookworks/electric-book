@@ -16,6 +16,13 @@ Then get the total number of images in the array.
 {% assign figure-images = image-list | split: "," %}
 {% assign number-of-images = figure-images | size %}
 
+{% comment %} Allow tag to override default images location,
+where 'path=""' can specify a path relative to the site's
+root directory. {% endcomment %}
+{% if include.path and include.path != "" %}
+    {% capture images %}{{ path-to-root-directory }}{{ include.path }}/{{ site.output }}{% endcapture %}
+{% endif %}
+
 {% comment %}
 Then create our figure, using multiple images if necessary.
 We have to do funky remove: '<p>' | remove: '</p>' | strip_newlines
