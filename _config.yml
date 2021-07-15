@@ -73,7 +73,7 @@ nav-source: nav
 # MathJax scripts are loaded by mathjax-config include, where you can also
 # configure MathJax for your project. For MathJax font choices, see
 # http://docs.mathjax.org/en/latest/font-support.html
-mathjax-enabled: false
+mathjax-enabled: true
 
 # Jekyll collections
 # ------------------
