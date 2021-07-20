@@ -22,6 +22,7 @@ exclude:
   - package.json
   - package-lock.json
   - CNAME
+  - .sass-cache
 
   # Included as-is in other files, no need to process
   - /assets/js/annotation.js
@@ -58,11 +59,10 @@ exclude:
   # Exclude files we don't need for print-pdf
   - about.md
   - contact.md
-  - index*
-  - search*
+  - index.md
+  - search.md
   - sitemap.xml
   - /assets/styles
-  - /assets/*.jpg
   - /assets/js/accordion.js
   - /assets/js/annotation.js
   - /assets/js/elasticlunr-setup.js

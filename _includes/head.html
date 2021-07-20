@@ -70,6 +70,7 @@ we want the doc name to be the book title, not only the first doc's title.
       data-page-info="{% unless site.data.settings.redact == true %}{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first | truncate: 20 }} • {% endunless %}{{ site.time | date: "%-d %b %Y, %H:%M" }}"
       {% if site.data.settings.print-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}
       data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+      data-creator="{% if creator %}{{ creator }}{% else %}{{ project.project-organisation }}{% endif %}"
       {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 <div id="wrapper">
 
@@ -105,6 +106,7 @@ we want the doc name to be the book title, not only the first doc's title.
       data-page-info="{{ title | truncate: 20 }}: {{ page.title | truncate: 20 }} • {{ page.url | split: "/" | last | split: "." | first }} • {{ site.time | date: "%-d %b %Y, %H:%M" }}"
       {% if site.data.settings.screen-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}
       data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+      data-creator="{% if creator %}{{ creator }}{% else %}{{ project.project-organisation }}{% endif %}"
       {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 <div id="wrapper">
 
