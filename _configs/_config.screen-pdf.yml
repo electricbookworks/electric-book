@@ -61,6 +61,7 @@ exclude:
   - contact.md
   - index.md
   - search.md
+  - sitemap.xml
   - /assets/styles
   - /assets/js/accordion.js
   - /assets/js/annotation.js

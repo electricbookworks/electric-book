@@ -449,6 +449,9 @@ run-windows.bat
 
 search.md
 
+# Repo xml sitemap
+sitemap.xml
+
 
 # App files
 # ---------
@@ -646,6 +649,7 @@ _includes/random
 _includes/redirect
 _includes/search
 _includes/select
+_includes/sitemap
 _includes/start-content.html
 _includes/toc
 _includes/video
