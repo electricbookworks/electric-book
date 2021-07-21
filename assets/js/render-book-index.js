@@ -57,7 +57,8 @@ function generateTargetsIndex() {
             }
 
             // Go to the page path.
-            await page.goto(path);
+            // Puppeteer requires the protocol (file://) on OSX.
+            await page.goto('file://' + path);
 
             // Check that any index targets for the page have been processed.
             // This is done by assets/js/index-targets.js (in bundle.js).
