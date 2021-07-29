@@ -9,29 +9,35 @@
 <?xml version='1.0' encoding='utf-8'?>
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" xml:lang="en" unique-identifier="uid" prefix="cc: http://creativecommons.org/ns#">
 
+{% comment %} In each meta tag we output here, we filter as follows:
+    - markdownify: include any markdown syntax from meta.yml, e.g. italics
+    - strip_html: but we cannot include HTML in these tags
+    - strip_newlines: we don't want new lines in tags
+    - escape: ensures we don't include characters invalid in XML. {% endcomment %}
+
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-        <dc:title id="title">{{ title | escape }}</dc:title>
+        <dc:title id="title">{{ title | markdownify | strip_html | strip_newlines | escape }}</dc:title>
         <meta refines="#title" property="title-type">main</meta>
-        <dc:identifier id="uid">{{ epub-identifier }}</dc:identifier>
-        <dc:language>{% if site.data.settings.epub.meta.language and site.data.settings.epub.meta.language != "" %}{{ site.data.settings.epub.meta.language }}{% elsif epub-language and epub-language != "" %}{{ epub-language }}{% else %}{{ language }}{% endif %}</dc:language>
+        <dc:identifier id="uid">{{ epub-identifier | markdownify | strip_html | strip_newlines | escape }}</dc:identifier>
+        <dc:language>{% if site.data.settings.epub.meta.language and site.data.settings.epub.meta.language != "" %}{{ site.data.settings.epub.meta.language }}{% elsif epub-language and epub-language != "" %}{{ epub-language }}{% else %}{{ language | markdownify | strip_html | strip_newlines | escape }}{% endif %}</dc:language>
         <meta property="dcterms:modified">{{ site.time | date_to_xmlschema | truncate: 19, "" }}Z</meta>
 
     {% if subtitle and subtitle != "" %}
-        <dc:title id="subtitle">{{ subtitle | escape }}</dc:title>
+        <dc:title id="subtitle">{{ subtitle | markdownify | strip_html | strip_newlines | escape }}</dc:title>
         <meta refines="#subtitle" property="title-type">subtitle</meta>
     {% endif %}
     {% if project-name and project-name != "" and site.data.settings.epub.meta.project-name != false %}
-        <dc:title id="project-name">{{ project-name | escape }}</dc:title>
+        <dc:title id="project-name">{{ project-name | markdownify | strip_html | strip_newlines | escape }}</dc:title>
         <meta refines="#project-name" property="title-type">collection</meta>
     {% endif %}
     {% if publisher and publisher != "" %}
-        <dc:publisher>{{ publisher | escape }}</dc:publisher>
+        <dc:publisher>{{ publisher | markdownify | strip_html | strip_newlines | escape }}</dc:publisher>
     {% endif %}
     {% if creator and creator != "" %}
-        <dc:creator>{{ creator | escape }}</dc:creator>
+        <dc:creator>{{ creator | markdownify | strip_html | strip_newlines | escape }}</dc:creator>
     {% endif %}
     {% if contributor and contributor != "" %}
-        <dc:contributor>{{ contributor | escape }}</dc:contributor>
+        <dc:contributor>{{ contributor | markdownify | strip_html | strip_newlines | escape }}</dc:contributor>
     {% endif %}
     {% if epub-date and epub-date != "" %}
         <dc:date>{{ epub-date }}</dc:date>
@@ -39,28 +45,28 @@
         <dc:date>{{ date }}</dc:date>
     {% endif %}
     {% if description and description != "" %}
-        <dc:description>{{ description | escape }}</dc:description>
+        <dc:description>{{ description | markdownify | strip_html | strip_newlines | escape }}</dc:description>
     {% endif %}
     {% if relation and relation != "" %}
-        <dc:relation>{{ relation | escape }}</dc:relation>
+        <dc:relation>{{ relation | markdownify | strip_html | strip_newlines | escape }}</dc:relation>
     {% endif %}
     {% if source and source != "" %}
-        <dc:source>{{ source | escape }}</dc:source>
+        <dc:source>{{ source | markdownify | strip_html | strip_newlines | escape }}</dc:source>
     {% endif %}
     {% if subject and subject != "" %}
-        <dc:subject>{{ subject | escape }}</dc:subject>
+        <dc:subject>{{ subject | markdownify | strip_html | strip_newlines | escape }}</dc:subject>
     {% endif %}
     {% if rights and rights != "" %}
-        <dc:rights>{{ rights | escape }}</dc:rights>
+        <dc:rights>{{ rights | markdownify | strip_html | strip_newlines | escape }}</dc:rights>
     {% endif %}
     {% if coverage and coverage != "" %}
-        <dc:coverage>{{ coverage | escape }}</dc:coverage>
+        <dc:coverage>{{ coverage | markdownify | strip_html | strip_newlines | escape }}</dc:coverage>
     {% endif %}
     {% if epub-format and epub-format != "" %}
-        <dc:format>{{ epub-format | escape }}</dc:format>
+        <dc:format>{{ epub-format | markdownify | strip_html | strip_newlines | escape }}</dc:format>
     {% endif %}
     {% if type and type != "" %}
-        <dc:type>{{ type | escape }}</dc:type>
+        <dc:type>{{ type | markdownify | strip_html | strip_newlines | escape }}</dc:type>
     {% endif %}
 
     {% comment %} Accessibility metadata.
