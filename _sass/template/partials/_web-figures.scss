@@ -24,20 +24,19 @@ $web-figures: true !default;
         }
         img, p img {
             margin: 0 auto;
+            max-height: 80vh;  // ensure figures are always visible
             max-width: 100%; 
             object-fit: contain;
             display: block;
         }
-        @media screen and (max-height: $break-height-small) {
+
+        // Enable removing max-height on a figure's images
+        &.web-max-height-none {
             img, p img {
-                max-height: $break-height-small / 2;
+                max-height: none;
             }
         }
-        @media screen and (max-height: ($break-height-small * 0.7)) {
-            img, p img {
-                max-height: $break-height-small * 0.35;
-            }
-        }
+
         .figure-body {
             .figure-images {
                 text-align: center;
