@@ -108,6 +108,7 @@ web:
   # -----------------
   images:
     lazyload: true
+    open-image-on-click: true
   # -----------------
   # Bookmarks
   # -----------------
