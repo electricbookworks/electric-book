@@ -108,6 +108,8 @@ web:
   # -----------------
   images:
     lazyload: true
+    # Do you want images to open as a standalone file when clicked?
+    open-image-on-click: true
   # -----------------
   # Bookmarks
   # -----------------
