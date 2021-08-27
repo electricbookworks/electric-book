@@ -41,6 +41,6 @@ as body text despite CSS rules for em size.
 </p>
 
 {% include image
-   file="boundary-bay-classics-logo.svg"
+   file="publisher-logo.jpg"
    class="title-page-logo"
    path="assets/images" %}
