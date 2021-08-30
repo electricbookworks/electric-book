@@ -1,0 +1,46 @@
+{% include metadata %}
+
+{% comment %}
+In PDF, we avoid making the title an h1, so that
+in a PDF reader's built-in navigation the h1s
+that start parts or chapters are not all indented
+or put into a dropdown beneath the title h1, and
+the overall book heading-level heirarchy is sensible.
+Only PDF treats the entire book as one file.
+
+Other formats all treat the title-page as one of
+many files, where using an h1 on this page is okay
+and semantically sensible.
+
+E.g. In epub, we make the title an h1
+to ensure that it's emphasised in epub readers
+(like Thorium) that treat all paragraphs
+as body text despite CSS rules for em size.
+{% endcomment %}
+
+{% if site.output == "print-pdf" or site.output == "screen-pdf" %}
+   <p class="title-page-title">
+      {{ title }}
+   </p>
+{% else %}
+   <h1 class="title-page-title">
+      {{ title }}
+   </h1>
+{% endif %}
+
+<p class="title-page-subtitle">
+   {{ subtitle }}
+</p>
+
+<p class="title-page-author">
+   {{ creator }}
+</p>
+
+<p class="title-page-contributor">
+   {{ contributor }}
+</p>
+
+{% include image
+   file="publisher-logo.jpg"
+   class="title-page-logo"
+   path="assets/images" %}
