@@ -79,7 +79,7 @@ $print-notes: true !default;
 
     // The page-footnotes area
     @page {
-        @footnotes {
+        @footnote {
             margin-top: $line-height-default / 2;
             padding-top: $line-height-default / 2;
             font-size: $font-size-default * $font-size-smaller;
