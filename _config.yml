@@ -138,6 +138,8 @@ exclude:
   - package-lock.json
   - CNAME
   - .sass-cache
+  - /scripts
+  - /test
 
   # Included as-is in other files, no need to process
   - /assets/js/annotation.js
