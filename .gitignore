@@ -11,6 +11,8 @@ _data/secrets*
 _app/platforms
 _app/plugins
 .DS_Store
+.idea/
+__diff_output__
 
 # If your team needs strict node-package
 # version management, comment out this line
@@ -21,5 +23,3 @@ package-lock.json
 # for scripts to work, even if it's empty. Instead, there is
 # a .gitignore file in _output that ignores the folder's contents,
 # but, by its presence, keeps the folder in the repo.
-.idea/
-__diff_output__
