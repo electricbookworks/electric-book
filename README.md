@@ -38,7 +38,7 @@ And of course a good editor like [VS Code](https://code.visualstudio.com/), [Sub
 ### End to end testing
 
 ```bash
-$ npm run test:e2e
+npm run test:e2e
 ```
 ```
 > electric-book@0.1.0 test:e2e
@@ -64,7 +64,7 @@ Done
 ### Visual regression testing
 
 ```bash
-$ npm run test:visual_regression
+npm run test:visual_regression
 ```
 ```
 > electric-book@0.1.0 test:visual_regression
