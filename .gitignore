@@ -22,3 +22,4 @@ package-lock.json
 # a .gitignore file in _output that ignores the folder's contents,
 # but, by its presence, keeps the folder in the repo.
 .idea/
+__diff_output__

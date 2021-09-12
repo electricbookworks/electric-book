@@ -8,7 +8,7 @@ red=`tput setaf 1`
 green=`tput setaf 2`
 reset=`tput sgr0`
 
-printf "Building jekyll output for tests\n"
+printf "Building Jekyll output for tests\n"
 bundle exec jekyll build --quiet --incremental --config "_config.yml,_configs/_config.test.yml,_configs/_config.web.yml"
 printf "${green}Done${reset}\n\n"
 
