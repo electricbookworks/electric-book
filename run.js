@@ -258,13 +258,11 @@ function prince(format) {
         pathToFiles = projectRoot() + '/' +
                 '_site/' +
                 argv.book + '/' +
-                argv.subdir + '/' +
-                'text';
+                argv.subdir;
     } else {
         pathToFiles = projectRoot() + '/' +
                 '_site/' +
-                argv.book + '/' +
-                'text';
+                argv.book;
     }
 
     console.log('Using files in ' + fsPath.normalize(pathToFiles));
