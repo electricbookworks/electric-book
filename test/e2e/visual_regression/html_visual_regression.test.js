@@ -10,6 +10,8 @@ function getConfig () {
         // use SSIM to limit false positive
         // https://github.com/americanexpress/jest-image-snapshot#recommendations-when-using-ssim-comparison
         comparisonMethod: 'ssim',
+        failureThreshold: 0.01,
+        failureThresholdType: 'percent',
         // runInProcess: true,
         verbose: true,
     };
@@ -22,7 +24,7 @@ describe('HTML output visual regression', () => {
             let fullFilename = global.BASE_DIR + '/' + filename
 
             try {
-                const response = await page.goto('file://' + fullFilename);
+                const response = await page.goto('file://' + fullFilename, { waitUntil: 'domcontentloaded' });
             } catch (error) {
                 continue;
             }

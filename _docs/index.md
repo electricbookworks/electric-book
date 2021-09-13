@@ -15,5 +15,5 @@ These docs are a work in progress, and not everything is documented yet. You can
 
 {% include docs-by-category
     class="markdown-toc markdown-toc-wide"
-    categories="about, setup, editing, images, layout, output, advanced, troubleshooting"
+    categories="about, setup, editing, images, layout, output, advanced, testing, troubleshooting"
 %}
