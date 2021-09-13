@@ -40,9 +40,9 @@ This include is primarily for use in creating search stores and indexes. {% endc
                     {% for file in variant.products[site-output-for-files].files %}
                         {% for file-title in file %}
                             {% if file-title[0] %}
-                                /{{ work.directory }}/text/{{ file-title[0] }}.html,
+                                /{{ work.directory }}/{{ file-title[0] }}.html,
                             {% else %}
-                                /{{ work.directory }}/text/{{ file-title }}.html,
+                                /{{ work.directory }}/{{ file-title }}.html,
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
@@ -73,9 +73,9 @@ This include is primarily for use in creating search stores and indexes. {% endc
                         {% for file in translation.products[site-output-for-files].files %}
                             {% for file-title in file %}
                                 {% if file-title[0] %}
-                                    /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title[0] }}'.html,
+                                    /{{ work.directory }}/{{ translation.directory }}/{{ file-title[0] }}'.html,
                                 {% else %}
-                                    /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title }}.html,
+                                    /{{ work.directory }}/{{ translation.directory }}/{{ file-title }}.html,
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
@@ -106,9 +106,9 @@ This include is primarily for use in creating search stores and indexes. {% endc
             {% for file in work.products[site-output-for-files].files %}
                 {% for file-title in file %}
                     {% if file-title[0] %}
-                        /{{ work.directory }}/text/{{ file-title[0] }}.html,
+                        /{{ work.directory }}/{{ file-title[0] }}.html,
                     {% else %}
-                        /{{ work.directory }}/text/{{ file-title }}.html,
+                        /{{ work.directory }}/{{ file-title }}.html,
                     {% endif %}
                 {% endfor %}
             {% endfor %}
@@ -132,9 +132,9 @@ This include is primarily for use in creating search stores and indexes. {% endc
                 {% for file in translation.products[site-output-for-files].files %}
                     {% for file-title in file %}
                         {% if file-title[0] %}
-                            /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title[0] }}.html,
+                            /{{ work.directory }}/{{ translation.directory }}/{{ file-title[0] }}.html,
                         {% else %}
-                            /{{ work.directory }}/{{ translation.directory }}/text/{{ file-title }}.html,
+                            /{{ work.directory }}/{{ translation.directory }}/{{ file-title }}.html,
                         {% endif %}
                     {% endfor %}
                 {% endfor %}

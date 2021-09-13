@@ -411,8 +411,8 @@ assets/js/vendor/svg-inject.min.js
 book/fonts/.gitignore
 book/index.md
 book/package.opf
-book/text/file-list
-book/text/index.md
+book/file-list
+book/index.md
 book/toc.ncx
 
 

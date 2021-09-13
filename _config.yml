@@ -120,7 +120,7 @@ image-set: "images/web"
 # ----------------------------------
 # Jekyll will ignore these files and folders. 
 # This is useful for temporarily speeding up the build to output only certain files.
-# Include the file extension too. E.g. book/text/01.md
+# Include the file extension too. E.g. book/01.md
 exclude:
   # Build tools
   - run-linux.sh

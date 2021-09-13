@@ -15,7 +15,7 @@ A Jekyll template for creating books in multiple formats:
 2. Edit as needed:
 	- `_data/meta.yml` 
 	- the stylesheet variables in `book/styles`
-	- the content files in `book/text`
+	- the markdown files in `book`
 3. Run the `run-` script for your operating system.
 
 [Read the guide](https://electricbookworks.github.io/electric-book) for much more. The guide is also an example of the template in action.

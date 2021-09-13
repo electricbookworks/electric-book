@@ -27,7 +27,7 @@ var store = [
                     'url': {{ page.url | replace_first: "/", "" | jsonify }},
                     'id': {% assign search-store-loop-index = search-store-loop-index | plus: 1 %}{{ search-store-loop-index }}
                 }{% unless forloop.last %},{% endunless %}
-            {% elsif url-from-array contains '/text/index.html' %}
+            {% elsif url-from-array contains '/index.html' %}
                 {% capture page-url-as-index %}{{ page.url }}index.html{% endcapture %}
                     {% if page-url-as-index == url-from-array %}
                 {

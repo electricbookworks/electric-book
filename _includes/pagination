@@ -55,19 +55,19 @@ not pages like landing and search pages. {% endcomment %}
     Remove index.html from URLs so that they compare with
     Jekyll's folder-based-paths for the page.url of index.html files. {% endcomment %}
     {% if previous-page contains "/index.html" %}
-        {% capture previous-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}text/{% endcapture %}
+        {% capture previous-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{% endcapture %}
     {% else %}
-        {% capture previous-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}text/{{ previous-page }}{% endcapture %}
+        {% capture previous-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{{ previous-page }}{% endcapture %}
     {% endif %}
     {% if this-page contains "/index.html" %}
-        {% capture this-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}text/{% endcapture %}
+        {% capture this-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{% endcapture %}
     {% else %}
-        {% capture this-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}text/{{ this-page }}{% endcapture %}
+        {% capture this-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{{ this-page }}{% endcapture %}
     {% endif %}
     {% if next-page contains "/index.html" %}
-        {% capture next-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}text/{% endcapture %}
+        {% capture next-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{% endcapture %}
     {% else %}
-        {% capture next-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}text/{{ next-page }}{% endcapture %}
+        {% capture next-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{{ next-page }}{% endcapture %}
     {% endif %}
 
     {% comment %} Now look through all pages to find the titles. {% endcomment %}

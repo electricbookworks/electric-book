@@ -10,7 +10,7 @@ order: 40
 * Page contents
 {:toc}
 
-In the Electric Book workflow, a translation is a subfolder of the original book. Text files go into a subfolder of `/text`, e.g. `/text/fr`. We recommend naming the translation folder with the language code, but that's not required.
+In the Electric Book workflow, a translation is a subfolder of the original book. Text files go into a subfolder of the book, e.g. `/book/fr`. We recommend naming the translation folder with the language code, but that's not required.
 
 This structure assumes that the translation and its parent will be kept in sync for the most part, the translation always being a faithful reproduction of the parent; but this isn't required. A translation can be quite different to its parent.
 
@@ -29,7 +29,7 @@ To make a translation:
 
 ## Text
 
-The text files of each translation are saved in a `text` subdirectory. So all text files of a French translation live in `book/fr/text`, and all text files of a Xhosa translation in `book/xh/text`.
+The text files of each translation are saved in a `text` subdirectory. So all text files of a French translation live in `book/fr`, and all text files of a Xhosa translation in `book/xh`.
 
 ## Styles, fonts and images
 

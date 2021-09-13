@@ -119,7 +119,7 @@ function generateTargetsIndex() {
             //   entryText: 'Entry Text',
             //   filename: 'filename.html',
             //   id: '#entry-text--iid-1',
-            //   path: samples/text/filename.html
+            //   path: samples/filename.html
             // }
 
             // Parse the serialized entries and add

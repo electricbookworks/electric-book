@@ -62,7 +62,7 @@
 
         {% comment %}If this is any non-book, non-docs page,
         such as the home page or project search...{% endcomment %}
-        {% if is-book-subdirectory != true and is-docs-page != true %}
+        {% if is-book-directory != true is-book-subdirectory != true and is-docs-page != true %}
 
         {% comment %}If there is only one book, don't include its title{% endcomment %}
         {% if number-of-works == 1 %}
@@ -101,7 +101,7 @@
             <li {% if site.data.settings[site.output].nav.home.expand-books==true %}class="has-children" {% endif %}>
 
                 <a
-                    href="{{ path-to-root-directory }}{{ work.directory }}/text/{{ work.products[site.output].start-page }}.html">
+                    href="{{ path-to-root-directory }}{{ work.directory }}/{{ work.products[site.output].start-page }}.html">
                     {{ work.title }}
                 </a>
 

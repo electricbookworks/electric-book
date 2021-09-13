@@ -72,7 +72,7 @@ If you have many files that contain SVGs, you can set this value as a frontmatte
 defaults:
   -
     scope:
-      path: "*/text/01-title-page.html"
+      path: "*/01-title-page.html"
     values:
       contains-svg: true
 ```

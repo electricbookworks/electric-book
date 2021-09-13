@@ -28,7 +28,7 @@ Otherwise, check for project-root files like 'Contact' {% endcomment %}
         {% endfor %}
 
         {% comment %} 2. Check if any translations of this file actually exist. {% endcomment %}
-        {% capture translated-file-with-path %}{{ book-directory }}/{{ translation.directory }}/text/{{ current-file }}.md{% endcapture %}
+        {% capture translated-file-with-path %}{{ book-directory }}/{{ translation.directory }}/{{ current-file }}.md{% endcapture %}
         {% for page in site.pages %}
             {% if page.path == translated-file-with-path %}
                 {% assign translated-file-exists = true %}
@@ -99,7 +99,7 @@ Otherwise, check for project-root files like 'Contact' {% endcomment %}
                                 {% capture filename %}{{ item }}{% endcapture %}
                             {% endif %}
 
-                            {% capture this-translated-file-with-path %}{{ book-directory }}/{{ translation.directory }}/text/{{ filename }}.md{% endcapture %}
+                            {% capture this-translated-file-with-path %}{{ book-directory }}/{{ translation.directory }}/{{ filename }}.md{% endcapture %}
 
                         {% endfor %}
 
@@ -120,7 +120,7 @@ Otherwise, check for project-root files like 'Contact' {% endcomment %}
                                 {% unless translation.language == language %}
 
                                     <li class="language-select-language language-select-{{ translation.language }}">
-                                        <a href="{{ path-to-book-directory }}{{ translation.directory }}/text/{{ filename }}.html">
+                                        <a href="{{ path-to-book-directory }}{{ translation.directory }}/{{ filename }}.html">
                                             {{ site.data.locales[translation.language].local-name }}
                                         </a>
                                     </li>
@@ -134,7 +134,7 @@ Otherwise, check for project-root files like 'Contact' {% endcomment %}
 
                                 {% unless parent-language-link-added %}
                                     <li class="language-select-language language-select-{{ parent-language }}">
-                                        <a href="{{ path-to-book-directory }}text/{{ filename }}.html">
+                                        <a href="{{ path-to-book-directory }}{{ filename }}.html">
                                             {{ site.data.locales[parent-language].local-name }}
                                         </a>
                                     </li>

@@ -102,7 +102,7 @@
             {% endfor %}
 
             {% comment %} Get file content for detecting SVGs. {% endcomment %}
-            {% capture path-to-page %}{{ book-directory }}/text/{{ manifest-epub-file-name }}{% endcapture %}
+            {% capture path-to-page %}{{ book-directory }}/{{ manifest-epub-file-name }}{% endcapture %}
             {% assign this-page = site.pages | where_exp: "file", "file.path contains path-to-page" %}
 
             {% capture properties %}
@@ -131,7 +131,7 @@
 
         <item id="{% if file-prefix %}{{ file-prefix }}{% endif %}{{ manifest-epub-file-name | strip }}"
               media-type="application/xhtml+xml"
-              href="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ manifest-epub-file-name | strip }}.html"
+              href="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}{{ manifest-epub-file-name | strip }}.html"
               {% if properties != "" %}properties="{{ properties }}"{% endif %}
               />
 
@@ -388,7 +388,7 @@
 
                 {% if reference-type and reference-type != "" %}
                 <reference type="{{ reference-type }}"
-                           href="{{ book-directory }}/{% if is-translation %}{{ book-subdirectory }}/{% endif %}text/{{ file-href }}.html"
+                           href="{{ book-directory }}/{% if is-translation %}{{ book-subdirectory }}/{% endif %}{{ file-href }}.html"
                            {% if reference-title and reference-title != "" %}title="{{ reference-title }}"{% endif %}
                 />
                 {% endif %}

@@ -21,9 +21,9 @@ It also includes any items in _data/nav.yml below the book entries.
     https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-jekyll/
     {% endcomment %}
 
-    {% comment %}If this is neither a text directory (i.e. in a book) nor a docs page,
+    {% comment %}If this is neither a book directory nor a docs page,
     such as the home page or project search page...{% endcomment %}
-    {% if is-book-subdirectory != true and is-docs-page != true %}
+    {% if is-book-directory != true is-book-subdirectory != true and is-docs-page != true %}
 
       {% comment %}Get an array of all the pages we've output to check against{% endcomment %}
       {% assign site-pages-page-list = "" | split: "|" %}
@@ -38,7 +38,7 @@ It also includes any items in _data/nav.yml below the book entries.
         {% for item in include.nav-tree | sort: "order" %}
             <li class="{% unless site-pages-page-list contains item.file %}no-file{% endunless %}
             {% if item.children == nil %} no-children{% else %} has-children{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
-                <a {% if item.file != nil %}href="{{ path-to-root-directory }}{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/text/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
+                <a {% if item.file != nil %}href="{{ path-to-root-directory }}{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
                     {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
                 </a>
                 {% if item.children != nil %}
@@ -49,7 +49,7 @@ It also includes any items in _data/nav.yml below the book entries.
 
       </ol>
 
-    {% comment %}Otherwise, we're in a text directory (i.e. in a book),
+    {% comment %}Otherwise, we're in a book directory,
     and we're not on a docs page, create the full book nav.{% endcomment %}
     {% else %}
 
@@ -93,10 +93,10 @@ It also includes any items in _data/nav.yml below the book entries.
       {% comment %}If the include tag specifies a directory, we assume
       we're already in a `for work in works` loop.{% endcomment %}
       {% if include.directory %}
-        {% capture book-text-path %}{{ include.directory }}/text/{% endcapture %}
+        {% capture book-text-path %}{{ include.directory }}/{% endcapture %}
         {% assign relevant-files = work.products[site.output].files %}
       {% else %}
-        {% capture book-text-path %}{{ book-directory }}/{% if is-translation %}{{ book-subdirectory }}/{% endif %}text/{% endcapture %}
+        {% capture book-text-path %}{{ book-directory }}/{% if is-translation %}{{ book-subdirectory }}/{% endif %}{% endcapture %}
         {% assign relevant-files = file-list %}
       {% endif %}
 

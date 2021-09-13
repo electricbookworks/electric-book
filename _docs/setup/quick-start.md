@@ -25,7 +25,7 @@ This quick setup assumes you already have [Jekyll](https://jekyllrb.com/), [Node
 ## Edit your first book
 
 2. Open `_data/meta.yml` and replace the sample book information there with your project and book information.
-3. In `book/text`, overwrite the template's markdown files with your own.
+3. In `book`, overwrite the template's markdown files with your own.
 4. To change the design, edit the `.scss` files for each output format: set project-wide styles in `_sass`, and book-specific styles in `book/styles`.
 
 There is much more detail in [the docs](../).

@@ -73,7 +73,7 @@ exclude:
   - /*/styles/print-pdf*
   - /*/styles/screen-pdf*
   - /*/styles/app*
-  - /*/text/file-list
+  - /*/file-list
   - /*/package.opf
   - /*/toc.ncx
 
@@ -92,9 +92,8 @@ keep_files:
   # - book/images/epub
   # - book/fonts
   # - book/styles
-  # - book/text
-  # - book/text/01.html
-  # - book/text/02.html
+  # - book/01.html
+  # - book/02.html
 
 # Turn off docs
 collections:

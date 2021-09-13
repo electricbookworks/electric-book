@@ -96,13 +96,13 @@ Otherwise, the toc-branch should be the children called by this include recursiv
 {% comment %}If we're not inside a book, we need a path to each file.
 By default, assume we're linking to files in 'book',
 and allow setting a different book directory as a 'book' argument.{% endcomment %}
-{% if is-book-subdirectory %}
+{% if is-book-directory %}
     {% capture toc-path-to-file %}{% endcapture %}
 {% else %}
     {% if include.book %}
-        {% capture toc-path-to-file %}{{ include.book }}/text/{% endcapture %}
+        {% capture toc-path-to-file %}{{ include.book }}/{% endcapture %}
     {% else %}
-        {% capture toc-path-to-file %}book/text/{% endcapture %}
+        {% capture toc-path-to-file %}book/{% endcapture %}
     {% endif %}
 {% endif %}
 

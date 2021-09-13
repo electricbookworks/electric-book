@@ -58,13 +58,13 @@ function loadMetadata() {
         var j;
         for (i = 0; i < works.length; i += 1) {
             books.push(works[i].directory);
-            paths.push('_site/' + works[i].directory + '/text/');
-            filePaths.push('_site/' + works[i].directory + '/text/*.html');
+            paths.push('_site/' + works[i].directory + '/');
+            filePaths.push('_site/' + works[i].directory + '/*.html');
             if (works[i].translations) {
                 for (j = 0; j < works[i].translations.length; j += 1) {
                     languages.push(works[i].translations[j].directory);
-                    paths.push('_site/' + works[i].directory + '/' + works[i].translations[j].directory + '/text/');
-                    filePaths.push('_site/' + works[i].directory + '/' + works[i].translations[j].directory + '/text/*.html');
+                    paths.push('_site/' + works[i].directory + '/' + works[i].translations[j].directory + '/');
+                    filePaths.push('_site/' + works[i].directory + '/' + works[i].translations[j].directory + '/*.html');
                 }
             }
         }
@@ -154,12 +154,12 @@ var paths = {
         app: book + language + '/images/app/'
     },
     text: {
-        src: '_site/' + book + language + '/text/*.html',
-        dest: '_site/' + book + language + '/text/'
+        src: '_site/' + book + language + '/*.html',
+        dest: '_site/' + book + language + '/'
     },
     epub: {
-        src: '_site/epub/' + book + language + '/text/*.html',
-        dest: '_site/epub/' + book + language + '/text/'
+        src: '_site/epub/' + book + language + '/*.html',
+        dest: '_site/epub/' + book + language + '/'
     },
     js: {
         src: [],

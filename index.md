@@ -12,7 +12,7 @@ style: home
 
 The Electric Book template produces **website, ebook, app and print books from a single content source.** It is [packed with features for professional book production](#basic-features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. The template includes:
 
-- [a blank book](book/text/0-3-contents.html) to start working into,
+- [a blank book](book/0-3-contents.html) to start working into,
 - [a book of sample features](samples/) to learn from,
 - [a demo translation](samples/fr/), and
 - {% if site.output == "web" %}[how-to documentation](docs/){% else %}[online how-to documentation](https://electricbookworks.github.io/electric-book/docs/index.html){% endif %}. {% if output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
@@ -61,7 +61,7 @@ We deliberately made the template look plain – it's ready for your design deci
 
 ### Mathematics
 
-[Include complex maths]({{ site.baseurl }}/docs/editing/maths.html) using LaTex notation. [See a simple demo here](https://deploy-preview-471--electric-book.netlify.app/samples/text/03-02-maths.html).
+[Include complex maths]({{ site.baseurl }}/docs/editing/maths.html) using LaTex notation. [See a simple demo here](https://deploy-preview-471--electric-book.netlify.app/samples/03-02-maths.html).
 
 ### Refined page typography
 
@@ -111,11 +111,11 @@ Easily [embed streaming video]({{ site.baseurl }}/docs/editing/video.html) from 
 
 ### Collapsible pages
 
-Make long web pages [collapse on major headings]({{ site.baseurl }}/docs/layout/content-accordion.html) for easier reading. [See a demo here](https://deploy-preview-471--electric-book.netlify.app/samples/text/01-01-plain-text.html).
+Make long web pages [collapse on major headings]({{ site.baseurl }}/docs/layout/content-accordion.html) for easier reading. [See a demo here](https://deploy-preview-471--electric-book.netlify.app/samples/01-01-plain-text.html).
 
 ### Clickable slides
 
-Let users click through [slideshows]({{ site.baseurl }}/samples/text/04-05-slides.html), with useful equivalents in offline epub and PDF versions.
+Let users click through [slideshows]({{ site.baseurl }}/samples/04-05-slides.html), with useful equivalents in offline epub and PDF versions.
 
 
 ## Extending and integrating

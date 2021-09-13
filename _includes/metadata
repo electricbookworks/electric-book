@@ -82,11 +82,10 @@ We'll rewrite this later if we're in a translation
 
 {% comment %}Are we really in a listed book directory, or a directory
 in the root that isn't really a listed book?{% endcomment %}
+{% assign is-book-directory = false %}
 {% for directory in book-directory-array %}
     {% if book-directory == directory %}
         {% assign is-book-directory = true %}
-    {% else %}
-        {% assign is-book-directory = false %}
     {% endif %}
 {% endfor %}
 
@@ -131,14 +130,6 @@ Get this file's folder depth
 {% assign folder-depth = page.path | split: "/" | size | minus: 1 %}
 
 {% comment %}
-If the folder depth is more than 2, this is a subdirectory of `text`
-{% endcomment %}
-{% assign is-book-subsubdirectory = false %}
-{% if folder-depth > 2 %}
-    {% assign is-book-subsubdirectory = true %}
-{% endif %}
-
-{% comment %}
 Check whether we're in a subdirectory of `text`
 {% endcomment %}
 {% capture book-subdirectory %}{{ page.path | replace: "/", " " | truncatewords: 2, "" | split: " " | last }}{% endcapture %}
@@ -147,15 +138,8 @@ Check whether we're in a subdirectory of `text`
     {% capture book-subdirectory %}{% endcapture %}
 {% endif %}
 {% assign is-book-subdirectory = false %}
-{% if book-directory-array contains book-directory and page.path contains book-directory and page.path contains book-subdirectory and page.path contains "/text/" and page.path contains current-file %}
+{% if book-directory-array contains book-directory and page.path contains book-directory and page.path contains book-subdirectory and page.path contains "/" and page.path contains current-file and folder-depth > 1 %}
     {% assign is-book-subdirectory = true %}
-{% endif %}
-
-{% comment %}
-If this file is in a book-subsubdirectory, get its name
-{% endcomment %}
-{% if is-book-subsubdirectory %}
-    {% capture book-subsubdirectory %}{{ page.path | replace: "/", " " | truncatewords: 3, "" | split: " " | last }}{% endcapture %}
 {% endif %}
 
 {% comment %}Set default stylesheets{% endcomment %}
@@ -635,7 +619,7 @@ Check if we're on the search pages.
 {% endcomment %}
 {% capture project-search-url %}{{ site.baseurl }}/search.html{% endcapture %}
 {% unless is-homepage or is-translation-homepage %}
-    {% capture book-search-url %}{{ site.baseurl }}/{{ book-directory }}/text/search.html{% endcapture %}
+    {% capture book-search-url %}{{ site.baseurl }}/{{ book-directory }}/search.html{% endcapture %}
 {% endunless %}
 {% capture project-search-url-slug %}{{ project-search-url | slugify | remove: "-" }}{% endcapture %}
 {% capture book-search-url-slug %}{{ book-search-url | slugify | remove: "-" }}{% endcapture %}
@@ -671,7 +655,7 @@ Create an empty array for the breadcrumbs include to start with
 {% assign crumbs-array = "" | split: "|" %}
 
 {% comment %}
-Get relative paths to other book-asset folders, even if we're in a book-subsubdirectory
+Get relative paths to other book-asset folders, even if we're in a book-subdirectory
 {% endcomment %}
 
 {% comment %}First, for pages not in a book directory, set the path as
@@ -681,13 +665,20 @@ the first book-directory listed in meta.yml{% endcomment %}
     {% capture path-to-book-directory %}../{{ site.data.meta.works.[0].directory }}/{% endcapture %}
 {% endif %}
 
-{% comment %}Then, for all pages in a text directory, create a relative path to the book-directory{% endcomment %}
+{% comment %} Then, for pages in a book directory,
+there is no path because we're already there. {% endcomment %}
+{% if is-book-directory and page.path contains ".md" %}
+    {% capture path-to-book-directory %}{% endcapture %}
+{% endif %}
+
+{% comment %}Then, for all pages in a book subdirectory,
+create a relative path to the book-directory{% endcomment %}
 {% if is-book-subdirectory %}
-    {% if is-book-subsubdirectory != true %}
-        {% capture path-to-book-directory %}../{% endcapture %}
+    {% if is-book-subdirectory != true %}
+        {% capture path-to-book-directory %}{% endcapture %}
     {% else %}
         {% capture path-to-book-directory %}
-            {% for i in (2..folder-depth) %}../{% endfor %}
+            {% for i in (1..folder-depth) %}../{% endfor %}
         {% endcapture %}
     {% endif %}
 
