@@ -1,0 +1,118 @@
+{
+	"task": {
+		"description": "The main task you want to perform.",
+		"alias": "t",
+		"default": "output",
+		"defaultDescription": "output (output a publication).",
+		"choices": ["check", "output", "images", "index", "install", "export"],
+		"type": "string",
+		"demandOption": true
+	},
+	"format": {
+		"description": "The publication format you want to output.",
+		"alias": "f",
+		"default": "web",
+		"defaultDescription": "web (serve a website).",
+		"choices": ["print-pdf", "screen-pdf", "web", "epub", "app"],
+		"type": "string",
+		"implies": ["task"]
+	},
+	"book": {
+		"description": "The book folder to output.",
+		"alias": "b",
+		"default": "book",
+		"defaultDescription": "book (the default 'book' folder).",
+		"type": "string",
+		"implies": ["task", "format"]
+	},
+	"subdir": {
+		"description": "The book subdirectory folder, e.g. if you are outputting a translation.",
+		"alias": ["language", "s", "l"],
+		"default": "",
+		"defaultDescription": "No subdirectory.",
+		"type": "string",
+		"implies": ["task", "format", "book"]
+	},
+	"configs": {
+		"description": "Any custom config files in /_configs, comma-separated.",
+		"alias": "c",
+		"default": "",
+		"defaultDescription": "No extra configs.",
+		"type": "string",
+		"implies": ["task"]
+	},
+	"mathjax": {
+		"description": "Add this option if this project uses MathJax.",
+		"alias": "m",
+		"default": "false",
+		"defaultDescription": "No MathJax.",
+		"type": "boolean",
+		"implies": ["task", "format"]
+	},
+	"baseurl": {
+		"description": "A custom base URL, e.g. /books, instead of the one in _config.yml.",
+		"alias": "u",
+		"default": "",
+		"defaultDescription": "No base URL.",
+		"type": "string",
+		"implies": ["task", "format"]
+	},
+	"incremental": {
+		"description": "Whether Jekyll should only rebuild changed files (i.e. incremental build).",
+		"alias": "i",
+		"default": "false",
+		"defaultDescription": "false: do not rebuild incrementally.",
+		"type": "boolean",
+		"implies": ["task"]
+	},
+	"epubcheck": {
+		"description": "The path to the folder containing epubcheck.jar on your machine.",
+		"alias": "e",
+		"default": "/usr/local/bin/epubcheck-4.0.2",
+		"defaultDescription": "On Windows, we will check your PATH. On Mac, we will try '/usr/local/bin/epubcheck-4.0.2'.",
+		"type": "string",
+		"implies": ["task", "format"]
+	},
+	"app-os": {
+		"description": "The OS for which you want an app.",
+		"alias": "o",
+		"default": "android",
+		"defaultDescription": "android (an Android app)",
+		"choices": ["android", "ios", "windows"],
+		"type": "string",
+		"implies": ["task", "format"]
+	},
+	"app-build": {
+		"description": "Whether to build the app with Cordova. If false, we will generate app HTML but not build the app.",
+		"alias": "d",
+		"default": false,
+		"defaultDescription": "false (HTML only, no Cordova build)",
+		"type": "boolean",
+		"implies": ["task", "format", "app-os"]
+	},
+	"app-release": {
+		"description": "If building the app, whether to build a signed release.",
+		"alias": "r",
+		"default": false,
+		"defaultDescription": "false (build an unsigned debug app only).",
+		"type": "boolean",
+		"implies": ["task", "format", "app-os", "app-build"]
+	},
+	"app-emulate": {
+		"description": "Whether to try launching the built app in an emulator.",
+		"alias": "p",
+		"default": false,
+		"defaultDescription": "false (do not try to run the emulator).",
+		"type": "boolean",
+		"implies": ["task", "format", "app-os", "app-build"]
+	},
+	"export-format": {
+		"description": "Which file format to export to.",
+		"alias": "x",
+		"default": "word",
+		"defaultDescription": "word (MS Word).",
+		"choices": ["word"],
+		"type": "string",
+		"implies": ["task", "format"]
+	}
+}
