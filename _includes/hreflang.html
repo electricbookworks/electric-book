@@ -1,0 +1,39 @@
+{% include translations %}
+
+{% comment %} Add default. If this file exists in the parent language, set that language as default. Else, set this translation language as the default. {% endcomment %}
+
+{% if translations-of-this-file contains parent-language or language == parent-language %}
+    
+    <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/book/text/{{ current-file }}.html" />
+
+{% else %}
+    
+    <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/book/{{ language }}/text/{{ current-file }}.html" />
+    
+{% endif %}
+
+{% comment %} Add alternate link for this language {% endcomment %}
+{% if language == parent-language %}
+    
+    <link rel="alternate" hreflang="{{ language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/book/text/{{ current-file }}.html" />
+    
+{% else %}
+
+    <link rel="alternate" hreflang="{{ language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/book/{{ language }}/text/{{ current-file }}.html" />
+
+{% endif %}
+
+{% comment %} Add alternate link for available translations {% endcomment %}
+{% for translation in translations-of-this-file %}
+
+    {% if translation == parent-language %}
+    
+        <link rel="alternate" hreflang="{{ translation }}" href="{{ site.canonical-url }}{{ site.baseurl }}/book/text/{{ current-file }}.html" />
+    
+    {% else %}
+        
+        <link rel="alternate" hreflang="{{ translation }}" href="{{ site.canonical-url }}{{ site.baseurl }}/book/{{ translation }}/text/{{ current-file }}.html" />
+        
+    {% endif %}
+
+{% endfor %}
