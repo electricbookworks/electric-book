@@ -4,6 +4,8 @@ title: "Texte brut"
 
 ## Texte brut
 
+{% include page-info %}
+
 ### Un scandale en Bohème
 
 <!--index:

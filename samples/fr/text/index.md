@@ -1,5 +1,0 @@
----
-style: cover
----
-
-{% include cover %}
