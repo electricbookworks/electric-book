@@ -20,27 +20,25 @@
 // This mixin used for close buttons
 // on items like footnote popups
 @mixin button-close($color) {
+
+    // Appearance
     background: $color;
     border-radius: 1em;
     border: 0;
-    color: white;
-    display: inline-block;
+    color: $color-background;
     font-family: $font-text-secondary;
-    font-size: 1em;
-    font-weight: bold;
-    line-height: 1;
-    min-width: 1em;
-    padding: 0.15em 0.1em 0em 0.1em;
+    text-decoration: none;
+
+    // Position
     position: absolute;
-    right: -($line-height-default / 2);
+    right: -1em;
     text-align: center;
-    top: -($line-height-default / 2);
-    vertical-align: inherit;
+    top: -1em;
+    width: 2em;
+    height: 2em;
+
     &:before {
         content: $nav-bar-close;
-        display: inline-block;
-        width: 1em;
-        position: relative;
-        top: -0.1em;
+        font-size: 2em;
     }
 }

@@ -70,15 +70,16 @@ $print-notes: true !default;
         }
 
     // Avoid page-footnotes created by footnotes.js
-    // from inheriting blockquote indentation
+    // from inheriting blockquote indentation by
+    // reiterating properties that blockquote might override.
     blockquote .page-footnote {
-        text-indent: 0;
-        margin-left: 0;
+        text-indent: -($line-height-default);
+        margin-left: $line-height-default;
     }
 
     // The page-footnotes area
     @page {
-        @footnotes {
+        @footnote {
             margin-top: $line-height-default / 2;
             padding-top: $line-height-default / 2;
             font-size: $font-size-default * $font-size-smaller;

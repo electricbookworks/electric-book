@@ -1,0 +1,124 @@
+{% comment %}Don't do all this work if translations
+is already loaded on this page.{% endcomment %}
+{% if translations-loaded == true %}
+{% else %}
+
+{% comment %} Compile a list of languages for which this file exists and is being built {% endcomment %}
+
+{% assign translations-of-this-file = "" | split: "" %}
+
+{% if is-translation %}
+    
+    {% comment %} Check if the file exists in the parent language {% endcomment %}
+    {% for work in works %}
+
+        {% comment %} Reset {% endcomment %}
+        {% assign translated-file-exists = false %}
+        {% assign translated-file-built = false %}
+
+        {% comment %} Check if any translations of this file are listed in meta.yml.
+        Allow for files with values (e.g. pasted from epub, or nav-source: files). {% endcomment %}
+        {% for file in work.products[output-format].files %}
+            {% for filename in file %}
+                {% if filename[0] == current-file %}
+                    {% assign translated-file-exists = true %}
+                {% elsif filename == current-file %}
+                    {% assign translated-file-exists = true %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        {% comment %} Check if this translated file is being built {% endcomment %}
+        {% capture translated-file-with-path %}{{ book-directory }}/text/{{ current-file }}.md{% endcapture %}
+        {% for page in site.pages %}
+            {% if page.path == translated-file-with-path %}
+                {% assign translated-file-built = true %}
+            {% endif %}
+        {% endfor %}
+        
+        {% comment %} If both criteria are satisfied, add this language to the list of 
+        languages for which this file is being built. {% endcomment %}
+        {% if translated-file-exists == true and translated-file-built == true %}
+            {% assign translations-of-this-file = translations-of-this-file | push: parent-language %}
+        {% endif %}
+
+    {% endfor %}
+
+    {% comment %} Need to check all _other_ translations {% endcomment %}
+    {% assign other-translations = translations | where_exp: "translation", "translation.language != language" %}
+    
+    {% for translation in other-translations %}
+
+        {% comment %} Reset {% endcomment %}
+        {% assign translated-file-exists = false %}
+        {% assign translated-file-built = false %}
+
+        {% comment %} Check if any translations of this file are listed in meta.yml.
+        Allow for files with values (e.g. pasted from epub, or nav-source: files). {% endcomment %}
+        {% for file in translation.products[output-format].files %}
+            {% for filename in file %}
+                {% if filename[0] == current-file %}
+                    {% assign translated-file-exists = true %}
+                {% elsif filename == current-file %}
+                    {% assign translated-file-exists = true %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        {% comment %} Check if this translated file is being built {% endcomment %}
+        {% capture translated-file-with-path %}{{ book-directory }}/{{ translation.language }}/text/{{ current-file }}.md{% endcapture %}
+        {% for page in site.pages %}
+            {% if page.path == translated-file-with-path %}
+                {% assign translated-file-built = true %}
+            {% endif %}
+        {% endfor %}
+        
+        {% comment %} If both criteria are satisfied, add this language to the list of 
+        languages for which this file is being built. {% endcomment %}
+        {% if translated-file-exists == true and translated-file-built == true %}
+            {% assign translations-of-this-file = translations-of-this-file | push: translation.language %}
+        {% endif %}
+
+    {% endfor %}
+    
+{% else %}
+    {% comment %} We're in the parent language {% endcomment %}
+    
+    {% for translation in translations %}
+    
+        {% comment %} Reset {% endcomment %}
+        {% assign translated-file-exists = false %}
+        {% assign translated-file-built = false %}
+
+        {% comment %} Check if any translations of this file are listed in meta.yml.
+        Allow for files with values (e.g. pasted from epub, or nav-source: files). {% endcomment %}
+        {% for file in translation.products[output-format].files %}
+            {% for filename in file %}
+                {% if filename[0] == current-file %}
+                    {% assign translated-file-exists = true %}
+                {% elsif filename == current-file %}
+                    {% assign translated-file-exists = true %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        {% comment %} Check if this translated file is being built {% endcomment %}
+        {% capture translated-file-with-path %}{{ book-directory }}/{{ translation.language }}/text/{{ current-file }}.md{% endcapture %}
+        {% for page in site.pages %}
+            {% if page.path == translated-file-with-path %}
+                {% assign translated-file-built = true %}
+            {% endif %}
+        {% endfor %}
+        
+        {% comment %} If both criteria are satisfied, add this language to the list of 
+        languages for which this file is being built. {% endcomment %}
+        {% if translated-file-exists == true and translated-file-built == true %}
+            {% assign translations-of-this-file = translations-of-this-file | push: translation.language %}
+        {% endif %}
+
+    {% endfor %}
+{% endif %}
+
+{% comment %}End of entire translations load.{% endcomment %}
+{% assign translations-loaded = true %}
+{% endif %}

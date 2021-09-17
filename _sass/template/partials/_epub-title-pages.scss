@@ -9,7 +9,7 @@ $epub-title-pages: true !default;
 	.half-title-page {
 		margin: $start-depth auto 0 auto;
 		text-align: center;
-		p {
+		h1, p {
 			text-indent: 0;
 			hyphens: none;
 			text-align: center;
@@ -23,7 +23,7 @@ $epub-title-pages: true !default;
 			font-family: $font-display-main;
 			font-size: $font-size-default * $font-size-bigger;
 			line-height: 1;
-			margin: 0;
+			margin: 0 0 $line-height-default 0;
 			// string-set: book-title content(); // breaks entire CSS file in Adobe Digital Editions
 		}
 		.title-page-subtitle, 
@@ -31,14 +31,14 @@ $epub-title-pages: true !default;
 			font-family: $font-display-main;
 			font-size: $font-size-default * $font-size-bigger;
 			line-height: 1;
-			margin: $line-height-default 0 $line-height-default 0;
+			margin: 0 0 $line-height-default 0;
 			// string-set: book-subtitle content(); // breaks entire CSS file in Adobe Digital Editions
 		}
 		.title-page-author, 
 		.titlepage-author {
 			font-size: $font-size-default * $font-size-bigger;
 			line-height: 1;
-			margin: ($line-height-default * 2) 0;
+			margin: 0 0 $line-height-default 0;
 			// string-set: book-author content(); // breaks entire CSS file in Adobe Digital Editions
 		}
 		.title-page-publisher, 
@@ -48,11 +48,11 @@ $epub-title-pages: true !default;
 		.title-page-logo, 
 		.titlepage-logo {
 			display: block; // In case the class is applied to the image, not the paragraph
+			margin: $line-height-default auto 0 auto;
 			max-width: 30%;
 			img {
 				width: 100%;
 			}
 		}
 	}
-
 }

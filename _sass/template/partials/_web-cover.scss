@@ -15,10 +15,11 @@ $web-cover: true !default;
 	}
 	p.cover,
 	div.cover {
+		height: 100vh;
 		margin: 0 auto;
 		padding: 0;
+		text-align: center;
 		text-indent: 0;
-		height: 100vh;
 	}
 	img.cover {
 		max-height: 100%;

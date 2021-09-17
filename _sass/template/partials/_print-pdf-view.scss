@@ -17,6 +17,8 @@ $print-pdf-view: true !default;
         prince-pdf-output-intent: url("#{$path-to-root-directory}/../_tools/profiles/#{$color-profile}");
         @if $output-format == "print-pdf" {
             prince-filter-resolution: 300dpi;
+        } @else {
+            prince-filter-resolution: 200dpi;
         }
     }
 

@@ -3,10 +3,24 @@ $epub-index: true !default;
 
     // Index
 
-    ol.reference-index,
-    ul.reference-index {
+    // .reference-index-manual is for indexes that
+    // are manually created, and should not be processed
+    // by our dynamic-indexing scripts to save build time.
+
+    .reference-index,
+    .reference-index-manual {
         margin-left: $paragraph-indent;
         list-style-type: none;
+
+        // If we're not spacing paragraphs,
+        // and the index appears after a paragraph,
+        // then add some space above it.
+        @if not ($spaced-paras) {
+            p + & {
+                margin-top: $line-height-default;
+            }
+        }
+
         ul, ol {
             list-style-type: none;
         }
@@ -29,6 +43,19 @@ $epub-index: true !default;
                     color: inherit;
                     text-decoration: none;
                 }
+
+                // Space between entry and first reference number
+                &:first-of-type {
+                    margin-left: .5em;
+                }
+
+                // If this starts a range, use an en dash not a comma
+                &.index-range-from {
+
+                    &:after {
+                        content: "\2013"
+                    }
+                }
             }
         }
     }
@@ -39,6 +66,12 @@ $epub-index: true !default;
     // characters, which is its display: none limit.
     .duplicate {
         display: none;
+    }
+
+    .index-target {
+
+        // Avoid index anchors from adding line breaks
+        float: left;
     }
 
 }

@@ -8,7 +8,7 @@ title: "Plain images"
 
 Also see the docs on [including images in content](https://electricbookworks.github.io/electric-book/docs/editing/images.html) and [adding them to your project](https://electricbookworks.github.io/electric-book/docs/images/adding-image-files.html).
 
-For examples of plain images, here's the first chapter of [*The Count of Monte Christo* by Alexandre Dumas](http://www.gutenberg.org/files/1184/1184-h/1184-h.htm){:#count-2}.
+For examples of plain images, here's the first chapter of [*The Count of Monte Christo* by Alexandre Dumas](https://www.gutenberg.org/files/1184/1184-h/1184-h.htm){:#count-2}.
 
 First, here is a map of Naples, where the story is set.
 
