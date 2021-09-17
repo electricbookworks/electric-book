@@ -114,6 +114,9 @@ $text-divider-image-width: $line-height-default !default;
 // Set to false to turn partials off
 // ---------------------------------
 
+// Declare namespaces
+$epub-namespaces: true !default;
+
 // Reset ereader CSS as best we can
 $epub-css-reset: true !default;
 
@@ -164,6 +167,14 @@ $epub-fitting: true !default;
 
 // Logic (if this then that)
 $epub-reset-sequences: true !default;
+
+// ------------------
+// Declare namespaces
+// ------------------
+
+// This must come before other rules,
+// after @charset and @import.
+@import "template/partials/epub-namespaces";
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify

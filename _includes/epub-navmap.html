@@ -77,12 +77,12 @@ as the include calls itself for each list of children.
             for a fragment identifier that is different from the parent.{% endcomment %}
             <content
                 {% if item.file and item.file != "" %}
-                    src="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
+                    src="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
                 {% else %}
 
                     {% assign children-with-file = item.children | where_exp: "item", "item.file" %}
 
-                    src="{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ children-with-file[0].file }}.html"
+                    src="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ children-with-file[0].file }}.html"
                 {% endif %} />
 
             {% comment %}If there are child items, run this include again here,

@@ -5,7 +5,7 @@
 build: live
 
 # URLs
-canonical-url: "http://example.com"
+canonical-url: "https://example.com"
 baseurl: "/example"
 
 # Exclude list

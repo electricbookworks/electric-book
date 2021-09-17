@@ -62,6 +62,7 @@ exclude:
   - /assets/js/bookmarks.js
 
   # Things we don't need for an app
+  - sitemap.xml
   - assets/profiles
   - /*/package.opf
   - /*/toc.ncx

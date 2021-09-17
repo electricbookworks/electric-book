@@ -1,0 +1,4 @@
+---
+layout: trim
+---
+{% include sitemap %}

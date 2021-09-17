@@ -26,7 +26,7 @@ When printing in black and white, the darkness or lightness of images can be hea
 
 That said, the profiles included here should be suitable for most uses:
 
-> The PSO profiles are provided by eci.org. The sRGB profile is from color.org. The grey profiles were provided kindly by [digitaldistributors.co.za](http://digitaldistributors.co.za).
+> The PSO profiles are provided by eci.org. The sRGB profile is from color.org. The grey profiles were provided kindly by [digitaldistributors.co.za](https://digitaldistributors.co.za).
 {:.sidenote}
 
 - `sRGB_v4_ICC_preference_displayclass.icc` is for images and documents to be viewed on screens. Avoid using it for print PDF output.

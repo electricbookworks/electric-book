@@ -3,7 +3,7 @@ Do not use this include in book files that are in your book's files list
 in _data/meta.yml. It will break search-index builds by redirecting the web scraper.
 
 To call this include, use the following tag with a target to redirect to:
-{% include redirect target="http://example.com" %}
+{% include redirect target="https://example.com" %}
 Thanks to http://insider.zone/tools/client-side-url-redirect-generator/ 
 {% endcomment %}
 

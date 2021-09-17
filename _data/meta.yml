@@ -55,6 +55,7 @@ works:
     language: "en" # use ISO 639-1, 639-2, or 639-3 codes (in that order of preference)
     relation: "" # e.g. other edition ISBN
     coverage: "" # e.g. geographic place or chronological time span
+    rightsholder: "" # who owns the copyright?
     rights: "All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher." # e.g. a copyright statement
     image: "cover.jpg"
     products: # Metadata for each product for this title (only use values that override parent metadata)
@@ -213,6 +214,7 @@ works:
     language: "en" # use ISO 639-1, 639-2, or 639-3 codes (in that order of preference)
     relation: "" # e.g. other edition ISBN
     coverage: "" # e.g. geographic place or chronological time span
+    rightsholder: "" # who owns the copyright?
     rights: "This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use." # e.g. a copyright statement
     products: # Metadata for each product for this title (only use values that override parent metadata)
       print-pdf:
@@ -424,6 +426,8 @@ works:
           - label: "Frontmatter"
             class: "cover-entry"
             children:
+              - file: "00-00-cover"
+                label: "Cover"
               - label: "Half title page"
                 file: "00-01-halftitle-page"
                 class: "frontmatter-entry"
@@ -695,6 +699,7 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
             toc:
               - label: "Texte"
                 children:
@@ -708,9 +713,11 @@ works:
                     id: "images-simples"
               - label: "Mathématiques"
                 file: "03-02-maths"
+              - label: "Index dynamique"
+                file: "10-02-dynamic-index"
           web:
             files: # Required for translations to activate language-selector
-              - "00-00-cover"
+              - "index"
               - "00-03-title-page"
               - "00-04-copyright-page"
               - "00-05-contents-page"
@@ -719,6 +726,7 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
             nav:
               - file: "00-00-cover"
                 label: "Couverture"
@@ -738,6 +746,8 @@ works:
                     label: "Images simples"
               - label: "Mathématiques"
                 file: "03-02-maths"
+              - label: "Index dynamique"
+                file: "10-02-dynamic-index"
           screen-pdf:
             files:
               - "00-00-cover"
@@ -749,6 +759,7 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
           epub:
             files: # add a value to any file to set any of the guide types listed in http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
               - "00-00-cover": "cover"
@@ -760,6 +771,7 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
           app:
             files: # Required for translations to activate language-selector
               - "00-00-cover"
@@ -771,3 +783,4 @@ works:
               - "02-00-images"
               - "02-01-plain-images"
               - "03-02-maths"
+              - "10-02-dynamic-index"
