@@ -1,0 +1,21 @@
+{% include item file=include.file return="object" %}
+
+{% comment %}Get image source, necessary for exports{% endcomment %}
+{% assign question-images-source = site.canonical-url %}
+{% if site.data.settings.remote-media.live and site.data.settings.remote-media.live != "" %}
+    {% assign question-images-source = site.data.settings.remote-media.live %}
+{% endif %}
+
+<div class="mcq question{% if include.class %} {{ include.class }}{% endif %}" data-question="{{ item-file-object.path | split: "/" | last | split: "." | first }}" data-question-code="{% include question-secret-code.html correct=item-file-object.correct %}" data-question-images-source="{{ question-images-source }}/{{ book-directory }}/images/{{ site.output }}">
+
+<div class="question-content" markdown="1">
+{{ item-file-object.content }}
+</div>
+
+{% if item-file-object.marks %}
+<div class="question-total-marks">
+    {{ item-file-object.marks }}
+</div>
+{% endif %}
+
+</div>

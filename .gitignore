@@ -1,5 +1,3 @@
-# Files and folders that should not normally
-# be committed to version control.
 _site/
 .sass-cache/
 .jekyll-metadata
@@ -10,14 +8,8 @@ _tests/log*
 _data/secrets*
 _app/platforms
 _app/plugins
-.DS_Store
 
-# If your team needs strict node-package
-# version management, comment out this line
-# and commit package-lock.json.
-package-lock.json
-
-# We don't .gitignore _output/, because we need that folder
+# we don't .gitignore _output/, because we need that folder
 # for scripts to work, even if it's empty. Instead, there is
 # a .gitignore file in _output that ignores the folder's contents,
 # but, by its presence, keeps the folder in the repo.

@@ -10,7 +10,7 @@ A traditional index includes hard-coded page numbers. So the print edition must 
 
 We recommend creating book indexes with an unbroken, unordered list, with a `reference-index` class.
 
-This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](https://www.the-future-of-ideas.com/download/).
+This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](http://www.the-future-of-ideas.com/download/).
 
 -	access:
     -	competition in, 173
@@ -1615,4 +1615,4 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	Young, Bob, 213
 -	
 -	Zittrain, Jonathan, 129, 130
-{:.reference-index-manual}
+{:.reference-index}

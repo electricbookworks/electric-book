@@ -15,11 +15,6 @@
 var prePageNumberPhrase = locales[pageLanguage]['cross-references']['pre-page-number'];
 var postPageNumberPhrase = locales[pageLanguage]['cross-references']['post-page-number'];
 
-// A global variable for holding the page number being
-// inserted into a book's index, for comparison with
-// the last number inserted.
-var ebCurrentBookIndexPageNumber = '';
-
 function addPageReferenceFunc() {
     'use strict';
 
@@ -34,30 +29,6 @@ function addPageReferenceFunc() {
 
             // otherwise show a space and the page number in parentheses
             return '\u00A0' + prePageNumberPhrase + targetPage + postPageNumberPhrase;
-        });
-
-        // Add a page reference in a book index
-        Prince.addScriptFunc("indexPageReference", function (page, entryPosition, prepend) {
-
-            // If this is the first link in a new index entry,
-            // reset the ebCurrentBookIndexPageNumber.
-            if (entryPosition === 'first') {
-                ebCurrentBookIndexPageNumber = '';
-            }
-
-            // If the page number isn't the ebCurrentBookIndexPageNumber,
-            // return the page number for the target link.
-            if (page !== ebCurrentBookIndexPageNumber) {
-                // Update the ebCurrentBookIndexPageNumber
-                ebCurrentBookIndexPageNumber = page;
-
-                // Return the page plus any prepended string
-                return prepend + page;
-            } else {
-
-                // Otherwise, return an empty string.
-                return '';
-            }
         });
     }
 }

@@ -34,7 +34,7 @@ edition: "default"
 # -------------
 # To make absolute links work, e.g. in canonical links in <head>,
 # include the url where this site will live when it's live (production).
-# E.g. canonical-url: "https://example.com"
+# E.g. canonical-url: "http://example.com"
 # In Open Graph metadata, the base URL will be appended.
 canonical-url: "https://electricbookworks.github.io/electric-book"
 
@@ -82,8 +82,12 @@ mathjax-enabled: false
 #            as you work. To turn off the docs, change output to false.
 # app, epub: The app and epub collections are off by default, and
 #            turned on by those formats' _config files.
+# items:     Contains repeated items (e.g. text snippets) to be reused
+#            across books in this project.
 collections:
   docs:
+    output: true
+  items:
     output: true
 
 # --------------------------------------------
@@ -270,8 +274,3 @@ defaults:
     values:
       layout: "default"
       style: "chapter"
-  -
-    scope: # Sets default page frontmatter for all files in this project (an empty string "" for path means all files).
-      path: "_items"
-    values:
-      layout: "min"

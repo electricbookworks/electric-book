@@ -1,7 +1,8 @@
 /*jslint browser */
 /*globals window, IntersectionObserver, Element, locales, pageLanguage, settings,
-    ebSlugify, ebIsPositionRelative, ebNearestPrecedingSibling, ebTruncatedString,
-    ebToggleClickout, ebAccordionListenForAnchorClicks */
+    ebSlugify, ebIDsAssigned, ebFingerprintsAssigned, ebIsPositionRelative,
+    ebNearestPrecedingSibling, ebTruncatedString, ebToggleClickout,
+    ebAccordionListenForAnchorClicks */
 
 // This is a script for managing a user's bookmarks.
 // This script waits for setup.js to give elements IDs.
@@ -1188,28 +1189,13 @@ function ebBookmarksInit() {
     }
 }
 
-// Wait for data-index-targets to be loaded
-// and IDs to be assigned
-// before applying the accordion.
-function ebPrepareForBookmarks() {
-    'use strict';
-
-    var bookmarksObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            if (mutation.type === "attributes") {
-                if (document.body.getAttribute('data-ids-assigned')
-                        && document.body.getAttribute('data-fingerprints-assigned')) {
-                    ebBookmarksInit();
-                }
-            }
-        });
-    });
-
-    bookmarksObserver.observe(document.body, {
-        attributes: true // listen for attribute changes
-    });
-}
-
+// Load the bookmarks when IDs have been assigned
 if (settings.web.bookmarks.enabled) {
-    window.onload = ebPrepareForBookmarks();
+    var ebBookmarksCheckForIDs = window.setInterval(function () {
+        'use strict';
+        if (ebIDsAssigned === true && ebFingerprintsAssigned === true) {
+            ebBookmarksInit();
+            clearInterval(ebBookmarksCheckForIDs);
+        }
+    }, 500);
 }

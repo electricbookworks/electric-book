@@ -108,8 +108,6 @@ web:
   # -----------------
   images:
     lazyload: true
-    # Do you want images to open as a standalone file when clicked?
-    open-image-on-click: true
   # -----------------
   # Bookmarks
   # -----------------
@@ -230,5 +228,8 @@ app:
 # ----------------------------------------------------------
 # General output options
 # ----------------------
+# If included items are missing, do we show an error in output,
+# or does the site build break completely? Default is to break.
+on-missing-item: error
 # Redact elements with the 'redact' class: true or false
 redact: false

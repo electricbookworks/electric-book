@@ -107,7 +107,7 @@ It also includes any items in _data/nav.yml below the book entries.
         {% capture relevant-page-filename %}{{ page.path | split: "." | first | split: "/" | last }}{% endcapture %}
         {% if relevant-files contains relevant-page-filename %}
           <li{% if relevant-page-filename == current-file and this-page-path contains book-text-path %} class="active"{% endif %}>
-            <a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a>
+            <a href="{{ page.url }}">{{ page.title }}</a>
           </li>
         {% endif %}
       {% endfor %}

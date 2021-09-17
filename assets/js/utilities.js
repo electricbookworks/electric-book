@@ -281,9 +281,3 @@ function ebToggleClickout(modalElement, callback) {
         }, {once: true});
     }
 }
-
-// This lets us use a function from here in Node (e.g. gulp).
-// This must only run in Node, hence the `window` check.
-if (typeof window === 'undefined') {
-    module.exports.ebSlugify = ebSlugify;
-}

@@ -30,7 +30,7 @@ Ensure that raster images, or raster/bitmap elements in SVG, are high-res enough
 > Check out [Adobe's guidance on saving SVGs](https://helpx.adobe.com/illustrator/using/saving-artwork.html#save_in_svg_format).
 {:.box}
 
-If your SVG files seem too big, [read up on optimising SVGs](https://stackoverflow.com/a/7068651/1781075), and/or (if you're comfortable using Python scripts) run your SVGs through [Scour](https://codedread.com/scour/).
+If your SVG files seem too big, [read up on optimising SVGs](http://stackoverflow.com/a/7068651/1781075), and/or (if you're comfortable using Python scripts) run your SVGs through [Scour](http://codedread.com/scour/).
 
 ## Resolution
 
@@ -40,6 +40,8 @@ For JPGs, we often use 300dpi and image quality of 100%/12/maximum for `_source`
 
 > Note: To get a 200dpi JPG that is 115 mm wide, the image must be 906 pixels wide. (115mm is 4.53 inches, which contains 906 pixels at 200 pixels per inch, aka 200 dpi.)
 {:.sidenote}
+
+Try to keep non-`print-pdf` JPG file sizes below 127KB: [Amazon Kindle may automatically downsample images above that](http://authoradventures.blogspot.com/2014/02/image-size-limit-increased-in-kindle.html), and it's better if you control the downsampling for quality than let their servers do it. However, for raster-only images (e.g. x-rays or photos) if a larger size is required for acceptable print quality then larger is fine.
 
 ## Image styles
 

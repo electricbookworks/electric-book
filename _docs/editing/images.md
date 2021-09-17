@@ -62,15 +62,41 @@ If you are creating a [translation](translations.html) in a subdirectory of `tex
 
 {% endraw %}
 
-## Image size
+## Image placement
 
-In PDF output, you can use a class to specify the exact height of the image in lines. This is important if you're maintaining a baseline grid on your pages. For instance, `{:.height-15}` will limit the image to a height of fifteen lines.
+You may need to control how an image is sized and placed on the page – especially in print – depending on its detail or aspect ratio and nearby images or other elements. You do this by adding a class tag to the line following the image or figure created with a `>` blockquote. (This applies a class to the blockquote in HTML.) 
 
-``` liquid
-{% include image file="foobar.jpg" class="height-15" %}
-```
+You have two broad options:
 
-> CSS tip: [If you're having trouble with SVGs having space around them](https://stackoverflow.com/questions/24626908/how-to-get-rid-of-extra-space-below-svg-in-div-element), in your CSS make sure you set the height of the `img` element. SVGs are inline elements by default, and will add white space around them.
+The lazy way: use these class attributes:
+
+* `.x-small` limits the image height. In print, to 30mm.
+* `.small` limits the image height. In print, to 45mm.
+* `.medium` limits the image height. In print, to 65mm, which allows two figures with shortish captions to fit on a page.
+* `.large` fills the width and most of a printed page, up to 150mm tall. Try to put these images at the end of a section, because they cause a page break.
+* `.fixed` keeps the figure in its place in the text flow, and will not float it to the top or bottom of a page. For instance, when an image must appear in a step-by-step list of instructions.
+
+You add these classes to the `{:.figure} tag like this:
+
+`{:.figure .small}`
+
+`{:.figure .fixed}`
+
+and so on. You can combine size and placement classes like this, too:
+
+`{:.figure .fixed .small}`
+
+The more accurate way: use a class tag to specify the exact height of the image in lines. This is important if you're maintaining a baseline grid on your pages. For instance, `{:.height-5}` will limit the image to a height of five lines. Unlike the lazy way above, this tag should be applied to the image, not the figure. So a complete figure element might look like this in markdown:
+
+~~~
+> ![Potatoes on the moon]({{ site.image-set }}/1-moon-potatoes.jpg)
+> {:.height-12}
+>
+> Potatoes grow well on the moon if well watered.
+{:.figure}
+~~~
+
+> CSS tip: [If you're having trouble with SVGs having space around them](http://stackoverflow.com/questions/24626908/how-to-get-rid-of-extra-space-below-svg-in-div-element), in your CSS make sure you set the height of the `img` element. SVGs are inline elements by default, and will add white space around them.
 
 ## Images over a double-page-spread
 

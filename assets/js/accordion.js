@@ -1,7 +1,7 @@
 /*jslint browser, for */
 /*global window, ebLazyLoadImages, searchTerm, videoShow
-    locales, pageLanguage, console, Element, HTMLDocument, Node,
-    Node, MutationObserver */
+    locales, pageLanguage, console, Element, HTMLDocument,
+    Node, ebIDsAssigned */
 
 // console.log('Debugging accordions.js');
 
@@ -125,10 +125,15 @@ function ebAccordionFillSections() {
     // Grab the individual #contents elements of the page
     var contentItems = document.getElementById('content').childNodes;
 
-    // Put all the items in an array.
+    // Put all the items in an array, selecting only
+    // elements and text items that match the mathjax \[ pattern.
     var j, contentItemsForSections = [];
     for (j = 0; j < contentItems.length; j += 1) {
-        contentItemsForSections.push(contentItems[j]);
+        if (contentItems[j].nodeType === Node.ELEMENT_NODE) {
+            contentItemsForSections.push(contentItems[j]);
+        } else if (contentItems[j].nodeValue.includes('\[')) {
+            contentItemsForSections.push(contentItems[j]);
+        }
     }
 
     // We don't know where our first section is yet
@@ -336,7 +341,7 @@ function ebAccordionShow(targetID) {
         tabContents.setAttribute('aria-expanded', 'true');
 
         // lazyload the images inside
-        var lazyimages = sectionToShow.querySelectorAll('[data-src]');
+        var lazyimages = sectionToShow.querySelectorAll('[data-srcset]');
 
         // console.log('lazyimages: ' + lazyimages.innerHTML);
 
@@ -584,9 +589,6 @@ function ebAccordify() {
         return;
     }
 
-    // Signal that we're loading the accordion
-    document.body.setAttribute('data-accordion-active', 'true');
-
     // exit if there aren't any headings
     var collapserTargets = accordionHeads;
     var collapserButtons = document.querySelectorAll(collapserTargets);
@@ -656,27 +658,11 @@ function ebLoadAccordion() {
     ebAccordionListenForHashChange();
 }
 
-// Wait for data-index-targets to be loaded
-// and IDs to be assigned
-// before applying the accordion.
-function ebPrepareForAccordion() {
+// Load the accordion when IDs have been assigned
+var ebAccordionCheckForIDs = window.setInterval(function () {
     'use strict';
-
-    var accordionObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            if (mutation.type === "attributes") {
-                if (document.body.getAttribute('data-accordion-active') !== 'true'
-                        && document.body.getAttribute('data-index-targets')
-                        && document.body.getAttribute('data-ids-assigned')) {
-                    ebLoadAccordion();
-                }
-            }
-        });
-    });
-
-    accordionObserver.observe(document.body, {
-        attributes: true // listen for attribute changes
-    });
-}
-
-window.onload = ebPrepareForAccordion();
+    if (ebIDsAssigned === true) {
+        ebLoadAccordion();
+        clearInterval(ebAccordionCheckForIDs);
+    }
+}, 500);

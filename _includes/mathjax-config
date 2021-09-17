@@ -62,10 +62,17 @@ MathJax config for local MathJax with SVG output.
         });
     </script>
 
-    {% comment %} Link to local MathJax script.
-    Note the space in the script element, necessary to prevent
-    Cheerio from collapsing this to a self-closing tag. {% endcomment %}
-    <script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"> </script>
+    {% comment %} Link to local MathJax script. {% endcomment %}
+    {% if site.output == "epub" %}
+
+        {% comment %}This path uses the structure in the final, packaged epub.{% endcomment %}
+        <script type="text/javascript" src="{{ path-to-book-directory }}mathjax/MathJax.js"></script>
+
+    {% else %}
+
+        <script type="text/javascript" src="{{ path-to-root-directory }}assets/js/mathjax/MathJax.js"></script>
+
+    {% endif %}
 
 {% comment %} MathJax from the CDN (not local),
 with HTML-CSS output. {% endcomment %}

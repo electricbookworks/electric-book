@@ -20,8 +20,8 @@ You set the full URL for the `remote-media` location in `_data/settings.yml`. Th
 
 ``` yaml
 remote-media:
-  live: "https://media.superpotatoes.com"
-  development: "https://dev.superpotatoes.com/media"
+  live: "http://media.superpotatoes.com"
+  development: "http://dev.superpotatoes.com/media"
 ```
 
 To disable external media, comment out the relevant settings, e.g. to only use remote media for development, but not for a live website:
@@ -29,14 +29,14 @@ To disable external media, comment out the relevant settings, e.g. to only use r
 ``` yaml
 remote-media:
   # live: ""
-  development: "https://dev.superpotatoes.com/media"
+  development: "http://dev.superpotatoes.com/media"
 ```
 
 ## Structuring external-media files
 
 At the remote-media domain, the paths to media should match the paths to that media in this project.
 
-For example, if a project called `superpotatoes` contains two books, `mondial` and `fabula`, the remote-media URL might be `https://media.superpotatoes.com`. And on that media server, web images would be stored in `https://media.superpotatoes.com/mondial/images/web` and `https://media.superpotatoes.com/fabula/images/web`.
+For example, if a project called `superpotatoes` contains two books, `mondial` and `fabula`, the remote-media URL might be `http://media.superpotatoes.com`. And on that media server, web images would be stored in `http://media.superpotatoes.com/mondial/images/web` and `http://media.superpotatoes.com/fabula/images/web`.
 
 Images inserted by CSS (e.g. `background-image` files) cannot be in external media, because their paths are fixed in CSS. So do not move these to the external media location.
 
@@ -46,7 +46,7 @@ External media does not work for app or epub output. For apps with enough images
 
 ## Translations
 
-When using remote-media, translations must have their own image files in their translation subdirectories (e.g. `https://superpotatoes.com/mondial/fr/images/web`). That is, unlike local images they cannot inherit their parent language's images in the absence of their own `images` folder.
+When using remote-media, translations must have their own image files in their translation subdirectories (e.g. `http://superpotatoes.com/mondial/fr/images/web`). That is, unlike local images they cannot inherit their parent language's images in the absence of their own `images` folder.
 
 ## Local media
 

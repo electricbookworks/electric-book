@@ -12,7 +12,7 @@ style: copyright-page
 {:.non-printing}
 
 *{{ title }}*\\
-Text © {% if rightsholder != "" %}{{ rightsholder }}{% else %}{{ creator }}{% endif %}
+Text © {{ creator }}
 
 {% include identifiers scheme="ISBN" %}
 

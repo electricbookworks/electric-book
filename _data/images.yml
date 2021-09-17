@@ -9,10 +9,3 @@
 #
 # Possible values
 # - print-PDF colorspace: cmyk | gray
-#
-# To apply settings to all images at once,
-# use "all" instead of a filename.
-# E.g.
-# - file: "all"
-#   print-pdf:
-#     colorspace: "gray"

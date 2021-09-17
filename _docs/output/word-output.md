@@ -18,4 +18,4 @@ Run the template's `run-` script for your operating system and follow the prompt
 
 Word output is a conversion to MS Word from one of the other output formats. Our script generates your book in a format you choose (e.g. the print PDF version) and then converts the content into MS Word files.
 
-Word output requires that you have [Pandoc](https://pandoc.org/) installed.
+Word output requires that you have [Pandoc](http://pandoc.org/) installed.

@@ -46,11 +46,11 @@ Unfortunately HTML tags are very, very time consuming to type by hand. But we ha
 
 [Markdown](https://en.wikipedia.org/wiki/Markdown) is just plain text, neatly structured. Plain text as in `.txt` files. It's so neatly structured that software can work out, just from the structure of your text, what HTML you intended, and convert it instantly to finished HTML, tags and all. No way! Yes way.
 
-Markdown was invented by two very smart people in 2004: [John Gruber](https://daringfireball.net/projects/markdown/) and Aaron Swartz. Since their work, others have added new features to markdown. So today there are many variations of markdown. We use a variation called kramdown.
+Markdown was invented by two very smart people in 2004: [John Gruber](http://daringfireball.net/projects/markdown/) and Aaron Swartz. Since their work, others have added new features to markdown. So today there are many variations of markdown. We use a variation called kramdown.
 
-As you work with markdown, you'll get to know it really well. That can take as little as a few hours. And hopefully you'll come to love it as much as we do. To do that, you'll need to keep the [kramdown syntax reference](https://kramdown.gettalong.org/syntax.html) handy. For now, though, we'll explain the most common, important things you'll need to edit simple books.
+As you work with markdown, you'll get to know it really well. That can take as little as a few hours. And hopefully you'll come to love it as much as we do. To do that, you'll need to keep the [kramdown syntax reference](http://kramdown.gettalong.org/syntax.html) handy. For now, though, we'll explain the most common, important things you'll need to edit simple books.
 
-To quickly test any basic markdown yourself, go to [https://kramdown.herokuapp.com](https://kramdown.herokuapp.com/). Type markdown in the left, and see the rendered HTML on the right.
+To quickly test any basic markdown yourself, go to [http://kramdown.herokuapp.com](http://kramdown.herokuapp.com/). Type markdown in the left, and see the rendered HTML on the right.
 
 ### Paragraphs
 
@@ -178,12 +178,12 @@ If you want your final HTML to include a clickable link:
 Markdown:
 
 ~~~ md
-To learn more, [click here](https://google.com).
+To learn more, [click here](http://google.com).
 ~~~
 
 Result:
 
-To learn more, [click here](https://google.com).
+To learn more, [click here](http://google.com).
 
 ### Images
 

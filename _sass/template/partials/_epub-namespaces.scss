@@ -1,6 +1,0 @@
-// See https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace
-
-$epub-namespaces: true !default;
-@if $epub-namespaces {
-    @namespace epub "http://www.idpf.org/2007/ops";
-}

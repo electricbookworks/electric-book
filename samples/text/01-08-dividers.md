@@ -6,7 +6,7 @@ title: "Dividers"
 
 Some authors divide sections of work with little decorations, most commonly three asterisks. In our markdown, we use three asterisks, too, and this converts to an HTML horizontal rule or `<hr>` element. By default, we display that as empty space only. The space can be easily replaced with a symbol by setting the `$text-divider` value in each output's `.scss` styles file.
 
-Here is a passage of text with a couple of these dividers in it. This is from Frederick W. Hamilton's [*Division of Words: Rules for the Division of Words at the Ends of Lines, With Remarks on Spelling, Syllabication And Pronunciation*](https://www.gutenberg.org/files/17016/17016-h/17016-h.htm). We've added the dividers. Sorry, Fred.
+Here is a passage of text with a couple of these dividers in it. This is from Frederick W. Hamilton's [*Division of Words: Rules for the Division of Words at the Ends of Lines, With Remarks on Spelling, Syllabication And Pronunciation*](http://www.gutenberg.org/files/17016/17016-h/17016-h.htm). We've added the dividers. Sorry, Fred.
 
 ### Spelling
 

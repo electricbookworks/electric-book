@@ -10,11 +10,11 @@ order: 3
 * Page contents
 {:toc}
 
-Kramdown (and most markdown variants) can only handle very simple tables. For these you can create the Markdown layout manually. See [the chapter on markdown](markdown.html#simple-tables) for guidance on formatting simple tables.
+Kramdown (and most markdown variants) can only handle very simple tables. For these you can create the Markdown layout manually. See [the chapter on markdown](03-markdown.html#simple-tables) for guidance on formatting simple tables.
 
 You can also use online tools to convert tables into a markdown format.
 
-* [Senseful](https://senseful.github.io/text-table/). For instance, working from InDesign:
+* [Senseful](http://www.sensefulsolutions.com/2010/10/format-text-as-table.html). For instance, working from InDesign:
     - Click and drag over some cells in the InDesign table (not the header row). Then Ctrl+A to select the whole table.
     - Ctrl+C to copy, then paste into a blank spreadsheet.
     - Select all the relevant cells in your spreadsheet, and copy. The table text is now on your clipboard, with the cells separated by tabs.

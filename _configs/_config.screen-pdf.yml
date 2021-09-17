@@ -23,7 +23,6 @@ exclude:
   - package.json
   - package-lock.json
   - CNAME
-  - .sass-cache
 
   # Included as-is in other files, no need to process
   - /assets/js/annotation.js
@@ -58,12 +57,10 @@ exclude:
   - /assets/js/bookmarks.js
 
   # Exclude files we don't need for screen-pdf
-  - about.md
-  - contact.md
-  - index.md
-  - search.md
-  - sitemap.xml
+  - search*
+  - index*
   - /assets/styles
+  - /assets/*.jpg
   - /assets/js/accordion.js
   - /assets/js/annotation.js
   - /assets/js/elasticlunr-setup.js
@@ -72,6 +69,7 @@ exclude:
   - /assets/js/mcqs.js
   - /assets/js/nav.js
   - /assets/js/render-search-index.js
+  - /assets/js/search-engine.js
   - /assets/js/search-index.js
   - /assets/js/search-results.js
   - /assets/js/search-store.js
@@ -94,43 +92,6 @@ exclude:
   # - /assets/fonts
   # - /book/fonts
   # - /book/styles
-  # - /samples/text/00-00-cover
-  # - /samples/text/00-01-halftitle-page
-  # - /samples/text/00-02-previous-publications-page
-  # - /samples/text/00-03-title-page
-  # - /samples/text/00-04-copyright-page
-  # - /samples/text/00-05-contents-page
-  # - /samples/text/00-06-dedication-page
-  # - /samples/text/00-07-epigraph-page
-  # - /samples/text/00-08-frontispiece-page
-  # - /samples/text/00-09-frontmatter
-  # - /samples/text/01-00-text
-  # - /samples/text/01-01-plain-text
-  # - /samples/text/01-02-headings
-  # - /samples/text/01-03-quotes
-  # - /samples/text/01-04-lists
-  # - /samples/text/01-05-tables
-  # - /samples/text/01-06-boxes
-  # - /samples/text/01-07-notes
-  # - /samples/text/01-08-dividers
-  # - /samples/text/01-09-poetry
-  # - /samples/text/01-10-questions
-  # - /samples/text/02-00-images
-  # - /samples/text/02-01-plain-images
-  # - /samples/text/02-02-figures
-  # - /samples/text/03-00-code-and-maths
-  # - /samples/text/03-01-code
-  # - /samples/text/03-02-maths
-  # - /samples/text/04-00-interactivity
-  # - /samples/text/04-01-links-buttons
-  # - /samples/text/04-02-video
-  # - /samples/text/04-03-audio
-  # - /samples/text/04-04-iframes
-  # - /samples/text/04-05-slides
-  # - /samples/text/10-00-indexes
-  # - /samples/text/10-01-traditional-index
-  # - /samples/text/10-02-dynamic-index
-  # - /samples/text/question-01
 
 # Populate the keep_files list for temporary faster builds
 # or to keep previously generated files for other formats.

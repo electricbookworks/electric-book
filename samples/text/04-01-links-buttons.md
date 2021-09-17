@@ -10,9 +10,9 @@ Links are pretty straightforward. For instance, you might link to [the Electric 
 In print, that link shows in brackets after the linked text.
 {% endunless %}
 
-Buttons should be defined by adding a `.button` class to any element, such as a link. The template allows for [inline buttons](https://example.com){:.button} and block-level buttons:
+Buttons should be defined by adding a `.button` class to any element, such as a link. The template allows for [inline buttons](http://example.com){:.button} and block-level buttons:
 
-[Example](https://example.com)
+[Example](http://example.com)
 {:.button}
 
 {% raw %}

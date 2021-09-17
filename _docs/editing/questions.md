@@ -12,7 +12,7 @@ order: 12
 
 ## Basic usage
 
-If you want to manage your questions independently of the main book text, and make your multiple-choice questions interactive and self-marking, then each question should be its own file. Questions should be separate files in the book's `text` folder.
+If you want to manage your questions independently of the main book text, and make your multiple-choice questions interactive and self-marking, then each question should be its own file. Questions should be separate files in either the book's `text` folder [or in `_items`](../setup/repeatable-items.html).
 
 Include a question in your book file with the `include question` tag:
 
@@ -24,7 +24,23 @@ Include a question in your book file with the `include question` tag:
 
 ## Multiple-choice questions
 
-If your question file includes a `correct` value in its YAML frontmatter, it will be rendered as an interactive multiple-choice question.
+You can add MCQs to your book like this:
+
+{% raw %}
+```
+{% include mcq file="question-01" %}
+```
+{% endraw %}
+
+You can also just use the usual `question` include like this:
+
+{% raw %}
+```
+{% include question file="question-01" %}
+```
+{% endraw %}
+
+and if the question file includes a `correct` value in its YAML frontmatter, it will be rendered as an interactive multiple-choice question.
 
 MCQ files must include the correct answer option(s) in their YAML frontmatter to be rendered as interactive MCQs in web and app output. They should include feedback for each answer option. Here is an example of an MCQ markdown file:
 
@@ -48,7 +64,7 @@ Which of the following is true?
 {:.mcq-feedback}
 ```
 
-Your question can have more than one correct answer.
+You can have more than one correct answer.
 
 Note:
 

@@ -72,18 +72,6 @@ function localiseText(pageLanguage) {
         }
     }
 
-    // Localise search-box submit button
-    var searchSubmitInput = document.querySelector('.search input.search-submit');
-    if (searchSubmitInput) {
-        searchSubmitInput.setAttribute('value', locales[pageLanguage].search['search-title']);
-    }
-
-    // Localise search form label for screen readers
-    var searchFormLabel = document.querySelector('.search label.visuallyhidden');
-    if (searchFormLabel) {
-        searchFormLabel.innerHTML = locales[pageLanguage].search['search-title'];
-    }
-
     // Localise searching... notice
     var searchProgressPlaceholder = document.querySelector('.search-progress');
     if (searchProgressPlaceholder) {

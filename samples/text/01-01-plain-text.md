@@ -6,38 +6,17 @@ title: "Plain text"
 
 Most books comprise pages and pages of running text. A good design makes them lovely to look at and easy to read. The heart of a design is how it handles both plain text and special forms like letters. There is a [letter towards the end of this chapter](#letter){:.show-page-number}.
 
-The text for this chapter is taken from Sir Arthur Conan Doyle's *Adventures of Sherlock Holmes*.
+The text for this chapter is taken from Sir Arthur Conan Doyle's [*Adventures of Sherlock Holmes*](10-02-dynamic-index.html#sherlock-1){:.indexed #sherlock-1}.
 
 ### A Scandal in Bohemia
 
 #### I.
 
-<!--index:
-Holmes, Sherlock-
-Adler, Irene-
-cases \\ Scandal in Bohemia-
--->
-
 To Sherlock Holmes she is always THE woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen, but as a lover he would have placed himself in a false position. He never spoke of the softer passions, save with a gibe and a sneer. They were admirable things for the observer--excellent for drawing the veil from men's motives and actions. But for the trained reasoner to admit such intrusions into his own delicate and finely adjusted temperament was to introduce a distracting factor which might throw a doubt upon all his mental results. Grit in a sensitive instrument, or a crack in one of his own high-power lenses, would not be more disturbing than a strong emotion in a nature such as his. And yet there was but one woman to him, and that woman was the late Irene Adler, of dubious and questionable memory.
-
-<!-- index:
-marriage
-marriage \\ unhappy
-cases \\ Trepoff murder
-cases \\ Atkinson brothers
-cases \\ Holland royal family -->
 
 I had seen little of Holmes lately. My marriage had drifted us away from each other. My own complete happiness, and the home-centred interests which rise up around the man who first finds himself master of his own establishment, were sufficient to absorb all my attention, while Holmes, who loathed every form of society with his whole Bohemian soul, remained in our lodgings in Baker Street, buried among his old books, and alternating from week to week between cocaine and ambition, the drowsiness of the drug, and the fierce energy of his own keen nature. He was still, as ever, deeply attracted by the study of crime, and occupied his immense faculties and extraordinary powers of observation in following out those clues, and clearing up those mysteries which had been abandoned as hopeless by the official police. From time to time I heard some vague account of his doings: of his summons to Odessa in the case of the Trepoff murder, of his clearing up of the singular tragedy of the Atkinson brothers at Trincomalee, and finally of the mission which he had accomplished so delicately and successfully for the reigning family of Holland. Beyond these signs of his activity, however, which I merely shared with all the readers of the daily press, I knew little of my former friend and companion.
 
-<!-- index:
-cases \\ Study in Scarlet -->
-
 One night--it was on the twentieth of March, 1888--I was returning from a journey to a patient (for I had now returned to civil practice), when my way led me through Baker Street. As I passed the well-remembered door, which must always be associated in my mind with my wooing, and with the dark incidents of the Study in Scarlet, I was seized with a keen desire to see Holmes again, and to know how he was employing his extraordinary powers. His rooms were brilliantly lit, and, even as I looked up, I saw his tall, spare figure pass twice in a dark silhouette against the blind. He was pacing the room swiftly, eagerly, with his head sunk upon his chest and his hands clasped behind him. To me, who knew his every mood and habit, his attitude and manner told their own story. He was at work again. He had risen out of his drug-created dreams and was hot upon the scent of some new problem. I rang the bell and was shown up to the chamber which had formerly been in part my own.
-
-<!-- index:
-luxuries \\ cigars
-luxuries \\ spirits
-luxuries \\ gasogene -->
 
 His manner was not effusive. It seldom was; but he was glad, I think, to see me. With hardly a word spoken, but with a kindly eye, he waved me to an armchair, threw across his case of cigars, and indicated a spirit case and a gasogene in the corner. Then he stood before the fire and looked me over in his singular introspective fashion.
 
@@ -70,9 +49,6 @@ I could not help laughing at the ease with which he explained his process of ded
 "Then how many are there?"
 
 "How many? I don't know."
-
-<!-- index:
-cases \\ Scandal in Bohemia \\ letter- -->
 
 "Quite so! You have not observed. And yet you have seen. That is just my point. Now, I know that there are seventeen steps, because I have both seen and observed. By-the-way, since you are interested in these little problems, and since you are good enough to chronicle one or two of my trifling experiences, you may be interested in this." He threw over a sheet of thick, pink-tinted note-paper which had been lying open upon the table. "It came by the last post," said he. "Read it aloud."
 
@@ -124,9 +100,6 @@ A man entered who could hardly have been less than six feet six inches in height
 
 "You had my note?" he asked with a deep harsh voice and a strongly marked German accent. "I told you that I would call." He looked from one to the other of us, as if uncertain which to address.
 
-<!-- index:
--cases \\ Scandal in Bohemia \\ letter -->
-
 "Pray take a seat," said Holmes. "This is my friend and colleague, Dr. Watson, who is occasionally good enough to help me in my cases. Whom have I the honour to address?"
 
 "You may address me as the Count Von Kramm, a Bohemian nobleman. I understand that this gentleman, your friend, is a man of honour and discretion, whom I may trust with a matter of the most extreme importance. If not, I should much prefer to communicate with you alone."
@@ -166,10 +139,6 @@ The man sprang from his chair and paced up and down the room in uncontrollable a
 "Let me see!" said Holmes. "Hum! Born in New Jersey in the year 1858. Contralto--hum! La Scala, hum! Prima donna Imperial Opera of Warsaw--yes! Retired from operatic stage--ha! Living in London--quite so! Your Majesty, as I understand, became entangled with this young person, wrote her some compromising letters, and is now desirous of getting those letters back."
 
 "Precisely so. But how--"
-
-<!-- index:
-marriage
-marriage \\ secret -->
 
 "Was there a secret marriage?"
 
@@ -277,10 +246,6 @@ Holmes scribbled a receipt upon a sheet of his note-book and handed it to him.
 
 "And Mademoiselle's address?" he asked.
 
-<!-- index:
-Briony Lodge
--->
-
 "Is Briony Lodge, Serpentine Avenue, St. John's Wood."
 
 Holmes took a note of it. "One other question," said he. "Was the photograph a cabinet?"
@@ -304,33 +269,17 @@ It was close upon four before the door opened, and a drunken-looking groom, ill-
 
 "I can't imagine. I suppose that you have been watching the habits, and perhaps the house, of Miss Irene Adler."
 
-<!-- index:
-Briony Lodge
--->
-
 "Quite so; but the sequel was rather unusual. I will tell you, however. I left the house a little after eight o'clock this morning in the character of a groom out of work. There is a wonderful sympathy and freemasonry among horsey men. Be one of them, and you will know all that there is to know. I soon found Briony Lodge. It is a bijou villa, with a garden at the back, but built out in front right up to the road, two stories. Chubb lock to the door. Large sitting-room on the right side, well furnished, with long windows almost to the floor, and those preposterous English window fasteners which a child could open. Behind there was nothing remarkable, save that the passage window could be reached from the top of the coach-house. I walked round it and examined it closely from every point of view, but without noting anything else of interest.
 
 "I then lounged down the street and found, as I expected, that there was a mews in a lane which runs down by one wall of the garden. I lent the ostlers a hand in rubbing down their horses, and received in exchange twopence, a glass of half and half, two fills of shag tobacco, and as much information as I could desire about Miss Adler, to say nothing of half a dozen other people in the neighbourhood in whom I was not in the least interested, but whose biographies I was compelled to listen to."
 
 "And what of Irene Adler?" I asked.
 
-<!-- index:
-Briony Lodge
--->
-
 "Oh, she has turned all the men's heads down in that part. She is the daintiest thing under a bonnet on this planet. So say the Serpentine-mews, to a man. She lives quietly, sings at concerts, drives out at five every day, and returns at seven sharp for dinner. Seldom goes out at other times, except when she sings. Has only one male visitor, but a good deal of him. He is dark, handsome, and dashing, never calls less than once a day, and often twice. He is a Mr. Godfrey Norton, of the Inner Temple. See the advantages of a cabman as a confidant. They had driven him home a dozen times from Serpentine-mews, and knew all about him. When I had listened to all they had to tell, I began to walk up and down near Briony Lodge once more, and to think over my plan of campaign.
-
-<!-- index:
-Briony Lodge
--->
 
 "This Godfrey Norton was evidently an important factor in the matter. He was a lawyer. That sounded ominous. What was the relation between them, and what the object of his repeated visits? Was she his client, his friend, or his mistress? If the former, she had probably transferred the photograph to his keeping. If the latter, it was less likely. On the issue of this question depended whether I should continue my work at Briony Lodge, or turn my attention to the gentleman's chambers in the Temple. It was a delicate point, and it widened the field of my inquiry. I fear that I bore you with these details, but I have to let you see my little difficulties, if you are to understand the situation."
 
 "I am following you closely," I answered.
-
-<!-- index:
-Briony Lodge
--->
 
 "I was still balancing the matter in my mind when a hansom cab drove up to Briony Lodge, and a gentleman sprang out. He was a remarkably handsome man, dark, aquiline, and moustached--evidently the man of whom I had heard. He appeared to be in a great hurry, shouted to the cabman to wait, and brushed past the maid who opened the door with the air of a man who was thoroughly at home.
 
@@ -408,10 +357,6 @@ then?"
 "Then you may entirely rely on me."
 
 "That is excellent. I think, perhaps, it is almost time that I prepare for the new role I have to play."
-
-<!-- index:
-occupations \\ clergy
-occupations \\ clergy \\ Nonconformist -->
 
 He disappeared into his bedroom and returned in a few minutes in the character of an amiable and simple-minded Nonconformist clergyman. His broad black hat, his baggy trousers, his white tie, his sympathetic smile, and general look of peering and benevolent curiosity were such as Mr. John Hare alone could have equalled. It was not merely that Holmes changed his costume. His expression, his manner, his very soul seemed to vary with every fresh part that he assumed. The stage lost a fine actor, even as science lost an acute reasoner, when he became a specialist in crime.
 
@@ -506,10 +451,6 @@ There were several people on the pavement at the time, but the greeting appeared
 
 #### III.
 
-<!-- index:
-King of Bohemia-
--->
-
 I slept at Baker Street that night, and we were engaged upon our toast and coffee in the morning when the King of Bohemia rushed into the room.
 
 "You have really got it!" he cried, grasping Sherlock Holmes by either shoulder and looking eagerly into his face.
@@ -548,26 +489,13 @@ I slept at Baker Street that night, and we were engaged upon our toast and coffe
 
 "It is true. And yet--Well! I wish she had been of my own station! What a queen she would have made!" He relapsed into a moody silence, which was not broken until we drew up in Serpentine Avenue.
 
-<!-- index:
--King of Bohemia
-Briony Lodge
--->
-
 The door of Briony Lodge was open, and an elderly woman stood upon the steps. She watched us with a sardonic eye as we stepped from the brougham.
 
 "Mr. Sherlock Holmes, I believe?" said she.
 
 "I am Mr. Holmes," answered my companion, looking at her with a questioning and rather startled gaze.
 
-<!-- index:
-Charing Cross-
--->
-
 "Indeed! My mistress told me that you were likely to call. She left this morning with her husband by the 5:15 train from Charing Cross for the Continent."
-
-<!-- index:
--Charing Cross
--->
 
 "What!" Sherlock Holmes staggered back, white with chagrin and surprise. "Do you mean that she has left England?"
 
@@ -577,20 +505,13 @@ Charing Cross-
 
 "We shall see." He pushed past the servant and rushed into the drawing-room, followed by the King and myself. The furniture was scattered about in every direction, with dismantled shelves and open drawers, as if the lady had hurriedly ransacked them before her flight. Holmes rushed at the bell-pull, tore back a small sliding shutter, and, plunging in his hand, pulled out a photograph and a letter. The photograph was of Irene Adler herself in evening dress, the letter was superscribed to "Sherlock Holmes, Esq. To be left till called for." My friend tore it open and we all three read it together. It was dated at midnight of the preceding night and ran in this way:
 
-<!-- index:
-Adler, Irene
-Norton, Irene
-occupations \\ clergy \\ fake
-cases \\ Scandal in Bohemia \\ letter
--->
-
-> "MY DEAR MR. SHERLOCK HOLMES,--You really did it very well. You took me in completely. Until after the alarm of fire, I had not a suspicion. But then, when I found how I had betrayed myself, I began to think. I had been warned against you months ago. I had been told that if the King employed an agent it would certainly be you. And your address had been given me. Yet, with all this, you made me reveal what you wanted to know. Even after I became suspicious, I found it hard to think evil of such a dear, kind old <!-- index: clergy -->clergyman. But, you know, *I have been trained* as an actress myself. Male costume is nothing new to me. I often take advantage of the freedom which it gives. I sent John, the coachman, to watch you, ran up stairs, got into my walking-clothes, as I call them, and came down just as you departed.
+> "MY DEAR MR. SHERLOCK HOLMES,--You really did it very well. You took me in completely. Until after the alarm of fire, I had not a suspicion. But then, when I found how I had betrayed myself, I began to think. I had been warned against you months ago. I had been told that if the King employed an agent it would certainly be you. And your address had been given me. Yet, with all this, you made me reveal what you wanted to know. Even after I became suspicious, I found it hard to think evil of such a dear, kind old clergyman. But, you know, I have been trained as an actress myself. Male costume is nothing new to me. I often take advantage of the freedom which it gives. I sent John, the coachman, to watch you, ran up stairs, got into my walking-clothes, as I call them, and came down just as you departed.
 > 
 > "Well, I followed you to your door, and so made sure that I was really an object of interest to the celebrated Mr. Sherlock Holmes. Then I, rather imprudently, wished you good-night, and started for the Temple to see my husband.
 > 
-> "We both thought the best resource was flight, when pursued by so formidable an antagonist; so you will find the nest empty when you call to-morrow. As to the photograph, your client may rest in peace. I love and am loved by a better man than he. <!-- index: King of Bohemia -->The King may do what he will without hindrance from one whom he has cruelly wronged. I keep it only to safeguard myself, and to preserve a weapon which will always secure me from any steps which he might take in the future. I leave a photograph which he might care to possess; and I remain, dear Mr. Sherlock Holmes,
+> "We both thought the best resource was flight, when pursued by so formidable an antagonist; so you will find the nest empty when you call to-morrow. As to the photograph, your client may rest in peace. I love and am loved by a better man than he. The King may do what he will without hindrance from one whom he has cruelly wronged. I keep it only to safeguard myself, and to preserve a weapon which will always secure me from any steps which he might take in the future. I leave a photograph which he might care to possess; and I remain, dear Mr. Sherlock Holmes,
 > 
-> <!-- index: -Adler, Irene -->"Very truly yours,\\
+> "Very truly yours,\\
 > "IRENE NORTON, née ADLER."
 > {:.valediction}
 {:.letter #letter}
@@ -616,9 +537,5 @@ The King stared at him in amazement.
 "Irene's photograph!" he cried. "Certainly, if you wish it."
 
 "I thank your Majesty. Then there is no more to be done in the matter. I have the honour to wish you a very good-morning." He bowed, and, turning away without observing the hand which the King had stretched out to him, he set off in my company for his chambers.
-
-<!-- index:
--Holmes, Sherlock
--cases \\ Scandal in Bohemia -->
 
 And that was how a great scandal threatened to affect the kingdom of Bohemia, and how the best plans of Mr. Sherlock Holmes were beaten by a woman's wit. He used to make merry over the cleverness of women, but I have not heard him do it of late. And when he speaks of Irene Adler, or when he refers to her photograph, it is always under the honourable title of the woman. 

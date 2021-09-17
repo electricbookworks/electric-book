@@ -14,7 +14,7 @@ There are various options for notes.
 
 ## Endnotes
 
-Endnotes appear at the end of a document (a web page or book chapter). In kramdown and on the web these are often called footnotes. To create them in markdown, follow the [kramdown syntax for footnotes](https://kramdown.gettalong.org/syntax.html#footnotes):
+Endnotes appear at the end of a document (a web page or book chapter). In kramdown and on the web these are often called footnotes. To create them in markdown, follow the [kramdown syntax for footnotes](http://kramdown.gettalong.org/syntax.html#footnotes):
 
 *	put a `[^1]` where the footnote reference should appear (the `1` there can be any numbers or letters, and should be different for each footnote in a document);
 *	anywhere in the document (we recommend after the paragraph containing the footnote reference), put `[^1]: Your footnote text here.`.

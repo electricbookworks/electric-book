@@ -9,11 +9,6 @@ $web-notes: true !default;
         @include sidenote();
     }
 
-    // Superscript footnote reference
-    .footnote {
-        cursor: pointer;
-    }
-
     // Footnotes section
     .footnotes {
       margin: ($line-height-default * 2) 0 0 0;
@@ -23,11 +18,6 @@ $web-notes: true !default;
     }
     .footnotes p {
         text-indent: 0;
-    }
-
-    // the hook arrow in the footnotes section
-    .footnotes .reverse-footnote-arrow path {
-        fill: $color-links;
     }
 
     // Footnote popups
@@ -69,6 +59,21 @@ $web-notes: true !default;
     .footnote-detail {
         .reversefootnote {
             @include button-close($color-accent);
+            border: 0;
+            color: white;
+            font-size: 1em;
+            line-height: 1;
+            padding: 0.15em 0.1em 0em 0.1em; // override button-close padding
+            position: absolute;
+            right: -($line-height-default / 2);
+            top: -($line-height-default / 2);
+            &:before {
+                content: $nav-bar-close;
+                display: inline-block;
+                width: 1em;
+                position: relative;
+                top: -0.1em;
+            }
             // When a footnote is used twice in a doc,
             // hide the second reverse footnote in popups, which
             // breaks the 'close' action of footnote popups.

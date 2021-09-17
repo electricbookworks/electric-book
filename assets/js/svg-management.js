@@ -28,20 +28,6 @@ function ebSVGFontFixes(svg) {
             oldFontFace: 'OpenSans-Bold',
             newFontFace: 'Open Sans',
             newFontWeight: 'bold'
-        },
-        {
-            oldFontFace: 'Inter-Regular',
-            newFontFace: 'Inter'
-        },
-        {
-            oldFontFace: 'Inter-Medium',
-            newFontFace: 'Inter',
-            newFontWeight: '500'
-        },
-        {
-            oldFontFace: 'Inter-Italic',
-            newFontFace: 'Inter',
-            newFontStyle: 'italic'
         }
     ];
 
@@ -60,10 +46,6 @@ function ebSVGFontFixes(svg) {
                     ebFontFixElements[i].setAttribute('font-weight',
                             fontsToChange[j].newFontWeight);
                 }
-                if (fontsToChange[j].newFontStyle) {
-                    ebFontFixElements[i].setAttribute('font-style',
-                        fontsToChange[j].newFontStyle);
-                }
             }
 
             // Change font properties in style attributes
@@ -71,9 +53,6 @@ function ebSVGFontFixes(svg) {
                 ebFontFixElements[i].style.fontFamily = fontsToChange[j].newFontFace;
                 if (ebFontFixElements[i].style.fontWeight) {
                     ebFontFixElements[i].style.fontWeight = fontsToChange[j].newFontWeight;
-                }
-                if (ebFontFixElements[i].style.fontStyle) {
-                    ebFontFixElements[i].style.fontStyle = fontsToChange[j].newFontStyle;
                 }
             }
         }

@@ -15,9 +15,9 @@ To set up the workflow, you still have to have some technical expertise. Once it
 The technical team members who run the workflow need to be familiar with:
 
 *   **HTML and CSS**: the fundamental building blocks of almost all digital content.
-*   **Markdown**: a simple, plain-text shortcut for creating HTML. (The original [Markdown syntax reference](https://daringfireball.net/projects/markdown/syntax) is the easiest intro to basic markdown. We use a markdown variant called [kramdown](https://kramdown.gettalong.org). It lets us use attributes like classes, has a stricter syntax, and allows adding of IDs to elements.
+*   **Markdown**: a simple, plain-text shortcut for creating HTML. (The original [Markdown syntax reference](http://daringfireball.net/projects/markdown/syntax) is the easiest intro to basic markdown. We use a markdown variant called [kramdown](http://kramdown.gettalong.org). It lets us use attributes like classes, has a stricter syntax, and allows adding of IDs to elements.
 *   **Sass**: a way to create complex CSS from simple rules.
-*   **Git**: software for tracking a team's changes and syncing them with a remote server. We like to use [GitHub](https://github.com).
+*   **Git**: software for tracking a team's changes and syncing them with a remote server. We like to use [GitHub](http://github.com).
 
 ## How it works
 
@@ -36,7 +36,7 @@ Very broadly, this is how the Electric Book template works.
 
 ## Structure
 
-A project folder (which you should track in Git as a repository) can contain one or more related books. Its folders and files follow the [standard Jekyll structure](https://jekyllrb.com/docs/structure/). We store each book's content in its own subfolder. In the template, the first book folder is simply called `book`.
+A project folder (which you should track in Git as a repository) can contain one or more related books. Its folders and files follow the [standard Jekyll structure](http://jekyllrb.com/docs/structure/). We store each book's content in its own subfolder. In the template, the first book folder is simply called `book`.
 
 Here is an explanation of all the folders and files in the template.
 
@@ -86,7 +86,7 @@ Here is an explanation of all the folders and files in the template.
 
 *   `samples`: a sample book for demo and testing purposes. You can safely delete it (if you do, you should also remove its metadata in `_data/meta.yml`).
 *   `_config.yml`: a file for setting configuration options for Jekyll, which will compile your book for output.
-*   `_prose.yml`: configuration settings for using [prose.io](https://prose.io) for online book editing (generally, you won't have to edit this file) and for excluding files from view in the [Electric Book Manager](https://electricbookworks.github.io/electric-book-gui/).
+*   `_prose.yml`: configuration settings for using [prose.io](http://prose.io) for online book editing (generally, you won't have to edit this file) and for excluding files from view in the [Electric Book Manager](https://electricbookworks.github.io/electric-book-gui/).
 *   `gulpfile.js`: the 'recipe' for processing images from `_source` into various output formats. Most users can ignore this. Advanced users may want to adjust it, or use it for processing and minifying Javascript.
 *   `index.md`: the home page of your project when served as a website.
 *   `search.md`: the search page of your project when served as a website.

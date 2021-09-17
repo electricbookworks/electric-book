@@ -10,7 +10,7 @@
 
 {% for question in quiz-questions %}
     {% include question file=question class=question-class %}
-    {% assign quiz-total-marks = quiz-total-marks | plus: question-marks %}
+    {% assign quiz-total-marks = quiz-total-marks | plus: item-file-object.marks %}
 {% endfor %}
 
     <div class="quiz-total-marks">{{ locale.quiz.total }}: {{ quiz-total-marks }}</div>

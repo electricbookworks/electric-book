@@ -13,9 +13,7 @@ $print-page-headers-footers-content: true !default;
       page-header attr(data-header),
       page-header-left attr(data-header-left),
       page-header-right attr(data-header-right),
-      page-info attr(data-page-info),
-      book-creator attr(data-creator),
-      book-title attr(data-title);
+      page-info attr(data-page-info);
   }
 
   // Assign strings to use in headers and footers for each level of heading (h1-h6),
@@ -62,7 +60,7 @@ $print-page-headers-footers-content: true !default;
 
   // Verso
   @page chapter:left {
-    @top-center {
+    @top {
       content: $verso-top;
     }
     @top-right {
@@ -77,7 +75,7 @@ $print-page-headers-footers-content: true !default;
     @top-left-corner {
       content: $verso-top-left-corner;
     }
-    @bottom-center {
+    @bottom {
       content: $verso-bottom;
     }
     @bottom-left {
@@ -92,7 +90,7 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $verso-bottom-right-corner;
     }
-    @left-middle {
+    @left {
       content: $verso-left;
     }
     @left-top {
@@ -101,7 +99,7 @@ $print-page-headers-footers-content: true !default;
     @left-bottom {
       content: $verso-left-bottom;
     }
-    @right-middle {
+    @right {
       content: $verso-right;
     }
     @right-top {
@@ -114,7 +112,7 @@ $print-page-headers-footers-content: true !default;
 
   // Recto
   @page chapter:right {
-    @top-center {
+    @top {
       content: $recto-top;
     }
     @top-right {
@@ -129,7 +127,7 @@ $print-page-headers-footers-content: true !default;
     @top-left-corner {
       content: $recto-top-left-corner;
     }
-    @bottom-center {
+    @bottom {
       content: $recto-bottom;
     }
     @bottom-left {
@@ -144,7 +142,7 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $recto-bottom-right-corner;
     }
-    @left-middle {
+    @left {
       content: $recto-left;
     }
     @left-top {
@@ -153,7 +151,7 @@ $print-page-headers-footers-content: true !default;
     @left-bottom {
       content: $recto-left-bottom;
     }
-    @right-middle {
+    @right {
       content: $recto-right;
     }
     @right-top {
@@ -169,35 +167,35 @@ $print-page-headers-footers-content: true !default;
     prince-page-group: start;
   }
   @page chapter:first {
-    @top-center { content: normal; }
+    @top { content: normal; }
     @top-left { content: normal; }
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
-    @left-middle { content: normal; }
+    @left { content: normal; }
     @left-top { content: normal; }
     @left-bottom { content: normal; }
-    @right-middle { content: normal; }
+    @right { content: normal; }
     @right-top { content: normal; }
     @right-bottom { content: normal; }
   }
 
   // No headers or footers on blank pages of chapters
   @page chapter:blank {
-    @top-center { content: normal; }
+    @top { content: normal; }
     @top-left { content: normal; }
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
-    @bottom-center { content: normal; }
+    @bottom { content: normal; }
     @bottom-left { content: normal; }
     @bottom-right { content: normal; }
     @bottom-left-corner { content: normal; }
     @bottom-right-corner { content: normal; }
-    @left-middle { content: normal; }
+    @left { content: normal; }
     @left-top { content: normal; }
     @left-bottom { content: normal; }
-    @right-middle { content: normal; }
+    @right { content: normal; }
     @right-top { content: normal; }
     @right-bottom { content: normal; }
   }
@@ -206,7 +204,7 @@ $print-page-headers-footers-content: true !default;
 
   // Verso
   @page frontmatter:left {
-    @top-center {
+    @top {
       content: $verso-top-frontmatter;
     }
     @top-right {
@@ -221,7 +219,7 @@ $print-page-headers-footers-content: true !default;
     @top-left-corner {
       content: $verso-top-left-corner-frontmatter;
     }
-    @bottom-center {
+    @bottom {
       content: $verso-bottom-frontmatter;
     }
     @bottom-left {
@@ -236,7 +234,7 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $verso-bottom-right-corner-frontmatter;
     }
-    @left-middle {
+    @left {
       content: $verso-left-frontmatter;
     }
     @left-top {
@@ -245,7 +243,7 @@ $print-page-headers-footers-content: true !default;
     @left-bottom {
       content: $verso-left-bottom-frontmatter;
     }
-    @right-middle {
+    @right {
       content: $verso-right-frontmatter;
     }
     @right-top {
@@ -258,7 +256,7 @@ $print-page-headers-footers-content: true !default;
 
   // Recto
   @page frontmatter:right {
-    @top-center {
+    @top {
       content: $recto-top-frontmatter;
     }
     @top-right {
@@ -273,7 +271,7 @@ $print-page-headers-footers-content: true !default;
     @top-left-corner {
       content: $recto-top-left-corner-frontmatter;
     }
-    @bottom-center {
+    @bottom {
       content: $recto-bottom-frontmatter;
     }
     @bottom-left {
@@ -288,7 +286,7 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $recto-bottom-right-corner-frontmatter;
     }
-    @left-middle {
+    @left {
       content: $recto-left-frontmatter;
     }
     @left-top {
@@ -297,7 +295,7 @@ $print-page-headers-footers-content: true !default;
     @left-bottom {
       content: $recto-left-bottom-frontmatter;
     }
-    @right-middle {
+    @right {
       content: $recto-right-frontmatter;
     }
     @right-top {
@@ -313,35 +311,35 @@ $print-page-headers-footers-content: true !default;
     prince-page-group: start;
   }
   @page frontmatter:first {
-    @top-center { content: normal; }
+    @top { content: normal; }
     @top-left { content: normal; }
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
-    @left-middle { content: normal; }
+    @left { content: normal; }
     @left-top { content: normal; }
     @left-bottom { content: normal; }
-    @right-middle { content: normal; }
+    @right { content: normal; }
     @right-top { content: normal; }
     @right-bottom { content: normal; }
   }
 
   // No headers or footers on blank pages of frontmatter
   @page frontmatter:blank {
-    @top-center { content: normal; }
+    @top { content: normal; }
     @top-left { content: normal; }
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
-    @bottom-center { content: normal; }
+    @bottom { content: normal; }
     @bottom-left { content: normal; }
     @bottom-right { content: normal; }
     @bottom-left-corner { content: normal; }
     @bottom-right-corner { content: normal; }
-    @left-middle { content: normal; }
+    @left { content: normal; }
     @left-top { content: normal; }
     @left-bottom { content: normal; }
-    @right-middle { content: normal; }
+    @right { content: normal; }
     @right-top { content: normal; }
     @right-bottom { content: normal; }
   }

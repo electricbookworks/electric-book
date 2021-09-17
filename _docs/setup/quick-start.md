@@ -6,14 +6,14 @@ order: 0
 
 # Quick start
 
-This quick setup assumes you already have [Jekyll](https://jekyllrb.com/), [Node](https://nodejs.org/) and [Prince](https://www.princexml.com/) (for PDF output) installed. If not, see [setup guidance here](setting-up-your-computer).
+This quick setup assumes you already have [Jekyll](http://jekyllrb.com/), [Node](https://nodejs.org/) and [Prince](http://www.princexml.com/) (for PDF output) installed. If not, see [setup guidance here](setting-up-your-computer).
 
 ## Create a new project
 
 1. Download `electric-book.zip` from the [latest release](https://github.com/electricbookworks/electric-book/releases/latest) and extract it.
 2. In the extracted `electric-book` folder, run the `run-` script for your operating system.
 
-   (On OSX and Linux, you need to [give it permission first](https://stackoverflow.com/a/5126052/1781075).)
+   (On OSX and Linux, you need to [give it permission first](http://stackoverflow.com/a/5126052/1781075).)
 
 3. Choose the 'Install or update dependencies' option first. You should only need to do this once.
 4. Run the `run-` script to generate a book.

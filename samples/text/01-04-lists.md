@@ -106,7 +106,7 @@ What about bibliographies with really long, complicated titles? Since we're usin
 
 ### Definitions and glossaries
 
-In HTML definition lists are useful semantic structures, especially for things like glossaries. Here is a basic definition list, using definitions of new words from [OxfordDictionaries.com](https://blog.oxforddictionaries.com/press-releases/new-words-added-oxforddictionaries-com-august-2014/) in 2014.
+In HTML definition lists are useful semantic structures, especially for things like glossaries. Here is a basic definition list, using definitions of new words from [OxfordDictionaries.com](http://blog.oxforddictionaries.com/press-releases/new-words-added-oxforddictionaries-com-august-2014/) in 2014.
 
 acquihire, n.
 : buying out a company primarily for the skills and expertise of its staff…

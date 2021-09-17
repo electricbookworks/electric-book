@@ -80,12 +80,12 @@ $print-font-faces: true !default;
     }
     @font-face {
         font-family: "Crimson Pro";
-        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Black.ttf);
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Black.otf);
         font-weight: 900;
     }
     @font-face {
         font-family: "Crimson Pro";
-        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-BlackItalic.ttf);
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-BlackItalic.otf);
         font-weight: 900;
         font-style: italic;
     }

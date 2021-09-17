@@ -150,7 +150,7 @@ en:
     hide: "Hide"
   search:
     search-title: "Search"
-    placeholder: ""
+    placeholder: "Search"
     placeholder-searching: "Searching..."
     search-results: "Search results"
     results-for-singular: "result found for"
@@ -201,9 +201,6 @@ en:
     copy: "Copy"
     copied: "Copied"
     copy-failed: "Sorry, try again"
-  footnotes:
-    close-footnote: "Close footnote"
-    reversefootnote-alt: "Back to text"
   pdf:
     cover: "Cover"
 # eo:
@@ -248,7 +245,7 @@ fr:
     hide: "Cacher"
   search:
     search-title: "Recherche"
-    placeholder: ""
+    placeholder: "Recherche"
     placeholder-searching: "Recherche..."
     search-results: "Résultats de la recherche"
     results-for-singular: "résultat trouvé pour"
@@ -299,9 +296,6 @@ fr:
     copy: "Copie"
     copied: "Copié"
     copy-failed: "Désolé, essayez encore"
-  footnotes:
-    close-footnote: "Fermer la note de bas de page"
-    reversefootnote-alt: "Retour au texte"
   pdf:
     cover: "Couverture"
 # ff:
