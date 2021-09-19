@@ -1,0 +1,7 @@
+{
+    "properties": { 
+        "en": {
+            "type": "string"
+        }
+    }
+}
