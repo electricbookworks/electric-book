@@ -426,6 +426,8 @@ works:
           - label: "Frontmatter"
             class: "cover-entry"
             children:
+              - file: "00-00-cover"
+                label: "Cover"
               - label: "Half title page"
                 file: "00-01-halftitle-page"
                 class: "frontmatter-entry"
@@ -715,7 +717,7 @@ works:
                 file: "10-02-dynamic-index"
           web:
             files: # Required for translations to activate language-selector
-              - "00-00-cover"
+              - "index"
               - "00-03-title-page"
               - "00-04-copyright-page"
               - "00-05-contents-page"
