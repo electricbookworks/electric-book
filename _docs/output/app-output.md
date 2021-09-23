@@ -117,7 +117,7 @@ Here are the detailed steps:
 1. Ensure that `google-play-expansion-file-enabled` is not set in `_data/settings.yml` (that's only for Android).
 1. Use the output script to create the app-ready HTML only. If you're creating a translation app, when the output script asks for extra config files, enter the relevant config file for that language. E.g. for French: `_configs/_config.app.fr.yml`
 2. If you're using external media, copy the images from the remote media repo manually to `_site/app/www/book/images` (or the equivalent translation images folder; see '[Add remote media](#add-remote-media)' below for more detail).
-2. At a command prompt in the repo root, run `cd _site/app && cordova platform rm windows && cordova platform add windows@6.0.0 && cordova build windows`
+2. At a command prompt in the repo root, run `cd _site/app && cordova platform rm windows && cordova platform add windows && cordova build windows`
 3. Open Visual Studio. From there, open the Cordova solution file (`.sln`) in `_site/app/platforms/windows`, and deploy and and build for your local machine to test. (You should be able to click the '► Local machine' button in the toolbar.)
 4. We recommend building a Release version (not a Debug version) to test that the app works when fully signed. To do this:
     1. Associate the app with an app listing in the store. Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... (You may only have to do this once.)
