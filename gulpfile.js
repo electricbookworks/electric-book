@@ -25,7 +25,11 @@ var gulp = require('gulp'),
     del = require('del'),
     cheerio = require('gulp-cheerio'),
     tap = require('gulp-tap'),
-    iconv = require('iconv-lite');
+    iconv = require('iconv-lite'),
+    htmltidy = require("node-libtidy").compat.htmltidy,
+    buffer = require('gulp-buffer'),
+    stream = require('gulp-stream'),
+    through2 = require('through2');
 
     // Utilities copied from elsewhere in this repo
     var { ebSlugify } = require('./assets/js/utilities.js');
@@ -867,7 +871,7 @@ gulp.task('js', function (done) {
 var mjpageOptions = {
     mjpageConfig: {
         format: ["TeX"], // determines type of pre-processors to run
-        output: 'svg', // global override for output option; 'svg', 'html' or 'mml'
+        output: 'mml', // global override for output option; 'svg', 'html' or 'mml'
         tex: {}, // configuration options for tex pre-processor, cf. lib/tex.js
         ascii: {}, // configuration options for ascii pre-processor, cf. lib/ascii.js
         singleDollars: false, // allow single-dollar delimiter for inline TeX
@@ -918,6 +922,29 @@ gulp.task('mathjax', function (done) {
     console.log('Processing MathJax in ' + paths.text.src);
     gulp.src(paths.text.src)
         .pipe(mathjax(mjpageOptions))
+        // Convert to XHTML for sake of XSLT processing that
+        // can/will merge all HTML files into one file.
+        //
+        // Based on:
+        //  - https://gulpjs.com/docs/en/getting-started/using-plugins#inline-plugins
+        //  - https://github.com/gagern/node-libtidy/blob/master/API.md#compathtmltidytidyinput-opts-cb
+        //  - https://github.com/c0b41/gulp-htmltidy/blob/master/index.js
+        //  - http://api.html-tidy.org/tidy/tidylib_api_5.6.0/tidy_quickref.html
+        .pipe(buffer())
+	.pipe(through2.obj(function(file, _, cb) {
+	    var options = {
+		output_xhtml: true,
+		numeric_entities: true,
+		wrap: 0
+	    }
+	    htmltidy.tidy(file.contents, options, function (err, html) {
+		if (err) {
+                    this.emit('error', new PluginError('node-libtidy', err));
+		}
+		file.contents = new Buffer.from(String(html));
+		return cb(null, file);
+	    });}))
+        .pipe(stream())
         .pipe(debug({title: 'Processing MathJax in '}))
         .pipe(gulp.dest(paths.text.dest));
     done();
