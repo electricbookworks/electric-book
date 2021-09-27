@@ -1,0 +1,14 @@
+<formatter-config>
+  <!-- Specifies whether the size matches the viewBox setting when the
+       width and height of the root element are omitted in SVG. The
+       following values can be specified:
+
+       reference : It is considered width="100%" height="100%"
+       according to the SVG specification.
+
+       viewBox : If viewBox is specified as the root element, it is
+       considered its size.
+    -->
+  <formatter-settings responsive-svg-size="viewBox" />
+</formatter-config>
+
