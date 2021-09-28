@@ -387,11 +387,11 @@ $edition-suffix: null;
      * -------------
      */
 
-		/* Indicate lines that wrap. */
+    /* Indicate lines that wrap. */
     pre {
         -ah-line-continued-mark: "\\";
-				-ah-line-continued-mark-offset: -0.8 * $font-size-default - $line-height-default / 2;
-				-ah-line-continued-mark-color: $color-mid;
+        -ah-line-continued-mark-offset: -0.8 * $font-size-default - $line-height-default / 2;
+        -ah-line-continued-mark-color: $color-mid;
         margin: 0;
     }
 
@@ -442,6 +442,81 @@ $edition-suffix: null;
         -ah-baseline-grid: none;
         -ah-baseline-block-snap: auto margin-box;
         display: block;
+    }
+    /* MathJax styles that were lost when HTML files merged into one
+     *  file.
+     */
+    .mjpage .MJX-monospace {
+        font-family: monospace
+    }
+
+    .mjpage .MJX-sans-serif {
+        font-family: sans-serif
+    }
+
+    .mjpage {
+        display: inline;
+        font-style: normal;
+        font-weight: normal;
+        line-height: normal;
+        font-size: 100%;
+        font-size-adjust: none;
+        text-indent: 0;
+        text-align: left;
+        text-transform: none;
+        letter-spacing: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        float: none;
+        direction: ltr;
+        max-width: none;
+        max-height: none;
+        min-width: 0;
+        min-height: 0;
+        border: 0;
+        padding: 0;
+        margin: 0
+    }
+
+    .mjpage * {
+        transition: none;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none
+    }
+
+    .mjx-svg-href {
+        fill: blue;
+        stroke: blue
+    }
+
+    .MathJax_SVG_LineBox {
+        display: table!important
+    }
+
+    .MathJax_SVG_LineBox span {
+        display: table-cell!important;
+        width: 10000em!important;
+        min-width: 0;
+        max-width: none;
+        padding: 0;
+        border: 0;
+        margin: 0
+    }
+
+    .mjpage__block {
+        text-align: center;
+        margin: 1em 0em;
+        position: relative;
+        display: block!important;
+        text-indent: 0;
+        max-width: none;
+        max-height: none;
+        min-width: 0;
+        min-height: 0;
+        width: 100%
     }
 }
 

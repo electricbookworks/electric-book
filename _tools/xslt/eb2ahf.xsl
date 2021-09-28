@@ -9,9 +9,10 @@
     xmlns:svg="http://www.w3.org/2000/svg"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns="http://www.w3.org/1999/xhtml"
     xpath-default-namespace="http://www.w3.org/1999/xhtml"
-    exclude-result-prefixes="ahf axf m svg xhtml xs">
+    exclude-result-prefixes="ahf axf m svg xhtml xs xlink">
 
 <xsl:output indent="no" omit-xml-declaration="no" method="xhtml"
             html-version="5" encoding="utf-8" />
@@ -156,10 +157,11 @@
   <xsl:copy-of select="." />
 </xsl:template>
 
-<!-- Prefix fragments with current document's filename. -->
-<xsl:template match="@href[starts-with(., '#')]">
+<!-- Prefix fragments with current document's filename.  Works for
+     both 'href' and 'xlink:href' in SVG. -->
+<xsl:template match="@*:href[starts-with(., '#')]">
   <xsl:attribute
-      name="{local-name()}"
+      name="{name()}"
       expand-text="yes"
       >#{ahf:doc-and-href(.)}</xsl:attribute>
 </xsl:template>
@@ -182,7 +184,6 @@
       >#{replace(., '\.html#', '__')}</xsl:attribute>
 </xsl:template>
 
-
 <!-- Drop <script>. -->
 <xsl:template match="script" />
 
@@ -200,6 +201,16 @@
     <xsl:copy-of select="$atts" />
     <xsl:apply-templates select="node()" />
   </xsl:copy>
+</xsl:template>
+
+
+<!-- ============================================================= -->
+<!-- SVG                                                           -->
+<!-- ============================================================= -->
+
+<!-- XML is case-sensitive, unlike HTML. -->
+<xsl:template match="svg:*/@viewbox">
+  <xsl:attribute name="viewBox" select="." />
 </xsl:template>
 
 
