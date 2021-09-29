@@ -152,7 +152,7 @@ $edition-suffix: null;
         -ah-initial-letters: 3;
     }
     /* For better appearance, both outdent the dropped letter for better
-     * optical alignment with the edge of the text block and control
+     * optical alignment with the edge of the text block and also control
      * the distance between the letter and adjacent text on each line.
      * Obviously, these distances are different for different letters.
      * CSS won't select based on the text content, so rely on the XSLT
@@ -296,7 +296,33 @@ $edition-suffix: null;
     /* Paragraphs
      * ----------
      */
-    
+
+    p {
+        /* '-ah-flush-zone' nudges the last line of justified text to fill
+         * the line if unadjusted end of the line is within the 'flush
+         * zone'.
+         */
+        -ah-flush-zone: 0.5em;
+        /* '-ah-adjust-last-line-spacing' adjusts the spacing of
+         * the last line of justified text so there's less visual
+         * difference between a possible widely-space second last line
+         * and an unjustified last line with normal spacing between
+         * words.
+         */
+        -ah-adjust-last-line-spacing: true;
+    }
+    .footnotes p {
+        /* Do not adjust last line spacing in endnotes. */
+        -ah-adjust-last-line-spacing: false;
+    }
+    /* Do not justify 'identifiers' paragraph on copyright page or
+     * valediciton of letter.
+     */
+    p.identifiers,
+    p.valediction {
+        text-align: left;
+    }
+
     p,
     /* Undo some of the contexts where 'text-indent' is 0. */
     blockquote + p,
