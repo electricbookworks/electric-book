@@ -280,6 +280,11 @@
 
     {% endif %}
 
+    {% comment %}Enable web monetization{% endcomment %}
+    {% if site.data.settings.web.monetization.enabled == true %}
+        <meta name="monetization" content={{ site.data.settings.web.monetization.ilp-pointer }}>
+    {% endif %}
+    
     {% if site.mathjax-enabled == true %}
         {% include mathjax-config %}
     {% endif %}
