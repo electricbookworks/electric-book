@@ -124,9 +124,12 @@ web:
   # --------------
   # Monetization
   # --------------
+  # If your book is going to use web monetization, add your
+  # ILP pointer here. See _docs/advanced/monetization.md 
+  # for more information about web monetization.
   monetization:
-    enabled: true
-    ilp-pointer: "$ilp.uphold.com/FkrLkiL7yDBd"
+    enabled: false
+    ilp-pointer: ""
 
 # ----------------------------------------------------------
 # Epub settings
