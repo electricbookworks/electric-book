@@ -123,6 +123,15 @@ web:
   nav:
     home:
       expand-books: false
+  # --------------
+  # Monetization
+  # --------------
+  # If your book is going to use web monetization, add your
+  # ILP pointer here. See _docs/advanced/monetization.md 
+  # for more information about web monetization.
+  monetization:
+    enabled: false
+    ilp-pointer: ""
 
 # ----------------------------------------------------------
 # Epub settings
