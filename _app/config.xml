@@ -26,7 +26,7 @@ layout: min
             {{ project-description }}
         {% endif %}
     </description>
-    <author email="team@fireandlion.com" href="https://fireandlion.com/">
+    <author email="{{ site.data.meta.email }}" href="{{ site.data.meta.url }}">
         {% if site.build-language and site.build-language != "" %}
             {{ site.data.locales[site.build-language].project.organisation }}
         {% else %}

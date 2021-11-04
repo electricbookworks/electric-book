@@ -24,4 +24,4 @@ and after the last figure add
 
 `</div>`
 
-The template's interactive slides were developed in partnership between [The CORE Project](https://core-econ.org) and [Electric Book Works](https://electricbookworks).
+The template's interactive slides were developed in partnership between [The CORE Project](https://www.core-econ.org) and [Electric Book Works](https://electricbookworks).
