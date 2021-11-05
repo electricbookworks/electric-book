@@ -10,7 +10,6 @@
 
 // Get Node modules
 var gulp = require('gulp'),
-    responsive = require('gulp-responsive-images'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     newer = require('gulp-newer'),
@@ -25,7 +24,8 @@ var gulp = require('gulp'),
     del = require('del'),
     cheerio = require('gulp-cheerio'),
     tap = require('gulp-tap'),
-    iconv = require('iconv-lite');
+    iconv = require('iconv-lite'),
+    gulpif = require('gulp-if');
 
     // Utilities copied from elsewhere in this repo
     var { ebSlugify } = require('./assets/js/utilities.js');
@@ -181,19 +181,108 @@ var paths = {
 // Set filetypes to convert, comma separated, no spaces
 var filetypes = 'jpg,jpeg,gif,png';
 
+// Default color settings
+var defaultColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
+var defaultColorSpace = 'rgb';
+var defaultColorProfileGrayscale = 'Grey_Fogra39L.icc';
+var defaultColorSpaceGrayscale = 'gray';
+var defaultOutputFormat = 'web';
+
+// Function for checking if an image should be processed
+function modifyImageCheck(filename, format) {
+
+    // Assume true
+    var modifyImage = true;
+
+    if (!format) {
+        format = 'all';
+    }
+
+    if (imageSettings[book]) {
+        imageSettings[book].forEach(function (image) {
+            if (image.file === filename) {
+                if (image.modify || (image[format] && image[format].modify)) {
+                    if (image.modify === 'no' || image[format].modify === 'no') {
+                        modifyImage = false;
+                    }
+                }
+            }
+        })
+    }
+
+    return modifyImage;
+}
+
+// Function for getting a filename in gulp tap
+function getFilenameFromPath(path) {
+    filename = path.split('\/').pop(); // for unix slashes
+    filename = filename.split('\\').pop(); // for windows backslashes
+    return filename;
+}
+
+// Function for default gulp tap step
+function getFileDetailsFromTap(file, format) {
+
+    if (!format) {
+        format = 'all';
+    }
+
+    return {
+        prefix: file.basename.replace('.', '').replace(' ', ''),
+        filename: getFilenameFromPath(file.path),
+        modifyImage: modifyImageCheck(filename, format)
+    }
+}
+
+function lookupColorSettings(gmfile,
+        colorProfile, colorSpace,
+        colorProfileGrayscale, colorSpaceGrayscale,
+        outputFormat) {
+
+    var filename = getFilenameFromPath(gmfile.source);
+
+    // Look up image settings
+    if (imageSettings[book]) {
+        imageSettings[book].forEach(function (image) {
+            if (image.file === filename || image.file == "all") {
+                if (image[outputFormat] && image[outputFormat].colorspace === 'gray') {
+                    colorProfile = colorProfileGrayscale;
+                    colorSpace = colorSpaceGrayscale;
+                }
+            }
+        });
+    }
+
+    return {
+        colorSpace: colorSpace,
+        colorProfile: colorProfile
+    }
+}
+
 // Minify and clean SVGs and copy to destinations.
 // For EpubCheck-safe SVGs, we remove data- attributes
 // and don't strip defaults like <style "type=text/css">
 gulp.task('images:svg', function (done) {
     'use strict';
     console.log('Processing SVG images from ' + paths.img.source);
-    var prefix = '';
+
+    var prefix = ''; // TODO I think this gets overwritten incorrectly due to async piping
+
+    // Since SVGs are used as-as for all output formats,
+    // we can perform this check with gulpif based only
+    // on the file path, which is accessible with gulpif.
+    var modifyImage = function (file) {
+        var filename = getFilenameFromPath(file.path);
+        var modificationStatus = modifyImageCheck(filename);
+        return modificationStatus;
+    }
+
     gulp.src(paths.img.source + '*.svg')
-        .pipe(debug({title: 'Processing SVG '}))
         .pipe(tap(function (file) {
-            prefix = file.basename.replace('.', '').replace(' ', '');
+            prefix = getFileDetailsFromTap(file).prefix;
         }))
-        .pipe(svgmin({
+        .pipe(debug({title: 'Processing SVG '}))
+        .pipe(gulpif(modifyImage, svgmin({
             plugins: [
                 // This first pass only runs minifyStyles, to remove CDATA from
                 // <style> elements and give later access to inlineStyles.
@@ -248,8 +337,8 @@ gulp.task('images:svg', function (done) {
                 { removeOffCanvasPaths: false },
                 { reusePaths: false }
             ]
-        }))
-        .pipe(svgmin(function getOptions() {
+        })))
+        .pipe(gulpif(modifyImage, svgmin(function getOptions() {
             return {
                 plugins: [
                     {
@@ -460,7 +549,7 @@ gulp.task('images:svg', function (done) {
             };
         }).on('error', function (e) {
             console.log(e);
-        }))
+        })))
         .pipe(gulp.dest(paths.img.printpdf))
         .pipe(gulp.dest(paths.img.screenpdf))
         .pipe(gulp.dest(paths.img.web))
@@ -474,42 +563,58 @@ gulp.task('images:printpdf', function (done) {
     'use strict';
 
     // Options
-    var printPDFColorProfile = 'PSOcoated_v3.icc';
-    var printPDFColorSpace = 'cmyk';
-    var printPDFColorProfileGrayscale = 'Grey_Fogra39L.icc';
-    var printPDFColorSpaceGrayscale = 'gray';
+    var outputFormat = 'print-pdf';
+    var colorProfile = 'PSOcoated_v3.icc';
+    var colorSpace = 'cmyk';
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
 
-    console.log('Processing print-PDF images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + printPDFColorProfile)) {
+    console.log('Processing ' + outputFormat + ' images from ' + paths.img.source);
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.printpdf})
             .pipe(newer(paths.img.printpdf))
-            .pipe(debug({title: 'Creating print-PDF version of '}))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
 
-                // Check for grayscale
-                var thisColorProfile = printPDFColorProfile; // set default/fallback
-                var thisColorSpace = printPDFColorSpace; // set default/fallback
-                var thisFilename = gmfile.source.split('\/').pop(); // for unix slashes
-                thisFilename = thisFilename.split('\\').pop(); // for windows backslashes
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
 
-                // Look up image colour settings
-                imageSettings.forEach(function (image) {
-                    if (image.file === thisFilename || image.file == "all") {
-                        if (image['print-pdf'].colorspace === 'gray') {
-                            thisColorProfile = printPDFColorProfileGrayscale;
-                            thisColorSpace = printPDFColorSpaceGrayscale;
-                        }
-                    }
-                });
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
 
-                return gmfile.profile('_tools/profiles/' + thisColorProfile).colorspace(thisColorSpace);
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                    .profile('_tools/profiles/' + thisColorProfile)
+                    .colorspace(thisColorSpace);
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.printpdf));
     } else {
-        console.log('Colour profile _tools/profiles/' + printPDFColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -520,33 +625,66 @@ gulp.task('images:printpdf', function (done) {
 gulp.task('images:screenpdf', function (done) {
     'use strict';
 
-    // Options
-    var imagesOptimiseColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
-    var imagesOptimiseColorSpace = 'rgb';
+    // Set default variables for files,
+    // which can be modified during gulp process.
+    // Cannot be reset globally because all tasks
+    // run asynchronously and values will clash.
+    var modifyImage = true;
 
-    console.log('Processing screen-PDF images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + imagesOptimiseColorProfile)) {
+    // Options
+    var outputFormat = 'screen-pdf';
+    var colorProfile = defaultColorProfile;
+    var colorSpace = defaultColorSpace;
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
+
+    console.log('Processing ' + outputFormat + ' images from ' + paths.img.source);
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
+
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.screenpdf})
             .pipe(newer(paths.img.screenpdf))
-            .pipe(debug({title: 'Processing '}))
-            .pipe(responsive({
-                '*': [{
-                    width: 810,
-                    quality: 90,
-                    upscale: false
-                }]
-            }).on('error', function (e) {
-                console.log(e);
-            }))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/' + imagesOptimiseColorProfile).colorspace(imagesOptimiseColorSpace);
+
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
+
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
+
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                    .profile('_tools/profiles/' + thisColorProfile)
+                    .colorspace(thisColorSpace);
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.screenpdf));
     } else {
-        console.log('Colour profile _tools/profiles/' + imagesOptimiseColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -557,33 +695,71 @@ gulp.task('images:screenpdf', function (done) {
 gulp.task('images:epub', function (done) {
     'use strict';
 
+    // Set default variables for files,
+    // which can be modified during gulp process.
+    // Cannot be reset globally because all tasks
+    // run asynchronously and values will clash.
+    var modifyImage = true;
+
     // Options
-    var imagesOptimiseColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
-    var imagesOptimiseColorSpace = 'rgb';
+    var outputFormat = 'epub';
+    var colorProfile = defaultColorProfile;
+    var colorSpace = defaultColorSpace;
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
 
     console.log('Processing epub images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + imagesOptimiseColorProfile)) {
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.epub})
             .pipe(newer(paths.img.epub))
-            .pipe(debug({title: 'Processing '}))
-            .pipe(responsive({
-                '*': [{
-                    width: 810,
-                    quality: 90,
-                    upscale: false
-                }]
-            }).on('error', function (e) {
-                console.log(e);
-            }))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks except `return gmfile` settings
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/' + imagesOptimiseColorProfile).colorspace(imagesOptimiseColorSpace);
+
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
+
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
+
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                            .resize(810, null, '>') // *
+                            .profile('_tools/profiles/' + thisColorProfile)
+                            .colorspace(thisColorSpace)
+                            .quality(90);
+
+                            // * The '>' option specifies that the image should not be made larger
+                            //   if the original's width is less than the target width.
+                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.epub));
     } else {
-        console.log('Colour profile _tools/profiles/' + imagesOptimiseColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -594,33 +770,71 @@ gulp.task('images:epub', function (done) {
 gulp.task('images:app', function (done) {
     'use strict';
 
+    // Set default variables for files,
+    // which can be modified during gulp process.
+    // Cannot be reset globally because all tasks
+    // run asynchronously and values will clash.
+    var modifyImage = true;
+
     // Options
-    var imagesOptimiseColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
-    var imagesOptimiseColorSpace = 'rgb';
+    var outputFormat = 'app';
+    var colorProfile = defaultColorProfile;
+    var colorSpace = defaultColorSpace;
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
 
     console.log('Processing app images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + imagesOptimiseColorProfile)) {
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.app})
             .pipe(newer(paths.img.app))
-            .pipe(debug({title: 'Processing '}))
-            .pipe(responsive({
-                '*': [{
-                    width: 810,
-                    quality: 90,
-                    upscale: false
-                }]
-            }).on('error', function (e) {
-                console.log(e);
-            }))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks except `return gmfile` settings
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/' + imagesOptimiseColorProfile).colorspace(imagesOptimiseColorSpace);
+
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
+
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
+
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                            .resize(810, null, '>') // *
+                            .profile('_tools/profiles/' + thisColorProfile)
+                            .colorspace(thisColorSpace)
+                            .quality(90);
+
+                            // * The '>' option specifies that the image should not be made larger
+                            //   if the original's width is less than the target width.
+                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.app));
     } else {
-        console.log('Colour profile _tools/profiles/' + imagesOptimiseColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -631,33 +845,71 @@ gulp.task('images:app', function (done) {
 gulp.task('images:web', function (done) {
     'use strict';
 
+    // Set default variables for files,
+    // which can be modified during gulp process.
+    // Cannot be reset globally because all tasks
+    // run asynchronously and values will clash.
+    var modifyImage = true;
+
     // Options
-    var imagesOptimiseColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
-    var imagesOptimiseColorSpace = 'rgb';
+    var outputFormat = defaultOutputFormat;
+    var colorProfile = defaultColorProfile;
+    var colorSpace = defaultColorSpace;
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
 
     console.log('Processing web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + imagesOptimiseColorProfile)) {
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
-            .pipe(debug({title: 'Processing '}))
-            .pipe(responsive({
-                '*': [{
-                    width: 810,
-                    quality: 90,
-                    upscale: false
-                }]
-            }).on('error', function (e) {
-                console.log(e);
-            }))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks except `return gmfile` settings
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/' + imagesOptimiseColorProfile).colorspace(imagesOptimiseColorSpace);
+
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
+
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
+
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                            .resize(810, null, '>') // *
+                            .profile('_tools/profiles/' + thisColorProfile)
+                            .colorspace(thisColorSpace)
+                            .quality(90);
+
+                            // * The '>' option specifies that the image should not be made larger
+                            //   if the original's width is less than the target width.
+                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/' + imagesOptimiseColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -667,34 +919,72 @@ gulp.task('images:web', function (done) {
 gulp.task('images:small', function (done) {
     'use strict';
 
+    // Set default variables for files,
+    // which can be modified during gulp process.
+    // Cannot be reset globally because all tasks
+    // run asynchronously and values will clash.
+    var modifyImage = true;
+
     // Options
-    var imagesSmallColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
-    var imagesSmallColorSpace = 'rgb';
+    var outputFormat = defaultOutputFormat;
+    var colorProfile = defaultColorProfile;
+    var colorSpace = defaultColorSpace;
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
 
     console.log('Creating small web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + imagesSmallColorProfile)) {
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
-            .pipe(debug({title: 'Creating small '}))
-            .pipe(responsive({
-                '*': [{
-                    width: 320,
-                    quality: 90,
-                    upscale: false,
-                    suffix: '-320'
-                }]
-            }).on('error', function (e) {
-                console.log(e);
-            }))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks except `return gmfile` settings
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/' + imagesSmallColorProfile).colorspace(imagesSmallColorSpace);
+
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
+
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
+
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                            .resize(320, null, '>') // *
+                            .profile('_tools/profiles/' + thisColorProfile)
+                            .colorspace(thisColorSpace)
+                            .quality(90);
+
+                            // * The '>' option specifies that the image should not be made larger
+                            //   if the original's width is less than the target width.
+                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
+            .pipe(rename({suffix: "-320"}))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/' + imagesSmallColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -704,34 +994,72 @@ gulp.task('images:small', function (done) {
 gulp.task('images:medium', function (done) {
     'use strict';
 
+    // Set default variables for files,
+    // which can be modified during gulp process.
+    // Cannot be reset globally because all tasks
+    // run asynchronously and values will clash.
+    var modifyImage = true;
+
     // Options
-    var imagesMediumColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
-    var imagesMediumColorSpace = 'rgb';
+    var outputFormat = defaultOutputFormat;
+    var colorProfile = defaultColorProfile;
+    var colorSpace = defaultColorSpace;
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
 
     console.log('Creating medium web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + imagesMediumColorProfile)) {
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
-            .pipe(debug({title: 'Creating medium '}))
-            .pipe(responsive({
-                '*': [{
-                    width: 640,
-                    quality: 90,
-                    upscale: false,
-                    suffix: '-640'
-                }]
-            }).on('error', function (e) {
-                console.log(e);
-            }))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks except `return gmfile` settings
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/' + imagesMediumColorProfile).colorspace(imagesMediumColorSpace);
+
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
+
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
+
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                            .resize(640, null, '>') // *
+                            .profile('_tools/profiles/' + thisColorProfile)
+                            .colorspace(thisColorSpace)
+                            .quality(90);
+
+                            // * The '>' option specifies that the image should not be made larger
+                            //   if the original's width is less than the target width.
+                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
+            .pipe(rename({suffix: "-640"}))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/' + imagesMediumColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -741,34 +1069,72 @@ gulp.task('images:medium', function (done) {
 gulp.task('images:large', function (done) {
     'use strict';
 
+    // Set default variables for files,
+    // which can be modified during gulp process.
+    // Cannot be reset globally because all tasks
+    // run asynchronously and values will clash.
+    var modifyImage = true;
+
     // Options
-    var imagesLargeColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
-    var imagesLargeColorSpace = 'rgb';
+    var outputFormat = defaultOutputFormat;
+    var colorProfile = defaultColorProfile;
+    var colorSpace = defaultColorSpace;
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
 
     console.log('Creating large web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + imagesLargeColorProfile)) {
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
-            .pipe(debug({title: 'Creating large '}))
-            .pipe(responsive({
-                '*': [{
-                    width: 1024,
-                    quality: 90,
-                    upscale: false,
-                    suffix: '-1024'
-                }]
-            }).on('error', function (e) {
-                console.log(e);
-            }))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks except `return gmfile` settings
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/' + imagesLargeColorProfile).colorspace(imagesLargeColorSpace);
+
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
+
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
+
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                            .resize(1024, null, '>') // *
+                            .profile('_tools/profiles/' + thisColorProfile)
+                            .colorspace(thisColorSpace)
+                            .quality(90);
+
+                            // * The '>' option specifies that the image should not be made larger
+                            //   if the original's width is less than the target width.
+                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
+            .pipe(rename({suffix: "-1024"}))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/' + imagesLargeColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -778,34 +1144,72 @@ gulp.task('images:large', function (done) {
 gulp.task('images:xlarge', function (done) {
     'use strict';
 
+    // Set default variables for files,
+    // which can be modified during gulp process.
+    // Cannot be reset globally because all tasks
+    // run asynchronously and values will clash.
+    var modifyImage = true;
+
     // Options
-    var imagesXLargeColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
-    var imagesXLargeColorSpace = 'rgb';
+    var outputFormat = defaultOutputFormat;
+    var colorProfile = defaultColorProfile;
+    var colorSpace = defaultColorSpace;
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
 
     console.log('Creating extra-large web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + imagesXLargeColorProfile)) {
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
-            .pipe(debug({title: 'Creating extra-large '}))
-            .pipe(responsive({
-                '*': [{
-                    width: 2048,
-                    quality: 90,
-                    upscale: false,
-                    suffix: '-2048'
-                }]
-            }).on('error', function (e) {
-                console.log(e);
-            }))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks except `return gmfile` settings
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.profile('_tools/profiles/' + imagesXLargeColorProfile).colorspace(imagesXLargeColorSpace);
+
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
+
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
+
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                            .resize(2048, null, '>') // *
+                            .profile('_tools/profiles/' + thisColorProfile)
+                            .colorspace(thisColorSpace)
+                            .quality(90);
+
+                            // * The '>' option specifies that the image should not be made larger
+                            //   if the original's width is less than the target width.
+                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
+            .pipe(rename({suffix: "-2048"}))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/' + imagesXLargeColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();
@@ -815,25 +1219,70 @@ gulp.task('images:xlarge', function (done) {
 gulp.task('images:max', function (done) {
     'use strict';
 
+    // Set default variables for files,
+    // which can be modified during gulp process.
+    // Cannot be reset globally because all tasks
+    // run asynchronously and values will clash.
+    var modifyImage = true;
+
     // Options
-    var imagesMaxColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
-    var imagesMaxColorSpace = 'rgb';
+    var outputFormat = defaultOutputFormat;
+    var colorProfile = defaultColorProfile;
+    var colorSpace = defaultColorSpace;
+    var colorProfileGrayscale = defaultColorProfileGrayscale;
+    var colorSpaceGrayscale = defaultColorSpaceGrayscale;
 
     console.log('Creating max-quality web images from ' + paths.img.source);
-    if (fileExists.sync('_tools/profiles/' + imagesMaxColorProfile)) {
+    if (fileExists.sync('_tools/profiles/' + colorProfile)) {
         gulp.src(paths.img.source + '*.{' + filetypes + '}',
                 {ignore: paths.ignore.web})
             .pipe(newer(paths.img.web))
-            .pipe(debug({title: 'Creating max-quality '}))
+
+            // --------------------------------------------------------------
+            // Same for all bitmap image tasks except `return gmfile` settings
+            .pipe(debug({title: 'Creating ' + outputFormat + ' version of '}))
             .pipe(gm(function (gmfile) {
-                return gmfile.quality(100).profile('_tools/profiles/' + imagesMaxColorProfile).colorspace(imagesMaxColorSpace);
+
+                // Get file details
+                var filename = getFilenameFromPath(gmfile.source);
+
+                // Check if we should modify this image
+                var modifyImage = modifyImageCheck(filename, outputFormat);
+
+                // Reset defaults (in case previous image in stream
+                // set these values to something else)
+                var thisColorSpace = colorSpace;
+                var thisColorProfile = colorProfile;
+
+                // Override
+                var colorSettings = lookupColorSettings(gmfile, colorProfile, colorSpace,
+                        colorProfileGrayscale, colorSpaceGrayscale, outputFormat);
+                thisColorSpace = colorSettings.colorSpace;
+                thisColorProfile = colorSettings.colorProfile;
+
+                if (modifyImage) {
+                    return gmfile
+                            .profile('_tools/profiles/' + thisColorProfile)
+                            .colorspace(thisColorSpace);
+
+                            // * The '>' option specifies that the image should not be made larger
+                            //   if the original's width is less than the target width.
+                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                } else {
+                    return gmfile
+                    .define('jpeg:preserve-settings')
+                    .compress('None')
+                    .quality(100);
+                }
+                // --------------------------------------------------------------
+
             }).on('error', function (e) {
                 console.log(e);
             }))
             .pipe(rename({suffix: "-max"}))
             .pipe(gulp.dest(paths.img.web));
     } else {
-        console.log('Colour profile _tools/profiles/' + imagesMaxColorProfile + ' not found. Exiting.');
+        console.log('Colour profile _tools/profiles/' + colorProfile + ' not found. Exiting.');
         return;
     }
     done();

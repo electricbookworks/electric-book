@@ -16,3 +16,55 @@
 # - file: "all"
 #   print-pdf:
 #     colorspace: "gray"
+
+# # Here's concise way to define settings
+# # once and reuse them for many images.
+# # Use this alias to exclude an image
+# # from all pre-processing. To use it,
+# # add the following line uncommented
+# # after the `file: ""` line:
+# # <<: *no-modifications
+# no-modifications: &no-modifications
+#   print-pdf:
+#     modify: no
+#   screen-pdf:
+#     modify: no
+#   web:
+#     modify: no
+#   epub:
+#     modify: no
+#   app:
+#     modify: no
+
+# # Specify the book whose images you're modifying
+# samples:
+
+# # Change the colorspace for one image in one format
+# - file: "fradkin-1.jpg"
+#   print-pdf:
+#     colorspace: "gray"
+
+  # # Change the colorspace for all images in a format
+  # - file: "fradkin-1.jpg"
+  #   print-pdf:
+  #     colorspace: "gray"
+
+  # # Include an entire set of modification settings
+  # - file: "fradkin-1.jpg"
+  #   <<: *no-modifications
+
+  # # Or exclude only one format from modification
+  # - file: "fradkin-1.jpg"
+  #   web:
+  #     modify: no
+
+  # # Or no-modify for all formats. Best for SVGs,
+  # # which are currently the same file in all formats.
+  # - file: "4.svg"
+  #   modify: no
+
+  # # You can also use 'all' to set an option for all formats.
+  # - file: "naples.svg"
+  #   all:
+  #     modify: no
+
