@@ -201,8 +201,31 @@ function modifyImageCheck(filename, format) {
     if (imageSettings[book]) {
         imageSettings[book].forEach(function (image) {
             if (image.file === filename) {
-                if (image.modify || (image[format] && image[format].modify)) {
-                    if (image.modify === 'no' || image[format].modify === 'no') {
+
+                // User feedback for images not being modified
+                var noModifyFeedback = filename + " not modified for " + format + " format(s), as specified in images.yml";
+
+                // We use the same SVG for all output formats. So:
+                // if this is an SVG, do *any* of the output formats
+                // have 'modify' set to no? If so, do not modify it.
+                if (filename.match(/[^\s]+\.svg$/gi)) {
+                    var outputFormats = ['print-pdf', 'screen-pdf', 'web', 'epub', 'app', 'all'];
+                    outputFormats.forEach(function (format) {
+                        if (image[format] && image[format].modify && image[format].modify === 'no') {
+                            console.log(noModifyFeedback);
+                            modifyImage = false;
+                        }
+                    })
+                }
+
+                // If an image has a 'modify' setting for this or all formats...
+                if (image.modify || (image[format] && image[format].modify)
+                        || (image.all && image.all.modify)) {
+
+                    // ... and it's set to no, do not modify.
+                    if (image.modify === 'no' || (image[format] && image[format].modify === 'no')
+                            || (image.all && image.all.modify === 'no')) {
+                        console.log(noModifyFeedback);
                         modifyImage = false;
                     }
                 }
@@ -266,7 +289,7 @@ gulp.task('images:svg', function (done) {
     'use strict';
     console.log('Processing SVG images from ' + paths.img.source);
 
-    var prefix = ''; // TODO I think this gets overwritten incorrectly due to async piping
+    var prefix = ''; // does this ever get overwritten incorrectly due to async piping?
 
     // Since SVGs are used as-as for all output formats,
     // we can perform this check with gulpif based only
