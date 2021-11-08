@@ -1,70 +1,22 @@
 # Image settings
 # --------------
 # This file sets non-default settings for specific images.
+# Add your book directory, then each image at a "-".
+# For each image, you can set a colorspace (e.g. "gray", "cmyk")
+# or set it to not be modified by automated image processessing.
+# Possible formats: print-pdf, screen-pdf, web, epub, app
+# See the docs for more detail: /docs/images/image-conversions.html#image-settings
 #
 # E.g.
-# - file: "duckrabbit.jpg"
-#   print-pdf:
-#     colorspace: "gray"
-#
-# Possible values
-# - print-PDF colorspace: cmyk | gray
+# book:
+#   - file: "duckrabbit.jpg"
+#     print-pdf:
+#       colorspace: "gray"
 #
 # To apply settings to all images at once,
 # use "all" instead of a filename.
 # E.g.
-# - file: "all"
-#   print-pdf:
-#     colorspace: "gray"
-
-# # Here's concise way to define settings
-# # once and reuse them for many images.
-# # Use this alias to exclude an image
-# # from all pre-processing. To use it,
-# # add the following line uncommented
-# # after the `file: ""` line:
-# # <<: *no-modifications
-# no-modifications: &no-modifications
-#   print-pdf:
-#     modify: no
-#   screen-pdf:
-#     modify: no
-#   web:
-#     modify: no
-#   epub:
-#     modify: no
-#   app:
-#     modify: no
-
-# # Specify the book whose images you're modifying
-# samples:
-
-# # Change the colorspace for one image in one format
-# - file: "fradkin-1.jpg"
-#   print-pdf:
-#     colorspace: "gray"
-
-  # # Change the colorspace for all images in a format
-  # - file: "fradkin-1.jpg"
-  #   print-pdf:
-  #     colorspace: "gray"
-
-  # # Include an entire set of modification settings
-  # - file: "fradkin-1.jpg"
-  #   <<: *no-modifications
-
-  # # Or exclude only one format from modification
-  # - file: "fradkin-1.jpg"
-  #   web:
-  #     modify: no
-
-  # # Or no-modify for all formats. Best for SVGs,
-  # # which are currently the same file in all formats.
-  # - file: "4.svg"
-  #   modify: no
-
-  # # You can also use 'all' to set an option for all formats.
-  # - file: "naples.svg"
-  #   all:
-  #     modify: no
-
+# book:
+#   - file: "all"
+#     print-pdf:
+#       colorspace: "gray"
