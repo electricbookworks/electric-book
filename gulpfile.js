@@ -25,7 +25,10 @@ var gulp = require('gulp'),
     cheerio = require('gulp-cheerio'),
     tap = require('gulp-tap'),
     iconv = require('iconv-lite'),
-    gulpif = require('gulp-if');
+    gulpif = require('gulp-if'),
+    camelcase = require('camelcase'),
+    xmlEdit = require('gulp-edit-xml'),
+    imageFunctions = require('require-all')(__dirname + '/_tools/gulp/images');
 
     // Utilities copied from elsewhere in this repo
     var { ebSlugify } = require('./assets/js/utilities.js');
@@ -290,6 +293,7 @@ gulp.task('images:svg', function (done) {
     console.log('Processing SVG images from ' + paths.img.source);
 
     var prefix = ''; // does this ever get overwritten incorrectly due to async piping?
+    var bookFile = {};
 
     // Since SVGs are used as-as for all output formats,
     // we can perform this check with gulpif based only
@@ -303,6 +307,7 @@ gulp.task('images:svg', function (done) {
     gulp.src(paths.img.source + '*.svg')
         .pipe(tap(function (file) {
             prefix = getFileDetailsFromTap(file).prefix;
+            bookFile = camelcase(book + '-' + getFileDetailsFromTap(file).filename);
         }))
         .pipe(debug({title: 'Processing SVG '}))
         .pipe(gulpif(modifyImage, svgmin({
@@ -573,6 +578,14 @@ gulp.task('images:svg', function (done) {
         }).on('error', function (e) {
             console.log(e);
         })))
+        .pipe(xmlEdit(function(xml) {
+            console.log(bookFile);
+            if(imageFunctions.functions[bookFile]) {
+                console.log('Running ' + [bookFile] + ' function on ' + filename);
+                imageFunctions.functions[bookFile][bookFile](xml)
+            }
+            return xml;
+        }))
         .pipe(gulp.dest(paths.img.printpdf))
         .pipe(gulp.dest(paths.img.screenpdf))
         .pipe(gulp.dest(paths.img.web))
