@@ -579,7 +579,7 @@ gulp.task('images:svg', function (done) {
             console.log(e);
         })))
         .pipe(xmlEdit(function(xml) {
-            console.log(bookFile);
+
             if(imageFunctions.functions[bookFile]) {
                 console.log('Running ' + [bookFile] + ' function on ' + filename);
                 imageFunctions.functions[bookFile][bookFile](xml)
