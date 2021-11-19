@@ -8,7 +8,7 @@
 // - replacing 'Asap-Medium' with 'Asap', font-weight 600
 // - replacing 'Asap-Regular' with 'Asap'
 
-function samplesFigure0102ASvg(xml) {
+function figure_01_02_a_svg(xml) {
 
     xml.svg.defs = {
         style: '@import url("https://fonts.googleapis.com/css?family=Asap:400,400i,600,600i");'
@@ -58,4 +58,4 @@ function samplesFigure0102ASvg(xml) {
     return xml;
 }
 
-exports.samplesFigure0102ASvg = samplesFigure0102ASvg;
+exports.figure_01_02_a_svg = figure_01_02_a_svg;

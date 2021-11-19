@@ -26,7 +26,6 @@ var gulp = require('gulp'),
     tap = require('gulp-tap'),
     iconv = require('iconv-lite'),
     gulpif = require('gulp-if'),
-    camelcase = require('camelcase'),
     xmlEdit = require('gulp-edit-xml'),
     imageFunctions = require('require-all')(__dirname + '/_tools/gulp/images');
 
@@ -293,7 +292,7 @@ gulp.task('images:svg', function (done) {
     console.log('Processing SVG images from ' + paths.img.source);
 
     var prefix = ''; // does this ever get overwritten incorrectly due to async piping?
-    var bookFile = {};
+    var imageFunctionName = {};
 
     // Since SVGs are used as-as for all output formats,
     // we can perform this check with gulpif based only
@@ -307,7 +306,10 @@ gulp.task('images:svg', function (done) {
     gulp.src(paths.img.source + '*.svg')
         .pipe(tap(function (file) {
             prefix = getFileDetailsFromTap(file).prefix;
-            bookFile = camelcase(book + '-' + getFileDetailsFromTap(file).filename);
+            imageFunctionName = getFileDetailsFromTap(file).filename
+                    .replace(/\s/g, '')
+                    .replace(/-/g, '_')
+                    .replace(/\./g, '_');
         }))
         .pipe(debug({title: 'Processing SVG '}))
         .pipe(gulpif(modifyImage, svgmin({
@@ -580,13 +582,19 @@ gulp.task('images:svg', function (done) {
         })))
         .pipe(xmlEdit(function(xml) {
 
-            if(imageFunctions.functions[bookFile]) {
-                console.log('Running the ' + [bookFile] + ' function on ' + filename);
-                imageFunctions.functions[bookFile][bookFile](xml)
+            // Apply SVG manipulation functions stored in
+            // _tools/gulp/images/functions.
+
+            // If there is a [book]AllSvg.js function, run it
+            if(imageFunctions.functions[book]['all_svg']['all_svg']) {
+                console.log('Running the ' + 'all_svg function on ' + filename);
+                imageFunctions.functions[book]['all_svg']['all_svg'](xml)
             }
-            if(imageFunctions.functions[book + 'AllSvg']) {
-                console.log('Running the ' + [book + 'AllSvg'] + ' function on ' + filename);
-                imageFunctions.functions[book + 'AllSvg'][book + 'AllSvg'](xml)
+
+            // If there is an image-specific function, run it
+            if(imageFunctions.functions[book][imageFunctionName]) {
+                console.log('Running the ' + [imageFunctionName] + ' function on ' + filename);
+                imageFunctions.functions[book][imageFunctionName][imageFunctionName](xml)
             }
             return xml;
         }))
