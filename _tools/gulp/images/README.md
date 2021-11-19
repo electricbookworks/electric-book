@@ -35,3 +35,13 @@ function samplesNaplesSvg(xml) {
 exports.samplesNaplesSvg = samplesNaplesSvg;
 
 ```
+
+You can also create a function that will apply to *all* SVG images in a book. You only need to name it in the same format, but with the word 'All' instead of the filename. E.g. in the `samples` book, the script would be saved as `samplesAllSvg.js`, and the function would be called `samplesAllSvg`:
+
+```
+function samplesAllSvg(xml) {
+    // logic here
+    return xml;
+}
+exports.samplesAllSvg = samplesAllSvg;
+```

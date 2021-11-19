@@ -46,7 +46,12 @@ function samplesFigure0102ASvg(xml) {
 
         if (element.$['font-family'] === 'Asap-Medium') {
             element.$['font-family'] = 'Asap';
-            element.$['font-weight'] = '600';
+            element.$['font-weight'] = '500';
+        }
+
+        if (element.$['font-family'] === 'Asap Medium') {
+            element.$['font-family'] = 'Asap';
+            element.$['font-weight'] = '500';
         }
     });
 

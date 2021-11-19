@@ -581,8 +581,12 @@ gulp.task('images:svg', function (done) {
         .pipe(xmlEdit(function(xml) {
 
             if(imageFunctions.functions[bookFile]) {
-                console.log('Running ' + [bookFile] + ' function on ' + filename);
+                console.log('Running the ' + [bookFile] + ' function on ' + filename);
                 imageFunctions.functions[bookFile][bookFile](xml)
+            }
+            if(imageFunctions.functions[book + 'AllSvg']) {
+                console.log('Running the ' + [book + 'AllSvg'] + ' function on ' + filename);
+                imageFunctions.functions[book + 'AllSvg'][book + 'AllSvg'](xml)
             }
             return xml;
         }))
