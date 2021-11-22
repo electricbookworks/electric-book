@@ -391,6 +391,14 @@ function ebAccordionListenForAnchorClicks(querySelectorString) {
 
             event.stopPropagation();
 
+            // If the link was clicked with a modifier key pressed
+            // (e.g. Ctrl + click), assume user wants a new tab,
+            // and do not continue processing this here.
+            if (event.metaKey || event.ctrlKey || event.shiftKey) {
+                console.log('User was pressing Ctrl, Shift or the meta key.');
+                return;
+            }
+
             // Declare targetID so JSLint knows it's coming in this function.
             var targetID;
 
