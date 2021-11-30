@@ -95,10 +95,25 @@ function jumpToSearchResult() {
     }
 }
 
-// Ask mark.js to mark all the search terms
+// Ask mark.js to mark all the search terms.
+// We mark both the searchTerm and the search-query stem
 var markInstance = new Mark(document.querySelector("#wrapper"));
-if (searchTerm) {
-    markInstance.unmark().mark(searchTerm);
+if (searchTerm || getQueryVariable('search_stem')) {
+
+    // Create an array containing the search term
+    // and the search stem to pass to mark.js
+    var arrayToMark = [];
+
+    // Add them to the array if they exist
+    if (searchTerm) {
+        arrayToMark.push(searchTerm);
+    }
+    if (getQueryVariable('search_stem')) {
+        arrayToMark.push(getQueryVariable('search_stem'));
+    }
+
+    // Mark their instances on the page
+    markInstance.unmark().mark(arrayToMark);
 }
 
 if (isSearchPage() === false) {
