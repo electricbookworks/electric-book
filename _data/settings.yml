@@ -113,7 +113,9 @@ web:
   # -----------------
   # Bookmarks
   # -----------------
-  bookmarks: true
+  bookmarks: 
+    enabled: true
+    synchronise: true
   # --------------
   # Navigation
   # --------------

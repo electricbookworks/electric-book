@@ -20,10 +20,11 @@ var settings = {
         },
         bookmarks: {
             enabled: true,
+            synchronise: false,
             elements: {
                 include: '#content [id]',
                 exclude: ''
-            }
+            },
         }
     }
 };
@@ -42,6 +43,11 @@ settings.site.output = '{{ site.output }}';
 settings.web.images.lazyload = {{ site.data.settings.web.images.lazyload }};
 {% endif %}
 
-{% if site.data.settings.web.bookmarks != nil %}
-settings.web.bookmarks.enabled = {{ site.data.settings.web.bookmarks }};
+{% if site.data.settings.web.bookmarks.enabled != nil %}
+settings.web.bookmarks.enabled = {{ site.data.settings.web.bookmarks.enabled }};
 {% endif %}
+
+{% if site.data.settings.web.bookmarks.synchronise != nil %}
+settings.web.bookmarks.synchronise = {{ site.data.settings.web.bookmarks.synchronise }};
+{% endif %}
+

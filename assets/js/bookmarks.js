@@ -599,7 +599,13 @@ function ebBookmarksElementID(element) {
     // visible element in the viewport.
     if (!element) {
         element = document.querySelector('[data-bookmark="onscreen"]');
+
+        // If no bookmarkable elements found on screen exit early
+        if (!element) {
+            return false;
+        }
     }
+
     if (element.id) {
         return element.id;
     } else if (window.location.hash) {
@@ -1125,9 +1131,10 @@ function ebBookmarksListenForTextSelection() {
 // Set the lastLocation bookmark
 function ebBookmarksSetLastLocation() {
     'use strict';
-    if (ebBookmarksElementID()) {
-        ebBookmarksSetBookmark('lastLocation',
-                document.getElementById(ebBookmarksElementID()));
+
+    let lastLocationId = ebBookmarksElementID();
+    if (lastLocationId) {
+        ebBookmarksSetBookmark('lastLocation', document.getElementById(lastLocationId));
     }
 }
 
@@ -1179,12 +1186,16 @@ function ebBookmarksProcess() {
     ebBookmarksListenForTextSelection();
 }
 
+var ebBookmarksInitialised = false;
+
 // Start bookmarking
 function ebBookmarksInit() {
     'use strict';
-    // Check for support before running the main process
-    if (ebBookmarksSupport()) {
+
+    // Check for bookmark support and that we have not already initialised before running the main process
+    if (!ebBookmarksInitialised && ebBookmarksSupport()) {
         ebBookmarksProcess();
+        ebBookmarksInitialised = true;
     }
 }
 
@@ -1195,14 +1206,22 @@ function ebPrepareForBookmarks() {
     'use strict';
 
     var bookmarksObserver = new MutationObserver(function (mutations) {
+        var initialiseBookmarks = false;
+
         mutations.forEach(function (mutation) {
             if (mutation.type === "attributes") {
-                if (document.body.getAttribute('data-ids-assigned')
-                        && document.body.getAttribute('data-fingerprints-assigned')) {
-                    ebBookmarksInit();
+                if (
+                    document.body.getAttribute('data-ids-assigned') &&
+                    document.body.getAttribute('data-fingerprints-assigned')
+                ) {
+                    initialiseBookmarks = true;
                 }
             }
         });
+
+        if (initialiseBookmarks) {
+            ebBookmarksInit();
+        }
     });
 
     bookmarksObserver.observe(document.body, {
