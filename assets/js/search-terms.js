@@ -1,5 +1,5 @@
 /*jslint browser, for */
-/*globals window, locales, pageLanguage, Mark */
+/*globals window, locales, pageLanguage, Mark, settings */
 
 // get query search term from GET query string
 function getQueryVariable(variable) {
@@ -80,7 +80,12 @@ function jumpToSearchResult() {
         var mainHeading = document.querySelector('#content h1, #content h2, #content h3, #content h4, #content h5, #content h6');
         var contentDiv = document.querySelector('#content');
 
-        if (mainHeading) {
+        if (settings[settings.site.output].search.jumpBoxLocation
+                && settings[settings.site.output].search.jumpBoxLocation !== 'mainheading'
+                && document.querySelector(settings[settings.site.output].search.jumpBoxLocation)) {
+            var insertJumpBoxAfter = document.querySelector(settings[settings.site.output].search.jumpBoxLocation);
+            contentDiv.insertBefore(searchResultsSummary, insertJumpBoxAfter);
+        } else if (mainHeading) {
             contentDiv.insertBefore(searchResultsSummary, mainHeading.nextSibling);
         } else {
             contentDiv.insertBefore(searchResultsSummary, contentDiv.firstChild);
