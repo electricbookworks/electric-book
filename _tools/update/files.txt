@@ -836,6 +836,8 @@ _sass/template/web.scss
 
 # Note that we include this files.txt file here.
 
+_tools/gulp/README.md
+_tools/gulp/functions/.gitignore
 _tools/package/package.js
 _tools/profiles/Grey_Fogra39L.icc
 _tools/profiles/Grey_Fogra52L.icc

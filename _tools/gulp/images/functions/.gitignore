@@ -1,0 +1,5 @@
+# Don't ignore this file
+# This ensures that this folder
+# is tracked in version control
+# even if it is empty.
+!.gitignore
