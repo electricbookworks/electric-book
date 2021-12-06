@@ -29,18 +29,54 @@ var gulp = require('gulp'),
     xmlEdit = require('gulp-edit-xml'),
     imageFunctions = require('require-all')(__dirname + '/_tools/gulp/images');
 
-    // Utilities copied from elsewhere in this repo
-    var { ebSlugify } = require('./assets/js/utilities.js');
-    var { printpdfIndexTargets } = require('./assets/js/book-index-print-pdf.js');
-    var { screenpdfIndexTargets } = require('./assets/js/book-index-screen-pdf.js');
-    var { epubIndexTargets } = require('./assets/js/book-index-epub.js');
-    var { appIndexTargets } = require('./assets/js/book-index-app.js');
+// Load utilities from elsewhere in this repo,
+// wrapped in 'try' for when they don't exist.
 
-    // Get the file list from search-store.js,
-    // which is included in search-engine.js.
-    // The store includes a list of all pages
-    // that Jekyll parsed when last building.
+try {
+    var { ebSlugify } = require('./assets/js/utilities.js');
+}
+catch (error) {
+    console.log('Could not find ./assets/js/utilities.js');
+}
+
+try {
+    var { printpdfIndexTargets } = require('./assets/js/book-index-print-pdf.js');
+} catch (error) {
+    console.log('Could not find ./assets/js/book-index-print-pdf.js');
+    console.log('This is okay if you are only processing images.');
+}
+
+try {
+    var { screenpdfIndexTargets } = require('./assets/js/book-index-screen-pdf.js');
+} catch (error) {
+    console.log('Could not find ./assets/js/book-index-screen-pdf.js');
+    console.log('This is okay if you are only processing images.');
+}
+
+try {
+    var { epubIndexTargets } = require('./assets/js/book-index-epub.js');
+} catch (error) {
+    console.log('Could not find ./assets/js/book-index-epub.js');
+    console.log('This is okay if you are only processing images.');
+}
+
+try {
+    var { appIndexTargets } = require('./assets/js/book-index-app.js');
+} catch (error) {
+    console.log('Could not find ./assets/js/book-index-app.js');
+    console.log('This is okay if you are only processing images.');
+}
+
+// Get the file list from search-store.js,
+// which is included in search-engine.js.
+// The store includes a list of all pages
+// that Jekyll parsed when last building.
+try {
     var { store } = require('./_site/assets/js/search-engine.js');
+} catch (error) {
+    console.log('Could not find ./_site/assets/js/search-engine.js.');
+    console.log('This is okay if you are only processing images.');
+}
 
 // A function for loading book metadata as an object
 function loadMetadata() {
@@ -586,13 +622,15 @@ gulp.task('images:svg', function (done) {
             // _tools/gulp/images/functions.
 
             // If there is a [book]AllSvg.js function, run it
-            if(imageFunctions.functions[book]['all_svg']['all_svg']) {
+            if(imageFunctions.functions
+                    && imageFunctions.functions[book]['all_svg']['all_svg']) {
                 console.log('Running the ' + 'all_svg function on ' + filename);
                 imageFunctions.functions[book]['all_svg']['all_svg'](xml)
             }
 
             // If there is an image-specific function, run it
-            if(imageFunctions.functions[book][imageFunctionName]) {
+            if(imageFunctions.functions
+                    && imageFunctions.functions[book][imageFunctionName]) {
                 console.log('Running the ' + [imageFunctionName] + ' function on ' + filename);
                 imageFunctions.functions[book][imageFunctionName][imageFunctionName](xml)
             }
