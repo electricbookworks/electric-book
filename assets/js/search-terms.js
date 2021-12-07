@@ -1,5 +1,5 @@
 /*jslint browser, for */
-/*globals window, locales, pageLanguage, Mark */
+/*globals window, locales, pageLanguage, Mark, settings */
 
 // get query search term from GET query string
 function getQueryVariable(variable) {
@@ -80,7 +80,12 @@ function jumpToSearchResult() {
         var mainHeading = document.querySelector('#content h1, #content h2, #content h3, #content h4, #content h5, #content h6');
         var contentDiv = document.querySelector('#content');
 
-        if (mainHeading) {
+        if (settings[settings.site.output].search.jumpBoxLocation
+                && settings[settings.site.output].search.jumpBoxLocation !== 'mainheading'
+                && document.querySelector(settings[settings.site.output].search.jumpBoxLocation)) {
+            var insertJumpBoxAfter = document.querySelector(settings[settings.site.output].search.jumpBoxLocation);
+            contentDiv.insertBefore(searchResultsSummary, insertJumpBoxAfter);
+        } else if (mainHeading) {
             contentDiv.insertBefore(searchResultsSummary, mainHeading.nextSibling);
         } else {
             contentDiv.insertBefore(searchResultsSummary, contentDiv.firstChild);
@@ -95,10 +100,25 @@ function jumpToSearchResult() {
     }
 }
 
-// Ask mark.js to mark all the search terms
+// Ask mark.js to mark all the search terms.
+// We mark both the searchTerm and the search-query stem
 var markInstance = new Mark(document.querySelector("#wrapper"));
-if (searchTerm) {
-    markInstance.unmark().mark(searchTerm);
+if (searchTerm || getQueryVariable('search_stem')) {
+
+    // Create an array containing the search term
+    // and the search stem to pass to mark.js
+    var arrayToMark = [];
+
+    // Add them to the array if they exist
+    if (searchTerm) {
+        arrayToMark.push(searchTerm);
+    }
+    if (getQueryVariable('search_stem')) {
+        arrayToMark.push(getQueryVariable('search_stem'));
+    }
+
+    // Mark their instances on the page
+    markInstance.unmark().mark(arrayToMark);
 }
 
 if (isSearchPage() === false) {

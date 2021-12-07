@@ -31,11 +31,12 @@
     "gulp-cheerio": "^0.6.3",
     "gulp-debug": "^4.0.0",
     "gulp-each": "^0.5.0",
+    "gulp-edit-xml": "^3.1.1",
     "gulp-gm": "^0.0.9",
+    "gulp-if": "^3.0.0",
     "gulp-mathjax-page": "github:arthurattwell/gulp-mathjax-page",
     "gulp-newer": "^1.4.0",
     "gulp-rename": "^1.4.0",
-    "gulp-responsive-images": "github:electricbookworks/gulp-responsive-images",
     "gulp-svgmin": "^2.2.0",
     "gulp-tap": "^2.0.0",
     "gulp-uglify": "^3.0.1",
@@ -48,6 +49,7 @@
     "prince": "^1.5.0",
     "puppeteer": "^9.1.1",
     "shelljs": "^0.8.2",
+    "require-all": "^3.0.0",
     "yargs": "^15.3.1"
   },
   "cordova": {

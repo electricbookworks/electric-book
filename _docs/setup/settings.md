@@ -107,3 +107,5 @@ Injecting SVGs can have side-effects, depending how your SVGs are created and co
 - Your SVGs should have inline styles (Illustrator called these 'Style attributes'), not stylesheets in `<style>` elements. If different SVGs use the same class names for different styles, they all inherit each other's styles, ruining your SVGs.
 - If font names in your SVGs are different from the font names you use in your site CSS, adjust the font names in `assets/js/svg-management.js`. That script can replace font-family names in SVGs after injection.
 - All SVGs must have a [`viewBox` attribute](https://css-tricks.com/scale-svg/#article-header-id-3) for correct sizing. Good programs like Illustrator will add this automatically. Otherwise you should add it yourself to the SVG you save in your book's `_source` images.
+
+For more on SVG processing, see ['SVG processing'](../images/svg-processing.html) in the Images section.
