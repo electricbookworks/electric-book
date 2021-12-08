@@ -50,4 +50,3 @@ settings.web.bookmarks.enabled = {{ site.data.settings.web.bookmarks.enabled }};
 {% if site.data.settings.web.bookmarks.synchronise != nil %}
 settings.web.bookmarks.synchronise = {{ site.data.settings.web.bookmarks.synchronise }};
 {% endif %}
-
