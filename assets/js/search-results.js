@@ -1,5 +1,6 @@
 /*jslint browser */
-/*globals window, locales, pageLanguage, index, searchTerm, store, fillSearchBox */
+/*globals window, locales, pageLanguage, elasticlunr
+        index, searchTerm, store, fillSearchBox */
 
 // Display the search results
 function displaySearchResults(results, store) {
@@ -29,7 +30,20 @@ function displaySearchResults(results, store) {
         for (i = 0; i < results.length; i += 1) {
             item = store[results[i].ref];
             appendString += '<li>';
-            appendString += '<h3><a href="' + item.url + '?query=' + searchTerm + '">' + item.title + ' </a></h3>';
+            appendString += '<h3><a href="'
+                    + item.url
+                    + '?query='
+                    + searchTerm
+
+                    // Also add the stem that elasticlunr
+                    // used to find this in the index.
+                    // E.g. a search for 'processing'
+                    // will look for the stem 'process'.
+                    + '&search_stem='
+                    + elasticlunr.stemmer(searchTerm)
+                    + '">'
+                    + item.title
+                    + ' </a></h3>';
             appendString += '<p>' + item.excerpt + '</p>';
             appendString += '</li>';
         }

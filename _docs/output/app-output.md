@@ -117,7 +117,7 @@ Here are the detailed steps:
 1. Ensure that `google-play-expansion-file-enabled` is not set in `_data/settings.yml` (that's only for Android).
 1. Use the output script to create the app-ready HTML only. If you're creating a translation app, when the output script asks for extra config files, enter the relevant config file for that language. E.g. for French: `_configs/_config.app.fr.yml`
 2. If you're using external media, copy the images from the remote media repo manually to `_site/app/www/book/images` (or the equivalent translation images folder; see '[Add remote media](#add-remote-media)' below for more detail).
-2. At a command prompt in the repo root, run `cd _site/app && cordova platform rm windows && cordova platform add windows@6.0.0 && cordova build windows`
+2. At a command prompt in the repo root, run `cd _site/app && cordova platform rm windows && cordova platform add windows && cordova build windows`
 3. Open Visual Studio. From there, open the Cordova solution file (`.sln`) in `_site/app/platforms/windows`, and deploy and and build for your local machine to test. (You should be able to click the '► Local machine' button in the toolbar.)
 4. We recommend building a Release version (not a Debug version) to test that the app works when fully signed. To do this:
     1. Associate the app with an app listing in the store. Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... (You may only have to do this once.)
@@ -138,6 +138,7 @@ Here are the detailed steps:
 
 ### Troubleshooting
 
+- UWP apps created by Cordova are still using the old/original Edge renderer i.e. not Chromium. The [Microsoft Edge DevTools Preview](https://www.microsoft.com/en-za/p/microsoft-edge-devtools-preview/9mzbfrmz0mnj) app can be used to display a full devtools environment when debugging issues in the Windows app. To do this, run the Windows app you want to debug (this can be a local build as outlined in step 7 above), then launch the Microsoft Edge DevTools Preview app and 'connect' to the relevant app.
 - Sometimes, when you build a release, you get a white screen when opening the app or any page inside it. [This post explains a likely reason](https://stackoverflow.com/questions/39200592/visual-studio-2015-cordova-windows-10-blank-white-screen-after-associated-with), which is that Visual Studio has changed the Package Name based on what's in your Windows account, and it doesn't match what you have in your app. To get it right, `WindowsStoreIdentityName` and `WindowsStorePublisherName` must be correct in the output `config.xml`, which is populated from what you have in `_data/secrets.yml`.
 - Another possible reason for the white screen of doom is that Cordova is not setting the default language in `package.windows10.appxmanifest`, which is is supposed to read from `config.xml`. This seems to be because when associating the app with the store, Visual Studio unsets the default language. To fix this manually, open `package.windows10.appxmanifest` in Visual Studio and add the language code to 'Default language'.
 
