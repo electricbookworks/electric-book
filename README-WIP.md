@@ -8,3 +8,9 @@ Its primary aims are:
 
 2. Split book metadata into book-specific files. That is, replace the `meta.yml` file with separate metadata files, where each book gets its own file. This will make it easier to maintain projects with several books.
 
+## To do
+
+1. Update files.txt
+1. Replace `file-list` file with JS-driven way to fetch the file list for Prince
+1. Handle all output in run.js (cross-platform)
+1. Create output tests
