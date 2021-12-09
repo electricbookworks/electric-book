@@ -16,7 +16,7 @@ The content accordion breaks up your page into sections, and collapses them, sho
 
 The content accordion only works in chapter files (i.e. markdown files that do not have a `style` set in their YAML frontmatter, or have it set to something other than `chapter`, such as frontmatter).
 
-Technical note: By default, when you open an accordion section, other open sections stay open. If you would like only one accordion section to open at a time, so that opening a section closes the others, set `autoCloseAccordionSections` to `true` in `assets/js/accordion.js`.
+Technical note: By default, when you open an accordion section, other open sections stay open. If you would like only one accordion section to open at a time, so that opening a section closes the others, set `accordion-auto-close: false` for web and/or app output in `_data/settings.yml`.
 {:.box}
 
 ## Activating the content accordion
