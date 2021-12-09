@@ -136,10 +136,10 @@ Check whether we're in a subdirectory of the book directory
 {% comment %}
 Now capture each metadata value as a Liquid variable, to be used in HTML
 and book content as a Liquid output tag e.g. {{ title }}
-We do this with the template/work-metadata.html include.
+We do this with the work-metadata.html include.
 {% endcomment %}
 
-    {% include template/work-metadata.html %}
+    {% include work-metadata.html %}
 
 {% comment %} Set the parent language now before we override `language`. {% endcomment %}
 {% capture parent-language %}{{ language }}{% endcapture %}
@@ -200,7 +200,7 @@ defined in meta.yml for the given translation.
 {% if is-translation == true %}
 
     {% assign work = site.data.works.[book-directory].[book-subdirectory] %}
-    {% include template/work-metadata.html work=work %}
+    {% include work-metadata.html work=work %}
 
 {% endif %}
 
@@ -214,7 +214,7 @@ override any metadata set for that variant.{% endcomment %}
 
     {% capture variant %}{{ site.data.settings.active-variant }}{% endcapture %}
 
-    {% include template/work-metadata.html work=work work-variant=variant %}
+    {% include work-metadata.html work=work work-variant=variant %}
 
     {% comment %}Get variant settings from settings{% endcomment %}
     {% assign variant-settings = site.data.settings.variants | where: "variant", variant %}

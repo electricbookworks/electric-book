@@ -49,30 +49,41 @@ variants:
     app-variant-stylesheet: "app-anothervariant.css"
 ```
 
+You can list as many variants as you like in this way. The one that applies is the one set as the `active-variant` (see above). If no `active-variant` is set, then none of the variant stylesheets will apply on output.
+
 ## Variant metadata
 
-You can define variant-specific metadata in `_data/meta.yml` in the same way you'd create metadata for a [translation](translations.html), by creating a `variants` node in a `work` containing all the same metadata you would for the `work`. Except instead of setting a `directory`, you set a `variant`, which matches the name of the variant you created in `settings.yml`. This can include things like `identifier`s, `files` lists, and `toc` and `nav` nodes. For example:
+Sometimes a variant has different metadata to its parent (such as a different subtitle or author), or contains different files.
 
-``` yaml
-    variants:
-      - variant: myvariant
-        identifier: "9781234567890"
-        products:
-          epub:
-            identifier: "9780987654321"
-```
+You can define variant-specific metadata in a book's `_data` folder.
+
+1. Create a new YAML file alongside the book's `default.yml` file. Name that new file after the variant, with a `.yml` extension. E.g. `myvariant.yml`.
+2. In that new YAML file, define the variant's metadata as you would in default.yml. You only need to add fields for things that are different from `default.yml`. For example, if the only thing that changes is the subtitle, your variant YAML file will only contain one line, e.g. `subtitle: "The Jabberwocky Returns"`.
 
 ## Variant tables of contents
 
-For TOCs, you can also change the TOC output for a variant by adding the names of the variants in which a TOC item should appear to the main book's TOC `item` node as `variants`. This makes sure that that node in the TOC only outputs when outputting one of the listed variants. For example:
+Since tables of contents defined in YAML can be long and complex, it can be a hassle to redefine an entire TOC in a variant's YAML file just for one or two differences.
+
+So, for TOCs, you can also change the TOC output for a variant by adding the names of the variants in which a TOC item should appear to the main book's TOC items nodes as `variants`. That node in the TOC will only appear when you output one of the listed variants. For example, this node will only appear in variants named `school` and `varsity`:
 
 ``` yaml
 toc:
+  ...
   label: "Study tips"
   file: "05-study-tips"
   variants: school, varsity
 ```
 
-When an `active-variant` is defined in `_data/settings`, and the default `toc` or `nav` are output, any items that do *not* include the `active-variant`'s name in its `variants` list will *not* be output.
+'Study tips' will not appear in default output.
 
-This can be much easier to maintain than creating a whole new `toc` node to the variant's metadata, which would mostly be a straight duplication of the default output.
+If you want a TOC item to appear in both default outputs *and* specific variants, add `default` to the `variants` list here. E.g.
+
+``` yaml
+toc:
+  ...
+  label: "Study tips"
+  file: "05-study-tips"
+  variants: default, school, varsity
+```
+
+Now, in this example, 'Study tips' will appear in default outputs and the 'school' and 'varsity' variants, but not, say, the 'professional' variant (if you had such a variant in your project).

@@ -29,8 +29,9 @@ To create a new book in a new project:
     *   `index.md`: Replace our template text with your own. Usually, a link to each book is useful, e.g. `[Space Potatoes](space-potatoes)`.
     *   `README.md`: Replace our template text with any notes your collaborators might need to know about your project. (The README file is usually only read in the context of editing the files in your folder/repo.)
 1.  Optionally, rename the `book` folder with a one-word, lowercase version of your book's title (e.g. `space-potatoes`). Use only lowercase letters and no spaces. If you're creating more than one book, make a folder for each book. (In one-book projects, we usually just leave it called `book`.)
-1.	In `_data`, edit the `meta.yml` file, filling in your project info and info about at least your first book.
-1.  Inside a book's `text` folder, add a markdown file for each piece of your book, e.g. one file per chapter. Our template contains files we consider minimum requirements for most books: a cover, a title page, a copyright page, a contents page, and a chapter.
+1. Open `_data/project.yml` and replace the template values with your project's information.
+1.	In `_data/works`, edit the book's `default.yml` file, filling in your project info and info about at least your first book. If your book is called 'my-sci-fi', you'll need to copy and edit `_data/works/book/default.yml` as `_data/works/my-sci-fi/default.yml`.
+1.  Inside a book's folder, add a markdown file for each piece of your book, e.g. one file per chapter. Our template contains files we consider minimum requirements for most books: a cover, a title page, a copyright page, a contents page, and a chapter.
 1.  Inside each book's folder, store images in the `images/_source` folder. Add a `cover.jpg` image of your book's front cover there, too.
 1. In each book's `styles` folder, edit the values in `print-pdf.scss`, `screen-pdf.scss`, `web.scss` and `epub.scss`.
 

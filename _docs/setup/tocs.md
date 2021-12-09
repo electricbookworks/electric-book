@@ -10,18 +10,19 @@ order: 30
 * Page contents
 {:toc}
 
-We create website navigation and tables of contents for books in the `_data/meta.yml` file of the Electric Book template. The data in the `meta.yml` file is written in a syntax called yaml, which is very strict (e.g. a slight error in indentation can prevent your whole book from building), but once you get the hang of it, adding your book's information for output will be easy enough.
+We create website navigation and tables of contents for books in the `_data/works` files of the Electric Book template. The `_data/works` files are written in a syntax called YAML, which is simple but very strict (e.g. a slight error in indentation can prevent your whole book from building), but once you get the hang of it, adding your book's information for output will be easy enough.
 
-You can test whether your yaml is valid by pasting it into the box on [yamllint.com](http://www.yamllint.com/) and clicking ‘Go’. The yamllint validator will tell you whether it is valid or not, and will tell you on which lines errors appear with relative accuracy. 
+You can test whether your YAML is valid by pasting it into the box on [yamllint.com](http://www.yamllint.com/) and clicking ‘Go’. The yamllint validator will tell you whether it is valid or not, and will tell you on which lines errors appear with relative accuracy.
 {:.sidenote}
 
-The `_data/meta.yml` file includes all of the metadata of your book, from the series name and ISBN to the names of each file for your contents page. By default, the title page, copyright page and contents page pull information from the `_data/meta.yml` file.
+Each book has its own folder in `_data/works`. And in each book's data folder, there is at least a `default.yml` file, which contains all the default metadata for that book. E.g. the title, ISBNs, and the names of each file for your contents pages.
 
-For navigation to non-book pages like 'About us' and 'Contact us', see [Project-wide navigation](#project-wide-navigation) below.
+> For navigation for non-book pages like 'About us' and 'Contact us', see [Project-wide navigation](#project-wide-navigation) below.
+{:.box}
 
 ## How to edit the nav and TOC
 
-1. In the `works:` section, and then in the directory section for your particular book, and then under `products:`, scroll down to the output format you want to edit. E.g. `web:`.
+1. In the YAML file for your book, find the `products:` section, then scroll down to the output format you want to edit. E.g. `web:`.
 2. Edit (or create, if it doesn't exist) a `toc:` section indented by two spaces below, say, `web:`.
 3. For each navigation or table of contents entry, add a line for each of `file: ""`, `label: ""` and, optionally, `id: ""` and `class: ""`, for each TOC entry. The first line in the TOC entry should have a `-`, like a bullet point.
 4. To nest entries beneath an entry, give the parent entry a `children:` line, then indented on the next line add `file: ""`, `label: ""`, and so on.
@@ -106,20 +107,20 @@ By default, the `toc` include will generate the TOC of the book in the `book` fo
 
 Sometimes you may want to output a TOC of only part of a book. For instance, say your book has four parts, each containing several chapters. You may want each part page to include a TOC of its chapters.
 
-In `_data/meta.yml`, the chapters you want are listed within each part's `children` node.
+In your book's YAML file in `_data/works`, the chapters you want are listed within each part's `children` node.
 
-To list only those in TOC, you need to tell the `toc` include to start there, with the part's `children`.
+To list only those in this TOC, you need to tell the `toc` include to start there, with the part's `children`.
 
 To do this, you add a `start` parameter to the include tag, pointing to that `children` node.
 
 It can take some advanced technical know-how to write the 'address' of that node of data. Here is an example.
 
-We need to add the following two lines to our part page's markdown file. The first assigns the `children` node's data to a variable. The second includes the TOC on the page, using that variable:
+We need to add the following two lines to our part page's markdown file. The first assigns the `children` node's data to a variable. The second includes the TOC on the page, using that variable. This example assumes that your book's folder is called 'book':
 
 {% raw %}
 
 ```liquid
-{% assign my-chapter-list = site.data.meta.works[0].products[site.output].toc[4].children %}
+{% assign my-chapter-list = site.data.works.book.products[site.output].toc[4].children %}
 
 {% include toc start=my-chapter-list %}
 ```
@@ -129,14 +130,13 @@ We need to add the following two lines to our part page's markdown file. The fir
 If you want to know how that works, let's break it down. In
 
 ``` liquid
-site.data.meta.works[0].products[site.output].toc[4].children
+site.data.works.book.products[site.output].toc[4].children
 ```
 
 each dot or `[` means we're drilling down into the data by one level:
 
-- `site.data.meta` refers to all the data in `_data/meta.yml`.
-- `.works` refers to the `works` node in that file.
-- `[0]` refers to the first work in the `works` node – that is, the first book in your project. If you wanted the second book in your project, you'd use [1]. The numbering of nodes in data starts at 0.
+- `site.data.works` refers to all the data in `_data/works`.
+- `.book` refers to your book's folder.
 - `.products` refers to the products – or output formats – of the work.
 - `[site.output]` refers to the current site output format, which will be one of the child nodes of `products`.
 - `.toc` refers to that output format's `toc` node.

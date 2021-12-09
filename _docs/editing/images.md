@@ -155,6 +155,6 @@ That's all based on these page settings. Yours may differ, affecting your margin
 }
 ```
 
-We've done very little testing with this so far. YMMV.
+We've done very little testing with this so far, so your results may vary.
 
 There is another example [here](https://github.com/electricbookworks/electric-book/issues/164).

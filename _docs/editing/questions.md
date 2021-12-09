@@ -12,7 +12,7 @@ order: 12
 
 ## Basic usage
 
-If you want to manage your questions independently of the main book text, and make your multiple-choice questions interactive and self-marking, then each question should be its own file. Questions should be separate files in the book's `text` folder.
+If you want to manage your questions independently of the main book text, and make your multiple-choice questions interactive and self-marking, then each question should be its own file. Questions should be separate files in the book's folder.
 
 Include a question in your book file with the `include question` tag:
 

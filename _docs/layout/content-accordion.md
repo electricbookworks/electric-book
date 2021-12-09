@@ -16,7 +16,7 @@ The content accordion breaks up your page into sections, and collapses them, sho
 
 The content accordion only works in chapter files (i.e. markdown files that do not have a `style` set in their YAML frontmatter, or have it set to something other than `chapter`, such as frontmatter).
 
-Technical note: By default, when you open an accordion section, other open sections stay open. If you would like only one accordion section to open at a time, so that opening a section closes the others, set `autoCloseAccordionSections` to `true` in `assets/js/accordion.js`.
+Technical note: By default, when you open an accordion section, other open sections stay open. If you would like only one accordion section to open at a time, so that opening a section closes the others, set `accordion-auto-close: false` for web and/or app output in `_data/settings.yml`.
 {:.box}
 
 ## Activating the content accordion
@@ -43,26 +43,4 @@ accordion: expand
 
 ## Setting the accordion heading level
 
-By default, the content accordion collapses on `h2`s. You can change this in the `// Options` section of `assets/js/accordion.js`. For instance, to set the accordion to collapse on third-level headings, change:
-
-``` js
-var accordionHeads = '#content h2'
-```
-
-to
-
-``` js
-var accordionHeads = '#content h3'
-```
-
-You should also set which accordion section should open by default, if a user comes to a chapter without selecting an accordion. The default setting opens the first `h2` by default:
-
-``` js
-var defaultAccordionHead = '#content h2:first-of-type'
-```
-
-You can change `h2` to `h3` here, for instance, or just leave it blank to not set a default, in which case all accordions will be closed when a user comes to a chapter without selecting an accordion:
-
-``` js
-var defaultAccordionHead = ''
-```
+By default, the content accordion collapses on `h2`s. You can change this in `_data/settings.yml` by setting the `accordion-level`.
