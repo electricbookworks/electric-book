@@ -43,26 +43,4 @@ accordion: expand
 
 ## Setting the accordion heading level
 
-By default, the content accordion collapses on `h2`s. You can change this in the `// Options` section of `assets/js/accordion.js`. For instance, to set the accordion to collapse on third-level headings, change:
-
-``` js
-var accordionHeads = '#content h2'
-```
-
-to
-
-``` js
-var accordionHeads = '#content h3'
-```
-
-You should also set which accordion section should open by default, if a user comes to a chapter without selecting an accordion. The default setting opens the first `h2` by default:
-
-``` js
-var defaultAccordionHead = '#content h2:first-of-type'
-```
-
-You can change `h2` to `h3` here, for instance, or just leave it blank to not set a default, in which case all accordions will be closed when a user comes to a chapter without selecting an accordion:
-
-``` js
-var defaultAccordionHead = ''
-```
+By default, the content accordion collapses on `h2`s. You can change this in `_data/settings.yml` by setting the `accordion-level`.
