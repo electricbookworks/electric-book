@@ -123,23 +123,17 @@ at the top of the toc, put this in a nav element.{% endcomment %}
     {% comment %}Assume we will use every item in the toc-branch{% endcomment %}
     {% assign include-in-toc = true %}
 
-    {% comment %}If we're outputting a variant, check if a variant toc
-    has been specified. If it has, then it replaced the default toc tree.
-    If we are outputting a variant, and a variant toc is not specified,
-    check which variants, if any, this particular TOC item has specified.
-    Include the item in the TOC only if it is specified in the TOC item's
-    variants list.{% endcomment %}
-    {% if variant and variant-toc == false %}
-        {% assign toc-variants = item.variants | remove: " " | split: "," %}
-        {% for toc-variant in toc-variants %}
-            {% if toc-variant == variant %}
-                {% assign include-in-toc = true %}
-                {% break %}
-            {% else %}
-                {% assign include-in-toc = false %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+    {% comment %} Include the item in the TOC only if it is
+    specified in the TOC item's variants list. {% endcomment %}
+    {% assign toc-variants = item.variants | remove: " " | split: "," %}
+    {% for toc-variant in toc-variants %}
+        {% if toc-variant == variant or toc-variant == "default" %}
+            {% assign include-in-toc = true %}
+            {% break %}
+        {% else %}
+            {% assign include-in-toc = false %}
+        {% endif %}
+    {% endfor %}
 
     {% if include-in-toc == true %}
 
