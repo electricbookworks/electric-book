@@ -10,7 +10,6 @@ Its primary aims are:
 
 ## To do
 
-1. Update files.txt
 1. Replace `file-list` file with JS-driven way to fetch the file list for Prince
 1. Handle all output in run.js (cross-platform)
 1. Create output tests
