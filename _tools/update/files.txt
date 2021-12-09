@@ -442,6 +442,7 @@ package.json
 run-linux.sh
 run-mac.command
 run-windows.bat
+run.js
 
 
 # Repo search page
@@ -655,6 +656,7 @@ _includes/toc
 _includes/video
 _includes/vimeo
 _includes/widgets
+_includes/work-metadata.html
 _includes/youtube
 
 
@@ -838,6 +840,8 @@ _sass/template/web.scss
 
 _tools/gulp/README.md
 _tools/gulp/functions/.gitignore
+_tools/js/options.json
+_tools/js/setup.json
 _tools/package/package.js
 _tools/profiles/Grey_Fogra39L.icc
 _tools/profiles/Grey_Fogra52L.icc
