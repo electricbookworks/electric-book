@@ -46,4 +46,6 @@ RUN bundle update \
   && npm install \
   && npm install gulp-cli
 
-# CMD bash
+COPY ./_tools/docker/entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
