@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cordova": "cordova",
-    "package": "node _tools/package/package.js ./"
+    "package": "node _tools/package/package.js ./",
+    "eb": "node _tools/run/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,11 +20,14 @@
   },
   "homepage": "https://github.com/electricbookworks/electric-book#readme",
   "devDependencies": {
+    "chalk": "^4.1.0",
     "cordova-android": "^8.0.0",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-windows": "^7.0.0",
+    "cross-spawn": "^7.0.3",
     "del": "^5.0.0",
+    "figlet": "^1.5.2",
     "file-exists": "^5.0.1",
     "gulp": "^4.0.2",
     "gulp-cheerio": "^0.6.3",
@@ -38,14 +42,16 @@
     "gulp-svgmin": "^2.2.0",
     "gulp-tap": "^2.0.0",
     "gulp-uglify": "^3.0.1",
+    "http-server": "^14.0.0",
     "iconv-lite": "^0.6.2",
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^3.14.1",
     "jszip": "^3.2.2",
     "make-runnable": "^1.3.8",
+    "merge-yaml": "^1.1.0",
     "path": "^0.12.7",
     "puppeteer": "^9.1.1",
     "require-all": "^3.0.0",
-    "yargs": "^15.3.1"
+    "yargs": "^17.3.0"
   },
   "cordova": {
     "plugins": {

@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN ln -snf /usr/share/zoneinfo/$(curl https://ipapi.co/timezone) /etc/localtime
 
+RUN curl -sL https://deb.nodesource.com/setup_12.x  | bash -
+
 RUN apt-get install -y \
   software-properties-common \
   make \
@@ -19,20 +21,14 @@ RUN apt-get install -y \
   wget \
   libgif7 \
   libpixman-1-0 \
-  # chrpath \
-  # libssl-dev \
-  # libxft-dev \
-  # libfreetype6-dev \
-  # libfreetype6 \
-  # libfontconfig1-dev \
-  # libfontconfig1 \
+  libffi-dev \
+  libreadline-dev \
+  zlib1g-dev \
   nodejs \
-  npm \
   ruby \
   ruby-dev \
   graphicsmagick && \
   rm -rf /var/lib/apt/lists/*
-
 
 RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb && \
   dpkg -i prince_11.4-1_ubuntu18.04_amd64.deb
@@ -40,16 +36,14 @@ RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb 
 RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.deb && \
   dpkg -i pandoc-2.5-1-amd64.deb
 
-RUN gem update --system 3.0.6 --no-document && \
-  gem install bundler jekyll
-
-RUN npm install --global gulp-cli
+RUN gem update --system 3.0.9 --no-document && gem install bundler:1.16.1 jekyll
 
 WORKDIR /app
 COPY . /app
 
-RUN bundle update && \
-  bundle install && \
-  npm install
+RUN bundle update \
+  && bundle install \
+  && npm install \
+  && npm install gulp-cli
 
-CMD bash
+# CMD bash
