@@ -9,6 +9,10 @@ var fs = require('fs'); // for working with the file-system
 var fsPath = require('path'); // Node's path tool, e.g. for normalizing paths cross-platform
 var spawn = require('cross-spawn'); // for spawning child processes like Jekyll across platforms
 var open = require('open'); // opens files in user's preferred app
+var prince = require('prince'); // installs and runs PrinceXML
+var yaml = require('js-yaml'); // reads YAML files into JS objects
+var yamlMerge = require('yaml-merge'); // reads YAML files into JS objects
+
 
 // All the functions
 // -----------------
@@ -243,15 +247,71 @@ function openOutputFile() {
     open(fsPath.normalize(filePath));
 }
 
-// Run Prince
-function prince(format) {
+// Get project settings from settings.yml
+function projectSettings() {
+    'use strict';
+    var settings;
+    try {
+        settings = yaml.load(fs.readFileSync('./_data/settings.yml', 'utf8'));
+    } catch (error) {
+        console.log(error);
+    }
+    return settings;
+}
+
+// Get project metadata
+function metadata(book, language) {
     'use strict';
 
-    console.log('Rendering HTML to PDF with PrinceXML...');
-
-    if (format === undefined) {
-        format = 'print-pdf';
+    // Check for variant-edition output
+    var variant = false;
+    if (projectSettings()['active-variant']
+            && projectSettings()['active-variant'] !== '') {
+        variant = projectSettings()['active-variant'];
     }
+
+    // Build path to YAML data for this book
+    var pathToBookData = projectRoot()
+            + '/_data/works/'
+            + book + '/';
+    var pathToYAMLFolder = pathToBookData;
+
+    if (language) {
+        pathToYAMLFolder += language + '/';
+    }
+
+    // Build path to default-edition YAML
+    var pathToDefaultYAML = pathToYAMLFolder + 'default.yml';
+
+    // Build path to variant-edition YAML
+    var pathToVariantYAML;
+    if (variant) {
+        pathToVariantYAML = pathToYAMLFolder + variant + '.yml';
+    }
+
+    // Merge variant metadata into default metadata
+    var dataYAML;
+    if (variant) {
+        dataYAML = yamlMerge(pathToDefaultYAML, pathToVariantYAML);
+    } else {
+        dataYAML = yamlMerge(pathToDefaultYAML);
+    }
+
+    var data;
+    try {
+        data = yaml.load(dataYAML);
+    } catch (error) {
+        console.log(error);
+    }
+    return data;
+}
+
+// Get array of file paths for this output
+function fileList(format) {
+    'use strict';
+
+    var fileNames = metadata(argv.book, argv.language)
+        .products[format].files;
 
     var pathToFiles;
     if (argv.subdir) {
@@ -264,18 +324,55 @@ function prince(format) {
                 '_site/' +
                 argv.book;
     }
+    pathToFiles = fsPath.normalize(pathToFiles);
 
-    console.log('Using files in ' + fsPath.normalize(pathToFiles));
+    console.log('Using files in ' + pathToFiles);
 
-    var princeProcess = spawn(
-        'prince',
-        ['-v', '-l', 'file-list', '-o',
-                projectRoot() + '/_output/' +
-                outputFilename(format),
-                '--javascript'],
-        {cwd: pathToFiles}
-    );
-    processOutput(princeProcess, 'Prince', openOutputFile);
+    // Prepend path to fileNames
+    var filePaths = fileNames.map(function (filename) {
+        return pathToFiles + '/' + filename + '.html';
+    });
+
+    return filePaths;
+}
+
+// Run Prince
+function runPrince(format) {
+    'use strict';
+
+    console.log('Rendering HTML to PDF with PrinceXML...');
+
+    if (format === undefined) {
+        format = 'print-pdf';
+    }
+
+    // Get Prince license file, if any
+    // (and allow for 'correct' spelling, licence).
+    var princeLicenseFile = '';
+    var princeLicensePath;
+    var princeConfig = require("./package.json").prince;
+    if (princeConfig && princeConfig.license) {
+        princeLicensePath = princeConfig.license;
+    } else if (princeConfig && princeConfig.licence) {
+        princeLicensePath = princeConfig.licence;
+    }
+    if (fs.existsSync(princeLicensePath)) {
+        princeLicenseFile = princeLicensePath;
+        console.log('Using PrinceXML licence found at ' + princeLicenseFile);
+    }
+
+    prince()
+        .license('./' + princeLicenseFile)
+        .inputs(fileList(format))
+        .output(projectRoot() + '/_output/' + outputFilename(format))
+        .option('javascript')
+        .option('verbose')
+        .execute()
+        .then(function () {
+            openOutputFile();
+        }, function (error) {
+            console.log(error);
+        });
 }
 
 // Kills child processes
@@ -303,7 +400,7 @@ function outputPDF() {
     // If Mathjax is enabled, first render mathjax,
     // otherwise continue with the PDF process.
     if (mathjaxRendered === true) {
-        prince(argv.format);
+        runPrince(argv.format);
     } else {
         console.log('Mathjax enabled, rendering maths first.');
         renderMathjax(outputPDF);

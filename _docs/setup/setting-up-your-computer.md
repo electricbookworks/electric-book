@@ -8,7 +8,7 @@ order: 5
 
 If you want to edit and output books on your own computer (as opposed to using a hosted, online service like the Electric Book Manager), you need to get it set up first.
 
-The Electric Book workflow is like a toolkit: it uses a range of great open-source projects. So setting it up involves installing this software. We also use one proprietary, commercial application called PrinceXML, which is for creating PDFs. (If you're only making ebooks, websites and apps, you don't need Prince.)
+The Electric Book workflow is like a toolkit: it uses a range of great open-source projects. So setting it up involves installing this software.
 
 We recommend installing this software in this order (since some of these applications depend on others):
 
@@ -18,13 +18,14 @@ We recommend installing this software in this order (since some of these applica
 | [Ruby 2.4 or later](https://www.ruby-lang.org/en/)                                                                                            | The language that Jekyll runs in                                      |
 | [Jekyll](https://jekyllrb.com/)                                                                                                               | Builds finished HTML from your content and the Electric Book template |
 | [Bundler](https://bundler.io/)                                                                                                                | Manages other Ruby applications ('gems') that Jekyll depends on       |
-| [PrinceXML](https://www.princexml.com/)                                                                                                       | Converts Jekyll's HTML into PDF                                       |
 | [Pandoc](https://pandoc.org/)                                                                                                                 | Used for converting books to MS Word                                  |
 | [Git](https://git-scm.com/) (or a Git desktop app like [GitHub Desktop](https://desktop.github.com/))                                         | Used for version control                                              |
 | A code editor (e.g. [Sublime Text](https://www.sublimetext.com/), [VS Code](https://code.visualstudio.com/), [Brackets](https://brackets.io/)) | The best way to edit markdown and other content and style files       |
 | [Node.js](https://nodejs.org/en/)                                                                                                             | Required to run Gulp                                                  |
 | [Gulp](https://gulpjs.com/)                                                                                                                   | Used for processing image files in bulk                               |
 | [Graphicsmagick](http://www.graphicsmagick.org/)                                                                                              | Used for multi-format image conversions                               |
+
+We also use one proprietary, commercial application called PrinceXML, which is for creating PDFs. (If you're only making ebooks, websites and apps, you don't need Prince.) The Electric Book template will automatically install PrinceXML's free trial version when you run the 'Install and update dependencies' step. In order to use a [fully licensed version](https://www.princexml.com/purchase/), create a folder in your project called `_prince` and save your purchased `license.dat` file in there.
 
 If you also want to create apps, you will need to install:
 

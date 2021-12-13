@@ -41,15 +41,16 @@
     "gulp-tap": "^2.0.0",
     "gulp-uglify": "^3.0.1",
     "iconv-lite": "^0.6.2",
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^3.14.1",
     "jszip": "^3.2.2",
     "make-runnable": "github:electricbookworks/make-runnable",
     "open": "^7.3.1",
     "path": "^0.12.7",
-    "prince": "^1.5.0",
+    "prince": "../node-prince",
     "puppeteer": "^9.1.1",
-    "shelljs": "^0.8.2",
     "require-all": "^3.0.0",
+    "shelljs": "^0.8.2",
+    "yaml-merge": "github:electricbookworks/yaml-merge",
     "yargs": "^15.3.1"
   },
   "cordova": {
@@ -61,5 +62,9 @@
       "ios",
       "windows"
     ]
+  },
+  "prince": {
+    "version": "11.4",
+    "license": "_prince/license.dat"
   }
 }
