@@ -12,6 +12,12 @@ var ebShowHideOptions = {
 // Toggle visuallyhidden
 function ebTogglePreviousSiblingVisibility(event) {
     'use strict';
+
+    // Do not trigger listeners on the parent element.
+    // This lets us use show-hide in parent containers
+    // that have their own listeners.
+    event.stopPropagation();
+
     var button = event.target;
     var elementToHide = button.previousElementSibling;
     if (elementToHide.classList.contains('visuallyhidden')) {
