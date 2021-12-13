@@ -25,7 +25,7 @@ We recommend installing this software in this order (since some of these applica
 | [Gulp](https://gulpjs.com/)                                                                                                                   | Used for processing image files in bulk                               |
 | [Graphicsmagick](http://www.graphicsmagick.org/)                                                                                              | Used for multi-format image conversions                               |
 
-We also use one proprietary, commercial application called PrinceXML, which is for creating PDFs. (If you're only making ebooks, websites and apps, you don't need Prince.) The Electric Book template will automatically install PrinceXML's free trial version when you run the 'Install and update dependencies' step. In order to use a [fully licensed version](https://www.princexml.com/purchase/), create a folder in your project called `_prince` and save your purchased `license.dat` file in there.
+We also use one proprietary, commercial application called PrinceXML, which is for creating PDFs. (If you're only making ebooks, websites and apps, you don't need Prince.) See ['PrinceXML settings'](princexml.html) for more detail.
 
 If you also want to create apps, you will need to install:
 
