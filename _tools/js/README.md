@@ -127,7 +127,6 @@ exit(); // exits
 These look like they'll be useful or necessary for replacing parts of the output scripts.
 
 - [ShellJS](https://github.com/shelljs/shelljs), which provides Unix shell commands for Node.js
-- [npm: prince](https://www.npmjs.com/package/prince): useful if it can lock a Prince version per project
 - [gulpjs/issues/770](https://github.com/gulpjs/gulp/issues/770#issuecomment-63121203) comment by @contra on how to use gulpfile in node script
 - [nightmare.js](http://www.nightmarejs.org/) (npm install nightmare) to replace phantomjs (longer term to replace phantom entirely), if we don't already have electron available, in which case we should use that for consistency.
 
