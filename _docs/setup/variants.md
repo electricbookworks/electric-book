@@ -16,6 +16,8 @@ For most books, the default outputs (`print-pdf`, `screen-pdf`, `web`, `epub`, `
 
 To activate a variant, put its name as the `active-variant` in `settings.yml`. Make sure you deactivate it, for instance by commenting it out, to get your default output back.
 
+Note that an active variant applies to your *entire project*, not to a specific book. Then each book can have its own metadata, content and styles for a given project-wide variant.
+
 ## Variants in markdown
 
 If you only want certain content to display in a specific variant, wrap that content in a `if variant` tag. For example:
