@@ -100,7 +100,7 @@ not pages like landing and search pages. {% endcomment %}
             {% if next-page and next-page-url != "" and next-page-url != this-page-url %}
                 <div class="pagination-next">
                     <a href="{{ path-to-root-directory }}{{ next-page-url | replace_first: "/" }}">
-                        <span class="pagination-marker">{% if next-page-title and next-page-title != "" and site.data.settings[output-format].pagination-type == "titles" %}{{ next-page-title }}{% elsif site.data.settings[output-format].pagination-type == "direction" %}{{ locale.nav.previous }}{% else %}&#x2192;{% endif %}</span>
+                        <span class="pagination-marker">{% if next-page-title and next-page-title != "" and site.data.settings[output-format].pagination-type == "titles" %}{{ next-page-title }}{% elsif site.data.settings[output-format].pagination-type == "direction" %}{{ locale.nav.next }}{% else %}&#x2192;{% endif %}</span>
                     </a>
                 </div>
             {% endif %}
