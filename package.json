@@ -46,7 +46,7 @@
     "make-runnable": "github:electricbookworks/make-runnable",
     "open": "^7.3.1",
     "path": "^0.12.7",
-    "prince": "../node-prince",
+    "prince": "github:electricbookworks/node-prince",
     "puppeteer": "^9.1.1",
     "require-all": "^3.0.0",
     "shelljs": "^0.8.2",
