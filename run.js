@@ -11,7 +11,6 @@ var spawn = require('cross-spawn'); // for spawning child processes like Jekyll 
 var open = require('open'); // opens files in user's preferred app
 var prince = require('prince'); // installs and runs PrinceXML
 var yaml = require('js-yaml'); // reads YAML files into JS objects
-var yamlMerge = require('yaml-merge'); // reads YAML files into JS objects
 
 
 // All the functions
@@ -259,9 +258,13 @@ function projectSettings() {
     return settings;
 }
 
-// Get project metadata
-function metadata(book, language) {
+// Get the filelist for a format
+function fileList(format) {
     'use strict';
+
+    if (!format) {
+        format = 'web'; // default
+    }
 
     // Check for variant-edition output
     var variant = false;
@@ -270,48 +273,84 @@ function metadata(book, language) {
         variant = projectSettings()['active-variant'];
     }
 
+    var book = "book"; // default
+    if (argv.book) {
+        book = argv.book;
+    }
+
     // Build path to YAML data for this book
-    var pathToBookData = projectRoot()
+    var pathToYAMLFolder = projectRoot()
             + '/_data/works/'
             + book + '/';
-    var pathToYAMLFolder = pathToBookData;
-
-    if (language) {
-        pathToYAMLFolder += language + '/';
-    }
 
     // Build path to default-edition YAML
     var pathToDefaultYAML = pathToYAMLFolder + 'default.yml';
 
-    // Build path to variant-edition YAML
-    var pathToVariantYAML;
-    if (variant) {
+    // Get the files list
+    var metadata = yaml.load(fs.readFileSync(pathToDefaultYAML, 'utf8'));
+    var files = metadata.products[format].files;
+
+    // If there was no files list, oops!
+    if (!files) {
+        return [];
+    }
+
+    // Build path to translation's default YAML,
+    // if a language has been specified.
+    var pathToTranslationYAMLFolder,
+        pathToDefaultTranslationYAML;
+    if (argv.language) {
+        pathToTranslationYAMLFolder = pathToYAMLFolder + argv.language + '/';
+        pathToDefaultTranslationYAML = pathToTranslationYAMLFolder + 'default.yml';
+
+        // If the translation has this format among its products,
+        // and that format has a files list, use that list.
+        if (pathToDefaultTranslationYAML
+                && fs.existsSync(pathToDefaultTranslationYAML)) {
+            var translationMetadata = yaml.load(fs.readFileSync(pathToDefaultTranslationYAML, 'utf8'));
+            if (translationMetadata
+                    && translationMetadata.products
+                    && translationMetadata.products[format]
+                    && translationMetadata.products[format].files) {
+                files = translationMetadata.products[format].files;
+            }
+        }
+    }
+
+    // Build path to variant-edition YAML,
+    // if there is an active variant in settings.
+    var pathToVariantYAML = false;
+
+    // If there's a variant and this is a translation ...
+    if (argv.language && variant) {
+        pathToVariantYAML = pathToTranslationYAMLFolder + variant + '.yml';
+
+    // ... otherwise just get the parent language variant path
+    } else if (variant) {
         pathToVariantYAML = pathToYAMLFolder + variant + '.yml';
     }
 
-    // Merge variant metadata into default metadata
-    var dataYAML;
-    if (variant) {
-        dataYAML = yamlMerge(pathToDefaultYAML, pathToVariantYAML);
-    } else {
-        dataYAML = yamlMerge(pathToDefaultYAML);
+    // If we have a path, and there's a files list there,
+    // use that as the files list.
+    if (pathToVariantYAML
+            && fs.existsSync(pathToVariantYAML)) {
+        var variantMetadata = yaml.load(fs.readFileSync(pathToVariantYAML, 'utf8'));
+        if (variantMetadata
+                && variantMetadata.products
+                && variantMetadata.products[format]
+                && variantMetadata.products[format].files) {
+            files = variantMetadata.products[format].files;
+        }
     }
 
-    var data;
-    try {
-        data = yaml.load(dataYAML);
-    } catch (error) {
-        console.log(error);
-    }
-    return data;
+    return files;
 }
 
 // Get array of file paths for this output
-function fileList(format) {
+function filePaths(format) {
     'use strict';
 
-    var fileNames = metadata(argv.book, argv.language)
-        .products[format].files;
+    var fileNames = fileList(format);
 
     var pathToFiles;
     if (argv.subdir) {
@@ -363,10 +402,11 @@ function runPrince(format) {
 
     prince()
         .license('./' + princeLicenseFile)
-        .inputs(fileList(format))
+        .inputs(filePaths(format))
         .output(projectRoot() + '/_output/' + outputFilename(format))
         .option('javascript')
         .option('verbose')
+        .timeout(100 * 1000) // required for larger books
         .execute()
         .then(function () {
             openOutputFile();
