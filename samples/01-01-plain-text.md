@@ -4,8 +4,6 @@ title: "Plain text"
 
 ## Plain text
 
-{% include page-info %}
-
 Most books comprise pages and pages of running text. A good design makes them lovely to look at and easy to read. The heart of a design is how it handles both plain text and special forms like letters. There is a [letter towards the end of this chapter](#letter){:.show-page-number}.
 
 The text for this chapter is taken from Sir Arthur Conan Doyle's *Adventures of Sherlock Holmes*.
