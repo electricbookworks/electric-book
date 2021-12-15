@@ -6,7 +6,7 @@ console.log(chalk.red(figlet.textSync('Electric Book')));
 
 const argv = require('yargs/yargs')(process.argv.slice(2))
     .commandDir('./')
-    .demandCommand()
+    .showHelpOnFail(true)
     .wrap(100)
     .help()
     .argv;
