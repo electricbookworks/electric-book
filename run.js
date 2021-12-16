@@ -16,18 +16,9 @@ var yaml = require('js-yaml'); // reads YAML files into JS objects
 // All the functions
 // -----------------
 
-// Returns the absolute path to the project root
-function projectRoot() {
-    'use strict';
-    return process.cwd();
-}
-
-// Store the project root location
-var location = projectRoot();
-
 // Output spawned-process data to console
 // and callback when the process exits.
-function processOutput(process, processName, callback) {
+function logProcess(process, processName, callback) {
     'use strict';
 
     processName = processName || 'Process: ';
@@ -165,7 +156,7 @@ function configs(configFiles) {
 // }
 
 // Run Jekyll with options,
-// and pass a callback through to processOutput,
+// and pass a callback through to logProcess,
 // which calls the callback when Jekyll exits.
 function jekyll(command,
         configs,
@@ -192,7 +183,7 @@ function jekyll(command,
                 '--baseurl', baseurl,
                 switches]
     );
-    processOutput(jekyllProcess, 'Jekyll', callback);
+    logProcess(jekyllProcess, 'Jekyll', callback);
 }
 
 // // Processes mathjax in output HTML
@@ -215,7 +206,7 @@ function renderMathjax(callback) {
             ['mathjax', '--book', argv.book]
         );
     }
-    processOutput(mathJaxProcess, 'Gulp', callback);
+    logProcess(mathJaxProcess, 'Gulp', callback);
     mathjaxRendered = true;
 }
 
@@ -241,7 +232,7 @@ function outputFilename() {
 // Opens the output file
 function openOutputFile() {
     'use strict';
-    var filePath = fsPath.normalize(location + '/_output/' + outputFilename());
+    var filePath = fsPath.normalize(process.cwd() + '/_output/' + outputFilename());
     console.log('Your ' + argv.format + ' is in ' + filePath);
     open(fsPath.normalize(filePath));
 }
@@ -279,7 +270,7 @@ function fileList(format) {
     }
 
     // Build path to YAML data for this book
-    var pathToYAMLFolder = projectRoot()
+    var pathToYAMLFolder = process.cwd()
             + '/_data/works/'
             + book + '/';
 
@@ -354,12 +345,12 @@ function filePaths(format) {
 
     var pathToFiles;
     if (argv.subdir) {
-        pathToFiles = projectRoot() + '/' +
+        pathToFiles = process.cwd() + '/' +
                 '_site/' +
                 argv.book + '/' +
                 argv.subdir;
     } else {
-        pathToFiles = projectRoot() + '/' +
+        pathToFiles = process.cwd() + '/' +
                 '_site/' +
                 argv.book;
     }
@@ -403,7 +394,7 @@ function runPrince(format) {
     prince()
         .license('./' + princeLicenseFile)
         .inputs(filePaths(format))
-        .output(projectRoot() + '/_output/' + outputFilename(format))
+        .output(process.cwd() + '/_output/' + outputFilename(format))
         .option('javascript')
         .option('verbose')
         .timeout(100 * 1000) // required for larger books
@@ -446,12 +437,6 @@ function outputPDF() {
         renderMathjax(outputPDF);
     }
 }
-
-// // Output a screen PDF
-// function outputScreenPdf() {
-//     'use strict';
-//     console.log('Creating screen PDF...');
-// }
 
 // // Serve a website
 // function outputWeb() {
@@ -506,7 +491,7 @@ function taskImages(book, subdir) {
         'gulp',
         ['--book', book, '--language', subdir]
     );
-    processOutput(gulpProcess, 'gulp');
+    logProcess(gulpProcess, 'gulp');
 }
 
 // // Refresh the search index
@@ -528,7 +513,7 @@ function taskInstall() {
         'bundle',
         ['install']
     );
-    processOutput(bundleProcess, 'Bundler');
+    logProcess(bundleProcess, 'Bundler');
 
     console.log(
         'Running npm to install Node modules...\n' +
@@ -538,7 +523,7 @@ function taskInstall() {
         'npm',
         ['install']
     );
-    processOutput(npmProcess, 'npm');
+    logProcess(npmProcess, 'npm');
 }
 
 // Create an Electric Book output
@@ -547,7 +532,7 @@ function taskOutput(format) {
 
     // print-pdf and screen-pdf
     if (format === 'print-pdf' || format === 'screen-pdf') {
-        var filePath = fsPath.normalize(location + '/_output/' + outputFilename(format));
+        var filePath = fsPath.normalize(process.cwd() + '/_output/' + outputFilename(format));
         jekyll(
             'build',
             configs('_config.' + format + '.yml'),
