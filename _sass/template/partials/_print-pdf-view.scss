@@ -4,16 +4,14 @@ $print-pdf-view: true !default;
 
     // Set the initial default view when this PDF is opened. See http://www.princexml.com/forum/topic/2650/prince-pdf
     @prince-pdf {
-        // PDF/X-1a for print PDF does not support FitPage
+        // PDF/X-1a and PDF/A-3b do not support FitPage, open actions
         // or in-document Javascript.
-        @if $output-format == "screen-pdf" {
-            prince-pdf-open-action: command(FitPage); // none | print | command(NamedAction) See http://www.planetpdf.com/planetpdf/pdfs/A4NamedActions.pdf
-            prince-pdf-script: ""; // Insert Javascript between the quotes if needed: http://www.princexml.com/doc/properties/prince-pdf-script/
-        }
-    	prince-pdf-page-layout: two-page-right; // single-page snaps to single pages | one-column scrolls single pages| two-column | two-column-left | two-column-right | two-page-left for no cover page | two-page-right to show cover page
-    	prince-pdf-page-mode: show-bookmarks; // auto | show-attachments | show-bookmarks | fullscreen
-    	prince-pdf-paper-tray: auto; // auto | pick-tray-by-pdf-size
-    	prince-pdf-print-scaling: auto; // auto | none
+        // prince-pdf-open-action: zoom(fitpage); // none | print | command(NamedAction)
+        // prince-pdf-script: "";
+        prince-pdf-page-layout: two-page-right; // single-page snaps to single pages | one-column scrolls single pages| two-column | two-column-left | two-column-right | two-page-left for no cover page | two-page-right to show cover page
+        prince-pdf-page-mode: show-bookmarks; // auto | show-attachments | show-bookmarks | fullscreen
+        prince-pdf-paper-tray: auto; // auto | pick-tray-by-pdf-size
+        prince-pdf-print-scaling: auto; // auto | none
         prince-pdf-color-options: use-#{$black-ink}-black; // takes two values, use-true-black (/DeviceGray black in the PDF) and use-rich-black (/DeviceRGB black in PDF)
         prince-pdf-profile: $pdf-profile;
         prince-pdf-display-doc-title: true; // only supported from Prince 13
