@@ -27,7 +27,7 @@ This works alongside the prototyped Electric Book Builder, an Electron-based GUI
 Run this at the command line with
 
 ```sh
-npm run electricbook
+npm run electric-book
 ```
 
 for the default output: a local web server.
@@ -35,7 +35,7 @@ for the default output: a local web server.
 Add arguments for other tasks, e.g.
 
 ```sh
-npm run electricbook -- --task=output --format=print-pdf
+npm run electric-book -- --task=output --format=print-pdf
 ```
 
 for print output of the default `book`.
@@ -43,7 +43,7 @@ for print output of the default `book`.
 Another example. This will generate a screen PDF of the Samples book with maths enabled:
 
 ```sh
-npm run electricbook -- --task=output --format=screen-pdf --book=samples --mathjax=true
+npm run electric-book -- --task=output --format=screen-pdf --book=samples --mathjax=true
 ```
 
 ### Project setup check
@@ -51,12 +51,15 @@ npm run electricbook -- --task=output --format=screen-pdf --book=samples --mathj
 The `checkProjectSetup` function checks that basic folders and files exist for the project and the book being output. To run it:
 
 ```sh
-npm run electricbook -- --task=check
+npm run electric-book -- --task=check
 ```
 
-The folders and files are listed in `setup.json`.
+Assumes you're checking requirements for the 'book' folder nuless you specify a book. E.g.:
 
-This check is not very thorough yet, and only checks the default `book` folder, not other, custom book folders.
+```sh
+npm run electric-book -- --task=check --book=samples
+```
+
 
 ## Arguments
 
@@ -79,7 +82,7 @@ This script runs with these arguments:
 | --app-emulate   | -p                 | false   | true or false                                                 | boolean |
 | --export-format | -x                 | word    | word                                                          | string  |
 
-These are defined in `options.json`, which is [read by `argv`](https://www.npmjs.com/package/argv#options).
+These are defined in `options.js`, which is [read by `argv`](https://www.npmjs.com/package/argv#options).
 
 ## Functions
 

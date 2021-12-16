@@ -840,8 +840,8 @@ _sass/template/web.scss
 
 _tools/gulp/README.md
 _tools/gulp/functions/.gitignore
-_tools/js/options.json
-_tools/js/setup.json
+_tools/run/options.js
+_tools/run/requirements.js
 _tools/package/package.js
 _tools/profiles/Grey_Fogra39L.icc
 _tools/profiles/Grey_Fogra52L.icc
