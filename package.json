@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/electricbookworks/electric-book#readme",
   "devDependencies": {
+    "chalk": "^4.0.0",
     "concatenate": "^0.0.2",
     "cordova-android": "^8.0.0",
     "cordova-ios": "^5.0.1",

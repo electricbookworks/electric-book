@@ -1,17 +1,14 @@
 /*jslint node */
-/*globals book */
 
 var helpers = require("./helpers.js");
+var fsPath = require('path');
+var chalk = require('chalk');
 
 // Checks project for critical files and folders
-function checkRequiredPaths(book) {
+function checkRequiredPaths() {
     'use strict';
 
-    if (!book) {
-        book = "book";
-    }
-
-    var requirements = [
+    var globalRequirements = [
         {
             "path": "_app",
             "type": "required",
@@ -31,11 +28,6 @@ function checkRequiredPaths(book) {
             "path": "_data/project.yml",
             "type": "required",
             "description": "Your project's metadata."
-        },
-        {
-            "path": "_data/works/" + book + "/default.yml",
-            "type": "required",
-            "description": "Your book's default metadata."
         },
         {
             "path": "_data/locales.yml",
@@ -113,41 +105,6 @@ function checkRequiredPaths(book) {
             "description": "Javascript used in the template. Advanced users might add their own scripts here and manage which scripts are included on pages in `bundle.js`. See the ['Using Javascript'](../advanced/javascript.html) section for more detail."
         },
         {
-            "path": book,
-            "type": "optional",
-            "description": "The folder for your book's content, stored in markdown files. Duplicate and rename this folder for each book you add to your project."
-        },
-        {
-            "path": book + "/index.md",
-            "type": "required",
-            "description": "A landing page for a book. You can leave this file as is. It's useful in web and app versions. If you create a new book, you should copy this file as is into the same place in the new book's folder."
-        },
-        {
-            "path": book + "/package.opf",
-            "type": "required",
-            "description": "Required for epub output. Jekyll fills out this file and it's built into the epub. If you create a new book, you should copy this file as is into the same place in the new book's folder."
-        },
-        {
-            "path": book + "/toc.ncx",
-            "type": "optional",
-            "description": "A navigation file for backwards-compatibility in older ereaders. You only need this file in a book if that backwards-compatibility is important to you."
-        },
-        {
-            "path": book + "/fonts",
-            "type": "recommended",
-            "description": "Store any font files for your book here. (If you want to share font files across books, you can also store fonts in `assets/fonts`.)"
-        },
-        {
-            "path": book + "/images",
-            "type": "recommended",
-            "description": "This is where you store images for a book."
-        },
-        {
-            "path": book + "/styles",
-            "type": "required",
-            "description": "Contains the stylesheets for designing your book's various outputs."
-        },
-        {
             "path": "_config.yml",
             "type": "required",
             "description": "A file for setting configuration options for Jekyll, which will compile your book for output."
@@ -200,7 +157,7 @@ function checkRequiredPaths(book) {
         {
             "path": "node_modules",
             "type": "automatic",
-            "description": "Once you install Gulp and its dependencies for a project, you'll also see this folder in your project. You can ignore this, but don't delete it. It should not be tracked by Git."
+            "description": "If this is missing, you need to install dependencies. Once you install Gulp and its dependencies for a project, you'll also see this folder in your project. You can ignore this, but don't delete it. It should not be tracked by Git."
         },
         {
             "path": "package.json",
@@ -214,10 +171,89 @@ function checkRequiredPaths(book) {
         }
     ];
 
-    console.log('Checking for required files...');
-    requirements.forEach(function (item) {
-        helpers.pathExists(item.path);
+    console.log('Checking project requirements ...' + '\n');
+
+    // Check global requirements
+    globalRequirements.forEach(function (item) {
+
+        var path = fsPath.normalize(process.cwd() + '/' + item.path);
+
+        if (!helpers.pathExists(path)) {
+            console.log('Not found:');
+            if (item.type === 'required') {
+                console.log(path + ' ' + chalk.red(item.type));
+            } else {
+                console.log(path + ' ' + chalk.yellow(item.type));
+            }
+            console.log(item.description + '\n');
+        }
     });
+
+    // Check book-specific requirements
+    var works = helpers.works();
+    works.forEach(function (work) {
+
+        console.log('Checking files for ' + chalk.blue(work) + ' ... \n');
+
+        var bookRequirements = [
+            {
+                "path": "_data/works/" + work + "/default.yml",
+                "type": "required",
+                "description": "Your book's default metadata."
+            },
+            {
+                "path": work,
+                "type": "optional",
+                "description": "The folder for your book's content, stored in markdown files. Duplicate and rename this folder for each book you add to your project."
+            },
+            {
+                "path": work + "/index.md",
+                "type": "required",
+                "description": "A landing page for a book. You can leave this file as is. It's useful in web and app versions. If you create a new book, you should copy this file as is into the same place in the new book's folder."
+            },
+            {
+                "path": work + "/package.opf",
+                "type": "required",
+                "description": "Required for epub output. Jekyll fills out this file and it's built into the epub. If you create a new book, you should copy this file as is into the same place in the new book's folder."
+            },
+            {
+                "path": work + "/toc.ncx",
+                "type": "optional",
+                "description": "A navigation file for backwards-compatibility in older ereaders. You only need this file in a book if that backwards-compatibility is important to you."
+            },
+            {
+                "path": work + "/fonts",
+                "type": "recommended",
+                "description": "Store any font files for your book here. (If you want to share font files across books, you can also store fonts in `assets/fonts`.)"
+            },
+            {
+                "path": work + "/images",
+                "type": "recommended",
+                "description": "This is where you store images for a book."
+            },
+            {
+                "path": work + "/styles",
+                "type": "required",
+                "description": "Contains the stylesheets for designing your book's various outputs."
+            }
+        ];
+
+        bookRequirements.forEach(function (item) {
+
+            var path = fsPath.normalize(process.cwd() + '/' + item.path);
+
+            if (!helpers.pathExists(path)) {
+                console.log('Not found:');
+                if (item.type === 'required') {
+                    console.log(path + ' ' + chalk.red(item.type));
+                } else {
+                    console.log(path + ' ' + chalk.yellow(item.type));
+                }
+                console.log(item.description + '\n');
+            }
+        });
+    });
+
     console.log('Check complete.');
 }
 

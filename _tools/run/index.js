@@ -3,7 +3,6 @@
 
 var helpers = require('./helpers/helpers');
 var options = require('./helpers/options.js').options;
-var requirements = require('./helpers/requirements.js');
 var spawn = require('cross-spawn');
 
 // Parse arguments when calling this script
@@ -126,12 +125,7 @@ function taskInstall() {
 
 // TO DO: Move these to their own command files
 // as already done with output.js.
-// "check", "images", "index", "install", "export"
-
-// Check that the project contains required files
-if (argv.task === 'check') {
-    requirements.check(argv.book);
-}
+// "images", "index", "install", "export"
 
 // Process images
 if (argv.task === 'images') {

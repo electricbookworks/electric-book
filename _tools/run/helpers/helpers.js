@@ -189,6 +189,24 @@ function outputFilename(argv) {
     return filename;
 }
 
+// Get a list of works (aka books) in this project
+function works() {
+    'use strict';
+
+    // Get the works data directory
+    var worksDirectory = fsPath.normalize(process.cwd()
+            + '/_data/works');
+
+    // Get the folder names in the works directory
+    var arrayOfWorks = fs.readdirSync(worksDirectory, {withFileTypes: true})
+
+        // These only work with arrow functions?
+        .filter((dirent) => dirent.isDirectory())
+        .map((dirent) => dirent.name);
+
+    return arrayOfWorks;
+}
+
 // Get the filelist for a format
 function fileList(argv) {
     'use strict';
@@ -465,5 +483,6 @@ module.exports = {
     pathExists,
     projectSettings,
     runPrince,
-    switches
+    switches,
+    works
 };
