@@ -65,7 +65,7 @@ function configString(argv) {
     }
 
     // Add MathJax config if --mathjax=true
-    if (argv.mathjax === true) {
+    if (argv.mathjax) {
         console.log('Enabling MathJax...');
         string += ',_configs/_config.mathjax-enabled.yml';
     }
@@ -93,6 +93,23 @@ function configsObject(argv) {
 
     // Return the first object of the first object of the array
     return json[0];
+}
+
+// Check if MathJax is enabled in config or CLI arguments
+function mathjaxEnabled(argv) {
+    'use strict';
+
+    // Check if Mathjax is enabled in Jekyll config
+    var mathjaxConfig = configsObject(argv)["mathjax-enabled"];
+
+    // Is mathjax on either in config
+    // or activated by argv option?
+    var mathJaxOn = false;
+    if (argv.mathjax || mathjaxConfig === true) {
+        mathJaxOn = true;
+    }
+
+    return mathJaxOn;
 }
 
 // Run Jekyll with options,
@@ -130,11 +147,15 @@ function jekyll(command,
 // Checks if a file or folder exists
 function pathExists(path) {
     'use strict';
-    fs.access(path, function (err) {
-        if (err && err.code === 'ENOENT') {
-            console.log('Missing: ' + path + ' not found.');
+
+    try {
+        if (fs.existsSync(fsPath.normalize(path))) {
+            return true;
         }
-    });
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
 }
 
 // Get project settings from settings.yml
@@ -159,8 +180,8 @@ function outputFilename(argv) {
         fileExtension = '.epub';
     }
 
-    if (argv.subdir) {
-        filename = argv.book + '-' + argv.subdir + '-' + argv.format + fileExtension;
+    if (argv.language) {
+        filename = argv.book + '-' + argv.language + '-' + argv.format + fileExtension;
     } else {
         filename = argv.book + '-' + argv.format + fileExtension;
     }
@@ -176,7 +197,7 @@ function fileList(argv) {
     if (argv.format) {
         format = argv.format;
     } else {
-        format = 'web'; // fallback
+        format = 'print-pdf'; // fallback
     }
 
     // Check for variant-edition output
@@ -276,11 +297,11 @@ function filePaths(argv) {
     }
 
     var pathToFiles;
-    if (argv.subdir) {
+    if (argv.language) {
         pathToFiles = process.cwd() + '/' +
                 '_site/' +
                 book + '/' +
-                argv.subdir;
+                argv.language;
     } else {
         pathToFiles = process.cwd() + '/' +
                 '_site/' +
@@ -313,12 +334,12 @@ function renderMathjax(argv, callback, callbackArgs) {
     console.log('Rendering MathJax...');
 
     var mathJaxProcess;
-    if (argv.subdir) {
+    if (argv.language) {
         mathJaxProcess = spawn(
             'gulp',
             ['mathjax',
                     '--book', argv.book,
-                    '--language', argv.subdir]
+                    '--language', argv.language]
         );
     } else {
         mathJaxProcess = spawn(
@@ -378,21 +399,11 @@ function runPrince(argv) {
 function outputPDF(argv) {
     'use strict';
 
-    // Check if Mathjax is enabled in Jekyll config
-    var mathjaxConfig = configsObject(argv)["mathjax-enabled"];
-
-    // Is mathjax on either in config
-    // or activated by argv option?
-    var mathJaxOn = false;
-    if (argv.mathjax || mathjaxConfig === true) {
-        mathJaxOn = true;
-    }
-
     // If Mathjax is enabled, first render mathjax
     // before continuing with the PDF process.
     if (mathjaxRendered === true) {
         runPrince(argv);
-    } else if (mathJaxOn) {
+    } else if (mathjaxEnabled(argv)) {
         console.log('Mathjax enabled, rendering maths first.');
         renderMathjax(argv, outputPDF, argv);
     } else {
@@ -405,6 +416,12 @@ function switches(argv) {
     'use strict';
 
     var jekyllSwitches = '';
+
+    // Add baseurl if specified in argv
+    if (argv.baseurl) {
+        console.log('Adding baseurl...');
+        jekyllSwitches += '--baseurl=' + argv.baseurl + ' ';
+    }
 
     // Add incremental switch if --incremental=true
     if (argv.incremental === true) {
@@ -441,6 +458,7 @@ module.exports = {
     fileList,
     filePaths,
     logProcess,
+    mathjaxEnabled,
     openOutputFile,
     outputFilename,
     outputPDF,

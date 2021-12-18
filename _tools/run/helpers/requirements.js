@@ -1,7 +1,7 @@
 /*jslint node */
 /*globals book */
 
-var helpers = require("./_helpers.js");
+var helpers = require("./helpers.js");
 
 // Checks project for critical files and folders
 function checkRequiredPaths(book) {

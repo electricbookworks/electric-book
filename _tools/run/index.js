@@ -1,23 +1,22 @@
 /*jslint node */
 /*globals */
 
-// var { shelljs } = require('shelljs'); // for unix commands, not needed yet
-var requirements = require('./requirements.js'); // defines the files this project requires
-var options = require('./options.js').options; // options for argv
-var spawn = require('cross-spawn'); // for spawning child processes like Jekyll across platforms
-var helpers = require('./_helpers');
+var helpers = require('./helpers/helpers');
+var options = require('./helpers/options.js').options;
+var requirements = require('./helpers/requirements.js');
+var spawn = require('cross-spawn');
 
 // Parse arguments when calling this script
-var argv = require('yargs')(process.argv.slice(2))
+var argv = require('yargs')
     .usage('Usage: $0 <command> [options]')
-    .help('h')
-    .alias('h', 'help')
+    .default('help')
+    .commandDir('./commands/')
     .options(options)
-    .commandDir('./')
+    .demandCommand(1, "Provide at least one command, e.g. '-- output'")
     .showHelpOnFail(true)
     .wrap(100)
+    .version(false) // disable, gives npm version number
     .argv;
-
 
 // // Assembles epub in _site/epub
 // function epubAssemble() {
