@@ -33,7 +33,7 @@ function web(argv) {
 
 // Exports
 
-exports.command = 'output [--format=""] [--book=""] [...]';
+exports.command = 'output';
 exports.desc = 'Generate a project or publication';
 exports.handler = function (argv) {
     'use strict';

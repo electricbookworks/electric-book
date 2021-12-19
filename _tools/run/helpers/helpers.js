@@ -365,7 +365,7 @@ function renderMathjax(argv, callback, callbackArgs) {
             ['mathjax', '--book', argv.book]
         );
     }
-    logProcess(mathJaxProcess, 'Gulp', callback, callbackArgs);
+    logProcess(mathJaxProcess, 'Rendering MathJax', callback, callbackArgs);
     mathjaxRendered = true;
 }
 

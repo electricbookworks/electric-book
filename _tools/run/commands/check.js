@@ -9,12 +9,10 @@ var requirements = require('../helpers/requirements');
 
 // Functions
 
-
-
 // Exports
 
 exports.command = 'check';
-exports.desc = 'Checks project for required files and folders';
+exports.desc = 'Check project for required files and folders';
 exports.handler = function (argv) {
     'use strict';
 

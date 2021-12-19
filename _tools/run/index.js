@@ -1,9 +1,7 @@
 /*jslint node */
 /*globals */
 
-var helpers = require('./helpers/helpers');
 var options = require('./helpers/options.js').options;
-var spawn = require('cross-spawn');
 
 // Parse arguments when calling this script
 var argv = require('yargs')
@@ -15,6 +13,7 @@ var argv = require('yargs')
     .showHelpOnFail(true)
     .wrap(100)
     .version(false) // disable, gives npm version number
+    .scriptName("npm run electric-book")
     .argv;
 
 // // Assembles epub in _site/epub
@@ -82,57 +81,3 @@ var argv = require('yargs')
 //     'use strict';
 //     console.log('Generating search index...');
 // }
-
-// Processes images with gulp if -t images
-function taskImages(book, subdir) {
-    'use strict';
-
-    var gulpProcess = spawn(
-        'gulp',
-        ['--book', book, '--language', subdir]
-    );
-    helpers.logProcess(gulpProcess, 'gulp');
-}
-
-// Install Ruby and Node dependencies.
-// To do: add checks for other Electric Book dependencies.
-function taskInstall() {
-    'use strict';
-
-    console.log(
-        'Running Bundler to install Ruby gem dependencies...\n' +
-        'If you get errors, check that Bundler is installed (https://bundler.io).'
-    );
-    var bundleProcess = spawn(
-        'bundle',
-        ['install']
-    );
-    helpers.logProcess(bundleProcess, 'Bundler');
-
-    console.log(
-        'Running npm to install Node modules...\n' +
-        'If you get errors, check that Node.js is installed (https://nodejs.org).'
-    );
-    var npmProcess = spawn(
-        'npm',
-        ['install']
-    );
-    logProcess(npmProcess, 'npm');
-}
-
-// Execution
-// ---------
-
-// TO DO: Move these to their own command files
-// as already done with output.js.
-// "images", "index", "install", "export"
-
-// Process images
-if (argv.task === 'images') {
-    taskImages(argv.book, argv.subdir);
-}
-
-// Install dependencies
-if (argv.task === 'install') {
-    taskInstall();
-}
