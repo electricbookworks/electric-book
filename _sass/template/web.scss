@@ -244,8 +244,12 @@ $web-language-select: true !default;
 $web-annotator: true !default;
 $web-bookmarks: true !default;
 
+// Print-out styles
+$web-printout: true !default;
+
 // Logic (if this then that)
 $web-reset-sequences: true !default; // This should stay last in the @import list
+
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
@@ -329,6 +333,9 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "template/partials/web-annotator";
 @import "template/partials/web-language-select";
 @import "template/partials/web-bookmarks";
+
+// Print-out styles
+@import "template/partials/web-printout";
 
 // Logic (if this then that)
 @import "template/partials/web-reset-sequences"; // This should stay last in the @import list
