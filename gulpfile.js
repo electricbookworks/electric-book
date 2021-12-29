@@ -33,36 +33,44 @@ var gulp = require('gulp'),
 // wrapped in 'try' for when they don't exist.
 
 try {
-    var { ebSlugify } = require('./assets/js/utilities.js');
+    var ebSlugify = require('./assets/js/utilities.js').ebSlugify;
 }
-catch (error) {
+catch (utilitiesError) {
+    console.log(utilitiesError);
     console.log('Could not find ./assets/js/utilities.js');
 }
 
 try {
-    var { printpdfIndexTargets } = require('./assets/js/book-index-print-pdf.js');
-} catch (error) {
+    var printpdfIndexTargets = require('./assets/js/book-index-print-pdf.js')
+            .printpdfIndexTargets;
+} catch (printpdfIndexTargetsError) {
+    console.log(printpdfIndexTargetsError);
     console.log('Could not find ./assets/js/book-index-print-pdf.js');
     console.log('This is okay if you are only processing images.');
 }
 
 try {
-    var { screenpdfIndexTargets } = require('./assets/js/book-index-screen-pdf.js');
-} catch (error) {
+    var screenpdfIndexTargets = require('./assets/js/book-index-screen-pdf.js')
+        .screenpdfIndexTargets;
+} catch (screenpdfIndexTargetsError) {
+    console.log(screenpdfIndexTargetsError);
     console.log('Could not find ./assets/js/book-index-screen-pdf.js');
     console.log('This is okay if you are only processing images.');
 }
 
 try {
-    var { epubIndexTargets } = require('./assets/js/book-index-epub.js');
-} catch (error) {
+    var epubIndexTargets = require('./assets/js/book-index-epub.js')
+        .epubIndexTargets;
+} catch (epubIndexTargetsError) {
+    console.log(epubIndexTargetsError);
     console.log('Could not find ./assets/js/book-index-epub.js');
     console.log('This is okay if you are only processing images.');
 }
 
 try {
-    var { appIndexTargets } = require('./assets/js/book-index-app.js');
-} catch (error) {
+    var appIndexTargets = require('./assets/js/book-index-app.js').appIndexTargets;
+} catch (appIndexTargetsError) {
+    console.log(appIndexTargetsError);
     console.log('Could not find ./assets/js/book-index-app.js');
     console.log('This is okay if you are only processing images.');
 }
@@ -72,8 +80,10 @@ try {
 // The store includes a list of all pages
 // that Jekyll parsed when last building.
 try {
-    var { store } = require('./_site/assets/js/search-engine.js');
-} catch (error) {
+    var store = require('./_site/assets/js/search-engine.js')
+        .store;
+} catch (storeError) {
+    console.log(storeError);
     console.log('Could not find ./_site/assets/js/search-engine.js.');
     console.log('This is okay if you are only processing images.');
 }
