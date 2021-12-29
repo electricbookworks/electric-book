@@ -47,7 +47,7 @@ So the full command for a web server is actually:
 npm run electric-book -- output --format=web
 ```
 
-Note that the `output` command comes after the free-standing ` -- `, including spcaes on either side, after `electric-book`. This is [required by npm when parsing the command](https://medium.com/fhinkel/the-curious-case-of-double-dashes-b5e7711698f).
+Note that the `output` command comes after the free-standing ` -- `, including spaces on either side, after `electric-book`. This is [required by npm when parsing the command](https://medium.com/fhinkel/the-curious-case-of-double-dashes-b5e7711698f).
 
 You can then change things like your output format:
 
@@ -55,16 +55,12 @@ You can then change things like your output format:
 npm run electric-book -- output --format=print-pdf
 ```
 
-for a print-PDF output of the default `book`. Since `output` is a default command, you can shorten this to:
-
-```sh
-npm run electric-book -- --format=print-pdf
-```
+for a print-PDF output of the default `book`.
 
 If you're not outputting the default `book`, you must specify the book folder you want with the `--book` option. This will generate a screen PDF of the *Samples* book, with maths enabled:
 
 ```sh
-npm run electric-book -- --format=screen-pdf --book=samples --mathjax=true
+npm run electric-book -- output --format=screen-pdf --book=samples --mathjax=true
 ```
 
 Note that if maths is enabled in a project's Jekyll config(s), the output script will detect that, and it isn't necessary to pass `--mathjax=true` as well. (This is unlike older EBT output scripts, which did not check Jekyll configs.)
