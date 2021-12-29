@@ -31,6 +31,18 @@ function web(argv) {
     );
 }
 
+function epub(argv) {
+    'use strict';
+    helpers.jekyll(
+        'build',
+        helpers.configString(argv),
+        argv.baseurl,
+        helpers.switches(argv),
+        helpers.outputEpub,
+        argv
+    );
+}
+
 // Exports
 
 exports.command = 'output';
@@ -44,7 +56,7 @@ exports.handler = function (argv) {
         pdf(argv);
         break;
     case 'epub':
-        // TO DO
+        epub(argv);
         break;
     case 'app':
         // TO DO

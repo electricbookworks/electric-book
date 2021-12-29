@@ -8,6 +8,15 @@ var prince = require('prince'); // installs and runs PrinceXML
 var yaml = require('js-yaml'); // reads YAML files into JS objects
 var concatenate = require('concatenate'); // concatenate files
 
+// Store process status
+// TO DO: reset these at appropriate stages in process,
+//        e.g. when Jekyll first runs.
+var processStatus = {
+    indexCommentsRendered: false,
+    indexLinksRendered: false,
+    mathjaxRendered: false
+};
+
 // Output spawned-process data to console
 // and callback when the process exits.
 function logProcess(process, processName, callback, callbackArgs) {
@@ -346,7 +355,6 @@ function filePaths(argv) {
 }
 
 // Processes mathjax in output HTML
-var mathjaxRendered = false;
 function renderMathjax(argv, callback, callbackArgs) {
     'use strict';
     console.log('Rendering MathJax...');
@@ -366,7 +374,53 @@ function renderMathjax(argv, callback, callbackArgs) {
         );
     }
     logProcess(mathJaxProcess, 'Rendering MathJax', callback, callbackArgs);
-    mathjaxRendered = true;
+    processStatus.mathjaxRendered = true;
+}
+
+// Processes index comments as targets in output HTML
+function renderIndexComments(argv, callback, callbackArgs) {
+    'use strict';
+    console.log('Processing indexing comments ...');
+
+    var indexCommentsProcess;
+    if (argv.language) {
+        indexCommentsProcess = spawn(
+            'gulp',
+            ['renderIndexCommentsAsTargets',
+                    '--book', argv.book,
+                    '--language', argv.language]
+        );
+    } else {
+        indexCommentsProcess = spawn(
+            'gulp',
+            ['renderIndexCommentsAsTargets', '--book', argv.book]
+        );
+    }
+    logProcess(indexCommentsProcess, 'Index comments', callback, callbackArgs);
+    processStatus.indexCommentsRendered = true;
+}
+
+// Processes index-list items as linked references in output HTML
+function renderIndexLinks(argv, callback, callbackArgs) {
+    'use strict';
+    console.log('Adding links to reference indexes ...');
+
+    var indexLinksProcess;
+    if (argv.language) {
+        indexLinksProcess = spawn(
+            'gulp',
+            ['renderIndexListReferences',
+                    '--book', argv.book,
+                    '--language', argv.language]
+        );
+    } else {
+        indexLinksProcess = spawn(
+            'gulp',
+            ['renderIndexListReferences', '--book', argv.book]
+        );
+    }
+    logProcess(indexLinksProcess, 'Index links', callback, callbackArgs);
+    processStatus.indexLinksRendered = true;
 }
 
 // Opens the output file
@@ -418,15 +472,32 @@ function outputPDF(argv) {
     'use strict';
 
     // If Mathjax is enabled, first render mathjax
-    // before continuing with the PDF process.
-    if (mathjaxRendered === true) {
+    // before continuing with the process.
+    if (processStatus.mathjaxRendered === true
+            && processStatus.indexCommentsRendered === true
+            && processStatus.renderIndexLinks === true) {
         runPrince(argv);
-    } else if (mathjaxEnabled(argv)) {
+    } else if (mathjaxEnabled(argv)
+            && processStatus.mathjaxRendered === false) {
         console.log('Mathjax enabled, rendering maths first.');
         renderMathjax(argv, outputPDF, argv);
+    } else if (processStatus.indexCommentsRendered === false) {
+        console.log('Checking for indexing comments ...');
+        renderIndexComments(argv, outputPDF, argv);
+    } else if (processStatus.indexLinksRendered === false) {
+        console.log('Adding links to references indexes ...');
+        renderIndexLinks(argv, outputPDF, argv);
     } else {
         runPrince(argv);
     }
+}
+
+// Output an epub
+function outputEpub(argv) {
+    'use strict';
+
+    // TO DO
+    console.log('Epub output not supported yet.');
 }
 
 // Return switches for Jekyll
@@ -436,7 +507,7 @@ function switches(argv) {
     var jekyllSwitches = '';
 
     // Add baseurl if specified in argv
-    if (argv.baseurl) {
+    if (argv.baseurl && argv.baseurl.length > 0) {
         console.log('Adding baseurl...');
         jekyllSwitches += '--baseurl=' + argv.baseurl + ' ';
     }
@@ -478,6 +549,7 @@ module.exports = {
     logProcess,
     mathjaxEnabled,
     openOutputFile,
+    outputEpub,
     outputFilename,
     outputPDF,
     pathExists,
