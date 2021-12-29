@@ -1,0 +1,89 @@
+{% comment %} Output a list of files for a work,
+designed to be used in files-listed.html as a recursive
+loop through translations and variants. {% endcomment %}
+
+{% comment %} Fallback to default "book" directory. {% endcomment %}
+{% if include.work %}
+    {% assign files-listed-work = include.work %}
+{% else %}
+    {% assign files-listed-work = site.data.works.book %}
+{% endif %}
+
+{% if include.parent-work %}
+    {% assign files-listed-parent-work  = include.files-listed-parent-work %}
+{% endif %}
+
+{% comment %} Get the active variant,
+and fall back to 'default'. {% endcomment %}
+{% if site.data.settings.active-variant and site.data.settings.active-variant != "" %}
+    {% assign current-variant = site.data.settings.active-variant %}
+{% else %}
+    {% assign current-variant = 'default' %}
+{% endif %}
+
+{% comment %} We only want to look into work or translation folders,
+so to skip looping over YAML files (e.g. default.yml or myvariant.yml),
+we check that the folder includes a default key, i.e. a default.yml.
+{% endcomment %}
+
+{% if files-listed-work[1].default %}
+
+    {% comment %} Get the path to relevant markdown files. {% endcomment %}
+    {% capture markdown-files-path %}{{ files-listed-work[0] }}{% endcapture %}
+    {% if files-listed-parent-work %}
+        {% capture markdown-files-path %}{{ files-listed-parent-work[0] }}/{{ files-listed-work[0] }}{% endcapture %}
+    {% endif %}
+
+    {% comment %} Check if we need to inherit a files list.
+    - If variant has no files list, inherit from default.
+    - If app has no file list, inherits from web.
+    - If screen-pdf has no file list, inherit from print-pdf.
+
+    To do this, we want to know which variant and which
+    output format to take our files list from. {% endcomment %}
+
+    {% comment %} If the current variant and its output format
+    has a files list, stick with it. Otherwise, provide fallbacks.
+    {% endcomment %}
+    {% if files-listed-work[1][current-variant].products[site.output].files and files-listed-work[1][current-variant].products[site.output].files != "" %}
+        {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
+        {% capture variant-for-files %}{{ current-variant }}{% endcapture %}
+
+    {% comment %} If the variant has no files, use the default. {% endcomment %}
+    {% elsif files-listed-work[1].default.products[site.output].files and files-listed-work[1].default.products[site.output].files != "" %}
+        {% capture variant-for-files %}default{% endcapture %}
+
+        {% comment %} If the output format for the default has no files,
+        try fallbacks for app and screen-pdf outputs. {% endcomment %}
+        {% if files-listed-work[1].default.products[site.output].files and files-listed-work[1].default.products[site.output].files != "" %}
+            {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
+        {% else %}
+            {% if site.output == "app" %}
+                {% capture site-output-for-files %}web{% endcapture %}
+            {% elsif site.output == "screen-pdf" %}
+                {% capture site-output-for-files %}print-pdf{% endcapture %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% for file in files-listed-work[1][variant-for-files].products[site-output-for-files].files %}
+
+        {% for file-name in file %}
+            {% if file-name[0] %}
+                /{{ markdown-files-path }}/{{ file-name[0] }}.html,
+            {% else %}
+                /{{ markdown-files-path }}/{{ file-name }}.html,
+            {% endif %}
+        {% endfor %}
+
+    {% endfor %}
+
+    {% comment %} Now do the same for translations. {% endcomment %}
+
+    {% for files-listed-translation in files-listed-work[1] %}
+            
+        {% include files-listed-by-work.html work=files-listed-translation parent-work=files-listed-work %}
+
+    {% endfor %}
+
+{% endif %}

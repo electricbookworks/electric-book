@@ -1,161 +1,26 @@
-{% comment %} This include creates:
-1. {{ list-of-files }}: A list of all URLs of files in an output format's files list in meta.
-2. {{ array-of-files }}: A Liquid array of those URLs.
-
-It should respect active variants: if there is an active variant
-(as set in _data/settings), it should only include files listed
-for that variant and its translations. But this has not been properly tested yet.
-
-Inheritance:
-- If app output has no file list in meta.yml, it inherits the web file list.
-- If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
-
-This include is primarily for use in creating search stores and indexes. {% endcomment %}
-
 {% capture list-of-files %}
 
-    {% comment %} Loop through all the works {% endcomment %}
-    {% for work in site.data.meta.works %}
+    {% comment %} Output files for each work's current variant,
+    and then for any translations in that variant. {% endcomment %}
 
-        {% comment %} If a variant is active, we want only variant files {% endcomment %}
-        {% if site.data.settings.active-variant and site.data.settings.active-variant != "" %}
+    {% for work in site.data.works %}
 
-            {% for variant in work.variants %}
-                {% if variant.variant == site.data.settings.active-variant %}
-
-                    {% comment %}
-                    - If app output has no file list in meta.yml, it inherits the web file list.
-                    - If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
-                    {% endcomment %}
-                    {% if variant.products[site.output].files and variant.products[site.output].files != "" %}
-                        {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
-                    {% else %}
-                        {% if site.output == "app" %}
-                            {% capture site-output-for-files %}web{% endcapture %}
-                        {% elsif site.output == "screen-pdf" %}
-                            {% capture site-output-for-files %}print-pdf{% endcapture %}
-                        {% endif %}
-                    {% endif %}
-
-                    {% for file in variant.products[site-output-for-files].files %}
-                        {% for file-title in file %}
-                            {% if file-title[0] %}
-                                /{{ work.directory }}/{{ file-title[0] }}.html,
-                            {% else %}
-                                /{{ work.directory }}/{{ file-title }}.html,
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                {% endif %}
-            {% endfor %}
-
-            {% comment %} We also need the files in the variant's translations {% endcomment %}
-            {% for variant in work.variants %}
-
-                {% if variant.variant == site.data.settings.active-variant %}
-
-                    {% for translation in variant.translations %}
-
-                        {% comment %}
-                        - If app output has no file list in meta.yml, it inherits the web file list.
-                        - If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
-                        {% endcomment %}
-                        {% if translation.products[site.output].files and translation.products[site.output].files != "" %}
-                            {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
-                        {% else %}
-                            {% if site.output == "app" %}
-                                {% capture site-output-for-files %}web{% endcapture %}
-                            {% elsif site.output == "screen-pdf" %}
-                                {% capture site-output-for-files %}print-pdf{% endcapture %}
-                            {% endif %}
-                        {% endif %}
-
-                        {% for file in translation.products[site-output-for-files].files %}
-                            {% for file-title in file %}
-                                {% if file-title[0] %}
-                                    /{{ work.directory }}/{{ translation.directory }}/{{ file-title[0] }}'.html,
-                                {% else %}
-                                    /{{ work.directory }}/{{ translation.directory }}/{{ file-title }}.html,
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-
-                    {% endfor %}
-
-                {% endif %}
-
-            {% endfor %}
-
-        {% comment %} Otherwise, get the normal, non-variant file lists {% endcomment %}
-        {% else %}
-
-            {% comment %}
-            - If app output has no file list in meta.yml, it inherits the web file list.
-            - If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
-            {% endcomment %}
-            {% if work.products[site.output].files and work.products[site.output].files != "" %}
-                {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
-            {% else %}
-                {% if site.output == "app" %}
-                    {% capture site-output-for-files %}web{% endcapture %}
-                {% elsif site.output == "screen-pdf" %}
-                    {% capture site-output-for-files %}print-pdf{% endcapture %}
-                {% endif %}
-            {% endif %}
-
-            {% for file in work.products[site-output-for-files].files %}
-                {% for file-title in file %}
-                    {% if file-title[0] %}
-                        /{{ work.directory }}/{{ file-title[0] }}.html,
-                    {% else %}
-                        /{{ work.directory }}/{{ file-title }}.html,
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
-
-            {% for translation in work.translations %}
-
-                {% comment %}
-                - If app output has no file list in meta.yml, it inherits the web file list.
-                - If screen-pdf output has no file list in meta.yml, it inherits the print-pdf file list.
-                {% endcomment %}
-                {% if translation.products[site.output].files and translation.products[site.output].files != "" %}
-                    {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
-                {% else %}
-                    {% if site.output == "app" %}
-                        {% capture site-output-for-files %}web{% endcapture %}
-                    {% elsif site.output == "screen-pdf" %}
-                        {% capture site-output-for-files %}print-pdf{% endcapture %}
-                    {% endif %}
-                {% endif %}
-
-                {% for file in translation.products[site-output-for-files].files %}
-                    {% for file-title in file %}
-                        {% if file-title[0] %}
-                            /{{ work.directory }}/{{ translation.directory }}/{{ file-title[0] }}.html,
-                        {% else %}
-                            /{{ work.directory }}/{{ translation.directory }}/{{ file-title }}.html,
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-
-            {% endfor %}
-
-        {% endif %}
+        {% include files-listed-by-work.html work=work %}
 
     {% endfor %}
 
-    {% comment %}Are we outputting the docs?{% endcomment %}
+    {% comment %} Add the docs, if they are enabled. {% endcomment %}
+
     {% for coll in site.collections %}
-      {% if coll.output == true and coll.label == "docs" %}
+        {% if coll.output == true and coll.label == "docs" %}
         {% assign output-docs = true %}
         {% break %}
-      {% endif %}
+        {% endif %}
     {% endfor %}
 
     {% if output-docs == true %}
         {% for doc in site.docs  %}
-            {{ doc.url }},
+            {{ doc.url }}{% unless forloop.last %},{% endunless %}
         {% endfor %}
     {% endif %}
 
