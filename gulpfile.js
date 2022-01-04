@@ -1488,7 +1488,10 @@ gulp.task('mathjax:all', function (done) {
 gulp.task('epub:xhtmlLinks', function (done) {
     'use strict';
 
-    gulp.src([paths.epub.src, '_site/epub/package.opf', '_site/epub/toc.ncx'], {base: './'})
+    gulp.src([paths.epub.src,
+            '_site/' + book + '/package.opf',
+            '_site/' + book + '/toc.ncx'],
+            {base: './'})
         .pipe(cheerio({
             run: function ($) {
                 var target, asciiTarget, newTarget;

@@ -2,6 +2,7 @@
 
 var fs = require('fs'); // for working with the file-system
 var fsPath = require('path'); // Node's path tool, e.g. for normalizing paths cross-platform
+var fsPromises = require('fs/promises'); // Node async filesystem operations
 var spawn = require('cross-spawn'); // for spawning child processes like Jekyll across platforms
 var open = require('open'); // opens files in user's preferred app
 var prince = require('prince'); // installs and runs PrinceXML
@@ -9,12 +10,25 @@ var yaml = require('js-yaml'); // reads YAML files into JS objects
 var concatenate = require('concatenate'); // concatenate files
 
 // Store process status
-// TO DO: reset these at appropriate stages in process,
-//        e.g. when Jekyll first runs.
+// (Do we need to reset these at appropriate
+// stages in the process to avoid false positives?)
 var processStatus = {
+    htmlFilesCleaned: false,
     indexCommentsRendered: false,
     indexLinksRendered: false,
-    mathjaxRendered: false
+    mathjaxRendered: false,
+    xhtmlLinksConverted: false,
+    xhtmlFilesConverted: false,
+    epubAssembly: {
+        bookText: false,
+        bookCSS: false,
+        bookImages: false,
+        bookFonts: false,
+        bundleJS: false,
+        mathjax: false,
+        packageOPF: false,
+        ncx: false
+    }
 };
 
 // Output spawned-process data to console
@@ -309,7 +323,7 @@ function fileList(argv) {
     return files;
 }
 
-// Get array of file paths for this output
+// Get array of HTML-file paths for this output
 function filePaths(argv) {
     'use strict';
 
@@ -348,6 +362,63 @@ function filePaths(argv) {
         } else {
             return fsPath.normalize(pathToFiles + '/'
                     + filename + '.html');
+        }
+    });
+
+    return paths;
+}
+
+// Get array of image-file paths for this output
+function imagePaths(argv) {
+    'use strict';
+
+    // Provide fallback book
+    var book;
+    if (argv.book) {
+        book = argv.book;
+    } else {
+        book = "book";
+    }
+
+    var pathToParentImages, pathToTranslatedImages;
+    if (argv.language) {
+        pathToTranslatedImages = fsPath.normalize(process.cwd()
+                + '/_site/' +
+                book + '/' +
+                argv.language +
+                '/images/' +
+                argv.format);
+    } else {
+        pathToParentImages = fsPath.normalize(process.cwd()
+                + '/_site/'
+                + book
+                + '/images/' +
+                argv.format);
+    }
+
+    // If translated images exist, use that path,
+    // otherwise use the parent images.
+    var pathToImages;
+    if (argv.language
+            && fs.readdirSync(pathToTranslatedImages).length > 0) {
+        pathToImages = pathToTranslatedImages;
+    } else {
+        pathToImages = pathToParentImages;
+    }
+
+
+    console.log('Using files in ' + pathToImages);
+
+    // Extract filenames from file objects,
+    // and prepend path to each filename.
+    var paths = fs.readdirSync(pathToImages).map(function (filename) {
+
+        if (typeof filename === "object") {
+            return fsPath.normalize(pathToImages + '/'
+                    + Object.keys(filename)[0]);
+        } else {
+            return fsPath.normalize(pathToImages + '/'
+                    + filename);
         }
     });
 
@@ -423,6 +494,75 @@ function renderIndexLinks(argv, callback, callbackArgs) {
     processStatus.indexLinksRendered = true;
 }
 
+// Converts paths in links from *.html to *.xhtml
+function convertXHTMLLinks(argv, callback, callbackArgs) {
+    'use strict';
+    console.log('Converting links from .html to .xhtml ...');
+
+    var convertXHTMLLinksProcess;
+    if (argv.language) {
+        convertXHTMLLinksProcess = spawn(
+            'gulp',
+            ['epub:xhtmlLinks',
+                    '--book', argv.book,
+                    '--language', argv.language]
+        );
+    } else {
+        convertXHTMLLinksProcess = spawn(
+            'gulp',
+            ['epub:xhtmlLinks', '--book', argv.book]
+        );
+    }
+    logProcess(convertXHTMLLinksProcess, 'XHTML links', callback, callbackArgs);
+    processStatus.xhtmlLinksConverted = true;
+}
+
+// Converts .html files to .xhtml, e.g. for epub output
+function convertXHTMLFiles(argv, callback, callbackArgs) {
+    'use strict';
+    console.log('Converting links from .html to .xhtml ...');
+
+    var convertXHTMLFilesProcess;
+    if (argv.language) {
+        convertXHTMLFilesProcess = spawn(
+            'gulp',
+            ['epub:xhtmlFiles',
+                    '--book', argv.book,
+                    '--language', argv.language]
+        );
+    } else {
+        convertXHTMLFilesProcess = spawn(
+            'gulp',
+            ['epub:xhtmlFiles', '--book', argv.book]
+        );
+    }
+    logProcess(convertXHTMLFilesProcess, 'XHTML files', callback, callbackArgs);
+    processStatus.xhtmlFilesConverted = true;
+}
+
+// Cleans out old .html files after .xhtml conversions
+function cleanHTMLFiles(argv, callback, callbackArgs) {
+    'use strict';
+    console.log('Cleaning out old .html files ...');
+
+    var cleanHTMLFilesProcess;
+    if (argv.language) {
+        cleanHTMLFilesProcess = spawn(
+            'gulp',
+            ['epub:cleanHtmlFiles',
+                    '--book', argv.book,
+                    '--language', argv.language]
+        );
+    } else {
+        cleanHTMLFilesProcess = spawn(
+            'gulp',
+            ['epub:cleanHtmlFiles', '--book', argv.book]
+        );
+    }
+    logProcess(cleanHTMLFilesProcess, 'Clean HTML files', callback, callbackArgs);
+    processStatus.htmlFilesCleaned = true;
+}
+
 // Opens the output file
 function openOutputFile(argv) {
     'use strict';
@@ -452,6 +592,9 @@ function runPrince(argv) {
         console.log('Using PrinceXML licence found at ' + princeLicenseFile);
     }
 
+    // Currently, node-prince does not seem to
+    // log its progress to stdout. Possible WIP:
+    // https://github.com/rse/node-prince/pull/7
     prince()
         .license('./' + princeLicenseFile)
         .inputs(filePaths(argv))
@@ -465,6 +608,98 @@ function runPrince(argv) {
         }, function (error) {
             console.log(error);
         });
+}
+
+// Add an array of files to the epub folder.
+// The destinationFolder assumes, and is
+// relative to, the destination epub folder,
+// e.g. it might be `book/images/epub`.
+function addToEpub(arrayOfFilePaths, destinationFolder,
+        epubAssemblyType, callback, callbackArgs) {
+    'use strict';
+
+    // Ensure the destinationFolder ends with a slash
+    if (!destinationFolder.endsWith('/')) {
+        destinationFolder += '/';
+    }
+
+    // Build the full destination path
+    var destinationFolderPath = fsPath.normalize(process.cwd()
+            + '/_site/epub/' + destinationFolder);
+
+    // Create the destination directory
+    fs.mkdirSync(destinationFolderPath, {recursive: true});
+
+    // Track how many files we have to copy
+    var totalFiles = arrayOfFilePaths.length;
+    var filesCopied = 0;
+
+    // Add each file in the array to the destination
+    arrayOfFilePaths.forEach(function (path) {
+
+        // Deduce the filename
+        var filename = path.replace(/^.*[\\\/]/, '');
+
+        try {
+            fsPromises.copyFile(path, destinationFolderPath + filename);
+            console.log('Copied ' + filename + ' to epub folder.');
+            filesCopied += 1;
+
+            // Check if we're done
+            if (filesCopied === totalFiles) {
+                processStatus.epubAssembly[epubAssemblyType] = true;
+                callback(callbackArgs);
+            }
+        } catch (error) {
+            console.log('Could not copy ' + filename + ' to epub folder: \n'
+                    + error);
+        }
+    });
+}
+
+// Zip the epub folder
+function epubZip(argv) {
+    'use strict';
+    // TO DO
+    console.log('Epub zip coming soon...' + argv);
+}
+
+// Assemble an epub folder
+function assembleEpub(argv) {
+    'use strict';
+
+    // If all is assembled, move on to zipping,
+    // otherwise continue assembly and recurse.
+    if (processStatus.epubAssembly.bookText
+            && processStatus.epubAssembly.bookCSS
+            && processStatus.epubAssembly.bookImages
+            && processStatus.epubAssembly.bookFonts
+            && processStatus.epubAssembly.bundleJS
+            && processStatus.epubAssembly.mathjax
+            && processStatus.epubAssembly.packageOPF
+            && processStatus.epubAssembly.ncx) {
+        epubZip(argv);
+    } else if (processStatus.epubAssembly.bookText === false) {
+
+        // Add text
+        addToEpub(filePaths(argv), argv.book, 'bookText', assembleEpub, argv);
+    } else if (processStatus.epubAssembly.bookImages === false) {
+
+        // Add images
+        addToEpub(imagePaths(argv),
+                argv.book + '/images/epub', 'bookImages',
+                assembleEpub, argv);
+    } else {
+        console.log('Epub assembly could not complete. Status:\n'
+                + JSON.stringify(processStatus.epubAssembly, null, 2));
+    }
+
+    // Add images
+    // Add package.opf
+    // Add toc.ncx
+    // Add fonts
+    // Add scripts: mathjax, bundle
+    // Add appropriate styles
 }
 
 // Output a print PDF
@@ -496,8 +731,47 @@ function outputPDF(argv) {
 function outputEpub(argv) {
     'use strict';
 
-    // TO DO
-    console.log('Epub output not supported yet.');
+    // TO DO. Process will involve:
+    // 1. run jekyll [done]
+    // 2. process through index comments, index links [done]
+    // 3. convert to xhtml: links, files, clean [done]
+    // 4. assemble epub folder:
+    //    - text [done]
+    //    - images [done]
+    //    - package, ncx
+    //    - fonts
+    //    - scripts: mathjax, bundle
+    //    - appropriate styles
+    // 5. zip epub folder
+    // 6. run epubcheck
+    // 7. open epub file location
+
+    // First render index comments and links and
+    // do XHTML conversions before assembling the epub.
+    if (processStatus.indexCommentsRendered === true
+            && processStatus.renderIndexLinks === true
+            && processStatus.xhtmlLinksConverted === true
+            && processStatus.xhtmlFilesConverted === true
+            && processStatus.htmlFilesCleaned === true) {
+        assembleEpub(argv);
+    } else if (processStatus.indexCommentsRendered === false) {
+        console.log('Checking for indexing comments ...');
+        renderIndexComments(argv, outputEpub, argv);
+    } else if (processStatus.indexLinksRendered === false) {
+        console.log('Adding links to references indexes ...');
+        renderIndexLinks(argv, outputEpub, argv);
+    } else if (processStatus.xhtmlLinksConverted === false) {
+        console.log('Converting links to XHTML ...');
+        convertXHTMLLinks(argv, outputEpub, argv);
+    } else if (processStatus.xhtmlFilesConverted === false) {
+        console.log('Renaming .html files to .xhtml ...');
+        convertXHTMLFiles(argv, outputEpub, argv);
+    } else if (processStatus.htmlFilesCleaned === false) {
+        console.log('Adding links to references indexes ...');
+        cleanHTMLFiles(argv, outputEpub, argv);
+    } else {
+        assembleEpub(argv);
+    }
 }
 
 // Return switches for Jekyll
@@ -506,7 +780,10 @@ function switches(argv) {
 
     var jekyllSwitches = '';
 
-    // Add baseurl if specified in argv
+    // Add baseurl if specified in argv.
+    // Remember that the default argv options
+    // include a blank baseurl in argv, so we don't
+    // want to include a baseurl if it's blank.
     if (argv.baseurl && argv.baseurl.length > 0) {
         console.log('Adding baseurl...');
         jekyllSwitches += '--baseurl=' + argv.baseurl + ' ';
