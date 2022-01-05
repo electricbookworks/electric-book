@@ -36,7 +36,8 @@ function getFiles(root, files, base) {
     return files;
 }
 
-module.exports = function (uncompressedEpubDirectory) {
+module.exports = function (uncompressedEpubDirectory,
+        callback, callbackArgs) {
     'use strict';
 
     // Check if the directory exists
@@ -67,7 +68,12 @@ module.exports = function (uncompressedEpubDirectory) {
             // JSZip generates a readable stream with a "end" event,
             // but is piped here in a writable stream which emits a "finish" event.
             console.log(uncompressedEpubDirectory + ".zip created.");
+
+            if (callback) {
+                callback(callbackArgs);
+            }
         });
+
 };
 
 // Make this runnable from the command line

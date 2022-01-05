@@ -7,6 +7,7 @@ var open = require('open'); // opens files in user's preferred app
 var prince = require('prince'); // installs and runs PrinceXML
 var yaml = require('js-yaml'); // reads YAML files into JS objects
 var concatenate = require('concatenate'); // concatenates files
+var zipEpub = require('./zip'); // our own zip utility
 
 // Store process status
 // (Do we need to reset these at appropriate
@@ -355,10 +356,14 @@ function fileList(argv) {
 }
 
 // Get array of HTML-file paths for this output
-function htmlFilePaths(argv) {
+function htmlFilePaths(argv, extension) {
     'use strict';
 
     var fileNames = fileList(argv);
+
+    if (!extension) {
+        extension = '.html';
+    }
 
     // Provide fallback book
     var book;
@@ -389,10 +394,10 @@ function htmlFilePaths(argv) {
 
         if (typeof filename === "object") {
             return fsPath.normalize(pathToFiles + '/'
-                    + Object.keys(filename)[0] + '.html');
+                    + Object.keys(filename)[0] + extension);
         } else {
             return fsPath.normalize(pathToFiles + '/'
-                    + filename + '.html');
+                    + filename + extension);
         }
     });
 
@@ -560,7 +565,7 @@ function convertXHTMLLinks(argv, callback, callbackArgs) {
 // Converts .html files to .xhtml, e.g. for epub output
 function convertXHTMLFiles(argv, callback, callbackArgs) {
     'use strict';
-    console.log('Converting links from .html to .xhtml ...');
+    console.log('Renaming files from .html to .xhtml ...');
 
     var convertXHTMLFilesProcess;
     if (argv.language) {
@@ -710,11 +715,36 @@ function addToEpub(arrayOfPaths, destinationFolder,
     });
 }
 
+// Move epub.zip to _output
+function epubZipRename(argv) {
+    'use strict';
+
+    var pathToEpubZipped = fsPath.normalize(process.cwd()
+            + '/_site/epub.zip');
+    var epubFilename = argv.book + '.epub';
+
+    console.log('Moving zipped epub to _output/' + epubFilename);
+
+    if (pathExists(pathToEpubZipped)) {
+        fs.moveSync(pathToEpubZipped,
+                process.cwd()
+                + '/_output/'
+                + epubFilename,
+                {overwrite: true});
+    } else {
+        console.log('Epub zip folder not found at '
+                + pathToEpubZipped);
+    }
+}
+
 // Zip the epub folder
 function epubZip(argv) {
     'use strict';
-    // TO DO
-    console.log('Epub zip coming soon...' + argv);
+
+    var pathToEpubFolder = fsPath.normalize(process.cwd()
+            + '/_site/epub');
+    console.log('Zipping ' + pathToEpubFolder);
+    zipEpub(pathToEpubFolder, epubZipRename, argv);
 }
 
 // Assemble an epub folder
@@ -734,7 +764,7 @@ function assembleEpub(argv) {
     } else if (processStatus.epubAssembly.bookText === false) {
 
         // Add text
-        addToEpub(htmlFilePaths(argv), argv.book, 'bookText', assembleEpub, argv);
+        addToEpub(htmlFilePaths(argv, '.xhtml'), argv.book, 'bookText', assembleEpub, argv);
     } else if (processStatus.epubAssembly.bookImages === false) {
 
         // Add images
@@ -767,6 +797,28 @@ function assembleEpub(argv) {
                     assembleEpub, argv);
         } else {
             processStatus.epubAssembly.mathjax = true;
+            assembleEpub(argv);
+        }
+    } else if (processStatus.epubAssembly.packageOPF === false) {
+
+        // Add package.opf
+        addToEpub([process.cwd() + '/_site/'
+                + argv.book + '/package.opf'],
+                '',
+                'packageOPF',
+                assembleEpub, argv);
+    } else if (processStatus.epubAssembly.ncx === false) {
+
+        // Add toc.ncx, if any
+        var ncxFile = process.cwd() + '/_site/'
+                + argv.book + '/toc.ncx';
+        if (pathExists(ncxFile)) {
+            addToEpub([ncxFile],
+                    '',
+                    'ncx',
+                    assembleEpub, argv);
+        } else {
+            processStatus.epubAssembly.ncx = true;
             assembleEpub(argv);
         }
     } else {
@@ -814,8 +866,8 @@ function outputEpub(argv) {
     //    - appropriate styles [done]
     //    - scripts: mathjax, bundle [done]
     //    - fonts [not required, are already in _epub/assets/fonts]
-    //    - package, ncx
-    // 5. zip epub folder
+    //    - package, ncx [done]
+    // 5. zip epub folder [done]
     // 6. run epubcheck
     // 7. open epub file location
 
@@ -828,19 +880,14 @@ function outputEpub(argv) {
             && processStatus.htmlFilesCleaned === true) {
         assembleEpub(argv);
     } else if (processStatus.indexCommentsRendered === false) {
-        console.log('Checking for indexing comments ...');
         renderIndexComments(argv, outputEpub, argv);
     } else if (processStatus.indexLinksRendered === false) {
-        console.log('Adding links to references indexes ...');
         renderIndexLinks(argv, outputEpub, argv);
     } else if (processStatus.xhtmlLinksConverted === false) {
-        console.log('Converting links to XHTML ...');
         convertXHTMLLinks(argv, outputEpub, argv);
     } else if (processStatus.xhtmlFilesConverted === false) {
-        console.log('Renaming .html files to .xhtml ...');
         convertXHTMLFiles(argv, outputEpub, argv);
     } else if (processStatus.htmlFilesCleaned === false) {
-        console.log('Adding links to references indexes ...');
         cleanHTMLFiles(argv, outputEpub, argv);
     } else {
         assembleEpub(argv);
@@ -914,7 +961,7 @@ function installNodeModules() {
         'npm',
         ['install']
     );
-    helpers.logProcess(npmProcess, 'Installing Node modules');
+    logProcess(npmProcess, 'Installing Node modules');
 }
 
 // Install Ruby dependencies
@@ -930,7 +977,7 @@ function installGems() {
         'bundle',
         ['install']
     );
-    helpers.logProcess(bundleProcess, 'Installing Ruby gems');
+    logProcess(bundleProcess, 'Installing Ruby gems');
 }
 
 // TO DO: export to Word
@@ -977,6 +1024,7 @@ function epub(argv) {
     );
 }
 
+// Start the output process
 function initialiseOutput(callback, argv) {
     'use strict';
     clearFolderContents(process.cwd() + '/_site',

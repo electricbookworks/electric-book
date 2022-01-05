@@ -206,8 +206,8 @@ var paths = {
         dest: '_site/' + book + language + '/'
     },
     epub: {
-        src: '_site/epub/' + book + language + '/*.html',
-        dest: '_site/epub/' + book + language + '/'
+        src: '_site/' + book + language + '/*.html',
+        dest: '_site/' + book + language + '/'
     },
     js: {
         src: [],
