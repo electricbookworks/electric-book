@@ -48,9 +48,11 @@ Your epub will build correctly only if you have provided sufficient, accurate in
 
 ## Fonts
 
-To embed font files in an epub (for `@import`ing in your epub's CSS), add the font files to `_epub/fonts`.
+To embed font files in an epub (for `@import`ing in your epub's CSS), add the font files to `_epub/assets/fonts`.
 
-Font files stored anywhere else in your project (e.g. in `assets/fonts`) are not included in epub outputs. This ensures that the epub includes only those font files that are specifically required for your epub.
+Font files stored anywhere else in your project (e.g. in the main `assets/fonts` folder) are not included in epub outputs. This ensures that the epub includes only those font files that are specifically required for your epub.
+
+Currently, the template does not support using different fonts for different epubs. If you are embedding fonts in your epubs, you must use the same ones for all your books.
 
 ## Javascript
 

@@ -8,41 +8,6 @@
 // Modules
 
 var helpers = require('../helpers/helpers');
-var spawn = require('cross-spawn');
-
-// Functions
-
-// Install Node dependencies
-function installNodeModules() {
-    'use strict';
-
-    console.log(
-        'Running npm to install Node modules...\n' +
-        'If you get errors, check that Node.js is installed \n' +
-        'and up to date (https://nodejs.org). \n'
-    );
-    var npmProcess = spawn(
-        'npm',
-        ['install']
-    );
-    helpers.logProcess(npmProcess, 'Installing Node modules');
-}
-
-// Install Ruby dependencies
-function installGems() {
-    'use strict';
-
-    console.log(
-        'Running Bundler to install Ruby gem dependencies...\n' +
-        'If you get errors, check that Bundler is installed \n' +
-        'and up to date (https://bundler.io). \n'
-    );
-    var bundleProcess = spawn(
-        'bundle',
-        ['install']
-    );
-    helpers.logProcess(bundleProcess, 'Installing Ruby gems');
-}
 
 // Exports
 
@@ -51,6 +16,6 @@ exports.desc = 'Install or update dependencies';
 exports.handler = function () {
     'use strict';
 
-    installGems();
-    installNodeModules();
+    helpers.installGems();
+    helpers.installNodeModules();
 };

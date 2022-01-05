@@ -22,7 +22,6 @@ var processStatus = {
         bookText: false,
         bookStyles: false,
         bookImages: false,
-        bookFonts: false,
         bundleJS: false,
         mathjax: false,
         packageOPF: false,
@@ -62,6 +61,53 @@ function logProcess(process, processName, callback, callbackArgs) {
             callback(callbackArgs);
         }
     });
+}
+
+// Checks if a file or folder exists
+function pathExists(path) {
+    'use strict';
+
+    try {
+        if (fs.existsSync(fsPath.normalize(path))) {
+            return true;
+        }
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+
+// Clear folder contents
+function clearFolderContents(path, callback, callbackArgs) {
+    'use strict';
+
+    var pathToClear = fsPath.normalize(path);
+
+    if (pathExists(pathToClear)) {
+
+        console.log('Clearing ' + pathToClear);
+
+        var contents = fs.readdirSync(pathToClear);
+        var totalEntries = contents.length;
+        var totalRemoved = 0;
+
+        contents.forEach(function (entry) {
+            var pathToDelete = fsPath.normalize(pathToClear + '/' + entry);
+            fs.remove(pathToDelete, function (error) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    totalRemoved += 1;
+
+                    if (totalRemoved === totalEntries) {
+                        callback(callbackArgs);
+                    }
+                }
+            });
+        });
+    } else {
+        console.log('Could not find ' + pathToClear + ' to clear.');
+    }
 }
 
 // Return a string of Jekyll config files.
@@ -164,20 +210,6 @@ function jekyll(command,
                 switches]
     );
     logProcess(jekyllProcess, 'Jekyll', callback, argv);
-}
-
-// Checks if a file or folder exists
-function pathExists(path) {
-    'use strict';
-
-    try {
-        if (fs.existsSync(fsPath.normalize(path))) {
-            return true;
-        }
-    } catch (err) {
-        console.error(err);
-        return false;
-    }
 }
 
 // Get project settings from settings.yml
@@ -323,7 +355,7 @@ function fileList(argv) {
 }
 
 // Get array of HTML-file paths for this output
-function filePaths(argv) {
+function htmlFilePaths(argv) {
     'use strict';
 
     var fileNames = fileList(argv);
@@ -414,9 +446,12 @@ function bookAssetPaths(argv, assetType) {
 
     console.log('Using files in ' + pathToAssets);
 
+    // Create an array of files
+    var files = fs.readdirSync(pathToAssets);
+
     // Extract filenames from file objects,
     // and prepend path to each filename.
-    var paths = fs.readdirSync(pathToAssets).map(function (filename) {
+    var paths = files.map(function (filename) {
 
         if (typeof filename === "object") {
             return fsPath.normalize(pathToAssets + '/'
@@ -602,7 +637,7 @@ function runPrince(argv) {
     // https://github.com/rse/node-prince/pull/7
     prince()
         .license('./' + princeLicenseFile)
-        .inputs(filePaths(argv))
+        .inputs(htmlFilePaths(argv))
         .output(process.cwd() + '/_output/' + outputFilename(argv))
         .option('javascript')
         .option('verbose')
@@ -687,11 +722,10 @@ function assembleEpub(argv) {
     'use strict';
 
     // If all is assembled, move on to zipping,
-    // otherwise continue assembly and recurse.
+    // otherwise continue assembly and try again.
     if (processStatus.epubAssembly.bookText
             && processStatus.epubAssembly.bookStyles
             && processStatus.epubAssembly.bookImages
-            && processStatus.epubAssembly.bookFonts
             && processStatus.epubAssembly.bundleJS
             && processStatus.epubAssembly.mathjax
             && processStatus.epubAssembly.packageOPF
@@ -700,7 +734,7 @@ function assembleEpub(argv) {
     } else if (processStatus.epubAssembly.bookText === false) {
 
         // Add text
-        addToEpub(filePaths(argv), argv.book, 'bookText', assembleEpub, argv);
+        addToEpub(htmlFilePaths(argv), argv.book, 'bookText', assembleEpub, argv);
     } else if (processStatus.epubAssembly.bookImages === false) {
 
         // Add images
@@ -713,16 +747,32 @@ function assembleEpub(argv) {
         addToEpub(bookAssetPaths(argv, 'styles'),
                 argv.book + '/styles', 'bookStyles',
                 assembleEpub, argv);
+    } else if (processStatus.epubAssembly.bundleJS === false) {
+
+        // Add bundle of JS, if there is one
+        if (pathExists(process.cwd() + '/_site/assets/js/bundle.js')) {
+            addToEpub([process.cwd() + '/_site/assets/js/bundle.js'],
+                    '/assets/js', 'bundleJS',
+                    assembleEpub, argv);
+        } else {
+            processStatus.epubAssembly.bundleJS = true;
+            assembleEpub(argv);
+        }
+    } else if (processStatus.epubAssembly.mathjax === false) {
+
+        // Add mathjax if required
+        if (mathjaxEnabled(argv)) {
+            addToEpub([process.cwd() + '/_site/assets/js/mathjax'],
+                    '/assets/js/mathjax', 'mathjax',
+                    assembleEpub, argv);
+        } else {
+            processStatus.epubAssembly.mathjax = true;
+            assembleEpub(argv);
+        }
     } else {
         console.log('Epub assembly could not complete. Status:\n'
                 + JSON.stringify(processStatus.epubAssembly, null, 2));
     }
-
-    // TO DO
-    // Add fonts
-    // Add scripts: mathjax, bundle
-    // Add package.opf
-    // Add toc.ncx
 }
 
 // Output a print PDF
@@ -762,8 +812,8 @@ function outputEpub(argv) {
     //    - text [done]
     //    - images [done]
     //    - appropriate styles [done]
-    //    - scripts: mathjax, bundle
-    //    - fonts
+    //    - scripts: mathjax, bundle [done]
+    //    - fonts [not required, are already in _epub/assets/fonts]
     //    - package, ncx
     // 5. zip epub folder
     // 6. run epubcheck
@@ -840,21 +890,109 @@ function switches(argv) {
     return jekyllSwitches;
 }
 
+// Processes images with gulp if -t images
+function processImages(argv) {
+    'use strict';
+
+    var gulpProcess = spawn(
+        'gulp',
+        ['--book', argv.book, '--language', argv.language]
+    );
+    logProcess(gulpProcess, 'Processing images');
+}
+
+// Install Node dependencies
+function installNodeModules() {
+    'use strict';
+
+    console.log(
+        'Running npm to install Node modules...\n' +
+        'If you get errors, check that Node.js is installed \n' +
+        'and up to date (https://nodejs.org). \n'
+    );
+    var npmProcess = spawn(
+        'npm',
+        ['install']
+    );
+    helpers.logProcess(npmProcess, 'Installing Node modules');
+}
+
+// Install Ruby dependencies
+function installGems() {
+    'use strict';
+
+    console.log(
+        'Running Bundler to install Ruby gem dependencies...\n' +
+        'If you get errors, check that Bundler is installed \n' +
+        'and up to date (https://bundler.io). \n'
+    );
+    var bundleProcess = spawn(
+        'bundle',
+        ['install']
+    );
+    helpers.logProcess(bundleProcess, 'Installing Ruby gems');
+}
+
+// TO DO: export to Word
+function exportWord(argv) {
+    'use strict';
+
+    console.log('Export for ' + argv['export-format'] + ' coming soon.');
+}
+
+// Start PDF-output process
+function pdf(argv) {
+    'use strict';
+    jekyll(
+        'build',
+        configString(argv),
+        argv.baseurl,
+        switches(argv),
+        outputPDF,
+        argv
+    );
+}
+
+// Start webserver process
+function web(argv) {
+    'use strict';
+    jekyll(
+        'serve',
+        configString(argv),
+        argv.baseurl,
+        switches(argv)
+    );
+}
+
+// Start epub-output process
+function epub(argv) {
+    'use strict';
+    jekyll(
+        'build',
+        configString(argv),
+        argv.baseurl,
+        switches(argv),
+        outputEpub,
+        argv
+    );
+}
+
+function initialiseOutput(callback, argv) {
+    'use strict';
+    clearFolderContents(process.cwd() + '/_site',
+            callback,
+            argv);
+}
+
 module.exports = {
-    configsObject,
-    configString,
-    jekyll,
-    fileList,
-    filePaths,
-    logProcess,
-    mathjaxEnabled,
-    openOutputFile,
-    outputEpub,
-    outputFilename,
-    outputPDF,
+    pdf,
+    web,
+    epub,
+    exportWord,
+    initialiseOutput,
+    processImages,
+    installGems,
+    installNodeModules,
     pathExists,
-    projectSettings,
-    runPrince,
-    switches,
     works
 };

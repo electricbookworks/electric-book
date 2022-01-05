@@ -49,7 +49,7 @@ Here is an explanation of folders and files in the template.
     * `settings.yml`: settings for your project.
 
 *   `_docs`: this documentation on how to use the template.
-*   `_epub`: template files for epub output. You shouldn't ever have to change these.
+*   `_epub`: template files for epub output. You shouldn't ever have to change these, except to add font files to `_epub/assets/fonts` if you're embedding fonts in epubs.
 *   `_includes`: HTML templates that Jekyll uses to build your books. You will rarely change anything here. You may need to add new templates here for custom book features.
 *   `_layouts`: templates that Jekyll uses to structure pages. You shouldn't ever have to change these.
 *   `_output`: the folder where our output scripts will save your PDFs and epubs.
@@ -64,7 +64,7 @@ Here is an explanation of folders and files in the template.
     *   `images`: a folder that contains:
         -   `cover.jpg`: a front-cover image used as the default for the project as a whole.
         -   `publisher-logo.jpg`: a logo (which you'll replace with your own) for the project and website as a whole.
-    *   `fonts`: a place to store fonts that all books in a project might use. The template includes several open-licensed fonts here already.
+    *   `fonts`: a place to store fonts that any book in a project might use. The template includes several open-licensed fonts here already. (You may also choose to store fonts in `_epub/assets/fonts` for [epub output](../output/epub-output.html#fonts).)
     *   `js`: Javascript used in the template. Advanced users might add their own scripts here and manage which scripts are included on pages in `bundle.js`. See the ['Using Javascript'](../advanced/javascript.html) section for more detail.
 
 *   `book`: a folder for a book's content, stored in markdown files. You might add more similarly structured folders for further books in your project. You'd duplicate and rename this folder for each book you add to your project.
@@ -74,7 +74,6 @@ Here is an explanation of folders and files in the template.
      *   `index.md`: a landing page for the book. You can leave this file as is. If you create a new book, you should copy this file as is into the same place in the new book's folder.
      *   `package.opf`: on epub output, Jekyll fills out this file and it's built into the epub. If you create a new book, you should copy this file as is into the same place in the new book's folder. Do not edit it.
      *   `toc.ncx`: a navigation file for backwards-compatibility in older ereaders. You only need this file in a book if that backwards-compatibility is important to you. Do not edit it.
-     *   `fonts`: store any book-specific font files for your book here. (If you want to use font files across books, you should store them in `assets/fonts`.)
      *   `images`: this is where you store images for a book. See the ['Adding image files' section](../images/adding-image-files.html) for more detail.
      *   `styles`: contains the stylesheets for designing your book's various outputs. See the ['Design'](../layout/design.html) section for more detail.
      *  `file-list`: Jekyll turns this into a list of files that the system uses for output, for instance to tell PrinceXML which files to include in a PDF. It gets this file list from the `files:` lists that you create in `_data/meta.yml`. Do not edit it.

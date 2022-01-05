@@ -7,42 +7,6 @@
 
 var helpers = require('../helpers/helpers');
 
-// Functions
-
-function pdf(argv) {
-    'use strict';
-    helpers.jekyll(
-        'build',
-        helpers.configString(argv),
-        argv.baseurl,
-        helpers.switches(argv),
-        helpers.outputPDF,
-        argv
-    );
-}
-
-function web(argv) {
-    'use strict';
-    helpers.jekyll(
-        'serve',
-        helpers.configString(argv),
-        argv.baseurl,
-        helpers.switches(argv)
-    );
-}
-
-function epub(argv) {
-    'use strict';
-    helpers.jekyll(
-        'build',
-        helpers.configString(argv),
-        argv.baseurl,
-        helpers.switches(argv),
-        helpers.outputEpub,
-        argv
-    );
-}
-
 // Exports
 
 exports.command = 'output';
@@ -53,16 +17,16 @@ exports.handler = function (argv) {
     switch (argv.format) {
     case 'print-pdf':
     case 'screen-pdf':
-        pdf(argv);
+        helpers.initialiseOutput(helpers.pdf, argv);
         break;
     case 'epub':
-        epub(argv);
+        helpers.initialiseOutput(helpers.epub, argv);
         break;
     case 'app':
         // TO DO
         break;
     default:
-        web(argv);
+        helpers.initialiseOutput(helpers.web, argv);
         break;
     }
 };

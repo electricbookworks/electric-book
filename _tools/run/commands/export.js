@@ -5,18 +5,7 @@
 
 // Modules
 
-// var helpers = require('../helpers/helpers');
-
-// Functions
-
-// Processes images with gulp if -t images
-function exportWord(argv) {
-    'use strict';
-
-    // TO DO
-    console.log('Export for ' + argv['export-format'] + ' coming soon.');
-}
-
+var helpers = require('../helpers/helpers');
 
 // Exports
 
@@ -27,10 +16,10 @@ exports.handler = function (argv) {
 
     switch (argv['export-format']) {
     case 'word':
-        exportWord(argv);
+        helpers.exportWord(argv);
         break;
     default:
-        exportWord(argv);
+        helpers.exportWord(argv);
         break;
     }
 };
