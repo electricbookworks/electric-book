@@ -21,7 +21,7 @@ var processStatus = {
     xhtmlFilesConverted: false,
     epubAssembly: {
         bookText: false,
-        bookCSS: false,
+        bookStyles: false,
         bookImages: false,
         bookFonts: false,
         bundleJS: false,
@@ -368,8 +368,9 @@ function filePaths(argv) {
     return paths;
 }
 
-// Get array of image-file paths for this output
-function imagePaths(argv) {
+// Get array of book-asset file paths for this output.
+// assetType can be images or styles.
+function bookAssetPaths(argv, assetType) {
     'use strict';
 
     // Provide fallback book
@@ -380,44 +381,49 @@ function imagePaths(argv) {
         book = "book";
     }
 
-    var pathToParentImages, pathToTranslatedImages;
+    // Image assets are in a subdirectory
+    var formatSubdirectory = '';
+    if (assetType === 'images') {
+        formatSubdirectory = argv.format;
+    }
+
+    var pathToParentAssets, pathToTranslatedAssets;
     if (argv.language) {
-        pathToTranslatedImages = fsPath.normalize(process.cwd()
-                + '/_site/' +
-                book + '/' +
-                argv.language +
-                '/images/' +
-                argv.format);
-    } else {
-        pathToParentImages = fsPath.normalize(process.cwd()
+        pathToTranslatedAssets = fsPath.normalize(process.cwd()
                 + '/_site/'
-                + book
-                + '/images/' +
-                argv.format);
-    }
-
-    // If translated images exist, use that path,
-    // otherwise use the parent images.
-    var pathToImages;
-    if (argv.language
-            && fs.readdirSync(pathToTranslatedImages).length > 0) {
-        pathToImages = pathToTranslatedImages;
+                + book + '/'
+                + argv.language + '/'
+                + assetType + '/'
+                + formatSubdirectory);
     } else {
-        pathToImages = pathToParentImages;
+        pathToParentAssets = fsPath.normalize(process.cwd()
+                + '/_site/'
+                + book + '/'
+                + assetType + '/'
+                + formatSubdirectory);
     }
 
+    // If translated assets exist, use that path,
+    // otherwise use the parent assets.
+    var pathToAssets;
+    if (argv.language
+            && fs.readdirSync(pathToTranslatedAssets).length > 0) {
+        pathToAssets = pathToTranslatedAssets;
+    } else {
+        pathToAssets = pathToParentAssets;
+    }
 
-    console.log('Using files in ' + pathToImages);
+    console.log('Using files in ' + pathToAssets);
 
     // Extract filenames from file objects,
     // and prepend path to each filename.
-    var paths = fs.readdirSync(pathToImages).map(function (filename) {
+    var paths = fs.readdirSync(pathToAssets).map(function (filename) {
 
         if (typeof filename === "object") {
-            return fsPath.normalize(pathToImages + '/'
+            return fsPath.normalize(pathToAssets + '/'
                     + Object.keys(filename)[0]);
         } else {
-            return fsPath.normalize(pathToImages + '/'
+            return fsPath.normalize(pathToAssets + '/'
                     + filename);
         }
     });
@@ -671,7 +677,7 @@ function assembleEpub(argv) {
     // If all is assembled, move on to zipping,
     // otherwise continue assembly and recurse.
     if (processStatus.epubAssembly.bookText
-            && processStatus.epubAssembly.bookCSS
+            && processStatus.epubAssembly.bookStyles
             && processStatus.epubAssembly.bookImages
             && processStatus.epubAssembly.bookFonts
             && processStatus.epubAssembly.bundleJS
@@ -686,20 +692,25 @@ function assembleEpub(argv) {
     } else if (processStatus.epubAssembly.bookImages === false) {
 
         // Add images
-        addToEpub(imagePaths(argv),
+        addToEpub(bookAssetPaths(argv, 'images'),
                 argv.book + '/images/epub', 'bookImages',
+                assembleEpub, argv);
+    } else if (processStatus.epubAssembly.bookStyles === false) {
+
+        // Add images
+        addToEpub(bookAssetPaths(argv, 'styles'),
+                argv.book + '/styles', 'bookStyles',
                 assembleEpub, argv);
     } else {
         console.log('Epub assembly could not complete. Status:\n'
                 + JSON.stringify(processStatus.epubAssembly, null, 2));
     }
 
-    // Add images
-    // Add package.opf
-    // Add toc.ncx
+    // TO DO
     // Add fonts
     // Add scripts: mathjax, bundle
-    // Add appropriate styles
+    // Add package.opf
+    // Add toc.ncx
 }
 
 // Output a print PDF
@@ -738,10 +749,10 @@ function outputEpub(argv) {
     // 4. assemble epub folder:
     //    - text [done]
     //    - images [done]
-    //    - package, ncx
-    //    - fonts
+    //    - appropriate styles [done]
     //    - scripts: mathjax, bundle
-    //    - appropriate styles
+    //    - fonts
+    //    - package, ncx
     // 5. zip epub folder
     // 6. run epubcheck
     // 7. open epub file location
