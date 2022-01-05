@@ -1,13 +1,12 @@
 /*jslint node es6 */
 
-var fs = require('fs'); // for working with the file-system
+var fs = require('fs-extra'); // beyond normal fs, for working with the file-system
 var fsPath = require('path'); // Node's path tool, e.g. for normalizing paths cross-platform
-var fsPromises = require('fs/promises'); // Node async filesystem operations
 var spawn = require('cross-spawn'); // for spawning child processes like Jekyll across platforms
 var open = require('open'); // opens files in user's preferred app
 var prince = require('prince'); // installs and runs PrinceXML
 var yaml = require('js-yaml'); // reads YAML files into JS objects
-var concatenate = require('concatenate'); // concatenate files
+var concatenate = require('concatenate'); // concatenates files
 
 // Store process status
 // (Do we need to reset these at appropriate
@@ -616,11 +615,13 @@ function runPrince(argv) {
         });
 }
 
-// Add an array of files to the epub folder.
+// Add files to the epub folder.
 // The destinationFolder assumes, and is
 // relative to, the destination epub folder,
 // e.g. it might be `book/images/epub`.
-function addToEpub(arrayOfFilePaths, destinationFolder,
+// If you include a directory in the arrayOfPaths,
+// its contents will be copied to the destination.
+function addToEpub(arrayOfPaths, destinationFolder,
         epubAssemblyType, callback, callbackArgs) {
     'use strict';
 
@@ -637,28 +638,39 @@ function addToEpub(arrayOfFilePaths, destinationFolder,
     fs.mkdirSync(destinationFolderPath, {recursive: true});
 
     // Track how many files we have to copy
-    var totalFiles = arrayOfFilePaths.length;
-    var filesCopied = 0;
+    var totalFiles = arrayOfPaths.length;
+    var totalCopied = 0;
 
     // Add each file in the array to the destination
-    arrayOfFilePaths.forEach(function (path) {
+    arrayOfPaths.forEach(function (path) {
 
-        // Deduce the filename
-        var filename = path.replace(/^.*[\\\/]/, '');
+        path = fsPath.normalize(path);
 
-        try {
-            fsPromises.copyFile(path, destinationFolderPath + filename);
-            console.log('Copied ' + filename + ' to epub folder.');
-            filesCopied += 1;
+        if (fs.existsSync(path)) {
 
-            // Check if we're done
-            if (filesCopied === totalFiles) {
-                processStatus.epubAssembly[epubAssemblyType] = true;
-                callback(callbackArgs);
+            try {
+
+                // Destination depends on whether we are
+                // copying a directory or a file
+                if (fs.lstatSync(path).isDirectory()) {
+                    fs.copySync(path, destinationFolderPath);
+                } else {
+                    fs.copySync(path, destinationFolderPath
+                            + fsPath.basename(path));
+                }
+
+                console.log('Copied ' + path + ' to epub folder.');
+                totalCopied += 1;
+
+                // Check if we're done
+                if (totalCopied === totalFiles) {
+                    processStatus.epubAssembly[epubAssemblyType] = true;
+                    callback(callbackArgs);
+                }
+            } catch (error) {
+                console.log('Could not copy ' + path + ' to epub folder: \n'
+                        + error);
             }
-        } catch (error) {
-            console.log('Could not copy ' + filename + ' to epub folder: \n'
-                    + error);
         }
     });
 }

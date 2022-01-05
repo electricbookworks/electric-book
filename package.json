@@ -29,6 +29,7 @@
     "cross-spawn": "^7.0.3",
     "del": "^5.0.0",
     "file-exists": "^5.0.1",
+    "fs-extra": "^10.0.0",
     "gulp": "^4.0.2",
     "gulp-cheerio": "^0.6.3",
     "gulp-debug": "^4.0.0",
