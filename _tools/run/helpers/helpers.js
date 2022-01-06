@@ -7,7 +7,8 @@ var open = require('open'); // opens files in user's preferred app
 var prince = require('prince'); // installs and runs PrinceXML
 var yaml = require('js-yaml'); // reads YAML files into JS objects
 var concatenate = require('concatenate'); // concatenates files
-var zipEpub = require('./zip'); // our own zip utility
+var epubZip = require('./zip'); // our own zip utility
+var epubchecker = require('epubchecker'); // checks epubs for validity
 
 // Store process status
 // (Do we need to reset these at appropriate
@@ -24,6 +25,7 @@ var processStatus = {
         bookStyles: false,
         bookImages: false,
         bundleJS: false,
+        assetsImages: false,
         mathjax: false,
         packageOPF: false,
         ncx: false
@@ -406,12 +408,15 @@ function htmlFilePaths(argv, extension) {
 
 // Get array of book-asset file paths for this output.
 // assetType can be images or styles.
-function bookAssetPaths(argv, assetType) {
+function bookAssetPaths(argv, assetType, folder) {
     'use strict';
 
-    // Provide fallback book
+    // Provide fallback book folder, which lets us
+    // specify the 'assets' folder.
     var book;
-    if (argv.book) {
+    if (folder) {
+        book = folder;
+    } else if (argv.book) {
         book = argv.book;
     } else {
         book = "book";
@@ -608,11 +613,21 @@ function cleanHTMLFiles(argv, callback, callbackArgs) {
     processStatus.htmlFilesCleaned = true;
 }
 
-// Opens the output file
-function openOutputFile(argv) {
+// Opens the output file. Accepts argv or a filepath.
+function openOutputFile(argvOrFilePath) {
     'use strict';
-    var filePath = fsPath.normalize(process.cwd() + '/_output/' + outputFilename(argv));
-    console.log('Your ' + argv.format + ' is in ' + filePath);
+
+    // If no filepath is provided, assume we're opening
+    // the book file we've just generated.
+    var filePath;
+    if (argvOrFilePath.book) {
+        filePath = fsPath.normalize(process.cwd()
+                + '/_output/'
+                + outputFilename(argv));
+        console.log('Your ' + argv.format + ' is at ' + filePath);
+    } else {
+        filePath = argvOrFilePath;
+    }
     open(fsPath.normalize(filePath));
 }
 
@@ -715,36 +730,73 @@ function addToEpub(arrayOfPaths, destinationFolder,
     });
 }
 
+// Check epub.
+// Done as async so that we can await epubchecker
+// and output its report to the console.
+async function epubCheck(pathToEpub) {
+    'use strict';
+
+    pathToEpub = fsPath.normalize(pathToEpub);
+    var epubFilename = fsPath.basename(pathToEpub);
+    var epubcheckReportFilePath = fsPath.normalize(process.cwd()
+            + '/_output/'
+            + epubFilename
+            + '--epubcheck.json');
+
+    console.log('Checking ' + epubFilename + '...');
+
+    var report = await epubchecker(pathToEpub, {
+        includeWarnings: true,
+        includeNotices: true,
+        output: epubcheckReportFilePath
+    });
+
+    console.log('Fatal errors: ' + report.checker.nError + '\n'
+            + 'Epub errors: ' + report.checker.nError + '\n'
+            + 'Epub warnings: ' + report.checker.nWarning + '\n');
+    if (report.messages.length > 0) {
+        console.log(report.messages);
+        console.log('Your epub is at ' + pathToEpub);
+        console.log('Your epub has issues. Opening report...');
+        openOutputFile(epubcheckReportFilePath);
+    } else {
+        console.log('Epub is valid :-)');
+        console.log('Your epub is at ' + pathToEpub);
+    }
+}
+
 // Move epub.zip to _output
 function epubZipRename(argv) {
     'use strict';
 
-    var pathToEpubZipped = fsPath.normalize(process.cwd()
+    var pathToZip = fsPath.normalize(process.cwd()
             + '/_site/epub.zip');
     var epubFilename = argv.book + '.epub';
+    var pathToEpub = process.cwd()
+            + '/_output/'
+            + epubFilename;
 
     console.log('Moving zipped epub to _output/' + epubFilename);
 
-    if (pathExists(pathToEpubZipped)) {
-        fs.moveSync(pathToEpubZipped,
-                process.cwd()
-                + '/_output/'
-                + epubFilename,
-                {overwrite: true});
+    if (pathExists(pathToZip)) {
+        fs.move(pathToZip, pathToEpub,
+                {overwrite: true})
+            .then(function () {
+                epubCheck(pathToEpub);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        // fs.moveSync(pathToZip,
+        //         process.cwd()
+        //         + '/_output/'
+        //         + epubFilename,
+        //         {overwrite: true});
+
     } else {
         console.log('Epub zip folder not found at '
-                + pathToEpubZipped);
+                + pathToZip);
     }
-}
-
-// Zip the epub folder
-function epubZip(argv) {
-    'use strict';
-
-    var pathToEpubFolder = fsPath.normalize(process.cwd()
-            + '/_site/epub');
-    console.log('Zipping ' + pathToEpubFolder);
-    zipEpub(pathToEpubFolder, epubZipRename, argv);
 }
 
 // Assemble an epub folder
@@ -760,7 +812,10 @@ function assembleEpub(argv) {
             && processStatus.epubAssembly.mathjax
             && processStatus.epubAssembly.packageOPF
             && processStatus.epubAssembly.ncx) {
-        epubZip(argv);
+        var pathToEpubFolder = fsPath.normalize(process.cwd()
+                + '/_site/epub');
+        console.log('Zipping ' + pathToEpubFolder);
+        epubZip(pathToEpubFolder, epubZipRename, argv);
     } else if (processStatus.epubAssembly.bookText === false) {
 
         // Add text
@@ -776,6 +831,12 @@ function assembleEpub(argv) {
         // Add images
         addToEpub(bookAssetPaths(argv, 'styles'),
                 argv.book + '/styles', 'bookStyles',
+                assembleEpub, argv);
+    } else if (processStatus.epubAssembly.assetsImages === false) {
+
+        // Add images from assets/images/epub
+        addToEpub(bookAssetPaths(argv, 'images', 'assets'),
+                'assets/images/epub', 'assetsImages',
                 assembleEpub, argv);
     } else if (processStatus.epubAssembly.bundleJS === false) {
 
@@ -855,21 +916,6 @@ function outputPDF(argv) {
 // Output an epub
 function outputEpub(argv) {
     'use strict';
-
-    // TO DO. Process will involve:
-    // 1. run jekyll [done]
-    // 2. process through index comments, index links [done]
-    // 3. convert to xhtml: links, files, clean [done]
-    // 4. assemble epub folder:
-    //    - text [done]
-    //    - images [done]
-    //    - appropriate styles [done]
-    //    - scripts: mathjax, bundle [done]
-    //    - fonts [not required, are already in _epub/assets/fonts]
-    //    - package, ncx [done]
-    // 5. zip epub folder [done]
-    // 6. run epubcheck
-    // 7. open epub file location
 
     // First render index comments and links and
     // do XHTML conversions before assembling the epub.

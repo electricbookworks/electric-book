@@ -190,11 +190,11 @@
 
         {% endfor %}
 
-        {% comment %}Add epub font files in _epub/fonts.{% endcomment %}
+        {% comment %}Add epub font files in _epub/assets/fonts.{% endcomment %}
         {% for collection in site.collections %}
             {% if collection.label == "epub" %}
                 {% for file in collection.files %}
-                    {% if file.path contains "_epub/fonts/" %}
+                    {% if file.path contains "_epub/assets/fonts/" %}
 
                         {% capture file-basename %}{{ file.name | split: "." | first }}{% endcapture %}
                         {% capture file-extension %}{{ file.name | split: "." | last }}{% endcapture %}
