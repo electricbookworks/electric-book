@@ -9,7 +9,7 @@ So far, this script can do some options from the run-* shell scripts:
 - [x]  Create a print PDF
 - [x]  Create a screen PDF
 - [x]  Run as a website
-- [ ]  Create an epub
+- [x]  Create an epub
 - [ ]  Create an app
 - [ ]  Export to Word
 - [x]  Convert source images to output formats
