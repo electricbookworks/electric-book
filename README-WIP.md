@@ -8,8 +8,12 @@ Its primary aims are:
 
 2. Split book metadata into book-specific files. That is, replace the `meta.yml` file with separate metadata files, where each book gets its own file. This will make it easier to maintain projects with several books.
 
+3. Replace the output scripts with a cross-platform Node script designed to be run with a single command, so that it can be automated from a web- or Electron-based GUI. Creating this here is more efficient than refactoring the existing OS-specific shell scripts to handle the new file structure.
+
+4. Add checks for basic project structure and installed dependencies (e.g. pandoc, jekyll)?
+
 ## To do
 
-1. Replace `file-list` file with JS-driven way to fetch the file list for Prince
+1. Replace `file-list` file with JS-driven way to fetch the file list for Prince [done]
 1. Handle all output in run.js (cross-platform)
-1. Create output tests
+1. Create output tests (possibly in a separate project after this one)

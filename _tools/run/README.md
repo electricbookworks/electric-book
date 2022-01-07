@@ -85,19 +85,3 @@ The `check` command checks that basic folders and files exist for the project an
 ```sh
 npm run electric-book -- check
 ```
-
-
-## Resources
-
-These look like they'll be useful or necessary for replacing parts of the output scripts.
-
-- [ShellJS](https://github.com/shelljs/shelljs), which provides Unix shell commands for Node.js
-- [gulpjs/issues/770](https://github.com/gulpjs/gulp/issues/770#issuecomment-63121203) comment by @contra on how to use gulpfile in node script
-- [nightmare.js](http://www.nightmarejs.org/) (npm install nightmare) to replace phantomjs (longer term to replace phantom entirely), if we don't already have electron available, in which case we should use that for consistency.
-
-We probably won't need these, because we can execute these commands ourselves, but just in case:
-
-- [node-pandoc](https://www.npmjs.com/package/node-pandoc) (still requires pandoc to be installed)
-- [npm: infozip-bin](https://www.npmjs.com/package/infozip-bin)
-- [gitbookIO/node-epubcheck](https://github.com/gitbookIO/node-epubcheck) (wrapper, still requires epubcheck to be available)
-- [electron: shell.showitemInFolder(fullpath)](https://github.com/electron/electron/blob/master/docs/api/shell.md#shellshowiteminfolderfullpath) if we want to install electron
