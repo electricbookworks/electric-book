@@ -48,6 +48,7 @@
     "js-yaml": "^4.1.0",
     "jszip": "^3.2.2",
     "make-runnable": "github:electricbookworks/make-runnable",
+    "node-pandoc": "^0.3.0",
     "open": "^7.3.1",
     "path": "^0.12.7",
     "prince": "github:electricbookworks/node-prince",

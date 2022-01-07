@@ -9,6 +9,7 @@ var yaml = require('js-yaml'); // reads YAML files into JS objects
 var concatenate = require('concatenate'); // concatenates files
 var epubZip = require('./zip'); // our own zip utility
 var epubchecker = require('epubchecker'); // checks epubs for validity
+var pandoc = require('node-pandoc'); // for converting files, e.g. html to word
 
 // Store process status
 // (Do we need to reset these at appropriate
@@ -94,22 +95,33 @@ function clearFolderContents(path, callback, callbackArgs) {
         var totalEntries = contents.length;
         var totalRemoved = 0;
 
-        contents.forEach(function (entry) {
-            var pathToDelete = fsPath.normalize(pathToClear + '/' + entry);
-            fs.remove(pathToDelete, function (error) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    totalRemoved += 1;
+        if (totalEntries > 0) {
 
-                    if (totalRemoved === totalEntries) {
-                        callback(callbackArgs);
+            contents.forEach(function (entry) {
+                var pathToDelete = fsPath.normalize(pathToClear + '/' + entry);
+                fs.remove(pathToDelete, function (error) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        totalRemoved += 1;
+
+                        if (totalRemoved === totalEntries) {
+                            callback(callbackArgs);
+                        }
                     }
-                }
+                });
             });
-        });
+        } else {
+            console.log(pathToClear + ' already empty.');
+            if (callback) {
+                callback(callbackArgs);
+            } else {
+                return true;
+            }
+        }
     } else {
         console.log('Could not find ' + pathToClear + ' to clear.');
+        return false;
     }
 }
 
@@ -940,6 +952,73 @@ function outputEpub(argv) {
     }
 }
 
+// Output Word files
+function outputWord(argv) {
+    'use strict';
+
+    // Get file list for this format
+    var filePaths = htmlFilePaths(argv);
+
+    // Initialise a counter
+    var totalConverted = 0;
+
+    // Determine the output location
+    var outputLocation = fsPath.normalize(process.cwd()
+            + '/_output/'
+            + argv.book
+            + '--word');
+
+    function convertFiles(filePaths) {
+
+        // Loop through files and convert with Pandoc
+        filePaths.forEach(function (filePath) {
+
+            // Build path to output file
+            var fileBasename = fsPath.basename(filePath, '.html');
+            var outputFilePath = fsPath.normalize(outputLocation + '/'
+                    + fileBasename + '.docx');
+
+            // Passing an array is safer than a string because
+            // is handles potential spaces in the source filename.
+            // We must provide --resource-path or pandoc will look
+            // for images in the working directory.
+            var args = ['--resource-path=' + fsPath.dirname(filePath),
+                    '-f', 'html', '-t', 'docx', '-s', '-o',
+                    outputFilePath];
+
+            function callback(error) {
+                if (error) {
+
+                    // Filter out errors that tell users
+                    // to install rsvg-convert, because this
+                    // isn't necessary for simple Word output.
+                    if (!error.message.includes('check that rsvg-convert is in path')) {
+                        console.log('Problem converting HTML to Word: ', error);
+                    }
+                } else {
+                    totalConverted += 1;
+
+                    if (totalConverted === filePaths.length) {
+                        console.log('Conversion to Word complete. Files in '
+                                + outputLocation);
+                    }
+                }
+            }
+
+            pandoc(filePath, args, callback);
+        });
+    }
+
+    // Clear the previous output folder if it exists,
+    // or create the output directory first if it doesn't.
+    if (pathExists(outputLocation)) {
+        clearFolderContents(outputLocation, convertFiles, filePaths);
+    } else {
+        fs.mkdirSync(outputLocation, {recursive: true});
+        convertFiles(filePaths);
+    }
+}
+
 // Return switches for Jekyll
 function switches(argv) {
     'use strict';
@@ -1030,7 +1109,17 @@ function installGems() {
 function exportWord(argv) {
     'use strict';
 
-    console.log('Export for ' + argv['export-format'] + ' coming soon.');
+    console.log('Building HTML then converting to '
+            + argv['export-format'] + '...\n');
+
+    jekyll(
+        'build',
+        configString(argv),
+        argv.baseurl,
+        switches(argv),
+        outputWord,
+        argv
+    );
 }
 
 // Start PDF-output process

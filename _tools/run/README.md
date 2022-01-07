@@ -11,7 +11,7 @@ So far, this script can do some options from the run-* shell scripts:
 - [x]  Run as a website
 - [x]  Create an epub
 - [ ]  Create an app
-- [ ]  Export to Word
+- [x]  Export to Word
 - [x]  Convert source images to output formats
 - [ ]  Refresh search index
 - [x]  Install or update dependencies
@@ -61,6 +61,12 @@ If you're not outputting the default `book`, you must specify the book folder yo
 
 ```sh
 npm run electric-book -- output --format=screen-pdf --book=samples --mathjax=true
+```
+
+To get a Word export of a book, use `export` instead of `output`, e.g.:
+
+```sh
+npm run electric-book -- output --book=samples --format=screen-pdf
 ```
 
 Note that if maths is enabled in a project's Jekyll config(s), the output script will detect that, and it isn't necessary to pass `--mathjax=true` as well. (This is unlike older EBT output scripts, which did not check Jekyll configs.)
