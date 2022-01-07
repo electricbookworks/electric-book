@@ -22,15 +22,10 @@ RUN apt-get install -y \
   wget \
   libgif7 \
   libpixman-1-0 \
-  # chrpath \
-  # libssl-dev \
-  # libxft-dev \
-  # libfreetype6-dev \
-  # libfreetype6 \
-  # libfontconfig1-dev \
-  # libfontconfig1 \
+  libffi-dev \
+  libreadline-dev \
+  zlib1g-dev \
   nodejs \
-  npm \
   ruby \
   ruby-dev \
   graphicsmagick && \
@@ -46,7 +41,7 @@ RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.
 
 # Pin RubyGems to 3.0.6 and install Jekyll
 RUN gem update --system 3.0.6 --no-document && \
-  gem install bundler jekyll
+  gem install bundler:1.16.1 jekyll
 
 # Install Gulp cli app
 RUN npm install --global gulp-cli
@@ -55,10 +50,11 @@ RUN npm install --global gulp-cli
 WORKDIR /app
 COPY . /app
 
-# Install Ruby and Node dependencies
-RUN bundle update && \
-  bundle install && \
-  npm install
+RUN bundle update \
+  && bundle install \
+  && npm install \
+  && npm install gulp-cli
 
+COPY ./_tools/docker/entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT [ "/entrypoint.sh" ]

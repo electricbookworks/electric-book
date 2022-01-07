@@ -80,6 +80,10 @@ web:
   # particular heading level? Default h2, set in accordion.js.
   # Set this to true to enable, or false to disable.
   accordion: false
+  # Set the heading level that defines an accordion section
+  accordion-level: h3
+  # Should opening a new section close the others?
+  accordion-auto-close: false
   # Enable annotation
   # You can have annotation on for development and/or for live.
   # Set each to either true or false
@@ -108,6 +112,8 @@ web:
   # -----------------
   images:
     lazyload: true
+    # Do you want images to open as a standalone file when clicked?
+    open-image-on-click: true
   # -----------------
   # Bookmarks
   # -----------------
@@ -121,6 +127,25 @@ web:
   nav:
     home:
       expand-books: false
+  # --------------
+  # Search
+  # --------------
+  search:
+    # Set where you want the 'Jump to first result' box
+    # to show on pages linked from search results.
+    # Define this as a querySelector string, targeting
+    # the element before which the box should be shown.
+    # Or for the main page heading, use the default 'mainHeading'.
+    jump-box-location: "mainHeading"
+  # --------------
+  # Monetization
+  # --------------
+  # If your book is going to use web monetization, add your
+  # ILP pointer here. See _docs/advanced/monetization.md 
+  # for more information about web monetization.
+  monetization:
+    enabled: false
+    ilp-pointer: ""
 
 # ----------------------------------------------------------
 # Epub settings
@@ -191,6 +216,10 @@ app:
   # particular heading level? Default h2, set in accordion.js.
   # Set this to true to enable, or false to disable.
   accordion: false
+  # Set the heading level that defines an accordion section
+  accordion-level: h3
+  # Should opening a new section close the others?
+  accordion-auto-close: false
   # -----------------
   # Bookmarks
   # -----------------
@@ -211,6 +240,16 @@ app:
   nav:
     home:
       expand-books: false
+  # --------------
+  # Search
+  # --------------
+  search:
+    # Set where you want the 'Jump to first result' box
+    # to show on pages linked from search results.
+    # Define this as a querySelector string, targeting
+    # the element before which the box should be shown.
+    # Or for the main page heading, use the default 'mainHeading'.
+    jump-box-location: "mainHeading"
 
 # ----------------------------------------------------------
 # External media settings

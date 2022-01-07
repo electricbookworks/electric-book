@@ -93,6 +93,20 @@ Rotation only affects PDF output.
 
 If you need to make a figure narrower than the full text area, add a `width-x` class, where `x` is the width you want in percent. E.g. `width-50` will create a half-width image.
 
+### Figure height
+
+On the web, sometimes portrait-orientation images are too tall to fit in one screen. We need to limit their height so that the user doesn't need to scroll to see the whole image. However, some figures' images do need to be taller than the viewport to be readable (e.g. a large poster with small text). So we need to be able to override the default max height.
+
+In the template, the default max height of a figure image is 80% of the viewport height (the 80% leaves space for at least some of the caption). To override this default, and allow a figure's images to be taller than 80% of the viewport height in web outputs, add a `web-max-height-none` class to the figure. E.g.
+
+```
+{% include figure
+    image="figure-01.jpg"
+    class="web-max-height-none"
+%}
+```
+
+Note that this is only implemented for web and app outputs.
 
 ## Simple markdown figures
 

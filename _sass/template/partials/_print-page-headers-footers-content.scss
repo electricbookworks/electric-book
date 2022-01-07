@@ -62,7 +62,7 @@ $print-page-headers-footers-content: true !default;
 
   // Verso
   @page chapter:left {
-    @top {
+    @top-center {
       content: $verso-top;
     }
     @top-right {
@@ -77,7 +77,7 @@ $print-page-headers-footers-content: true !default;
     @top-left-corner {
       content: $verso-top-left-corner;
     }
-    @bottom {
+    @bottom-center {
       content: $verso-bottom;
     }
     @bottom-left {
@@ -92,7 +92,7 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $verso-bottom-right-corner;
     }
-    @left {
+    @left-middle {
       content: $verso-left;
     }
     @left-top {
@@ -101,7 +101,7 @@ $print-page-headers-footers-content: true !default;
     @left-bottom {
       content: $verso-left-bottom;
     }
-    @right {
+    @right-middle {
       content: $verso-right;
     }
     @right-top {
@@ -114,7 +114,7 @@ $print-page-headers-footers-content: true !default;
 
   // Recto
   @page chapter:right {
-    @top {
+    @top-center {
       content: $recto-top;
     }
     @top-right {
@@ -129,7 +129,7 @@ $print-page-headers-footers-content: true !default;
     @top-left-corner {
       content: $recto-top-left-corner;
     }
-    @bottom {
+    @bottom-center {
       content: $recto-bottom;
     }
     @bottom-left {
@@ -144,7 +144,7 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $recto-bottom-right-corner;
     }
-    @left {
+    @left-middle {
       content: $recto-left;
     }
     @left-top {
@@ -153,7 +153,7 @@ $print-page-headers-footers-content: true !default;
     @left-bottom {
       content: $recto-left-bottom;
     }
-    @right {
+    @right-middle {
       content: $recto-right;
     }
     @right-top {
@@ -169,35 +169,35 @@ $print-page-headers-footers-content: true !default;
     prince-page-group: start;
   }
   @page chapter:first {
-    @top { content: normal; }
+    @top-center { content: normal; }
     @top-left { content: normal; }
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
-    @left { content: normal; }
+    @left-middle { content: normal; }
     @left-top { content: normal; }
     @left-bottom { content: normal; }
-    @right { content: normal; }
+    @right-middle { content: normal; }
     @right-top { content: normal; }
     @right-bottom { content: normal; }
   }
 
   // No headers or footers on blank pages of chapters
   @page chapter:blank {
-    @top { content: normal; }
+    @top-center { content: normal; }
     @top-left { content: normal; }
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
-    @bottom { content: normal; }
+    @bottom-center { content: normal; }
     @bottom-left { content: normal; }
     @bottom-right { content: normal; }
     @bottom-left-corner { content: normal; }
     @bottom-right-corner { content: normal; }
-    @left { content: normal; }
+    @left-middle { content: normal; }
     @left-top { content: normal; }
     @left-bottom { content: normal; }
-    @right { content: normal; }
+    @right-middle { content: normal; }
     @right-top { content: normal; }
     @right-bottom { content: normal; }
   }
@@ -206,7 +206,7 @@ $print-page-headers-footers-content: true !default;
 
   // Verso
   @page frontmatter:left {
-    @top {
+    @top-center {
       content: $verso-top-frontmatter;
     }
     @top-right {
@@ -221,7 +221,7 @@ $print-page-headers-footers-content: true !default;
     @top-left-corner {
       content: $verso-top-left-corner-frontmatter;
     }
-    @bottom {
+    @bottom-center {
       content: $verso-bottom-frontmatter;
     }
     @bottom-left {
@@ -236,7 +236,7 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $verso-bottom-right-corner-frontmatter;
     }
-    @left {
+    @left-middle {
       content: $verso-left-frontmatter;
     }
     @left-top {
@@ -245,7 +245,7 @@ $print-page-headers-footers-content: true !default;
     @left-bottom {
       content: $verso-left-bottom-frontmatter;
     }
-    @right {
+    @right-middle {
       content: $verso-right-frontmatter;
     }
     @right-top {
@@ -258,7 +258,7 @@ $print-page-headers-footers-content: true !default;
 
   // Recto
   @page frontmatter:right {
-    @top {
+    @top-center {
       content: $recto-top-frontmatter;
     }
     @top-right {
@@ -273,7 +273,7 @@ $print-page-headers-footers-content: true !default;
     @top-left-corner {
       content: $recto-top-left-corner-frontmatter;
     }
-    @bottom {
+    @bottom-center {
       content: $recto-bottom-frontmatter;
     }
     @bottom-left {
@@ -288,7 +288,7 @@ $print-page-headers-footers-content: true !default;
     @bottom-right-corner {
       content: $recto-bottom-right-corner-frontmatter;
     }
-    @left {
+    @left-middle {
       content: $recto-left-frontmatter;
     }
     @left-top {
@@ -297,7 +297,7 @@ $print-page-headers-footers-content: true !default;
     @left-bottom {
       content: $recto-left-bottom-frontmatter;
     }
-    @right {
+    @right-middle {
       content: $recto-right-frontmatter;
     }
     @right-top {
@@ -313,35 +313,35 @@ $print-page-headers-footers-content: true !default;
     prince-page-group: start;
   }
   @page frontmatter:first {
-    @top { content: normal; }
+    @top-center { content: normal; }
     @top-left { content: normal; }
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
-    @left { content: normal; }
+    @left-middle { content: normal; }
     @left-top { content: normal; }
     @left-bottom { content: normal; }
-    @right { content: normal; }
+    @right-middle { content: normal; }
     @right-top { content: normal; }
     @right-bottom { content: normal; }
   }
 
   // No headers or footers on blank pages of frontmatter
   @page frontmatter:blank {
-    @top { content: normal; }
+    @top-center { content: normal; }
     @top-left { content: normal; }
     @top-right { content: normal; }
     @top-left-corner { content: normal; }
     @top-right-corner { content: normal; }
-    @bottom { content: normal; }
+    @bottom-center { content: normal; }
     @bottom-left { content: normal; }
     @bottom-right { content: normal; }
     @bottom-left-corner { content: normal; }
     @bottom-right-corner { content: normal; }
-    @left { content: normal; }
+    @left-middle { content: normal; }
     @left-top { content: normal; }
     @left-bottom { content: normal; }
-    @right { content: normal; }
+    @right-middle { content: normal; }
     @right-top { content: normal; }
     @right-bottom { content: normal; }
   }

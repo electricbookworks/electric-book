@@ -1,20 +1,20 @@
 /*jslint browser, for */
 /*global window, ebLazyLoadImages, searchTerm, videoShow
-    locales, pageLanguage, console, Element, HTMLDocument, Node,
-    Node, MutationObserver */
+    locales, pageLanguage, console, Element, HTMLDocument,
+    settings, Node, MutationObserver */
 
 // console.log('Debugging accordions.js');
 
 // --------------------------------------------------------------
-// Options
+// Options, defined in _data/settings.yml
 //
 // 1. Use CSS selectors to list the headings that will
 //    define each accordion section, e.g. '#content h2'
-var accordionHeads = '#content h2';
+var accordionHeads = '#content ' + settings[settings.site.output].accordion.level;
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content h2:first-of-type';
+var defaultAccordionHead = '#content ' + settings[settings.site.output].accordion.level + ':first-of-type';
 // 3. Auto close last accordion when you open a new one?
-var autoCloseAccordionSections = false;
+var autoCloseAccordionSections = settings[settings.site.output].accordion.autoClose;
 // --------------------------------------------------------------
 
 function ebAccordionInit() {
@@ -29,11 +29,21 @@ function ebAccordionInit() {
         pageAccordionOff = true;
     }
 
+    // Check if there are any headings on the page
+    // to make into an accordion.
+    var availableAccordionHeads = document.querySelectorAll(accordionHeads);
+    var noAccordionHeadings = false;
+    if (!availableAccordionHeads
+            || availableAccordionHeads.length === 0) {
+        noAccordionHeadings = true;
+    }
+
     return navigator.userAgent.indexOf('Opera Mini') === -1 &&
             document.querySelectorAll !== "undefined" &&
             window.addEventListener !== "undefined" &&
             !!Array.prototype.forEach &&
-            !pageAccordionOff;
+            !pageAccordionOff &&
+            !noAccordionHeadings;
 }
 
 function ebAccordionPageSetting() {
@@ -391,6 +401,14 @@ function ebAccordionListenForAnchorClicks(querySelectorString) {
 
             event.stopPropagation();
 
+            // If the link was clicked with a modifier key pressed
+            // (e.g. Ctrl + click), assume user wants a new tab,
+            // and do not continue processing this here.
+            if (event.metaKey || event.ctrlKey || event.shiftKey) {
+                console.log('User was pressing Ctrl, Shift or the meta key.');
+                return;
+            }
+
             // Declare targetID so JSLint knows it's coming in this function.
             var targetID;
 
@@ -579,11 +597,6 @@ function ebAccordionShowAllButton() {
 function ebAccordify() {
     'use strict';
 
-    // early exit for older browsers
-    if (!ebAccordionInit()) {
-        return;
-    }
-
     // Signal that we're loading the accordion
     document.body.setAttribute('data-accordion-active', 'true');
 
@@ -648,12 +661,14 @@ function ebExpand() {
 
 function ebLoadAccordion() {
     'use strict';
-    ebAccordify();
-    ebExpand();
-    ebAccordionListenForAnchorClicks();
-    ebAccordionListenForHeadingClicks();
-    ebAccordionListenForNavClicks();
-    ebAccordionListenForHashChange();
+    if (ebAccordionInit()) {
+        ebAccordify();
+        ebExpand();
+        ebAccordionListenForAnchorClicks();
+        ebAccordionListenForHeadingClicks();
+        ebAccordionListenForNavClicks();
+        ebAccordionListenForHashChange();
+    }
 }
 
 // Wait for data-index-targets to be loaded

@@ -45,7 +45,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
         {% capture image-extension-with-full-stop %}.{{ image-file-extension }}{% endcapture %}
         {% assign image-without-file-extension = image | replace: image-extension-with-full-stop, "" %}
 
-        {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" %}<a href="{{ images }}/{{ image }}">{% endif %}
+        {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" and  site.data.settings.web.images.open-image-on-click == true %}<a href="{{ images }}/{{ image }}">{% endif %}
 
             {% if site.output == "web" %}
 
@@ -87,7 +87,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
             {% endif %}
 
-        {% if include.link or site.output == "web" %}</a>{% endif %}
+        {% if include.link or site.output == "web" and site.data.settings.web.images.open-image-on-click == true %}</a>{% endif %}
     {% endfor %}
 </div>
 {% endif %}
