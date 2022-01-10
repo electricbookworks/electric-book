@@ -10,6 +10,8 @@ var concatenate = require('concatenate'); // concatenates files
 var epubZip = require('./zip'); // our own zip utility
 var epubchecker = require('epubchecker'); // checks epubs for validity
 var pandoc = require('node-pandoc'); // for converting files, e.g. html to word
+var which = require('which');
+var child_process = require('child_process');
 
 // Store process status
 // (Do we need to reset these at appropriate
@@ -635,12 +637,80 @@ function openOutputFile(argvOrFilePath) {
     if (argvOrFilePath.book) {
         filePath = fsPath.normalize(process.cwd()
                 + '/_output/'
-                + outputFilename(argv));
-        console.log('Your ' + argv.format + ' is at ' + filePath);
+                + outputFilename(argvOrFilePath));
+        console.log('Your ' + argvOrFilePath.format + ' is at ' + filePath);
     } else {
         filePath = argvOrFilePath;
     }
+    console.log('Opening ' + filePath);
     open(fsPath.normalize(filePath));
+}
+
+// Check Prince version
+function checkPrinceVersion() {
+    'use strict';
+
+    // Get globally installed Prince version, if any
+    var installedPrince = function () {
+        return new Promise(function (resolve, reject) {
+
+            // Check local node_modules for Prince binary ...
+            if (prince().config.binary.includes('node_modules')) {
+                child_process.execFile(prince().config.binary, [ "--version" ], function (error, stdout, stderr) {
+                    if (error !== null) {
+                        reject("Could not get Prince version:\n" + error);
+                        return;
+                    }
+                    var m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)/);
+                    if (!(m !== null && typeof m[1] !== "undefined")) {
+                        reject("Prince version check returned unexpected output:\n" + stdout + stderr);
+                        return;
+                    }
+                    resolve(m[1]);
+                });
+            } else {
+
+                // ... or else check the global PATH
+                which('prince', function (error, filename) {
+                    if (error) {
+                        reject("Prince not found in PATH: " + error);
+                        return;
+                    }
+                    child_process.execFile(filename, [ "--version" ], function (error, stdout, stderr) {
+                        if (error !== null) {
+                            reject("Could not get Prince version:\n" + error);
+                            return;
+                        }
+                        var m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)/);
+                        if (!(m !== null && typeof m[1] !== "undefined")) {
+                            reject("Prince version check returned unexpected output:\n" + stdout + stderr);
+                            return;
+                        }
+                        resolve(m[1]);
+                    });
+                });
+            }
+        });
+    };
+
+    // Check global Prince version vs version defined in package.json
+    installedPrince().then(function (installedVersion) {
+        var packageJSON = require(process.cwd() + '/package.json');
+
+        var preferredPrinceVersion = undefined;
+
+        if (packageJSON.prince && packageJSON.prince.version) {
+            preferredPrinceVersion = packageJSON.prince.version;
+
+            if (installedVersion !== preferredPrinceVersion) {
+                console.log('\nWARNING: your installed Prince version is ' + installedVersion
+                        + ' but your project requires ' + preferredPrinceVersion + '\n'
+                        + 'You should delete node_modules/prince and run: npm install\n');
+            }
+        }
+    }, function () {
+        console.log(error);
+    })
 }
 
 // Run Prince
@@ -663,6 +733,8 @@ function runPrince(argv) {
         princeLicenseFile = princeLicensePath;
         console.log('Using PrinceXML licence found at ' + princeLicenseFile);
     }
+
+    checkPrinceVersion();
 
     // Currently, node-prince does not seem to
     // log its progress to stdout. Possible WIP:
