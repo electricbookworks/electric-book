@@ -1,32 +1,30 @@
-/*jslint node es6 */
-
 // For more on yargs command modules like this one, see
 // https://github.com/yargs/yargs/blob/main/docs/advanced.md#providing-a-command-module
 
 // Modules
 
-var helpers = require('../helpers/helpers');
+const helpers = require('../helpers/helpers')
 
 // Exports
 
-exports.command = 'output';
-exports.desc = 'Generate a project or publication';
+exports.command = 'output'
+exports.desc = 'Generate a project or publication'
 exports.handler = function (argv) {
-    'use strict';
+  'use strict'
 
-    switch (argv.format) {
+  switch (argv.format) {
     case 'print-pdf':
     case 'screen-pdf':
-        helpers.initialiseOutput(helpers.pdf, argv);
-        break;
+      helpers.initialiseOutput(helpers.pdf, argv)
+      break
     case 'epub':
-        helpers.initialiseOutput(helpers.epub, argv);
-        break;
+      helpers.initialiseOutput(helpers.epub, argv)
+      break
     case 'app':
-        // TO DO
-        break;
+      // TO DO
+      break
     default:
-        helpers.initialiseOutput(helpers.web, argv);
-        break;
-    }
-};
+      helpers.initialiseOutput(helpers.web, argv)
+      break
+  }
+}
