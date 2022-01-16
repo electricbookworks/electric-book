@@ -1,70 +1,65 @@
 const fs = require('fs-extra') // beyond normal fs, for working with the file-system
 const fsPath = require('path') // Node's path tool, e.g. for normalizing paths cross-platform
+const fsPromises = require('fs/promises') // Promise-based Node fs
 const spawn = require('cross-spawn') // for spawning child processes like Jekyll across platforms
 const open = require('open') // opens files in user's preferred app
 const prince = require('prince') // installs and runs PrinceXML
 const yaml = require('js-yaml') // reads YAML files into JS objects
 const concatenate = require('concatenate') // concatenates files
-const epubZip = require('./zip') // our own zip utility
 const epubchecker = require('epubchecker') // checks epubs for validity
 const pandoc = require('node-pandoc') // for converting files, e.g. html to word
-const which = require('which')
-const childProcess = require('child_process')
-
-// Store process status
-// (Do we need to reset these at appropriate
-// stages in the process to avoid false positives?)
-const processStatus = {
-  htmlFilesCleaned: false,
-  indexCommentsRendered: false,
-  indexLinksRendered: false,
-  mathjaxRendered: false,
-  xhtmlLinksConverted: false,
-  xhtmlFilesConverted: false,
-  epubAssembly: {
-    bookText: false,
-    bookStyles: false,
-    bookImages: false,
-    bundleJS: false,
-    assetsImages: false,
-    mathjax: false,
-    packageOPF: false,
-    ncx: false
-  }
-}
+const which = require('which') // finds installed executables
+const childProcess = require('child_process') // creates child processes
+const JSZip = require('jszip') // epub-friendly zip utility
 
 // Output spawned-process data to console
-// and callback when the process exits.
-function logProcess (process, processName, callback, callbackArgs) {
+function logProcess (process, processName) {
   'use strict'
 
-  processName = processName || 'Process: '
+  return new Promise(function (resolve, reject) {
+    processName = processName || 'Process: '
 
-  // Listen to stdout
-  process.stdout.on('data', function (data) {
-    console.log(processName + ': ' + data)
-  })
+    // Listen to stdout
+    process.stdout.on('data', function (data) {
+      console.log(processName + ': ' + data)
+    })
 
-  // Listen to stderr
-  process.stderr.on('data', function (data) {
-    console.log(processName + ': ' + data)
-  })
+    // Listen to stderr
+    process.stderr.on('data', function (data) {
+      console.log(processName + ': ' + data)
+    })
 
-  // Listen for an error event:
-  process.on('error', function (errorCode) {
-    console.log(processName + ' errored with: ' + errorCode)
-    if (callback) {
-      callback()
-    }
-  })
+    // Listen for an error event:
+    process.on('error', function (error) {
+      console.log(processName + ' errored with: ' + error.message)
+      reject(error.message)
+    })
 
-  // Listen for an exit event:
-  process.on('exit', function (exitCode) {
-    console.log(processName + ' exited with: ' + exitCode)
-    if (callback) {
-      callback(callbackArgs)
-    }
+    // Listen for an exit event:
+    process.on('close', function (exitCode) {
+      console.log(processName + ' exited with: ' + exitCode)
+      resolve(exitCode)
+    })
   })
+}
+
+// Returns a filename for the output file
+function outputFilename (argv) {
+  'use strict'
+
+  let filename
+  let fileExtension = '.pdf'
+  if (argv.format === 'epub') {
+    fileExtension = '.epub'
+  }
+
+  if (argv.language) {
+    filename = argv.book + '-' + argv.language + '-' + argv.format + fileExtension
+  } else {
+    filename = argv.book + '-' + argv.format + fileExtension
+  }
+
+  return filename
 }
 
 // Checks if a file or folder exists
@@ -81,8 +76,27 @@ function pathExists (path) {
   }
 }
 
+// Opens the output file. Accepts argv or a filepath.
+function openOutputFile (argvOrFilePath) {
+  'use strict'
+
+  // If no filepath is provided, assume we're opening
+  // the book file we've just generated.
+  let filePath
+  if (argvOrFilePath.book) {
+    filePath = fsPath.normalize(process.cwd() +
+                '/_output/' +
+                outputFilename(argvOrFilePath))
+    console.log('Your ' + argvOrFilePath.format + ' is at ' + filePath)
+  } else {
+    filePath = argvOrFilePath
+  }
+  console.log('Opening ' + filePath)
+  open(fsPath.normalize(filePath))
+}
+
 // Clear folder contents
-function clearFolderContents (path, callback, callbackArgs) {
+async function clearFolderContents (path) {
   'use strict'
 
   const pathToClear = fsPath.normalize(path)
@@ -90,36 +104,35 @@ function clearFolderContents (path, callback, callbackArgs) {
   if (pathExists(pathToClear)) {
     console.log('Clearing ' + pathToClear)
 
-    const contents = fs.readdirSync(pathToClear)
+    const contents = await fsPromises.readdir(pathToClear)
     const totalEntries = contents.length
     let totalRemoved = 0
 
-    if (totalEntries > 0) {
-      contents.forEach(function (entry) {
-        const pathToDelete = fsPath.normalize(pathToClear + '/' + entry)
-        fs.remove(pathToDelete, function (error) {
-          if (error) {
-            console.log(error)
-          } else {
-            totalRemoved += 1
+    return new Promise(function (resolve, reject) {
+      if (totalEntries > 0) {
+        contents.forEach(function (entry) {
+          const pathToDelete = fsPath.normalize(pathToClear + '/' + entry)
+          fs.remove(pathToDelete, function (error) {
+            if (error) {
+              console.log(error)
+              reject(error)
+            } else {
+              totalRemoved += 1
 
-            if (totalRemoved === totalEntries) {
-              callback(callbackArgs)
+              if (totalRemoved === totalEntries) {
+                console.log('Folder cleared.')
+                resolve()
+              }
             }
-          }
+          })
         })
-      })
-    } else {
-      console.log(pathToClear + ' already empty.')
-      if (callback) {
-        callback(callbackArgs)
       } else {
-        return true
+        console.log(pathToClear + ' already empty.')
+        resolve()
       }
-    }
+    })
   } else {
     console.log('Could not find ' + pathToClear + ' to clear.')
-    return false
   }
 }
 
@@ -147,11 +160,97 @@ function configString (argv) {
 
   // Add MathJax config if --mathjax=true
   if (argv.mathjax) {
-    console.log('Enabling MathJax...')
     string += ',_configs/_config.mathjax-enabled.yml'
   }
 
+  // Turn Mathjax off if we're exporting to Word.
+  // We want raw editable TeX in Word docs.
+  if (argv._[0] === 'export' && argv['export-format'] === 'word') {
+    string += ',_configs/_config.math-disabled.yml'
+  }
+
   return string
+}
+
+// Return switches for Jekyll
+function jekyllSwitches (argv) {
+  'use strict'
+
+  let switches = ''
+
+  // Add baseurl if specified in argv.
+  // Remember that the default argv options
+  // include a blank baseurl in argv, so we don't
+  // want to include a baseurl if it's blank.
+  if (argv.baseurl && argv.baseurl.length > 0) {
+    console.log('Adding baseurl...')
+    switches += '--baseurl=' + argv.baseurl + ' '
+  }
+
+  // Add incremental switch if --incremental=true
+  if (argv.incremental === true) {
+    switches += '--incremental '
+  }
+
+  // Add switches passed as argv's
+  let switchesString = ''
+  if (argv.switches) {
+    console.log('Adding ' + argv.switches + ' to switches...')
+    // Strip quotes that might have been added around arguments by user
+    switchesString = argv.switches.replace(/'/g, '').replace(/"/g, '')
+  }
+
+  // Add all switches in switchesString
+  if (switchesString) {
+    // Strip spaces, then split the string into an array,
+    // then loop through the array adding each switch.
+    switchesString.replace(/\s/g, '')
+    switchesString.split(',')
+    switchesString.forEach(function (switchString) {
+      switches += '--' + switchString
+    })
+  }
+
+  return switches
+}
+
+// Run Jekyll
+async function jekyll (argv) {
+  'use strict'
+
+  // Use 'build' unless we're starting a webserver,
+  // or the main argv command is 'export' (i.e. if
+  // we're exporting the web output to word, we still
+  // only want Jekyll to build, not serve).
+  let command = 'build'
+  if (argv.format === 'web' &&
+      argv._[0] !== 'export') {
+    command = 'serve'
+  }
+
+  try {
+    console.log('Running Jekyll with command: ' +
+              'bundle exec jekyll ' + command +
+              ' --config="' + configString(argv) + '"' +
+              ' --baseurl="' + argv.baseurl + '"' +
+              ' ' + jekyllSwitches(argv))
+
+    // Credit for child_process examples:
+    // https://medium.com/@graeme_boy/how-to-optimize-cpu-intensive-work-in-node-js-cdc09099ed41
+
+    // Create a child process
+    const jekyllProcess = spawn(
+      'bundle',
+      ['exec', 'jekyll', command,
+        '--config', configString(argv),
+        '--baseurl', argv.baseurl,
+        jekyllSwitches(argv)]
+    )
+    const result = await logProcess(jekyllProcess, 'Jekyll')
+    return result
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Jekyll configs as JS object. Note:
@@ -193,35 +292,144 @@ function mathjaxEnabled (argv) {
   return mathJaxOn
 }
 
-// Run Jekyll with options,
-// and pass a callback through to logProcess,
-// which calls the callback when Jekyll exits.
-function jekyll (command,
-  configs,
-  baseurl,
-  switches,
-  callback,
-  argv) {
+// Processes mathjax in output HTML
+async function renderMathjax (argv) {
   'use strict'
 
-  console.log('Running Jekyll with command: ' +
-            'bundle exec jekyll ' + command +
-            ' --config="' + configs + '"' +
-            ' --baseurl="' + baseurl + '"' +
-            ' ' + switches)
+  try {
+    if (mathjaxEnabled(argv) || argv.mathjax) {
+      console.log('Rendering MathJax...')
 
-  // Credit for child_process examples:
-  // https://medium.com/@graeme_boy/how-to-optimize-cpu-intensive-work-in-node-js-cdc09099ed41
+      let mathJaxProcess
+      if (argv.language) {
+        mathJaxProcess = spawn(
+          'gulp',
+          ['mathjax',
+            '--book', argv.book,
+            '--language', argv.language]
+        )
+      } else {
+        mathJaxProcess = spawn(
+          'gulp',
+          ['mathjax', '--book', argv.book]
+        )
+      }
+      await logProcess(mathJaxProcess, 'Rendering MathJax')
+      return true
+    } else {
+      return true
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-  // Create a child process
-  const jekyllProcess = spawn(
-    'bundle',
-    ['exec', 'jekyll', command,
-      '--config', configs,
-      '--baseurl', baseurl,
-      switches]
-  )
-  logProcess(jekyllProcess, 'Jekyll', callback, argv)
+// Processes index comments as targets in output HTML
+async function renderIndexComments (argv) {
+  'use strict'
+  console.log('Processing indexing comments ...')
+
+  try {
+    let indexCommentsProcess
+    if (argv.language) {
+      indexCommentsProcess = spawn(
+        'gulp',
+        ['renderIndexCommentsAsTargets',
+          '--book', argv.book,
+          '--language', argv.language]
+      )
+    } else {
+      indexCommentsProcess = spawn(
+        'gulp',
+        ['renderIndexCommentsAsTargets', '--book', argv.book]
+      )
+    }
+    await logProcess(indexCommentsProcess, 'Index comments')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Processes index-list items as linked references in output HTML
+async function renderIndexLinks (argv) {
+  'use strict'
+  console.log('Adding links to reference indexes ...')
+
+  try {
+    let indexLinksProcess
+    if (argv.language) {
+      indexLinksProcess = spawn(
+        'gulp',
+        ['renderIndexListReferences',
+          '--book', argv.book,
+          '--language', argv.language]
+      )
+    } else {
+      indexLinksProcess = spawn(
+        'gulp',
+        ['renderIndexListReferences', '--book', argv.book]
+      )
+    }
+    await logProcess(indexLinksProcess, 'Index links')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Converts paths in links from *.html to *.xhtml
+async function convertXHTMLLinks (argv) {
+  'use strict'
+  console.log('Converting links from .html to .xhtml ...')
+
+  try {
+    let convertXHTMLLinksProcess
+    if (argv.language) {
+      convertXHTMLLinksProcess = spawn(
+        'gulp',
+        ['epub:xhtmlLinks',
+          '--book', argv.book,
+          '--language', argv.language]
+      )
+    } else {
+      convertXHTMLLinksProcess = spawn(
+        'gulp',
+        ['epub:xhtmlLinks', '--book', argv.book]
+      )
+    }
+    await logProcess(convertXHTMLLinksProcess, 'XHTML links')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Converts .html files to .xhtml, e.g. for epub output
+async function convertXHTMLFiles (argv) {
+  'use strict'
+  console.log('Renaming files from .html to .xhtml ...')
+
+  try {
+    let convertXHTMLFilesProcess
+    if (argv.language) {
+      convertXHTMLFilesProcess = spawn(
+        'gulp',
+        ['epub:xhtmlFiles',
+          '--book', argv.book,
+          '--language', argv.language]
+      )
+    } else {
+      convertXHTMLFilesProcess = spawn(
+        'gulp',
+        ['epub:xhtmlFiles', '--book', argv.book]
+      )
+    }
+    await logProcess(convertXHTMLFilesProcess, 'XHTML files')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Get project settings from settings.yml
@@ -234,43 +442,6 @@ function projectSettings () {
     console.log(error)
   }
   return settings
-}
-
-// Returns a filename for the output file
-function outputFilename (argv) {
-  'use strict'
-
-  let filename
-  let fileExtension = '.pdf'
-  if (argv.format === 'epub') {
-    fileExtension = '.epub'
-  }
-
-  if (argv.language) {
-    filename = argv.book + '-' + argv.language + '-' + argv.format + fileExtension
-  } else {
-    filename = argv.book + '-' + argv.format + fileExtension
-  }
-
-  return filename
-}
-
-// Get a list of works (aka books) in this project
-function works () {
-  'use strict'
-
-  // Get the works data directory
-  const worksDirectory = fsPath.normalize(process.cwd() +
-            '/_data/works')
-
-  // Get the folder names in the works directory
-  const arrayOfWorks = fs.readdirSync(worksDirectory, { withFileTypes: true })
-
-  // These only work with arrow functions?
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name)
-
-  return arrayOfWorks
 }
 
 // Get the filelist for a format
@@ -414,6 +585,366 @@ function htmlFilePaths (argv, extension) {
   return paths
 }
 
+// Cleans out old .html files after .xhtml conversions
+async function cleanHTMLFiles (argv) {
+  'use strict'
+  console.log('Cleaning out old .html files ...')
+
+  try {
+    let cleanHTMLFilesProcess
+    if (argv.language) {
+      cleanHTMLFilesProcess = spawn(
+        'gulp',
+        ['epub:cleanHtmlFiles',
+          '--book', argv.book,
+          '--language', argv.language]
+      )
+    } else {
+      cleanHTMLFilesProcess = spawn(
+        'gulp',
+        ['epub:cleanHtmlFiles', '--book', argv.book]
+      )
+    }
+    await logProcess(cleanHTMLFilesProcess, 'Clean HTML files')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Check Prince version
+function checkPrinceVersion () {
+  'use strict'
+
+  // Get globally installed Prince version, if any
+  const installedPrince = function () {
+    return new Promise(function (resolve, reject) {
+      // Check local node_modules for Prince binary ...
+      if (prince().config.binary.includes('node_modules')) {
+        childProcess.execFile(prince().config.binary, ['--version'], function (error, stdout, stderr) {
+          if (error !== null) {
+            console.log('Could not get Prince version:\n')
+            reject(error)
+            return
+          }
+          const m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)/)
+          if (!(m !== null && typeof m[1] !== 'undefined')) {
+            error = 'Prince version check returned unexpected output:\n' + stdout + stderr
+            reject(error)
+            return
+          }
+          resolve(m[1])
+        })
+      } else {
+        // ... or else check the global PATH
+        which('prince', function (error, filename) {
+          if (error) {
+            console.log('Prince not found in PATH:\n')
+            reject(error)
+            return
+          }
+          childProcess.execFile(filename, ['--version'], function (error, stdout, stderr) {
+            if (error !== null) {
+              console.log('Could not get Prince version:\n')
+              reject(error)
+              return
+            }
+            const m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)/)
+            if (!(m !== null && typeof m[1] !== 'undefined')) {
+              error = 'Prince version check returned unexpected output:\n' + stdout + stderr
+              reject(error)
+              return
+            }
+            resolve(m[1])
+          })
+        })
+      }
+    })
+  }
+
+  // Check global Prince version vs version defined in package.json
+  installedPrince().then(function (installedVersion) {
+    const packageJSON = require(process.cwd() + '/package.json')
+
+    let preferredPrinceVersion
+
+    if (packageJSON.prince && packageJSON.prince.version) {
+      preferredPrinceVersion = packageJSON.prince.version
+
+      if (installedVersion !== preferredPrinceVersion) {
+        console.log('\nWARNING: your installed Prince version is ' + installedVersion +
+                        ' but your project requires ' + preferredPrinceVersion + '\n' +
+                        'You should delete node_modules/prince and run: npm install\n')
+      } else {
+        console.log('Prince version matches preferred version in package.json.')
+      }
+    }
+  }, function (error) {
+    console.log(error)
+  })
+}
+
+// Run Prince
+async function runPrince (argv) {
+  'use strict'
+
+  return new Promise(function (resolve, reject) {
+    console.log('Rendering HTML to PDF with PrinceXML...')
+
+    // Get Prince license file, if any
+    // (and allow for 'correct' spelling, licence).
+    let princeLicenseFile = ''
+    let princeLicensePath
+    const princeConfig = require(process.cwd() + '/package.json').prince
+    if (princeConfig && princeConfig.license) {
+      princeLicensePath = princeConfig.license
+    } else if (princeConfig && princeConfig.licence) {
+      princeLicensePath = fsPath.normalize(princeConfig.licence)
+    }
+    if (fs.existsSync(princeLicensePath)) {
+      princeLicenseFile = princeLicensePath
+      console.log('Using PrinceXML licence found at ' + princeLicenseFile)
+    }
+
+    checkPrinceVersion()
+
+    // Currently, node-prince does not seem to
+    // log its progress to stdout. Possible WIP:
+    // https://github.com/rse/node-prince/pull/7
+    prince()
+      .license('./' + princeLicenseFile)
+      .inputs(htmlFilePaths(argv))
+      .output(process.cwd() + '/_output/' + outputFilename(argv))
+      .option('javascript')
+      .option('verbose')
+      .timeout(100 * 1000) // required for larger books
+      .on('stderr', function (line) { console.log(line) })
+      .on('stdout', function (line) { console.log(line) })
+      .execute()
+      .then(function (executionResult) {
+        resolve()
+      }, function (error) {
+        console.log(error)
+        reject(error)
+      })
+  })
+}
+
+// Zip an epub folder
+async function epubZip () {
+  'use strict'
+
+  return new Promise(function (resolve, reject) {
+    // Check if the directory exists
+    const uncompressedEpubDirectory = fsPath.normalize(process.cwd() +
+      '/_site/epub')
+    if (!pathExists(uncompressedEpubDirectory)) {
+      throw new Error('Sorry, could not find ' + uncompressedEpubDirectory + '.')
+    }
+
+    // Thanks https://github.com/lostandfound/epub-zip
+    // for the initial idea for this.
+    // Note that we use path.posix (not just path) because
+    // EPUBCheck needs forward slashes in paths, otherwise
+    // it cannot find META-INF/container.xml in epubs
+    // generated on Windows machines.
+    function getFiles (root, files, base) {
+      'use strict'
+
+      base = base || ''
+      files = files || []
+      const directory = fsPath.posix.join(root, base)
+
+      // Files and folders to skip. For instance,
+      // don't add the mimetype file, we'll create that
+      // when we zip, so that we can add it specially.
+      const skipFiles = /^(mimetype)$/
+
+      if (fs.lstatSync(directory).isDirectory()) {
+        fs.readdirSync(directory)
+          .forEach(function (file) {
+            if (!file.match(skipFiles)) {
+              getFiles(root, files, fsPath.posix.join(base, file))
+            }
+          })
+      } else {
+        files.push(base)
+      }
+      return files
+    }
+
+    try {
+      // Get the files to zip
+      const files = getFiles(uncompressedEpubDirectory)
+
+      // Create a new instance of JSZip
+      const zip = new JSZip()
+
+      // Add an uncompressed mimetype file first
+      zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' })
+
+      // Add all the files
+      files.forEach(function (file) {
+        console.log('Adding ' + file + ' to zip.')
+        zip.file(file,
+          fs.readFileSync(fsPath.posix.join(uncompressedEpubDirectory, file)), { compression: 'DEFLATE' })
+      })
+
+      // Write the zip file to disk
+      zip
+        .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
+        .pipe(fs.createWriteStream(uncompressedEpubDirectory + '.zip'))
+        .on('finish', function () {
+          // JSZip generates a readable stream with a "end" event,
+          // but is piped here in a writable stream which emits a "finish" event.
+          console.log(uncompressedEpubDirectory + '.zip created.')
+
+          resolve()
+        })
+    } catch (error) {
+      console.log(error)
+      reject(error)
+    }
+  })
+}
+
+// Move epub.zip to _output
+async function epubZipRename (argv) {
+  'use strict'
+
+  return new Promise(function (resolve, reject) {
+    const pathToZip = fsPath.normalize(process.cwd() +
+              '/_site/epub.zip')
+    const epubFilename = argv.book + '.epub'
+    const pathToEpub = process.cwd() +
+              '/_output/' +
+              epubFilename
+
+    console.log('Moving zipped epub to _output/' + epubFilename)
+
+    if (pathExists(pathToZip)) {
+      fs.move(pathToZip, pathToEpub,
+        { overwrite: true })
+        .then(function () {
+          resolve()
+        })
+        .catch(function (error) {
+          console.log(error)
+          reject(error)
+        })
+    } else {
+      const error = 'Epub zip folder not found at ' +
+        pathToZip
+      console.log(error)
+      reject(error)
+    }
+  })
+}
+
+// Check epub.
+// Done as async so that we can await epubchecker
+// and output its report to the console.
+async function epubValidate (pathToEpubOrArgv) {
+  'use strict'
+
+  // Get path to epub from argument
+  let pathToEpub
+  if (pathToEpubOrArgv.book) {
+    pathToEpub = process.cwd() +
+      '/_output/' +
+      pathToEpubOrArgv.book + '.epub'
+  } else {
+    pathToEpub = pathToEpubOrArgv
+  }
+
+  pathToEpub = fsPath.normalize(pathToEpub)
+  const epubFilename = fsPath.basename(pathToEpub)
+  const epubcheckReportFilePath = fsPath.normalize(process.cwd() +
+            '/_output/' +
+            epubFilename +
+            '--epubcheck.json')
+
+  console.log('Checking ' + epubFilename + '...')
+
+  const report = await epubchecker(pathToEpub, {
+    includeWarnings: true,
+    includeNotices: true,
+    output: epubcheckReportFilePath
+  })
+
+  console.log('Fatal errors: ' + report.checker.nError + '\n' +
+            'Epub errors: ' + report.checker.nError + '\n' +
+            'Epub warnings: ' + report.checker.nWarning + '\n')
+  if (report.messages.length > 0) {
+    console.log(report.messages)
+    console.log('Your epub has issues. Opening report...')
+    openOutputFile(epubcheckReportFilePath)
+    return true
+  } else {
+    console.log('Epub is valid :-)')
+    return true
+  }
+}
+
+// Add files to the epub folder.
+// The destinationFolder assumes, and is
+// relative to, the destination epub folder,
+// e.g. it might be `book/images/epub`.
+// If you include a directory in the arrayOfPaths,
+// its contents will be copied to the destination.
+async function addToEpub (arrayOfPaths, destinationFolder) {
+  'use strict'
+
+  try {
+    // Ensure the destinationFolder ends with a slash
+    if (!destinationFolder.endsWith('/')) {
+      destinationFolder += '/'
+    }
+
+    // Build the full destination path
+    const destinationFolderPath = fsPath.normalize(process.cwd() +
+              '/_site/epub/' + destinationFolder)
+
+    // Create the destination directory
+    fs.mkdirSync(destinationFolderPath, { recursive: true })
+
+    // Track how many files we have to copy
+    const totalFiles = arrayOfPaths.length
+    let totalCopied = 0
+
+    // Add each file in the array to the destination
+    arrayOfPaths.forEach(function (path) {
+      path = fsPath.normalize(path)
+
+      if (fs.existsSync(path)) {
+        try {
+          // Destination depends on whether we are
+          // copying a directory or a file
+          if (fs.lstatSync(path).isDirectory()) {
+            fs.copySync(path, destinationFolderPath)
+          } else {
+            fs.copySync(path, destinationFolderPath +
+                              fsPath.basename(path))
+          }
+
+          console.log('Copied ' + path + ' to epub folder.')
+          totalCopied += 1
+
+          // Check if we're done
+          if (totalCopied === totalFiles) {
+            return true
+          }
+        } catch (error) {
+          console.log('Could not copy ' + path + ' to epub folder: \n' +
+                          error)
+        }
+      }
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // Get array of book-asset file paths for this output.
 // assetType can be images or styles.
 function bookAssetPaths (argv, assetType, folder) {
@@ -482,648 +1013,22 @@ function bookAssetPaths (argv, assetType, folder) {
   return paths
 }
 
-// Processes mathjax in output HTML
-function renderMathjax (argv, callback, callbackArgs) {
-  'use strict'
-  console.log('Rendering MathJax...')
-
-  let mathJaxProcess
-  if (argv.language) {
-    mathJaxProcess = spawn(
-      'gulp',
-      ['mathjax',
-        '--book', argv.book,
-        '--language', argv.language]
-    )
-  } else {
-    mathJaxProcess = spawn(
-      'gulp',
-      ['mathjax', '--book', argv.book]
-    )
-  }
-  logProcess(mathJaxProcess, 'Rendering MathJax', callback, callbackArgs)
-  processStatus.mathjaxRendered = true
-}
-
-// Processes index comments as targets in output HTML
-function renderIndexComments (argv, callback, callbackArgs) {
-  'use strict'
-  console.log('Processing indexing comments ...')
-
-  let indexCommentsProcess
-  if (argv.language) {
-    indexCommentsProcess = spawn(
-      'gulp',
-      ['renderIndexCommentsAsTargets',
-        '--book', argv.book,
-        '--language', argv.language]
-    )
-  } else {
-    indexCommentsProcess = spawn(
-      'gulp',
-      ['renderIndexCommentsAsTargets', '--book', argv.book]
-    )
-  }
-  logProcess(indexCommentsProcess, 'Index comments', callback, callbackArgs)
-  processStatus.indexCommentsRendered = true
-}
-
-// Processes index-list items as linked references in output HTML
-function renderIndexLinks (argv, callback, callbackArgs) {
-  'use strict'
-  console.log('Adding links to reference indexes ...')
-
-  let indexLinksProcess
-  if (argv.language) {
-    indexLinksProcess = spawn(
-      'gulp',
-      ['renderIndexListReferences',
-        '--book', argv.book,
-        '--language', argv.language]
-    )
-  } else {
-    indexLinksProcess = spawn(
-      'gulp',
-      ['renderIndexListReferences', '--book', argv.book]
-    )
-  }
-  logProcess(indexLinksProcess, 'Index links', callback, callbackArgs)
-  processStatus.indexLinksRendered = true
-}
-
-// Converts paths in links from *.html to *.xhtml
-function convertXHTMLLinks (argv, callback, callbackArgs) {
-  'use strict'
-  console.log('Converting links from .html to .xhtml ...')
-
-  let convertXHTMLLinksProcess
-  if (argv.language) {
-    convertXHTMLLinksProcess = spawn(
-      'gulp',
-      ['epub:xhtmlLinks',
-        '--book', argv.book,
-        '--language', argv.language]
-    )
-  } else {
-    convertXHTMLLinksProcess = spawn(
-      'gulp',
-      ['epub:xhtmlLinks', '--book', argv.book]
-    )
-  }
-  logProcess(convertXHTMLLinksProcess, 'XHTML links', callback, callbackArgs)
-  processStatus.xhtmlLinksConverted = true
-}
-
-// Converts .html files to .xhtml, e.g. for epub output
-function convertXHTMLFiles (argv, callback, callbackArgs) {
-  'use strict'
-  console.log('Renaming files from .html to .xhtml ...')
-
-  let convertXHTMLFilesProcess
-  if (argv.language) {
-    convertXHTMLFilesProcess = spawn(
-      'gulp',
-      ['epub:xhtmlFiles',
-        '--book', argv.book,
-        '--language', argv.language]
-    )
-  } else {
-    convertXHTMLFilesProcess = spawn(
-      'gulp',
-      ['epub:xhtmlFiles', '--book', argv.book]
-    )
-  }
-  logProcess(convertXHTMLFilesProcess, 'XHTML files', callback, callbackArgs)
-  processStatus.xhtmlFilesConverted = true
-}
-
-// Cleans out old .html files after .xhtml conversions
-function cleanHTMLFiles (argv, callback, callbackArgs) {
-  'use strict'
-  console.log('Cleaning out old .html files ...')
-
-  let cleanHTMLFilesProcess
-  if (argv.language) {
-    cleanHTMLFilesProcess = spawn(
-      'gulp',
-      ['epub:cleanHtmlFiles',
-        '--book', argv.book,
-        '--language', argv.language]
-    )
-  } else {
-    cleanHTMLFilesProcess = spawn(
-      'gulp',
-      ['epub:cleanHtmlFiles', '--book', argv.book]
-    )
-  }
-  logProcess(cleanHTMLFilesProcess, 'Clean HTML files', callback, callbackArgs)
-  processStatus.htmlFilesCleaned = true
-}
-
-// Opens the output file. Accepts argv or a filepath.
-function openOutputFile (argvOrFilePath) {
+// Get a list of works (aka books) in this project
+function works () {
   'use strict'
 
-  // If no filepath is provided, assume we're opening
-  // the book file we've just generated.
-  let filePath
-  if (argvOrFilePath.book) {
-    filePath = fsPath.normalize(process.cwd() +
-                '/_output/' +
-                outputFilename(argvOrFilePath))
-    console.log('Your ' + argvOrFilePath.format + ' is at ' + filePath)
-  } else {
-    filePath = argvOrFilePath
-  }
-  console.log('Opening ' + filePath)
-  open(fsPath.normalize(filePath))
-}
+  // Get the works data directory
+  const worksDirectory = fsPath.normalize(process.cwd() +
+            '/_data/works')
 
-// Check Prince version
-function checkPrinceVersion () {
-  'use strict'
+  // Get the folder names in the works directory
+  const arrayOfWorks = fs.readdirSync(worksDirectory, { withFileTypes: true })
 
-  // Get globally installed Prince version, if any
-  const installedPrince = function () {
-    return new Promise(function (resolve, reject) {
-      // Check local node_modules for Prince binary ...
-      if (prince().config.binary.includes('node_modules')) {
-        childProcess.execFile(prince().config.binary, ['--version'], function (error, stdout, stderr) {
-          if (error !== null) {
-            console.log('Could not get Prince version:\n')
-            reject(error)
-            return
-          }
-          const m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)/)
-          if (!(m !== null && typeof m[1] !== 'undefined')) {
-            error = 'Prince version check returned unexpected output:\n' + stdout + stderr
-            reject(error)
-            return
-          }
-          resolve(m[1])
-        })
-      } else {
-        // ... or else check the global PATH
-        which('prince', function (error, filename) {
-          if (error) {
-            console.log('Prince not found in PATH:\n')
-            reject(error)
-            return
-          }
-          childProcess.execFile(filename, ['--version'], function (error, stdout, stderr) {
-            if (error !== null) {
-              console.log('Could not get Prince version:\n')
-              reject(error)
-              return
-            }
-            const m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)/)
-            if (!(m !== null && typeof m[1] !== 'undefined')) {
-              error = 'Prince version check returned unexpected output:\n' + stdout + stderr
-              reject(error)
-              return
-            }
-            resolve(m[1])
-          })
-        })
-      }
-    })
-  }
+  // These only work with arrow functions?
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name)
 
-  // Check global Prince version vs version defined in package.json
-  installedPrince().then(function (installedVersion) {
-    const packageJSON = require(process.cwd() + '/package.json')
-
-    let preferredPrinceVersion
-
-    if (packageJSON.prince && packageJSON.prince.version) {
-      preferredPrinceVersion = packageJSON.prince.version
-
-      if (installedVersion !== preferredPrinceVersion) {
-        console.log('\nWARNING: your installed Prince version is ' + installedVersion +
-                        ' but your project requires ' + preferredPrinceVersion + '\n' +
-                        'You should delete node_modules/prince and run: npm install\n')
-      }
-    }
-  }, function (error) {
-    console.log(error)
-  })
-}
-
-// Run Prince
-function runPrince (argv) {
-  'use strict'
-
-  console.log('Rendering HTML to PDF with PrinceXML...')
-
-  // Get Prince license file, if any
-  // (and allow for 'correct' spelling, licence).
-  let princeLicenseFile = ''
-  let princeLicensePath
-  const princeConfig = require(process.cwd() + '/package.json').prince
-  if (princeConfig && princeConfig.license) {
-    princeLicensePath = princeConfig.license
-  } else if (princeConfig && princeConfig.licence) {
-    princeLicensePath = fsPath.normalize(princeConfig.licence)
-  }
-  if (fs.existsSync(princeLicensePath)) {
-    princeLicenseFile = princeLicensePath
-    console.log('Using PrinceXML licence found at ' + princeLicenseFile)
-  }
-
-  checkPrinceVersion()
-
-  // Currently, node-prince does not seem to
-  // log its progress to stdout. Possible WIP:
-  // https://github.com/rse/node-prince/pull/7
-  prince()
-    .license('./' + princeLicenseFile)
-    .inputs(htmlFilePaths(argv))
-    .output(process.cwd() + '/_output/' + outputFilename(argv))
-    .option('javascript')
-    .option('verbose')
-    .timeout(100 * 1000) // required for larger books
-    .execute()
-    .then(function () {
-      openOutputFile(argv)
-    }, function (error) {
-      console.log(error)
-    })
-}
-
-// Add files to the epub folder.
-// The destinationFolder assumes, and is
-// relative to, the destination epub folder,
-// e.g. it might be `book/images/epub`.
-// If you include a directory in the arrayOfPaths,
-// its contents will be copied to the destination.
-function addToEpub (arrayOfPaths, destinationFolder,
-  epubAssemblyType, callback, callbackArgs) {
-  'use strict'
-
-  // Ensure the destinationFolder ends with a slash
-  if (!destinationFolder.endsWith('/')) {
-    destinationFolder += '/'
-  }
-
-  // Build the full destination path
-  const destinationFolderPath = fsPath.normalize(process.cwd() +
-            '/_site/epub/' + destinationFolder)
-
-  // Create the destination directory
-  fs.mkdirSync(destinationFolderPath, { recursive: true })
-
-  // Track how many files we have to copy
-  const totalFiles = arrayOfPaths.length
-  let totalCopied = 0
-
-  // Add each file in the array to the destination
-  arrayOfPaths.forEach(function (path) {
-    path = fsPath.normalize(path)
-
-    if (fs.existsSync(path)) {
-      try {
-        // Destination depends on whether we are
-        // copying a directory or a file
-        if (fs.lstatSync(path).isDirectory()) {
-          fs.copySync(path, destinationFolderPath)
-        } else {
-          fs.copySync(path, destinationFolderPath +
-                            fsPath.basename(path))
-        }
-
-        console.log('Copied ' + path + ' to epub folder.')
-        totalCopied += 1
-
-        // Check if we're done
-        if (totalCopied === totalFiles) {
-          processStatus.epubAssembly[epubAssemblyType] = true
-          callback(callbackArgs)
-        }
-      } catch (error) {
-        console.log('Could not copy ' + path + ' to epub folder: \n' +
-                        error)
-      }
-    }
-  })
-}
-
-// Check epub.
-// Done as async so that we can await epubchecker
-// and output its report to the console.
-async function epubCheck (pathToEpub) {
-  'use strict'
-
-  pathToEpub = fsPath.normalize(pathToEpub)
-  const epubFilename = fsPath.basename(pathToEpub)
-  const epubcheckReportFilePath = fsPath.normalize(process.cwd() +
-            '/_output/' +
-            epubFilename +
-            '--epubcheck.json')
-
-  console.log('Checking ' + epubFilename + '...')
-
-  const report = await epubchecker(pathToEpub, {
-    includeWarnings: true,
-    includeNotices: true,
-    output: epubcheckReportFilePath
-  })
-
-  console.log('Fatal errors: ' + report.checker.nError + '\n' +
-            'Epub errors: ' + report.checker.nError + '\n' +
-            'Epub warnings: ' + report.checker.nWarning + '\n')
-  if (report.messages.length > 0) {
-    console.log(report.messages)
-    console.log('Your epub is at ' + pathToEpub)
-    console.log('Your epub has issues. Opening report...')
-    openOutputFile(epubcheckReportFilePath)
-  } else {
-    console.log('Epub is valid :-)')
-    console.log('Your epub is at ' + pathToEpub)
-  }
-}
-
-// Move epub.zip to _output
-function epubZipRename (argv) {
-  'use strict'
-
-  const pathToZip = fsPath.normalize(process.cwd() +
-            '/_site/epub.zip')
-  const epubFilename = argv.book + '.epub'
-  const pathToEpub = process.cwd() +
-            '/_output/' +
-            epubFilename
-
-  console.log('Moving zipped epub to _output/' + epubFilename)
-
-  if (pathExists(pathToZip)) {
-    fs.move(pathToZip, pathToEpub,
-      { overwrite: true })
-      .then(function () {
-        epubCheck(pathToEpub)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    // fs.moveSync(pathToZip,
-    //         process.cwd()
-    //         + '/_output/'
-    //         + epubFilename,
-    //         {overwrite: true});
-  } else {
-    console.log('Epub zip folder not found at ' +
-                pathToZip)
-  }
-}
-
-// Assemble an epub folder
-function assembleEpub (argv) {
-  'use strict'
-
-  // If all is assembled, move on to zipping,
-  // otherwise continue assembly and try again.
-  if (processStatus.epubAssembly.bookText &&
-            processStatus.epubAssembly.bookStyles &&
-            processStatus.epubAssembly.bookImages &&
-            processStatus.epubAssembly.bundleJS &&
-            processStatus.epubAssembly.mathjax &&
-            processStatus.epubAssembly.packageOPF &&
-            processStatus.epubAssembly.ncx) {
-    const pathToEpubFolder = fsPath.normalize(process.cwd() +
-                '/_site/epub')
-    console.log('Zipping ' + pathToEpubFolder)
-    epubZip(pathToEpubFolder, epubZipRename, argv)
-  } else if (processStatus.epubAssembly.bookText === false) {
-    // Add text
-    addToEpub(htmlFilePaths(argv, '.xhtml'), argv.book, 'bookText', assembleEpub, argv)
-  } else if (processStatus.epubAssembly.bookImages === false) {
-    // Add images
-    addToEpub(bookAssetPaths(argv, 'images'),
-      argv.book + '/images/epub', 'bookImages',
-      assembleEpub, argv)
-  } else if (processStatus.epubAssembly.bookStyles === false) {
-    // Add images
-    addToEpub(bookAssetPaths(argv, 'styles'),
-      argv.book + '/styles', 'bookStyles',
-      assembleEpub, argv)
-  } else if (processStatus.epubAssembly.assetsImages === false) {
-    // Add images from assets/images/epub
-    addToEpub(bookAssetPaths(argv, 'images', 'assets'),
-      'assets/images/epub', 'assetsImages',
-      assembleEpub, argv)
-  } else if (processStatus.epubAssembly.bundleJS === false) {
-    // Add bundle of JS, if there is one
-    if (pathExists(process.cwd() + '/_site/assets/js/bundle.js')) {
-      addToEpub([process.cwd() + '/_site/assets/js/bundle.js'],
-        '/assets/js', 'bundleJS',
-        assembleEpub, argv)
-    } else {
-      processStatus.epubAssembly.bundleJS = true
-      assembleEpub(argv)
-    }
-  } else if (processStatus.epubAssembly.mathjax === false) {
-    // Add mathjax if required
-    if (mathjaxEnabled(argv)) {
-      addToEpub([process.cwd() + '/_site/assets/js/mathjax'],
-        '/assets/js/mathjax', 'mathjax',
-        assembleEpub, argv)
-    } else {
-      processStatus.epubAssembly.mathjax = true
-      assembleEpub(argv)
-    }
-  } else if (processStatus.epubAssembly.packageOPF === false) {
-    // Add package.opf
-    addToEpub([process.cwd() + '/_site/' +
-                argv.book + '/package.opf'],
-    '',
-    'packageOPF',
-    assembleEpub, argv)
-  } else if (processStatus.epubAssembly.ncx === false) {
-    // Add toc.ncx, if any
-    const ncxFile = process.cwd() + '/_site/' +
-                argv.book + '/toc.ncx'
-    if (pathExists(ncxFile)) {
-      addToEpub([ncxFile],
-        '',
-        'ncx',
-        assembleEpub, argv)
-    } else {
-      processStatus.epubAssembly.ncx = true
-      assembleEpub(argv)
-    }
-  } else {
-    console.log('Epub assembly could not complete. Status:\n' +
-                JSON.stringify(processStatus.epubAssembly, null, 2))
-  }
-}
-
-// Output a print PDF
-function outputPDF (argv) {
-  'use strict'
-
-  // If Mathjax is enabled, first render mathjax
-  // before continuing with the process.
-  if (processStatus.mathjaxRendered === true &&
-            processStatus.indexCommentsRendered === true &&
-            processStatus.renderIndexLinks === true) {
-    runPrince(argv)
-  } else if (mathjaxEnabled(argv) &&
-            processStatus.mathjaxRendered === false) {
-    console.log('Mathjax enabled, rendering maths first.')
-    renderMathjax(argv, outputPDF, argv)
-  } else if (processStatus.indexCommentsRendered === false) {
-    console.log('Checking for indexing comments ...')
-    renderIndexComments(argv, outputPDF, argv)
-  } else if (processStatus.indexLinksRendered === false) {
-    console.log('Adding links to references indexes ...')
-    renderIndexLinks(argv, outputPDF, argv)
-  } else {
-    runPrince(argv)
-  }
-}
-
-// Output an epub
-function outputEpub (argv) {
-  'use strict'
-
-  // First render index comments and links and
-  // do XHTML conversions before assembling the epub.
-  if (processStatus.indexCommentsRendered === true &&
-            processStatus.renderIndexLinks === true &&
-            processStatus.xhtmlLinksConverted === true &&
-            processStatus.xhtmlFilesConverted === true &&
-            processStatus.htmlFilesCleaned === true) {
-    assembleEpub(argv)
-  } else if (processStatus.indexCommentsRendered === false) {
-    renderIndexComments(argv, outputEpub, argv)
-  } else if (processStatus.indexLinksRendered === false) {
-    renderIndexLinks(argv, outputEpub, argv)
-  } else if (processStatus.xhtmlLinksConverted === false) {
-    convertXHTMLLinks(argv, outputEpub, argv)
-  } else if (processStatus.xhtmlFilesConverted === false) {
-    convertXHTMLFiles(argv, outputEpub, argv)
-  } else if (processStatus.htmlFilesCleaned === false) {
-    cleanHTMLFiles(argv, outputEpub, argv)
-  } else {
-    assembleEpub(argv)
-  }
-}
-
-// Output Word files
-function outputWord (argv) {
-  'use strict'
-
-  // Get file list for this format
-  const filePaths = htmlFilePaths(argv)
-
-  // Initialise a counter
-  let totalConverted = 0
-
-  // Determine the output location
-  const outputLocation = fsPath.normalize(process.cwd() +
-            '/_output/' +
-            argv.book +
-            '--word')
-
-  function convertFiles (filePaths) {
-    // Loop through files and convert with Pandoc
-    filePaths.forEach(function (filePath) {
-      // Build path to output file
-      const fileBasename = fsPath.basename(filePath, '.html')
-      const outputFilePath = fsPath.normalize(outputLocation + '/' +
-                    fileBasename + '.docx')
-
-      // Passing an array is safer than a string because
-      // is handles potential spaces in the source filename.
-      // We must provide --resource-path or pandoc will look
-      // for images in the working directory.
-      const args = ['--resource-path=' + fsPath.dirname(filePath),
-        '-f', 'html', '-t', 'docx', '-s', '-o',
-        outputFilePath]
-
-      function callback (error) {
-        if (error) {
-          // Filter out errors that tell users
-          // to install rsvg-convert, because this
-          // isn't necessary for simple Word output.
-          if (!error.message.includes('check that rsvg-convert is in path')) {
-            console.log('Problem converting HTML to Word: ', error)
-          }
-        } else {
-          totalConverted += 1
-
-          if (totalConverted === filePaths.length) {
-            console.log('Conversion to Word complete. Files in ' +
-                                outputLocation)
-          }
-        }
-      }
-
-      pandoc(filePath, args, callback)
-    })
-  }
-
-  // Clear the previous output folder if it exists,
-  // or create the output directory first if it doesn't.
-  if (pathExists(outputLocation)) {
-    clearFolderContents(outputLocation, convertFiles, filePaths)
-  } else {
-    fs.mkdirSync(outputLocation, { recursive: true })
-    convertFiles(filePaths)
-  }
-}
-
-// Return switches for Jekyll
-function switches (argv) {
-  'use strict'
-
-  let jekyllSwitches = ''
-
-  // Add baseurl if specified in argv.
-  // Remember that the default argv options
-  // include a blank baseurl in argv, so we don't
-  // want to include a baseurl if it's blank.
-  if (argv.baseurl && argv.baseurl.length > 0) {
-    console.log('Adding baseurl...')
-    jekyllSwitches += '--baseurl=' + argv.baseurl + ' '
-  }
-
-  // Add incremental switch if --incremental=true
-  if (argv.incremental === true) {
-    console.log('Enabling incremental build...')
-    jekyllSwitches += '--incremental '
-  }
-
-  // Add switches passed as argv's
-  let switchesString = ''
-  if (argv.switches) {
-    console.log('Adding ' + argv.switches + ' to switches...')
-    // Strip quotes that might have been added around arguments by user
-    switchesString = argv.switches.replace(/'/g, '').replace(/"/g, '')
-  }
-
-  // Add all switches in switchesString
-  if (switchesString) {
-    // Strip spaces, then split the string into an array,
-    // then loop through the array adding each switch.
-    switchesString.replace(/\s/g, '')
-    switchesString.split(',')
-    switchesString.forEach(function (switchString) {
-      jekyllSwitches += '--' + switchString
-    })
-  }
-
-  return jekyllSwitches
-}
-
-// Processes images with gulp if -t images
-function processImages (argv) {
-  'use strict'
-
-  const gulpProcess = spawn(
-    'gulp',
-    ['--book', argv.book, '--language', argv.language]
-  )
-  logProcess(gulpProcess, 'Processing images')
+  return arrayOfWorks
 }
 
 // Install Node dependencies
@@ -1158,66 +1063,208 @@ function installGems () {
   logProcess(bundleProcess, 'Installing Ruby gems')
 }
 
-// TO DO: export to Word
-function exportWord (argv) {
+// Processes images with gulp if -t images
+async function processImages (argv) {
   'use strict'
 
-  console.log('Building HTML then converting to ' +
-            argv['export-format'] + '...\n')
-
-  jekyll(
-    'build',
-    configString(argv),
-    argv.baseurl,
-    switches(argv),
-    outputWord,
-    argv
-  )
+  try {
+    const gulpProcess = spawn(
+      'gulp',
+      ['--book', argv.book, '--language', argv.language]
+    )
+    await logProcess(gulpProcess, 'Processing images')
+    return
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-// Start PDF-output process
-function pdf (argv) {
+// Convert HTML files to another format
+async function convertHTMLtoWord (argv) {
   'use strict'
-  jekyll(
-    'build',
-    configString(argv),
-    argv.baseurl,
-    switches(argv),
-    outputPDF,
-    argv
-  )
+
+  console.log('Converting HTML to Word...')
+
+  // Get file list for this format
+  const filePaths = htmlFilePaths(argv)
+
+  // Initialise a counter
+  let totalConverted = 0
+
+  // Determine the output location
+  const outputLocation = fsPath.normalize(process.cwd() +
+    '/_output/' +
+    argv.book +
+    '--word')
+
+  // Clear the previous output folder if it exists,
+  // or create the output directory first if it doesn't.
+  if (pathExists(outputLocation)) {
+    await clearFolderContents(outputLocation)
+  } else {
+    await fs.mkdir(outputLocation, { recursive: true })
+  }
+
+  return new Promise(function (resolve, reject) {
+    // Loop through files and convert with Pandoc
+    filePaths.forEach(function (filePath) {
+      // Build path to output file
+      const fileBasename = fsPath.basename(filePath, '.html')
+      const outputFilePath = fsPath.normalize(outputLocation + '/' +
+                    fileBasename + '.docx')
+
+      // Passing an array is safer than a string because
+      // is handles potential spaces in the source filename.
+      // We must provide --resource-path or pandoc will look
+      // for images in the working directory.
+      const args = ['--resource-path=' + fsPath.dirname(filePath),
+        '-f', 'html', '-t', 'docx', '-s', '-o',
+        outputFilePath]
+
+      function pandocCallback (error) {
+        if (error) {
+          // Filter out errors that tell users
+          // to install rsvg-convert, because this
+          // isn't necessary for simple Word output.
+          if (!error.message.includes('check that rsvg-convert is in path')) {
+            console.log('Problem converting HTML to Word: ', error)
+          }
+        } else {
+          totalConverted += 1
+
+          if (totalConverted === filePaths.length) {
+            console.log('Conversion to Word complete. Files in ' +
+              outputLocation)
+            resolve()
+          }
+        }
+      }
+
+      pandoc(filePath, args, pandocCallback)
+    })
+  })
 }
 
-// Start webserver process
-function web (argv) {
+// Web output
+async function web (argv) {
   'use strict'
-  jekyll(
-    'serve',
-    configString(argv),
-    argv.baseurl,
-    switches(argv)
-  )
+
+  try {
+    await clearFolderContents(process.cwd() + '/_site')
+    await jekyll(argv)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-// Start epub-output process
-function epub (argv) {
+// PDF output
+async function pdf (argv) {
   'use strict'
-  jekyll(
-    'build',
-    configString(argv),
-    argv.baseurl,
-    switches(argv),
-    outputEpub,
-    argv
-  )
+
+  try {
+    await clearFolderContents(process.cwd() + '/_site')
+    await jekyll(argv)
+    await renderMathjax(argv)
+    await renderIndexComments(argv)
+    await renderIndexLinks(argv)
+    await runPrince(argv)
+    openOutputFile(argv)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-// Start the output process
-function initialiseOutput (callback, argv) {
+// Epub output
+async function epub (argv) {
   'use strict'
-  clearFolderContents(process.cwd() + '/_site',
-    callback,
-    argv)
+
+  try {
+    await clearFolderContents(process.cwd() + '/_site')
+    await jekyll(argv)
+    await renderIndexComments(argv)
+    await renderIndexLinks(argv)
+    await convertXHTMLLinks(argv)
+    await convertXHTMLFiles(argv)
+    await cleanHTMLFiles(argv)
+    await addToEpub(htmlFilePaths(argv, '.xhtml'), argv.book)
+    await addToEpub(bookAssetPaths(argv, 'images'),
+      argv.book + '/images/epub')
+    await addToEpub(bookAssetPaths(argv, 'styles'),
+      argv.book + '/styles')
+    await addToEpub(bookAssetPaths(argv, 'images', 'assets'),
+      'assets/images/epub')
+
+    if (pathExists(process.cwd() + '/_site/assets/js/bundle.js')) {
+      await addToEpub([process.cwd() + '/_site/assets/js/bundle.js'],
+        '/assets/js')
+    }
+
+    if (mathjaxEnabled(argv)) {
+      await addToEpub([process.cwd() + '/_site/assets/js/mathjax'],
+        '/assets/js/mathjax')
+    }
+
+    await addToEpub([process.cwd() + '/_site/' +
+                argv.book + '/package.opf'], '')
+
+    const ncxFile = process.cwd() + '/_site/' +
+                argv.book + '/toc.ncx'
+    if (pathExists(ncxFile)) {
+      await addToEpub([ncxFile], '')
+    }
+    await epubZip()
+    await epubZipRename(argv)
+
+    const pathToEpub = fsPath.normalize(process.cwd() +
+      '/_output/' +
+      argv.book + '.epub')
+    await epubValidate(pathToEpub)
+
+    console.log('Your epub is at ' + pathToEpub)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Word export
+async function exportWord (argv) {
+  'use strict'
+
+  try {
+    await clearFolderContents(process.cwd() + '/_site')
+    await jekyll(argv)
+
+    // Word export does not yet support index comments
+    // and index links. We need to extend the gulp tasks
+    // that process comments to make them visible in Word.
+    // await renderIndexComments(argv)
+    // await renderIndexLinks(argv)
+
+    await convertHTMLtoWord(argv)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Refresh indexes
+async function refreshIndexes (argv) {
+  'use strict'
+
+  try {
+    await clearFolderContents(process.cwd() + '/_site')
+    await jekyll(argv)
+
+    if (argv.format === 'print-pdf' |
+        'screen-pdf' |
+        'epub') {
+      await renderMathjax(argv)
+      await renderIndexComments(argv)
+      await renderIndexLinks(argv)
+    }
+    // TO DO: gulp here
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 module.exports = {
@@ -1225,10 +1272,10 @@ module.exports = {
   web,
   epub,
   exportWord,
-  initialiseOutput,
   processImages,
   installGems,
   installNodeModules,
   pathExists,
+  refreshIndexes,
   works
 }

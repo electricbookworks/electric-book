@@ -15,16 +15,16 @@ exports.handler = function (argv) {
   switch (argv.format) {
     case 'print-pdf':
     case 'screen-pdf':
-      helpers.initialiseOutput(helpers.pdf, argv)
+      helpers.pdf(argv)
       break
     case 'epub':
-      helpers.initialiseOutput(helpers.epub, argv)
+      helpers.epub(argv)
       break
     case 'app':
       // TO DO
       break
     default:
-      helpers.initialiseOutput(helpers.web, argv)
+      helpers.web(argv)
       break
   }
 }
