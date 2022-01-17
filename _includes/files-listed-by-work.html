@@ -9,8 +9,9 @@ loop through translations and variants. {% endcomment %}
     {% assign files-listed-work = site.data.works.book %}
 {% endif %}
 
+{% assign files-listed-parent-work = nil %}
 {% if include.parent-work %}
-    {% assign files-listed-parent-work  = include.files-listed-parent-work %}
+    {% assign files-listed-parent-work = include.parent-work %}
 {% endif %}
 
 {% comment %} Get the active variant,
@@ -31,7 +32,7 @@ we check that the folder includes a default key, i.e. a default.yml.
     {% comment %} Get the path to relevant markdown files. {% endcomment %}
     {% capture markdown-files-path %}{{ files-listed-work[0] }}{% endcapture %}
     {% if files-listed-parent-work %}
-        {% capture markdown-files-path %}{{ files-listed-parent-work[0] }}/{{ files-listed-work[0] }}{% endcapture %}
+        {% capture markdown-files-path %}{{ files-listed-parent-work }}/{{ files-listed-work[0] }}{% endcapture %}
     {% endif %}
 
     {% comment %} Check if we need to inherit a files list.
@@ -80,9 +81,11 @@ we check that the folder includes a default key, i.e. a default.yml.
 
     {% comment %} Now do the same for translations. {% endcomment %}
 
+    {% capture parent-work-name %}{{ files-listed-work[0] }}{% endcapture %}
+
     {% for files-listed-translation in files-listed-work[1] %}
-            
-        {% include files-listed-by-work.html work=files-listed-translation parent-work=files-listed-work %}
+
+        {% include files-listed-by-work.html work=files-listed-translation parent-work=parent-work-name %}
 
     {% endfor %}
 
