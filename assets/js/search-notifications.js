@@ -32,8 +32,13 @@ function ebSearchHideSearchingNotice() {
 function ebSearchLoadIndexAndResults() {
     'use strict';
 
+    var searchIndex = 'assets/js/search-index-' + settings.site.output + '.js';
+    if (settings.site.docs === true) {
+        searchIndex = 'assets/js/search-index-with-docs-' + settings.site.output + '.js';
+    }
+
     [
-        'assets/js/search-index-' + settings.site.output + '.js',
+        searchIndex,
         'assets/js/search-results.js'
     ].forEach(function (src) {
         var script = document.createElement('script');

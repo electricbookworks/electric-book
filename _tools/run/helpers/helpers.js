@@ -11,6 +11,8 @@ const pandoc = require('node-pandoc') // for converting files, e.g. html to word
 const which = require('which') // finds installed executables
 const childProcess = require('child_process') // creates child processes
 const JSZip = require('jszip') // epub-friendly zip utility
+const buildReferenceIndex = require('./reindex/build-reference-index.js')
+const buildSearchIndex = require('./reindex/build-search-index.js')
 
 // Output spawned-process data to console
 function logProcess (process, processName) {
@@ -218,13 +220,9 @@ function jekyllSwitches (argv) {
 async function jekyll (argv) {
   'use strict'
 
-  // Use 'build' unless we're starting a webserver,
-  // or the main argv command is 'export' (i.e. if
-  // we're exporting the web output to word, we still
-  // only want Jekyll to build, not serve).
+  // Use 'build' unless we're starting a webserver
   let command = 'build'
-  if (argv.format === 'web' &&
-      argv._[0] !== 'export') {
+  if (argv.format === 'web' && argv._[0] === 'output') {
     command = 'serve'
   }
 
@@ -1254,14 +1252,19 @@ async function refreshIndexes (argv) {
     await clearFolderContents(process.cwd() + '/_site')
     await jekyll(argv)
 
-    if (argv.format === 'print-pdf' |
-        'screen-pdf' |
-        'epub') {
+    if (argv.format === 'print-pdf' ||
+      argv.format === 'screen-pdf' ||
+      argv.format === 'epub') {
       await renderMathjax(argv)
       await renderIndexComments(argv)
-      await renderIndexLinks(argv)
     }
-    // TO DO: gulp here
+
+    buildReferenceIndex(argv.format)
+
+    if (argv.format === 'web' ||
+      argv.format === 'app') {
+      buildSearchIndex(argv.format)
+    }
   } catch (error) {
     console.log(error)
   }

@@ -8,11 +8,15 @@
 // NB: The generated settings load in client-side Javascript, so
 // do not include any settings that should not be publicly available.
 
+// Make Jekyll metadata available to Liquid
+{% include metadata %}
+
 // Create default settings object
 var settings = {
     site: {
         baseurl: '',
-        output: 'web'
+        output: 'web',
+        docs: false
     },
     web: {
         images: {
@@ -105,4 +109,8 @@ settings.app.accordion.autoClose = {{ site.data.settings.app.accordion-auto-clos
 
 {% if site.data.settings.app.search.jump-box-location != nil %}
 settings.app.search.jumpBoxLocation = '{{ site.data.settings.app.search.jump-box-location }}';
+{% endif %}
+
+{% if output-docs %}
+settings.site.docs = true;
 {% endif %}

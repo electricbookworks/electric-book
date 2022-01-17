@@ -16,6 +16,6 @@ exports.handler = function (argv) {
   'use strict'
 
   console.log('Refreshing index for ' + argv.format + '\n' +
-    'Remember to refresh indexes for each output format.')
+    'Remember to refresh indexes separately for each output format.')
   helpers.refreshIndexes(argv)
 }
