@@ -8,7 +8,7 @@ const helpers = require('../helpers/helpers')
 // Exports
 
 exports.command = 'export'
-exports.desc = 'Export (coming soon)'
+exports.desc = 'Export to another file format'
 exports.handler = function (argv) {
   'use strict'
 

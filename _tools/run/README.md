@@ -13,7 +13,7 @@ So far, this script can do some options from the run-* shell scripts:
 - [ ]  Create an app
 - [x]  Export to Word
 - [x]  Convert source images to output formats
-- [ ]  Refresh search index
+- [x]  Refresh search index
 - [x]  Install or update dependencies
 
 Additional functions it provides:
