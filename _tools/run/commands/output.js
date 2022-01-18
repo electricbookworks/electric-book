@@ -21,7 +21,7 @@ exports.handler = function (argv) {
       helpers.epub(argv)
       break
     case 'app':
-      // TO DO
+      helpers.app(argv)
       break
     default:
       helpers.web(argv)

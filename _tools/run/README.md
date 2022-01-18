@@ -10,7 +10,7 @@ So far, this script can do some options from the run-* shell scripts:
 - [x]  Create a screen PDF
 - [x]  Run as a website
 - [x]  Create an epub
-- [ ]  Create an app
+- [x]  Create an app
 - [x]  Export to Word
 - [x]  Convert source images to output formats
 - [x]  Refresh search index

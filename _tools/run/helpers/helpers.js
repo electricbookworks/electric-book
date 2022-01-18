@@ -97,46 +97,46 @@ function openOutputFile (argvOrFilePath) {
   open(fsPath.normalize(filePath))
 }
 
-// Clear folder contents
-async function clearFolderContents (path) {
-  'use strict'
+// // Clear folder contents
+// async function clearFolderContents (path) {
+//   'use strict'
 
-  const pathToClear = fsPath.normalize(path)
+//   const pathToClear = fsPath.normalize(path)
 
-  if (pathExists(pathToClear)) {
-    console.log('Clearing ' + pathToClear)
+//   if (pathExists(pathToClear)) {
+//     console.log('Clearing ' + pathToClear)
 
-    const contents = await fsPromises.readdir(pathToClear)
-    const totalEntries = contents.length
-    let totalRemoved = 0
+//     const contents = await fsPromises.readdir(pathToClear)
+//     const totalEntries = contents.length
+//     let totalRemoved = 0
 
-    return new Promise(function (resolve, reject) {
-      if (totalEntries > 0) {
-        contents.forEach(function (entry) {
-          const pathToDelete = fsPath.normalize(pathToClear + '/' + entry)
-          fs.remove(pathToDelete, function (error) {
-            if (error) {
-              console.log(error)
-              reject(error)
-            } else {
-              totalRemoved += 1
+//     return new Promise(function (resolve, reject) {
+//       if (totalEntries > 0) {
+//         contents.forEach(function (entry) {
+//           const pathToDelete = fsPath.normalize(pathToClear + '/' + entry)
+//           fs.remove(pathToDelete, function (error) {
+//             if (error) {
+//               console.log(error)
+//               reject(error)
+//             } else {
+//               totalRemoved += 1
 
-              if (totalRemoved === totalEntries) {
-                console.log('Folder cleared.')
-                resolve()
-              }
-            }
-          })
-        })
-      } else {
-        console.log(pathToClear + ' already empty.')
-        resolve()
-      }
-    })
-  } else {
-    console.log('Could not find ' + pathToClear + ' to clear.')
-  }
-}
+//               if (totalRemoved === totalEntries) {
+//                 console.log('Folder cleared.')
+//                 resolve()
+//               }
+//             }
+//           })
+//         })
+//       } else {
+//         console.log(pathToClear + ' already empty.')
+//         resolve()
+//       }
+//     })
+//   } else {
+//     console.log('Could not find ' + pathToClear + ' to clear.')
+//   }
+// }
 
 // Return a string of Jekyll config files.
 // The filenames passed must be of files
@@ -271,6 +271,49 @@ function configsObject (argv) {
 
   // Return the first object of the first object of the array
   return json[0]
+}
+
+// Run Cordova with args.
+// - args is an array of arguments
+// - cordovaWorkingDirectory is the directory in which
+//   cordova must run, e.g. _site/app
+async function cordova (args, cordovaWorkingDirectory) {
+  'use strict'
+
+  // Create a default/fallback working directory
+  if (!cordovaWorkingDirectory) {
+    cordovaWorkingDirectory = fsPath.normalize(process.cwd() + '/_site/app')
+  }
+
+  try {
+    console.log('Running Cordova with ' + JSON.stringify(args) +
+      ' from\n' + cordovaWorkingDirectory)
+
+    const cordovaProcess = spawn('cordova', args, { cwd: cordovaWorkingDirectory })
+    const result = await logProcess(cordovaProcess, 'Cordova')
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Assemble app files
+async function assembleApp () {
+  'use strict'
+
+  // Move everything in the _site folder to _site/app
+  // except, of course, _site/app itself.
+
+  const source = fsPath.normalize(process.cwd() + '/_site')
+  const destination = fsPath.normalize(process.cwd() + '/_site/app/www')
+
+  const pathsInSource = await fsPromises.readdir(source, { withFileTypes: true })
+
+  pathsInSource.forEach(function (entry) {
+    if (entry.name !== 'app') {
+      fs.moveSync(source + fsPath.sep + entry.name, destination + fsPath.sep + entry.name)
+    }
+  })
 }
 
 // Check if MathJax is enabled in config or CLI arguments
@@ -862,7 +905,7 @@ async function epubValidate (pathToEpubOrArgv) {
             epubFilename +
             '--epubcheck.json')
 
-  console.log('Checking ' + epubFilename + '...')
+  console.log('Validating ' + epubFilename + '...')
 
   const report = await epubchecker(pathToEpub, {
     includeWarnings: true,
@@ -1098,7 +1141,8 @@ async function convertHTMLtoWord (argv) {
   // Clear the previous output folder if it exists,
   // or create the output directory first if it doesn't.
   if (pathExists(outputLocation)) {
-    await clearFolderContents(outputLocation)
+    // await clearFolderContents(outputLocation)
+    await fs.emptyDir(outputLocation)
   } else {
     await fs.mkdir(outputLocation, { recursive: true })
   }
@@ -1148,7 +1192,8 @@ async function web (argv) {
   'use strict'
 
   try {
-    await clearFolderContents(process.cwd() + '/_site')
+    // await clearFolderContents(process.cwd() + '/_site')
+    await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
   } catch (error) {
     console.log(error)
@@ -1160,7 +1205,8 @@ async function pdf (argv) {
   'use strict'
 
   try {
-    await clearFolderContents(process.cwd() + '/_site')
+    // await clearFolderContents(process.cwd() + '/_site')
+    await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
     await renderMathjax(argv)
     await renderIndexComments(argv)
@@ -1177,7 +1223,8 @@ async function epub (argv) {
   'use strict'
 
   try {
-    await clearFolderContents(process.cwd() + '/_site')
+    // await clearFolderContents(process.cwd() + '/_site')
+    await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
     await renderIndexComments(argv)
     await renderIndexLinks(argv)
@@ -1224,12 +1271,47 @@ async function epub (argv) {
   }
 }
 
+// App output
+async function app (argv) {
+  'use strict'
+
+  try {
+    // await clearFolderContents(process.cwd() + '/_site')
+    await fs.emptyDir(process.cwd() + '/_site')
+    await jekyll(argv)
+    await fsPromises.mkdir(process.cwd() + '/_site/app/www')
+    await assembleApp()
+
+    if (argv['app-build']) {
+      await cordova(['platform', 'add', argv['app-os']])
+      await cordova(['platform', 'prepare', argv['app-os']])
+
+      // Build the app
+      if (argv['app-release']) {
+        await cordova(['build', argv['app-os']], '--release')
+      } else {
+        await cordova(['build', argv['app-os']])
+      }
+
+      // Run emulator
+      if (argv['app-emulate']) {
+        await cordova(['emulate', argv['app-os']])
+      }
+    } else {
+      console.log('App folders ready in _site/app.')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // Word export
 async function exportWord (argv) {
   'use strict'
 
   try {
-    await clearFolderContents(process.cwd() + '/_site')
+    // await clearFolderContents(process.cwd() + '/_site')
+    await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
 
     // Word export does not yet support index comments
@@ -1249,7 +1331,8 @@ async function refreshIndexes (argv) {
   'use strict'
 
   try {
-    await clearFolderContents(process.cwd() + '/_site')
+    // await clearFolderContents(process.cwd() + '/_site')
+    await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
 
     if (argv.format === 'print-pdf' ||
@@ -1271,6 +1354,7 @@ async function refreshIndexes (argv) {
 }
 
 module.exports = {
+  app,
   pdf,
   web,
   epub,

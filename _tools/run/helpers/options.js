@@ -88,8 +88,7 @@ const options = {
     default: false,
     defaultDescription: 'false',
     type: 'boolean',
-    implies: ['format', 'app-os'],
-    nargs: 1
+    implies: ['format', 'app-os']
   },
   'app-release': {
     description: 'Make the app a signed release',
