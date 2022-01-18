@@ -13,7 +13,7 @@ style: home
 The Electric Book template produces **website, ebook, app and print books from a single content source.** It is [packed with features for professional book production](#basic-features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. The template includes:
 
 - [a blank book](book/0-3-contents.html) to start working into,
-- [a book of sample features](samples/) to learn from,
+- [a book of sample features](samples/index.html) to learn from,
 - [a demo translation](samples/fr/), and
 - {% if site.output == "web" %}[how-to documentation](docs/){% else %}[online how-to documentation](https://electricbookworks.github.io/electric-book/docs/index.html){% endif %}. {% if output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
 
