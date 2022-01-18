@@ -22,6 +22,7 @@ $nav-bar-back-button-hide: false !default;
         border-radius: $button-border-radius;
         padding: 0.25rem 0.5rem;
         cursor: pointer;
+        margin: 0.5rem 0 0.5rem 0.5rem;
 
         @if $nav-bar-back-button-hide {
             display: none;
