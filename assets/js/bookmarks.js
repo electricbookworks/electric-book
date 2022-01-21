@@ -1195,11 +1195,15 @@ function ebPrepareForBookmarks() {
     'use strict';
 
     var bookmarksObserver = new MutationObserver(function (mutations) {
+
+        var readyForBookmarks = false;
         mutations.forEach(function (mutation) {
-            if (mutation.type === "attributes") {
+            if (mutation.type === "attributes" && readyForBookmarks === false) {
                 if (document.body.getAttribute('data-ids-assigned')
                         && document.body.getAttribute('data-fingerprints-assigned')) {
+                    readyForBookmarks = true;
                     ebBookmarksInit();
+                    bookmarksObserver.disconnect();
                 }
             }
         });
