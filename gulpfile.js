@@ -1474,6 +1474,7 @@ gulp.task('mathjax', function (done) {
 	    var options = {
 		output_xhtml: true,
 		numeric_entities: true,
+		drop_empty_elements: false,
 		wrap: 0
 	    }
 	    htmltidy.tidy(file.contents, options, function (err, html) {
