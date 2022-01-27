@@ -185,7 +185,13 @@ $edition-suffix: null;
     blockquote.letter {
         -ah-hanging-punctuation: first allow-end last;
     }
-    /* It's possible to hang punctuation is all paragraphs. */
+    /* Workaround for valediction containing a line-break rather than
+     * being two paragraphs.
+     */
+    .valediction {
+        -ah-hanging-punctuation: start allow-end last;
+    }
+    /* It's possible to hang punctuation in all paragraphs. */
     /*
     p {
         -ah-hanging-punctuation: allow-end last;
@@ -543,6 +549,40 @@ $edition-suffix: null;
         min-width: 0;
         min-height: 0;
         width: 100%
+    }
+
+    /* Line numbers
+     * ------------
+     */
+
+    /* Show line number for every fifth line in poetry, starting from the
+     * fifth line.
+     */
+    :root {
+        -ah-line-number-start: 5;
+        -ah-line-number-interval: 5;
+    }
+    .verse {
+        /* Show line numbers. */
+        -ah-line-number: show;
+        -ah-line-number-position: end;
+        /* Restart for each verse. */
+        -ah-line-number-reset: force;
+        /* Line numbers are small and italic. */
+        -ah-line-number-font-size: 5.5pt;
+        -ah-line-number-font-style: italic;
+        -ah-line-number-offset: 5.5pt;
+        /* Do not number runover lines. */
+        -ah-line-number-except-continued-line: true;
+    }
+
+    /* Rely on the XSLT adding a 'data-*' attribute to work around the
+     * poem title also being in an <li> in the same list and making
+     * lines that could be numbered.
+     */
+    .verse li[data-verse-title = 'yes'],
+    .verse li:empty {
+        -ah-line-number: none;
     }
 }
 

@@ -134,14 +134,42 @@
 
   <xsl:next-match>
     <xsl:with-param name="atts" as="attribute()*">
-      <xsl:attribute
-          name="data-initial-letter"
-          select="substring(., 1, 1)" />
+      <xsl:attribute name="data-initial-letter"
+                     select="substring(., 1, 1)" />
       <!-- Put overriding attributes last in sequence. -->
       <xsl:sequence select="$atts" />
     </xsl:with-param>
   </xsl:next-match>
 </xsl:template>
+
+<!-- CSS won't look inside an <li> to see if it has an <h4>, so have
+     to provide a 'data-*' attribute as a hint. (Could have added to
+     class instead.) -->
+<xsl:template
+    match="ul[tokenize(@class, ' ') = 'verse']/li[(h1, h2, h3, h4, h5, h6)]">
+  <xsl:param name="atts" select="()" as="attribute()*" />
+
+  <xsl:next-match>
+    <xsl:with-param name="atts" as="attribute()*">
+      <xsl:attribute name="data-verse-title"
+                     select="'yes'" />
+      <!-- Put overriding attributes last in sequence. -->
+      <xsl:sequence select="$atts" />
+    </xsl:with-param>
+  </xsl:next-match>
+</xsl:template>
+
+
+<!-- ============================================================= -->
+<!-- IDS AND CROSS-REFERENCES                                      -->
+<!-- ============================================================= -->
+
+<!-- The source is multiple HTML files, and the output is the HTML
+     files merged into one file.  To avoid duplicate IDs in the result
+     HTML, all IDs are modified to also indicate their original source
+     file.  Cross-references to the current file or a local (non-HTTP)
+     URI are modified to also indicate the original source file of
+     the target. -->
 
 <!-- Prefix each ID with its document's filename. -->
 <xsl:template match="@id">
@@ -201,16 +229,6 @@
     <xsl:copy-of select="$atts" />
     <xsl:apply-templates select="node()" />
   </xsl:copy>
-</xsl:template>
-
-
-<!-- ============================================================= -->
-<!-- SVG                                                           -->
-<!-- ============================================================= -->
-
-<!-- XML is case-sensitive, unlike HTML. -->
-<xsl:template match="svg:*/@viewbox">
-  <xsl:attribute name="viewBox" select="." />
 </xsl:template>
 
 
