@@ -4,7 +4,7 @@ $print-smallcaps: true !default;
     // Use small-cap alternate glyphs
     .smallcaps {
         letter-spacing: 0.025em;
-        font-variant: prince-opentype(smcp, onum);
+        font-variant: small-caps oldstyle-nums;
         font-style: inherit;
         font-weight: inherit;
         line-height: 100%;
@@ -19,7 +19,7 @@ $print-smallcaps: true !default;
     // Convert both upper and lowercase to small caps (affects punctuation also)
     .allsmallcaps { 
         letter-spacing: 0.025em;
-        font-variant: prince-opentype(c2sc, smcp, onum);
+        font-variant: all-small-caps oldstyle-nums;
         font-style: inherit;
         font-weight: inherit;
         line-height: 100%;
