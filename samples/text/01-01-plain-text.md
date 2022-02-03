@@ -18,7 +18,7 @@ Adler, Irene-
 cases \\ Scandal in Bohemia-
 -->
 
-To Sherlock Holmes she is always THE woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen, but as a lover he would have placed himself in a false position. He never spoke of the softer passions, save with a gibe and a sneer. They were admirable things for the observer--excellent for drawing the veil from men's motives and actions. But for the trained reasoner to admit such intrusions into his own delicate and finely adjusted temperament was to introduce a distracting factor which might throw a doubt upon all his mental results. Grit in a sensitive instrument, or a crack in one of his own high-power lenses, would not be more disturbing than a strong emotion in a nature such as his. And yet there was but one woman to him, and that woman was the late Irene Adler, of dubious and questionable memory.
+To Sherlock Holmes she is always *the* woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen, but as a lover he would have placed himself in a false position. He never spoke of the softer passions, save with a gibe and a sneer. They were admirable things for the observer---excellent for drawing the veil from men's motives and actions. But for the trained reasoner to admit such intrusions into his own delicate and finely adjusted temperament was to introduce a distracting factor which might throw a doubt upon all his mental results. Grit in a sensitive instrument, or a crack in one of his own high-power lenses, would not be more disturbing than a strong emotion in a nature such as his. And yet there was but one woman to him, and that woman was the late Irene Adler, of dubious and questionable memory.
 
 <!-- index:
 marriage
@@ -32,7 +32,7 @@ I had seen little of Holmes lately. My marriage had drifted us away from each ot
 <!-- index:
 cases \\ Study in Scarlet -->
 
-One night--it was on the twentieth of March, 1888--I was returning from a journey to a patient (for I had now returned to civil practice), when my way led me through Baker Street. As I passed the well-remembered door, which must always be associated in my mind with my wooing, and with the dark incidents of the Study in Scarlet, I was seized with a keen desire to see Holmes again, and to know how he was employing his extraordinary powers. His rooms were brilliantly lit, and, even as I looked up, I saw his tall, spare figure pass twice in a dark silhouette against the blind. He was pacing the room swiftly, eagerly, with his head sunk upon his chest and his hands clasped behind him. To me, who knew his every mood and habit, his attitude and manner told their own story. He was at work again. He had risen out of his drug-created dreams and was hot upon the scent of some new problem. I rang the bell and was shown up to the chamber which had formerly been in part my own.
+One night---it was on the twentieth of March, 1888---I was returning from a journey to a patient (for I had now returned to civil practice), when my way led me through Baker Street. As I passed the well-remembered door, which must always be associated in my mind with my wooing, and with the dark incidents of the Study in Scarlet, I was seized with a keen desire to see Holmes again, and to know how he was employing his extraordinary powers. His rooms were brilliantly lit, and, even as I looked up, I saw his tall, spare figure pass twice in a dark silhouette against the blind. He was pacing the room swiftly, eagerly, with his head sunk upon his chest and his hands clasped behind him. To me, who knew his every mood and habit, his attitude and manner told their own story. He was at work again. He had risen out of his drug-created dreams and was hot upon the scent of some new problem. I rang the bell and was shown up to the chamber which had formerly been in part my own.
 
 <!-- index:
 luxuries \\ cigars
@@ -90,19 +90,19 @@ written.
 
 "The man who wrote it was presumably well to do," I remarked, endeavouring to imitate my companion's processes. "Such paper could not be bought under half a crown a packet. It is peculiarly strong and stiff."
 
-"Peculiar--that is the very word," said Holmes. "It is not an English paper at all. Hold it up to the light."
+"Peculiar---that is the very word," said Holmes. "It is not an English paper at all. Hold it up to the light."
 
-I did so, and saw a large "E" with a small "g," a "P," and a large "G" with a small "t" woven into the texture of the paper.
+I did so, and saw a large *E* with a small *g,* a *P*, and a large *G* with a small *t* woven into the texture of the paper.
 
 "What do you make of that?" asked Holmes.
 
 "The name of the maker, no doubt; or his monogram, rather."
 
-"Not at all. The 'G' with the small 't' stands for 'Gesellschaft,' which is the German for 'Company.' It is a customary contraction like our 'Co.' 'P,' of course, stands for 'Papier.' Now for the 'Eg.' Let us glance at our Continental Gazetteer." He took down a heavy brown volume from his shelves. "Eglow, Eglonitz--here we are, Egria. It is in a German-speaking country--in Bohemia, not far from Carlsbad. 'Remarkable as being the scene of the death of Wallenstein, and for its numerous glass-factories and paper-mills.' Ha, ha, my boy, what do you make of that?" His eyes sparkled, and he sent up a great blue triumphant cloud from his cigarette.
+"Not at all. The *G* with the small *t* stands for 'Gesellschaft,' which is the German for 'Company.' It is a customary contraction like our 'Co.' *P*, of course, stands for 'Papier.' Now for the *Eg.* Let us glance at our Continental Gazetteer." He took down a heavy brown volume from his shelves. "Eglow, Eglonitz---here we are, Egria. It is in a German-speaking country---in Bohemia, not far from Carlsbad. 'Remarkable as being the scene of the death of Wallenstein, and for its numerous glass-factories and paper-mills.' Ha, ha, my boy, what do you make of that?" His eyes sparkled, and he sent up a great blue triumphant cloud from his cigarette.
 
 "The paper was made in Bohemia," I said.
 
-"Precisely. And the man who wrote the note is a German. Do you note the peculiar construction of the sentence--'This account of you we have from all quarters received.' A Frenchman or Russian could not have written that. It is the German who is so uncourteous to his verbs. It only remains, therefore, to discover what is wanted by this German who writes upon Bohemian paper and prefers wearing a mask to showing his face. And here he comes, if I am not mistaken, to resolve all our doubts."
+"Precisely. And the man who wrote the note is a German. Do you note the peculiar construction of the sentence---'This account of you we have from all quarters received.' A Frenchman or Russian could not have written that. It is the German who is so uncourteous to his verbs. It only remains, therefore, to discover what is wanted by this German who writes upon Bohemian paper and prefers wearing a mask to showing his face. And here he comes, if I am not mistaken, to resolve all our doubts."
 
 As he spoke there was the sharp sound of horses' hoofs and grating wheels against the curb, followed by a sharp pull at the bell. Holmes whistled.
 
@@ -112,7 +112,7 @@ As he spoke there was the sharp sound of horses' hoofs and grating wheels agains
 
 "Not a bit, Doctor. Stay where you are. I am lost without my Boswell. And this promises to be interesting. It would be a pity to miss it."
 
-"But your client--"
+"But your client---"
 
 "Never mind him. I may want your help, and so may he. Here he comes. Sit down in that armchair, Doctor, and give us your best attention."
 
@@ -155,7 +155,7 @@ The man sprang from his chair and paced up and down the room in uncontrollable a
 
 "Why, indeed?" murmured Holmes. "Your Majesty had not spoken before I was aware that I was addressing Wilhelm Gottsreich Sigismond von Ormstein, Grand Duke of Cassel-Felstein, and hereditary King of Bohemia."
 
-"But you can understand," said our strange visitor, sitting down once more and passing his hand over his high white forehead, "you can understand that I am not accustomed to doing such business in my own person. Yet the matter was so delicate that I could not confide it to an agent without putting myself in his power. I have come incognito from Prague for the purpose of consulting you."
+"But you can understand," said our strange visitor, sitting down once more and passing his hand over his high white forehead, "you can understand that I am not accustomed to doing such business in my own person. Yet the matter was so delicate that I could not confide it to an agent without putting myself in his power. I have come *incognito* from Prague for the purpose of consulting you."
 
 "Then, pray consult," said Holmes, shutting his eyes once more.
 
@@ -163,9 +163,9 @@ The man sprang from his chair and paced up and down the room in uncontrollable a
 
 "Kindly look her up in my index, Doctor," murmured Holmes without opening his eyes. For many years he had adopted a system of docketing all paragraphs concerning men and things, so that it was difficult to name a subject or a person on which he could not at once furnish information. In this case I found her biography sandwiched in between that of a Hebrew rabbi and that of a staff-commander who had written a monograph upon the deep-sea fishes.
 
-"Let me see!" said Holmes. "Hum! Born in New Jersey in the year 1858. Contralto--hum! La Scala, hum! Prima donna Imperial Opera of Warsaw--yes! Retired from operatic stage--ha! Living in London--quite so! Your Majesty, as I understand, became entangled with this young person, wrote her some compromising letters, and is now desirous of getting those letters back."
+"Let me see!" said Holmes. "Hum! Born in New Jersey in the year 1858. Contralto---hum! La Scala, hum! Prima donna Imperial Opera of Warsaw---yes! Retired from operatic stage---ha! Living in London---quite so! Your Majesty, as I understand, became entangled with this young person, wrote her some compromising letters, and is now desirous of getting those letters back."
 
-"Precisely so. But how--"
+"Precisely so. But how---"
 
 <!-- index:
 marriage
@@ -201,7 +201,7 @@ marriage \\ secret -->
 
 "Oh, dear! That is very bad! Your Majesty has indeed committed an indiscretion."
 
-"I was mad--insane."
+"I was mad---insane."
 
 "You have compromised yourself seriously."
 
@@ -241,7 +241,7 @@ Holmes laughed. "It is quite a pretty little problem," said he.
 
 "And Irene Adler?"
 
-"Threatens to send them the photograph. And she will do it. I know that she will do it. You do not know her, but she has a soul of steel. She has the face of the most beautiful of women, and the mind of the most resolute of men. Rather than I should marry another woman, there are no lengths to which she would not go--none."
+"Threatens to send them the photograph. And she will do it. I know that she will do it. You do not know her, but she has a soul of steel. She has the face of the most beautiful of women, and the mind of the most resolute of men. Rather than I should marry another woman, there are no lengths to which she would not go---none."
 
 "You are sure that she has not sent it yet?"
 
@@ -261,7 +261,7 @@ Holmes laughed. "It is quite a pretty little problem," said he.
 
 "Then, as to money?"
 
-"You have carte blanche."
+"You have *carte blanche*."
 
 "Absolutely?"
 
@@ -308,7 +308,7 @@ It was close upon four before the door opened, and a drunken-looking groom, ill-
 Briony Lodge
 -->
 
-"Quite so; but the sequel was rather unusual. I will tell you, however. I left the house a little after eight o'clock this morning in the character of a groom out of work. There is a wonderful sympathy and freemasonry among horsey men. Be one of them, and you will know all that there is to know. I soon found Briony Lodge. It is a bijou villa, with a garden at the back, but built out in front right up to the road, two stories. Chubb lock to the door. Large sitting-room on the right side, well furnished, with long windows almost to the floor, and those preposterous English window fasteners which a child could open. Behind there was nothing remarkable, save that the passage window could be reached from the top of the coach-house. I walked round it and examined it closely from every point of view, but without noting anything else of interest.
+"Quite so; but the sequel was rather unusual. I will tell you, however. I left the house a little after eight o'clock this morning in the character of a groom out of work. There is a wonderful sympathy and freemasonry among horsey men. Be one of them, and you will know all that there is to know. I soon found Briony Lodge. It is a *bijou* villa, with a garden at the back, but built out in front right up to the road, two stories. Chubb lock to the door. Large sitting-room on the right side, well furnished, with long windows almost to the floor, and those preposterous English window fasteners which a child could open. Behind there was nothing remarkable, save that the passage window could be reached from the top of the coach-house. I walked round it and examined it closely from every point of view, but without noting anything else of interest.
 
 "I then lounged down the street and found, as I expected, that there was a mews in a lane which runs down by one wall of the garden. I lent the ostlers a hand in rubbing down their horses, and received in exchange twopence, a glass of half and half, two fills of shag tobacco, and as much information as I could desire about Miss Adler, to say nothing of half a dozen other people in the neighbourhood in whom I was not in the least interested, but whose biographies I was compelled to listen to."
 
@@ -332,7 +332,7 @@ Briony Lodge
 Briony Lodge
 -->
 
-"I was still balancing the matter in my mind when a hansom cab drove up to Briony Lodge, and a gentleman sprang out. He was a remarkably handsome man, dark, aquiline, and moustached--evidently the man of whom I had heard. He appeared to be in a great hurry, shouted to the cabman to wait, and brushed past the maid who opened the door with the air of a man who was thoroughly at home.
+"I was still balancing the matter in my mind when a hansom cab drove up to Briony Lodge, and a gentleman sprang out. He was a remarkably handsome man, dark, aquiline, and moustached---evidently the man of whom I had heard. He appeared to be in a great hurry, shouted to the cabman to wait, and brushed past the maid who opened the door with the air of a man who was thoroughly at home.
 
 "He was in the house about half an hour, and I could catch glimpses of him in the windows of the sitting-room, pacing up and down, talking excitedly, and waving his arms. Of her I could see nothing. Presently he emerged, looking even more flurried than before. As he stepped up to the cab, he pulled a gold watch from his pocket and looked at it earnestly, 'Drive like the devil,' he shouted, 'first to Gross & Hankey's in Regent Street, and then to the Church of St. Monica in the Edgeware Road. Half a guinea if you do it in twenty minutes!'
 
@@ -395,7 +395,7 @@ then?"
 
 "Yes."
 
-"And when I raise my hand--so--you will throw into the room what I give you to throw, and will, at the same time, raise the cry of fire. You quite follow me?"
+"And when I raise my hand---so---you will throw into the room what I give you to throw, and will, at the same time, raise the cry of fire. You quite follow me?"
 
 "Entirely."
 
@@ -459,7 +459,7 @@ As he spoke the gleam of the side-lights of a carriage came round the curve of t
 
 Slowly and solemnly he was borne into Briony Lodge and laid out in the principal room, while I still observed the proceedings from my post by the window. The lamps had been lit, but the blinds had not been drawn, so that I could see Holmes as he lay upon the couch. I do not know whether he was seized with compunction at that moment for the part he was playing, but I know that I never felt more heartily ashamed of myself in my life than when I saw the beautiful creature against whom I was conspiring, or the grace and kindliness with which she waited upon the injured man. And yet it would be the blackest treachery to Holmes to draw back now from the part which he had intrusted to me. I hardened my heart, and took the smoke-rocket from under my ulster. After all, I thought, we are not injuring her. We are but preventing her from injuring another.
 
-Holmes had sat up upon the couch, and I saw him motion like a man who is in need of air. A maid rushed across and threw open the window. At the same instant I saw him raise his hand and at the signal I tossed my rocket into the room with a cry of "Fire!" The word was no sooner out of my mouth than the whole crowd of spectators, well dressed and ill--gentlemen, ostlers, and servant-maids--joined in a general shriek of "Fire!" Thick clouds of smoke curled through the room and out at the open window. I caught a glimpse of rushing figures, and a moment later the voice of Holmes from within assuring them that it was a false alarm. Slipping through the shouting crowd I made my way to the corner of the street, and in ten minutes was rejoiced to find my friend's arm in mine, and to get away from the scene of uproar. He walked swiftly and in silence for some few minutes until we had turned down one of the quiet streets which lead towards the Edgeware Road.
+Holmes had sat up upon the couch, and I saw him motion like a man who is in need of air. A maid rushed across and threw open the window. At the same instant I saw him raise his hand and at the signal I tossed my rocket into the room with a cry of "Fire!" The word was no sooner out of my mouth than the whole crowd of spectators, well dressed and ill---gentlemen, ostlers, and servant-maids---joined in a general shriek of "Fire!" Thick clouds of smoke curled through the room and out at the open window. I caught a glimpse of rushing figures, and a moment later the voice of Holmes from within assuring them that it was a false alarm. Slipping through the shouting crowd I made my way to the corner of the street, and in ten minutes was rejoiced to find my friend's arm in mine, and to get away from the scene of uproar. He walked swiftly and in silence for some few minutes until we had turned down one of the quiet streets which lead towards the Edgeware Road.
 
 "You did it very nicely, Doctor," he remarked. "Nothing could have been better. It is all right."
 
@@ -546,7 +546,7 @@ I slept at Baker Street that night, and we were engaged upon our toast and coffe
 
 "Because it would spare your Majesty all fear of future annoyance. If the lady loves her husband, she does not love your Majesty. If she does not love your Majesty, there is no reason why she should interfere with your Majesty's plan."
 
-"It is true. And yet--Well! I wish she had been of my own station! What a queen she would have made!" He relapsed into a moody silence, which was not broken until we drew up in Serpentine Avenue.
+"It is true. And yet--- Well! I wish she had been of my own station! What a queen she would have made!" He relapsed into a moody silence, which was not broken until we drew up in Serpentine Avenue.
 
 <!-- index:
 -King of Bohemia
@@ -584,18 +584,18 @@ occupations \\ clergy \\ fake
 cases \\ Scandal in Bohemia \\ letter
 -->
 
-> "MY DEAR MR. SHERLOCK HOLMES,--You really did it very well. You took me in completely. Until after the alarm of fire, I had not a suspicion. But then, when I found how I had betrayed myself, I began to think. I had been warned against you months ago. I had been told that if the King employed an agent it would certainly be you. And your address had been given me. Yet, with all this, you made me reveal what you wanted to know. Even after I became suspicious, I found it hard to think evil of such a dear, kind old <!-- index: clergy -->clergyman. But, you know, *I have been trained* as an actress myself. Male costume is nothing new to me. I often take advantage of the freedom which it gives. I sent John, the coachman, to watch you, ran up stairs, got into my walking-clothes, as I call them, and came down just as you departed.
+> "*My Dear Mr. Sherlock Holmes*{:.smallcaps},---You really did it very well. You took me in completely. Until after the alarm of fire, I had not a suspicion. But then, when I found how I had betrayed myself, I began to think. I had been warned against you months ago. I had been told that if the King employed an agent it would certainly be you. And your address had been given me. Yet, with all this, you made me reveal what you wanted to know. Even after I became suspicious, I found it hard to think evil of such a dear, kind old <!-- index: clergy -->clergyman. But, you know, I have been trained as an actress myself. Male costume is nothing new to me. I often take advantage of the freedom which it gives. I sent John, the coachman, to watch you, ran up stairs, got into my walking-clothes, as I call them, and came down just as you departed.
 > 
 > "Well, I followed you to your door, and so made sure that I was really an object of interest to the celebrated Mr. Sherlock Holmes. Then I, rather imprudently, wished you good-night, and started for the Temple to see my husband.
 > 
 > "We both thought the best resource was flight, when pursued by so formidable an antagonist; so you will find the nest empty when you call to-morrow. As to the photograph, your client may rest in peace. I love and am loved by a better man than he. <!-- index: King of Bohemia -->The King may do what he will without hindrance from one whom he has cruelly wronged. I keep it only to safeguard myself, and to preserve a weapon which will always secure me from any steps which he might take in the future. I leave a photograph which he might care to possess; and I remain, dear Mr. Sherlock Holmes,
 > 
 > <!-- index: -Adler, Irene -->"Very truly yours,\\
-> "IRENE NORTON, née ADLER."
+> "*Irene Norton*{:.smallcaps}, *née* *Adler*{:.smallcaps}."
 > {:.valediction}
 {:.letter #letter}
 
-"What a woman--oh, what a woman!" cried the King of Bohemia, when we had all three read this epistle. "Did I not tell you how quick and resolute she was? Would she not have made an admirable queen? Is it not a pity that she was not on my level?"
+"What a woman---oh, what a woman!" cried the King of Bohemia, when we had all three read this epistle. "Did I not tell you how quick and resolute she was? Would she not have made an admirable queen? Is it not a pity that she was not on my level?"
 
 "From what I have seen of the lady she seems indeed to be on a very different level to your Majesty," said Holmes coldly. "I am sorry that I have not been able to bring your Majesty's business to a more successful conclusion."
 
@@ -603,7 +603,7 @@ cases \\ Scandal in Bohemia \\ letter
 
 "I am glad to hear your Majesty say so."
 
-"I am immensely indebted to you. Pray tell me in what way I can reward you. This ring--" He slipped an emerald snake ring from his finger and held it out upon the palm of his hand.
+"I am immensely indebted to you. Pray tell me in what way I can reward you. This ring---" He slipped an emerald snake ring from his finger and held it out upon the palm of his hand.
 
 "Your Majesty has something which I should value even more highly," said Holmes.
 
@@ -621,4 +621,4 @@ The King stared at him in amazement.
 -Holmes, Sherlock
 -cases \\ Scandal in Bohemia -->
 
-And that was how a great scandal threatened to affect the kingdom of Bohemia, and how the best plans of Mr. Sherlock Holmes were beaten by a woman's wit. He used to make merry over the cleverness of women, but I have not heard him do it of late. And when he speaks of Irene Adler, or when he refers to her photograph, it is always under the honourable title of the woman. 
+And that was how a great scandal threatened to affect the kingdom of Bohemia, and how the best plans of Mr. Sherlock Holmes were beaten by a woman's wit. He used to make merry over the cleverness of women, but I have not heard him do it of late. And when he speaks of Irene Adler, or when he refers to her photograph, it is always under the honourable title of *the* woman. 
