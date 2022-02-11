@@ -41,6 +41,6 @@ as body text despite CSS rules for em size.
 </p>
 
 {% include image
-   file="publisher-logo.jpg"
+   file=site.data.meta.project.logo
    class="title-page-logo"
    path="assets/images" %}
