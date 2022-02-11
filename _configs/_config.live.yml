@@ -8,6 +8,14 @@ build: live
 canonical-url: "https://example.com"
 baseurl: "/example"
 
+# Turn off docs.
+# Setting output: false actually doesn't work,
+# see https://github.com/jekyll/jekyll/issues/7504
+# so we also exclude the _docs below.
+collections:
+  docs:
+    output: false
+
 # Exclude list
 exclude:
   # Build tools
@@ -59,6 +67,9 @@ exclude:
   - /assets/js/page-reference.js
   - /assets/js/bookmarks.js
 
+  # Collections that must not render
+  - _docs
+
   # Colour profiles for conversions
   - /assets/profiles
 
@@ -95,8 +106,3 @@ keep_files:
   # - book/styles
   # - book/01.html
   # - book/02.html
-
-# Turn off docs
-collections:
-  docs:
-    output: false
