@@ -29,11 +29,12 @@ Jekyll is great at generating clean HTML in flexible ways, and has a big, active
 
 PrinceXML is the only software we use that isn't open. While it's proprietary, it's an excellent implementation of the open standards for CSS Paged Media. In future, we hope to support other PDF renderers, too, such as:
 
-*	[Antenna House](https://www.antennahouse.com/), a proprietary, mature system
-*	[WeasyPrint](https://weasyprint.org/), an open-source PDF engine in active development
-*	[Vivliostyle](https://vivliostyle.com/en/), which is [partly open-source](https://github.com/vivliostyle/vivliostyle)
-*	[PDFReactor](https://www.pdfreactor.com/), a proprietary PDF engine
-*	[DocRaptor](https://docraptor.com/), a cloud-service implementation of PrinceXML.
+* [Antenna House](https://www.antennahouse.com/), a proprietary, mature system
+* [PagedJS](https://www.pagedjs.org/), an open Javascript-based approach for rendering pages with CSS Paged Media in the browser
+* [WeasyPrint](https://weasyprint.org/), an open-source PDF engine in active development
+* [Vivliostyle](https://vivliostyle.com/en/), which is [partly open-source](https://github.com/vivliostyle/vivliostyle)
+* [PDFReactor](https://www.pdfreactor.com/), a proprietary PDF engine
+* [DocRaptor](https://docraptor.com/), a cloud-service implementation of PrinceXML.
 
 ## Alternative tools
 
@@ -44,9 +45,9 @@ There are several digital-first book-publishing systems around. Some are also ba
 * [LeanPub](https://leanpub.com/) (which uses [Markua](https://markua.com/))
 * [PubPub](https://www.pubpub.org/)
 * [MagicBook](https://github.com/magicbookproject/magicbook)
-* [Bookdown](https://bookdown.org/yihui/bookdown/)
+* [Bookdown](https://bookdown.org/)
 * [Phil Schatz's viewer](https://philschatz.com/2014/07/07/tiny-book-reader).
 
-[PressBooks](https://pressbooks.com/) is another superb, affordable service. It's built on Wordpress.
+[PressBooks](https://pressbooks.com/) is another superb, affordable service. It's built on Wordpress, and takes a different approach technically.
 
-The Coko Foundation is building [Editoria](https://editoria.pub/) with their new [PubSweet](https://coko.foundation/resources.html) framework. If you're a large organisation, especially in scholarly publishing, or have in-house developers, it's worth checking out.
+The Coko Foundation provides [Editoria](https://editoria.pub/) built with their new [PubSweet](https://coko.foundation/resources.html) framework. If you're a large organisation, especially in scholarly publishing, or have in-house developers, it's worth checking out.

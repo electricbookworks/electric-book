@@ -10,11 +10,7 @@ order: 4
 * Page contents
 {:toc}
 
-Run the template's `run-` script for your operating system and follow the prompts. For these to work, you must already have Jekyll installed and working.
-
-* On Windows, run `run-windows.bat` by double-clicking it from your file explorer.
-* On Linux, run `run-linux.sh`. You may have to run it from a terminal, and first enter `chmod +x run-linux.sh` to give it permissions, then `./run-linux.sh`.
-* On Mac OSX, double-click `run-mac.command` in Finder. You may need to give the file permission to run first. To do this, in a Terminal in the same folder as the script, type `chmod +x run-mac.command`.
+Run `npm run electric-book` on the command line to see app-related options.
 
 App output and this documentation is still experimental and a work in progress. It requires that you have Apache Cordova installed, and Android Studio (for Android apps), X Code (for iOS apps) or Visual Studio (for Windows apps).
 
@@ -58,7 +54,7 @@ These are useful resources:
 
 ## iOS
 
-This is work-in-progress. On an up-to-date Mac with X-Code, run the `run-mac.command` script and use the app option.
+This is work-in-progress.
 
 See '[Add remote media](#add-remote-media)' below before using the script.
 

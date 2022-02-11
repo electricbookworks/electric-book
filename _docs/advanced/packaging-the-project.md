@@ -11,7 +11,7 @@ You may need to package your project without its Git history and non-version-con
 To create a package, from the command line run this:
 
 ``` sh
-npm run package
+npm run electric-book -- package
 ```
 
 A zip file of your project will be saved to the `_output` folder.

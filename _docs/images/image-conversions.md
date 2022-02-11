@@ -14,12 +14,25 @@ You can automate the conversion of images to various outputs. Then you only need
 
 This will automatically optimise, convert and save your images to the output folders, including specifying the correct [colour profiles](../layout/colour-profiles.html) and creating multiple image sizes for web output.
 
-> Note: To do this on your computer, you need to have GraphicsMagick and Node installed, and to have run `npm install` in the project root to install the `node_modules`. This can be done easily by running the 'Update and install dependencies' option in the `run-` output script for your operating system.
+> Note: To do this on your computer, you need to have GraphicsMagick and Node installed, and to have run `npm install` in the project root to install the `node_modules`.
 {:.box}
 
 ## Using the output script
 
-Run the `run-` output script for your operating system, then choose 'Convert source images to output formats' and answer the prompts.
+Run the output script with the relevant options, e.g.
+
+```shell
+npm run electric-book -- images
+```
+
+for images in the default `book` folder.
+
+```shell
+npm run electric-book -- images --book samples
+```
+
+will process images in the `samples` book folder.
+
 
 ## Using gulp directly
 
