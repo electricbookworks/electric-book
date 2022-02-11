@@ -8,9 +8,6 @@ collections:
     output: false
 exclude:
   # The usual excludes from _config.yml
-  - run-linux.sh
-  - run-mac.command
-  - run-windows.bat
   - run.js
   - Gemfile
   - Gemfile.lock

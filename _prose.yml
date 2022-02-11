@@ -25,9 +25,6 @@ prose:
     - package-lock.json
     - package.json
     - _prose.yml
-    - run-linux.sh
-    - run-mac.command
-    - run-windows.bat
     - search.md
 
     # Root folders

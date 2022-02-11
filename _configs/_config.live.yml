@@ -21,9 +21,6 @@ exclude:
   # Build tools
   - README.md
   - LICENSE
-  - run-linux*
-  - run-mac*
-  - run-windows*
   - run.js
   - Gemfile
   - Gemfile.lock

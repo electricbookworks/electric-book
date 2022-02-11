@@ -123,9 +123,6 @@ image-set: "images/web"
 # Include the file extension too. E.g. book/01.md
 exclude:
   # Build tools
-  - run-linux.sh
-  - run-mac.command
-  - run-windows.bat
   - run.js
   - Gemfile
   - Gemfile.lock

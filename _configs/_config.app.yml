@@ -20,9 +20,6 @@ baseurl: ""
 # Exclude from this build
 exclude:
   # Build tools
-  - run-linux.sh
-  - run-mac.command
-  - run-windows.bat
   - run.js
   - Gemfile
   - Gemfile.lock
