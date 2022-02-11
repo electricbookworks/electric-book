@@ -171,6 +171,11 @@ function configString (argv) {
     string += ',_configs/_config.math-disabled.yml'
   }
 
+  // Add docx config if we're exporting to Word.
+  if (argv._[0] === 'export' && argv['export-format'] === 'word') {
+    string += ',_configs/_config.docx.yml'
+  }
+
   return string
 }
 
