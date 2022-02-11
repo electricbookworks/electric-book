@@ -889,7 +889,7 @@ set /p process=Enter a number and hit return.
             :: ...and run Jekyll to build new HTML.
             :: We turn off the math engine so that we get raw TeX output,
             :: and because Pandoc does not support SVG output anyway.
-            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.math-disabled.yml,%config%" || exit /b
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.%fromformat%.yml,_configs/_config.math-disabled.yml,_configs/_config.docx.yml,%config%" || exit /b
 
             :: Navigate to the HTML we just generated
             if "%subdirectory%"=="" cd _site\%bookfolder%\text

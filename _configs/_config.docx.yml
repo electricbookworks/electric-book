@@ -1,0 +1,4 @@
+# Config flags for export to .docx
+
+export:
+  format: docx

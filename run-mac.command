@@ -929,7 +929,7 @@ Enter a number and hit enter. "
 
 			# We turn off the math engine so that we get raw TeX output,
 			# and because Pandoc does not support SVG output anyway.
-			bundle exec jekyll build --config="_config.yml,_configs/_config.$fromformat.yml,_configs/_config.math-disabled.yml,$config"
+			bundle exec jekyll build --config="_config.yml,_configs/_config.$fromformat.yml,_configs/_config.math-disabled.yml,_configs/_config.docx.yml,$config"
 
 			# Return to default error handling
 			set +e
