@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cordova": "cordova",
-    "electric-book": "node _tools/run/index.js",
-    "package": "node _tools/package/package.js ./"
+    "electric-book": "node _tools/run/index.js"
   },
   "repository": {
     "type": "git",
