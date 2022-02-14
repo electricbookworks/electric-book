@@ -439,9 +439,6 @@ package.json
 # Output scripts
 # --------------
 
-run-linux.sh
-run-mac.command
-run-windows.bat
 run.js
 
 
