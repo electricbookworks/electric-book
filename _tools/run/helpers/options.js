@@ -16,8 +16,8 @@ const options = {
     nargs: 1
   },
   book: {
-    description: 'Book folder to output',
-    alias: 'b',
+    description: 'Relevant book or assets directory',
+    alias: ['b', 'folder', 'dir'],
     default: 'book',
     defaultDescription: 'book',
     type: 'string',
