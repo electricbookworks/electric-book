@@ -88,44 +88,6 @@ try {
     console.log('This is okay if you are only processing images.');
 }
 
-// A function for loading book metadata as an object
-function loadMetadata() {
-    'use strict';
-
-    var paths = [];
-    var filePaths = [];
-    var books = [];
-    var languages = [];
-
-    if (fileExists.sync('_data/meta.yml')) {
-
-        var metadata = yaml.load(fs.readFileSync('_data/meta.yml', 'utf8'));
-        var works = metadata.works;
-
-        var i;
-        var j;
-        for (i = 0; i < works.length; i += 1) {
-            books.push(works[i].directory);
-            paths.push('_site/' + works[i].directory + '/');
-            filePaths.push('_site/' + works[i].directory + '/*.html');
-            if (works[i].translations) {
-                for (j = 0; j < works[i].translations.length; j += 1) {
-                    languages.push(works[i].translations[j].directory);
-                    paths.push('_site/' + works[i].directory + '/' + works[i].translations[j].directory + '/');
-                    filePaths.push('_site/' + works[i].directory + '/' + works[i].translations[j].directory + '/*.html');
-                }
-            }
-        }
-    }
-
-    return {
-        books: books,
-        languages: languages,
-        paths: paths,
-        filePaths: filePaths
-    };
-}
-
 // Load image settings if they exist
 var imageSettings = [];
 if (fs.existsSync('_data/images.yml')) {
@@ -1468,21 +1430,6 @@ gulp.task('mathjax', function (done) {
         .pipe(debug({title: 'Processing MathJax in '}))
         .pipe(gulp.dest(paths.text.dest));
     done();
-});
-
-// Process MathJax in all HTML files
-gulp.task('mathjax:all', function (done) {
-    'use strict';
-    var k;
-    var mathJaxFilePaths = loadMetadata().paths;
-    for (k = 0; k < mathJaxFilePaths.length; k += 1) {
-        console.log('Processing MathJax in ' + mathJaxFilePaths[k]);
-        gulp.src(mathJaxFilePaths[k] + '*.html')
-            .pipe(mathjax(mjpageOptions))
-            .pipe(debug({title: 'Processing MathJax in '}))
-            .pipe(gulp.dest(mathJaxFilePaths[k]));
-        done();
-    }
 });
 
 // Convert all file names in internal links from .html to .xhtml.
