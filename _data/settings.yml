@@ -14,11 +14,11 @@ electric-book-manager-key: ""
 # where `include metadata` has been used, in if statements like
 # {% if variant == "somename" %}Variant text!{% endif %}
 # Variant names must be one word, lowercase. Hyphens are allowed.
-# Add variant book metadata to meta.yml, and output settings here.
+# Add variant book metadata to `_data/works`, and output settings here.
 # --------------
 # Active variant
 # --------------
-# Add the active variant (defined in meta.yml) to activate it:
+# Add the active variant (defined in `_data/works`) to activate it:
 active-variant: ""
 # ---------------
 # Variant options
@@ -126,7 +126,7 @@ web:
   # make your pages much bigger and slower. true/false
   nav:
     home:
-      expand-books: false
+      expand-books: true
   # --------------
   # Search
   # --------------

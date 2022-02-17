@@ -92,7 +92,7 @@
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ epub-stylesheet }}" />
 
     {% comment %}Metadata defined in page frontmatter overrides
-    project metadata, which is the default from meta.yml.{% endcomment %}
+    project metadata, which is the default from `_data/works`.{% endcomment %}
     {% if page.title %}{% capture title %}{{ page.title }}{% endcapture %}{% endif %}
     {% if page.language %}{% capture language %}{{ page.language }}{% endcapture %}{% endif %}
     {% if page.creator %}{% capture creator %}{{ page.creator }}{% endcapture %}{% endif %}
@@ -203,8 +203,8 @@
 
     {% comment %}Get appropriate description, in order of preference:
     1. Page description (from page frontmatter)
-    2. Book description (from meta.yml via metadata include)
-    3. Project description (from meta.yml via metadata include)
+    2. Book description (from `_data/works` via metadata include)
+    3. Project description (from `_data/works` via metadata include)
     {% endcomment %}
     {% if page.description and page.description != "" %}
         {% capture og-description %}{{ page.description }}{% endcapture %}

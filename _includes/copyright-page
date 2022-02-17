@@ -1,0 +1,11 @@
+{% include metadata %}
+
+# {{ locale.features.copyright-page }}
+{:.non-printing}
+
+*{{ title }}*\\
+{% if rightsholder and rightsholder != "" %}© {{ rightsholder }}{% else %}© {{ creator }}{% endif %}
+
+{% include identifiers scheme="ISBN" %}
+
+{{ rights }}

@@ -92,7 +92,7 @@
                 {% if file-hash[0] %}
                     {% capture manifest-epub-file-name %}{{ file-hash[0] }}{% endcapture %}
                     {% comment %}While we're here, find out which file is the toc.
-                    This overrides any epub-contents-page set in meta.yml for metadata.{% endcomment %}
+                    This overrides any epub-contents-page set in `_data/works` for metadata.{% endcomment %}
                     {% if file-hash[1] == "toc" %}
                         {% capture epub-contents-page %}{{ file-hash[0] }}{% endcapture %}
                     {% endif %}
@@ -278,7 +278,7 @@
     {% comment %}Guide, see http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
     The guide is deprecated in EPUB3 in favour of the landmarks nav.
     We don't yet support the landmarks nav. That's to do, and will probably
-    get its values from a new value in the epub toc in meta.yml.{% endcomment %}
+    get its values from a new value in the epub toc in `_data/works`.{% endcomment %}
 
     {% comment %}Check if any guide references exist{% endcomment %}
     {% for file in epub-file-list %}

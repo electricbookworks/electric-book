@@ -1,6 +1,6 @@
 {% comment %}
 The nav list might be created from the files list or the nav list
-defined in meta.yml. This is defined in _config.yml as nav-source.
+defined in `_data/works`. This is defined in _config.yml as nav-source.
 It also includes any items in _data/nav.yml below the book entries.
 {% endcomment %}
 
@@ -11,12 +11,13 @@ It also includes any items in _data/nav.yml below the book entries.
     {% comment %}
     How this works:
     1. Since the metadata include has already run, the current file name is available
-      as "current-file", so we can work out when it's the active nav item.
+       as "current-file", so we can work out when it's the active nav item.
     2. The "nav-tree" variable has been defined in the include tag that included this file,
-      usually starting with the nav list in meta.yml stored by metadata as "web-nav-tree".
+       usually starting with the nav list in `_data/works` stored by metadata as "web-nav-tree".
     3. To include children items in that tree, this file includes itself recursively,
-      redefining "nav-tree" each time as the children of the nav-tree it received before.
-    4. Turtles all the way down, as deep as the nav tree in meta.yml goes.
+       redefining "nav-tree" each time as the children of the nav-tree it received before.
+    4. Turtles all the way down, as deep as the nav tree in `_data/works` goes.
+
     Credit to Christian Specht for the inspiration:
     https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-jekyll/
     {% endcomment %}
@@ -42,7 +43,7 @@ It also includes any items in _data/nav.yml below the book entries.
                     {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
                 </a>
                 {% if item.children != nil %}
-                  {% include nav-list nav-tree=item.children directory=include.directory %}
+                  {% include nav-list.html nav-tree=item.children directory=include.directory %}
                 {% endif %}
             </li>
         {% endfor %}
@@ -73,7 +74,7 @@ It also includes any items in _data/nav.yml below the book entries.
                   {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
               </a>
               {% if item.children != nil %}
-                {% include nav-list nav-tree=item.children %}
+                {% include nav-list.html nav-tree=item.children %}
               {% endif %}
           </li>
         {% endfor %}
@@ -83,7 +84,7 @@ It also includes any items in _data/nav.yml below the book entries.
 
   {% comment %}
   Otherwise, if the site.nav-source is anything or 'files',
-  build the nav-list from the files list in meta.yml.
+  build the nav-list from the files list in `_data/works`.
   {% endcomment %}
 
   {% else %}
@@ -145,7 +146,7 @@ It also includes any items in _data/nav.yml below the book entries.
         </a>
 
         {% if item.children != nil %}
-          {% include nav-list nav-tree=item.children project-nav=true %}
+          {% include nav-list.html nav-tree=item.children project-nav=true %}
         {% endif %}
 
       </li>

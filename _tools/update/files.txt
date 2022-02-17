@@ -515,7 +515,7 @@ _configs/_config.mathjax-enabled.yml
 # but could be shared for some project families.
 
 # _data/locales.yml
-# _data/meta.yml
+# _data/project.yml
 # _data/settings.yml
 
 
@@ -635,6 +635,7 @@ _includes/mathjax-config
 _includes/mathjax-manifest.xml
 _includes/mcq
 _includes/metadata
+_includes/metadata-work.html
 _includes/nav-button.html
 _includes/nav-list
 _includes/nav.html
@@ -653,7 +654,6 @@ _includes/toc
 _includes/video
 _includes/vimeo
 _includes/widgets
-_includes/work-metadata.html
 _includes/youtube
 
 

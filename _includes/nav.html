@@ -43,11 +43,32 @@
 
         {% comment %}If this is not the homepage,
         include a link to the homepage.{% endcomment %}
-        {% if is-homepage != true %}
-        <ol class="nav-project-home">
-            <li><a href="{{ path-to-root-directory }}index.html">{{ locale.nav.home }}</a></li>
-        </ol>
-        {% endif %}
+        {% unless is-homepage or is-translation-homepage %}
+            <ol class="nav-project-home">
+
+                {% if is-translation %}
+
+                    {% comment %} Check if this language has a translated home page. {% endcomment %}
+                    {% capture path-for-translated-home-page %}{{ language }}/index.md{% endcapture %}
+                    {% assign translated-home-page-array = site.pages | where_exp: "page", "page.path == path-for-translated-home-page" %}
+                    {% assign translated-home-page-exists = false %}
+                    {% for page in translated-home-page-array %}
+                        {% if page.path == path-for-translated-home-page %}
+                            {% assign translated-home-page-exists = true %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                {% endif %}
+
+                <li>
+                    {% if translated-home-page-exists %}
+                        <a href="{{ path-to-root-directory }}{{ language }}/index.html">{{ locale.nav.home }}</a>
+                    {% else %}
+                        <a href="{{ path-to-root-directory }}index.html">{{ locale.nav.home }}</a>
+                    {% endif %}
+                </li>
+            </ol>
+        {% endunless %}
 
         {% comment %}If docs are on (i.e. output set to true in _config.yml),
         show the docs nav.{% endcomment %}
@@ -64,75 +85,122 @@
         such as the home page or project search...{% endcomment %}
         {% if is-book-directory != true is-book-subdirectory != true and is-docs-page != true %}
 
-        {% comment %}If there is only one book, don't include its title{% endcomment %}
-        {% if number-of-works == 1 %}
+            {% comment %}If there is only one book, don't include its title{% endcomment %}
+            {% if number-of-works == 1 %}
 
-        {% for work in site.data.meta.works | sort: "order" %}
-        {% assign home-nav-work-directory = work.directory %}
-        {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
-        {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
-        {% assign home-nav-work-tree = work.products[site.output].nav %}
-        {% else %}
-        {% assign home-nav-work-tree = work.products.web.nav %}
-        {% endif %}
-        {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
-        {% endfor %}
+                {% for work in site.data.works | sort: "order" %}
 
-        {% else %}
+                    {% comment %} Assume the _data/works book dir is named
+                    the same as the book directory. {% endcomment %}
+                    {% assign home-nav-work-directory = work[0] %}
 
-        <ol class="nav-book-list">
-            {% for work in site.data.meta.works | sort: "order" %}
-            {% assign home-nav-work-directory = work.directory %}
+                    {% comment %} If this page is a translation (e.g. translation landing page)
+                    we want to show the translated books if possible. {% endcomment %}
+                    {% if is-translation %}
+                        {% if work[1][language][1] %}
+                            {% assign this-work = work[1][language][1] %}
+                        {% endif %}
+                    {% else %}
+                        {% assign this-work = work[1] %}
+                    {% endif %}
 
-            {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
-            {% if work.products[site.output].nav and work.products[site.output].nav != "" %}
-            {% assign home-nav-work-tree = work.products[site.output].nav %}
+                    {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
+                    {% if this-work[variant].products[site.output].nav and this-work[variant].products[site.output].nav != "" %}
+                        {% assign home-nav-work-tree = this-work[variant].products[site.output].nav %}
+                    {% elsif this-work.default.products[site.output].nav and this-work.default.products[site.output].nav != "" %}
+                        {% assign home-nav-work-tree = work.default.products[site.output].nav %}
+                    {% elsif this-work[variant].products.web.nav and this-work[variant].products.web.nav != "" %}
+                        {% assign home-nav-work-tree = this-work[variant].products.web.nav %}
+                    {% else %}
+                        {% assign home-nav-work-tree = this-work.default.products.web.nav %}
+                    {% endif %}
+
+                    {% include nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                {% endfor %}
+
             {% else %}
-            {% assign home-nav-work-tree = work.products.web.nav %}
+
+                <ol class="nav-book-list">
+                    {% for work in site.data.works | sort: "order" %}
+
+                        {% comment %} Assume the _data/works book dir is named
+                        the same as the book directory. {% endcomment %}
+                        {% assign home-nav-work-directory = work[0] %}
+
+                        {% comment %} If this page is a translation (e.g. translation landing page)
+                        we want to show the translated books if possible. {% endcomment %}
+                        {% if is-translation and work[1][language] %}
+                            {% if work[1][language] %}
+                                {% assign this-work = work[1][language] %}
+                            {% endif %}
+                        {% else %}
+                            {% assign this-work = work[1] %}
+                        {% endif %}
+
+                        {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
+                        {% if this-work[variant].products[site.output].nav and this-work[variant].products[site.output].nav != "" %}
+                            {% assign home-nav-work-tree = this-work[variant].products[site.output].nav %}
+                        {% elsif this-work.default.products[site.output].nav and this-work.default.products[site.output].nav != "" %}
+                            {% assign home-nav-work-tree = this-work.default.products[site.output].nav %}
+                        {% elsif this-work[variant].products.web.nav and this-work[variant].products.web.nav != "" %}
+                            {% assign home-nav-work-tree = this-work[variant].products.web.nav %}
+                        {% else %}
+                            {% assign home-nav-work-tree = this-work.default.products.web.nav %}
+                        {% endif %}
+
+                        {% comment %} Get book start page, fallback to web {% endcomment %}
+                        {% if this-work[variant].products[site.output].start-page and this-work[variant].products[site.output].start-page != "" %}
+                            {% assign this-book-start-page = this-work[variant].products[site.output].start-page %}
+                        {% elsif this-work.default.products[site.output].start-page and this-work.default.products[site.output].start-page != "" %}
+                            {% assign this-book-start-page = this-work.default.products[site.output].start-page %}
+                        {% elsif this-work[variant].products.web.start-page and this-work[variant].products.web.start-page != "" %}
+                            {% assign this-book-start-page = this-work[variant].products.web.start-page %}
+                        {% else %}
+                            {% assign this-book-start-page = this-work.default.products.web.start-page %}
+                        {% endif %}                        
+
+                        <li {% if site.data.settings[site.output].nav.home.expand-books == true %}class="has-children" {% endif %}>
+
+                            <a
+                                href="{{ path-to-root-directory }}{{ work[0] }}/{{ this-book-start-page }}.html">
+
+                                {% if this-work[variant].title %}
+                                    {{ this-work[variant].title }}
+                                {% else %}
+                                    {{ this-work.default.title }}
+                                {% endif %}
+                            </a>
+
+                            {% if site.data.settings[site.output].nav.home.expand-books == true %}
+                                {% include nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                            {% endif %}
+
+                        </li>
+                    {% endfor %}
+                </ol>
+
             {% endif %}
 
-            {% comment %} Get book start page, fallback to web {% endcomment %}
-            {% if work.products[site.output].start-page and work.products[site.output].start-page != "" %}
-            {% assign this-book-start-page = work.products[site.output].start-page %}
+        {% else %}
+
+            {% comment %}Fetch recursive navigation{% endcomment %}
+            {% if site.output == "app" %}
+                {% include nav-list.html nav-tree=app-nav-tree %}
             {% else %}
-            {% assign this-book-start-page = work.products.web.start-page %}
+                {% include nav-list.html nav-tree=web-nav-tree %}
             {% endif %}
-
-            <li {% if site.data.settings[site.output].nav.home.expand-books==true %}class="has-children" {% endif %}>
-
-                <a
-                    href="{{ path-to-root-directory }}{{ work.directory }}/{{ work.products[site.output].start-page }}.html">
-                    {{ work.title }}
-                </a>
-
-                {% if site.data.settings[site.output].nav.home.expand-books == true %}
-                {% include nav-list nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
-                {% endif %}
-            </li>
-            {% endfor %}
-        </ol>
-
-        {% endif %}
-
-        {% else %}
-
-        {% comment %}Fetch recursive navigation{% endcomment %}
-        {% if site.output == "app" %}
-        {% include nav-list nav-tree=app-nav-tree %}
-        {% else %}
-        {% include nav-list nav-tree=web-nav-tree %}
-        {% endif %}
 
         {% endif %}
 
         {% comment %} Include the nav.yml items for this language, if any. {% endcomment %}
         {% if site.data.nav[language] %}
-        {% assign project-nav-tree = site.data.nav[language] %}
+            {% assign project-nav-tree = site.data.nav[language] %}
         {% else %}
-        {% assign project-nav-tree = site.data.nav[project-language] %}
+            {% assign project-nav-tree = site.data.nav[project-language] %}
         {% endif %}
+
         {% if project-nav-tree %}
-        {% include nav-list nav-tree=project-nav-tree project-nav=true %}
+            {% include nav-list.html nav-tree=project-nav-tree project-nav=true %}
         {% endif %}
 
     </div>

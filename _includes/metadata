@@ -1,5 +1,5 @@
 {% comment %}
-Loop through meta.yml and return this book's metadata
+Look in `_data/works` and return this book's metadata
 as a set of Liquid variables that we can use on pages
 as output tags, e.g. {{ title }} for the current
 book's title.
@@ -34,20 +34,29 @@ These values can be overridden in _data/locales.yml for translations.
 {% capture project-app-id %}{{ site.data.project.app-id }}{% endcapture %}
 {% capture project-version %}{{ site.data.project.version }}{% endcapture %}
 
-{% comment %}Also use project language as default, fallback language,
-which will be overridden below if we're on book pages...{% endcomment %}
-{% capture language %}{{ site.data.project.language }}{% endcapture %}
+{% comment %} Also use project language as default, fallback language,
+which will be overridden below if we're on book pages.
+Fallback to language in config, then to en. {% endcomment %}
+{% if site.data.project.language and site.data.project.language != "" %}
+    {% capture language %}{{ site.data.project.language }}{% endcapture %}
+{% elsif site.language %}
+    {% capture language %}{{ site.language }}{% endcapture %}
+{% else %}
+    {% capture language %}en{% endcapture %}
+{% endif %}
 
 {% comment %}
 ...But if a build-language is set in _config, that takes precedence
-and overrides the project language in meta.yml as the default.
+and overrides the project language in `_data/project.yml` as the default.
 {% endcomment %}
 {% if site.build-language and site.build-language != "" %}
     {% capture language %}{{ site.build-language }}{% endcapture %}
 {% endif %}
 
 {% comment %}
-It's useful to know how many books are in this project
+It's useful to know how many books are in this project.
+This does assume that every folder in _data/works is a book.
+We may want to extend this to check, say, for a default.yml file.
 {% endcomment %}
 {% assign number-of-works = site.data.works | size %}
 
@@ -136,10 +145,12 @@ Check whether we're in a subdirectory of the book directory
 {% comment %}
 Now capture each metadata value as a Liquid variable, to be used in HTML
 and book content as a Liquid output tag e.g. {{ title }}
-We do this with the work-metadata.html include.
+We do this with the metadata-work.html include.
 {% endcomment %}
 
-    {% include work-metadata.html %}
+{% if is-book-directory %}
+    {% include metadata-work.html %}
+{% endif %}
 
 {% comment %} Set the parent language now before we override `language`. {% endcomment %}
 {% capture parent-language %}{{ language }}{% endcapture %}
@@ -147,21 +158,44 @@ We do this with the work-metadata.html include.
 {% comment %} Create an array for translations.{% endcomment %}
 {% assign translations = "" | split: "" %}
 
-{% comment %} Loop through the current book's _data/works/[book]
+{% comment %} We need to know into which languages parts of this project
+have been translated into. A translation is registered here if:
+    (a) at least one book folder contains a translation
+    (b) that language is active/uncommented in _data/locales.yml.
+
+For book directories, we loop through the current book's _data/works/[book]
 files and subfolders. Subfolders are usually for translations.
 Inside each subfolder, return any language code from locales.yml
-that matches a language in the subfolder's default.yml.
+that matches a language folder in the book's _data/works folder.
 These matches can be safely assumed to be translations of the work.
-Then put those language codes in an array, `translations`. {% endcomment %}
+Then put those language codes in an array, `translations`.
 
-{% assign work = site.data.works.[book-directory] %}
-{% for file-or-folder in work %}
-    {% for locale-language in site.data.locales %}
-        {% if file-or-folder[0] == locale-language[0] %}
-            {% assign translations = translations | push: locale-language[0] %}
-        {% endif %}
+For non-book directories, we include any languages with an active
+language in _data/locales.yml. This means we can just translate
+our landing page and still get it registered as a translation.
+
+{% endcomment %}
+
+{% if is-book-directory %}
+
+    {% assign work = site.data.works.[book-directory] %}
+    {% for file-or-folder in work %}
+        {% for locale-language in site.data.locales %}
+            {% if file-or-folder[0] == locale-language[0] %}
+                {% assign translations = translations | push: locale-language[0] %}
+            {% endif %}
+        {% endfor %}
     {% endfor %}
-{% endfor %}
+
+{% else %}
+
+    {% for locale-language in site.data.locales %}
+        {% unless locale-language[0] == parent-language %}
+            {% assign translations = translations | push: locale-language[0] %}
+        {% endunless %}
+    {% endfor %}
+
+{% endif %}
 
 {% comment %}
 Detect if this page is a translation.
@@ -185,7 +219,7 @@ e.g. this is fr/index.md
     {% if folder-depth == 1 and current-directory == translation-language %}
         {% assign is-translation = true %}
         {% assign is-translation-root-directory = true %}
-        {% capture language %}{{ language }}{% endcapture %}
+        {% capture language %}{{ translation-language }}{% endcapture %}
         {% if page.name == "index.md" %}
             {% assign is-translation-homepage = true %}
         {% endif %}
@@ -194,13 +228,13 @@ e.g. this is fr/index.md
 
 {% comment %}
 If we are in a translation, rewrite book metadata where it's been
-defined in meta.yml for the given translation.
+defined in `_data/works` for the given translation.
 {% endcomment %}
 
-{% if is-translation == true %}
+{% if is-book-directory and book-subdirectory and book-subdirectory != "" and is-translation == true %}
 
-    {% assign work = site.data.works.[book-directory].[book-subdirectory] %}
-    {% include work-metadata.html work=work %}
+    {% assign work = site.data.works[book-directory][book-subdirectory] %}
+    {% include metadata-work.html work=work %}
 
 {% endif %}
 
@@ -210,11 +244,21 @@ override any metadata set for that variant.{% endcomment %}
 {% comment %}First, though, set variant-toc to false as default{% endcomment %}
 {% assign variant-toc = false %}
 
+{% comment %} By default, set the active-variant to 'default' {% endcomment %}
+{% capture variant %}default{% endcapture %}
+
 {% if site.data.settings.active-variant and site.data.settings.active-variant != "" %}
 
     {% capture variant %}{{ site.data.settings.active-variant }}{% endcapture %}
 
-    {% include work-metadata.html work=work work-variant=variant %}
+    {% if is-book-directory %}
+        {% if book-subdirectory and book-subdirectory != "" and is-translation == true %}
+            {% assign work = site.data.works[book-directory][book-subdirectory] %}
+            {% include metadata-work.html work-variant=variant work=work %}
+        {% else %}
+            {% include metadata-work.html work-variant=variant %}
+        {% endif %}
+    {% endif %}
 
     {% comment %}Get variant settings from settings{% endcomment %}
     {% assign variant-settings = site.data.settings.variants | where: "variant", variant %}
@@ -305,7 +349,7 @@ Get relative paths to other book-asset folders, even if we're in a book-subdirec
 {% endcomment %}
 
 {% comment %}First, for pages not in a book directory, set the path as
-the first book-directory listed in meta.yml{% endcomment %}
+the first book-directory `_data/works`{% endcomment %}
 {% capture path-to-book-directory %}{{ site.data.works[0] }}/{% endcapture %}
 {% if is-translation-homepage %}
     {% capture path-to-book-directory %}../{{ site.data.works[0] }}/{% endcapture %}
@@ -515,13 +559,14 @@ guarantee that the template is in a new state. {% endcomment %}
 
 {% comment %} Localisation {% endcomment %}
 
-{% if translations %}
+{% assign languages = parent-language | split: "," %}
 
-    {% comment %} Get an array of all languages listed
-    as translations in meta.yml, plus the parent language {% endcomment %}
-    {% assign languages = parent-language | split: "," %}
+{% if translations.size > 0 %}
+
+    {% comment %} Get an array of all languages included
+    as translations in `_data/works`, and add to the parent language {% endcomment %}
     {% for translation in translations %}
-        {% assign languages = languages | push: translation.language | uniq %}
+        {% assign languages = languages | push: translation | uniq %}
     {% endfor %}
 
 {% endif %}

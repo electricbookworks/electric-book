@@ -2,7 +2,7 @@
 
 {% comment %} Includes pagination to the next and previous pages,
 according to the order of the output-format's file-list,
-which is defined in meta.yml at 'files'. 
+which is defined in `_data/works` in 'files' nodes. 
 To have the include only show one direction, in the include tag
 use direction="next" or direction="previous". {% endcomment %}
 
