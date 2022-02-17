@@ -6,14 +6,4 @@ style: copyright-page
 # from this book's YML file in _data
 ---
 
-{% include metadata %}
-
-# Copyright
-{:.non-printing}
-
-*{{ title }}*\\
-Text © {% if rightsholder != "" %}{{ rightsholder }}{% else %}{{ creator }}{% endif %}
-
-{% include identifiers scheme="ISBN" %}
-
-{{ rights }}
+{% include copyright-page %}

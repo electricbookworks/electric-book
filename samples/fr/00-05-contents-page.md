@@ -1,5 +1,5 @@
 ---
-title: Contents
+title: "Table des matières"
 style: contents-page
 ---
 

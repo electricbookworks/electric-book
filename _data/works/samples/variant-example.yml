@@ -1,9 +1,5 @@
-# identifier: ""
-# products:
-#   print-pdf:
-#     identifier: ""
+# This variant example includes fewer files in the web edition
 
-# temp debugging
 products:
   web:
     files:
