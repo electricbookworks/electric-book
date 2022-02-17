@@ -118,9 +118,9 @@ $footer-background-color: $color-accent !default;
 $footer-border-color: $color-accent !default;
 
 // Website masthead
-$masthead-text-color: $color-light !default;
-$masthead-background-color: $color-accent !default;
-$masthead-border-color: $color-light !default;
+$masthead-text-color: $color-links !default;
+$masthead-background-color: $color-background !default;
+$masthead-border-color: transparent !default;
 $masthead-breadcrumb-divider: "\2044" !default; // 2044 is a fraction slash
 
 // Website sidebar/navigation
@@ -130,13 +130,13 @@ $nav-bar-close: "\00D7" !default; // &times; ×
 $nav-bar-children-prompt: "+" !default;
 $nav-bar-children-prompt-hide: "\2212" !default; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true !default;
-$nav-bar-width: 15em !default;
+$nav-bar-width: 20rem !default;
 $nav-bar-fixed: true !default; // fixed is not fully supported on many mobile browsers
 $nav-bar-back-button-hide: true !default;
 $nav-bar-title-color: $color-text-secondary !default;
-$nav-bar-label-color: $color-light !default;
+$nav-bar-label-color: $color-links !default;
 $nav-bar-label-background-color: $masthead-background-color !default;
-$nav-bar-label-border-color: transparent !default;
+$nav-bar-label-border-color: $color-light !default;
 $nav-bar-border-color: $color-light !default;
 $nav-bar-background-color: $color-background !default;
 $nav-bar-search-background-color: $color-background !default;
