@@ -10,6 +10,7 @@ function displaySearchResults(results, store) {
     var appendString = '';
 
     var localisedSearchResultsNumberSuffix;
+
     if (results.length) {
 
         appendString += '<div class="search-results" id="search-results">';
@@ -28,6 +29,13 @@ function displaySearchResults(results, store) {
 
         var i, item;
         for (i = 0; i < results.length; i += 1) {
+
+            // If the store doesn't contain this result's ref number,
+            // skip it and continue with the loop.
+            if (!store[results[i].ref]) {
+                continue;
+            }
+
             item = store[results[i].ref];
             appendString += '<li>';
             appendString += '<h3><a href="'
