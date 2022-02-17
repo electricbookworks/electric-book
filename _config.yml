@@ -58,8 +58,9 @@ repository: ""
 # Navigation
 # ----------
 # Web navigation source: select either files or nav
-# files: navigation will be taken from the web files list in `meta.yml`
-# nav: navigation will be taken from the web nav tree in `meta.yml`.
+# files: navigation will be taken from the web files list in
+# each book or variant's YAML file in `_data/works`.`
+# nav: navigation will be taken from the web nav tree in `_data/works`.
 # nav is more powerful, and allows submenu nesting;
 # files is quicker, because you don't have to create nav yaml,
 # only a files list.
@@ -257,9 +258,7 @@ sass:
 
 # Default page variables
 # ----------------------
-# Set default values here for all documents/pages in this publication. 
-# (For technical details, see http://jekyllrb.com/docs/configuration/#front-matter-defaults).
-# Store only site configurations here, and book metadata (title, author, ISBNs) in _data/meta.yml
+# For technical details, see http://jekyllrb.com/docs/configuration/#front-matter-defaults.
 defaults: 
   -
     scope: # Sets default page frontmatter for all files in this project (an empty string "" for path means all files).
