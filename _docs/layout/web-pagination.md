@@ -16,4 +16,4 @@ The pagination format can also be changed there to use 'Next' and 'Previous', to
 
 By adding a 'direction' parameter to the include tag, you can show only previous or next links. E.g. {% raw %}`{% include pagination direction="next" %}`{% endraw %} will only output 'next' links.
 
-The order of pagination is determined by the `files` list for each format in `meta.yml`.
+The order of pagination is determined by the `files` list for each format in a book's YAML file in `_data/works`.

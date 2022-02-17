@@ -6,7 +6,7 @@ order: 40
 
 # File lists
 
-You must define which markdown files to include in a given output in the `files:` section of `meta.yml`.
+You must define which markdown files to include in a given output in the `files:` section of your book's YAML file in `_data/works`.
 
 For example, to add files to include in a print PDF, you can follow the example of the template: under `files:`, add a hyphen followed by the filename in straight double quotes. This filename is the exact name of the file as it is in your project, but *without* a file extension. 
 

@@ -48,7 +48,7 @@ Here is an example:
 
 If you only add a `toc` for print or web output, the template will try to read that TOC for the other formats, too, so that you don't have to repeat your `toc` for every format. If you want a different TOC for a given format, you can give that format it's own `toc` section.
 
-> Note that the `toc` and `nav` sections in `meta.yml` are structurally identical. In many projects they are the same except that one starts with `toc` and the other `nav`. A PDF will never need a `nav`, but a website output might have both a `toc` (which displays a Table of Contents on a body text page) and a `nav` (which defines the dropdown menu on a website).
+> Note that the `toc` and `nav` sections in your book's YAML file in `_data/works` are structurally identical. In many projects they are the same except that one starts with `toc` and the other `nav`. A PDF will never need a `nav`, but a website output might have both a `toc` (which displays a Table of Contents on a body text page) and a `nav` (which defines the dropdown menu on a website).
 
 ## Using IDs for accurate linking
 
@@ -64,7 +64,7 @@ If you are having trouble finding the slug for the `id`: generate a web version 
 
 Here `chapter-5-animals` is the `id`.
 
-Note that to see files in website navigation at all, they must be included in your web output in the `nav:` section of `_data/meta.yml`. Otherwise you have to know the URL of the page you're looking for and enter it directly into the browser's address bar.
+Note that to see files in website navigation at all, they must be included in your web output in the `nav:` section of your book's YAML file in `_data/works`. Otherwise you have to know the URL of the page you're looking for and enter it directly into the browser's address bar.
 {:.sidenote}
 
 ## Adding classes to control design

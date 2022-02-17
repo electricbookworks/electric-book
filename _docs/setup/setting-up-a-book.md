@@ -138,6 +138,4 @@ We recommend adding a few descriptive words to your filenames after the numbers 
 
 Alongside the content files in a book's folder is an `images` folder, for images that belong to that book only.
 
-A book's folder should only ever need to contain markdown files and images. If you're embedding other kinds of media you could add folders for that alongside `images`. We don't recommend sharing images or media between books, in case you want to move a book from one project to another later. (So, for example, copy the publisher logo into each book's `images` folder separately.)
-
-If your project home page requires images, keep those in `/assets/images`, so that you can link to them from any page.
+See ['Adding image files'](../images/adding-image-files.html) for more detail.

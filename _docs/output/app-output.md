@@ -123,7 +123,7 @@ Here are the detailed steps:
     1. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... and select the correct app that appears. This will sign the app with the correct certificate. (You may only have to do this once.)
     1. However, this unsets the default language that Cordova adds to non-release builds. So under `CordovaApp.Windows10 (Universal Windows)` open `package.windows10.appxmanifest` and add the language code to the 'Default language' field. You can also correct the description, which Visual Studio or Cordova aren't getting right currently.
     1. Now create an app package upload file. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Create App Packages.
-    2. When setting the version number, we use the same version as the project version in `_data/meta.yml`, with an extra zero (e.g. if the `meta.yml` version number is `1.0.5`, your Windows app version number will be `1.0.5.0`.
+    2. When setting the version number, we use the same version as the project version in `_data/project.yml`, with an extra zero (e.g. if the `project.yml` version number is `1.0.5`, your Windows app version number will be `1.0.5.0`.
     4. In the 'Generate app bundle' listbox, select 'Always'.
     3. Select the three architecture configurations ('x86', 'x64', and 'ARM') in the Select and Configure Packages dialog. Deselect the 'Neutral' option.
     5. Click Create and hold thumbs.

@@ -72,7 +72,7 @@ Here is an explanation of folders and files in the template.
   * `toc.ncx`: a navigation file for backwards-compatibility in older ereaders. You only need this file in a book if that backwards-compatibility is important to you. Do not edit it.
   * `images`: this is where you store images for a book. See the ['Adding image files' section](../images/adding-image-files.html) for more detail.
   * `styles`: contains the stylesheets for designing your book's various outputs. See the ['Design'](../layout/design.html) section for more detail.
-  * `index.md`: a landing page for your book. Jekyll will build this to contain the book's cover image, and clicking it will open the book's start page, which you define in `_data/meta.yml`.
+  * `index.md`: a landing page for your book. Jekyll will build this to contain the book's cover image, and clicking it will open the book's start page, which you define in the book's YAML file in `_data/works`.
 
 * `samples`: a sample book for demo and testing purposes. You can safely delete it (if you do, you can also remove `_data/works/samples`).
 * `_config.yml`: a file for setting configuration options for Jekyll, which will compile your book for output.

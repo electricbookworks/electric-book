@@ -39,4 +39,4 @@ In YAML, indentation *must* be accurate and *must* be created with exactly two s
 
 There are many subtle rules for structuring YAML, but if you just follow the existing structure in `_data/works` carefully, you'll be fine. [Here is a good tutorial](https://learn.getgrav.org/advanced/yaml) on YAML, if you want to know more.
 
-There is more detail on editing `meta.yml` in [Navigation and TOCs](tocs.html).
+There is more detail on editing the YAML files in `_data/works` in [Navigation and TOCs](tocs.html).

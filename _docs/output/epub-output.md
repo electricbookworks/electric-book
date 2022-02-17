@@ -28,9 +28,9 @@ If you're creating translations, you also need these files in the translation di
 
 Your epub will build correctly only if you have provided sufficient, accurate information about it in its YAML file in `_data/works/`. You may also need to adjust some epub settings in `_data/settings.yml`.
 
-1. File list: you must list all the files to be included in your epub in the epub `files` section of `meta.yml`.
+1. File list: you must list all the files to be included in your epub in the epub `files` section of your book's YAML file in `_data/works`.
 2. Optionally, add guide names to key files in that list, e.g. `"0-0-cover": "cover"`.
-3. There must be a `nav` section in `meta.yml` that points to at least one of your epub's files. For epubs, every item in the `nav` must include a file (unlike web output, where label-only items are allowed).
+3. There must be a `nav` section in your book's YAML file in `_data/works` that points to at least one of your epub's files. For epubs, every item in the `nav` must include a file (unlike web output, where label-only items are allowed).
 4. To tell the epub package where to find navigation, you must either:
 	1. Define the epub's `contents-page` item, as the content file that contains {% raw %}`{% include toc %}`{% endraw %}, e.g. `- contents-page: "0-3-contents"`, and/or
 	2. Add the guide name `"toc"` to the relevant file in the `files` list (e.g. `- "0-3-contents": "toc"`).
@@ -48,7 +48,7 @@ Your epub will build correctly only if you have provided sufficient, accurate in
 6. If your epub must not include a *visible* table of contents in its pages (e.g. for a novel with no chapter headings), you can hide it visually by setting `hide-nav: true` in the `epub` section of `settings.yml`.
 7. If you're using a `toc.ncx` file for backwards compatibility with old ereaders, you have to be especially careful with how you construct your epub `toc` tree in the book's `_data/works` file.
 
-	In an NCX, you cannot have two items in nav pointing to the same target. So in your epub `toc` in `meta.yml`, you can't have two items with the same `file` and `id`. To differentiate them, you add an `id` pointing to, say, a heading in the document to differentiate one target in the same file from another.
+	In an NCX, you cannot have two items in nav pointing to the same target. So in your epub `toc` in your book's YAML file in `_data/works`, you can't have two items with the same `file` and `id`. To differentiate them, you add an `id` pointing to, say, a heading in the document to differentiate one target in the same file from another.
 
 	Also, in an NCX, every item must include a link. So if an item in your toc has no link, and only children items, then in the `toc.ncx` the Electric Book will create a link for it. It will use the `file` (without the `id`) of its first child. So, to ensure that you don't get duplicate links, you must add an `id` to that first child. This way, the parent will point to the `file`, and the first child item will point to the `file` + `id`.
 

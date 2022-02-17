@@ -33,6 +33,20 @@ npm run electric-book -- images --book samples
 
 will process images in the `samples` book folder.
 
+The options `--folder` and `--dir` are aliases for `--book`. So this is exactly the same as the above command:
+
+```shell
+npm run electric-book -- images --dir samples
+```
+
+And this:
+
+```shell
+npm run electric-book -- images --dir assets
+```
+
+will process images in the `assets` folder, which is for images that must be available to pages outside of books, such as your project's landing page.
+
 
 ## Using gulp directly
 
