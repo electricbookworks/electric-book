@@ -179,46 +179,33 @@ function configString (argv) {
   return string
 }
 
-// Return switches for Jekyll
+// Return array of switches for Jekyll
 function jekyllSwitches (argv) {
   'use strict'
 
-  let switches = ''
-
-  // Add baseurl if specified in argv.
-  // Remember that the default argv options
-  // include a blank baseurl in argv, so we don't
-  // want to include a baseurl if it's blank.
-  if (argv.baseurl && argv.baseurl.length > 0) {
-    console.log('Adding baseurl...')
-    switches += '--baseurl=' + argv.baseurl + ' '
-  }
+  const switchesArray = []
 
   // Add incremental switch if --incremental=true
-  if (argv.incremental === true) {
-    switches += '--incremental '
+  if (argv.incremental) {
+    switchesArray.push('--incremental')
   }
 
-  // Add switches passed as argv's
-  let switchesString = ''
+  // Add switches passed as a --switches="" argv
   if (argv.switches) {
-    console.log('Adding ' + argv.switches + ' to switches...')
+    let switchesString = ''
+
     // Strip quotes that might have been added around arguments by user
     switchesString = argv.switches.replace(/'/g, '').replace(/"/g, '')
-  }
 
-  // Add all switches in switchesString
-  if (switchesString) {
-    // Strip spaces, then split the string into an array,
-    // then loop through the array adding each switch.
-    switchesString.replace(/\s/g, '')
-    switchesString.split(',')
-    switchesString.forEach(function (switchString) {
-      switches += '--' + switchString
+    // Replace spaces with commans, then split the string into an array,
+    // and loop through the array adding each string to switchesArray.
+    const switchesStringAsArray = switchesString.replace(/\s/g, ',').split(',')
+    switchesStringAsArray.forEach(function (switchString) {
+      switchesArray.push(switchString)
     })
   }
 
-  return switches
+  return switchesArray
 }
 
 // Run Jekyll
@@ -236,19 +223,20 @@ async function jekyll (argv) {
               'bundle exec jekyll ' + command +
               ' --config="' + configString(argv) + '"' +
               ' --baseurl="' + argv.baseurl + '"' +
-              ' ' + jekyllSwitches(argv))
+              ' ' + jekyllSwitches(argv).join(' '))
 
-    // Credit for child_process examples:
-    // https://medium.com/@graeme_boy/how-to-optimize-cpu-intensive-work-in-node-js-cdc09099ed41
+    // Create an array of arguments to pass to spawn()
+    const jekyllSpawnArgs = ['exec', 'jekyll', command,
+      '--config', configString(argv),
+      '--baseurl', argv.baseurl]
+
+    // Add each of the switches to the args array
+    jekyllSwitches(argv).forEach(function (switchString) {
+      jekyllSpawnArgs.push(switchString)
+    })
 
     // Create a child process
-    const jekyllProcess = spawn(
-      'bundle',
-      ['exec', 'jekyll', command,
-        '--config', configString(argv),
-        '--baseurl', argv.baseurl,
-        jekyllSwitches(argv)]
-    )
+    const jekyllProcess = spawn('bundle', jekyllSpawnArgs)
     const result = await logProcess(jekyllProcess, 'Jekyll')
     return result
   } catch (error) {
