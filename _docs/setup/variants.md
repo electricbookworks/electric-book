@@ -62,6 +62,19 @@ You can define variant-specific metadata in a book's `_data` folder.
 1. Create a new YAML file alongside the book's `default.yml` file. Name that new file after the variant, with a `.yml` extension. E.g. `myvariant.yml`.
 2. In that new YAML file, define the variant's metadata as you would in default.yml. You only need to add fields for things that are different from `default.yml`. For example, if the only thing that changes is the subtitle, your variant YAML file will only contain one line, e.g. `subtitle: "The Jabberwocky Returns"`.
 
+### Variant metadata fallbacks
+
+If you are rendering a variant with translations, and you do not set a value in the translation variant YAML file, it will fall back to that language's `default.yml`. It will not fall back to the parent language's variant YAML.
+
+For example:
+
+- Parent-language default `subtitle`: `Potatoes`
+- Parent-language variant `subtitle`: `Tomatoes`
+- Translation default `subtitle`: `Pommes de terre`
+- Translation variant `subtitle`: not set
+
+When rendered, the translation variant `subtitle` will be `Pommes de terre`, and not `Tomatoes`.
+
 ## Variant tables of contents
 
 Since tables of contents defined in YAML can be long and complex, it can be a hassle to redefine an entire TOC in a variant's YAML file just for one or two differences.
