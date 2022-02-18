@@ -60,10 +60,12 @@ web:
   # Pagination
   # ----------
   pagination: true
-  # Choose 'direction' for 'Next/Previous' pagination,
-  # or 'titles' to show page titles at pagination,
-  # or 'arrows' to use only arrows.
-  pagination-type: "arrows"
+  # Choose one of:
+  # - 'direction' for 'Next/Previous' pagination,
+  # - 'titles' to show page titles at pagination,
+  # - 'title-arrows' to show page titles and arrows,
+  # - 'arrows' to use only arrows.
+  pagination-type: "title-arrows"
   # --------
   # Masthead
   # --------
@@ -196,10 +198,12 @@ app:
   # Pagination
   # ----------
   pagination: true
-  # Choose 'direction' for 'Next/Previous' pagination,
-  # or 'titles' to show page titles at pagination,
-  # or 'arrows' to use only arrows.
-  pagination-type: "arrows"
+  # Choose one of:
+  # - 'direction' for 'Next/Previous' pagination,
+  # - 'titles' to show page titles at pagination,
+  # - 'title-arrows' to show page titles and arrows,
+  # - 'arrows' to use only arrows.
+  pagination-type: "title-arrows"
   # --------
   # Masthead
   # --------
