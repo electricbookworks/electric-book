@@ -8,11 +8,11 @@
 # Language
 # --------
 # The primary language used in this project. You can set the language
-# for each book individually below at 'defaults'. 
+# for each book individually below at 'defaults'.
 # To understand what language tags to use, read:
-# http://www.w3.org/International/articles/language-tags/ 
+# http://www.w3.org/International/articles/language-tags/
 # For the registry of tags:
-# http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry 
+# http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
 # Useful lookup tool: http://r12a.github.io/apps/subtags/
 language: en
 
@@ -57,13 +57,15 @@ repository: ""
 
 # Navigation
 # ----------
-# Web navigation source: select either files or nav
-# files: navigation will be taken from the web files list in
-# each book or variant's YAML file in `_data/works`.`
-# nav: navigation will be taken from the web nav tree in `_data/works`.
-# nav is more powerful, and allows submenu nesting;
-# files is quicker, because you don't have to create nav yaml,
-# only a files list.
+# Web navigation source: use either "files" or "nav":
+# - files: navigation will be taken from the web files list in
+#   each book or variant's YAML file in `_data/works`.`
+#   files is easier, because you don't have to create
+#   nav yaml in _data/works, only a files list.
+#   The site also builds more quickly.
+# - nav: navigation will be taken from the web nav tree in `_data/works`.
+#   nav is more powerful, and allows submenu nesting,
+#   but is more complex to create and builds more slowly.
 nav-source: nav
 
 # MathJax
@@ -105,10 +107,10 @@ output: "web"
 # Image set
 # ---------
 # We use different sets of images for different purposes.
-# For instance, small, colour images for epub and screen-pdf, 
+# For instance, small, colour images for epub and screen-pdf,
 # and high-res greyscale for print-pdf.
 # This sets the default image set here. This refers to the `images`
-# directory in each book's directory, and then to any 
+# directory in each book's directory, and then to any
 # subdirectories you create per set. Default is images/web.
 # This is overriden in output-specific config files in _configs/.
 # image-set: "images/print-pdf"
@@ -119,7 +121,7 @@ image-set: "images/web"
 
 # Files to exclude from Jekyll build
 # ----------------------------------
-# Jekyll will ignore these files and folders. 
+# Jekyll will ignore these files and folders.
 # This is useful for temporarily speeding up the build to output only certain files.
 # Include the file extension too. E.g. book/01.md
 exclude:
@@ -235,7 +237,7 @@ markdown: kramdown
 # ----------------
 # kramdown options (see http://kramdown.gettalong.org/options.html)
 # auto_id_stripping removes formatting from headings before generating IDs,
-# which keeps your IDs neat and tidy, and your links persistent 
+# which keeps your IDs neat and tidy, and your links persistent
 # even if you format headings.
 kramdown:
   auto_id_stripping: true
@@ -259,7 +261,7 @@ sass:
 # Default page variables
 # ----------------------
 # For technical details, see http://jekyllrb.com/docs/configuration/#front-matter-defaults.
-defaults: 
+defaults:
   -
     scope: # Sets default page frontmatter for all files in this project (an empty string "" for path means all files).
       path: ""
