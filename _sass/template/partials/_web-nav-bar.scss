@@ -298,6 +298,7 @@ $nav-bar-back-button-hide: false !default;
 
     [data-nav-close] {
         background-color: transparent;
+        font-size: $font-size-default * $font-size-bigger;
 
         &:after {
             content: $nav-bar-close;
