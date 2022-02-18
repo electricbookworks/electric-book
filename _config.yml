@@ -23,13 +23,6 @@ language: en
 # If you're using GitHub Pages, note that it may not support your theme.
 # theme: your-theme-gem-name-here
 
-# Custom-edition variable
-# -----------------------
-# Which edition are we creating? You can leave this as `default`.
-# This can be used to create different editions of a book using
-# Liquid control-flow tags, e.g. in includes, layouts and file-list
-edition: "default"
-
 # Canonical URL
 # -------------
 # To make absolute links work, e.g. in canonical links in <head>,
