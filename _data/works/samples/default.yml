@@ -17,6 +17,7 @@ relation: "" # e.g. other edition ISBN
 coverage: "" # e.g. geographic place or chronological time span
 rightsholder: "" # who owns the copyright?
 rights: "This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use." # e.g. a copyright statement
+image: "cover.jpg"
 
 products: # Metadata for each product for this title (only use values that override parent metadata)
   print-pdf:
