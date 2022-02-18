@@ -598,7 +598,7 @@ function ebBookmarksElementID(element) {
     // use its hash, otherwise use the first
     // visible element in the viewport.
     if (!element) {
-        element = document.querySelector('[data-bookmark="onscreen"]');
+        element = document.querySelector('[data-bookmark="onscreen"]') || document.body;
     }
     if (element.id) {
         return element.id;
