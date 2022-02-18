@@ -275,14 +275,16 @@ override any metadata set for that variant.{% endcomment %}
 {% comment %} Generate a file-list for the current output. {% endcomment %}
 {% capture file-list-name %}{{ site.output }}-file-list{% endcapture %}
 
-{% comment %} Don't indent. We don't want indents in file lists. {% endcomment %}
+{% comment %} Don't indent. We don't want indents in file lists.
+File-list entries can be hashes. For file-list, we want only filenames,
+so we have to iterate over the entry, in case it's a key-value pair. {% endcomment %}
 {% capture file-list %}
-{% for file in [file-list-name] %}
-{% for file-title in file %}
-{% if file-title[0] %}
-{{ file-title[0] }}.html
+{% for file-entry in [file-list-name] %}
+{% for string in file-entry %}
+{% if string[0] %}
+{{ string[0] }}.html
 {% else %}
-{{ file-title }}.html
+{{ string }}.html
 {% endif %}
 {% endfor %}
 {% endfor %}
