@@ -252,6 +252,7 @@ $nav-bar-back-button-hide: false !default;
         .nav-title {
             color: $nav-bar-title-color;
             font-size: $font-size-default * 1.5;
+            font-weight: bold;
             line-height: $line-height-default * 0.75;
             margin: 1rem 0;
             padding: 0 1rem;
