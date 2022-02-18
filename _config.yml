@@ -66,7 +66,7 @@ nav-source: nav
 # Enable MathJax to render mathematics. MathJax adds a large script to your pages,
 # so this is off (false) by default. Change to true to load MathJax.
 # See http://docs.mathjax.org/en/latest/configuration.html for details.
-# MathJax scripts are loaded by mathjax-config include, where you can also
+# MathJax scripts are loaded by mathjax-config.html include, where you can also
 # configure MathJax for your project. For MathJax font choices, see
 # http://docs.mathjax.org/en/latest/font-support.html
 mathjax-enabled: false

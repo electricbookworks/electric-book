@@ -266,7 +266,8 @@ $web-bookmarks: true !default;
         }
     }
 
-    // Icons (_includes/bookmark-icon, _includes/history-icon)
+    // Icons (_includes/template/bookmark-icon.svg,
+    // _includes/template/history-icon.svg)
     svg[class*="icon"] {
         // Avoid Firefox bug where tapping selects SVG as text
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882

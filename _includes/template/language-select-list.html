@@ -4,14 +4,14 @@ reading the file list of each translation. To appear in the selector,
 each translated file must both exist and be included in the
 translation's file list in meta.yml.{% endcomment %}
 
-{% include translations-array.html %}
+{% include template/translations-array.html %}
 
 {% comment %} Render the list only if this page has translations. {% endcomment %}
 {% if translations-array.size > 0 %}
 
 <div class="language-select" title="{{ locale.controls.language-select }}">
 
-    {% include language-select-icon %}
+    {% include template/language-select-icon.svg %}
 
     <ul class="language-select-list">
 

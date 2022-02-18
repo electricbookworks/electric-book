@@ -145,11 +145,11 @@ Check whether we're in a subdirectory of the book directory
 {% comment %}
 Now capture each metadata value as a Liquid variable, to be used in HTML
 and book content as a Liquid output tag e.g. {{ title }}
-We do this with the metadata-work.html include.
+We do this with the template/metadata-work.html include.
 {% endcomment %}
 
 {% if is-book-directory %}
-    {% include metadata-work.html %}
+    {% include template/metadata-work.html %}
 {% endif %}
 
 {% comment %} Set the parent language now before we override `language`. {% endcomment %}
@@ -234,7 +234,7 @@ defined in `_data/works` for the given translation.
 {% if is-book-directory and book-subdirectory and book-subdirectory != "" and is-translation == true %}
 
     {% assign work = site.data.works[book-directory][book-subdirectory] %}
-    {% include metadata-work.html work=work %}
+    {% include template/metadata-work.html work=work %}
 
 {% endif %}
 
@@ -254,9 +254,9 @@ override any metadata set for that variant.{% endcomment %}
     {% if is-book-directory %}
         {% if book-subdirectory and book-subdirectory != "" and is-translation == true %}
             {% assign work = site.data.works[book-directory][book-subdirectory] %}
-            {% include metadata-work.html work-variant=variant work=work %}
+            {% include template/metadata-work.html work-variant=variant work=work %}
         {% else %}
-            {% include metadata-work.html work-variant=variant %}
+            {% include template/metadata-work.html work-variant=variant %}
         {% endif %}
     {% endif %}
 

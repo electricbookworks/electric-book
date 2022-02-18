@@ -208,7 +208,7 @@ $epub-questions: true !default;
                 display: block;
             }
         }
-        // Words hard-coded here need to be localised with Javascript in _includes/end-elements
+        // Words hard-coded here need to be localised with Javascript in _includes/end-elements.html
         .mcq-incorrect {
             .mcq-feedback {
                 &:before {

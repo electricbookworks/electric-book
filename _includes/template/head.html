@@ -1,5 +1,5 @@
 {% include metadata %}
-{% include title %}
+{% include template/html-title.html %}
 
 {% if site.output == "print-pdf" %}
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
     {% comment %} Note: MathJax script not included for PDF output.
     MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
-    {% include head-elements %}
+    {% include head-elements.html %}
 
 </head>
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
@@ -58,7 +58,7 @@
     {% comment %} Note: MathJax script not included for PDF output.
     MathJax rendered in PDF via gulp and mathjax-node-page. {% endcomment %}
 
-    {% include head-elements %}
+    {% include head-elements.html %}
 
 </head>
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
@@ -113,10 +113,10 @@
         <meta name="DC.Description" content="{{ description | escape }}" />
 
     {% if site.mathjax-enabled == true %}
-        {% include mathjax-config %}
+        {% include mathjax-config.html %}
     {% endif %}
 
-    {% include head-elements %}
+    {% include head-elements.html %}
 
 </head>
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
@@ -164,10 +164,10 @@
     {% endif %}
 
     {% if site.mathjax-enabled == true %}
-        {% include mathjax-config %}
+        {% include mathjax-config.html %}
     {% endif %}
 
-    {% include head-elements %}
+    {% include head-elements.html %}
 
     </head>
     <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
@@ -286,13 +286,13 @@
     {% endif %}
     
     {% if site.mathjax-enabled == true %}
-        {% include mathjax-config %}
+        {% include mathjax-config.html %}
     {% endif %}
 
     {% comment %} Include custom elements {% endcomment %}
 
-    {% include hreflang.html %}
-    {% include head-elements %}
+    {% include template/hreflang.html %}
+    {% include head-elements.html %}
 
 </head>
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"

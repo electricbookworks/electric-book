@@ -6,7 +6,7 @@ whether output-docs == true. {% endcomment %}
 {% include metadata %}
 
 {% comment %} Get the array-of-files to include in the index {% endcomment %}
-{% include files-listed.html %}
+{% include template/files-listed.html %}
 
 {% comment %} Create an index number. This helps us check that
 the files in this store match those in the index. {% endcomment %}

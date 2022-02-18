@@ -11,11 +11,11 @@ categories: advanced
 
 Unless there's a good reason to put them elsewhere, scripts should live in `assets/js`, and be included in `bundle.js`, and not added separately. This is especially important in epubs. (More on [scripts in epubs below](#adding-scripts-to-epubs).
 
-If you must add scripts that are not included in bundle.js, add them to your `<head>` elements by adding `<script>` tags to `_includes/head-elements`. And to add them just before the `</body>` tag, add `<script>` tags to `_includes/end-elements`.
+If you must add scripts that are not included in bundle.js, add them to your `<head>` elements by adding `<script>` tags to `_includes/head-elements.html`. And to add them just before the `</body>` tag, add `<script>` tags to `_includes/end-elements.html`.
 
 For web outputs, you can also link to remote scripts this way, without the need to save the actual scripts in the `js` folder.
 
-Keep in mind that anything you add to `head-elements` will be added to all books in the project folder, and to all their formats.
+Keep in mind that anything you add to `head-elements.html` will be added to all books in the project folder, and to all their formats.
 
 ## Limiting scripts by book or format
 

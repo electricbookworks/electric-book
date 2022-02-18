@@ -30,7 +30,7 @@
     {% endif %}
 
     {% comment %} Add controls and settings {% endcomment %}
-    {% include controls.html %}
+    {% include template/controls.html %}
 
     {% comment %}Add the search box.{% endcomment %}
     <div class="search">
@@ -76,7 +76,7 @@
         <ul>
             <li{% unless is-docs-page %} class="has-children" {% endunless %}><a
                     href="{{ path-to-root-directory }}docs">Docs</a>
-                {% include docs-by-category %}
+                {% include template/docs-by-category.html %}
                 </li>
         </ul>
         {% endif %}
@@ -115,7 +115,7 @@
                         {% assign home-nav-work-tree = this-work.default.products.web.nav %}
                     {% endif %}
 
-                    {% include nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                    {% include template/nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                 {% endfor %}
 
             {% else %}
@@ -172,7 +172,7 @@
                             </a>
 
                             {% if site.data.settings[site.output].nav.home.expand-books == true %}
-                                {% include nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                                {% include template/nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                             {% endif %}
 
                         </li>
@@ -185,9 +185,9 @@
 
             {% comment %}Fetch recursive navigation{% endcomment %}
             {% if site.output == "app" %}
-                {% include nav-list.html nav-tree=app-nav-tree %}
+                {% include template/nav-list.html nav-tree=app-nav-tree %}
             {% else %}
-                {% include nav-list.html nav-tree=web-nav-tree %}
+                {% include template/nav-list.html nav-tree=web-nav-tree %}
             {% endif %}
 
         {% endif %}
@@ -200,14 +200,14 @@
         {% endif %}
 
         {% if project-nav-tree %}
-            {% include nav-list.html nav-tree=project-nav-tree project-nav=true %}
+            {% include template/nav-list.html nav-tree=project-nav-tree project-nav=true %}
         {% endif %}
 
     </div>
     <!--.nav-list-->
 
     <div class="widgets">
-        {% include widgets %}
+        {% include widgets.html %}
     </div>
     <!--.widgets-->
 

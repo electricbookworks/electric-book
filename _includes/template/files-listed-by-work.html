@@ -85,7 +85,7 @@ we check that the folder includes a default key, i.e. a default.yml.
 
     {% for files-listed-translation in files-listed-work[1] %}
 
-        {% include files-listed-by-work.html work=files-listed-translation parent-work=parent-work-name %}
+        {% include template/files-listed-by-work.html work=files-listed-translation parent-work=parent-work-name %}
 
     {% endfor %}
 

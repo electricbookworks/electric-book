@@ -36,7 +36,7 @@ $web-language-select: true !default;
         }
     }
 
-    // Icon (_includes/language-select-icon)
+    // Icon (_includes/template/language-select-icon.svg)
     svg.language-select-icon {
         // Avoid Firefox bug where tapping selects SVG as text
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882

@@ -411,7 +411,6 @@ assets/js/vendor/svg-inject.min.js
 book/fonts/.gitignore
 book/index.md
 book/package.opf
-book/file-list
 book/index.md
 book/toc.ncx
 
@@ -593,68 +592,72 @@ _epub/mimetype
 # you can update these includes automatically,
 # wihtout overwriting book-specific values.
 
-_includes/annotate-icon
-_includes/annotate-show-icon
-_includes/annotator.html
-_includes/bookmark-icon
-_includes/bookmarks.html
-_includes/breadcrumbs
-_includes/close-body.html
-_includes/close-content.html
-_includes/controls.html
+_includes/copyright-page
 _includes/cover
-_includes/docs-by-category
-
-# Excluded because this is where you'd add
-# custom features that an EBT update should not overwrite.
-# _includes/end-elements
-
-_includes/epub-navmap.html
-_includes/epub-ncx
-_includes/epub-package
 _includes/figure
-_includes/file-list
-_includes/files-listed.html
-_includes/footer.html
-_includes/globe-icon
-
-# Excluded because this is where you'd add
-# custom features that an EBT update should not overwrite.
-# _includes/head-elements
-
-_includes/head.html
-_includes/history-icon
-_includes/html-entities.html
 _includes/identifiers
 _includes/image
-_includes/item
-_includes/language-select
-_includes/language-select-icon
-_includes/masthead.html
-_includes/mathjax-config
-_includes/mathjax-manifest.xml
-_includes/mcq
+_includes/mathjax-config.html
 _includes/metadata
-_includes/metadata-work.html
-_includes/nav-button.html
-_includes/nav-list
-_includes/nav.html
 _includes/page-info
-_includes/pagination
 _includes/question
-_includes/question-secret-code.html
 _includes/quiz
 _includes/random
+_includes/README.md
 _includes/redirect
 _includes/search
 _includes/select
-_includes/sitemap
-_includes/start-content.html
+_includes/title-page
 _includes/toc
 _includes/video
 _includes/vimeo
-_includes/widgets
+_includes/widgets.html
 _includes/youtube
+
+# Excluded because this is where you'd add
+# custom features that an EBT update should not overwrite.
+# _includes/end-elements.html
+
+# The footer HTML is often customised per project
+# _includes/footer.html
+
+# Excluded because this is where you'd add
+# custom features that an EBT update should not overwrite.
+# _includes/head-elements.html
+
+_includes/template/annotate-icon.html
+_includes/template/annotate-show-icon.html
+_includes/template/annotator.html
+_includes/template/bookmark-icon.html
+_includes/template/bookmarks.html
+_includes/template/breadcrumbs.html
+_includes/template/close-body.html
+_includes/template/close-content.html
+_includes/template/controls.html
+_includes/template/docs-by-category.html
+_includes/template/epub-navmap.html
+_includes/template/epub-ncx.html
+_includes/template/epub-package.html
+_includes/template/files-listed.html
+_includes/template/files-listed-by-work.html
+_includes/template/head.html
+_includes/template/history-icon.svg
+_includes/template/hreflang.html
+_includes/template/html-entities.html
+_includes/template/html-title.html
+_includes/template/language-select-icon.svg
+_includes/template/language-select-list.html
+_includes/template/masthead.html
+_includes/template/mathjax-manifest.xml
+_includes/template/metadata-work.html
+_includes/template/nav.html
+_includes/template/nav-button.html
+_includes/template/nav-list.html
+_includes/template/pagination.html
+_includes/template/question-secret-code.html
+_includes/template/sitemap.html
+_includes/template/start-content.html
+_includes/template/translations-array.html
 
 
 # Layouts
@@ -663,6 +666,9 @@ _includes/youtube
 _layouts/compress.html
 _layouts/default.html
 _layouts/min.html
+_layouts/ncx.html
+_layouts/opf.html
+_layouts/sitemap.html
 _layouts/trim.html
 
 

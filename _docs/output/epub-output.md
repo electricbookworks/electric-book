@@ -95,7 +95,7 @@ Epubs are notoriously hard to make, largely because validation is so strict. Her
 
 2. If you've used named HTML entities like `&nbsp;` in HTML snippets, kramdown may not have processed those as markdown, and therefore will not have converted them to unicode characters. Named entities are not valid in epub 3, and you'll need to replace them with their numeric equivalents, such as `&#160;` instead of `&nbsp;`.
 3. If you get errors about your navigation or TOC (`nav`), see the guidelines on [Metadata and settings](#metadata-and-settings) above. The `toc.ncx` file is particularly sensitive.
-4. Make sure your book has a `package.opf` file in its book directory. You can copy this from the Electric Book template. (It uses the `epub-package` include to generate the epub's metadata and manifest.)
+4. Make sure your book has a `package.opf` file in its book directory. You can copy this from the Electric Book template. (It uses the `epub-package.html` include to generate the epub's metadata and manifest.)
 
 > ## How epubs are generated
 >

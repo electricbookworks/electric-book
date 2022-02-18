@@ -222,7 +222,7 @@
 
         {% comment %}If we're using mathjax, add the mathjax-manifest{% endcomment %}
         {% if site.mathjax-enabled == true %}
-            {% include mathjax-manifest.xml %}
+            {% include template/mathjax-manifest.xml %}
         {% endif %}
 
         {% comment %}If a toc.ncx exists, add it{% endcomment %}

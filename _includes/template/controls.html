@@ -3,9 +3,9 @@
     {% comment %} Unless we're building a particular language, 
     include the language selector. {% endcomment %}
     {% unless site.build-language and site.build-language != "" %}
-        {% include language-select-list.html %}
+        {% include template/language-select-list.html %}
     {% endunless %}
 
-    {% include bookmarks.html %}
+    {% include template/bookmarks.html %}
 
 </div>

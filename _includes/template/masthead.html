@@ -8,9 +8,9 @@
     </ul>
 
     {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
-        {% include annotator.html %}
+        {% include template/annotator.html %}
     {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
-        {% include annotator.html %}
+        {% include template/annotator.html %}
     {% endif %}
 
 {% comment %} Book pages {% endcomment %}
@@ -29,11 +29,11 @@
         <ul>
             {% if number-of-works == 1 %}
                 <li class="masthead-book-title"><a href="{{ path-to-root-directory }}index.html">{{ title }}</a></li>
-                {% include breadcrumbs breadcrumb-tree=breadcrumb-nav-tree %}
+                {% include template/breadcrumbs.html breadcrumb-tree=breadcrumb-nav-tree %}
             {% else %}
                 <li class="masthead-project-name"><a href="{{ path-to-root-directory }}index.html">{{ project-name }}</a></li>
                 <li class="masthead-book-title"><a href="{{ masthead-contents-page }}{% unless masthead-contents-page contains '.html' %}.html{% endunless %}">{{ title }}</a></li>
-                {% include breadcrumbs breadcrumb-tree=breadcrumb-nav-tree %}
+                {% include template/breadcrumbs.html breadcrumb-tree=breadcrumb-nav-tree %}
             {% endif %}
         </ul>
 
@@ -70,9 +70,9 @@
     {% endif %}
 
     {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
-        {% include annotator.html %}
+        {% include template/annotator.html %}
     {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
-        {% include annotator.html %}
+        {% include template/annotator.html %}
     {% endif %}
 
 {% endif %}

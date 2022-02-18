@@ -47,7 +47,7 @@ into an array, then grabbing everything after the frontmatter.
 {% capture question-markdown %}{{ question-notthreehyphens | split: "notthreehyphens" | last }}{% endcapture %}
 
 {% comment %} Output a div containing its content. {% endcomment %}
-<div class="question{% if include.class %} {{ include.class }}{% endif %}{% if question-is-mcq %} mcq{% endif %}" markdown="1" data-question="{{ question-file }}" data-question-code="{% include question-secret-code.html correct=question-correct-options %}">
+<div class="question{% if include.class %} {{ include.class }}{% endif %}{% if question-is-mcq %} mcq{% endif %}" markdown="1" data-question="{{ question-file }}" data-question-code="{% include template/question-secret-code.html correct=question-correct-options %}">
 
 <div class="question-content" markdown="1">
 {{ question-markdown }}

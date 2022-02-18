@@ -4,30 +4,30 @@ layout: compress
 
 {% if site.output == 'epub' or site.output == 'print-pdf' or site.output == 'screen-pdf' %}
 
-{% include head.html %}
-{% include start-content.html %}
+{% include template/head.html %}
+{% include template/start-content.html %}
 {{ content }}
-{% include close-content.html %}
-{% include close-body.html %}
+{% include template/close-content.html %}
+{% include template/close-body.html %}
 
 {% else %}
 
-{% include head.html %}
-{% include masthead.html %}
-{% include nav-button.html %}
-{% include start-content.html %}
+{% include template/head.html %}
+{% include template/masthead.html %}
+{% include template/nav-button.html %}
+{% include template/start-content.html %}
 {{ content }}
-{% include close-content.html %}
+{% include template/close-content.html %}
 
 {% if site.output == "web" and site.data.settings.web.pagination == true %}
-{% include pagination %}
+{% include template/pagination.html %}
 {% endif %}
 {% if site.output == "app" and site.data.settings.app.pagination == true %}
-{% include pagination %}
+{% include template/pagination.html %}
 {% endif %}
 
-{% include nav.html %}
+{% include template/nav.html %}
 {% include footer.html %}
-{% include close-body.html %}
+{% include template/close-body.html %}
 
 {% endif %}

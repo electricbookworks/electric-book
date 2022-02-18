@@ -56,7 +56,6 @@ prose:
     # Book subfolders and files
     - /*/*/.gitignore
     - /*/*/0-0-cover.md
-    - /*/*/file-list
 
     # Translation folders and files
     - /*/*/.gitignore
@@ -70,7 +69,6 @@ prose:
     # Translation subfolders and files
     - /*/*/*/.gitignore
     - /*/*/*/0-0-cover.md
-    - /*/*/*/file-list
 
   media: "media"
   metadata:

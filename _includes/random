@@ -1,7 +1,7 @@
 {% capture random %}
 {% comment %}This include generates a random string.
-Save it to _includes. Then use {% include random %} 
-to get an 8-character string of numbers and letters.
+Use {% include random %} in markdown to get
+an 8-character string of numbers and letters.
 
 Optionally:
 
