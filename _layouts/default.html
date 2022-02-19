@@ -14,6 +14,13 @@ layout: compress
 
 {% include template/head.html %}
 {% include template/masthead.html %}
+
+{% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
+{% include template/annotator.html %}
+{% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
+{% include template/annotator.html %}
+{% endif %}
+
 {% include template/nav-button.html %}
 {% include template/start-content.html %}
 {{ content }}

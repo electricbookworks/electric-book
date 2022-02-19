@@ -7,12 +7,6 @@
         <li class="masthead-project-name"><a href="{{ path-to-root-directory }}index.html">{{ project-name }}</a></li>
     </ul>
 
-    {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
-        {% include template/annotator.html %}
-    {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
-        {% include template/annotator.html %}
-    {% endif %}
-
 {% comment %} Book pages {% endcomment %}
 {% else %}
 
@@ -67,12 +61,6 @@
             {% endif %}
         </ul>
 
-    {% endif %}
-
-    {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
-        {% include template/annotator.html %}
-    {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
-        {% include template/annotator.html %}
     {% endif %}
 
 {% endif %}
