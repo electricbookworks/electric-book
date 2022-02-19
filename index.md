@@ -7,7 +7,7 @@ style: home
 
 {% include metadata %}
 
-# Book-making with superpowers
+# Book-making with super&shy;powers
 {:.no_toc}
 
 The Electric Book template produces **website, ebook, app and print books from a single content source.** It is [packed with features for professional book production](#basic-features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. The template includes:
