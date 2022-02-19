@@ -1,7 +1,13 @@
 <div class="masthead">
 
+    <div class="masthead-logo">
+        <a href="{{ project-url }}">
+            {% include image file=project-logo path="assets/images" %}
+        </a>
+    </div>
+
 {% comment %} Home page, search page, and similar non-book pages {% endcomment %}
-{% if is-book-subdirectory != true %}
+{% if is-book-directory != true %}
 
     <ul>
         <li class="masthead-project-name"><a href="{{ path-to-root-directory }}index.html">{{ project-name }}</a></li>

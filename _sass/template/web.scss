@@ -122,10 +122,12 @@ $masthead-text-color: $color-links !default;
 $masthead-background-color: $color-background !default;
 $masthead-border-color: transparent !default;
 $masthead-breadcrumb-divider: "\2044" !default; // 2044 is a fraction slash
-$masthead-text-align: "left" !default; // left, right or center
+$masthead-align: "left" !default; // left, right or center
+$masthead-logo: true !default; // show logo in masthead?
+$masthead-logo-width: 5rem !default;
 
 // Website sidebar/navigation
-$nav-position: "right" !default; // left, right (not same as $masthead-text-align)
+$nav-position: "right" !default; // left, right (not same as $masthead-align)
 $nav-bar-text-size: 0.8em !default;
 $nav-bar-item-collapse: false !default; // Does the nav list fully expand, or collapse until mouseover?
 $nav-bar-close: "\00D7" !default; // &times; ×
