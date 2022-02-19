@@ -24,10 +24,17 @@ $web-masthead: true !default;
 
         ul {
             display: flex;
-            justify-content: end;
             list-style-type: none;
             margin: 0 auto;
             padding: 0.5em;
+
+            @if $masthead-text-align == "right" {
+                justify-content: end;
+            } @else if $masthead-text-align == "center" {
+                justify-content: center;
+            } @else {
+                justify-content: start;
+            }
 
             // Keep masthead height when li is display:none
             min-height: 3.5rem;

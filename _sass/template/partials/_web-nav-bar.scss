@@ -9,8 +9,13 @@ $nav-bar-back-button-hide: false !default;
         display: flex;
         position: absolute;
         top: 0;
-        left: 0;
         margin: 0;
+
+        @if $nav-position == "left" {
+            left: 0;
+        } @else {
+            right: 0;
+        }
     }
 
     .nav-back-button {
@@ -94,7 +99,12 @@ $nav-bar-back-button-hide: false !default;
             max-width: $nav-bar-width;
             position: absolute;
             top: 0;
-            left: 0;
+
+            @if $nav-position == "left" {
+                left: 0;
+            } @else {
+                right: 0;
+            }
         }
 
         // Reset position to fixed if $nav-bar-fixed: true
