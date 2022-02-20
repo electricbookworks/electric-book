@@ -266,6 +266,10 @@ $nav-bar-back-button-hide: false !default;
             line-height: $line-height-default * 0.75;
             margin: 1rem 0;
             padding: 0 1rem;
+
+            a {
+                text-decoration: none;
+            }
         }
 
     } // #nav

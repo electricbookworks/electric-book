@@ -1,0 +1,97 @@
+{% comment %}
+This is designed as an alternative to generating a nav list based on
+the nav nodes in _data/works files.
+
+This requires that the metadata include is already run in this context.
+{% endcomment %}
+
+{% comment %} What book are we rendering a list for? {% endcomment %}
+{% assign nav-files-book-directory = book-directory %}
+{% if include.directory %}
+    {% assign nav-files-book-directory = include.directory %}
+{% endif %}
+
+{% assign files-for-nav = site.pages | where_exp: "page", "page.name contains '.md'" %}
+{% if is-book-directory %}
+    {% capture book-path %}{{ book-directory }}/{% endcapture %}
+    {% assign files-for-nav = files-for-nav | where_exp: "page", "page.path contains book-path" %}
+{% endif %}
+
+{% comment %} Further refine pages array. {% endcomment %}
+{% if is-translation %}
+    {% capture nav-files-language-in-path %}/{{ language }}/{% endcapture %}
+    {% assign files-for-nav = files-for-nav | where_exp: "page", "page.path contains nav-files-language-in-path" %}
+{% endif %}
+
+{% comment %} Store book index pages in one array, and other book pages in another. {% endcomment %}
+{% assign new-files-tree-books = "" | split: "" %}
+{% assign new-files-tree-pages = "" | split: "" %}
+
+{% comment %} Fill that array with little arrays, one for each file. {% endcomment %}
+{% for file in files-for-nav %}
+
+    {% comment %} Create array. {% endcomment %}
+    {% assign files-entry = "" | split: "" %}
+
+    {% comment %} Get the filename on its own. {% endcomment %}
+    {% capture nav-files-entry-filename %}{{ file.name | replace: ".md", "" }}{% endcapture %}
+
+    {% comment %} Get directory from path. {% endcomment %}
+    {% capture nav-files-entry-directory %}{{ file.path | split: "/" | first }}{% endcapture %}
+
+    {% comment %} Get language of book listed. {% endcomment %}
+    {% assign nav-files-entry-translation-language = null %}
+    {% assign files-path-as-array = file.path | split: "/" %}
+    {% if files-path-as-array.size > 2 %}
+        {% capture nav-files-entry-translation-language %}{{ file.path | split: "/" | shift | first }}{% endcapture %}
+    {% endif %}
+
+    {% comment %} Get the file title or a fallback. {% endcomment %}
+    {% if file.title and file.title != "" %}
+        {% capture nav-files-entry-title %}{{ file.title }}{% endcapture %}
+    {% else %}
+        {% capture nav-files-entry-title %}{{ nav-files-entry-filename | capitalize }}{% endcapture %}
+    {% endif %}
+
+    {% comment %} Add items to arrays. In entry:
+    [0]: book
+    [1]: file
+    [2]: title
+    [3]: language {% endcomment %}
+
+    {% assign files-entry = files-entry | push: nav-files-entry-directory %}
+    {% assign files-entry = files-entry | push: nav-files-entry-filename %}
+    {% assign files-entry = files-entry | push: nav-files-entry-title %}
+    {% assign files-entry = files-entry | push: nav-files-entry-translation-language %}
+
+    {% if nav-files-entry-filename == "index" %}
+        {% assign new-files-tree-books = new-files-tree-books | push: files-entry %}
+    {% else %}
+        {% assign new-files-tree-pages = new-files-tree-pages | push: files-entry %}
+    {% endif %}
+
+{% endfor %}
+
+{% comment %} Render the list. {% endcomment %}
+<ol>
+
+    {% comment %} If we're rendering the relevant book, list its children. {% endcomment %}
+    {% for entry in new-files-tree-pages %}
+
+        {% if is-translation and entry[0] == nav-files-book-directory and entry[3] == language %}
+            <li>
+                <a href="{{ path-to-root-directory }}{{ entry[0] }}/{{ entry[3] }}/{{ entry[1] }}.html">
+                    {{ entry[2] }}
+                </a>
+            </li>
+        {% elsif entry[0] == nav-files-book-directory and entry[3] == null %}
+            <li>
+                <a href="{{ path-to-root-directory }}{{ entry[0] }}/{{ entry[1] }}.html">
+                    {{ entry[2] }}
+                </a>
+            </li>
+        {% endif %}
+
+    {% endfor %}
+
+</ol>

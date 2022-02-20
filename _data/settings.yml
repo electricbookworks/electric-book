@@ -123,10 +123,10 @@ web:
   # --------------
   # Navigation
   # --------------
+  nav:
   # On your landing page, should books in the nav expand
   # to include chapters? Expanding many chapters can
   # make your pages much bigger and slower. true/false
-  nav:
     home:
       expand-books: true
   # --------------
@@ -238,12 +238,12 @@ app:
   # --------------
   # Navigation
   # --------------
+  nav:
   # On your landing page, should books in the nav expand
   # to include chapters? Expanding many chapters can
   # make your pages much bigger and slower. true/false
-  nav:
     home:
-      expand-books: false
+      expand-books: true
   # --------------
   # Search
   # --------------

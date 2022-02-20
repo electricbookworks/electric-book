@@ -17,6 +17,8 @@ You can test whether your YAML is valid by pasting it into the box on [yamllint.
 
 Each book has its own folder in `_data/works`. And in each book's data folder, there is at least a `default.yml` file, which contains all the default metadata for that book. E.g. the title, ISBNs, and the names of each file for your contents pages.
 
+As described below, in the YAML files in `_data/works`, you define website and app navigation menus in the `nav` sections. If you do not define a `nav` section, the template will generate your navigation menu from your markdown files directly. This auto-generated menu is usually less refined than a `nav` you've defined manually, but it is a quicker way to get going.
+
 > For navigation for non-book pages like 'About us' and 'Contact us', see [Project-wide navigation](#project-wide-navigation) below.
 {:.box}
 

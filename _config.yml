@@ -48,19 +48,6 @@ baseurl: "/electric-book"
 # in this project's Gemfile.
 repository: ""
 
-# Navigation
-# ----------
-# Web navigation source: use either "files" or "nav":
-# - files: navigation will be taken from the web files list in
-#   each book or variant's YAML file in `_data/works`.`
-#   files is easier, because you don't have to create
-#   nav yaml in _data/works, only a files list.
-#   The site also builds more quickly.
-# - nav: navigation will be taken from the web nav tree in `_data/works`.
-#   nav is more powerful, and allows submenu nesting,
-#   but is more complex to create and builds more slowly.
-nav-source: nav
-
 # MathJax
 # -------
 # Enable MathJax to render mathematics. MathJax adds a large script to your pages,
@@ -91,11 +78,7 @@ collections:
 # The default output format is 'web'. Don't change this
 # unless you really know what you're doing.
 # This is overriden by output-specific config files in _configs/
-# output: "print-pdf"
-# output: "screen-pdf"
 output: "web"
-# output: "epub"
-# output: "app"
 
 # Image set
 # ---------
@@ -106,11 +89,7 @@ output: "web"
 # directory in each book's directory, and then to any
 # subdirectories you create per set. Default is images/web.
 # This is overriden in output-specific config files in _configs/.
-# image-set: "images/print-pdf"
-# image-set: "images/screen-pdf"
 image-set: "images/web"
-# image-set: "images/epub"
-# image-set: "images/app"
 
 # Files to exclude from Jekyll build
 # ----------------------------------
