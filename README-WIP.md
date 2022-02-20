@@ -17,6 +17,16 @@ Its primary aims are:
 
 ## To do
 
-1. Replace `file-list` file with JS-driven way to fetch the file list for Prince [done]
-1. Handle all output in run.js (cross-platform) [done]
 1. Create output tests (possibly in a separate project after this one)
+
+### Done
+
+1. Remove nav-source, use files as fallback for no nav entry
+1. Add option to use org logo in masthead, linked to org URL
+1. Create option to put menu on right, logo/masthead top left
+1. Move annotator out of masthead
+1. Fix nav misalignment in docs pages
+1. Replace `file-list` file with JS-driven way to fetch the file list for Prince
+1. Handle all output in run.js (cross-platform)
+1. Move .html includes into _includes/template, and update files.txt
+1. Add new layouts to files.txt
