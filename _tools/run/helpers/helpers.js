@@ -1346,6 +1346,40 @@ async function refreshIndexes (argv) {
   }
 }
 
+// Copy a book to create a new one
+function newBook(argv) {
+  'use strict'
+
+  let sourceName = 'book'
+  if (argv.book) {
+    sourceName = argv.book
+  }
+
+  let destinationName = 'new'
+  if (argv.name) {
+    destinationName = argv.name
+  }
+
+  const contentSource = fsPath.normalize(process.cwd() + '/' + sourceName)
+  const dataSource = fsPath.normalize(process.cwd() + '/_data/works/' + sourceName)
+  const contentDestination = fsPath.normalize(process.cwd() + '/' + destinationName)
+  const dataDestination = fsPath.normalize(process.cwd() + '/_data/works/' + destinationName)
+
+  // Copy content folder
+  try {
+    fs.copySync(contentSource, contentDestination)
+  } catch (error) {
+    console.log(error)
+  }
+
+  // Copy _data/works folder
+  try {
+    fs.copySync(dataSource, dataDestination)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   app,
   pdf,
@@ -1355,6 +1389,7 @@ module.exports = {
   processImages,
   installGems,
   installNodeModules,
+  newBook,
   pathExists,
   refreshIndexes,
   works

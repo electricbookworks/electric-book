@@ -24,6 +24,15 @@ const options = {
     implies: ['format'],
     nargs: 1
   },
+  name: {
+    description: 'Name of a new book',
+    alias: 'n',
+    default: 'new',
+    defaultDescription: 'new',
+    type: 'string',
+    implies: ['book'],
+    nargs: 1
+  },
   language: {
     description: 'Translation language, e.g. fr',
     alias: 'l',
