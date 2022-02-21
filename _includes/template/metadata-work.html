@@ -145,6 +145,8 @@ we fall back to the value in the work's default.yml.
     {% capture print-pdf-date %}{{ work[work-variant].products.print-pdf.date }}{% endcapture %}
 {% elsif work.default.products.print-pdf.date and work.default.products.print-pdf.date != "" %}
     {% capture print-pdf-date %}{{ work.default.products.print-pdf.date }}{% endcapture %}
+{% else %}
+    {% capture print-pdf-date %}{{ date }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.print-pdf.format and work[work-variant].products.print-pdf.format != "" %}
@@ -157,12 +159,16 @@ we fall back to the value in the work's default.yml.
     {% capture print-pdf-identifier %}{{ work[work-variant].products.print-pdf.identifier }}{% endcapture %}
 {% elsif work.default.products.print-pdf.identifier and work.default.products.print-pdf.identifier != "" %}
     {% capture print-pdf-identifier %}{{ work.default.products.print-pdf.identifier }}{% endcapture %}
+{% else %}
+    {% capture print-pdf-identifier %}{{ identifier }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.print-pdf.image and work[work-variant].products.print-pdf.image != "" %}
     {% capture print-pdf-image %}{{ work[work-variant].products.print-pdf.image }}{% endcapture %}
 {% elsif work.default.products.print-pdf.image and work.default.products.print-pdf.image != "" %}
     {% capture print-pdf-image %}{{ work.default.products.print-pdf.image }}{% endcapture %}
+{% else %}
+    {% capture print-pdf-image %}{{ image }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.print-pdf.files and work[work-variant].products.print-pdf.files != "" %}
@@ -188,6 +194,8 @@ we fall back to the value in the work's default.yml.
     {% capture web-date %}{{ work[work-variant].products.web.date }}{% endcapture %}
 {% elsif work.default.products.web.date and work.default.products.web.date != "" %}
     {% capture web-date %}{{ work.default.products.web.date }}{% endcapture %}
+{% else %}
+    {% capture web-date %}{{ date }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.web.format and work[work-variant].products.web.format != "" %}
@@ -200,12 +208,16 @@ we fall back to the value in the work's default.yml.
     {% capture web-identifier %}{{ work[work-variant].products.web.identifier }}{% endcapture %}
 {% elsif work.default.products.web.identifier and work.default.products.web.identifier != "" %}
     {% capture web-identifier %}{{ work.default.products.web.identifier }}{% endcapture %}
+{% else %}
+    {% capture web-identifier %}{{ identifier }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.web.image and work[work-variant].products.web.image != "" %}
     {% capture web-image %}{{ work[work-variant].products.web.image }}{% endcapture %}
 {% elsif work.default.products.web.image and work.default.products.web.image != "" %}
     {% capture web-image %}{{ work.default.products.web.image }}{% endcapture %}
+{% else %}
+    {% capture web-image %}{{ image }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.web.start-page and work[work-variant].products.web.start-page != "" %}
@@ -248,6 +260,8 @@ we fall back to the value in the work's default.yml.
     {% capture epub-date %}{{ work[work-variant].products.epub.date }}{% endcapture %}
 {% elsif work.default.products.epub.date and work.default.products.epub.date != "" %}
     {% capture epub-date %}{{ work.default.products.epub.date }}{% endcapture %}
+{% else %}
+    {% capture epub-date %}{{ date }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.epub.format and work[work-variant].products.epub.format != "" %}
@@ -260,12 +274,16 @@ we fall back to the value in the work's default.yml.
     {% capture epub-identifier %}{{ work[work-variant].products.epub.identifier }}{% endcapture %}
 {% elsif work.default.products.epub.identifier and work.default.products.epub.identifier != "" %}
     {% capture epub-identifier %}{{ work.default.products.epub.identifier }}{% endcapture %}
+{% else %}
+    {% capture epub-identifier %}{{ identifier }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.epub.image and work[work-variant].products.epub.image != "" %}
     {% capture epub-image %}{{ work[work-variant].products.epub.image }}{% endcapture %}
 {% elsif work.default.products.epub.image and work.default.products.epub.image != "" %}
     {% capture epub-image %}{{ work.default.products.epub.image }}{% endcapture %}
+{% else %}
+    {% capture epub-image %}{{ image }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.epub.files and work[work-variant].products.epub.files != "" %}
@@ -301,6 +319,8 @@ we fall back to the value in the work's default.yml.
     {% capture screen-pdf-date %}{{ work[work-variant].products.screen-pdf.date }}{% endcapture %}
 {% elsif work.default.products.screen-pdf.date and work.default.products.screen-pdf.date != "" %}
     {% capture screen-pdf-date %}{{ work.default.products.screen-pdf.date }}{% endcapture %}
+{% else %}
+    {% capture screen-pdf-date %}{{ date }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.screen-pdf.format and work[work-variant].products.screen-pdf.format != "" %}
@@ -313,12 +333,16 @@ we fall back to the value in the work's default.yml.
     {% capture screen-pdf-identifier %}{{ work[work-variant].products.screen-pdf.identifier }}{% endcapture %}
 {% elsif work.default.products.screen-pdf.identifier and work.default.products.screen-pdf.identifier != "" %}
     {% capture screen-pdf-identifier %}{{ work.default.products.screen-pdf.identifier }}{% endcapture %}
+{% else %}
+    {% capture screen-pdf-identifier %}{{ identifier }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.screen-pdf.image and work[work-variant].products.screen-pdf.image != "" %}
     {% capture screen-pdf-image %}{{ work[work-variant].products.screen-pdf.image }}{% endcapture %}
 {% elsif work.default.products.screen-pdf.image and work.default.products.screen-pdf.image != "" %}
     {% capture screen-pdf-image %}{{ work.default.products.screen-pdf.image }}{% endcapture %}
+{% else %}
+    {% capture screen-pdf-image %}{{ image }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.screen-pdf.files and work[work-variant].products.screen-pdf.files != "" %}
@@ -327,14 +351,14 @@ we fall back to the value in the work's default.yml.
     {% assign screen-pdf-file-list = work.default.products.screen-pdf.files %}
 {% endif %}
 
-{% if work[work-variant].products.screen-pdf.date and work[work-variant].products.screen-pdf.date != "" %}
+{% if work[work-variant].products.screen-pdf.toc and work[work-variant].products.screen-pdf.toc != "" %}
     {% assign screen-pdf-toc = work[work-variant].products.screen-pdf.toc %}
 
     {% if site.output == "screen-pdf" and work-variant != "default" %}
         {% assign variant-toc = true %}
     {% endif %}
 
-{% elsif work.default.products.screen-pdf.date and work.default.products.screen-pdf.date != "" %}
+{% elsif work.default.products.screen-pdf.toc and work.default.products.screen-pdf.toc != "" %}
 
     {% assign screen-pdf-toc = work.default.products.screen-pdf.toc %}
 {% endif %}
