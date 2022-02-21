@@ -13,6 +13,14 @@ A Jekyll template for creating books in multiple formats:
 
 ## Usage
 
+The first time you work on this project on your machine, run this at the command line, in the same folder as this README file:
+
+```sh
+npm run setup
+```
+
+Now the Electric Book template is ready to use.
+
 Start by entering this at the command line, in the same folder as this README file:
 
 ```sh
