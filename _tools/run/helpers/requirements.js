@@ -218,11 +218,6 @@ function checkRequiredPaths () {
         description: 'A navigation file for backwards-compatibility in older ereaders. You only need this file in a book if that backwards-compatibility is important to you.'
       },
       {
-        path: work + '/fonts',
-        type: 'recommended',
-        description: 'Store any font files for your book here. (If you want to share font files across books, you can also store fonts in `assets/fonts`.)'
-      },
-      {
         path: work + '/images',
         type: 'recommended',
         description: 'This is where you store images for a book.'

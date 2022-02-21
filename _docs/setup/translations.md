@@ -33,7 +33,7 @@ The markdown files of each translation are saved in its folder. So all markdown 
 
 ## Styles, fonts and images
 
-Translations inherit `styles`, `fonts` and `images` from the parent language, unless files in those folders exist in the translation directory.
+Translations inherit `styles` and `images` from the parent language, unless files in those folders exist in the translation directory.
 
 ### Styles
 
