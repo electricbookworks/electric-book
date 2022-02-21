@@ -27,7 +27,7 @@ Start by entering this at the command line, in the same folder as this README fi
 npm run electric-book
 ```
 
-That lists available `electric-book` commands and options.
+That lists available `electric-book` commands and options. You can also use `eb` instead of `electric-book`, here and in the following commands.
 
 This default output command serves your project as website on your machine:
 

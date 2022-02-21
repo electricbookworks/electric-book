@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "cordova": "cordova",
     "electric-book": "node _tools/run/index.js",
+    "eb": "node _tools/run/index.js",
     "setup": "npm install && bundle install"
   },
   "repository": {
