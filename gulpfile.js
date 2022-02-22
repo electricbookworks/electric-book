@@ -623,6 +623,7 @@ gulp.task('images:svg', function (done) {
 
             // If there is a [book]AllSvg.js function, run it
             if(imageFunctions.functions
+                    && imageFunctions.functions[book]
                     && imageFunctions.functions[book]['all_svg']
                     && imageFunctions.functions[book]['all_svg']['all_svg']) {
                 console.log('Running the ' + 'all_svg function on ' + filename);
@@ -631,6 +632,7 @@ gulp.task('images:svg', function (done) {
 
             // If there is an image-specific function, run it
             if(imageFunctions.functions
+                    && imageFunctions.functions[book]
                     && imageFunctions.functions[book][imageFunctionName]
                     && imageFunctions.functions[book][imageFunctionName][imageFunctionName]) {
                 console.log('Running the ' + [imageFunctionName] + ' function on ' + filename);
