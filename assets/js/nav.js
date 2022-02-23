@@ -87,7 +87,9 @@ function ebNav() {
 
                 // if it's an anchor with an href (an in-page link)
                 if (clickedElement.tagName === "A" && clickedElement.getAttribute('href')) {
-                    ebHideMenu();
+                    ebToggleClickout(menu, function () {
+                        ebHideMenu();
+                    });
                     return;
                 }
 
