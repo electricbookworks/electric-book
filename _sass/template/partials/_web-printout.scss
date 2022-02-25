@@ -1,0 +1,67 @@
+$web-printout: true !default;
+
+@if $web-printout {
+
+    // Print-from-browser styles
+
+    @media print {
+
+        // Hide web-only elements
+
+        [href="#nav"],
+        .masthead,
+        .pagination,
+        a.accordion-show-all-button,
+        svg.history-icon {
+            display: none
+        }
+
+        [data-accordion="open"]:after,
+        [data-accordion="closed"]:after {
+            content: normal;
+        }
+
+        // Adjust sizes and colours
+
+        body {
+            background: none;
+            font-size: 1rem;
+        }
+
+        #wrapper {
+            background: none;
+        }
+
+        #content,
+        .footer-content {
+            max-width: 60em;
+        }
+
+        h1 {
+            background: none;
+            color: $color-text-main;
+        }
+
+        .reverse-footnote-arrow {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        #footer {
+            background: none;
+            color: $color-text-main;
+
+            p {
+                color: $color-text-main;
+            }
+        }
+
+        // Sidebar elements
+        .sidenote {
+            display: block;
+            float: right;
+            max-width: 40%;
+            margin-bottom: $line-height-default;
+        }
+    }
+}
