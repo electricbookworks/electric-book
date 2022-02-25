@@ -12,8 +12,11 @@ RUN apt-get update && apt-get install -y \
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/$(curl https://ipapi.co/timezone) /etc/localtime
 
+# Add node source for nodejs version 12, instead of Ubuntu installed node (version 10)
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
+
 # Main dependency installation and clear apt cache to make image smaller
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
   software-properties-common \
   make \
   gcc \
@@ -40,19 +43,17 @@ RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.
   dpkg -i pandoc-2.5-1-amd64.deb
 
 # Pin RubyGems to 3.0.6 and install Jekyll
-RUN gem update --system 3.0.6 --no-document && \
-  gem install bundler:1.16.1 jekyll
+RUN gem update --system 3.0.6 --no-document && gem install bundler:1.16.1 jekyll
 
 # Install Gulp cli app
 RUN npm install --global gulp-cli
 
-
 WORKDIR /app
 COPY . /app
 
-RUN bundle update \
-  && bundle install \
-  && npm install \
+RUN bundle install
+
+RUN npm install \
   && npm install gulp-cli
 
 COPY ./_tools/docker/entrypoint.sh /entrypoint.sh

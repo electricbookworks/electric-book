@@ -5,3 +5,6 @@ layout: min
 ---
 
 {% include redirect target="text" %}
+
+
+test
