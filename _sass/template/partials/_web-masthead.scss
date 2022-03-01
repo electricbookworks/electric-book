@@ -28,7 +28,7 @@ $web-masthead: true !default;
 
         .masthead-logo {
             padding: 1rem;
-            max-height: 3.5rem;
+            max-height: $masthead-height;
             width: 5rem;
 
             @if $masthead-logo-width {
@@ -40,7 +40,7 @@ $web-masthead: true !default;
                 max-width: 100%;
             }
 
-            @if $masthead-align == "right" {
+            @if $masthead-logo-position == "right" {
                 order: 2;
             }
         }
@@ -65,7 +65,7 @@ $web-masthead: true !default;
             padding: 0.5rem 0.5rem 0.5rem 0;
 
             // Keep masthead height when li is display:none
-            min-height: 3.5rem;
+            min-height: $masthead-height;
 
             li {
                 display: none; // hide masthead breadcrumbs as mobile-first default

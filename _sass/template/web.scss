@@ -122,8 +122,10 @@ $masthead-text-color: $color-links !default;
 $masthead-background-color: $color-background !default;
 $masthead-border-color: transparent !default;
 $masthead-breadcrumb-divider: "\2044" !default; // 2044 is a fraction slash
-$masthead-align: "left" !default; // left, right or center
+$masthead-height: 3.5rem !default;
+$masthead-align: left !default; // left, right or center
 $masthead-logo: true !default; // show logo in masthead?
+$masthead-logo-position: left !default; // left, right
 $masthead-logo-width: 5rem !default;
 
 // Website sidebar/navigation

@@ -160,7 +160,7 @@ $nav-bar-back-button-hide: false !default;
                         // Make link fill entire li area
                         display: inline-block;
                         width: 100%;
-                        padding: 0 1rem;
+                        padding: 0 1.5rem 0 1rem; // space for open/close button
                         color: $nav-bar-parent-text-color;
                         text-decoration: none;
 
