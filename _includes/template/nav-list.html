@@ -25,7 +25,7 @@ It also includes any items in _data/nav.yml, below the book entries.
   {% if is-book-directory != true is-book-subdirectory != true and is-docs-page != true %}
 
     {% comment %}Get an array of all the pages we've output to check against{% endcomment %}
-    {% assign site-pages-page-list = "" | split: "|" %}
+    {% assign site-pages-page-list = "" | split: "" %}
     {% for page in site.pages %}
       {% capture site-pages-page-name %}{{ page.name | split: "." | first }}{% endcapture %}
       {% assign site-pages-page-list = site-pages-page-list | push: site-pages-page-name %}
@@ -54,7 +54,7 @@ It also includes any items in _data/nav.yml, below the book entries.
 
     {% comment %}Get an array of existing pages to check against{% endcomment %}
     {% assign site-pages-in-book = site.pages | where_exp: 'p', 'p.path contains book-directory' %}
-    {% assign nav-tree-page-list = "" | split: "|" %}
+    {% assign nav-tree-page-list = "" | split: "" %}
     {% for page in site-pages-in-book %}
       {% capture nav-tree-page-name %}{{ page.name | split: "." | first }}{% endcapture %}
       {% assign nav-tree-page-list = nav-tree-page-list | push: nav-tree-page-name %}
