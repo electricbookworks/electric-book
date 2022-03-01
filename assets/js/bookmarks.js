@@ -49,6 +49,7 @@ function ebBookmarkableElements() {
     // ... but exclude elements with data-bookmarkable="no",
     // or whose ancestors have data-bookmarkable="no",
     // or who are MathJax elements
+    // or are footnote references
     // or those specified in settings.web.bookmarks.elements.exclude
     // (We also check for '[data-bookmarkable="no"]' there,
     // bacause settings.web.bookmarks.elements.exclude may be empty.)
@@ -56,6 +57,7 @@ function ebBookmarkableElements() {
         if (element.getAttribute('data-bookmarkable') !== 'no'
                 && !element.closest('[data-bookmarkable="no"]')
                 && !element.id.startsWith('MathJax-')
+                && !element.id.startsWith('fnref:')
                 && !element.matches('[data-bookmarkable="no"]', settings.web.bookmarks.elements.exclude)) {
             return true;
         }
