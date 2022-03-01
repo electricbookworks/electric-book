@@ -38,8 +38,14 @@ The crumbs-array is created empty in _includes/metadata.
             {% for crumb in include.crumbs-array %}
                 <li class="masthead-breadcrumb">{{ crumb | strip | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</li>
             {% endfor %}
-            <li class="masthead-breadcrumb">{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines | strip }}</li>
-            {% comment %}We don't break here because some files
+
+            {% comment %} If the current file is an index.* file, don't add a breadcrumb,
+            because it's the same as its parent breakdcrumb. {% endcomment %}
+            {% unless current-file == "index" %}
+                <li class="masthead-breadcrumb">{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines | strip }}</li>
+            {% endunless %}
+
+            {% comment %}We don't {% break %} here because some files
             appear more than once in nav/breadcrumbs.{% endcomment %}
         {% else %}
             {% include template/breadcrumbs.html breadcrumb-tree=children crumbs-array=crumbs-array %}
