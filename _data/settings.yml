@@ -113,9 +113,8 @@ web:
   # Images management
   # -----------------
   images:
+    # Load images only when they come into view?
     lazyload: true
-    # Do you want images to open as a standalone file when clicked?
-    open-image-on-click: true
   # -----------------
   # Bookmarks
   # -----------------
