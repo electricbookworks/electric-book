@@ -208,6 +208,24 @@ en:
     reversefootnote-alt: "Back to text"
   pdf:
     cover: "Cover"
+  # Comment out a network to remove it
+  # from the share menu
+  share:
+    link: "Link"
+    email: "Email"
+    facebook: "Facebook"
+    linkedin: "LinkedIn"
+    reddit: "Reddit"
+    twitter: "Twitter"
+    whatsapp: "WhatsApp"
+    # buffer: "Buffer"
+    # delicious: "Delicious"
+    # evernote: "Evernote"
+    # pinterest: "Pinterest"
+    # pocket: "Pocket"
+    # stumbleupon: "Stumbleupon"
+    # tumblr: "Tumblr"
+    # wordpress: "WordPress"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""

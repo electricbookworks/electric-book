@@ -367,6 +367,7 @@ assets/js/search-store.js
 assets/js/search-terms.js
 assets/js/select-list.js
 assets/js/setup.js
+assets/js/share.js
 assets/js/shift-elements.js
 assets/js/show-hide.js
 assets/js/slides.js
@@ -649,12 +650,14 @@ _includes/template/language-select-icon.svg
 _includes/template/language-select-list.html
 _includes/template/masthead.html
 _includes/template/mathjax-manifest.xml
+_includes/template/meta-tags.html
 _includes/template/metadata-work.html
 _includes/template/nav.html
 _includes/template/nav-button.html
 _includes/template/nav-list.html
 _includes/template/pagination.html
 _includes/template/question-secret-code.html
+_includes/template/share.html
 _includes/template/sitemap.html
 _includes/template/start-content.html
 _includes/template/translations-array.html
@@ -822,6 +825,7 @@ _sass/template/partials/_web-questions.scss
 _sass/template/partials/_web-reset-sequences.scss
 _sass/template/partials/_web-search.scss
 _sass/template/partials/_web-select-questions.scss
+_sass/template/partials/_web-share.scss
 _sass/template/partials/_web-slides.scss
 _sass/template/partials/_web-smallcaps.scss
 _sass/template/partials/_web-sources.scss

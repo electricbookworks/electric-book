@@ -196,73 +196,14 @@
     <link rel="icon" type="image/png" href="{{ path-to-root-directory }}assets/images/web/favicon.png">
 
     {% comment %}OpenGraph metadata{% endcomment %}
-    <meta property="og:title"
-          content="{% if page.title and page.title != "" %}{{ page.title }}{% elsif title and title != "" %}{{ title }}{% else %}{{ project-name }}{% endif %}" />
+
+    {% include template/meta-tags.html %}
+
+    <meta property="og:title" content="{{ meta-tag-title }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}" />
-
-    {% comment %}Get appropriate description, in order of preference:
-    1. Page description (from page frontmatter)
-    2. Book description (from `_data/works` via metadata include)
-    3. Project description (from `_data/works` via metadata include)
-    {% endcomment %}
-    {% if page.description and page.description != "" %}
-        {% capture og-description %}{{ page.description }}{% endcapture %}
-    {% elsif description and description != "" %}
-        {% capture og-description %}{{ description }}{% endcapture %}
-    {% else %}
-        {% capture og-description %}{{ project-description }}{% endcapture %}
-    {% endif %}
-
-    <meta property="og:description" content="{{ og-description }}" />
-
-    {% comment %} Work out which image to use {% endcomment %}
-    {% capture og-image-relative %}
-
-        {% comment %} If the page has an image defined for it, use that... {% endcomment %}
-        {% if page.image %}
-
-            {% if is-root-directory == true or is-translation-root-directory == true %}
-                assets/images/web/{{ page.image }}
-            {% else %}
-                {{ book-directory }}/{{ site.image-set }}/{{ page.image }}
-            {% endif %}
-
-        {% comment %} If no page image is defined...
-
-        on non-book pages use the project image,
-        and the translated version for translated home pages.
-        We don't check for the existence of the translated image file,
-        to save build time. Onus on user to add it to assets/[language]. {% endcomment %}
-        {% elsif is-root-directory == true or is-translation-root-directory == true %}
-            {% if is-translation-homepage == true %}
-                assets/{{ language }}/images/web/{{ project-image }}
-            {% else %}
-                assets/images/web/{{ project-image }}
-            {% endif %}
-
-        {% comment %} Otherwise, if there is a web image, use that {% endcomment %}
-        {% elsif web-image != "" %}
-            {{ book-directory }}/{{ site.image-set }}/{{ web-image }}
-
-        {% comment %} Otherwise, if no web-image but there is an image defined
-        for the work or product, use that {% endcomment %}
-        {% elsif image != "" %}
-            {{ book-directory }}/{{ site.image-set }}/{{ image }}
-
-        {% comment %} Or fall back to the project image {% endcomment %}
-        {% else %}
-            assets/images/web/{{ project-image }}
-        {% endif %}
-    {% endcapture %}
-
-    {% comment %} Add absolute-link prefix to the relative path {% endcomment %}
-    {% capture og-image %}
-        {{ site.canonical-url }}{{ site.baseurl }}/{{ og-image-relative | strip_newlines | strip }}
-    {% endcapture %}
-
-    <meta property="og:image" content="{{ og-image | strip_newlines | strip }}" />
-
+    <meta property="og:url" content="{{ meta-tag-url }}" />
+    <meta property="og:description" content="{{ meta-tag-description }}" />
+    <meta property="og:image" content="{{ meta-tag-image }}" />
 
     {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
@@ -284,7 +225,7 @@
     {% if site.data.settings.web.monetization.enabled == true %}
         <meta name="monetization" content={{ site.data.settings.web.monetization.ilp-pointer }}>
     {% endif %}
-    
+
     {% if site.mathjax-enabled == true %}
         {% include mathjax-config.html %}
     {% endif %}

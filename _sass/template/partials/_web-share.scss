@@ -1,0 +1,75 @@
+$web-share: true !default;
+$share-icon-color: $color-accent !default;
+@if $web-share {
+
+    .share {
+
+        .share-button {
+            
+            svg.share-icon {
+                width: 1rem;
+    
+                path {
+                    stroke: $share-icon-color;
+                    fill: none;
+                }
+
+                &.active {
+    
+                    path {
+                        fill: $share-icon-color;
+                    }
+                }
+            }
+        }
+
+        .share-links {
+
+            @include dialog-styles();
+            list-style-type: none;
+            position: absolute;
+            z-index: 1;
+
+            .share-link {
+                margin-bottom: 0.25rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                .share-link-content {
+                    text-decoration: none;
+
+                    &:hover {
+
+                        svg {
+
+                            path {
+                                fill: $share-icon-color;
+                            }
+                        }
+                    }
+                }
+        
+                .share-link-icon {
+                    display: inline-block;
+                    margin-right: 0.5rem;
+                    vertical-align: middle;
+                    width: 1rem;
+    
+                    svg {
+                        path {
+                            fill: $grey-mid;
+                        }
+                    }
+                }
+        
+                .share-link-label {
+                    line-height: 1; 
+                }
+            }
+    
+        }
+
+    }
+}

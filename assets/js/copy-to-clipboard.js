@@ -29,7 +29,14 @@ function ebCopyButtonFeedback(button, text) {
 // Copy an element's text to the clipboard.
 function ebCopyToClipboard(element, button) {
     'use strict';
+
+    // If the element has a data-copy-text attribute,
+    // use that text. Otherwise, use its textContent.
     var text = element.textContent;
+    if (element.hasAttribute('data-copy-text')) {
+        text = element.getAttribute('data-copy-text');
+    }
+
     navigator.clipboard.writeText(text).then(function () {
         // success
         ebCopyButtonFeedback(button, ebCopyToClipboardSuccessText);
@@ -60,7 +67,12 @@ function ebAddCopyButtons() {
     'use strict';
     var elementsThatNeedButtons = document.querySelectorAll('.copy-to-clipboard');
     elementsThatNeedButtons.forEach(function (element) {
-        ebAddCopyButton(element, ebCopyToClipboardButtonText);
+
+        if (element.hasAttribute('data-copy-button-text')) {
+            ebAddCopyButton(element, element.getAttribute('data-copy-button-text'));
+        } else {
+            ebAddCopyButton(element, ebCopyToClipboardButtonText);
+        }
     });
 }
 

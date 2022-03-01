@@ -249,6 +249,7 @@ $web-controls: true !default;
 $web-language-select: true !default;
 $web-annotator: true !default;
 $web-bookmarks: true !default;
+$web-share: true !default;
 
 // Print-out styles
 $web-printout: true !default;
@@ -339,6 +340,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "template/partials/web-annotator";
 @import "template/partials/web-language-select";
 @import "template/partials/web-bookmarks";
+@import "template/partials/web-share";
 
 // Print-out styles
 @import "template/partials/web-printout";
