@@ -23,7 +23,7 @@ var ebCurrentBookIndexPageNumber = '';
 function addPageReferenceFunc() {
     'use strict';
 
-    if (typeof Prince === 'object') {
+    if (Prince && typeof Prince === 'object') {
         console.log('Adding page references in Prince.');
         Prince.addScriptFunc("pagereference", function (currentPage, targetPage) {
 
