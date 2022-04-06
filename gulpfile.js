@@ -189,7 +189,7 @@ var paths = {
 };
 
 // Set filetypes to convert, comma separated, no spaces
-var filetypes = 'jpg,jpeg,gif,png';
+var filetypes = 'jpg,jpeg,gif,png,tif,tiff';
 
 // Default color settings
 var defaultColorProfile = 'sRGB_v4_ICC_preference_displayclass.icc';
