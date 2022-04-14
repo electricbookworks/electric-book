@@ -388,6 +388,8 @@ assets/js/vendor/svg-inject.min.js
 
 # assets/js/search-index-app.js
 # assets/js/search-index-web.js
+# assets/js/search-index-with-docs-app.js
+# assets/js/search-index-with-docs-web.js
 
 
 
@@ -559,6 +561,7 @@ _docs/output/web-output.md
 _docs/output/word-output.md
 _docs/setup/file-lists.md
 _docs/setup/metadata.md
+_docs/setup/princexml.md
 _docs/setup/quick-start.md
 _docs/setup/search-indexes.md
 _docs/setup/setting-up-a-book.md
@@ -578,7 +581,7 @@ _docs/troubleshooting/troubleshooting.md
 # This is a Jekyll collection of files used
 # when generating epub files.
 
-_epub/fonts/.gitignore
+_epub/assets/fonts/.gitignore
 _epub/META-INF/com.apple.ibooks.display-options.xml
 _epub/META-INF/container.xml
 _epub/mimetype
@@ -655,6 +658,7 @@ _includes/template/metadata-work.html
 _includes/template/nav.html
 _includes/template/nav-button.html
 _includes/template/nav-list.html
+_includes/template/nav-list-files.html
 _includes/template/pagination.html
 _includes/template/question-secret-code.html
 _includes/template/share.html
@@ -662,6 +666,23 @@ _includes/template/sitemap.html
 _includes/template/start-content.html
 _includes/template/translations-array.html
 
+_includes/template/icons/buffer.svg
+_includes/template/icons/delicious.svg
+_includes/template/icons/email.svg
+_includes/template/icons/evernote.svg
+_includes/template/icons/facebook.svg
+_includes/template/icons/link.svg
+_includes/template/icons/linkedin.svg
+_includes/template/icons/pinterest.svg
+_includes/template/icons/pocket.svg
+_includes/template/icons/reddit.svg
+_includes/template/icons/stumbleupon.svg
+_includes/template/icons/tumblr.svg
+_includes/template/icons/twitter.svg
+_includes/template/icons/whatsapp.svg
+_includes/template/icons/wordpress.svg
+
+_includes/theme/.gitignore
 
 # Layouts
 # -------
@@ -847,9 +868,23 @@ _sass/template/web.scss
 
 _tools/gulp/README.md
 _tools/gulp/functions/.gitignore
+_tools/run/commands/check.js
+_tools/run/commands/export.js
+_tools/run/commands/images.js
+_tools/run/commands/install.js
+_tools/run/commands/new.js
+_tools/run/commands/output.js
+_tools/run/commands/package.js
+_tools/run/commands/reindex.js
+_tools/run/helpers/helpers.js
+_tools/run/helpers/options.js
+_tools/run/helpers/package/package.js
+_tools/run/helpers/reindex/build-reference-index.js
+_tools/run/helpers/reindex/build-search-index.js
+_tools/run/helpers/requirements.js
+_tools/run/index.js
 _tools/run/options.js
 _tools/run/requirements.js
-_tools/package/package.js
 _tools/profiles/Grey_Fogra39L.icc
 _tools/profiles/Grey_Fogra52L.icc
 _tools/profiles/PSOcoated_v3.icc
@@ -857,4 +892,3 @@ _tools/profiles/PSOuncoated_v3_FOGRA52.icc
 _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
 _tools/update/files.txt
 _tools/update/update.sh
-_tools/zip/zip.js
