@@ -81,6 +81,8 @@ You might want to change the color space of specific images in, say, print-PDF o
 
 You can apply these settings in `_data/images.yml`.
 
+Also see [SVG processing](svg-processing.html) for advanced techniques for modifying SVGs during processing.
+
 ### Color spaces
 
 For example, to make one image grayscale in print-PDF:
