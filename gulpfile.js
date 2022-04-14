@@ -27,30 +27,32 @@ var gulp = require('gulp'),
     iconv = require('iconv-lite'),
     gulpif = require('gulp-if'),
     xmlEdit = require('gulp-edit-xml'),
-    imageFunctions = require('require-all')(__dirname + '/_tools/gulp/images');
+    imageFunctions = require('require-all')(__dirname + '/_tools/gulp/images/functions');
 
 // Load utilities from elsewhere in this repo,
 // wrapped in 'try' for when they don't exist.
 
+var ebSlugify;
 try {
-    var ebSlugify = require('./assets/js/utilities.js').ebSlugify;
-}
-catch (utilitiesError) {
+    ebSlugify = require('./assets/js/utilities.js').ebSlugify;
+} catch (utilitiesError) {
     console.log(utilitiesError);
     console.log('Could not find ./assets/js/utilities.js');
 }
 
+var printpdfIndexTargets;
 try {
-    var printpdfIndexTargets = require('./assets/js/book-index-print-pdf.js')
-            .printpdfIndexTargets;
+    printpdfIndexTargets = require('./assets/js/book-index-print-pdf.js')
+        .printpdfIndexTargets;
 } catch (printpdfIndexTargetsError) {
     console.log(printpdfIndexTargetsError);
     console.log('Could not find ./assets/js/book-index-print-pdf.js');
     console.log('This is okay if you are only processing images.');
 }
 
+var screenpdfIndexTargets;
 try {
-    var screenpdfIndexTargets = require('./assets/js/book-index-screen-pdf.js')
+    screenpdfIndexTargets = require('./assets/js/book-index-screen-pdf.js')
         .screenpdfIndexTargets;
 } catch (screenpdfIndexTargetsError) {
     console.log(screenpdfIndexTargetsError);
@@ -58,8 +60,9 @@ try {
     console.log('This is okay if you are only processing images.');
 }
 
+var epubIndexTargets;
 try {
-    var epubIndexTargets = require('./assets/js/book-index-epub.js')
+    epubIndexTargets = require('./assets/js/book-index-epub.js')
         .epubIndexTargets;
 } catch (epubIndexTargetsError) {
     console.log(epubIndexTargetsError);
@@ -67,8 +70,9 @@ try {
     console.log('This is okay if you are only processing images.');
 }
 
+var appIndexTargets;
 try {
-    var appIndexTargets = require('./assets/js/book-index-app.js').appIndexTargets;
+    appIndexTargets = require('./assets/js/book-index-app.js').appIndexTargets;
 } catch (appIndexTargetsError) {
     console.log(appIndexTargetsError);
     console.log('Could not find ./assets/js/book-index-app.js');
@@ -79,8 +83,9 @@ try {
 // which is included in search-engine.js.
 // The store includes a list of all pages
 // that Jekyll parsed when last building.
+var store;
 try {
-    var store = require('./_site/assets/js/search-engine.js')
+    store = require('./_site/assets/js/search-engine.js')
         .store;
 } catch (storeError) {
     console.log(storeError);
@@ -146,9 +151,9 @@ var allTextPaths = function (store) {
     var paths = [];
     store.forEach(function (entry) {
         paths.push('_site/' + entry.url);
-    })
+    });
     return paths;
-}
+};
 
 // Set up paths.
 // Paths to text src must include the *.html extension.
@@ -200,6 +205,7 @@ var defaultOutputFormat = 'web';
 
 // Function for checking if an image should be processed
 function modifyImageCheck(filename, format) {
+    'use strict';
 
     // Assume true
     var modifyImage = true;
@@ -225,7 +231,7 @@ function modifyImageCheck(filename, format) {
                             console.log(noModifyFeedback);
                             modifyImage = false;
                         }
-                    })
+                    });
                 }
 
                 // If an image has a 'modify' setting for this or all formats...
@@ -240,7 +246,7 @@ function modifyImageCheck(filename, format) {
                     }
                 }
             }
-        })
+        });
     }
 
     return modifyImage;
@@ -248,36 +254,41 @@ function modifyImageCheck(filename, format) {
 
 // Function for getting a filename in gulp tap
 function getFilenameFromPath(path) {
-    filename = path.split('\/').pop(); // for unix slashes
+    'use strict';
+    var filename = path.split('\/').pop(); // for unix slashes
     filename = filename.split('\\').pop(); // for windows backslashes
     return filename;
 }
 
 // Function for default gulp tap step
 function getFileDetailsFromTap(file, format) {
+    'use strict';
 
     if (!format) {
         format = 'all';
     }
 
+    var filename = getFilenameFromPath(file.path);
+
     return {
         prefix: file.basename.replace('.', '').replace(' ', ''),
-        filename: getFilenameFromPath(file.path),
+        filename: filename,
         modifyImage: modifyImageCheck(filename, format)
-    }
+    };
 }
 
 function lookupColorSettings(gmfile,
         colorProfile, colorSpace,
         colorProfileGrayscale, colorSpaceGrayscale,
         outputFormat) {
+    'use strict';
 
     var filename = getFilenameFromPath(gmfile.source);
 
     // Look up image settings
     if (imageSettings[book]) {
         imageSettings[book].forEach(function (image) {
-            if (image.file === filename || image.file == "all") {
+            if (image.file === filename || image.file === "all") {
                 if (image[outputFormat] && image[outputFormat].colorspace === 'gray') {
                     colorProfile = colorProfileGrayscale;
                     colorSpace = colorSpaceGrayscale;
@@ -289,7 +300,7 @@ function lookupColorSettings(gmfile,
     return {
         colorSpace: colorSpace,
         colorProfile: colorProfile
-    }
+    };
 }
 
 // Minify and clean SVGs and copy to destinations.
@@ -301,79 +312,80 @@ gulp.task('images:svg', function (done) {
 
     var prefix = ''; // does this ever get overwritten incorrectly due to async piping?
     var imageFunctionName = {};
+    var filename = '';
 
     // Since SVGs are used as-as for all output formats,
     // we can perform this check with gulpif based only
     // on the file path, which is accessible with gulpif.
     var modifyImage = function (file) {
-        var filename = getFilenameFromPath(file.path);
+        filename = getFilenameFromPath(file.path);
         var modificationStatus = modifyImageCheck(filename);
         return modificationStatus;
-    }
+    };
 
     gulp.src(paths.img.source + '*.svg')
         .pipe(tap(function (file) {
             prefix = getFileDetailsFromTap(file).prefix;
             imageFunctionName = getFileDetailsFromTap(file).filename
-                    .replace(/\s/g, '')
-                    .replace(/-/g, '_')
-                    .replace(/\./g, '_');
+                .replace(/\s/g, '')
+                .replace(/-/g, '_')
+                .replace(/\./g, '_');
         }))
         .pipe(debug({title: 'Processing SVG '}))
         .pipe(gulpif(modifyImage, svgmin({
             plugins: [
                 // This first pass only runs minifyStyles, to remove CDATA from
                 // <style> elements and give later access to inlineStyles.
-                { minifyStyles: true },
-                { removeDoctype: false },
-                { removeXMLProcInst: false },
-                { removeComments: false },
-                { removeMetadata: false },
-                { removeXMLNS: false },
-                { removeEditorsNSData: false },
-                { cleanupAttrs: false },
-                { mergeStyles: false },
-                { inlineStyles: false },
-                { convertStyleToAttrs: false },
-                { cleanupIDs: false },
-                { prefixIds: false },
-                { removeRasterImages: false },
-                { removeUselessDefs: false },
-                { cleanupNumericValues: false },
-                { cleanupListOfValues: false },
-                { convertColors: false },
-                { removeUnknownsAndDefaults: false },
-                { removeNonInheritableGroupAttrs: false },
-                { removeUselessStrokeAndFill: false },
-                { removeViewBox: false },
-                { cleanupEnableBackground: false },
-                { removeHiddenElems: false },
-                { removeEmptyText: false },
-                { convertShapeToPath: false },
-                { convertEllipseToCircle: false },
-                { moveElemsAttrsToGroup: false },
-                { moveGroupAttrsToElems: false },
-                { collapseGroups: false },
-                { convertPathData: false },
-                { convertTransform: false },
-                { removeEmptyAttrs: false },
-                { removeEmptyContainers: false },
-                { mergePaths: false },
-                { removeUnusedNS: false },
-                { sortAttrs: false },
-                { sortDefsChildren: false },
-                { removeTitle: false },
-                { removeDesc: false },
-                { removeDimensions: false },
-                { removeAttrs: false },
-                { removeAttributesBySelector: false },
-                { removeElementsByAttr: false },
-                { addClassesToSVGElement: false },
-                { removeStyleElement: false },
-                { removeScriptElement: false },
-                { addAttributesToSVGElement: false },
-                { removeOffCanvasPaths: false },
-                { reusePaths: false }
+                {minifyStyles: true},
+                {removeDoctype: false},
+                {removeXMLProcInst: false},
+                {removeComments: false},
+                {removeMetadata: false},
+                {removeXMLNS: false},
+                {removeEditorsNSData: false},
+                {cleanupAttrs: false},
+                {mergeStyles: false},
+                {inlineStyles: false},
+                {convertStyleToAttrs: false},
+                {cleanupIDs: false},
+                {prefixIds: false},
+                {removeRasterImages: false},
+                {removeUselessDefs: false},
+                {cleanupNumericValues: false},
+                {cleanupListOfValues: false},
+                {convertColors: false},
+                {removeUnknownsAndDefaults: false},
+                {removeNonInheritableGroupAttrs: false},
+                {removeUselessStrokeAndFill: false},
+                {removeViewBox: false},
+                {cleanupEnableBackground: false},
+                {removeHiddenElems: false},
+                {removeEmptyText: false},
+                {convertShapeToPath: false},
+                {convertEllipseToCircle: false},
+                {moveElemsAttrsToGroup: false},
+                {moveGroupAttrsToElems: false},
+                {collapseGroups: false},
+                {convertPathData: false},
+                {convertTransform: false},
+                {removeEmptyAttrs: false},
+                {removeEmptyContainers: false},
+                {mergePaths: false},
+                {removeUnusedNS: false},
+                {sortAttrs: false},
+                {sortDefsChildren: false},
+                {removeTitle: false},
+                {removeDesc: false},
+                {removeDimensions: false},
+                {removeAttrs: false},
+                {removeAttributesBySelector: false},
+                {removeElementsByAttr: false},
+                {addClassesToSVGElement: false},
+                {removeStyleElement: false},
+                {removeScriptElement: false},
+                {addAttributesToSVGElement: false},
+                {removeOffCanvasPaths: false},
+                {reusePaths: false}
             ]
         })))
         .pipe(gulpif(modifyImage, svgmin(function getOptions() {
@@ -588,25 +600,27 @@ gulp.task('images:svg', function (done) {
         }).on('error', function (e) {
             console.log(e);
         })))
-        .pipe(xmlEdit(function(xml) {
+        .pipe(xmlEdit(function (xml) {
 
             // Apply SVG manipulation functions stored in
             // _tools/gulp/images/functions.
 
-            // If there is a [book]AllSvg.js function, run it
-            if(imageFunctions.functions
-                    && imageFunctions.functions[book]['all_svg']
-                    && imageFunctions.functions[book]['all_svg']['all_svg']) {
+            // If there is a [book]all_svg.js file in /_tools/gulp/images/functions
+            // containing an all_svg function, run that function.
+            console.log('imageFunctions: ' + imageFunctions);
+            if (imageFunctions
+                    && imageFunctions[book].all_svg
+                    && imageFunctions[book].all_svg.all_svg) {
                 console.log('Running the ' + 'all_svg function on ' + filename);
-                imageFunctions.functions[book]['all_svg']['all_svg'](xml)
+                imageFunctions[book].all_svg.all_svg(xml);
             }
 
             // If there is an image-specific function, run it
-            if(imageFunctions.functions
-                    && imageFunctions.functions[book][imageFunctionName]
-                    && imageFunctions.functions[book][imageFunctionName][imageFunctionName]) {
+            if (imageFunctions
+                    && imageFunctions[book][imageFunctionName]
+                    && imageFunctions[book][imageFunctionName][imageFunctionName]) {
                 console.log('Running the ' + [imageFunctionName] + ' function on ' + filename);
-                imageFunctions.functions[book][imageFunctionName][imageFunctionName](xml)
+                imageFunctions[book][imageFunctionName][imageFunctionName](xml);
             }
             return xml;
         }))
@@ -659,13 +673,13 @@ gulp.task('images:printpdf', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                    .profile('_tools/profiles/' + thisColorProfile)
-                    .colorspace(thisColorSpace);
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace);
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -714,7 +728,7 @@ gulp.task('images:screenpdf', function (done) {
                 var filename = getFilenameFromPath(gmfile.source);
 
                 // Check if we should modify this image
-                var modifyImage = modifyImageCheck(filename, outputFormat);
+                modifyImage = modifyImageCheck(filename, outputFormat);
 
                 // Reset defaults (in case previous image in stream
                 // set these values to something else)
@@ -729,13 +743,13 @@ gulp.task('images:screenpdf', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                    .profile('_tools/profiles/' + thisColorProfile)
-                    .colorspace(thisColorSpace);
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace);
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -783,7 +797,7 @@ gulp.task('images:epub', function (done) {
                 var filename = getFilenameFromPath(gmfile.source);
 
                 // Check if we should modify this image
-                var modifyImage = modifyImageCheck(filename, outputFormat);
+                modifyImage = modifyImageCheck(filename, outputFormat);
 
                 // Reset defaults (in case previous image in stream
                 // set these values to something else)
@@ -798,19 +812,19 @@ gulp.task('images:epub', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                            .resize(810, null, '>') // *
-                            .profile('_tools/profiles/' + thisColorProfile)
-                            .colorspace(thisColorSpace)
-                            .quality(90);
+                        .resize(810, null, '>') // *
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace)
+                        .quality(90);
 
-                            // * The '>' option specifies that the image should not be made larger
-                            //   if the original's width is less than the target width.
-                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                        // * The '>' option specifies that the image should not be made larger
+                        //   if the original's width is less than the target width.
+                        //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -858,7 +872,7 @@ gulp.task('images:app', function (done) {
                 var filename = getFilenameFromPath(gmfile.source);
 
                 // Check if we should modify this image
-                var modifyImage = modifyImageCheck(filename, outputFormat);
+                modifyImage = modifyImageCheck(filename, outputFormat);
 
                 // Reset defaults (in case previous image in stream
                 // set these values to something else)
@@ -873,19 +887,19 @@ gulp.task('images:app', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                            .resize(810, null, '>') // *
-                            .profile('_tools/profiles/' + thisColorProfile)
-                            .colorspace(thisColorSpace)
-                            .quality(90);
+                        .resize(810, null, '>') // *
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace)
+                        .quality(90);
 
-                            // * The '>' option specifies that the image should not be made larger
-                            //   if the original's width is less than the target width.
-                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                        // * The '>' option specifies that the image should not be made larger
+                        //   if the original's width is less than the target width.
+                        //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -933,7 +947,7 @@ gulp.task('images:web', function (done) {
                 var filename = getFilenameFromPath(gmfile.source);
 
                 // Check if we should modify this image
-                var modifyImage = modifyImageCheck(filename, outputFormat);
+                modifyImage = modifyImageCheck(filename, outputFormat);
 
                 // Reset defaults (in case previous image in stream
                 // set these values to something else)
@@ -948,19 +962,19 @@ gulp.task('images:web', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                            .resize(810, null, '>') // *
-                            .profile('_tools/profiles/' + thisColorProfile)
-                            .colorspace(thisColorSpace)
-                            .quality(90);
+                        .resize(810, null, '>') // *
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace)
+                        .quality(90);
 
-                            // * The '>' option specifies that the image should not be made larger
-                            //   if the original's width is less than the target width.
-                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                        // * The '>' option specifies that the image should not be made larger
+                        //   if the original's width is less than the target width.
+                        //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -1007,7 +1021,7 @@ gulp.task('images:small', function (done) {
                 var filename = getFilenameFromPath(gmfile.source);
 
                 // Check if we should modify this image
-                var modifyImage = modifyImageCheck(filename, outputFormat);
+                modifyImage = modifyImageCheck(filename, outputFormat);
 
                 // Reset defaults (in case previous image in stream
                 // set these values to something else)
@@ -1022,19 +1036,19 @@ gulp.task('images:small', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                            .resize(320, null, '>') // *
-                            .profile('_tools/profiles/' + thisColorProfile)
-                            .colorspace(thisColorSpace)
-                            .quality(90);
+                        .resize(320, null, '>') // *
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace)
+                        .quality(90);
 
-                            // * The '>' option specifies that the image should not be made larger
-                            //   if the original's width is less than the target width.
-                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                        // * The '>' option specifies that the image should not be made larger
+                        //   if the original's width is less than the target width.
+                        //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -1082,7 +1096,7 @@ gulp.task('images:medium', function (done) {
                 var filename = getFilenameFromPath(gmfile.source);
 
                 // Check if we should modify this image
-                var modifyImage = modifyImageCheck(filename, outputFormat);
+                modifyImage = modifyImageCheck(filename, outputFormat);
 
                 // Reset defaults (in case previous image in stream
                 // set these values to something else)
@@ -1097,19 +1111,19 @@ gulp.task('images:medium', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                            .resize(640, null, '>') // *
-                            .profile('_tools/profiles/' + thisColorProfile)
-                            .colorspace(thisColorSpace)
-                            .quality(90);
+                        .resize(640, null, '>') // *
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace)
+                        .quality(90);
 
-                            // * The '>' option specifies that the image should not be made larger
-                            //   if the original's width is less than the target width.
-                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                        // * The '>' option specifies that the image should not be made larger
+                        //   if the original's width is less than the target width.
+                        //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -1157,7 +1171,7 @@ gulp.task('images:large', function (done) {
                 var filename = getFilenameFromPath(gmfile.source);
 
                 // Check if we should modify this image
-                var modifyImage = modifyImageCheck(filename, outputFormat);
+                modifyImage = modifyImageCheck(filename, outputFormat);
 
                 // Reset defaults (in case previous image in stream
                 // set these values to something else)
@@ -1172,19 +1186,19 @@ gulp.task('images:large', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                            .resize(1024, null, '>') // *
-                            .profile('_tools/profiles/' + thisColorProfile)
-                            .colorspace(thisColorSpace)
-                            .quality(90);
+                        .resize(1024, null, '>') // *
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace)
+                        .quality(90);
 
-                            // * The '>' option specifies that the image should not be made larger
-                            //   if the original's width is less than the target width.
-                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                        // * The '>' option specifies that the image should not be made larger
+                        //   if the original's width is less than the target width.
+                        //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -1232,7 +1246,7 @@ gulp.task('images:xlarge', function (done) {
                 var filename = getFilenameFromPath(gmfile.source);
 
                 // Check if we should modify this image
-                var modifyImage = modifyImageCheck(filename, outputFormat);
+                modifyImage = modifyImageCheck(filename, outputFormat);
 
                 // Reset defaults (in case previous image in stream
                 // set these values to something else)
@@ -1247,19 +1261,19 @@ gulp.task('images:xlarge', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                            .resize(2048, null, '>') // *
-                            .profile('_tools/profiles/' + thisColorProfile)
-                            .colorspace(thisColorSpace)
-                            .quality(90);
+                        .resize(2048, null, '>') // *
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace)
+                        .quality(90);
 
-                            // * The '>' option specifies that the image should not be made larger
-                            //   if the original's width is less than the target width.
-                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                        // * The '>' option specifies that the image should not be made larger
+                        //   if the original's width is less than the target width.
+                        //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -1307,7 +1321,7 @@ gulp.task('images:max', function (done) {
                 var filename = getFilenameFromPath(gmfile.source);
 
                 // Check if we should modify this image
-                var modifyImage = modifyImageCheck(filename, outputFormat);
+                modifyImage = modifyImageCheck(filename, outputFormat);
 
                 // Reset defaults (in case previous image in stream
                 // set these values to something else)
@@ -1322,17 +1336,17 @@ gulp.task('images:max', function (done) {
 
                 if (modifyImage) {
                     return gmfile
-                            .profile('_tools/profiles/' + thisColorProfile)
-                            .colorspace(thisColorSpace);
+                        .profile('_tools/profiles/' + thisColorProfile)
+                        .colorspace(thisColorSpace);
 
-                            // * The '>' option specifies that the image should not be made larger
-                            //   if the original's width is less than the target width.
-                            //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
+                        // * The '>' option specifies that the image should not be made larger
+                        //   if the original's width is less than the target width.
+                        //   See http://www.graphicsmagick.org/GraphicsMagick.html#details-geometry
                 } else {
                     return gmfile
-                    .define('jpeg:preserve-settings')
-                    .compress('None')
-                    .quality(100);
+                        .define('jpeg:preserve-settings')
+                        .compress('None')
+                        .quality(100);
                 }
                 // --------------------------------------------------------------
 
@@ -1449,8 +1463,8 @@ gulp.task('epub:xhtmlLinks', function (done) {
                         target = $(this).attr('href');
                     } else if ($(this).attr('src')) {
                         target = $(this).attr('src');
-                    } else if  ($(this).attr('id')) {
-                        target = $(this).attr('id')
+                    } else if ($(this).attr('id')) {
+                        target = $(this).attr('id');
                     } else {
                         return;
                     }
@@ -1458,11 +1472,11 @@ gulp.task('epub:xhtmlLinks', function (done) {
                     // remove all non-ascii characters using iconv-lite
                     // by converting the target from utf-8 to ascii.
                     var iconvLiteBuffer = iconv.encode(target, 'utf-8');
-                    var asciiTarget = iconv.decode(iconvLiteBuffer, 'ascii');
+                    asciiTarget = iconv.decode(iconvLiteBuffer, 'ascii');
                     // Note that this doesn't remove illegal characters,
                     // which must then be replaced.
                     // (See https://github.com/ashtuchkin/iconv-lite/issues/81)
-                    var asciiTarget = asciiTarget.replace(/[�?]/g, '');
+                    asciiTarget = asciiTarget.replace(/[�?]/g, '');
 
                     if (!asciiTarget.includes('http')) {
                         newTarget = asciiTarget.replace('.html', '.xhtml');
@@ -1546,13 +1560,13 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                 $('*').contents()
                     // Return only text nodes...
                     .filter(function () {
-                        return this.nodeType === 8
+                        return this.nodeType === 8;
                     })
                     // .. that start with `index:`
                     .filter(function () {
-                        return (/^\s*index:/).test(this.data)
+                        return (/^\s*index:/).test(this.data);
                     })
-                    .each(function (index, comment) {
+                    .each(function (unusedIndex, comment) {
 
                         // Is this comment between elements ('block')
                         // or inline (e.g. inside a paragraph)?
@@ -1671,9 +1685,9 @@ gulp.task('renderIndexCommentsAsTargets', function (done) {
                 // we get the next element that is not an .index-target
                 // then prepend the link to it.
 
-                $('[data-target-type=block]').each(function (i, link) {
+                $('[data-target-type=block]').each(function (unusedIndex, link) {
 
-                    var link = $(link); // wrap it for cheerio
+                    link = $(link); // wrap it for cheerio
                     var indexedElement = $(link).nextAll(':not(.index-target)').first();
                     indexedElement.prepend(link);
                 });
@@ -1706,11 +1720,10 @@ gulp.task('renderIndexListReferences', function (done) {
 
                 // Add a link to an entry in a reference index
                 function ebIndexAddLink(listItem, pageReferenceSequenceNumber, entry) {
-                    'use strict';
 
                     var link = $('<a>​</a>')
                         .attr('href', entry.filename + '#' + entry.id)
-                        .text(pageReferenceSequenceNumber)
+                        .text(pageReferenceSequenceNumber);
 
                     // Add a class to flag whether this link starts
                     // or ends a reference range.
@@ -1731,7 +1744,6 @@ gulp.task('renderIndexListReferences', function (done) {
 
                 // Add a link to a specific reference-index entry
                 function ebIndexFindLinks(listItem, ebIndexTargets) {
-                    'use strict';
 
                     listItem = $(listItem);
                     var nestingLevel = listItem.parentsUntil('.reference-index').length / 2;
@@ -1764,15 +1776,15 @@ gulp.task('renderIndexListReferences', function (done) {
 
                     listItemTree.push(getListItemText(listItem));
 
-                    if (nestingLevel > 0) {
-
-                        function buildTree(listItem) {
-                            if (listItem.parent()
-                                    && listItem.parent().closest('li').contents()[0]) {
-                                listItemTree.unshift(getListItemText(listItem.parent().closest('li')));
-                                buildTree(listItem.parent().closest('li'));
-                            }
+                    function buildTree(listItem) {
+                        if (listItem.parent()
+                                && listItem.parent().closest('li').contents()[0]) {
+                            listItemTree.unshift(getListItemText(listItem.parent().closest('li')));
+                            buildTree(listItem.parent().closest('li'));
                         }
+                    }
+
+                    if (nestingLevel > 0) {
                         buildTree(listItem);
                     }
 
@@ -1871,7 +1883,6 @@ gulp.task('renderIndexListReferences', function (done) {
 
                 // Get all the indexes on the page, and start processing them.
                 function ebIndexPopulate(ebIndexTargets) {
-                    'use strict';
 
                     // Don't do this if the list links are already loaded.
                     if ($('body').attr('data-index-list') === 'loaded') {
@@ -1909,7 +1920,7 @@ gulp.task('renderIndexListReferences', function (done) {
                                 || indexLists.length === 1) {
                             $('body').attr('data-index-list', 'loaded');
                         }
-                    })
+                    });
                 }
             },
             parserOptions: {
