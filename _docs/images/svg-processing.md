@@ -46,7 +46,7 @@ For example, `naples_svg.js` will contain a function that runs on the `naples.sv
 
 Behind the scenes, the function will be run by [gulp-edit-xml](https://www.npmjs.com/package/gulp-edit-xml), which parses SVG files as Javascript objects. For more detail on this approach and syntax, see the docs for [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js). In particular, note that:
 
-- you refer to your SVG as `xml` in your function.
+- you refer to your SVG as `xml` in your function, and the SVG element as `xml.svg`
 - your script must include an `exports` statement after the function. E.g. `exports.naples_svg = naples_svg;`
 
 Here is a full example of a file that would be saved as `_tools/gulp/images/functions/naples_svg.js`, and which inserts a font-face import into an SVG. (Note that this function will entirely replace any existing `<style>` element in the SVG.)
