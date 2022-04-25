@@ -55,11 +55,11 @@ exclude:
   - /assets/js/bookmarks.js
 
   # Exclude files we don't need for print-pdf
-  - about.md
-  - contact.md
-  - index.md
-  - search.md
-  - sitemap.xml
+  - /about.md
+  - /contact.md
+  - /index.md
+  - /search.md
+  - /sitemap.xml
   - /assets/styles
   - /assets/js/accordion.js
   - /assets/js/annotation.js
@@ -80,7 +80,6 @@ exclude:
   - /*/styles/web.scss
   - /*/styles/epub.scss
   - /*/styles/app.scss
-  - /*/index.md
   - /*/images/screen-pdf
   - /*/images/web
   - /*/images/epub
