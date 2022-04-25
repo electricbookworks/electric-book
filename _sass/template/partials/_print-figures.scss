@@ -188,8 +188,10 @@ $print-figures: true !default;
     // Paragraphs that follow figures should:
     // have an indent when following floated figures
     // not have an indent when following fixed figures.
-    .figure + p {
-        text-indent: $paragraph-indent;
+    @if $spaced-paras == false {
+        .figure + p {
+            text-indent: $paragraph-indent;
+        }
     }
     .figure.fixed + p {
         text-indent: 0;

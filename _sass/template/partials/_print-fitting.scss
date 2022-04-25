@@ -16,11 +16,14 @@ $print-fitting: true !default;
     float: top next;
   }
   // If a paragraph would normally be flush left after an element, 
-  // but that element is floated away, it should get its indent back.
-  .float-top#{$edition-suffix} + p,
-  .float-bottom#{$edition-suffix} + p,
-  .float-top-next#{$edition-suffix} + p {
-    text-indent: $paragraph-indent;
+  // but that element is floated away, it should get its indent back,
+  // unless we're not spacing paragraphs.
+  @if $spaced-paras == false {
+    .float-top#{$edition-suffix} + p,
+    .float-bottom#{$edition-suffix} + p,
+    .float-top-next#{$edition-suffix} + p {
+      text-indent: $paragraph-indent;
+    }
   }
 
   // These classes control letter-spacing (tracking), usually to save widows and orphans.

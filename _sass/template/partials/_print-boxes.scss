@@ -17,9 +17,12 @@
         text-indent: 0;
     }
     // But paragraphs after boxes floated out of the flow must still be indented
-    &.float-top + p,
-    &.float-bottom + p {
-        text-indent: $paragraph-indent;
+    // unless we're not spacing paragraphs
+    @if $spaced-paras == false {
+        &.float-top + p,
+        &.float-bottom + p {
+            text-indent: $paragraph-indent;
+        }
     }
     // No margin above the first headings in a box
     h1:first-of-type, 
