@@ -91,7 +91,10 @@ assets/fonts/UbuntuMono-RI.ttf
 assets/js/accordion.js
 assets/js/annotation.js
 assets/js/bookmarks.js
-assets/js/bundle.js
+
+# bundle.js is often customised per project
+# assets/js/bundle.js
+
 assets/js/copy-to-clipboard.js
 assets/js/elasticlunr-setup.js
 assets/js/footnote-popups.js
@@ -371,7 +374,10 @@ assets/js/share.js
 assets/js/shift-elements.js
 assets/js/show-hide.js
 assets/js/slides.js
-assets/js/svg-management.js
+
+# svg-management.js is often customised per project
+# assets/js/svg-management.js
+
 assets/js/tables.js
 assets/js/utilities.js
 assets/js/videos.js
@@ -411,7 +417,6 @@ assets/js/vendor/svg-inject.min.js
 # When you rename or add new books to a project.
 # remember to add their equivalent files here as needed.
 
-book/fonts/.gitignore
 book/index.md
 book/package.opf
 book/index.md
@@ -436,12 +441,6 @@ gulpfile.js
 
 package-lock.json
 package.json
-
-
-# Output scripts
-# --------------
-
-run.js
 
 
 # Repo search page
@@ -629,10 +628,8 @@ _includes/youtube
 # custom features that an EBT update should not overwrite.
 # _includes/head-elements.html
 
-_includes/template/annotate-icon.html
-_includes/template/annotate-show-icon.html
+
 _includes/template/annotator.html
-_includes/template/bookmark-icon.html
 _includes/template/bookmarks.html
 _includes/template/breadcrumbs.html
 _includes/template/close-body.html
@@ -642,23 +639,21 @@ _includes/template/docs-by-category.html
 _includes/template/epub-navmap.html
 _includes/template/epub-ncx.html
 _includes/template/epub-package.html
-_includes/template/files-listed.html
 _includes/template/files-listed-by-work.html
+_includes/template/files-listed.html
 _includes/template/head.html
-_includes/template/history-icon.svg
 _includes/template/hreflang.html
 _includes/template/html-entities.html
 _includes/template/html-title.html
-_includes/template/language-select-icon.svg
 _includes/template/language-select-list.html
 _includes/template/masthead.html
 _includes/template/mathjax-manifest.xml
 _includes/template/meta-tags.html
 _includes/template/metadata-work.html
-_includes/template/nav.html
 _includes/template/nav-button.html
-_includes/template/nav-list.html
 _includes/template/nav-list-files.html
+_includes/template/nav-list.html
+_includes/template/nav.html
 _includes/template/pagination.html
 _includes/template/question-secret-code.html
 _includes/template/share.html
@@ -666,16 +661,22 @@ _includes/template/sitemap.html
 _includes/template/start-content.html
 _includes/template/translations-array.html
 
+_includes/template/icons/annotate-icon.svg
+_includes/template/icons/annotate-show-icon.svg
+_includes/template/icons/bookmark-icon.svg
 _includes/template/icons/buffer.svg
 _includes/template/icons/delicious.svg
 _includes/template/icons/email.svg
 _includes/template/icons/evernote.svg
 _includes/template/icons/facebook.svg
+_includes/template/icons/history-icon.svg
+_includes/template/icons/language-select-icon.svg
 _includes/template/icons/link.svg
 _includes/template/icons/linkedin.svg
 _includes/template/icons/pinterest.svg
 _includes/template/icons/pocket.svg
 _includes/template/icons/reddit.svg
+_includes/template/icons/share-icon.svg
 _includes/template/icons/stumbleupon.svg
 _includes/template/icons/tumblr.svg
 _includes/template/icons/twitter.svg
@@ -866,8 +867,8 @@ _sass/template/web.scss
 
 # Note that we include this files.txt file here.
 
-_tools/gulp/README.md
-_tools/gulp/functions/.gitignore
+_tools/gulp/images/README.md
+_tools/gulp/images/functions/.gitignore
 _tools/run/commands/check.js
 _tools/run/commands/export.js
 _tools/run/commands/images.js
@@ -883,8 +884,8 @@ _tools/run/helpers/reindex/build-reference-index.js
 _tools/run/helpers/reindex/build-search-index.js
 _tools/run/helpers/requirements.js
 _tools/run/index.js
-_tools/run/options.js
-_tools/run/requirements.js
+_tools/run/helpers/options.js
+_tools/run/helpers/requirements.js
 _tools/profiles/Grey_Fogra39L.icc
 _tools/profiles/Grey_Fogra52L.icc
 _tools/profiles/PSOcoated_v3.icc
