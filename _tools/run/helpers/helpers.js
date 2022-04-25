@@ -98,6 +98,7 @@ function openOutputFile (argvOrFilePath) {
 }
 
 // // Clear folder contents
+// // Probably not required; we now use fs.emptyDir
 // async function clearFolderContents (path) {
 //   'use strict'
 
@@ -238,6 +239,13 @@ async function jekyll (argv) {
     // Create a child process
     const jekyllProcess = spawn('bundle', jekyllSpawnArgs)
     const result = await logProcess(jekyllProcess, 'Jekyll')
+
+    // If Jekyll fails (i.e. exit code 1), kill this process.
+    // We don't want to try to render a PDF if Jekyll didn't build.
+    if (result === 1) {
+      console.log('Jekyll could not complete its build. Exiting.')
+      process.exit();
+    }
     return result
   } catch (error) {
     console.log(error)
