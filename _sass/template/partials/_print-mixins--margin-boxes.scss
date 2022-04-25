@@ -1,0 +1,69 @@
+// Mixins for page margin-box styles
+
+@mixin header-style() {
+  color: $header-text-color;
+  font-family: $header-font;
+  font-size: $header-font-size;
+  font-weight: $header-font-weight;
+  text-transform: $header-case;
+  letter-spacing: $header-letter-spacing;
+}
+
+@mixin header-position() {
+  vertical-align: top;
+  line-height: 1;
+  margin-top: $header-space-from-top;
+  margin-bottom: $header-space-from-text;
+  text-align: $header-text-align;
+}
+
+@mixin footer-style() {
+  color: $footer-text-color;
+  font-family: $footer-font;
+  font-size: $footer-font-size;
+  font-weight: $footer-font-weight;
+  text-transform: $footer-case;
+  letter-spacing: $footer-letter-spacing;
+}
+
+@mixin footer-position() {
+  vertical-align: bottom;
+  line-height: 1;
+  margin-top: $footer-space-from-text;
+  margin-bottom: $footer-space-from-bottom;
+  text-align: $footer-text-align;
+}
+
+@mixin left-margin-style() {
+  color: $left-margin-text-color;
+  font-family: $left-margin-font;
+  font-size: $left-margin-font-size;
+  font-weight: $left-margin-font-weight;
+  text-transform: $left-margin-case;
+  letter-spacing: $left-margin-letter-spacing;
+}
+
+@mixin left-margin-position() {
+  vertical-align: $left-margin-alignment;
+  line-height: 1;
+  padding-left: $left-margin-space-from-edge;
+  margin-right: $left-margin-space-from-text;
+  text-align: $left-margin-text-align;
+}
+
+@mixin right-margin-style() {
+  color: $right-margin-text-color;
+  font-family: $right-margin-font;
+  font-size: $right-margin-font-size;
+  font-weight: $right-margin-font-weight;
+  text-transform: $right-margin-case;
+  letter-spacing: $right-margin-letter-spacing;
+}
+
+@mixin right-margin-position() {
+  vertical-align: $right-margin-alignment;
+  line-height: 1;
+  padding-right: $right-margin-space-from-edge;
+  margin-left: $right-margin-space-from-text;
+  text-align: $right-margin-text-align;
+}
