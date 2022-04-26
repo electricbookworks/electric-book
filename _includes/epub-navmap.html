@@ -88,7 +88,7 @@ as the include calls itself for each list of children.
             {% comment %}If there are child items, run this include again here,
             using the children as the starting point{% endcomment %}
             {% if item.children != nil %}
-                {% include template/epub-navmap.html start=item.children %}
+                {% include epub-navmap.html start=item.children %}
             {% endif %}
 
         {% endif %}

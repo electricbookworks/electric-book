@@ -1,17 +1,19 @@
 # Includes
 
-Includes in this folder without file extensions are intended for use in markdown. This keeps their syntax neat and intuitive, e.g.
+Includes are files that can be inserted in other files with the Liquid `include` tag. E.g. where the tag `{% include share.html %}` appears, Jekyll will insert the contents of the file `_includes/share.html`.
+
+Files in this folder without file extensions are intended for use in markdown. This keeps their syntax neat and intuitive, as if the filename is just a keyword. E.g.
 
 ``` liquid
 {% include metadata %}
 ```
 
-Includes in this folder with file extensions tend to be customised per project. E.g. `end-elements.html` and `footer.html`.
+Files in this folder with file extensions tend to be customised per project, or are code templates used in rendering processes. The file extension makes it easier for code editors to apply useful syntax highlighting.
 
-The `theme` folder is for creating custom includes for a new project. This keeps them neatly distinct from the template's includes. If you use these in markdown, you will need to add `theme/` to the include tag. E.g.
+E.g. `end-elements.html` and `footer.html` are often customised. And `head.html` is rarely customised, and is used in building the `<head>` element of almost all pages.
 
-```liquid
-{% include theme/elephant %}
+Subfolders can be used to organise groups of files, such as `icons`. When including a file from a subfolder, include the subfolder in the include tag, e.g.
+
+``` liquid
+{% include icons/email.svg %}
 ```
-
-Includes in `template` are code templates used in rendering processes. We give them appropriate file extensions to make development easier.

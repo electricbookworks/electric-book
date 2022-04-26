@@ -41,7 +41,7 @@ It also includes any items in _data/nav.yml, below the book entries.
                   {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
               </a>
               {% if item.children != nil %}
-                {% include template/nav-list.html nav-tree=item.children directory=include.directory %}
+                {% include nav-list.html nav-tree=item.children directory=include.directory %}
               {% endif %}
           </li>
       {% endfor %}
@@ -72,7 +72,7 @@ It also includes any items in _data/nav.yml, below the book entries.
                 {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
             </a>
             {% if item.children != nil %}
-              {% include template/nav-list.html nav-tree=item.children %}
+              {% include nav-list.html nav-tree=item.children %}
             {% endif %}
         </li>
       {% endfor %}
@@ -109,7 +109,7 @@ It also includes any items in _data/nav.yml, below the book entries.
         </a>
 
         {% if item.children != nil %}
-          {% include template/nav-list.html nav-tree=item.children project-nav=true %}
+          {% include nav-list.html nav-tree=item.children project-nav=true %}
         {% endif %}
 
       </li>

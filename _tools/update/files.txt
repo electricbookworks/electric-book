@@ -91,10 +91,7 @@ assets/fonts/UbuntuMono-RI.ttf
 assets/js/accordion.js
 assets/js/annotation.js
 assets/js/bookmarks.js
-
-# bundle.js is often customised per project
-# assets/js/bundle.js
-
+assets/js/bundle.js
 assets/js/copy-to-clipboard.js
 assets/js/elasticlunr-setup.js
 assets/js/footnote-popups.js
@@ -374,10 +371,7 @@ assets/js/share.js
 assets/js/shift-elements.js
 assets/js/show-hide.js
 assets/js/slides.js
-
-# svg-management.js is often customised per project
-# assets/js/svg-management.js
-
+assets/js/svg-management.js
 assets/js/tables.js
 assets/js/utilities.js
 assets/js/videos.js
@@ -629,61 +623,60 @@ _includes/youtube
 # _includes/head-elements.html
 
 
-_includes/template/annotator.html
-_includes/template/bookmarks.html
-_includes/template/breadcrumbs.html
-_includes/template/close-body.html
-_includes/template/close-content.html
-_includes/template/controls.html
-_includes/template/docs-by-category.html
-_includes/template/epub-navmap.html
-_includes/template/epub-ncx.html
-_includes/template/epub-package.html
-_includes/template/files-listed-by-work.html
-_includes/template/files-listed.html
-_includes/template/head.html
-_includes/template/hreflang.html
-_includes/template/html-entities.html
-_includes/template/html-title.html
-_includes/template/language-select-list.html
-_includes/template/masthead.html
-_includes/template/mathjax-manifest.xml
-_includes/template/meta-tags.html
-_includes/template/metadata-work.html
-_includes/template/nav-button.html
-_includes/template/nav-list-files.html
-_includes/template/nav-list.html
-_includes/template/nav.html
-_includes/template/pagination.html
-_includes/template/question-secret-code.html
-_includes/template/share.html
-_includes/template/sitemap.html
-_includes/template/start-content.html
-_includes/template/translations-array.html
+_includes/annotator.html
+_includes/bookmarks.html
+_includes/breadcrumbs.html
+_includes/close-body.html
+_includes/close-content.html
+_includes/controls.html
+_includes/docs-by-category.html
+_includes/epub-navmap.html
+_includes/epub-ncx.html
+_includes/epub-package.html
+_includes/files-listed-by-work.html
+_includes/files-listed.html
+_includes/head.html
+_includes/hreflang.html
+_includes/html-entities.html
+_includes/html-title.html
+_includes/language-select-list.html
+_includes/masthead.html
+_includes/mathjax-manifest.xml
+_includes/meta-tags.html
+_includes/metadata-work.html
+_includes/nav-button.html
+_includes/nav-list-files.html
+_includes/nav-list.html
+_includes/nav.html
+_includes/pagination.html
+_includes/question-secret-code.html
+_includes/share.html
+_includes/sitemap.html
+_includes/start-content.html
+_includes/translations-array.html
 
-_includes/template/icons/annotate-icon.svg
-_includes/template/icons/annotate-show-icon.svg
-_includes/template/icons/bookmark-icon.svg
-_includes/template/icons/buffer.svg
-_includes/template/icons/delicious.svg
-_includes/template/icons/email.svg
-_includes/template/icons/evernote.svg
-_includes/template/icons/facebook.svg
-_includes/template/icons/history-icon.svg
-_includes/template/icons/language-select-icon.svg
-_includes/template/icons/link.svg
-_includes/template/icons/linkedin.svg
-_includes/template/icons/pinterest.svg
-_includes/template/icons/pocket.svg
-_includes/template/icons/reddit.svg
-_includes/template/icons/share-icon.svg
-_includes/template/icons/stumbleupon.svg
-_includes/template/icons/tumblr.svg
-_includes/template/icons/twitter.svg
-_includes/template/icons/whatsapp.svg
-_includes/template/icons/wordpress.svg
+_includes/icons/annotate-icon.svg
+_includes/icons/annotate-show-icon.svg
+_includes/icons/bookmark-icon.svg
+_includes/icons/buffer.svg
+_includes/icons/delicious.svg
+_includes/icons/email.svg
+_includes/icons/evernote.svg
+_includes/icons/facebook.svg
+_includes/icons/history-icon.svg
+_includes/icons/language-select-icon.svg
+_includes/icons/link.svg
+_includes/icons/linkedin.svg
+_includes/icons/pinterest.svg
+_includes/icons/pocket.svg
+_includes/icons/reddit.svg
+_includes/icons/share-icon.svg
+_includes/icons/stumbleupon.svg
+_includes/icons/tumblr.svg
+_includes/icons/twitter.svg
+_includes/icons/whatsapp.svg
+_includes/icons/wordpress.svg
 
-_includes/theme/.gitignore
 
 # Layouts
 # -------

@@ -1,5 +1,5 @@
 {% include metadata %}
-{% include template/html-title.html %}
+{% include html-title.html %}
 
 {% if site.output == "print-pdf" %}
 <!DOCTYPE html>
@@ -197,7 +197,7 @@
 
     {% comment %}OpenGraph metadata{% endcomment %}
 
-    {% include template/meta-tags.html %}
+    {% include meta-tags.html %}
 
     <meta property="og:title" content="{{ meta-tag-title }}" />
     <meta property="og:type" content="website" />
@@ -232,7 +232,7 @@
 
     {% comment %} Include custom elements {% endcomment %}
 
-    {% include template/hreflang.html %}
+    {% include hreflang.html %}
     {% include head-elements.html %}
 
 </head>

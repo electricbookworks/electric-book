@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% include template/files-listed.html %}
+  {% include files-listed.html %}
   {% for path in array-of-files %}
     <url>
       <loc>{{ site.canonical-url }}{{ site.baseurl }}{{ path | replace: "/index.html", "/" }}</loc>

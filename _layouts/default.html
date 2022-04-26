@@ -4,37 +4,37 @@ layout: compress
 
 {% if site.output == 'epub' or site.output == 'print-pdf' or site.output == 'screen-pdf' %}
 
-{% include template/head.html %}
-{% include template/start-content.html %}
+{% include head.html %}
+{% include start-content.html %}
 {{ content }}
-{% include template/close-content.html %}
-{% include template/close-body.html %}
+{% include close-content.html %}
+{% include close-body.html %}
 
 {% else %}
 
-{% include template/head.html %}
-{% include template/masthead.html %}
+{% include head.html %}
+{% include masthead.html %}
 
 {% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
-{% include template/annotator.html %}
+{% include annotator.html %}
 {% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
-{% include template/annotator.html %}
+{% include annotator.html %}
 {% endif %}
 
-{% include template/nav-button.html %}
-{% include template/start-content.html %}
+{% include nav-button.html %}
+{% include start-content.html %}
 {{ content }}
-{% include template/close-content.html %}
+{% include close-content.html %}
 
 {% if site.output == "web" and site.data.settings.web.pagination == true %}
-{% include template/pagination.html %}
+{% include pagination.html %}
 {% endif %}
 {% if site.output == "app" and site.data.settings.app.pagination == true %}
-{% include template/pagination.html %}
+{% include pagination.html %}
 {% endif %}
 
-{% include template/nav.html %}
+{% include nav.html %}
 {% include footer.html %}
-{% include template/close-body.html %}
+{% include close-body.html %}
 
 {% endif %}

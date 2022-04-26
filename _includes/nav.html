@@ -30,7 +30,7 @@
     {% endif %}
 
     {% comment %} Add controls and settings {% endcomment %}
-    {% include template/controls.html %}
+    {% include controls.html %}
 
     {% comment %}Add the search box.{% endcomment %}
     <div class="search">
@@ -76,7 +76,7 @@
         <ul>
             <li{% unless is-docs-page %} class="has-children" {% endunless %}><a
                     href="{{ path-to-root-directory }}docs">Docs</a>
-                {% include template/docs-by-category.html %}
+                {% include docs-by-category.html %}
                 </li>
         </ul>
         {% endif %}
@@ -116,9 +116,9 @@
                     {% endif %}
 
                     {% if home-nav-work-tree and home-nav-work-tree != "" %}
-                        {% include template/nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                        {% include nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                     {% else %}
-                        {% include template/nav-list-files.html directory=home-nav-work-directory %}
+                        {% include nav-list-files.html directory=home-nav-work-directory %}
                     {% endif %}
                 {% endfor %}
 
@@ -177,9 +177,9 @@
 
                             {% if site.data.settings[site.output].nav.home.expand-books == true %}
                                 {% if home-nav-work-tree and home-nav-work-tree != "" %}
-                                    {% include template/nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
+                                    {% include nav-list.html nav-tree=home-nav-work-tree directory=home-nav-work-directory %}
                                 {% else %}
-                                    {% include template/nav-list-files.html directory=home-nav-work-directory %}
+                                    {% include nav-list-files.html directory=home-nav-work-directory %}
                                 {% endif %}
                             {% endif %}
 
@@ -194,15 +194,15 @@
             {% comment %}Fetch recursive navigation{% endcomment %}
             {% if site.output == "app" %}
                 {% if app-nav-tree and app-nav-tree != "" %}
-                    {% include template/nav-list.html nav-tree=app-nav-tree %}
+                    {% include nav-list.html nav-tree=app-nav-tree %}
                 {% else %}
-                    {% include template/nav-list-files.html %}
+                    {% include nav-list-files.html %}
                 {% endif %}
             {% else %}
                 {% if web-nav-tree and web-nav-tree != "" %}
-                    {% include template/nav-list.html nav-tree=web-nav-tree %}
+                    {% include nav-list.html nav-tree=web-nav-tree %}
                 {% else %}
-                    {% include template/nav-list-files.html %}
+                    {% include nav-list-files.html %}
                 {% endif %}
             {% endif %}
 
@@ -216,7 +216,7 @@
         {% endif %}
 
         {% if project-nav-tree %}
-            {% include template/nav-list.html nav-tree=project-nav-tree project-nav=true %}
+            {% include nav-list.html nav-tree=project-nav-tree project-nav=true %}
         {% endif %}
 
     </div>

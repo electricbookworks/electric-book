@@ -149,7 +149,7 @@ We do this with the template/metadata-work.html include.
 {% endcomment %}
 
 {% if is-book-directory %}
-    {% include template/metadata-work.html %}
+    {% include metadata-work.html %}
 {% endif %}
 
 {% comment %} Set the parent language now before we override `language`. {% endcomment %}
@@ -234,7 +234,7 @@ defined in `_data/works` for the given translation.
 {% if is-book-directory and book-subdirectory and book-subdirectory != "" and is-translation == true %}
 
     {% assign work = site.data.works[book-directory][book-subdirectory] %}
-    {% include template/metadata-work.html work=work %}
+    {% include metadata-work.html work=work %}
 
 {% endif %}
 
@@ -254,9 +254,9 @@ override any metadata set for that variant.{% endcomment %}
     {% if is-book-directory %}
         {% if book-subdirectory and book-subdirectory != "" and is-translation == true %}
             {% assign work = site.data.works[book-directory][book-subdirectory] %}
-            {% include template/metadata-work.html work-variant=variant work=work %}
+            {% include metadata-work.html work-variant=variant work=work %}
         {% else %}
-            {% include template/metadata-work.html work-variant=variant %}
+            {% include metadata-work.html work-variant=variant %}
         {% endif %}
     {% endif %}
 
