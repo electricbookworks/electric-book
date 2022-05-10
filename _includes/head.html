@@ -172,6 +172,7 @@
     </head>
     <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
     {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
+    {% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
     data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
     {% if is-translation %} data-translation="{{ language }}"{% endif %}>
         <div id="wrapper">
@@ -238,6 +239,7 @@
 </head>
 <body class="{{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
 {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
+{% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
 data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
 {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 <div id="wrapper">

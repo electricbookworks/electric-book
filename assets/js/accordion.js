@@ -7,12 +7,18 @@
 
 // --------------------------------------------------------------
 // Options, defined in _data/settings.yml
-//
+
 // 1. Use CSS selectors to list the headings that will
 //    define each accordion section, e.g. '#content h2'
-var accordionHeads = '#content ' + settings[settings.site.output].accordion.level;
+var accordionLevel = settings[settings.site.output].accordion.level;
+if (document.body.getAttribute('data-accordion-level')) {
+    accordionLevel = document.body.getAttribute('data-accordion-level');
+}
+var accordionHeads = '#content ' + accordionLevel;
+
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content [role="tabpanel"] ' + settings[settings.site.output].accordion.level + ':first-of-type';
+var defaultAccordionHead = '#content [role="tabpanel"] ' + accordionLevel + ':first-of-type';
+
 // 3. Auto close last accordion when you open a new one?
 var autoCloseAccordionSections = settings[settings.site.output].accordion.autoClose;
 // --------------------------------------------------------------
@@ -617,11 +623,9 @@ function ebAccordify() {
         return;
     }
 
-    // exit if this isn't a chapter
-    var thisIsNotAChapter = (document.querySelector('body').getAttribute('class').indexOf('chapter') === -1);
-    var thisHasNoH2s = (document.querySelector(accordionHeads) === null);
-    var thisIsEndmatter = (document.querySelector('body').getAttribute('class').indexOf('endmatter') !== -1);
-    if (thisIsNotAChapter || thisHasNoH2s || thisIsEndmatter) {
+    // exit if this page must not accordify
+    var pageHasNoAccordionHeads = (document.querySelector(accordionHeads) === null);
+    if (pageHasNoAccordionHeads) {
         return;
     }
 
