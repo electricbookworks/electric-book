@@ -303,6 +303,10 @@ function lookupColorSettings(gmfile,
     };
 }
 
+// TO DO: process formats separately even for SVG,
+// so that we can do CMYK SVG functions. You
+// may need https://stackoverflow.com/a/42067036/1781075
+
 // Minify and clean SVGs and copy to destinations.
 // For EpubCheck-safe SVGs, we remove data- attributes
 // and don't strip defaults like <style "type=text/css">
@@ -607,8 +611,8 @@ gulp.task('images:svg', function (done) {
 
             // If there is a [book]all_svg.js file in /_tools/gulp/images/functions
             // containing an all_svg function, run that function.
-            console.log('imageFunctions: ' + imageFunctions);
             if (imageFunctions
+                    && imageFunctions[book]
                     && imageFunctions[book].all_svg
                     && imageFunctions[book].all_svg.all_svg) {
                 console.log('Running the ' + 'all_svg function on ' + filename);
@@ -617,6 +621,7 @@ gulp.task('images:svg', function (done) {
 
             // If there is an image-specific function, run it
             if (imageFunctions
+                    && imageFunctions[book]
                     && imageFunctions[book][imageFunctionName]
                     && imageFunctions[book][imageFunctionName][imageFunctionName]) {
                 console.log('Running the ' + [imageFunctionName] + ' function on ' + filename);
