@@ -152,7 +152,7 @@ en:
     hide: "Hide"
   search:
     search-title: "Search"
-    placeholder: ""
+    placeholder: "Search here..."
     placeholder-searching: "Searching..."
     search-results: "Search results"
     results-for-singular: "result found for"
@@ -211,6 +211,7 @@ en:
   # Comment out a network to remove it
   # from the share menu
   share:
+    share: "Share"
     link: "Link"
     email: "Email"
     facebook: "Facebook"
@@ -270,7 +271,7 @@ fr:
     hide: "Cacher"
   search:
     search-title: "Recherche"
-    placeholder: ""
+    placeholder: "Cherche ici..."
     placeholder-searching: "Recherche..."
     search-results: "Résultats de la recherche"
     results-for-singular: "résultat trouvé pour"
@@ -326,6 +327,25 @@ fr:
     reversefootnote-alt: "Retour au texte"
   pdf:
     cover: "Couverture"
+  # Comment out a network to remove it
+  # from the share menu
+  share:
+    share: "Partager"
+    link: "Lien"
+    email: "Email"
+    facebook: "Facebook"
+    linkedin: "LinkedIn"
+    reddit: "Reddit"
+    twitter: "Twitter"
+    whatsapp: "WhatsApp"
+    # buffer: "Buffer"
+    # delicious: "Delicious"
+    # evernote: "Evernote"
+    # pinterest: "Pinterest"
+    # pocket: "Pocket"
+    # stumbleupon: "Stumbleupon"
+    # tumblr: "Tumblr"
+    # wordpress: "WordPress"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
@@ -652,7 +672,7 @@ es:
     hide: "Cerrar"
   search:
     search-title: "Buscar"
-    placeholder: ""
+    placeholder: "Busca aquí..."
     placeholder-searching: "Buscar..."
     search-results: "Resultados de la búsqueda"
     results-for-singular: "resultado encontrado para"
@@ -708,6 +728,25 @@ es:
     reversefootnote-alt: "Volver al texto"
   pdf:
     cover: "La tapa"
+  # Comment out a network to remove it
+  # from the share menu
+  share:
+    share: "Compartir"
+    link: "Vínculo"
+    email: "Email"
+    facebook: "Facebook"
+    linkedin: "LinkedIn"
+    reddit: "Reddit"
+    twitter: "Twitter"
+    whatsapp: "WhatsApp"
+    # buffer: "Buffer"
+    # delicious: "Delicious"
+    # evernote: "Evernote"
+    # pinterest: "Pinterest"
+    # pocket: "Pocket"
+    # stumbleupon: "Stumbleupon"
+    # tumblr: "Tumblr"
+    # wordpress: "WordPress"
 # su:
 #   iso-name: "Sundanese"
 #   local-name: ""

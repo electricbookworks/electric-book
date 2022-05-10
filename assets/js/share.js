@@ -3,14 +3,21 @@
 function ebShareButtons() {
     'use strict';
 
-    var shareButtons = document.querySelectorAll('.share-button');
+    // Move the panel out of controls, so we can
+    // position it anywhere on the page with CSS.
+    var shareModal = document.getElementById('share-links');
 
-    if (shareButtons) {
+    if (shareModal) {
+        document.body.appendChild(shareModal);
+    }
+
+    var shareButtons = document.querySelectorAll('.share-button, .share-links-close');
+
+    if (shareButtons && shareModal) {
         shareButtons.forEach(function (button) {
             button.addEventListener('click', function () {
-                var shareModal = button.parentNode.querySelector('.share-links');
-                var buttonIcon = button.querySelector('svg');
                 shareModal.classList.toggle('visuallyhidden');
+                var buttonIcon = document.querySelector('.share-button svg');
                 buttonIcon.classList.toggle('active');
             });
         });
