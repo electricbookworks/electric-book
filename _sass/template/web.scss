@@ -119,7 +119,7 @@ $footer-border-color: $color-accent !default;
 
 // Website masthead
 $masthead-text-color: $color-links !default;
-$masthead-background-color: $color-background !default;
+$masthead-background-color: transparent !default;
 $masthead-border-color: transparent !default;
 $masthead-breadcrumb-divider: "\2044" !default; // 2044 is a fraction slash
 $masthead-height: 3.5rem !default;
@@ -183,6 +183,7 @@ $bookmark-icon-text-size: 1em !default;
 $bookmark-last-location-prompt-color-background: $color-links !default;
 $bookmark-last-location-prompt-color-text: $color-background !default;
 $bookmark-last-location-prompt-color-border: $color-links !default;
+
 // Share icon
 $share-icon-color: $color-accent !default;
 
@@ -283,6 +284,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "template/partials/web-mixins--buttons";
 @import "template/partials/web-mixins--sidenotes";
 @import "template/partials/web-mixins--dialogs";
+@import "template/partials/web-mixins--search";
 
 // Structural HTML components
 @import "template/partials/web-wrappers";

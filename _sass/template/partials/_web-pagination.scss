@@ -8,21 +8,35 @@ $web-pagination: true !default;
         padding: $line-height-default;
         margin: auto;
 
+        // Clearfix
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
         a {
             text-decoration: none;
         }
 
         .pagination-previous {
             float: left;
-            a {
-                padding: 0 1em;
+            width: 70%;
+            max-width: 20rem;
+
+            .pagination-previous-arrow {
+                margin-left: -1rem;
             }
         }
 
         .pagination-next {
             float: right;
-            a {
-                padding: 0 1em;
+            width: 70%;
+            max-width: 20rem;
+            text-align: right;
+
+            .pagination-next-arrow {
+                margin-right: -1rem;
             }
         }
     }
