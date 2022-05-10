@@ -147,6 +147,11 @@ web:
   monetization:
     enabled: false
     ilp-pointer: ""
+  # --------------
+  # Page tags and metadata
+  # --------------
+  page-tags:
+    html-title-divider: " &ndash; "
 
 # ----------------------------------------------------------
 # Epub settings
@@ -253,6 +258,11 @@ app:
     # the element before which the box should be shown.
     # Or for the main page heading, use the default 'mainHeading'.
     jump-box-location: "mainHeading"
+  # --------------
+  # Page tags and metadata
+  # --------------
+  page-tags:
+    html-title-divider: " &ndash; "
 
 # ----------------------------------------------------------
 # External media settings

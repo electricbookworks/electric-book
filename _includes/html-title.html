@@ -6,6 +6,12 @@ unless (a) this is the home page, in which case only use the page title, or
 (b) it's the same as the project/book title, in which case don't duplicate.
 {% endcomment %}
 
+{% comment %} Define divider {% endcomment %}
+{% capture html-title-divider %} &ndash; {% endcapture %}
+{% if site.data.settings[site.output].page-tags.html-title-divider and site.data.settings[site.output].page-tags.html-title-divider != ""  %}
+    {% capture html-title-divider %}{{ site.data.settings[site.output].page-tags.html-title-divider }}{% endcapture %}
+{% endif %}
+
 {% capture html-title %}{{ project-name }}{% endcapture %}
 {% if title and title != "" %}
     {% capture html-title %}{{ title }}{% endcapture %}
@@ -14,7 +20,7 @@ unless (a) this is the home page, in which case only use the page title, or
     {% if is-homepage %}
         {% capture html-title %}{{ page.title }}{% endcapture %}
     {% else %}
-        {% capture html-title %}{{ page.title }} &ndash; {{ html-title }}{% endcapture %}
+        {% capture html-title %}{{ page.title }}{{ html-title-divider }}{{ html-title }}{% endcapture %}
     {% endif %}
 {% endif %}
 
