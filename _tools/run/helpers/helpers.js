@@ -1,3 +1,6 @@
+// Lint with JS Standard
+
+// Import Node modules
 const fs = require('fs-extra') // beyond normal fs, for working with the file-system
 const fsPath = require('path') // Node's path tool, e.g. for normalizing paths cross-platform
 const fsPromises = require('fs/promises') // Promise-based Node fs
@@ -244,7 +247,7 @@ async function jekyll (argv) {
     // We don't want to try to render a PDF if Jekyll didn't build.
     if (result === 1) {
       console.log('Jekyll could not complete its build. Exiting.')
-      process.exit();
+      process.exit()
     }
     return result
   } catch (error) {
@@ -430,14 +433,14 @@ async function convertXHTMLLinks (argv) {
     if (argv.language) {
       convertXHTMLLinksProcess = spawn(
         'gulp',
-        ['epub:xhtmlLinks',
+        ['epubXhtmlLinks',
           '--book', argv.book,
           '--language', argv.language]
       )
     } else {
       convertXHTMLLinksProcess = spawn(
         'gulp',
-        ['epub:xhtmlLinks', '--book', argv.book]
+        ['epubXhtmlLinks', '--book', argv.book]
       )
     }
     await logProcess(convertXHTMLLinksProcess, 'XHTML links')
@@ -457,14 +460,14 @@ async function convertXHTMLFiles (argv) {
     if (argv.language) {
       convertXHTMLFilesProcess = spawn(
         'gulp',
-        ['epub:xhtmlFiles',
+        ['epubXhtmlFiles',
           '--book', argv.book,
           '--language', argv.language]
       )
     } else {
       convertXHTMLFilesProcess = spawn(
         'gulp',
-        ['epub:xhtmlFiles', '--book', argv.book]
+        ['epubXhtmlFiles', '--book', argv.book]
       )
     }
     await logProcess(convertXHTMLFilesProcess, 'XHTML files')
@@ -637,14 +640,14 @@ async function cleanHTMLFiles (argv) {
     if (argv.language) {
       cleanHTMLFilesProcess = spawn(
         'gulp',
-        ['epub:cleanHtmlFiles',
+        ['epubCleanHtmlFiles',
           '--book', argv.book,
           '--language', argv.language]
       )
     } else {
       cleanHTMLFilesProcess = spawn(
         'gulp',
-        ['epub:cleanHtmlFiles', '--book', argv.book]
+        ['epubCleanHtmlFiles', '--book', argv.book]
       )
     }
     await logProcess(cleanHTMLFilesProcess, 'Clean HTML files')
@@ -1355,7 +1358,7 @@ async function refreshIndexes (argv) {
 }
 
 // Copy a book to create a new one
-function newBook(argv) {
+function newBook (argv) {
   'use strict'
 
   let sourceName = 'book'
@@ -1397,6 +1400,7 @@ module.exports = {
   processImages,
   installGems,
   installNodeModules,
+  logProcess,
   newBook,
   pathExists,
   refreshIndexes,

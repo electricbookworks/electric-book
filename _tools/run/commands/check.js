@@ -14,5 +14,6 @@ exports.desc = 'Check project for required files and folders'
 exports.handler = function (argv) {
   'use strict'
 
-  requirements.check(argv)
+  requirements.checkRequiredPaths(argv)
+  requirements.checkYAML(argv)
 }

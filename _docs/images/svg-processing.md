@@ -19,7 +19,7 @@ Also see the ['Settings'](../setup/settings.html#svg-injection) section in Setup
 
 Our built-in image-preparation process automatically optimises SVG images, for instance by removing unnecessary data from their code. This happens when you run the 'Convert source images to output formats' option in the output script.
 
-We use a library called [SVGO](https://github.com/svg/svgo) for this optimisation. SVGO has many configuration options. We've carefully preset options based on our experience, and they are written into the `images:svg` task in `gulpfile.js`. If you need to change them, tread carefully and be careful not to overwrite your changes if you update `gulpfile.js` (e.g. by copying the latest version from the template or another project).
+> Technical note: We use a library called [SVGO](https://github.com/svg/svgo) for this optimisation. SVGO has many configuration options. We've carefully preset options based on our experience, and they are written into `_tools/gulp/processors/svgs.js`. If you need to change them, tread carefully and be careful not to overwrite your changes if you update this or related files, for instance by copying the latest version from the template or another project.
 
 
 ## Manipulating SVGs automatically

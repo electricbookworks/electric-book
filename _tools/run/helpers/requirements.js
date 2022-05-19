@@ -1,6 +1,25 @@
 const helpers = require('./helpers.js')
 const fsPath = require('path')
 const chalk = require('chalk')
+const spawn = require('cross-spawn')
+
+// Check that YAML is valid
+async function checkYAML () {
+  'use strict'
+
+  console.log('Checking that YAML files are valid ...' + '\n')
+
+  try {
+    const gulpProcess = spawn(
+      'gulp',
+      ['yaml']
+    )
+    await helpers.logProcess(gulpProcess, 'Checking YAML')
+    return
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // Checks project for critical files and folders
 function checkRequiredPaths () {
@@ -247,4 +266,5 @@ function checkRequiredPaths () {
   console.log('Check complete.')
 }
 
-exports.check = checkRequiredPaths
+exports.checkRequiredPaths = checkRequiredPaths
+exports.checkYAML = checkYAML
