@@ -1140,6 +1140,7 @@ async function convertHTMLtoWord (argv) {
   const outputLocation = fsPath.normalize(process.cwd() +
     '/_output/' +
     argv.book +
+    '--' + argv.format +
     '--word')
 
   // Clear the previous output folder if it exists,
@@ -1173,7 +1174,7 @@ async function convertHTMLtoWord (argv) {
           // to install rsvg-convert, because this
           // isn't necessary for simple Word output.
           if (!error.message.includes('check that rsvg-convert is in path')) {
-            console.log('Problem converting HTML to Word: ', error)
+            console.log('Potential problem converting HTML to Word: ', error)
           }
         } else {
           totalConverted += 1
