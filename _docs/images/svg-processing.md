@@ -30,7 +30,7 @@ This can be tedious to do manually, or impossible to do in tools like Adobe Illu
 
 So, the Electric Book template includes a way for you to write Javascript functions that manipulate your SVGs for you during image processing. These functions run *after* SVGO optimisation.
 
-These functions are in scripts saved to book specific folders in `_tools/gulp/images/functions`. You can create one file and function per SVG image, or one file and function that applies to *all* SVGs images in a book.
+These functions are in scripts saved to book specific folders in `_tools/gulp/images/functions`. You can create one file and function per SVG image, or one file and function that applies to *all* SVGs images in a book. You can also have a function run only on the SVG for a particular output format (e.g. `print-pdf`),
 
 
 ### Single-image functions
@@ -43,6 +43,8 @@ Add a file for the relevant SVG to the `_tools/gulp/images/functions` folder, in
 - a `.js` file extension.
 
 For example, `naples_svg.js` will contain a function that runs on the `naples.svg` file in the `samples` book. It should be in `_tools/gulp/images/functions/samples`.
+
+If you want the file to only apply to a particular output format, place it in a sub-folder named after that format. E.g. `_tools/gulp/images/functions/samples/print-pdf/naples_svg.js`. If there is a file with the same name for both all formats and a specific output format, the all-formats function will run first, followed by the output-specific one.
 
 Behind the scenes, the function will be run by [gulp-edit-xml](https://www.npmjs.com/package/gulp-edit-xml), which parses SVG files as Javascript objects. For more detail on this approach and syntax, see the docs for [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js). In particular, note that:
 

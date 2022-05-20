@@ -4,6 +4,7 @@
 const debug = require('gulp-debug')
 const gulp = require('gulp')
 const gulpif = require('gulp-if')
+const newer = require('gulp-newer')
 const path = require('path')
 const svgmin = require('gulp-svgmin')
 const tap = require('gulp-tap')
@@ -25,25 +26,23 @@ const imageFunctions = require('require-all')(path.join(__dirname, '/../images/f
 // may need https://stackoverflow.com/a/42067036/1781075
 
 // Minify and clean SVGs and copy to destinations.
-// For EpubCheck-safe SVGs, we remove data- attributes
-// and don't strip defaults like <style "type=text/css">
-function svgs (done) {
+function svgProcess (outputFormat) {
   console.log('Processing SVG images from ' + paths.img.source)
 
   let prefix = '' // does this ever get overwritten incorrectly due to async piping?
   let imageFunctionName = {}
   let filename = ''
+  const outputFormatAsValidJSVariableName = outputFormat.replace('-', '')
 
-  // Since SVGs are used as-as for all output formats,
-  // we can perform this check with gulpif based only
-  // on the file path, which is accessible with gulpif.
+  // Should this SVG be modified?
   const modifyImage = function (file) {
     filename = getFilenameFromPath(file.path)
-    const modificationStatus = modifyImageCheck(filename)
+    const modificationStatus = modifyImageCheck(filename, outputFormat)
     return modificationStatus
   }
 
-  gulp.src(paths.img.source + '*.svg')
+  return gulp.src(paths.img.source + '*.svg')
+    .pipe(newer(paths.img[outputFormatAsValidJSVariableName]))
     .pipe(tap(function (file) {
       prefix = getFileDetailsFromTap(file).prefix
       imageFunctionName = getFileDetailsFromTap(file).filename
@@ -52,6 +51,9 @@ function svgs (done) {
         .replace(/\./g, '_')
     }))
     .pipe(debug({ title: 'Processing SVG ' }))
+
+    // For EpubCheck-safe SVGs, we remove data- attributes
+    // and don't strip defaults like <style "type=text/css">
     .pipe(gulpif(modifyImage, svgmin({
       plugins: [
         // This first pass only runs minifyStyles, to remove CDATA from
@@ -334,6 +336,18 @@ function svgs (done) {
         imageFunctions[book].all_svg.all_svg(xml)
       }
 
+      // If there is a [book]all_svg.js file in a format subfolder
+      // of /_tools/gulp/images/functions
+      // containing an all_svg function, run that function.
+      if (imageFunctions &&
+                    imageFunctions[book] &&
+                    imageFunctions[book][outputFormat] &&
+                    imageFunctions[book][outputFormat].all_svg &&
+                    imageFunctions[book][outputFormat].all_svg.all_svg) {
+        console.log('Running the ' + outputFormat + ' all_svg function on ' + filename)
+        imageFunctions[book][outputFormat].all_svg.all_svg(xml)
+      }
+
       // If there is an image-specific function, run it
       if (imageFunctions &&
                     imageFunctions[book] &&
@@ -342,14 +356,49 @@ function svgs (done) {
         console.log('Running the ' + [imageFunctionName] + ' function on ' + filename)
         imageFunctions[book][imageFunctionName][imageFunctionName](xml)
       }
+
+      // If there is an image- and format-specific specific function, run it
+      if (imageFunctions &&
+                    imageFunctions[book] &&
+                    imageFunctions[book][outputFormat] &&
+                    imageFunctions[book][outputFormat][imageFunctionName] &&
+                    imageFunctions[book][outputFormat][imageFunctionName][imageFunctionName]) {
+        console.log('Running the ' + outputFormat + ' ' + [imageFunctionName] + ' function on ' + filename)
+        imageFunctions[book][outputFormat][imageFunctionName][imageFunctionName](xml)
+      }
+
       return xml
     }))
-    .pipe(gulp.dest(paths.img.printpdf))
-    .pipe(gulp.dest(paths.img.screenpdf))
-    .pipe(gulp.dest(paths.img.web))
-    .pipe(gulp.dest(paths.img.epub))
-    .pipe(gulp.dest(paths.img.app))
+    .pipe(gulp.dest(paths.img[outputFormatAsValidJSVariableName]))
+}
+
+function svgsPrintPDF (done) {
+  svgProcess('print-pdf')
   done()
 }
 
-exports.svgs = svgs
+function svgsScreenPDF (done) {
+  svgProcess('screen-pdf')
+  done()
+}
+
+function svgsWeb (done) {
+  svgProcess('web')
+  done()
+}
+
+function svgsEpub (done) {
+  svgProcess('epub')
+  done()
+}
+
+function svgsApp (done) {
+  svgProcess('app')
+  done()
+}
+
+exports.svgsPrintPDF = svgsPrintPDF
+exports.svgsScreenPDF = svgsScreenPDF
+exports.svgsWeb = svgsWeb
+exports.svgsEpub = svgsEpub
+exports.svgsApp = svgsApp

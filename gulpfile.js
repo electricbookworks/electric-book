@@ -21,12 +21,16 @@ const {
 
 const { js } = require('./_tools/gulp/processors/js.js')
 const { mathjax } = require('./_tools/gulp/processors/mathjax.js')
-const { svgs } = require('./_tools/gulp/processors/svgs.js')
+const { svgsPrintPDF, svgsScreenPDF, svgsWeb, svgsEpub, svgsApp } = require('./_tools/gulp/processors/svgs.js')
 const { yaml } = require('./_tools/gulp/processors/yaml.js')
 
 // Make tasks available to gulp
 exports.default = parallel(
-  svgs,
+  svgsPrintPDF,
+  svgsScreenPDF,
+  svgsWeb,
+  svgsEpub,
+  svgsApp,
   imagesPrintPDF,
   imagesScreenPDF,
   imagesEpub,
@@ -59,5 +63,13 @@ exports.renderIndexListReferences = renderIndexListReferences
 
 exports.js = js
 exports.mathjax = mathjax
-exports.svgs = svgs
+
+exports.svgs = parallel(
+  svgsPrintPDF,
+  svgsScreenPDF,
+  svgsWeb,
+  svgsEpub,
+  svgsApp
+)
+
 exports.yaml = yaml
