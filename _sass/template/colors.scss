@@ -4,6 +4,11 @@ $template-blue: #5f738c !default;
 $template-yellow: #ffd54d !default;
 $template-orange: #ff7c4d !default;
 
+$template-green-light: #D0FFFF !default;
+$template-blue-light: #C9DEFA !default;
+$template-yellow-light: #FFFFBD !default;
+$template-orange-light: #FFECB5 !default;
+
 // Blacks
 $black: #262626 !default;
 $grey-dark: #333333 !default;
@@ -22,6 +27,11 @@ $white-mid: #f9f9f9 !default;
     $template-blue: cmyk(18%, 10%, 0%, 45%)  !default;
     $template-yellow: cmyk(0%, 16%, 70%, 0% ) !default;
     $template-orange: cmyk(0%, 51%, 70%, 0% ) !default;
+
+    $template-green-light: cmyk(15%, 0%, 0%, 3%) !default;
+    $template-blue-light: cmyk(19%, 7%, 0%, 0%)  !default;
+    $template-yellow-light: cmyk(2%, 0%, 31%, 0% ) !default;
+    $template-orange-light: cmyk(1%, 6%, 34%, 0% ) !default;
 
     // Blacks
     $black: cmyk(0%, 0%, 0%, 100%) !default;

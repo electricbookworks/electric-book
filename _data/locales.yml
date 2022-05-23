@@ -128,7 +128,7 @@ en:
   local-name: "English"
   project:
     # Project items are set for the parent language
-    # in meta.yml and can be overridden here.
+    # in _data/project.yml and can be overridden here.
     # Project 'name' also sets the HTML title on the home page.
     organisation: ""
     url: ""
@@ -137,6 +137,8 @@ en:
     description: ""
     image: ""
     credit: ""
+  features:
+    copyright-page: "Copyright"
   nav:
     home: "Home"
     menu: "Menu"
@@ -150,7 +152,7 @@ en:
     hide: "Hide"
   search:
     search-title: "Search"
-    placeholder: ""
+    placeholder: "Search here..."
     placeholder-searching: "Searching..."
     search-results: "Search results"
     results-for-singular: "result found for"
@@ -206,6 +208,25 @@ en:
     reversefootnote-alt: "Back to text"
   pdf:
     cover: "Cover"
+  # Comment out a network to remove it
+  # from the share menu
+  share:
+    share: "Share"
+    link: "Link"
+    email: "Email"
+    facebook: "Facebook"
+    linkedin: "LinkedIn"
+    reddit: "Reddit"
+    twitter: "Twitter"
+    whatsapp: "WhatsApp"
+    # buffer: "Buffer"
+    # delicious: "Delicious"
+    # evernote: "Evernote"
+    # pinterest: "Pinterest"
+    # pocket: "Pocket"
+    # stumbleupon: "Stumbleupon"
+    # tumblr: "Tumblr"
+    # wordpress: "WordPress"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -235,6 +256,8 @@ fr:
     description: "Livres créés avec le flux de travail Electric Book"
     image: ""
     credit: "Construit avec [l'Electric Book](https://ebw.co/template)"
+  features:
+    copyright-page: "Droits"
   nav:
     home: "Accueil"
     menu: "Menu"
@@ -248,7 +271,7 @@ fr:
     hide: "Cacher"
   search:
     search-title: "Recherche"
-    placeholder: ""
+    placeholder: "Cherche ici..."
     placeholder-searching: "Recherche..."
     search-results: "Résultats de la recherche"
     results-for-singular: "résultat trouvé pour"
@@ -304,6 +327,25 @@ fr:
     reversefootnote-alt: "Retour au texte"
   pdf:
     cover: "Couverture"
+  # Comment out a network to remove it
+  # from the share menu
+  share:
+    share: "Partager"
+    link: "Lien"
+    email: "Email"
+    facebook: "Facebook"
+    linkedin: "LinkedIn"
+    reddit: "Reddit"
+    twitter: "Twitter"
+    whatsapp: "WhatsApp"
+    # buffer: "Buffer"
+    # delicious: "Delicious"
+    # evernote: "Evernote"
+    # pinterest: "Pinterest"
+    # pocket: "Pocket"
+    # stumbleupon: "Stumbleupon"
+    # tumblr: "Tumblr"
+    # wordpress: "WordPress"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
@@ -604,9 +646,107 @@ fr:
 # st:
 #   iso-name: "Southern Sotho"
 #   local-name: ""
-# es:
-#   iso-name: "Spanish"
-#   local-name: "Español"
+es:
+  iso-name: "Spanish"
+  local-name: "Español"
+  project:
+    organisation: ""
+    url: ""
+    email: ""
+    name: ""
+    description: "Libros creados con el Libro Eléctrico"
+    image: ""
+    credit: "Construido con el [Libro Eléctrico](https://ebw.co/template)"
+  features:
+    copyright-page: "Derechos"
+  nav:
+    home: "Inicio"
+    menu: "Menú"
+    next: "Siguiente"
+    previous: "Anterior"
+    back: "&larr;"
+  input:
+    submit: "Enviar"
+    send: "Enviar"
+    show: "Expandir"
+    hide: "Cerrar"
+  search:
+    search-title: "Buscar"
+    placeholder: "Busca aquí..."
+    placeholder-searching: "Buscar..."
+    search-results: "Resultados de la búsqueda"
+    results-for-singular: "resultado encontrado para"
+    results-for-plural: "resultados encontrados para"
+    results-for-none: "No se encontraron resultados para"
+    jump-to-first: "Ir al primer resultado ↓"
+    notice: ""
+  questions:
+    check-answers-button: "Validar mis respuestas"
+    feedback-correct: "¡Correcto!"
+    feedback-incorrect: "Incorrecto"
+    feedback-unfinished: "No ha seleccionado todas las respuestas correctas."
+    mark-correct: "&#10003;" # check mark
+    mark-incorrect: "&#10007;" # ballot x
+  quiz:
+    total: "Total"
+  cross-references:
+    pre-page-number: "(página "
+    post-page-number: ")"
+  account:
+    login: "Acceso"
+    my-account: "Mi cuenta"
+  annotator:
+    show-sidebar-tooltip-title: "Anotaciones abiertas"
+    show-sidebar-tooltip-description: "Ingrese aquí para mostrar la barra de anotaciones. Seleccione texto para resaltarlo y crear notas en esta página."
+    show-annotated-text-tooltip-title: "Resaltar anotaciones"
+    show-annotated-text-tooltip-description: "Ingrese aquí para mostrar u ocultar las anotaciones resaltadas en esta página."
+  bookmarks:
+    bookmark: "Marcador"
+    bookmarks: "Marcador"
+    bookmarks-tip: "Pulsa o selecciona el texto, y luego pulsa el ícono de marcador para guardar un marcador. Los marcadores se guardan en tu caché. Al borrar los datos almacenados en caché, se eliminarán."
+    last-location: "Su última visita"
+    last-locations-tip: "En su última visita usted paró de leer aquí."
+    last-location-prompt: "¿Desea continuar desde su última visita?"
+    delete-bookmark: "Eliminar"
+    delete-all: "Eliminar"
+    delete-bookmark-confirm: "Pulsa de nuevo para confirmar"
+    delete-all-bookmarks-confirm: "Pulsa de nuevo para confirmar"
+    bookmarks-shifted-warning: "Un marcador parece no encontrar correspondencia exacta con su ubicación original. El contenido de esta página puede haber cambiado."
+  accordion:
+    show-all: "Expandir todo"
+    close-all: "Cerrar todo"
+  controls:
+    language-select: "Seleccione idioma"
+  video:
+    options-button: "Otras opciones de vídeo"
+  copy:
+    copy: "Copiar"
+    copied: "Copiado"
+    copy-failed: "Lo siento, inténtalo de nuevo"
+  footnotes:
+    close-footnote: "Cerrar nota al pie"
+    reversefootnote-alt: "Volver al texto"
+  pdf:
+    cover: "La tapa"
+  # Comment out a network to remove it
+  # from the share menu
+  share:
+    share: "Compartir"
+    link: "Vínculo"
+    email: "Email"
+    facebook: "Facebook"
+    linkedin: "LinkedIn"
+    reddit: "Reddit"
+    twitter: "Twitter"
+    whatsapp: "WhatsApp"
+    # buffer: "Buffer"
+    # delicious: "Delicious"
+    # evernote: "Evernote"
+    # pinterest: "Pinterest"
+    # pocket: "Pocket"
+    # stumbleupon: "Stumbleupon"
+    # tumblr: "Tumblr"
+    # wordpress: "WordPress"
 # su:
 #   iso-name: "Sundanese"
 #   local-name: ""

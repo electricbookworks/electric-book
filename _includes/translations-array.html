@@ -1,0 +1,174 @@
+{% comment %} This include returns an array called `translations-array`,
+which includes language codes for all available versions
+of the including file. It assumes that the `metadata` include
+has already been processed in the scope of its Jekyll build step. {% endcomment %}
+
+{% comment %} Don't do all this work if the translations list
+is already loaded on this page. {% endcomment %}
+{% if translations-array-loaded == true %}
+{% else %}
+
+    {% comment %} Create an array of link strings, to sort later. {% endcomment %}
+    {% assign translations-array = "" | split: "" %}
+
+    {% comment %} If we're in a book directory, we'll use file lists
+    to determine what has been translated. {% endcomment %}
+    {% if is-book-directory %}
+
+        {% comment %} We have all translation language codes as `translations` from metadata. {% endcomment %}
+        {% for translation in translations %}
+
+            {% comment %} Exclude the current language. {% endcomment %}
+            {% unless translation == language %}
+
+                {% comment %} Get a file list for that language.
+                Check the current variant first, then fall back to default.yml. {% endcomment %}
+                {% if site.data.works[book-directory][translation][variant].products[output-format].files
+                    and site.data.works[book-directory][translation][variant].products[output-format].files != "" %}
+                    {% assign this-language-file-list = site.data.works[book-directory][translation][variant].products[output-format].files %}
+                {% else %}
+                    {% assign this-language-file-list = site.data.works[book-directory][translation].default.products[output-format].files %}
+                {% endif %}
+
+                {% comment %} See if the current-file is in that list. {% endcomment %}
+                {% assign translated-file-listed = false %}
+                {% for file in this-language-file-list %}
+                    {% for filename in file %}
+                        {% if filename[0] == current-file %}
+                            {% assign translated-file-listed = true %}
+                        {% elsif filename == current-file %}
+                            {% assign translated-file-listed = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+                {% comment %} Check if the translated file actually exists. {% endcomment %}
+                {% assign translated-file-built = false %}
+
+                {% if translated-file-listed %}
+                    {% capture translated-file-with-path %}{{ book-directory }}/{{ translation }}/{{ current-file }}.md{% endcapture %}
+
+                    {% comment %} Create a smaller array to loop through. {% endcomment %}
+                    {% assign translated-pages-subset = site.pages | where_exp: "page", "page.path contains translated-file-with-path" %}
+
+                    {% for page in translated-pages-subset %}
+                        {% if page.path == translated-file-with-path %}
+                            {% assign translated-file-built = true %}
+                            {% break %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% comment %} Add the translation language code to the array. {% endcomment %}
+                {% if translated-file-built %}
+                    {% assign translations-array = translations-array | push: translation %}
+                {% endif %}
+
+            {% endunless %}
+
+        {% endfor %}
+
+        {% comment %} Now add the parent language,
+        unless this page is in the parent-language. {% endcomment %}
+        {% unless language == parent-language %}
+            
+            {% comment %} Get a file list for the parent language.
+            Check the current variant first, then fall back to default.yml. {% endcomment %}
+            {% if site.data.works[book-directory][variant].products[output-format].files
+                    and site.data.works[book-directory][variant].products[output-format].files != "" %}
+                {% assign parent-language-file-list = site.data.works[book-directory][variant].products[output-format].files %}
+            {% else %}
+                {% assign parent-language-file-list = site.data.works[book-directory].default.products[output-format].files %}
+            {% endif %}
+
+            {% comment %} See if the current-file is in that list. {% endcomment %}
+            {% assign parent-language-file-listed = false %}
+            {% for file in parent-language-file-list %}
+                {% for filename in file %}
+                    {% if filename[0] == current-file %}
+                        {% assign parent-language-file-listed = true %}
+                    {% elsif filename == current-file %}
+                        {% assign parent-language-file-listed = true %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+            {% comment %} Check if the parent-language file actually exists. {% endcomment %}
+            {% assign parent-language-file-built = false %}
+
+            {% if parent-language-file-listed %}
+                {% capture parent-language-file-with-path %}{{ book-directory }}/{{ current-file }}.md{% endcapture %}
+
+                {% comment %} Create a smaller array to loop through. {% endcomment %}
+                {% assign parent-language-pages-subset = site.pages | where_exp: "page", "page.path contains parent-language-file-with-path" %}
+
+                {% for page in parent-language-pages-subset %}
+                    {% if page.path == parent-language-file-with-path %}
+                        {% assign parent-language-file-built = true %}
+                        {% break %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% comment %} Add the parent language to the array. {% endcomment %}
+            {% if parent-language-file-built %}
+                {% assign translations-array = translations-array | push: parent-language %}
+            {% endif %}
+
+        {% endunless %}
+
+    {% comment %} If this is not a book directory, translations must be
+    in language-specific directories in the root directory.
+    There is no files list for these, so we only check for file existence.
+    The translation is registered in `metadata` if:
+    (a) at least one book folder contains a translation in that language
+    (b) the language is active/uncommented in _data/locales.yml. {% endcomment %}
+
+    {% else %}
+
+        {% comment %} Check translation languages, using `translations` from `metadata`. {% endcomment %}
+        {% for translation in translations %}
+
+            {% comment %} Exclude the current page's language. {% endcomment %}
+            {% unless translation == language %}
+                
+                {% capture path-to-translated-root-page %}{{ translation }}/{{ current-file }}.md{% endcapture %}
+
+                {% comment %} Create a smaller array to loop through. {% endcomment %}
+                {% assign translated-root-pages-subset = site.pages | where_exp: "page", "page.path contains path-to-translated-root-page" %}
+
+                {% for page in translated-root-pages-subset %}
+                    {% if page.path == path-to-translated-root-page %}
+                        {% assign translations-array = translations-array | push: translation %}
+                    {% endif %}
+                {% endfor %}
+            
+            {% endunless %}
+
+        {% endfor %}
+
+        {% comment %} On translated pages, check and add the parent language. {% endcomment %}
+        {% if is-translation %}
+
+            {% capture path-to-parent-language-root-page %}{{ current-file }}.md{% endcapture %}
+
+            {% comment %} Create an array that contains only the one file we're after. {% endcomment %}
+            {% assign parent-language-pages-subset = site.pages | where_exp: "page", "page.path == path-to-parent-language-root-page" %}
+
+            {% if parent-language-pages-subset.size == 1 %}
+                {% assign translations-array = translations-array | push: parent-language %}
+            {% endif %}
+
+        {% endif %}
+
+    {% comment %} End of is-book-directory. {% endcomment %}
+    {% endif %}
+
+    {% comment %} Sort the array if it contains anything. {% endcomment %}
+    {% if translations-array.size > 0 %}
+        {% assign translations-array = translations-array | sort %}
+    {% endif %}
+
+{% comment %}End of entire translations load.{% endcomment %}
+{% endif %}
+{% assign translations-loaded = true %}

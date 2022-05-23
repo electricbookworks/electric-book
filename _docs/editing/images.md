@@ -56,7 +56,7 @@ If you are creating a [translation](translations.html) in a subdirectory of `tex
 
    Even if you're not in a translation folder, it's good practice to always use the `{{ path-to-book-directory }}` tag for maximum portability, if you don't mind having the `{% include metadata %}` tag at the top of your files. Ultimately this image include will look like this: `![A description of the image]({{ path-to-book-directory }}{{ site.image-set }}/filename.jpg)`
 
-1. In very old versions of the template: add another `../` for each directory level. So if your translation text is in `book/text/fr`, anf your images are in the `book` folder, you need to come up two levels before going into `book/images`. So your path is `../../{{ site.image-set }}/filename.jpg`.
+1. In very old versions of the template: add another `../` for each directory level. So if your translation text is in `book/fr`, anf your images are in the `book` folder, you need to come up two levels before going into `book/images`. So your path is `../../{{ site.image-set }}/filename.jpg`.
    
    Ultimately, your image include will be `![A description of the image](../../{{ site.image-set }}/filename.jpg)`.
 
@@ -155,6 +155,6 @@ That's all based on these page settings. Yours may differ, affecting your margin
 }
 ```
 
-We've done very little testing with this so far. YMMV.
+We've done very little testing with this so far, so your results may vary.
 
 There is another example [here](https://github.com/electricbookworks/electric-book/issues/164).

@@ -26,8 +26,12 @@ $web-notes: true !default;
     }
 
     // the hook arrow in the footnotes section
-    .footnotes .reverse-footnote-arrow path {
-        fill: $color-links;
+    .footnotes .reverse-footnote-arrow {
+        vertical-align: bottom;
+
+        path {
+            fill: $color-links;
+        }
     }
 
     // Footnote popups

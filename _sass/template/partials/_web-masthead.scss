@@ -4,12 +4,16 @@ $web-masthead: true !default;
     // Masthead
 
     .masthead {
-        font-family: $font-text-secondary;
+
+        // Position
+        display: flex;
+
+        // Appearance
         background-color: $masthead-background-color;
         border-bottom: $rule-thickness solid $masthead-border-color;
-        width: 100%;
-        text-align: center;
         color: $masthead-text-color;
+        font-family: $font-text-secondary;
+        text-align: center;
 
         &:after {
             content: "";
@@ -22,15 +26,46 @@ $web-masthead: true !default;
             text-decoration: none;
         }
 
+        .masthead-logo {
+            padding: 1rem;
+            max-height: $masthead-height;
+            width: 5rem;
+
+            @if $masthead-logo-width {
+                width: $masthead-logo-width;
+            }
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
+            }
+
+            @if $masthead-logo-position == "right" {
+                order: 2;
+            }
+        }
+
         ul {
+
+            // Position
             display: flex;
-            justify-content: center;
+            width: 100%;
+
+            @if $masthead-align == "right" {
+                justify-content: end;
+            } @else if $masthead-align == "center" {
+                justify-content: center;
+            } @else {
+                justify-content: start;
+            }
+
+            // Appearance
             list-style-type: none;
             margin: 0 auto;
-            padding: 0.5em;
+            padding: 0.5rem 0.5rem 0.5rem 0;
 
             // Keep masthead height when li is display:none
-            min-height: 3.5rem;
+            min-height: $masthead-height;
 
             li {
                 display: none; // hide masthead breadcrumbs as mobile-first default

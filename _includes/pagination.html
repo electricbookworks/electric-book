@@ -1,0 +1,150 @@
+{% capture pagination-html %}
+
+{% comment %} Includes pagination to the next and previous pages,
+according to the order of the output-format's file-list,
+which is defined in `_data/works` in 'files' nodes. 
+To have the include only show one direction, in the include tag
+use direction="next" or direction="previous". {% endcomment %}
+
+{% include metadata %}
+
+{% comment %} Only paginate book chapters,
+not pages like landing and search pages. {% endcomment %}
+{% assign paginate-this-page = false %}
+
+{% if is-book-directory %}
+
+    {% comment %} Create an array from the file-list we get from metadata,
+    and capture the current file's name.{% endcomment %}
+    {% assign pages-to-paginate = file-list | split: " " %}
+    {% capture page-to-look-for %}{{ current-file }}.html{% endcapture %}
+
+    {% comment %} Check if this page is in the list. {% endcomment %}
+    {% for page-to-paginate in pages-to-paginate %}
+        {% if page-to-paginate == page-to-look-for %}
+            {% assign paginate-this-page = true %}
+            {% break %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if paginate-this-page %}
+
+    {% comment %} Loop through the file-list looking for the current file.
+    When we find it, get the previous and next files, too,
+    by using Liquid's option to index from 0 or 1. {% endcomment %}
+    {% for page in pages-to-paginate %}
+        {% if page == page-to-look-for %}
+            {% assign pagination-match = true  %}
+            {% assign page-index0 = forloop.index0 %}
+            {% assign page-index1 = forloop.index %}
+            {% break %}
+        {% endif %}
+    {% endfor %}
+
+    {% comment %} If we have a match, store the previous and next files. {% endcomment %}
+    {% if pagination-match == true %}
+        {% for page in pages-to-paginate %}
+            {% if page-index0 == forloop.index0 %}
+                {% assign this-page = page %}
+            {% endif %}
+            {% if page-index0 == forloop.index %}
+                {% assign previous-page = page %}
+            {% endif %}
+            {% if page-index1 == forloop.index0 %}
+                {% assign next-page = page %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% comment %} We're going to look up the next and previous pages' titles. 
+    Remove index.html from URLs so that they compare with
+    Jekyll's folder-based-paths for the page.url of index.html files. {% endcomment %}
+    {% if previous-page contains "/index.html" %}
+        {% capture previous-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{% endcapture %}
+    {% else %}
+        {% capture previous-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{{ previous-page }}{% endcapture %}
+    {% endif %}
+    {% if this-page contains "/index.html" %}
+        {% capture this-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{% endcapture %}
+    {% else %}
+        {% capture this-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{{ this-page }}{% endcapture %}
+    {% endif %}
+    {% if next-page contains "/index.html" %}
+        {% capture next-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{% endcapture %}
+    {% else %}
+        {% capture next-page-url %}/{{ book-directory }}/{% if is-translation %}{{ language }}/{% endif %}{{ next-page }}{% endcapture %}
+    {% endif %}
+
+    {% comment %} Now look through all pages to find the titles. {% endcomment %}
+    {% for page in site.pages %}
+        {% if page.url == previous-page-url %}
+            {% capture previous-page-title %}{{ page.title }}{% endcapture %}
+        {% endif %}
+        {% if page.url == next-page-url %}
+            {% capture next-page-title %}{{ page.title }}{% endcapture %}
+        {% endif %}
+    {% endfor %}
+
+    {% comment %} Get the display style for pagination. {% endcomment %}
+    {% assign pagination-type = "arrows" %}
+    {% if site.data.settings[output-format].pagination-type == "direction" %}
+        {% assign pagination-type = "direction" %}
+    {% elsif site.data.settings[output-format].pagination-type == "titles" %}
+        {% assign pagination-type = "titles" %}
+    {% elsif site.data.settings[output-format].pagination-type == "title-arrows" %}
+        {% assign pagination-type = "title-arrows" %}
+    {% endif %}
+
+    {% comment %} Now create a div for each pagination item,
+    if there is a file to link to. Don't include a link if
+    it points to the page we're on. This can happen when the page
+    is the first file in the file-list.{% endcomment %}
+
+    <div class="pagination">
+        {% unless include.direction == "next" %}    
+            {% if previous-page and previous-page-url != "" and previous-page-url != this-page-url %}
+                <div class="pagination-previous">
+                    <a href="{{ path-to-root-directory }}{{ previous-page-url | replace_first: "/" }}">
+                        <span class="pagination-marker">
+                            {% if previous-page-title and previous-page-title != "" and pagination-type == "titles" %}
+                                <span class="pagination-previous-text">{{ previous-page-title }}</span>
+                            {% elsif previous-page-title and previous-page-title != "" and pagination-type == "title-arrows" %}
+                                <span class="pagination-previous-arrow">&#x2190;</span>
+                                <span class="pagination-previous-text">{{ previous-page-title }}</span>
+                            {% elsif pagination-type == "direction" %}
+                                <span class="pagination-previous-text">{{ locale.nav.previous }}</span>
+                            {% else %}
+                                <span class="pagination-previous-arrow">&#x2190;</span>
+                            {% endif %}
+                        </span>
+                    </a>
+                </div>
+            {% endif %}
+        {% endunless %}
+
+        {% unless include.direction == "previous" %}
+            {% if next-page and next-page-url != "" and next-page-url != this-page-url %}
+                <div class="pagination-next">
+                    <a href="{{ path-to-root-directory }}{{ next-page-url | replace_first: "/" }}">
+                        <span class="pagination-marker">
+                            {% if next-page-title and next-page-title != "" and pagination-type == "titles" %}
+                                <span class="pagination-next-text">{{ next-page-title }}</span>
+                            {% elsif next-page-title and next-page-title != "" and pagination-type == "title-arrows" %}
+                                <span class="pagination-next-text">{{ next-page-title }}</span>
+                                <span class="pagination-next-arrow">&#x2192;</span>
+                            {% elsif pagination-type == "direction" %}
+                                <span class="pagination-next-arrow">{{ locale.nav.next }}</span>
+                            {% else %}
+                                <span class="pagination-next-arrow">&#x2192;</span>
+                            {% endif %}
+                         </span>
+                    </a>
+                </div>
+            {% endif %}
+        {% endunless %}
+    </div>
+
+{% endif %}
+
+{% endcapture %}{{ pagination-html | strip_newlines | strip }}

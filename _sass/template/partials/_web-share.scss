@@ -1,0 +1,110 @@
+$web-share: true !default;
+$share-icon-color: $color-accent !default;
+@if $web-share {
+
+    #share-links {
+
+        @include dialog-styles();
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30rem;
+        max-width: 90%;
+        z-index: 2000; // not great, but should be higher than clickout div's 999+ increments
+
+        .share-links-close {
+
+            // Position
+            position: absolute;
+            top: -0.75rem;
+            right: -0.75rem;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: end;
+
+            // Appearance
+            color: transparent;
+            background-color: $white;
+            border-radius: 2rem;
+            border: $rule-thickness solid $color-accent;
+            cursor: pointer;
+
+            &::before {
+                color: $color-accent;
+                content: "\00D7";
+                display: inline-block;
+                font-size: 2rem;
+                position: absolute;
+                text-align: center;
+                width: 1.8rem;
+                top: -0.25rem; // manual alignment
+            }
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+
+            .share-link {
+                margin-bottom: 0.25rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                .share-link-content {
+                    text-decoration: none;
+
+                    &:hover {
+
+                        svg {
+
+                            path {
+                                fill: $share-icon-color;
+                            }
+                        }
+                    }
+                }
+
+                .share-link-icon {
+                    display: inline-block;
+                    margin-right: 0.5rem;
+                    vertical-align: middle;
+                    width: 1rem;
+
+                    svg {
+                        path {
+                            fill: $grey-mid;
+                        }
+                    }
+                }
+
+                .share-link-label {
+                    line-height: 1;
+                }
+            }
+        }
+    }
+
+    .share-button {
+        cursor: pointer;
+
+        svg.share-icon {
+            width: 1rem;
+
+            path {
+                stroke: $share-icon-color;
+                fill: none;
+            }
+
+            &.active {
+
+                path {
+                    fill: $share-icon-color;
+                }
+            }
+        }
+    }
+}

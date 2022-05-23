@@ -1,0 +1,56 @@
+{% comment %}
+Works much like nav-list, passing child items to itself
+as new parameters to drill down through web-nav-tree,
+and outputting only list items relevant to the current file.
+Include with {% include breadcrumbs.html breadcrumb-tree=web-nav-tree %}.
+The crumbs-array is created empty in _includes/metadata.
+{% endcomment %}
+
+{% if include.breadcrumb-tree %}
+    {% for item in include.breadcrumb-tree %}
+
+        {% comment %}Put the label and link, if there is a link,
+        in a variable called 'label'{% endcomment %}
+        {% capture label %}
+            {% if item.file %}
+                <a href="{{ item.file }}{% unless item.file contains ".html" %}.html{% endunless %}{% if item.id %}#{{ item.id }}{% endif %}">
+            {% endif %}
+                {{ item.label | strip | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}{% if item.file %}</a>{% endif %}
+        {% endcapture %}
+        {% capture label %}{{ label | strip_newlines }}{% endcapture %}
+
+        {% comment %}Add that label to the crumbs-array,
+        which we'll pass to this include shortly.{% endcomment %}
+        {% assign crumbs-array = crumbs-array | push: label %}
+        
+        {% comment %}Assign this item's child nodes to the children array,
+        which we'll pass to this include again shortly.{% endcomment %}
+        {% assign children = item.children %}
+
+        {% comment %}If, while traversing the breadcrumb-tree,
+        we find the file we're generating now, output list items
+        for each crumb we've collected in the crumbs-array,
+        and finally a list item for the current file.
+        Otherwise, just include this include again, and pass to it
+        the children of the item and the crumbs-array we've gathered
+        along the way.{% endcomment %}
+        {% if item.file == current-file %}
+            {% for crumb in include.crumbs-array %}
+                <li class="masthead-breadcrumb">{{ crumb | strip | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</li>
+            {% endfor %}
+
+            {% comment %} If the current file is an index.* file, don't add a breadcrumb,
+            because it's the same as its parent breakdcrumb. {% endcomment %}
+            {% unless current-file == "index" %}
+                <li class="masthead-breadcrumb">{{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines | strip }}</li>
+            {% endunless %}
+
+            {% comment %}We don't {% break %} here because some files
+            appear more than once in nav/breadcrumbs.{% endcomment %}
+        {% else %}
+            {% include breadcrumbs.html breadcrumb-tree=children crumbs-array=crumbs-array %}
+        {% endif %}
+    {% endfor %}
+{% else %}
+    {% assign crumbs-array = "" | split: "|" %}
+{% endif %}

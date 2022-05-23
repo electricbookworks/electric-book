@@ -168,38 +168,43 @@ $print-page-headers-footers-content: true !default;
   .chapter {
     prince-page-group: start;
   }
-  @page chapter:first {
-    @top-center { content: normal; }
-    @top-left { content: normal; }
-    @top-right { content: normal; }
-    @top-left-corner { content: normal; }
-    @top-right-corner { content: normal; }
-    @left-middle { content: normal; }
-    @left-top { content: normal; }
-    @left-bottom { content: normal; }
-    @right-middle { content: normal; }
-    @right-top { content: normal; }
-    @right-bottom { content: normal; }
+
+  @if $first-page-margin-boxes == blank {
+    @page chapter:first {
+      @top-center { content: normal; }
+      @top-left { content: normal; }
+      @top-right { content: normal; }
+      @top-left-corner { content: normal; }
+      @top-right-corner { content: normal; }
+      @left-middle { content: normal; }
+      @left-top { content: normal; }
+      @left-bottom { content: normal; }
+      @right-middle { content: normal; }
+      @right-top { content: normal; }
+      @right-bottom { content: normal; }
+    }
   }
 
   // No headers or footers on blank pages of chapters
-  @page chapter:blank {
-    @top-center { content: normal; }
-    @top-left { content: normal; }
-    @top-right { content: normal; }
-    @top-left-corner { content: normal; }
-    @top-right-corner { content: normal; }
-    @bottom-center { content: normal; }
-    @bottom-left { content: normal; }
-    @bottom-right { content: normal; }
-    @bottom-left-corner { content: normal; }
-    @bottom-right-corner { content: normal; }
-    @left-middle { content: normal; }
-    @left-top { content: normal; }
-    @left-bottom { content: normal; }
-    @right-middle { content: normal; }
-    @right-top { content: normal; }
-    @right-bottom { content: normal; }
+  @if $first-page-margin-boxes == blank {
+    @page chapter:blank {
+      @top-center { content: normal; }
+      @top-left { content: normal; }
+      @top-right { content: normal; }
+      @top-left-corner { content: normal; }
+      @top-right-corner { content: normal; }
+      @bottom-center { content: normal; }
+      @bottom-left { content: normal; }
+      @bottom-right { content: normal; }
+      @bottom-left-corner { content: normal; }
+      @bottom-right-corner { content: normal; }
+      @left-middle { content: normal; }
+      @left-top { content: normal; }
+      @left-bottom { content: normal; }
+      @right-middle { content: normal; }
+      @right-top { content: normal; }
+      @right-bottom { content: normal; }
+    }
   }
 
   // Now we place our content for `.frontmatter` pages
@@ -312,18 +317,20 @@ $print-page-headers-footers-content: true !default;
   .frontmatter {
     prince-page-group: start;
   }
-  @page frontmatter:first {
-    @top-center { content: normal; }
-    @top-left { content: normal; }
-    @top-right { content: normal; }
-    @top-left-corner { content: normal; }
-    @top-right-corner { content: normal; }
-    @left-middle { content: normal; }
-    @left-top { content: normal; }
-    @left-bottom { content: normal; }
-    @right-middle { content: normal; }
-    @right-top { content: normal; }
-    @right-bottom { content: normal; }
+  @if $first-page-margin-boxes == blank {
+    @page frontmatter:first {
+      @top-center { content: normal; }
+      @top-left { content: normal; }
+      @top-right { content: normal; }
+      @top-left-corner { content: normal; }
+      @top-right-corner { content: normal; }
+      @left-middle { content: normal; }
+      @left-top { content: normal; }
+      @left-bottom { content: normal; }
+      @right-middle { content: normal; }
+      @right-top { content: normal; }
+      @right-bottom { content: normal; }
+    }
   }
 
   // No headers or footers on blank pages of frontmatter

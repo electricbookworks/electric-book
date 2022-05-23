@@ -4,4 +4,4 @@ title: "Contact"
 
 # Contact
 
-Email [{{ site.data.meta.project.email }}](mailto:{{ site.data.meta.project.email }}){:.copy-to-clipboard}
+Email [{{ site.data.project.email }}](mailto:{{ site.data.project.email }}){:.copy-to-clipboard}

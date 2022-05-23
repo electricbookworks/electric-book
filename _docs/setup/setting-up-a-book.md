@@ -9,9 +9,6 @@ order: 7
 
 The process of setting up a new book is covered very briefly in our [quick-start section](quick-start.html#quick-new-book-setup). This is a slightly longer explanation. For much more detail, read the various sections [listed on the docs starting page](../).
 
-> Once you've followed the instructions below to set up your book (or at any point if you're curious), and you want to actually output a book, run the `run-` script for your operating system, which you'll find in the main project folder. In Windows and Mac, you can just double-click it. (On Mac and Linux, you do need to [give it permission first](https://stackoverflow.com/a/5126052/1781075).) The first time you run it, start with the 'Install or update dependencies' option.
-{:.box}
-
 * TOC
 {:toc}
 
@@ -29,8 +26,9 @@ To create a new book in a new project:
     *   `index.md`: Replace our template text with your own. Usually, a link to each book is useful, e.g. `[Space Potatoes](space-potatoes)`.
     *   `README.md`: Replace our template text with any notes your collaborators might need to know about your project. (The README file is usually only read in the context of editing the files in your folder/repo.)
 1.  Optionally, rename the `book` folder with a one-word, lowercase version of your book's title (e.g. `space-potatoes`). Use only lowercase letters and no spaces. If you're creating more than one book, make a folder for each book. (In one-book projects, we usually just leave it called `book`.)
-1.	In `_data`, edit the `meta.yml` file, filling in your project info and info about at least your first book.
-1.  Inside a book's `text` folder, add a markdown file for each piece of your book, e.g. one file per chapter. Our template contains files we consider minimum requirements for most books: a cover, a title page, a copyright page, a contents page, and a chapter.
+1. Open `_data/project.yml` and replace the template values with your project's information.
+1.	In `_data/works`, edit the book's `default.yml` file, filling in your project info and info about at least your first book. If your book is called 'my-sci-fi', you'll need to copy and edit `_data/works/book/default.yml` as `_data/works/my-sci-fi/default.yml`.
+1.  Inside a book's folder, add a markdown file for each piece of your book, e.g. one file per chapter. Our template contains files we consider minimum requirements for most books: a cover, a title page, a copyright page, a contents page, and a chapter.
 1.  Inside each book's folder, store images in the `images/_source` folder. Add a `cover.jpg` image of your book's front cover there, too.
 1. In each book's `styles` folder, edit the values in `print-pdf.scss`, `screen-pdf.scss`, `web.scss` and `epub.scss`.
 
@@ -140,6 +138,4 @@ We recommend adding a few descriptive words to your filenames after the numbers 
 
 Alongside the content files in a book's folder is an `images` folder, for images that belong to that book only.
 
-A book's folder should only ever need to contain markdown files and images. If you're embedding other kinds of media you could add folders for that alongside `images`. We don't recommend sharing images or media between books, in case you want to move a book from one project to another later. (So, for example, copy the publisher logo into each book's `images` folder separately.)
-
-If your project home page requires images, keep those in `/assets/images`, so that you can link to them from any page.
+See ['Adding image files'](../images/adding-image-files.html) for more detail.

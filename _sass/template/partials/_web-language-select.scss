@@ -11,7 +11,9 @@ $web-language-select: true !default;
 
         .language-select-list {
             @include dialog-styles();
+            background-color: $language-select-background-color;
             list-style-type: none;
+            margin-top: -1rem; // prevents disappearing when mouse moves
             li {
                 display: block; // overrides masthead ul styles
                 a {
@@ -30,13 +32,12 @@ $web-language-select: true !default;
         &:hover {
             .language-select-list {
                 display: block;
-                left: 0;
                 position: fixed;
             }
         }
     }
 
-    // Icon (_includes/language-select-icon)
+    // Icon (_includes/template/language-select-icon.svg)
     svg.language-select-icon {
         // Avoid Firefox bug where tapping selects SVG as text
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882

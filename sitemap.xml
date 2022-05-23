@@ -1,4 +1,5 @@
 ---
-layout: trim
+# This file will generate a sitemap.
+# Do not edit it.
+layout: sitemap
 ---
-{% include sitemap %}

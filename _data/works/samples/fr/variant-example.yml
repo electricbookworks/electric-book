@@ -1,0 +1,11 @@
+# This variant example includes fewer files in the web edition
+
+products:
+  web:
+    files:
+      - "00-00-cover"
+      - "00-03-title-page"
+      - "00-04-copyright-page"
+      - "00-05-contents-page"
+      - "01-00-text"
+      - "01-01-plain-text"

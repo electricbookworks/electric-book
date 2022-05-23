@@ -19,7 +19,7 @@ So updating is a largely manual exercise of knitting your content, styles and te
 Some tips for tackling an update:
 
 1. Back up everything.
-2. For the very simplest books, when updating between versions that are close together (e.g. from v0.10 to v0.11) you might be able to simply copy `book` folders and `_data/meta.yml` from the old project into a new copy of the template. Check the [changelog](https://github.com/electricbookworks/electric-book/blob/master/CHANGELOG.md) to see whether anything major changed that your project depends on.
+2. For the very simplest books, when updating between versions that are close together (e.g. from v0.10 to v0.11) you might be able to simply copy `book` folders and `_data/works` from the old project into a new copy of the template. Check the [changelog](https://github.com/electricbookworks/electric-book/blob/master/CHANGELOG.md) to see whether anything major changed that your project depends on.
 3. Your PDF outputs (`print-pdf` in particular) need special attention, because reflow could affect layouts that you've already carefully refined. You may want to use a tool like [diff-pdf](https://vslavik.github.io/diff-pdf/) or Acrobat Pro to compare old and new PDF outputs.
 
 You can read some discussion about updates, and see a checklist of possible things to look out for while updating, [in the repo's issues](https://github.com/electricbookworks/electric-book/issues/57#issuecomment-303998954).
@@ -27,8 +27,8 @@ You can read some discussion about updates, and see a checklist of possible thin
 Here is an example workflow for updating that you could adapt as follow for your updating projects:
 
 1. Create a new repo from the latest Electric Book template.
-2. Unless you really need the built-in samples (aka demo content) for testing, delete the `samples` folder and the `samples` node from `meta.yml`.
-3. Manually copy values from `_data/meta.yml` from the old project to your new one.
+2. Unless you really need the built-in samples (aka demo content) for testing, delete the `samples` and `_data/works/samples` folders.
+3. Manually copy values from `_data/meta.yml` (in old repos) or `_data/works` (newer repos) from the old project to your new one.
 4. Copy any custom or customised files you created in `_includes` from the old project to the new one.
 5. Make a decision whether to use only the new template's `_includes`, or to copy the includes in the old version over the newer ones. We don't recommend keeping the old includes. Either way, you need to watch for changes or bugs in your output, in case the behaviour of includes changed.
 6. Copy all fonts, images and text files from the old project to the new one, into the relevant folders (e.g. old `images/print-pdf` images may now go into `images/_source`). Be careful to only copy across actual content files, and retain the new template's default files (like `index.md` and `cover.md`).

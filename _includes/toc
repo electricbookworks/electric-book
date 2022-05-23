@@ -16,7 +16,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif web-nav-tree != nil %}
             {% assign toc = web-nav-tree %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            Please define a TOC or web nav in `_data/works`.
         {% endif %}
 
     {% elsif site.output == "screen-pdf" %}
@@ -27,7 +27,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif web-nav-tree != nil %}
             {% assign toc = web-nav-tree %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            Please define a TOC or web nav in `_data/works`.
         {% endif %}
 
     {% elsif site.output == "epub" %}
@@ -38,7 +38,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif web-nav-tree != nil %}
             {% assign toc = web-nav-tree %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            Please define a TOC or web nav in `_data/works`.
         {% endif %}
 
     {% elsif site.output == "web" %}
@@ -49,7 +49,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif print-pdf-toc != nil %}
             {% assign toc = print-pdf-toc %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            Please define a TOC or web nav in `_data/works`.
         {% endif %}
 
     {% elsif site.output == "app" %}
@@ -64,7 +64,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif print-pdf-toc != nil %}
             {% assign toc = print-pdf-toc %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            Please define a TOC or web nav in `_data/works`.
         {% endif %}
 
     {% else %}
@@ -73,7 +73,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif print-pdf-toc != nil %}
             {% assign toc = print-pdf-toc %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            Please define a TOC or web nav in `_data/works`.
         {% endif %}
 
     {% endif %}
@@ -96,13 +96,13 @@ Otherwise, the toc-branch should be the children called by this include recursiv
 {% comment %}If we're not inside a book, we need a path to each file.
 By default, assume we're linking to files in 'book',
 and allow setting a different book directory as a 'book' argument.{% endcomment %}
-{% if is-book-subdirectory %}
+{% if is-book-directory %}
     {% capture toc-path-to-file %}{% endcapture %}
 {% else %}
     {% if include.book %}
-        {% capture toc-path-to-file %}{{ include.book }}/text/{% endcapture %}
+        {% capture toc-path-to-file %}{{ include.book }}/{% endcapture %}
     {% else %}
-        {% capture toc-path-to-file %}book/text/{% endcapture %}
+        {% capture toc-path-to-file %}book/{% endcapture %}
     {% endif %}
 {% endif %}
 
@@ -123,23 +123,17 @@ at the top of the toc, put this in a nav element.{% endcomment %}
     {% comment %}Assume we will use every item in the toc-branch{% endcomment %}
     {% assign include-in-toc = true %}
 
-    {% comment %}If we're outputting a variant, check if a variant toc
-    has been specified. If it has, then it replaced the default toc tree.
-    If we are outputting a variant, and a variant toc is not specified,
-    check which variants, if any, this particular TOC item has specified.
-    Include the item in the TOC only if it is specified in the TOC item's
-    variants list.{% endcomment %}
-    {% if variant and variant-toc == false %}
-        {% assign toc-variants = item.variants | remove: " " | split: "," %}
-        {% for toc-variant in toc-variants %}
-            {% if toc-variant == variant %}
-                {% assign include-in-toc = true %}
-                {% break %}
-            {% else %}
-                {% assign include-in-toc = false %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+    {% comment %} Include the item in the TOC only if it is
+    specified in the TOC item's variants list. {% endcomment %}
+    {% assign toc-variants = item.variants | remove: " " | split: "," %}
+    {% for toc-variant in toc-variants %}
+        {% if toc-variant == variant or toc-variant == "default" %}
+            {% assign include-in-toc = true %}
+            {% break %}
+        {% else %}
+            {% assign include-in-toc = false %}
+        {% endif %}
+    {% endfor %}
 
     {% if include-in-toc == true %}
 

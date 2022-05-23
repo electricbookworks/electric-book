@@ -10,11 +10,12 @@ order: 1
 * Page contents
 {:toc}
 
-Run the template's `run-` script for your operating system and follow the prompts. For these to work, you must already have Jekyll installed and working.
+You can run the website version of your project by running:
 
-* On Windows, run `run-windows.bat` by double-clicking it from your file explorer.
-* On Linux, run `run-linux.sh`. You may have to run it from a terminal, and first enter `chmod +x run-linux.sh` to give it permissions, then `./run-linux.sh`.
-* On Mac OSX, double-click `run-mac.command` in Finder. You may need to give the file permission to run first. To do this, in a Terminal in the same folder as the script, type `chmod +x run-mac.command`.
+```shell
+npm run electric-book -- output
+```
+
 
 ## Using GitHub Pages
 

@@ -23,11 +23,9 @@ $web-figures: true !default;
             }
         }
         img, p img {
-            margin: 0 auto;
-            max-height: 80vh;  // ensure figures are always visible
-            max-width: 100%; 
-            object-fit: contain;
             display: block;
+            margin: 0 auto;
+            width: 100%;
         }
 
         // Enable removing max-height on a figure's images
@@ -51,6 +49,7 @@ $web-figures: true !default;
                 display: none;
             }
             .caption {
+                line-height: $line-height-default;
                 margin: 0;
                 text-align: left;
                 text-indent: 0;

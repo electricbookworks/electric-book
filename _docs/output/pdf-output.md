@@ -10,23 +10,23 @@ order: 2
 * Page contents
 {:toc}
 
+You can create a PDF by running the output script with the relevant PDF option, and your book folder for the `book` option, e.g.:
+
+```shell
+npm run electric-book -- output --format print-pdf --book great-expectations
+```
+
+
 ## Introduction
 
-We use [PrinceXML](https://princexml.com/) to turn Jekyll's HTML into beautiful, print-ready book files. We haven't found anything as good as Prince, so we reckon it's worth its price tag. And you can use the trial version to get your print output perfect before committing to the price. So our CSS files for print are designed specifically for Prince.
+We use [PrinceXML](https://princexml.com/) to turn Jekyll's HTML into beautiful, print-ready book files. You can use the trial version to get your print output perfect before committing to the price. Our CSS files for print are tested with Prince.
 
 You can output print PDFs for sending to high-end printers, or screen PDFs, for digital distribution and reading on screen.
 
-## Quick output
 
-Run the template's `run-` output script for your operating system, and follow the prompts. For these to work, you must already have Jekyll and Prince installed and working.
+## Ingram Spark / Lightning Source output
 
-* On Windows, run `run-windows.bat` by double-clicking it from your file explorer.
-* On Linux, run `run-linux.sh`. You may have to run it from a terminal, and first enter `chmod +x run-linux.sh` to give it permissions, then `./run-linux.sh`.
-* On Mac OSX, double-click `run-mac.command` in Finder. You may need to give the file permission to run first. To do this, in a Terminal in the same folder as the script, type `chmod +x run-mac.command`.
-
-## Lightning Source output
-
-We often have to create print PDFs for Lightning Source and similar print-on-demand providers. Their needs are unusual and specific. In most cases, you can get a Lightning Source-compatible PDF by turning on the Lightning Source setting in your book's `print-pdf.scss` file:
+We often have to create print PDFs for Ingram Spark, Lightning Source and similar print-on-demand providers. Their needs are unusual and specific. In most cases, you can get a Lightning Source-compatible PDF by turning on the Lightning Source setting in your book's `print-pdf.scss` file:
 
 ``` scss
 $print-page-setup-lightning-source: true;
@@ -114,7 +114,7 @@ To speed this up:
       - book-two*
     ~~~
 
-2.  We should now only pass Prince the file(s) we're actually generating. In the `files` list in `_data/meta.yml`, comment out the lines listing files you're not working on.
+2.  We should now only pass Prince the file(s) we're actually generating. In the `files` list in the book's `_data/works` file, comment out the lines listing files you're not working on.
 3.  If you've used Javascript not required for PDF, make sure it's wrapped in a `if site.output == ""` tag that doesn't include it in `print-pdf` output.
 4.  Use a PDF Viewer that [doesn't lock the file](https://superuser.com/questions/599442/pdf-viewer-that-handles-live-updating-of-pdf-doesnt-lock-the-file). 
 	*	On Windows, [Sumatra](https://www.sumatrapdfreader.org/free-pdf-reader.html) is perfect for this, unlike Acrobat and Windows Preview, which locks the file. If you edit/regenerate a PDF it has open, Sumatra will allow that to happen and will automatically reload the new file, at the same page you had open.
@@ -123,9 +123,9 @@ To speed this up:
 > ## Technical background: The output-to-PDF process
 > 
 > 1.    When Jekyll runs, it saves your book's HTML files in the `_site` folder.
-> 2.    The output script passes a list of HTML files into Prince. This list is generated from the `files` list in `_data.meta.yml` for each PDF format, `print-pdf` and `screen-pdf`, in the order they're listed. These should only include the files you need in the relevant PDF. For instance, you'll usually leave out `index.html`. And you'll usually only include `cover` for the screen PDF.
-> 3.    Prince will use your book's print CSS file for the design, which Jekyll creates from the `print-pdf.scss` or `screenpdf.scss` files in your book's folder.
-> 4.  Prince will save the PDF is creates to the `_output` folder.
+> 2.    The output script passes a list of HTML files into Prince. This list is generated from the `files` list in the book's `_data/works` file for each PDF format, `print-pdf` and `screen-pdf`, in the order they're listed. These lists must only include the files you need in the relevant PDF. For instance, you'll usually leave out `index` files. And you'll usually only include `cover` for the screen PDF.
+> 3.    Prince will use your book's print CSS file for the design, which Jekyll creates from the `print-pdf.scss` or `screen-pdf.scss` files in your book's folder.
+> 4.  Prince will save the PDF it creates to the `_output` folder.
 > 
 > If you want to learn about using CSS to control print output using Prince, [this is a great tutorial](https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/).
 {:.box}

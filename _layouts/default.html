@@ -14,16 +14,23 @@ layout: compress
 
 {% include head.html %}
 {% include masthead.html %}
+
+{% if site.output == "web" and build == "development" and site.data.settings.web.annotator.development == true %}
+{% include annotator.html %}
+{% elsif site.output == "web" and build == "live" and site.data.settings.web.annotator.live == true %}
+{% include annotator.html %}
+{% endif %}
+
 {% include nav-button.html %}
 {% include start-content.html %}
 {{ content }}
 {% include close-content.html %}
 
 {% if site.output == "web" and site.data.settings.web.pagination == true %}
-{% include pagination %}
+{% include pagination.html %}
 {% endif %}
 {% if site.output == "app" and site.data.settings.app.pagination == true %}
-{% include pagination %}
+{% include pagination.html %}
 {% endif %}
 
 {% include nav.html %}

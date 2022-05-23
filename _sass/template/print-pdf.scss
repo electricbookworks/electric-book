@@ -243,6 +243,10 @@ $recto-right-frontmatter: normal !default;
 $recto-right-top-frontmatter: normal !default;
 $recto-right-bottom-frontmatter: normal !default;
 
+// Are there headers and footers on the first pages?
+// Set to blank or show.
+$first-page-margin-boxes: blank !default;
+
 // Set styles for headers and footers
 $header-font: $font-text-secondary !default;
 $footer-font: $font-text-secondary !default;
@@ -378,6 +382,7 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 // Load general-purpose mixins
 @import "template/partials/print-mixins--buttons";
 @import "template/partials/print-mixins--sidenotes";
+@import "template/partials/print-mixins--margin-boxes";
 
 // Conventional helper classes
 @import "template/partials/print-helpers";

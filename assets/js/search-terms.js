@@ -84,11 +84,11 @@ function jumpToSearchResult() {
                 && settings[settings.site.output].search.jumpBoxLocation !== 'mainheading'
                 && document.querySelector(settings[settings.site.output].search.jumpBoxLocation)) {
             var insertJumpBoxAfter = document.querySelector(settings[settings.site.output].search.jumpBoxLocation);
-            contentDiv.insertBefore(searchResultsSummary, insertJumpBoxAfter);
+            insertJumpBoxAfter.insertAdjacentElement('afterend', searchResultsSummary);
         } else if (mainHeading) {
-            contentDiv.insertBefore(searchResultsSummary, mainHeading.nextSibling);
+            mainHeading.insertAdjacentElement('afterend', searchResultsSummary);
         } else {
-            contentDiv.insertBefore(searchResultsSummary, contentDiv.firstChild);
+            contentDiv.firstChild.insertAdjacentElement('afterend', searchResultsSummary);
         }
 
         // add a link to the first result

@@ -113,20 +113,26 @@ function ebAssignIDs(container) {
     var elementCounter = 1;
     var idCounter = 1;
     var elementsToID = container.querySelectorAll(ebElementsToGetIDs);
-    elementsToID.forEach(function (element) {
-        elementCounter += 1;
-        if (!element.id) {
-            element.id = 'eb-' + idCounter;
-            idCounter += 1;
-        }
-        // Once done, set status, e.g. for the accordion and bookmarking.
-        // elementsToID indexes from 0, and elementCounter starts at 1, so
-        // we're done when elementCounter > the number of elementsToID.
-        if (elementCounter > elementsToID.length) {
-            document.body.setAttribute('data-ids-assigned', 'true');
-            ebAssignFingerprints();
-        }
-    });
+
+    if (elementsToID.length > 0) {
+        elementsToID.forEach(function (element) {
+            elementCounter += 1;
+            if (!element.id) {
+                element.id = 'eb-' + idCounter;
+                idCounter += 1;
+            }
+            // Once done, set status, e.g. for the accordion and bookmarking.
+            // elementsToID indexes from 0, and elementCounter starts at 1, so
+            // we're done when elementCounter > the number of elementsToID.
+            if (elementCounter > elementsToID.length) {
+                document.body.setAttribute('data-ids-assigned', 'true');
+                ebAssignFingerprints();
+            }
+        });
+    } else {
+        document.body.setAttribute('data-ids-assigned', 'true');
+        ebAssignFingerprints();
+    }
 }
 
 // Assign IDs and data-fingerprint attributes

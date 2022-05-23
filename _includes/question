@@ -11,7 +11,7 @@ of this include on the page. {% endcomment %}
 
 {% comment %}Create a one-file array of question pages
 to look through.{% endcomment %}
-{% capture path-to-question-file %}{% if is-translation %}/{{ language }}{% endif %}/text/{{ question-file }}.md{% endcapture %}
+{% capture path-to-question-file %}{% if is-translation %}/{{ language }}{% endif %}/{{ question-file }}.md{% endcapture %}
 {% assign questions = site.pages | where_exp: "page", "page.path contains path-to-question-file" %}
 
 {% comment %}Check whether the question-file exists.{% endcomment %}
