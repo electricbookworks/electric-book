@@ -774,6 +774,7 @@ _sass/template/partials/_print-index.scss
 _sass/template/partials/_print-letters.scss
 _sass/template/partials/_print-maths.scss
 _sass/template/partials/_print-mixins--buttons.scss
+_sass/template/partials/_print-mixins--margin-boxes.scss
 _sass/template/partials/_print-mixins--sidenotes.scss
 _sass/template/partials/_print-notes.scss
 _sass/template/partials/_print-openers.scss
@@ -829,6 +830,7 @@ _sass/template/partials/_web-masthead.scss
 _sass/template/partials/_web-maths.scss
 _sass/template/partials/_web-mixins--buttons.scss
 _sass/template/partials/_web-mixins--dialogs.scss
+_sass/template/partials/_web-mixins--search.scss
 _sass/template/partials/_web-mixins--sidenotes.scss
 _sass/template/partials/_web-nav-bar.scss
 _sass/template/partials/_web-notes.scss
@@ -860,8 +862,24 @@ _sass/template/web.scss
 
 # Note that we include this files.txt file here.
 
-_tools/gulp/images/README.md
+_tools/gulp/helpers/args.js
+_tools/gulp/helpers/colour.js
+_tools/gulp/helpers/paths.js
+_tools/gulp/helpers/utilities.js
 _tools/gulp/images/functions/.gitignore
+_tools/gulp/images/README.md
+_tools/gulp/processors/epub.js
+_tools/gulp/processors/images.js
+_tools/gulp/processors/indexes.js
+_tools/gulp/processors/js.js
+_tools/gulp/processors/mathjax.js
+_tools/gulp/processors/svgs.js
+_tools/gulp/processors/yaml.js
+_tools/profiles/Grey_Fogra39L.icc
+_tools/profiles/Grey_Fogra52L.icc
+_tools/profiles/PSOcoated_v3.icc
+_tools/profiles/PSOuncoated_v3_FOGRA52.icc
+_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
 _tools/run/commands/check.js
 _tools/run/commands/export.js
 _tools/run/commands/images.js
@@ -877,12 +895,5 @@ _tools/run/helpers/reindex/build-reference-index.js
 _tools/run/helpers/reindex/build-search-index.js
 _tools/run/helpers/requirements.js
 _tools/run/index.js
-_tools/run/helpers/options.js
-_tools/run/helpers/requirements.js
-_tools/profiles/Grey_Fogra39L.icc
-_tools/profiles/Grey_Fogra52L.icc
-_tools/profiles/PSOcoated_v3.icc
-_tools/profiles/PSOuncoated_v3_FOGRA52.icc
-_tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
 _tools/update/files.txt
 _tools/update/update.sh
