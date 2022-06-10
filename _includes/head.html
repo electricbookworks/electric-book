@@ -206,6 +206,9 @@
     <meta property="og:description" content="{{ meta-tag-description }}" />
     <meta property="og:image" content="{{ meta-tag-image }}" />
 
+    {% comment %} Reuse OG description for generic meta description tag {% endcomment %}
+    <meta name="description" content="{{ meta-tag-description }}" />
+
     {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-root-directory == true or page.collection == "docs" or is-translation-root-directory == true %}
