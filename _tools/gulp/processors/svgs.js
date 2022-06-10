@@ -21,10 +21,6 @@ const {
 // Custom image functions
 const imageFunctions = require('require-all')(path.join(__dirname, '/../images/functions'))
 
-// TO DO: process formats separately even for SVG,
-// so that we can do CMYK SVG functions. You
-// may need https://stackoverflow.com/a/42067036/1781075
-
 // Minify and clean SVGs and copy to destinations.
 function svgProcess (outputFormat) {
   console.log('Processing SVG images from ' + paths.img.source)
