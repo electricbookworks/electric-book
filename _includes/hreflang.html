@@ -1,7 +1,7 @@
 {% comment %} Add tags for landing pages.
 This assumes we've created a page for each translation
 in the root folder as /[language]/index.md. If we have not, it's okay:
-Google will ignore them, since Google requires bidirectional links, {% endcomment %}
+Google will ignore them, since Google requires bidirectional links. {% endcomment %}
 
 {% if is-homepage or is-translation-homepage %}
 
@@ -9,12 +9,12 @@ Google will ignore them, since Google requires bidirectional links, {% endcommen
     <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/" />
 
     {% comment %} Add link for project language {% endcomment %}
-    <link rel="alternate" hreflang="{{ series-language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/" />
+    <link rel="alternate" hreflang="{{ project-language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/" />
 
     {% comment %} Add alternate links for available translations {% endcomment %}
-    {% for all-languages-language in all-languages %}
-        {% unless all-languages-language == series-language %}
-            <link rel="alternate" hreflang="{{ all-languages-language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ all-languages-language }}/" />
+    {% for each-language in languages %}
+        {% unless each-language == project-language %}
+            <link rel="alternate" hreflang="{{ each-language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ each-language }}/" />
         {% endunless %}
     {% endfor %}
 
@@ -25,11 +25,11 @@ Google will ignore them, since Google requires bidirectional links, {% endcommen
 
 {% if is-book-directory or is-book-subdirectory %}
 
-    {% include translations %}
+    {% include translations-array.html %}
 
     {% comment %} Add default. If this file exists in the parent language, set that language as default. Else, set this translation language as the default. {% endcomment %}
 
-    {% if translations-of-this-file contains parent-language or language == parent-language %}
+    {% if translations-array contains parent-language or language == parent-language %}
 
         <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/book/text/{{ current-file }}.html" />
 
@@ -51,7 +51,7 @@ Google will ignore them, since Google requires bidirectional links, {% endcommen
     {% endif %}
 
     {% comment %} Add alternate link for available translations {% endcomment %}
-    {% for translation in translations-of-this-file %}
+    {% for translation in translations-array %}
 
         {% if translation == parent-language %}
 
