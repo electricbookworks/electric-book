@@ -100,48 +100,6 @@ function openOutputFile (argvOrFilePath) {
   open(fsPath.normalize(filePath))
 }
 
-// // Clear folder contents
-// // Probably not required; we now use fs.emptyDir
-// async function clearFolderContents (path) {
-//   'use strict'
-
-//   const pathToClear = fsPath.normalize(path)
-
-//   if (pathExists(pathToClear)) {
-//     console.log('Clearing ' + pathToClear)
-
-//     const contents = await fsPromises.readdir(pathToClear)
-//     const totalEntries = contents.length
-//     let totalRemoved = 0
-
-//     return new Promise(function (resolve, reject) {
-//       if (totalEntries > 0) {
-//         contents.forEach(function (entry) {
-//           const pathToDelete = fsPath.normalize(pathToClear + '/' + entry)
-//           fs.remove(pathToDelete, function (error) {
-//             if (error) {
-//               console.log(error)
-//               reject(error)
-//             } else {
-//               totalRemoved += 1
-
-//               if (totalRemoved === totalEntries) {
-//                 console.log('Folder cleared.')
-//                 resolve()
-//               }
-//             }
-//           })
-//         })
-//       } else {
-//         console.log(pathToClear + ' already empty.')
-//         resolve()
-//       }
-//     })
-//   } else {
-//     console.log('Could not find ' + pathToClear + ' to clear.')
-//   }
-// }
-
 // Return a string of Jekyll config files.
 // The filenames passed must be of files
 // already saved in the _configs directory.
