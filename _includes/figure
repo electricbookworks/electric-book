@@ -111,19 +111,19 @@ because https://github.com/jekyll/jekyll/issues/2248.
 {% endif %}
 
 {% if include.markdown and include.markdown != "" %}
-<div class="figure-md">
+<div class="figure-md" markdown="1">
 {{ include.markdown | markdownify }}
 </div>
 {% endif %}
 
 {% if include.title and include.title != "" %}
-<p class="title">
+<p class="title" markdown="1">
 {{ include.title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
 {% endif %}
 
 {% if include.slide-caption and include.slide-caption != "" %}
-<p class="slide-caption">
+<p class="slide-caption" markdown="1">
 {{ include.slide-caption | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
 {% endif %}
@@ -131,7 +131,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 {% if include.slide-caption == nil %}
 
     {% if figure-reference or include.caption and include.caption != "" %}
-    <p class="caption">
+    <p class="caption" markdown="1">
     {% if figure-reference and figure-reference-hidden == false %}<span class="figure-reference">{{ figure-reference }} </span>{% endif %}
     {{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
     </p>
@@ -145,7 +145,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 {% if include.source and include.source != "" %}
 
 <div class="figure-source">
-<p class="source">
+<p class="source" markdown="1">
 {{ include.source | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
 </div><!--.figure-source-->
