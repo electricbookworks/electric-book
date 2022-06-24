@@ -119,7 +119,7 @@ function configString (argv) {
   if (argv.configs) {
     console.log('Adding ' + argv.configs + ' to configs...')
     // Strip quotes that might have been added around arguments by user
-    string += '_configs/' + argv.configs.replace(/'/g, '').replace(/"/g, '')
+    string += ',_configs/' + argv.configs.replace(/'/g, '').replace(/"/g, '')
   }
 
   // Add MathJax config if --mathjax=true
@@ -180,17 +180,33 @@ async function jekyll (argv) {
     command = 'serve'
   }
 
+  // Get the baseurl from Jekyll config, unless
+  // it's been overridden by one set in
+  // a --baseurl command-line argument
+  let baseurl = ''
+  if (configsObject(argv).baseurl) {
+    baseurl = configsObject(argv).baseurl
+  }
+  if (argv.baseurl) {
+    baseurl = argv.baseurl
+  }
+
+  // Ensure baseurl string starts with a slash
+  if (baseurl !== '' && baseurl.indexOf('/') !== 0) {
+    baseurl = '/' + baseurl
+  }
+
   try {
     console.log('Running Jekyll with command: ' +
               'bundle exec jekyll ' + command +
               ' --config="' + configString(argv) + '"' +
-              ' --baseurl="' + argv.baseurl + '"' +
+              ' --baseurl="' + baseurl + '"' +
               ' ' + jekyllSwitches(argv).join(' '))
 
     // Create an array of arguments to pass to spawn()
     const jekyllSpawnArgs = ['exec', 'jekyll', command,
       '--config', configString(argv),
-      '--baseurl', argv.baseurl]
+      '--baseurl', baseurl]
 
     // Add each of the switches to the args array
     jekyllSwitches(argv).forEach(function (switchString) {
