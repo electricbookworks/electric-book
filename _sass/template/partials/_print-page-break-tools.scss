@@ -27,11 +27,7 @@ $print-page-break-tools: true !default;
 		page-break-before: auto !important;
 		page-break-after: auto !important;
 		page-break-inside: auto !important;
-	}
-	.allow-break * {
-		page-break-before: inherit !important;
-		page-break-after: inherit !important;
-		page-break-inside: inherit !important;
+		break-inside: auto !important;
 	}
 
 	// To end a section on a left or a right page, apply one of these classes to a block element
