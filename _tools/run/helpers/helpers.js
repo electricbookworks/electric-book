@@ -492,7 +492,7 @@ function fileList (argv) {
             book + '/'
 
   // Build path to default-edition YAML
-  const pathToDefaultYAML = pathToYAMLFolder + 'default.yml'
+  const pathToDefaultYAML = fsPath.normalize(pathToYAMLFolder + 'default.yml')
 
   // Get the files list
   const metadata = yaml.load(fs.readFileSync(pathToDefaultYAML, 'utf8'))
