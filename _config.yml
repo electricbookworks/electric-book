@@ -68,6 +68,8 @@ mathjax-enabled: false
 collections:
   docs:
     output: true
+  api:
+    output: true
 
 # --------------------------------------------
 # CHANGE THESE SETTINGS ONLY IF/WHEN NECESSARY

@@ -211,7 +211,7 @@
 
     {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
-    {% if is-root-directory == true or page.collection == "docs" or is-translation-root-directory == true %}
+    {% if is-root-directory == true or page.collection == "docs" or page.collection == "api" or is-translation-root-directory == true %}
         <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/assets/styles/{{ web-stylesheet }}" />
     {% else %}
 
