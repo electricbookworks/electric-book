@@ -4,6 +4,7 @@ $web-pagination: true !default;
     // Pagination (next and previous pages)
 
     .pagination {
+        clear: both;
         font-family: $font-text-secondary;
         padding: $line-height-default;
         margin: auto;

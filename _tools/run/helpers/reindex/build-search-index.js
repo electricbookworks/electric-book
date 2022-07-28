@@ -7,8 +7,15 @@ const fsPromises = require('fs/promises')
 async function buildSearchIndex (outputFormat) {
   'use strict'
 
+  // This will be the elasticllunr index without /docs
   let searchIndexNoDocs = ''
+
+  // This will be the elasticllunr index with /docs
   let searchIndexWithDocs = ''
+
+  // This will be an index for API access.
+  // It will not include any /docs
+  let searchIndexForAPI = []
 
   // Get the store. We do this here, not at the top,
   // so that it'll get required after it's freshly built
@@ -57,6 +64,18 @@ async function buildSearchIndex (outputFormat) {
       .querySelector('#content').textContent
       .replace(/"/g, '\'').replace(/\s+/g, ' ').trim())
 
+    // Create an object for this page.
+    // For title and content, we strip out backslashes
+    // to avoid invalid unicode escape sequences.
+    // E.g. at MathJax you can get \\uparrow,
+    // where \u will throw a JS exception
+    const pageObject = {
+      id: count,
+      url: searchStore[i].url,
+      title: title.replace(/\\/g, ''),
+      content: content.replace(/\\/g, '')
+    }
+
     // Write the index entry object.
     // We want this for each page:
     // index.addDoc({
@@ -64,25 +83,19 @@ async function buildSearchIndex (outputFormat) {
     //   title: "Title of page",
     //   content: "Content of page",
     // });
-    const entry = 'index.addDoc({\n    id: ' +
-                    count +
-                    ',\n    title: "' +
-                    title +
-                    '",\n    content: "' +
-                    content + '"\n});\n'
-
-    // Strip out backslashes to avoid invalid unicode
-    // escape sequences. E.g. at MathJax you can get
-    // \\uparrow, where \u will throw a JS exception
-    const entryCleaned = entry.replace(/\\/g, '')
+    const entry = 'index.addDoc('
+        + JSON.stringify(pageObject)
+        + ');\n'
 
     // Add entry to the searchIndex array
-    searchIndexWithDocs += entryCleaned
+    searchIndexWithDocs += entry
 
     // If this page isn't a doc, include it
-    // in the no-docs search index.
+    // in the no-docs search index
+    // and the API index
     if (!url.includes('/_site/docs/')) {
-      searchIndexNoDocs += entryCleaned
+      searchIndexNoDocs += entry
+      searchIndexForAPI.push(pageObject)
     }
 
     // Increment counter
@@ -102,6 +115,8 @@ async function buildSearchIndex (outputFormat) {
       '/assets/js/search-index-' + outputFormat + '.js')
   const indexFilePathWithDocs = fsPath.normalize(process.cwd() +
       '/assets/js/search-index-with-docs-' + outputFormat + '.js')
+  const indexFilePathForAPI = fsPath.normalize(process.cwd() +
+      '/_api/content/index.json')
 
   if (!fs.existsSync(indexFilePathNoDocs)) {
     console.log('Creating ' + indexFilePathNoDocs)
@@ -111,8 +126,13 @@ async function buildSearchIndex (outputFormat) {
     console.log('Creating ' + indexFilePathWithDocs)
     await fsPromises.writeFile(indexFilePathWithDocs, '')
   }
+  if (!fs.existsSync(indexFilePathForAPI)) {
+    console.log('Creating ' + indexFilePathForAPI)
+    await fsPromises.writeFile(indexFilePathForAPI, '')
+  }
 
-  // Write the search index files
+  // Write the search index files.
+  // Note: searchIndexForAPI is an object and must be stringified.
   fs.writeFile(indexFilePathWithDocs,
     searchIndexWithDocs, function () {
       console.log('Writing ' + indexFilePathWithDocs)
@@ -122,6 +142,12 @@ async function buildSearchIndex (outputFormat) {
   fs.writeFile(indexFilePathNoDocs,
     searchIndexNoDocs, function () {
       console.log('Writing ' + indexFilePathNoDocs)
+      console.log('Done.')
+    })
+
+  fs.writeFile(indexFilePathForAPI,
+    JSON.stringify(searchIndexForAPI), function () {
+      console.log('Writing ' + indexFilePathForAPI)
       console.log('Done.')
     })
 }

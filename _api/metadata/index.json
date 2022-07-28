@@ -1,0 +1,12 @@
+---
+# Jekyll will populate this json file
+# with a representation of meta.yml.
+# If your book's metadata should be private,
+# disable the api in a _config file.
+layout: min
+---
+
+{
+    "project": {{ site.data.project | jsonify }},
+    "works": {{ site.data.works | jsonify }}
+}
