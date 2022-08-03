@@ -31,6 +31,10 @@ $output-format: "screen-pdf" !default;
 // If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.
 $edition-suffix: null !default;
 
+// The path to the project root, for settings paths to fonts and colour profiles.
+// Override this for translations, which need an extra leading ../
+$path-to-root-directory: "../.." !default;
+
 // First, we set several variables related to overall page setup.
 $bleed: 0 !default;
 $trim: 0 !default;

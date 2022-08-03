@@ -29,7 +29,7 @@ $output-format: "print-pdf" !default;
 $edition-suffix: null !default;
 
 // The path to the project root, for settings paths to fonts and colour profiles.
-// Override this for translation styles, which need an extra leading ../
+// Override this for translations, which need an extra leading ../
 $path-to-root-directory: "../.." !default;
 
 // First, we set several variables related to overall page setup.

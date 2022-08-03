@@ -20,11 +20,9 @@ $output-format: "app" !default;
 // Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
 $edition-suffix: null !default;
 
-// The path to project-wide assets like fonts and colour profiles.
-// By default this is the assets folder in the project root directory.
-// Override this for translation styles, which need an extra leading ../
+// The path to the project root, for settings paths to fonts and colour profiles.
+// Override this for translations, which need an extra leading ../
 $path-to-root-directory: "../.." !default;
-
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify

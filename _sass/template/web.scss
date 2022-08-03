@@ -25,6 +25,10 @@ $output-format: "web" !default;
 // Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
 $edition-suffix: null !default;
 
+// The path to the project root, for settings paths to fonts and colour profiles.
+// Override this for translations, which need an extra leading ../
+$path-to-root-directory: "../.." !default;
+
 // Max width of main body area
 $max-width-default: 50rem !default;
 
