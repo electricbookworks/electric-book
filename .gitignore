@@ -11,6 +11,8 @@ _data/secrets*
 _app/platforms
 _app/plugins
 .DS_Store
+.idea/
+__diff_output__
 
 # If your team needs strict node-package
 # version management, comment out this line

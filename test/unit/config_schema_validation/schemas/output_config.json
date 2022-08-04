@@ -1,0 +1,99 @@
+{
+    "properties": {
+        "language": {
+            "type": "string"
+        },
+        "theme": {
+            "type": "string"
+        },
+        "edition": {
+            "type": "string"
+        },
+        "canonical-url": {
+            "type": "string",
+            "format": "uri"
+        },
+        "baseurl": {
+            "type": "string"
+        },
+        "repository": {
+            "type": "string"
+        },
+        "nav-source": {
+            "type": "string"
+        },
+        "mathjax-enabled": {
+            "type": "boolean"
+        },
+        "collections": {
+            "type": "object"
+        },
+        "output": {
+            "type": "string",
+            "enum": [
+                "print-pdf",
+                "screen-pdf",
+                "web",
+                "epub",
+                "app"
+            ]
+        },
+        "image-set": {
+            "type": "string",
+            "enum": [
+                "images/print-pdf",
+                "images/screen-pdf",
+                "images/web",
+                "images/epub",
+                "images/app"
+            ]
+        },
+        "exclude": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "keep_files": {
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "compress_html": {
+            "type": "object"
+        },
+        "version": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string",
+            "format": "uri"
+        },
+        "markdown": {
+            "type": "string"
+        },
+        "kramdown": {
+            "type": "object"
+        },
+        "permalink": {
+            "type": "string"
+        },
+        "sass": {
+            "type": "object"
+        },
+        "defaults": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            }
+        }
+    }
+}
