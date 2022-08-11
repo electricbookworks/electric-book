@@ -24,11 +24,11 @@ translation's file list in meta.yml.{% endcomment %}
                     {% if is-book-directory %}
                         
                         {% if translation == parent-language %}
-                            <a href="{{ path-to-book-directory }}{{ current-file }}.html">
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="{{ path-to-book-directory }}{{ current-file }}.html">
                                 {{ site.data.locales[translation].local-name }}
                             </a>
                         {% else %}
-                            <a href="{{ path-to-book-directory }}{{ translation }}/{{ current-file }}.html">
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="{{ path-to-book-directory }}{{ translation }}/{{ current-file }}.html">
                                 {{ site.data.locales[translation].local-name }}
                             </a>
                         {% endif %}
@@ -36,11 +36,11 @@ translation's file list in meta.yml.{% endcomment %}
                     {% elsif is-root-directory %}
 
                         {% if translation == parent-language %}
-                            <a href="{{ current-file }}.html">
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="{{ current-file }}.html">
                                 {{ site.data.locales[translation].local-name }}
                             </a>
                         {% else %}
-                            <a href="{{ translation }}/{{ current-file }}.html">
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="{{ translation }}/{{ current-file }}.html">
                                 {{ site.data.locales[translation].local-name }}
                             </a>
                         {% endif %}
@@ -48,11 +48,11 @@ translation's file list in meta.yml.{% endcomment %}
                     {% elsif is-translation-homepage %}
                         
                         {% if translation == parent-language %}
-                            <a href="../{{ current-file }}.html">
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="../{{ current-file }}.html">
                                 {{ site.data.locales[translation].local-name }}
                             </a>
                         {% else %}
-                            <a href="../{{ translation }}/{{ current-file }}.html">
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="../{{ translation }}/{{ current-file }}.html">
                                 {{ site.data.locales[translation].local-name }}
                             </a>
                         {% endif %}
