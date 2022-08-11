@@ -10,9 +10,24 @@ don't include it again to avoid unnecessary looping.{% endcomment %}
 	{% include metadata %}
 {% endunless %}
 
-<form class="search" action="{{ path-to-root-directory }}search.html" method="get">
+{% comment %} Get the search settings. {% endcomment %}
+{% assign search-settings = site.data.settings[site.output].search %}
+
+{% comment %} Establish the URL to send search requests to. {% endcomment %}
+{% capture search-form-action-url %}{{ path-to-root-directory }}search.html{% endcapture %}
+{% if search-settings.search-url and search-settings.search-url != "" %}
+    {% capture search-form-action-url %}{{ search-settings.search-url }}{% endcapture %}
+{% endif %}
+
+{% comment %} Establish the URL parameter to use. {% endcomment %}
+{% capture search-form-action-url-parameter %}query{% endcapture %}
+{% if search-settings.search-url-parameter and search-settings.search-url-parameter != "" %}
+    {% capture search-form-action-url-parameter %}{{ search-settings.search-url-parameter }}{% endcapture %}
+{% endif %}
+
+<form class="search" action="{{ search-form-action-url }}" method="get">
   <label for="search-box" class="visuallyhidden">{{ locale.search.search-title }}</label>
-  <input type="text" size="1" id="search-box{{ include.id-suffix }}" class="search-box" name="query" placeholder="{{ locale.search.placeholder }}">
+  <input type="text" size="1" id="search-box{{ include.id-suffix }}" class="search-box" name="{{ search-form-action-url-parameter }}" placeholder="{{ locale.search.placeholder }}">
   <input id="search-language" type="hidden" name="lang" value="{{ language }}">
   <input type="submit" class="search-submit" value="{{ locale.search.search-title }}">
 </form>

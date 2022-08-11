@@ -138,6 +138,12 @@ web:
     # the element before which the box should be shown.
     # Or for the main page heading, use the default 'mainHeading'.
     jump-box-location: "mainHeading"
+    # If you need to point the search form at a different URL,
+    # add it here in full, including a trailing slash, e.g.
+    # https://example.com/
+    search-url: ""
+    # Set the parameter name to use for search URLs. Default is "query".
+    search-url-parameter: ""
   # --------------
   # Monetization
   # --------------
@@ -258,6 +264,12 @@ app:
     # the element before which the box should be shown.
     # Or for the main page heading, use the default 'mainHeading'.
     jump-box-location: "mainHeading"
+    # If you need to point the search form at a different URL,
+    # add it here in full, including a trailing slash, e.g.
+    # https://example.com/
+    search-url: ""
+    # Set the parameter name to use for search URLs. Default is "query".
+    search-url-parameter: ""
   # --------------
   # Page tags and metadata
   # --------------
