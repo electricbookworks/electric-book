@@ -144,6 +144,11 @@ web:
     search-url: ""
     # Set the parameter name to use for search URLs. Default is "query".
     search-url-parameter: ""
+    # Add any extra, static parameters you might need
+    # as a list, set `name` and `value` for each one. E.g.
+    # static-url-parameters:
+    #   - name: "type"
+    #     value: "riskbulletins"
   # --------------
   # Monetization
   # --------------
@@ -270,6 +275,11 @@ app:
     search-url: ""
     # Set the parameter name to use for search URLs. Default is "query".
     search-url-parameter: ""
+    # Add any extra, static parameters you might need
+    # as a list, set `name` and `value` for each one. E.g.
+    # static-url-parameters:
+    #   - name: "type"
+    #     value: "riskbulletins"
   # --------------
   # Page tags and metadata
   # --------------
