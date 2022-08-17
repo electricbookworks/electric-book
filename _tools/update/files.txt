@@ -62,27 +62,27 @@ assets/fonts/UbuntuMono-RI.ttf
 # should not be overwritten by updates.
 
 # assets/images/app/cover.jpg
-# assets/images/app/publisher-logo.jpg
+# assets/images/app/logo.jpg
 # assets/images/epub/cover.jpg
-# assets/images/epub/publisher-logo.jpg
+# assets/images/epub/logo.jpg
 # assets/images/print-pdf/cover.jpg
-# assets/images/print-pdf/publisher-logo.jpg
+# assets/images/print-pdf/logo.jpg
 # assets/images/screen-pdf/cover.jpg
-# assets/images/screen-pdf/publisher-logo.jpg
+# assets/images/screen-pdf/logo.jpg
 # assets/images/web/cover-1024.jpg
 # assets/images/web/cover-2048.jpg
 # assets/images/web/cover-320.jpg
 # assets/images/web/cover-640.jpg
 # assets/images/web/cover-max.jpg
 # assets/images/web/cover.jpg
-# assets/images/web/publisher-logo-1024.jpg
-# assets/images/web/publisher-logo-2048.jpg
-# assets/images/web/publisher-logo-320.jpg
-# assets/images/web/publisher-logo-640.jpg
-# assets/images/web/publisher-logo-max.jpg
-# assets/images/web/publisher-logo.jpg
+# assets/images/web/logo-1024.jpg
+# assets/images/web/logo-2048.jpg
+# assets/images/web/logo-320.jpg
+# assets/images/web/logo-640.jpg
+# assets/images/web/logo-max.jpg
+# assets/images/web/logo.jpg
 # assets/images/_source/cover.jpg
-# assets/images/_source/publisher-logo.jpg
+# assets/images/_source/logo.jpg
 
 
 # Sitewide Javascript

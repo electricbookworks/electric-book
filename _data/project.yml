@@ -14,7 +14,7 @@ name: "The Electric Book template"
 description: "This is Electric Book template, a way to build websites, books and ebooks from the same master content. Created and maintained by Electric Book Works."
 
 # The logo of the organisation, saved web-ready in /assets
-logo: "publisher-logo.jpg"
+logo: "logo.jpg"
 
 # An image in /assets/images/web that stands for the project
 image: "cover.jpg"

@@ -59,7 +59,7 @@ Here is an explanation of folders and files in the template.
   * `styles`: a folder that contains project-wide stylesheets, mainly for use on project home pages.
   * `images`: a folder that contains:
     - `cover.jpg`: a front-cover image used as the default for the project as a whole.
-    - `publisher-logo.jpg`: a logo (which you'll replace with your own) for the project and website as a whole.
+    - `logo.jpg`: a logo (which you'll replace with your own) for the project and website as a whole.
   * `fonts`: a place to store fonts that any book in a project might use. The template includes several open-licensed fonts here already. (You may also choose to store fonts in `_epub/assets/fonts` for [epub output](../output/epub-output.html#fonts).)
   * `js`: Javascript used in the template. Advanced users might add their own scripts here and manage which scripts are included on pages in `bundle.js`. See the ['Using Javascript'](../advanced/javascript.html) section for more detail.
 
