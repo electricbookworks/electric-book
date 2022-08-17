@@ -1,38 +1,16 @@
 [
   {
     "id": 0,
-    "url": "book/index.html",
-    "title": "Template",
-    "content": "<img src='images/web/cover.jpg' sizes='auto' srcset='images/web/cover-320.jpg 320w, images/web/cover-640.jpg 640w, images/web/cover-1024.jpg 1024w, images/web/cover-2048.jpg 2048w' class='cover' alt='Template' />"
+    "url": "esa-obs-020/index.html",
+    "title": "Summary | Risk Bulletin #20 – September 2021",
+    "description": "Trends, developments and insights into the relationship between criminal economies and instability across Eastern and Southern Africa.",
+    "json": "api/content/esa-obs-020/index/index.json"
   },
   {
     "id": 1,
-    "url": "book/0-1-titlepage.html",
-    "title": "Title page – Template",
-    "content": "Template A. N. Author <img src='../assets/images/web/publisher-logo.jpg' sizes='auto' srcset='../assets/images/web/publisher-logo-320.jpg 320w, ../assets/images/web/publisher-logo-640.jpg 640w, ../assets/images/web/publisher-logo-1024.jpg 1024w, ../assets/images/web/publisher-logo-2048.jpg 2048w' class='title-page-logo' alt='' />"
-  },
-  {
-    "id": 2,
-    "url": "book/0-2-copyright.html",
-    "title": "Copyright – Template",
-    "content": "Copyright Template © A. N. Author ISBN (Digital download): 9780000000000 All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher."
-  },
-  {
-    "id": 3,
-    "url": "book/0-3-contents.html",
-    "title": "Contents – Template",
-    "content": "Contents Frontmatter Cover Title page Copyright Contents Chapter One Chapter Two Subsection"
-  },
-  {
-    "id": 4,
-    "url": "book/01.html",
-    "title": "1. Hello World – Template",
-    "content": "1 Hello World Start here."
-  },
-  {
-    "id": 5,
-    "url": "book/02.html",
-    "title": "2. Goodbye World – Template",
-    "content": "2 Goodbye World Thanks for all the fish."
+    "url": "esa-obs-022/index.html",
+    "title": "Summary | Risk Bulletin #22 – December 2021",
+    "description": "Trends, developments and insights into the relationship between criminal economies and instability across Eastern and Southern Africa.",
+    "json": "api/content/esa-obs-022/index/index.json"
   }
 ]

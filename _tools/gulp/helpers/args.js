@@ -16,7 +16,7 @@ if (args.folder && args.folder.trim() !== '') {
 }
 
 // Reminder on usage
-if (book === 'book') {
+if (book === 'book' && !args.silent) {
   console.log('If processing images for a book that\'s not in the /book directory, use the --book argument, e.g. gulp --book potatoes')
   console.log('To process images in assets, use gulp --folder assets')
 }
@@ -28,21 +28,21 @@ if (args.language && args.language.trim() !== '') {
 }
 
 // Reminder on usage
-if (language === '') {
+if (language === '' && !args.silent) {
   console.log('If processing a translation\'s images, use the --language argument, e.g. gulp --language fr')
 }
 
 // Get the output format we're working with
-let output = ''
-if (args.output && args.output.trim() !== '') {
-  output = args.output
+let format = ''
+if (args.format && args.format.trim() !== '') {
+  format = args.format
 }
 
 // Reminder on usage
-if (output === '') {
-  console.log('If processing for a specific output, use the --output argument, e.g. gulp --output printpdf. No hyphens.')
+if (format === '' && !args.silent) {
+  console.log('If processing for a specific format, use the --format argument, e.g. gulp --format printpdf. No hyphens.')
 }
 
 exports.book = book
 exports.language = language
-exports.output = output
+exports.format = format

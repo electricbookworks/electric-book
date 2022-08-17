@@ -2,6 +2,26 @@ const puppeteer = require('puppeteer')
 const fs = require('fs')
 const fsPath = require('path')
 const fsPromises = require('fs/promises')
+const fsExtra = require('fs-extra')
+
+// This function writes a single file for the content API
+async function writeContentAPIFile(pageObject) {
+
+  // Create an index.json path from the page's URL
+  let contentFileRelativePath = pageObject.url.replace(/\.html$/, '/index.json')
+
+  // Create an absolute path to write to
+  const contentFileAbsolutePath = fsPath.normalize(process.cwd() +
+      '/_api/content/' + contentFileRelativePath)
+
+  // Write the file (fsExtra.outputFile will create
+  // the path and file if they don't exist)
+  try {
+    await fsExtra.outputFile(contentFileAbsolutePath, JSON.stringify(pageObject))
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 // The main process for generating a search index
 async function buildSearchIndex (outputFormat) {
@@ -15,7 +35,11 @@ async function buildSearchIndex (outputFormat) {
 
   // This will be an index for API access.
   // It will not include any /docs
-  let searchIndexForAPI = []
+  let contentIndexForAPI = []
+
+  // Remove existing the api/content so that
+  // we can completely refresh it.
+  await fsExtra.emptyDir(fsPath.normalize(process.cwd() + '/_api/content'))
 
   // Get the store. We do this here, not at the top,
   // so that it'll get required after it's freshly built
@@ -59,20 +83,40 @@ async function buildSearchIndex (outputFormat) {
     const title = await page.evaluate(() => document.title
       .replace(/"/g, '\'').replace(/\s+/g, ' ').trim())
 
-    // Get the page content
+    // Get the page description
+    const description = await page.evaluate(() => document
+      .querySelector('meta[name="description"]').content
+      .replace(/"/g, '\'').replace(/\s+/g, ' ').trim())
+
+      // Get the page content
     const content = await page.evaluate(() => document.body
       .querySelector('#content').textContent
       .replace(/"/g, '\'').replace(/\s+/g, ' ').trim())
 
+    // Build the API endpoint
+    const endpoint = 'api/content/'
+        + searchStore[i].url.replace(/\.html$/, '/index.json')
+
     // Create an object for this page.
+    // We create two versions: one without content
+    // for the overall index, and with with content
+    // for the per-page JSON file.
     // For title and content, we strip out backslashes
     // to avoid invalid unicode escape sequences.
     // E.g. at MathJax you can get \\uparrow,
-    // where \u will throw a JS exception
-    const pageObject = {
+    // where \u will throw a JS exception.
+    let pageObjectForAPIIndex = {
       id: count,
       url: searchStore[i].url,
       title: title.replace(/\\/g, ''),
+      description: description,
+      json: endpoint
+    }
+    let pageObjectForAPIContent = {
+      id: count,
+      url: searchStore[i].url,
+      title: title.replace(/\\/g, ''),
+      description: description,
       content: content.replace(/\\/g, '')
     }
 
@@ -83,23 +127,29 @@ async function buildSearchIndex (outputFormat) {
     //   title: "Title of page",
     //   content: "Content of page",
     // });
-    const entry = 'index.addDoc('
-        + JSON.stringify(pageObject)
+    let searchIndexEntry = 'index.addDoc('
+        + JSON.stringify(pageObjectForAPIContent)
         + ');\n'
 
     // Add entry to the searchIndex array
-    searchIndexWithDocs += entry
+    searchIndexWithDocs += searchIndexEntry
 
     // If this page isn't a doc, include it
-    // in the no-docs search index
-    // and the API index
+    // in the no-docs search index and the API index,
+    // and write a single-page content file for it
     if (!url.includes('/_site/docs/')) {
-      searchIndexNoDocs += entry
-      searchIndexForAPI.push(pageObject)
+      searchIndexNoDocs += searchIndexEntry
+      contentIndexForAPI.push(pageObjectForAPIIndex)
+      writeContentAPIFile(pageObjectForAPIContent)
     }
 
     // Increment counter
     count += 1
+
+    // Reset the entry and pageObjects
+    searchIndexEntry = ''
+    pageObjectForAPIIndex = {}
+    pageObjectForAPIContent = {}
 
     // Close the page when we're done
     await page.close()
@@ -132,7 +182,7 @@ async function buildSearchIndex (outputFormat) {
   }
 
   // Write the search index files.
-  // Note: searchIndexForAPI is an object and must be stringified.
+  // Note: contentIndexForAPI is an object and must be stringified.
   fs.writeFile(indexFilePathWithDocs,
     searchIndexWithDocs, function () {
       console.log('Writing ' + indexFilePathWithDocs)
@@ -146,7 +196,7 @@ async function buildSearchIndex (outputFormat) {
     })
 
   fs.writeFile(indexFilePathForAPI,
-    JSON.stringify(searchIndexForAPI), function () {
+    JSON.stringify(contentIndexForAPI), function () {
       console.log('Writing ' + indexFilePathForAPI)
       console.log('Done.')
     })

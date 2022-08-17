@@ -13,13 +13,10 @@ const { paths } = require('../helpers/paths.js')
 function yaml (done) {
   'use strict'
 
-  console.log('Checking YAML files...')
-
   gulp.src(paths.yaml.src)
     .pipe(tap(function (file) {
       try {
         jsyaml.load(fs.readFileSync(file.path, 'utf8'))
-        console.log(file.path + ' ✓')
       } catch (e) {
         console.log('') // empty line space
         console.log('\x1b[35m%s\x1b[0m', 'YAML error in ' + file.path + ':')
@@ -27,6 +24,7 @@ function yaml (done) {
         console.log('') // empty line space
       }
     }))
+  console.log('YAML check complete.')
   done()
 }
 

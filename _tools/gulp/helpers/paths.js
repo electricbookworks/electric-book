@@ -111,7 +111,7 @@ const paths = {
     dest: 'assets/js/'
   },
   yaml: {
-    src: ['*.yml', '_configs/**/*.yml', '_data/**/*.yml']
+    src: ['*.yml', '_configs/*.yml', '_configs/**/*.yml', '_data/*.yml', '_data/**/*.yml']
   },
   // Arrays of globs to ignore from tasks
   ignore: {

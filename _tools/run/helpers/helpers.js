@@ -36,14 +36,18 @@ function logProcess (process, processName) {
 
     // Listen for an error event:
     process.on('error', function (error) {
-      console.log(processName + ' errored with: ' + error.message)
+      // console.log(processName + ' errored with: ' + error.message)
       reject(error.message)
     })
 
     // Listen for an exit event:
     process.on('close', function (exitCode) {
-      console.log(processName + ' exited with: ' + exitCode)
-      resolve(exitCode)
+      // console.log(processName + ' exited with: ' + exitCode)
+      if (exitCode !== 0) {
+        resolve(false)
+      } else {
+        resolve(true)
+      }
     })
   })
 }

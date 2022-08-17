@@ -1,29 +1,50 @@
 const helpers = require('./helpers.js')
+const fsExtra = require('fs-extra')
 const fsPath = require('path')
 const chalk = require('chalk')
 const spawn = require('cross-spawn')
+const yaml = require('js-yaml')
 
 // Check that YAML is valid
 async function checkYAML () {
   'use strict'
 
-  console.log('Checking that YAML files are valid ...' + '\n')
+  console.log('Checking whether YAML files are valid ...' + '\n')
 
   try {
     const gulpProcess = spawn(
       'gulp',
-      ['yaml']
+      ['yaml', '--silent']
     )
-    await helpers.logProcess(gulpProcess, 'Checking YAML')
-    return
+    let outcome = await helpers.logProcess(gulpProcess, 'Checking YAML')
+    if (outcome === true) {
+      return true
+    } else {
+      return false
+    }
   } catch (error) {
     console.log(error)
   }
 }
 
 // Checks project for critical files and folders
-function checkRequiredPaths () {
+async function checkRequiredPaths () {
   'use strict'
+
+  // Initialise this for checking later.
+  let requiredPaths = true
+  let projectLogo = 'logo.jpg'
+  let projectImage = 'cover.jpg'
+
+  // Get the names of the project images for checking
+  try {
+    const projectYAMLPath = fsPath.normalize(process.cwd() + '/_data/project.yml')
+    const projectYAML = await yaml.load(fsExtra.readFileSync(projectYAMLPath), 'utf8');
+    projectLogo = projectYAML.logo
+    projectImage = projectYAML.image
+  } catch (e) {
+    console.log(e);
+  }
 
   const globalRequirements = [
     {
@@ -102,14 +123,14 @@ function checkRequiredPaths () {
       description: 'A folder of Javascript, font files and images that your whole project might use.'
     },
     {
-      path: 'assets/images/_source/cover.jpg',
+      path: 'assets/images/_source/' + projectImage,
       type: 'recommended',
       description: 'An image used as the default for the project as a whole.'
     },
     {
-      path: 'assets/images/_source/publisher-logo.jpg',
+      path: 'assets/images/_source/' + projectLogo,
       type: 'optional',
-      description: "A logo (which you'll replace with your own) for the project and website as a whole."
+      description: "A logo for the project and website as a whole."
     },
     {
       path: 'assets/fonts',
@@ -188,14 +209,15 @@ function checkRequiredPaths () {
     }
   ]
 
-  console.log('Checking project requirements ...' + '\n')
+  console.log('Checking project requirements ...')
 
   // Check global requirements
   globalRequirements.forEach(function (item) {
     const path = fsPath.normalize(process.cwd() + '/' + item.path)
 
     if (!helpers.pathExists(path)) {
-      console.log('Not found:')
+      errors = true
+      console.log(chalk.red('Warning: ') + 'file not found:')
       if (item.type === 'required') {
         console.log(path + ' ' + chalk.red(item.type))
       } else {
@@ -208,7 +230,7 @@ function checkRequiredPaths () {
   // Check book-specific requirements
   const works = helpers.works()
   works.forEach(function (work) {
-    console.log('Checking files for ' + chalk.blue(work) + ' ... \n')
+    // console.log('Checking files for ' + chalk.blue(work) + ' ... \n')
 
     const bookRequirements = [
       {
@@ -252,7 +274,8 @@ function checkRequiredPaths () {
       const path = fsPath.normalize(process.cwd() + '/' + item.path)
 
       if (!helpers.pathExists(path)) {
-        console.log('Not found:')
+        errors = true
+        console.log(chalk.red('Warning: ') + 'file not found:')
         if (item.type === 'required') {
           console.log(path + ' ' + chalk.red(item.type))
         } else {
@@ -263,8 +286,61 @@ function checkRequiredPaths () {
     })
   })
 
-  console.log('Check complete.')
+  console.log('\nProject-requirements check complete.\n')
+  return requiredPaths
+}
+
+// Checks whether the API content files are up to date
+// by checking that one exists for every file listed
+// in the search store. If not, this outputs a warning.
+// Note that we are really testing whether the files listed
+// in the built _site/api/metadata/index.json are all
+// included in _api/content. The _site/api/metadata/index.json
+// file includes a JSON representation of _data/works. That
+// file is complex to parse, but the files listed are the same as
+// the `store` in search-engine.js, which uses _includes/files-listed.html,
+// which itself parses _data/works for its files lists.
+async function checkAPIContent() {
+
+  console.log('Checking content API...')
+
+  const pathToSearchStore = fsPath.normalize(process.cwd() +
+          '/_site/assets/js/search-engine.js')
+  const searchStoreExists = await fsExtra.pathExists(pathToSearchStore)
+
+  if (searchStoreExists) {
+
+    const searchStore = await require(pathToSearchStore).store
+    let missingFiles = false
+    let i
+    for (i = 0; i < searchStore.length; i += 1) {
+
+      const apiContentPath = process.cwd() + '/_api/content/'
+          + searchStore[i].url.replace(/\.html$/, '') + '/index.json'
+
+      const apiContentFileExists = await fsExtra.pathExists(fsPath.normalize(apiContentPath))
+
+      if (!apiContentFileExists) {
+        missingFiles = true
+        console.log(chalk.red('Warning') + ': API content is missing ' + searchStore[i].url)
+      }
+    }
+
+    console.log('Content-API check complete.')
+
+    if (missingFiles) {
+      console.log(chalk.red('\nPlease update the project web index to refresh API content.\n'))
+      return false
+    } else {
+      console.log('Content API includes all built files. '
+          + 'You may still want to run the index update.\n')
+      return true
+    }
+  } else {
+    return false
+  }
 }
 
 exports.checkRequiredPaths = checkRequiredPaths
 exports.checkYAML = checkYAML
+exports.checkAPIContent = checkAPIContent
