@@ -7,6 +7,7 @@ $epub-figures: true !default;
         clear: both;
         page-break-inside: avoid;
         background-color: inherit;
+        font-family: $font-text-secondary;
         font-size: inherit;
         font-weight: inherit;
         margin: $line-height-default 0;
@@ -17,7 +18,6 @@ $epub-figures: true !default;
             page-break-inside: avoid;
             page-break-before: avoid;
             hyphens: none;
-            font-size: $font-size-default * $font-size-smaller;
             &:last-of-type {
                 margin-bottom: 0;
             }
