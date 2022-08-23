@@ -9,9 +9,13 @@ loop through translations and variants. {% endcomment %}
     {% assign files-listed-work = site.data.works.book %}
 {% endif %}
 
+{% comment %} If this is a translation, we need the parent work name.
+Otherwise, we must make sure there isn't one. {% endcomment %}
 {% assign files-listed-parent-work = nil %}
 {% if include.parent-work %}
     {% assign files-listed-parent-work = include.parent-work %}
+{% else %}
+    {% assign parent-work-name = nil %}
 {% endif %}
 
 {% comment %} Get the active variant,
@@ -81,7 +85,12 @@ we check that the folder includes a default key, i.e. a default.yml.
 
     {% comment %} Now do the same for translations. {% endcomment %}
 
-    {% capture parent-work-name %}{{ files-listed-work[0] }}{% endcapture %}
+    {% comment %} If this is not a translation,
+    there is no parent-work-name yet, and we need one
+    for translation paths. {% endcomment %}
+    {% unless parent-work-name %}
+        {% capture parent-work-name %}{{ files-listed-work[0] }}{% endcapture %}
+    {% endunless %}
 
     {% for files-listed-translation in files-listed-work[1] %}
 
