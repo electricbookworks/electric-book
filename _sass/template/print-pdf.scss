@@ -383,6 +383,7 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 @import "template/partials/print-mixins--buttons";
 @import "template/partials/print-mixins--sidenotes";
 @import "template/partials/print-mixins--margin-boxes";
+@import "template/partials/print-mixins--floats";
 
 // Conventional helper classes
 @import "template/partials/print-helpers";
