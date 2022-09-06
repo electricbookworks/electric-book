@@ -1,3 +1,8 @@
+# This Dockerfile defines a virtual machine for gitpod.io
+# so that you can  use this Electric Book template project
+# in your browser (i.e. an online development environment).
+# See https://www.gitpod.io/docs/config-docker
+
 FROM ubuntu:20.04
 
 # Set default locale for the environment

@@ -1,3 +1,5 @@
+# This file defines how gitpod.io should make this project
+# available for editing in its browser-based IDE.
 # See https://www.gitpod.io/docs/config-gitpod-file
 
 image:
