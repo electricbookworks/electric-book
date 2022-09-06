@@ -1,0 +1,10 @@
+# See https://www.gitpod.io/docs/config-gitpod-file
+
+image:
+  file: .gitpod.Dockerfile
+
+ports:
+  - name: Electric Book server
+    description: A web output of your Electric Book project 
+    port: 4000
+    onOpen: open-browser
