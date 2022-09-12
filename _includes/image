@@ -36,7 +36,16 @@ in a way that allows for full stops in filenames. {% endcomment %}
 where 'path=""' can specify a path relative to the site's
 root directory. {% endcomment %}
 {% if include.path and include.path != "" %}
-    {% capture images %}{{ path-to-root-directory }}{{ include.path }}/{{ site.output }}{% endcapture %}
+
+    {% comment %} Create appropriate path to image
+    if we're using external media. The external-media variable
+    is set in the metadata include. {% endcomment %}
+    {% if external-media and external-media != "" %}
+        {% capture images %}{{ external-media }}/{{ include.path }}/{{ site.output }}{% endcapture %}
+    {% else %}
+        {% capture images %}{{ path-to-root-directory }}{{ include.path }}/{{ site.output }}{% endcapture %}
+    {% endif %}
+
 {% endif %}
 
 {% comment %} Adjust the value of `sizes` if your site design does not need
