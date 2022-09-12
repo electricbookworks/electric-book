@@ -57,13 +57,11 @@ RUN gem install bundler jekyll:3.9.2
 # Install Gulp cli app
 RUN npm install --global gulp-cli
 
-# Copy the build to where it will run
-WORKDIR /app
-COPY . /app
+# Copy our project files to the container
+COPY . .
 
 # Install gems in Gemfile
 RUN bundle install
 
 # Install modules in package.json
-RUN npm install \
-  && npm install gulp-cli
+RUN npm install
