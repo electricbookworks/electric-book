@@ -350,54 +350,62 @@ async function renderMathjax (argv) {
 // Processes index comments as targets in output HTML
 async function renderIndexComments (argv) {
   'use strict'
-  console.log('Processing indexing comments ...')
 
-  try {
-    let indexCommentsProcess
-    if (argv.language) {
-      indexCommentsProcess = spawn(
-        'gulp',
-        ['renderIndexCommentsAsTargets',
-          '--book', argv.book,
-          '--language', argv.language]
-      )
-    } else {
-      indexCommentsProcess = spawn(
-        'gulp',
-        ['renderIndexCommentsAsTargets', '--book', argv.book]
-      )
+  if (projectSettings()['dynamic-indexing'] !== false) {
+
+    console.log('Processing indexing comments ...')
+
+    try {
+      let indexCommentsProcess
+      if (argv.language) {
+        indexCommentsProcess = spawn(
+          'gulp',
+          ['renderIndexCommentsAsTargets',
+            '--book', argv.book,
+            '--language', argv.language]
+        )
+      } else {
+        indexCommentsProcess = spawn(
+          'gulp',
+          ['renderIndexCommentsAsTargets', '--book', argv.book]
+        )
+      }
+      await logProcess(indexCommentsProcess, 'Index comments')
+      return true
+    } catch (error) {
+      console.log(error)
     }
-    await logProcess(indexCommentsProcess, 'Index comments')
-    return true
-  } catch (error) {
-    console.log(error)
   }
 }
 
 // Processes index-list items as linked references in output HTML
 async function renderIndexLinks (argv) {
   'use strict'
-  console.log('Adding links to reference indexes ...')
 
-  try {
-    let indexLinksProcess
-    if (argv.language) {
-      indexLinksProcess = spawn(
-        'gulp',
-        ['renderIndexListReferences',
-          '--book', argv.book,
-          '--language', argv.language]
-      )
-    } else {
-      indexLinksProcess = spawn(
-        'gulp',
-        ['renderIndexListReferences', '--book', argv.book]
-      )
+  if (projectSettings()['dynamic-indexing'] !== false) {
+
+    console.log('Adding links to reference indexes ...')
+
+    try {
+      let indexLinksProcess
+      if (argv.language) {
+        indexLinksProcess = spawn(
+          'gulp',
+          ['renderIndexListReferences',
+            '--book', argv.book,
+            '--language', argv.language]
+        )
+      } else {
+        indexLinksProcess = spawn(
+          'gulp',
+          ['renderIndexListReferences', '--book', argv.book]
+        )
+      }
+      await logProcess(indexLinksProcess, 'Index links')
+      return true
+    } catch (error) {
+      console.log(error)
     }
-    await logProcess(indexLinksProcess, 'Index links')
-    return true
-  } catch (error) {
-    console.log(error)
   }
 }
 

@@ -35,6 +35,13 @@ variants:
   - variant: yourvariant
 
 # ----------------------------------------------------------
+# Indexing settings
+# ------------
+# Choose whether to disable dynamic indexing (false to disable).
+# Disabling dynamic indexing will speed up outputs.
+dynamic-indexing: true
+
+# ----------------------------------------------------------
 # Print-PDF settings
 # ------------
 print-pdf:
