@@ -54,269 +54,69 @@ function svgProcess (outputFormat) {
       plugins: [
         // This first pass only runs minifyStyles, to remove CDATA from
         // <style> elements and give later access to inlineStyles.
-        { minifyStyles: true },
-        { removeDoctype: false },
-        { removeXMLProcInst: false },
-        { removeComments: false },
-        { removeMetadata: false },
-        { removeXMLNS: false },
-        { removeEditorsNSData: false },
-        { cleanupAttrs: false },
-        { mergeStyles: false },
-        { inlineStyles: false },
-        { convertStyleToAttrs: false },
-        { cleanupIDs: false },
-        { prefixIds: false },
-        { removeRasterImages: false },
-        { removeUselessDefs: false },
-        { cleanupNumericValues: false },
-        { cleanupListOfValues: false },
-        { convertColors: false },
-        { removeUnknownsAndDefaults: false },
-        { removeNonInheritableGroupAttrs: false },
-        { removeUselessStrokeAndFill: false },
-        { removeViewBox: false },
-        { cleanupEnableBackground: false },
-        { removeHiddenElems: false },
-        { removeEmptyText: false },
-        { convertShapeToPath: false },
-        { convertEllipseToCircle: false },
-        { moveElemsAttrsToGroup: false },
-        { moveGroupAttrsToElems: false },
-        { collapseGroups: false },
-        { convertPathData: false },
-        { convertTransform: false },
-        { removeEmptyAttrs: false },
-        { removeEmptyContainers: false },
-        { mergePaths: false },
-        { removeUnusedNS: false },
-        { sortAttrs: false },
-        { sortDefsChildren: false },
-        { removeTitle: false },
-        { removeDesc: false },
-        { removeDimensions: false },
-        { removeAttrs: false },
-        { removeAttributesBySelector: false },
-        { removeElementsByAttr: false },
-        { addClassesToSVGElement: false },
-        { removeStyleElement: false },
-        { removeScriptElement: false },
-        { addAttributesToSVGElement: false },
-        { removeOffCanvasPaths: false },
-        { reusePaths: false }
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              cleanupAttrs: false,
+              cleanupEnableBackground: false,
+              cleanupIDs: false,
+              cleanupNumericValues: false,
+              collapseGroups: false,
+              convertColors: false,
+              convertEllipseToCircle: false,
+              convertPathData: false,
+              convertShapeToPath: false,
+              convertTransform: false,
+              inlineStyles: false,
+              mergePaths: false,
+              mergeStyles: false,
+              moveElemsAttrsToGroup: false,
+              moveGroupAttrsToElems: false,
+              removeComments: false,
+              removeDesc: false,
+              removeDoctype: false,
+              removeEditorsNSData: false,
+              removeEmptyAttrs: false,
+              removeEmptyContainers: false,
+              removeEmptyText: false,
+              removeHiddenElems: false,
+              removeMetadata: false,
+              removeNonInheritableGroupAttrs: false,
+              removeTitle: false,
+              removeUnknownsAndDefaults: false,
+              removeUnusedNS: false,
+              removeUselessDefs: false,
+              removeUselessStrokeAndFill: false,
+              removeViewBox: false,
+              removeXMLProcInst: false,
+              sortDefsChildren: false
+            }
+          }
+        }
       ]
     })))
-    .pipe(gulpif(modifyImage, svgmin(function getOptions () {
-      return {
-        plugins: [
-          {
-            // We definitely want a viewBox
-            removeViewBox: false
-          },
-          {
-            // With a viewBox, we can remove these
-            removeDimensions: true
-          },
-          {
-            // We can remove data- attributes
-            removeAttrs: {
-              attrs: 'data.*'
-            }
-          },
-          {
-            // Remove unknown elements, but not default values
-            removeUnknownsAndDefaults: {
-              defaultAttrs: false
-            }
-          },
-          {
-            // We want titles for accessibility
-            removeTitle: false
-          },
-          {
-            // We want descriptions for accessibility
-            removeDesc: false
-          },
-          {
-            // Default
-            convertStyleToAttrs: true
-          },
-          {
-            // Default
-            removeUselessStrokeAndFill: true
-          },
-          {
-            inlineStyles: {
-              onlyMatchedOnce: false
-            }
-          },
-          {
-            // Default
-            cleanupAttrs: true
-          },
-          {
-            // Default
-            removeDoctype: true
-          },
-          {
-            // Default
-            removeXMLProcInst: true
-          },
-          {
-            // Default
-            removeComments: true
-          },
-          {
-            // Default
-            removeMetadata: true
-          },
-          {
-            // Default
-            removeUselessDefs: true
-          },
-          {
-            // Default
-            removeXMLNS: false
-          },
-          {
-            // Default
-            removeEditorsNSData: true
-          },
-          {
-            // Default
-            removeEmptyAttrs: true
-          },
-          {
-            // Default
-            removeHiddenElems: true
-          },
-          {
-            // Default
-            removeEmptyText: true
-          },
-          {
-            // Default
-            removeEmptyContainers: true
-          },
-          {
-            // Default
-            cleanupEnableBackground: true
-          },
-          {
-            // Default
-            minifyStyles: true
-          },
-          {
-            // Default
-            convertColors: true
-          },
-          {
-            // Default
-            convertPathData: true
-          },
-          {
-            // Default
-            convertTransform: true
-          },
-          {
-            // Default
-            removeNonInheritableGroupAttrs: true
-          },
-          {
-            // Default
-            removeUselessStrokeAndFill: true
-          },
-          {
-            // Default
-            removeUnusedNS: true
-          },
-          {
-            // Default
-            prefixIds: false
-          },
-          {
-            // Prefix and minify IDs
-            cleanupIDs: {
-              prefix: prefix + '-',
-              minify: true
-            }
-          },
-          {
-            // Default
-            cleanupNumericValues: true
-          },
-          {
-            // Default
-            cleanupListOfValues: true
-          },
-          {
-            // Default
-            moveElemsAttrsToGroup: true
-          },
-          {
-            // Default
-            collapseGroups: true
-          },
-          {
-            // Default
-            removeRasterImages: false
-          },
-          {
-            // Default
-            mergePaths: true
-          },
-          {
-            // Default
-            convertShapeToPath: false
-          },
-          {
-            // Default
-            convertEllipseToCircle: true
-          },
-          {
-            // Default
-            sortAttrs: false
-          },
-          {
-            // Default
-            sortDefsChildren: true
-          },
-          {
-            // Default
-            removeAttributesBySelector: false
-          },
-          {
-            // Default
-            removeElementsByAttr: false
-          },
-          {
-            // Default
-            addClassesToSVGElement: false
-          },
-          {
-            // Default
-            addAttributesToSVGElement: false
-          },
-          {
-            // Default
-            removeOffCanvasPaths: false
-          },
-          {
-            // Default
-            removeStyleElement: false
-          },
-          {
-            // Default
-            removeScriptElement: false
-          },
-          {
-            // Default
-            reusePaths: false
+    .pipe(gulpif(modifyImage, svgmin({
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              cleanupIDs: {prefix: prefix + '-', minify: true},
+              cleanupListOfValues: true,
+              convertShapeToPath: false,
+              convertStyleToAttrs: true,
+              inlineStyles: {onlyMatchedOnce: false},
+              removeAttrs: {attrs: 'data.*'},
+              removeDesc: false,
+              removeDimensions: true,
+              removeTitle: false,
+              removeUnknownsAndDefaults: {defaultAttrs: false},
+              removeViewBox: false
           }
-        ]
+        }
       }
-    }).on('error', function (e) {
-      console.log(e)
+    ]
     })))
     .pipe(xmlEdit(function (xml) {
       // Apply SVG manipulation functions stored in
