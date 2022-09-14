@@ -9,3 +9,10 @@ ports:
   - name: Electric Book server
     description: A web output of your Electric Book project 
     port: 4000
+
+vscode:
+  extensions:
+
+    # This extension lets us see live-refreshing PDF outputs
+    # in the browser, e.g. during page refinement.
+    - yandeu.five-server
