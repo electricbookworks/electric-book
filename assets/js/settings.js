@@ -18,6 +18,7 @@ var settings = {
         output: 'web',
         docs: false
     },
+    dynamicIndexing: true,
     web: {
         images: {
             lazyload: true
@@ -66,6 +67,10 @@ settings.site.baseurl = '{{ site.baseurl }}';
 
 {% if site.output %}
 settings.site.output = '{{ site.output }}';
+{% endif %}
+
+{% if site.data.settings.dynamic-indexing != nil %}
+settings.dynamicIndexing = {{ site.data.settings.dynamic-indexing }}
 {% endif %}
 
 // Override default settings from settings.yml

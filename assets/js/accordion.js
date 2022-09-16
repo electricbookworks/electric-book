@@ -695,7 +695,7 @@ function ebPrepareForAccordion() {
         mutations.forEach(function (mutation) {
             if (mutation.type === "attributes") {
                 if (document.body.getAttribute('data-accordion-active') !== 'true'
-                        && document.body.getAttribute('data-index-targets')
+                        && (document.body.getAttribute('data-index-targets') || settings.dynamicIndexing === false)
                         && document.body.getAttribute('data-ids-assigned')) {
                     ebLoadAccordion();
                 }
