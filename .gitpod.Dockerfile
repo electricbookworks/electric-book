@@ -10,7 +10,7 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
-# Install dependencies required to set timezone 
+# Install dependencies required to set timezone
 RUN apt-get update && apt-get install -y \
   locales libcurl4 curl
 
