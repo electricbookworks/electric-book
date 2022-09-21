@@ -200,6 +200,14 @@ async function jekyll (argv) {
     baseurl = '/' + baseurl
   }
 
+  // Build the string of config files.
+  // We need the configs string passed to argv
+  // plus any auto-generated excludes config
+  let configs = configString(argv)
+  if (extraExcludesConfig(argv)) {
+    configs += ',' + extraExcludesConfig(argv)
+  }
+
   try {
     console.log('Running Jekyll with command: ' +
               'bundle exec jekyll ' + command +
@@ -209,7 +217,7 @@ async function jekyll (argv) {
 
     // Create an array of arguments to pass to spawn()
     const jekyllSpawnArgs = ['exec', 'jekyll', command,
-      '--config', configString(argv),
+      '--config', configs,
       '--baseurl', baseurl]
 
     // Add each of the switches to the args array
@@ -253,6 +261,43 @@ function configsObject (argv) {
 
   // Return the first object of the first object of the array
   return json[0]
+}
+
+// Config to exclude unnecessary books from Jekyll build
+function extraExcludesConfig (argv) {
+  'use strict'
+
+  // Default is no config file
+  let pathToTempExcludesConfig = ''
+
+  // Only do this if we're outputting a particular book
+  if (argv.book) {
+    // Get all the works but leave out the argv.book we want
+    const worksToExclude = works().filter(function (work) {
+      return work !== argv.book
+    })
+
+    // Get the current excludes. They will be the last
+    // object in this array.
+    const excludes = configsObject(argv).exclude
+
+    // Add the works we're not outputting to it
+    const newExcludes = excludes.concat(worksToExclude)
+
+    // That's only the values. We need the `excludes:` key.
+    const excludesProperty = {
+      exclude: newExcludes
+    }
+
+    // Write the new excludes config
+    const excludesYAML = yaml.dump(excludesProperty)
+    pathToTempExcludesConfig = '_output/.temp/_config.excludes.yml'
+    fsPromises.mkdir('_output/.temp', { recursive: true })
+    fsPromises.writeFile(pathToTempExcludesConfig, excludesYAML)
+  }
+
+  // Return the path to the new excludes config
+  return pathToTempExcludesConfig
 }
 
 // Run Cordova with args.
