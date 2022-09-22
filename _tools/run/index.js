@@ -1,4 +1,5 @@
 const options = require('./helpers/options.js').options
+const helpers = require('./helpers/helpers.js')
 
 // Parse arguments when calling this script
 const argv = require('yargs') // eslint-disable-line no-unused-vars
@@ -23,6 +24,12 @@ const argv = require('yargs') // eslint-disable-line no-unused-vars
 
   // Available options are in options.js
   .options(options)
+
+  // Check that option values provided are valid.
+  // For now, we only check the --book value.
+  .check(function (argv) {
+    return helpers.bookIsValid(argv)
+  })
 
   // User guidance
   .demandCommand(1, "Provide at least one command, e.g. '-- output'")

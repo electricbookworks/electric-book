@@ -16,6 +16,7 @@ const childProcess = require('child_process') // creates child processes
 const JSZip = require('jszip') // epub-friendly zip utility
 const buildReferenceIndex = require('./reindex/build-reference-index.js')
 const buildSearchIndex = require('./reindex/build-search-index.js')
+const options = require('./options.js').options
 
 // Output spawned-process data to console
 function logProcess (process, processName) {
@@ -69,6 +70,47 @@ function outputFilename (argv) {
   }
 
   return filename
+}
+
+// Check if a user passed an explicit option in argv
+// (i.e. yargs is not just using the default in options.js)
+function explicitOption (option) {
+  'use strict'
+
+  // Default is that option was not passed explicitly
+  let optionWasExplicit = false
+
+  // Get all the aliases for this option
+  const aliases = options[option].alias
+
+  // Add the default option to that array
+  aliases.push(option)
+
+  // Check if any of those aliases were in the args
+  aliases.forEach(function (alias) {
+    // process.argv includes various strings in an array,
+    // including the options we want to examine.
+    // Those options have the original leading hyphens
+    // as they were passed at the command line.
+    // So we create a new array containing only the strings
+    // in process.argv that start with hyphens,
+    // and then we strip those hyphens.
+    const optionsInProcessArgv = []
+    process.argv.forEach(function (argument) {
+      if (argument.match(/^-+/)) {
+        const argumentWithoutHyphens = argument.replace(/^-+/, '')
+        optionsInProcessArgv.push(argumentWithoutHyphens)
+      }
+    })
+
+    // Now, is this alias among the options
+    // that were explicitly passed at the command line?
+    if (optionsInProcessArgv.includes(alias)) {
+      optionWasExplicit = true
+    }
+  })
+
+  return optionWasExplicit
 }
 
 // Checks if a file or folder exists
@@ -268,11 +310,18 @@ function configsObject (argv) {
 async function extraExcludesConfig (argv) {
   'use strict'
 
-  // Default is no config file
-  let pathToTempExcludesConfig = ''
+  // Default is an empty config file, for no excludes.
+  // Create it and/or make it an empty file.
+  const pathToTempExcludesConfig = '_output/.temp/_config.excludes.yml'
+  await fsPromises.mkdir('_output/.temp', { recursive: true })
+  await fsPromises.writeFile(pathToTempExcludesConfig, '')
 
-  // Only do this if we're outputting a particular book
-  if (argv.book) {
+  // If we're outputting a particular book/work,
+  // and the user explicitly asked for that book
+  // (as opposed to omitting --book and using defaults),
+  // exclude any other works in this project
+  // by adding them to a Jekyll `exclude` config.
+  if (argv.book && explicitOption('book')) {
     // Get all the works but leave out the argv.book we want
     const worksToExclude = works().filter(function (work) {
       return work !== argv.book
@@ -292,8 +341,6 @@ async function extraExcludesConfig (argv) {
 
     // Write the new excludes config as a YAML file
     const excludesYAML = yaml.dump(excludesProperty)
-    pathToTempExcludesConfig = '_output/.temp/_config.excludes.yml'
-    await fsPromises.mkdir('_output/.temp', { recursive: true })
     await fsPromises.writeFile(pathToTempExcludesConfig, excludesYAML)
   }
 
@@ -1108,6 +1155,26 @@ function works () {
   return arrayOfWorks
 }
 
+// Check that the --book value is valid
+function bookIsValid (argv) {
+  'use strict'
+
+  let validity = true
+
+  // If the --book value is not among works
+  // in this project, it's not valid
+  if (argv.book) {
+    if (!works().includes(argv.book)) {
+      validity = false
+
+      console.error('Sorry, %s is not a work in this project.', argv.book)
+      process.exit()
+    }
+  }
+
+  return validity
+}
+
 // Install Node dependencies
 function installNodeModules () {
   'use strict'
@@ -1437,5 +1504,6 @@ module.exports = {
   newBook,
   pathExists,
   refreshIndexes,
+  bookIsValid,
   works
 }
