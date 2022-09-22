@@ -204,8 +204,9 @@ async function jekyll (argv) {
   // We need the configs string passed to argv
   // plus any auto-generated excludes config
   let configs = configString(argv)
-  if (extraExcludesConfig(argv)) {
-    configs += ',' + extraExcludesConfig(argv)
+  const extraConfigs = await extraExcludesConfig(argv)
+  if (extraConfigs) {
+    configs += ',' + extraConfigs
   }
 
   try {
@@ -264,7 +265,7 @@ function configsObject (argv) {
 }
 
 // Config to exclude unnecessary books from Jekyll build
-function extraExcludesConfig (argv) {
+async function extraExcludesConfig (argv) {
   'use strict'
 
   // Default is no config file
@@ -277,23 +278,23 @@ function extraExcludesConfig (argv) {
       return work !== argv.book
     })
 
-    // Get the current excludes. They will be the last
-    // object in this array.
+    // Get the current excludes list
     const excludes = configsObject(argv).exclude
 
     // Add the works we're not outputting to it
     const newExcludes = excludes.concat(worksToExclude)
 
-    // That's only the values. We need the `excludes:` key.
+    // That's only the list of values. To create a valid
+    // key:value property, we need the `excludes:` key.
     const excludesProperty = {
       exclude: newExcludes
     }
 
-    // Write the new excludes config
+    // Write the new excludes config as a YAML file
     const excludesYAML = yaml.dump(excludesProperty)
     pathToTempExcludesConfig = '_output/.temp/_config.excludes.yml'
-    fsPromises.mkdir('_output/.temp', { recursive: true })
-    fsPromises.writeFile(pathToTempExcludesConfig, excludesYAML)
+    await fsPromises.mkdir('_output/.temp', { recursive: true })
+    await fsPromises.writeFile(pathToTempExcludesConfig, excludesYAML)
   }
 
   // Return the path to the new excludes config
