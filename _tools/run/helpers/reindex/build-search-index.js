@@ -80,18 +80,43 @@ async function buildSearchIndex (outputFormat) {
     await page.goto(url)
 
     // Get the page title
-    const title = await page.evaluate(() => document.title
-      .replace(/"/g, '\'').replace(/\s+/g, ' ').trim())
+    const title = await page.evaluate(
+      function () {
+        const titleElement = document.title
+        let titleText = ''
+        if (titleElement) {
+          titleText = document.title
+            .replace(/"/g, '\'').replace(/\s+/g, ' ').trim()
+        }
+        return titleText
+      }
+    )
 
     // Get the page description
-    const description = await page.evaluate(() => document
-      .querySelector('meta[name="description"]').content
-      .replace(/"/g, '\'').replace(/\s+/g, ' ').trim())
+    const description = await page.evaluate(
+      function () {
+        let descriptionText = ''
+        const descriptionTag = document.querySelector('meta[name="description"]')
+        if (descriptionTag) {
+          descriptionText = descriptionTag.content
+            .replace(/"/g, '\'').replace(/\s+/g, ' ').trim()
+        }
+        return descriptionText
+      }
+    )
 
-      // Get the page content
-    const content = await page.evaluate(() => document.body
-      .querySelector('#content').textContent
-      .replace(/"/g, '\'').replace(/\s+/g, ' ').trim())
+    // Get the page content
+    const content = await page.evaluate(
+      function () {
+        const contentDiv = document.body.querySelector('#content')
+        let contentText = ''
+        if (contentDiv) {
+          contentText = contentDiv.textContent
+            .replace(/"/g, '\'').replace(/\s+/g, ' ').trim()
+        }
+        return contentText
+      }
+    )
 
     // Build the API endpoint
     const endpoint = 'api/content/'
