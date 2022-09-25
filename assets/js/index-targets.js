@@ -120,7 +120,8 @@ function ebIndexProcessComments(comments) {
 
             // Slugify the target text to use in an ID
             // and to check for duplicate instances later.
-            var entrySlug = ebSlugify(line);
+            // The second argument indicates that we are slugifying an index term.
+            var entrySlug = ebSlugify(line, true);
 
             // Add the slug to the array of entries,
             // where will we count occurrences of this entry.

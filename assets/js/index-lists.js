@@ -70,8 +70,9 @@ function ebIndexFindLinks(listItem) {
     buildTree(listItem);
 
     // Reconstruct the reference's text value from the tree
-    // and save its slug.
-    var listItemSlug = ebSlugify(listItemTree.join(' \\ '));
+    // and save its slug. The second argument indicates that we are slugifying
+    // an index term.
+    var listItemSlug = ebSlugify(listItemTree.join(' \\ '), true);
 
     // Get the book title and translation language (if any)
     // for the HTML page we're processing.
