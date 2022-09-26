@@ -123,13 +123,13 @@ then the website output will only include the book in the `samples` folder, and 
 
 #### Translations
 
-The Electric Book template includes a shorter French version of the `samples` book. If you want that French version of the book in `samples`, you add the `--language` option, like this:
+The Electric Book template includes a shorter French version of the `samples` book. If you want to output, say, a screen PDF of that French version of the book in `samples`, you add the `--language` option, like this:
 
 ```sh
-npm run eb -- output -f screen-pdf -b samples --language fr
+npm run eb -- output --format screen-pdf --book samples --language fr
 ```
 
-or, using the `-l` alias for `--language`:
+or, using short aliases:
 
 ```sh
 npm run eb -- output -f screen-pdf -b samples -l fr
@@ -137,7 +137,7 @@ npm run eb -- output -f screen-pdf -b samples -l fr
 
 #### Other options
 
-Entering `npm run eb` will list all available commands and options.
+As mentioned above, the command `npm run eb` will list all available commands and options.
 
 For example, if you want your website to rebuild faster by only rebuilding the files you're working on, add the `--incremental` option (aka `-i`). This particular option doesn't even need a value after the option:
 
@@ -145,13 +145,13 @@ For example, if you want your website to rebuild faster by only rebuilding the f
 npm run eb -- output --incremental
 ```
 
-If you want to enable maths rendering in that screen PDF, add the `--mathjax` option:
+If you want to enable maths rendering, add the `--mathjax` option:
 
 ```sh
 npm run eb -- output --format screen-pdf --book samples --mathjax true
 ```
 
-Note that if maths is enabled in a project's Jekyll config(s), the output script will detect that, and it isn't necessary to pass `--mathjax true` as well. (This is unlike older EBT output scripts, which did not check Jekyll configs.)
+Note that if maths is already enabled in a project's Jekyll config(s), the output script will detect that, and it isn't necessary to pass `--mathjax true` as well. (This is unlike older versions of the Electric Book output scripts, which did not check Jekyll configs.)
 
 
 ### Exporting to Word
@@ -165,7 +165,7 @@ npm run eb -- export --book samples --format screen-pdf
 
 ### Project setup check
 
-The `check` command checks that your project and its books include the folders and files required. It checks this for any books with folders in `_data/works`. To run it, enter this at the command line:
+The `check` command checks that your project and its books include the folders and files required. It checks this for any books for which there are folders in `_data/works`. To run it, enter this at the command line:
 
 ```sh
 npm run eb -- check
