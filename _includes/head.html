@@ -126,6 +126,7 @@
 
 
 {% elsif site.output == "app" %}
+<!DOCTYPE html>
 <html lang="{{ language }}"{% if site.data.locales[language].direction %} dir="{{ site.data.locales[language].direction }}"{% endif %}>
     <head>
 
@@ -147,9 +148,23 @@
     {% endcomment %}
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https://fonts.googleapis.com https://www.youtube.com http://player.vimeo.com; style-src 'self' 'unsafe-inline'; media-src * content:; img-src 'self' data: content:;{% if site.mathjax-enabled == true %} script-src 'self' 'unsafe-inline' 'unsafe-eval';{% endif %}">
 
+    {% comment %}OpenGraph metadata. While apps might not use this metadata,
+    descriptions etc. are useful for search indexing.{% endcomment %}
+
+    {% include meta-tags.html %}
+
+    <meta property="og:title" content="{{ meta-tag-title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ meta-tag-url }}" />
+    <meta property="og:description" content="{{ meta-tag-description }}" />
+    <meta property="og:image" content="{{ meta-tag-image }}" />
+
+    {% comment %} Reuse OG description for generic meta description tag {% endcomment %}
+    <meta name="description" content="{{ meta-tag-description }}" />
+
     {% comment %}If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
-    {% if is-root-directory == true or page.collection == "docs" or is-translation-root-directory == true %}|
+    {% if is-root-directory == true or page.collection == "docs" or is-translation-root-directory == true %}
         <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-root-directory }}assets/styles/{{ app-stylesheet }}" />
     {% else %}
 
