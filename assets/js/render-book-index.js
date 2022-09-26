@@ -64,7 +64,7 @@ function generateTargetsIndex() {
             // This is done by assets/js/index-targets.js (in bundle.js).
             await page.waitForSelector('[data-index-targets]');
 
-            // Get the page content. Note: we can only pass serialized data
+            // Note: we can only pass serialized data
             // back to the parent process.
             var indexEntries = await page.evaluate(function () {
 

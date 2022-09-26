@@ -5,10 +5,9 @@ const fsPromises = require('fs/promises')
 const fsExtra = require('fs-extra')
 
 // This function writes a single file for the content API
-async function writeContentAPIFile(pageObject) {
-
+async function writeContentAPIFile (pageObject) {
   // Create an index.json path from the page's URL
-  let contentFileRelativePath = pageObject.url.replace(/\.html$/, '/index.json')
+  const contentFileRelativePath = pageObject.url.replace(/\.html$/, '/index.json')
 
   // Create an absolute path to write to
   const contentFileAbsolutePath = fsPath.normalize(process.cwd() +
@@ -35,7 +34,7 @@ async function buildSearchIndex (outputFormat) {
 
   // This will be an index for API access.
   // It will not include any /docs
-  let contentIndexForAPI = []
+  const contentIndexForAPI = []
 
   // Remove existing the api/content so that
   // we can completely refresh it.
@@ -119,8 +118,8 @@ async function buildSearchIndex (outputFormat) {
     )
 
     // Build the API endpoint
-    const endpoint = 'api/content/'
-        + searchStore[i].url.replace(/\.html$/, '/index.json')
+    const endpoint = 'api/content/' +
+        searchStore[i].url.replace(/\.html$/, '/index.json')
 
     // Create an object for this page.
     // We create two versions: one without content
@@ -134,14 +133,14 @@ async function buildSearchIndex (outputFormat) {
       id: count,
       url: searchStore[i].url,
       title: title.replace(/\\/g, ''),
-      description: description,
+      description,
       json: endpoint
     }
     let pageObjectForAPIContent = {
       id: count,
       url: searchStore[i].url,
       title: title.replace(/\\/g, ''),
-      description: description,
+      description,
       content: content.replace(/\\/g, '')
     }
 
@@ -152,9 +151,9 @@ async function buildSearchIndex (outputFormat) {
     //   title: "Title of page",
     //   content: "Content of page",
     // });
-    let searchIndexEntry = 'index.addDoc('
-        + JSON.stringify(pageObjectForAPIContent)
-        + ');\n'
+    let searchIndexEntry = 'index.addDoc(' +
+        JSON.stringify(pageObjectForAPIContent) +
+        ');\n'
 
     // Add entry to the searchIndex array
     searchIndexWithDocs += searchIndexEntry
