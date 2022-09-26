@@ -119,7 +119,7 @@ Note that when you specify a book with `--book` (or `-b`), any other books in yo
 npm run eb -- output -b samples
 ```
 
-then the website output will *not* include the book in the `book` folder.
+then the website output will only include the book in the `samples` folder, and *not* the book in the `book` folder (or any other book folders).
 
 #### Translations
 
