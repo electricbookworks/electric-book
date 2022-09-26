@@ -59,6 +59,9 @@ function ebIndexProcessComments(comments) {
         document.body.setAttribute('data-index-targets', 'none');
     }
 
+    // Create a counter for tracking this process
+    var commentCounter = 0;
+
     // Process each comment in the `comments` array.
     comments.forEach(function (comment) {
 
@@ -210,8 +213,13 @@ function ebIndexProcessComments(comments) {
             }
         });
 
+        // Add this comment to the counter
+        commentCounter += 1;
+
         // Add an attribute to flag that we're done.
-        document.body.setAttribute('data-index-targets', 'loaded');
+        if (commentCounter === comments.length) {
+            document.body.setAttribute('data-index-targets', 'loaded');
+        }
     });
 }
 
