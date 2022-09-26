@@ -7,4 +7,7 @@
 // Use the imported font by adding and editing the $font*
 // variables in web-variables.
 
-@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+// Fonts should not be @imported in apps
+@if $output-format == "web" {
+    @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+}
