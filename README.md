@@ -35,7 +35,7 @@ The fastest way to get working is by using [Gitpod](https://gitpod.io). If you o
 
 1. Go to this repo's page on GitHub. (This can be the [original page](https://github.com/electricbookworks/electric-book/) or the page for the fork or branch you want to work in.)
 2. In the browser address bar, insert this *before* the URL: `https://gitpod.io/#`. Then hit enter.
-3. Follow the prompts to create a Gitpod workspace, using your GitHub account.
+3. Follow the prompts to create a Gitpod workspace, using your GitHub account. If you're prompted to choose an editor, we recommend the VS Code (browser) option.
 4. After a few minutes, your Gitpod workspace will appear: a code editor and a Terminal for you to enter the commands described below.
 
 
