@@ -107,7 +107,7 @@ Note that the `book` folder is the default, so you don't have to specify it. Her
 npm run eb -- output -f print-pdf
 ```
 
-If you're outputting a book other than the default `book`, you must specify the book folder you want with the `--book` (aka `-b`) option. For example, this will generate a screen PDF of the _Samples_ book:
+If you're outputting a book other than the default `book`, you must specify the book folder you want with the `--book` (aka `-b`) option. For example, this will generate a screen PDF of the book that's in the `samples` folder:
 
 ```sh
 npm run eb -- output -f screen-pdf -b samples
