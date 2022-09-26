@@ -39,6 +39,9 @@
 // Note that element names must be uppercase here.
 // (Note: our gulp equivalent uses a different logic
 // that may be more reliable than this.)
+// We include `script` tags so that MathJax blocks,
+// which are in script tags, can also be considered
+// when determining inline vs block-level index tags.
 var ebIndexOptions = {
     blockLevelElements: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6',
             'P', 'BLOCKQUOTE', 'OL', 'UL', 'TABLE', 'DL', 'DIV', 'SCRIPT']
