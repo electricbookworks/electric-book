@@ -51,42 +51,44 @@ async function buildReferenceIndex (outputFormat) {
     // This is done by assets/js/index-targets.js (in bundle.js).
     await page.waitForSelector('[data-index-targets]')
 
-    // Get the page content. Note: we can only pass serialized data
+    // Note: we can only pass serialized data
     // back to the parent process.
     let indexEntries = await page.evaluate(function () {
       const targetArray = []
       const indexLinkTargets = document.querySelectorAll('.index-target')
-      indexLinkTargets.forEach(function (entry) {
-        // Check if this target starts or ends a reference range
-        let range = ''
-        if (entry.classList.contains('index-target-from')) {
-          range = 'from'
-        }
-        if (entry.classList.contains('index-target-to')) {
-          range = 'to'
-        }
+      if (indexLinkTargets.length > 0) {
+        indexLinkTargets.forEach(function (entry) {
+          // Check if this target starts or ends a reference range
+          let range = ''
+          if (entry.classList.contains('index-target-from')) {
+            range = 'from'
+          }
+          if (entry.classList.contains('index-target-to')) {
+            range = 'to'
+          }
 
-        // Get the entry's nesting as an array.
-        // It might be a nested entry, where each level
-        // of nesting appears after double back slashes \\.
-        // e.g. software \\ book-production
-        const rawEntriesByLevel = entry.getAttribute('data-index-markup').split('\\')
+          // Get the entry's nesting as an array.
+          // It might be a nested entry, where each level
+          // of nesting appears after double back slashes \\.
+          // e.g. software \\ book-production
+          const rawEntriesByLevel = entry.getAttribute('data-index-markup').split('\\')
 
-        // Trim whitespace from each entry
-        // https://stackoverflow.com/a/41183617/1781075
-        const entriesByLevel = rawEntriesByLevel.map(str => str.trim())
+          // Trim whitespace from each entry
+          // https://stackoverflow.com/a/41183617/1781075
+          const entriesByLevel = rawEntriesByLevel.map(str => str.trim())
 
-        const entryObject = {
-          entrySlug: entry.id.split('--iid-')[0],
-          entryText: entry.getAttribute('data-index-entry'),
-          entryTree: JSON.stringify(entriesByLevel),
-          id: entry.id,
-          range: range,
-          bookTitle: document.body.getAttribute('data-title'),
-          translationLanguage: document.body.getAttribute('data-translation')
-        }
-        targetArray.push(entryObject)
-      })
+          const entryObject = {
+            entrySlug: entry.id.split('--iid-')[0],
+            entryText: entry.getAttribute('data-index-entry'),
+            entryTree: JSON.stringify(entriesByLevel),
+            id: entry.id,
+            range,
+            bookTitle: document.body.getAttribute('data-title'),
+            translationLanguage: document.body.getAttribute('data-translation')
+          }
+          targetArray.push(entryObject)
+        })
+      }
 
       // Note that we do not sort the entries in the targetArray.
       // The items are added in order of appearance in the DOM,
