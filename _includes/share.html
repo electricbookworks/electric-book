@@ -72,7 +72,7 @@ and clean them for use in URLs. {% endcomment %}
 
                 {% if locale.share.whatsapp and locale.share.whatsapp != "" %}
                     <li class="share-link">
-                        <a class="share-link-content" href="https://wa.me/?text={{ share-title}} {{ share-url }}" target="_blank">
+                        <a class="share-link-content" href="https://wa.me/?text={{ share-title}}+{{ share-url }}" target="_blank">
                             <span class="share-link-icon">
                                 {% include icons/whatsapp.svg %}
                             </span>
@@ -202,7 +202,7 @@ and clean them for use in URLs. {% endcomment %}
 
                 {% if locale.share.email and locale.share.email != "" %}
                     <li class="share-link">
-                        <a class="share-link-content" href="mailto:?subject={{ share-title }}&body={{ share-url }}%0D%0A%0D%0A{{ share-description }}" target="_blank">
+                        <a class="share-link-content" href="mailto:?subject={{ share-title }}&body={{ share-url }}%0D%0A%0D%0A{{ share-description | strip_html | url_encode }}" target="_blank">
                             <span class="share-link-icon">
                                 {% include icons/email.svg %}
                             </span>
