@@ -41,7 +41,7 @@
 // that may be more reliable than this.)
 var ebIndexOptions = {
     blockLevelElements: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6',
-            'P', 'BLOCKQUOTE', 'OL', 'UL', 'TABLE', 'DL', 'DIV']
+            'P', 'BLOCKQUOTE', 'OL', 'UL', 'TABLE', 'DL', 'DIV', 'SCRIPT']
 };
 
 // Process the comments, inserting anchor-tag targets
