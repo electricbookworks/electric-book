@@ -113,7 +113,7 @@ If you're outputting a book other than the default `book`, you must specify the 
 npm run eb -- output -f screen-pdf -b samples
 ```
 
-Note that when you specify a book with `--book` (or `-b`), any other books in your project (like the `samples` book in the default template) will not be generated or processed at all. A useful effect of this is that if you're working on the web version of a specific book and want your website to rebuild faster after each change you make, specify the book you're working on in your output command. For example, if I run this in the default template:
+Note that when you specify a book with `--book` (or `-b`), any other books in your project will not be generated or processed at all. A useful effect of this is that if you're working on the web version of a specific book and want your website to rebuild faster after each change you make, specify the book you're working on in your output command. For example, if I run this in the default template:
 
 ```sh
 npm run eb -- output -b samples
