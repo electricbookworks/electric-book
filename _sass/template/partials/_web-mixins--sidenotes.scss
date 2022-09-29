@@ -19,8 +19,7 @@
     }
 
     @media only screen and (min-width: $break-width-large) {
-        max-width: 15rem;
-        margin: 0 -17rem ($line-height-default / 2) 2rem;
+        margin: 0 -10rem ($line-height-default / 2) 2rem;
     }
 
     // Very large screens, sidenotes can be as wide
