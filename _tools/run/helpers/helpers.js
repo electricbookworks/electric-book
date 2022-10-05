@@ -1162,12 +1162,17 @@ function bookIsValid (argv) {
   let validity = true
 
   // If the --book value is not among works
-  // in this project, it's not valid
-  if (argv.book) {
+  // in this project, and it was explicitly passed,
+  // it's not a valid choice
+  if (argv.book && explicitOption('book')) {
     if (!works().includes(argv.book)) {
       validity = false
 
-      console.error('Sorry, %s is not a work in this project.', argv.book)
+      if (argv.book === options.book.default) {
+        console.error('Sorry, this project does not include a default %s.', argv.book)
+      } else {
+        console.error('Sorry, %s is not a work in this project.', argv.book)
+      }
       process.exit()
     }
   }
