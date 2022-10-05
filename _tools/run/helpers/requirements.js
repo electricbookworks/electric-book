@@ -32,6 +32,7 @@ async function checkRequiredPaths () {
   'use strict'
 
   // Initialise this for checking later.
+  let errors = false
   let requiredPaths = true
   let projectLogo = 'logo.jpg'
   let projectImage = 'cover.jpg'
@@ -216,10 +217,10 @@ async function checkRequiredPaths () {
     const path = fsPath.normalize(process.cwd() + '/' + item.path)
 
     if (!helpers.pathExists(path)) {
-      errors = true
       console.log(chalk.red('Warning: ') + 'file not found:')
       if (item.type === 'required') {
         console.log(path + ' ' + chalk.red(item.type))
+        errors = true
       } else {
         console.log(path + ' ' + chalk.yellow(item.type))
       }
@@ -274,10 +275,10 @@ async function checkRequiredPaths () {
       const path = fsPath.normalize(process.cwd() + '/' + item.path)
 
       if (!helpers.pathExists(path)) {
-        errors = true
         console.log(chalk.red('Warning: ') + 'file not found:')
         if (item.type === 'required') {
           console.log(path + ' ' + chalk.red(item.type))
+          errors = true
         } else {
           console.log(path + ' ' + chalk.yellow(item.type))
         }
@@ -287,6 +288,13 @@ async function checkRequiredPaths () {
   })
 
   console.log('\nProject-requirements check complete.\n')
+
+  if (errors) {
+    console.log('Required files or folders are missing.')
+    requiredPaths = false
+  } else {
+    console.log('Required files or folders are present.')
+  }
   return requiredPaths
 }
 
