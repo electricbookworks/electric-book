@@ -1196,7 +1196,7 @@ function ebBookmarksInit() {
     }
 }
 
-// Wait for data-index-targets to be loaded
+// Wait for IDs and fingerprints to be loaded
 // and IDs to be assigned
 // before applying the accordion.
 function ebPrepareForBookmarks() {
