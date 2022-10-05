@@ -62,7 +62,9 @@ function generateTargetsIndex() {
 
             // Check that any index targets for the page have been processed.
             // This is done by assets/js/index-targets.js (in bundle.js).
-            await page.waitForSelector('[data-index-targets]');
+            if (settings.dynamicIndexing !== false) {
+                await page.waitForSelector('[data-index-targets]');
+            }
 
             // Note: we can only pass serialized data
             // back to the parent process.

@@ -1451,7 +1451,9 @@ async function refreshIndexes (argv) {
       await renderIndexComments(argv)
     }
 
-    buildReferenceIndex(argv.format)
+    if (projectSettings()['dynamic-indexing'] !== false) {
+      buildReferenceIndex(argv.format)
+    }
 
     if (argv.format === 'web' ||
       argv.format === 'app') {
