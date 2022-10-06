@@ -20,7 +20,7 @@ RUN ln -snf /usr/share/zoneinfo/$(curl https://ipapi.co/timezone) /etc/localtime
 # Add node source for nodejs version 12, instead of Ubuntu installed node (version 10)
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
 
-# Main dependency installation and clear apt cache to make image smaller
+# Main dependency installation
 RUN apt-get update && apt-get install -y \
   software-properties-common \
   make \
@@ -36,8 +36,26 @@ RUN apt-get update && apt-get install -y \
   nodejs \
   ruby \
   ruby-dev \
-  graphicsmagick && \
-  rm -rf /var/lib/apt/lists/*
+  graphicsmagick
+
+# Dependencies specifically for Puppeteer on unix
+RUN apt-get install -y \
+  libasound2 \
+  libatk1.0-0 \
+  libatk-bridge2.0-0 \
+  libcairo2 \
+  libdrm2 \
+  libgbm1 \
+  libnss3 \
+  libpango-1.0-0 \
+  libxkbcommon-x11-0 \
+  libxcomposite1 \
+  libxdamage1 \
+  libxfixes3 \
+  libxrandr2
+
+# Clear apt cache to make image smaller
+RUN rm -rf /var/lib/apt/lists/*
 
 # Install PrinceXML for printing to PDF
 RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb && \

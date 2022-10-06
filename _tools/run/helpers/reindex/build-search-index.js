@@ -57,8 +57,9 @@ async function buildSearchIndex (outputFormat) {
     // not web-served pages. Assume this script
     // is run from the repo root, e.g as
     // node _site/assets/js/render-search-index.js
-    // in which case the repo root is the current working directory (cwd)
-    const url = process.cwd() + '/_site/' + searchStore[i].url
+    // in which case the repo root is the current working directory (cwd).
+    // Puppeteer requires the protocol (file://) on unix.
+    const url = 'file://' + process.cwd() + '/_site/' + searchStore[i].url
 
     // User feedback
     console.log('Indexing ' + url + ' for search index.')
