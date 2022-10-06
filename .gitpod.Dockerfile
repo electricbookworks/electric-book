@@ -46,7 +46,8 @@ RUN apt-get install -y \
   libnss3 \
   libxkbcommon-x11-0 \
   libxcomposite1 \
-  libxdamage1
+  libxdamage1 \
+  libxfixes3
 
 # Clear apt cache to make image smaller
 RUN rm -rf /var/lib/apt/lists/*
