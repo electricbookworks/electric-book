@@ -43,7 +43,8 @@ RUN apt-get install -y \
   libatk1.0-0 \
   libatk-bridge2.0-0 \
   libdrm2 \
-  libnss3
+  libnss3 \
+  libxkbcommon-x11-0
 
 # Clear apt cache to make image smaller
 RUN rm -rf /var/lib/apt/lists/*
