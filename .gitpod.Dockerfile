@@ -41,6 +41,7 @@ RUN apt-get update && apt-get install -y \
 # Dependencies specifically for Puppeteer on unix
 RUN apt-get install -y \
   libatk1.0-0 \
+  libatk-bridge2.0-0 \
   libnss3
 
 # Clear apt cache to make image smaller
