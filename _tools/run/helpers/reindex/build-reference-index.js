@@ -44,7 +44,7 @@ async function buildReferenceIndex (outputFormat) {
     }
 
     // Go to the page path.
-    // Puppeteer requires the protocol (file://) on OSX.
+    // Puppeteer requires the protocol (file://) on unix.
     await page.goto('file://' + path)
 
     // Check that any index targets for the page have been processed.
