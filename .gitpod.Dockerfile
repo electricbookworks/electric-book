@@ -45,6 +45,7 @@ RUN apt-get install -y \
   libdrm2 \
   libgbm1 \
   libnss3 \
+  libpango-1.0-0 \
   libxkbcommon-x11-0 \
   libxcomposite1 \
   libxdamage1 \
