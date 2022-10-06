@@ -47,7 +47,8 @@ RUN apt-get install -y \
   libxkbcommon-x11-0 \
   libxcomposite1 \
   libxdamage1 \
-  libxfixes3
+  libxfixes3 \
+  libxrandr2
 
 # Clear apt cache to make image smaller
 RUN rm -rf /var/lib/apt/lists/*
