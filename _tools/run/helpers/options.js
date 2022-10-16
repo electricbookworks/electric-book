@@ -124,6 +124,13 @@ const options = {
     type: 'string',
     implies: ['format'],
     nargs: 1
+  },
+  merged: {
+    description: 'Whether to merge HTML files for PDF output',
+    alias: 'j',
+    default: true,
+    defaultDescription: 'true',
+    type: 'boolean'
   }
 }
 

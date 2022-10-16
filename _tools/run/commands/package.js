@@ -3,7 +3,7 @@
 
 // Modules
 
-const packageProject = require('../helpers/package/package.js')
+const packageProject = require('../helpers/package/index.js')
 
 // Exports
 
