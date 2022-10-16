@@ -44,7 +44,7 @@
 function ebBookmarkableElements() {
     'use strict';
 
-    // Include anything in #content with an ID...
+    // Include anything in .content with an ID...
     var bookmarkableElements = document.querySelectorAll(settings.web.bookmarks.elements.include);
     // ... but exclude elements with data-bookmarkable="no",
     // or whose ancestors have data-bookmarkable="no",
@@ -691,7 +691,7 @@ function ebBookmarksSetBookmark(type, element, description) {
     var bookmark = {
         sessionDate: ebBookmarksSessionDate(),
         type: type,
-        bookTitle: document.body.dataset.title,
+        bookTitle: document.querySelector('.wrapper').dataset.title,
         pageTitle: pageTitle,
         sectionHeading: sectionHeading,
         description: description, // potential placeholder for a user-input description

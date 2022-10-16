@@ -50,7 +50,7 @@ function localiseText(pageLanguage) {
     }
 
     // Localise search
-    var searchPageHeading = document.querySelector('.search-page #content h1:first-of-type');
+    var searchPageHeading = document.querySelector('.search-page .content h1:first-of-type');
     if (searchPageHeading
             && locales[pageLanguage].search['search-title']
             && locales[pageLanguage].search['search-title'] !== '') {

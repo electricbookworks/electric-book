@@ -5,7 +5,7 @@ $print-cover: true !default;
     @page cover {
     	margin: 0;
     }
-    body.cover,
+    .wrapper.cover,
     div.cover {
         margin: 0;
         padding: 0;
@@ -21,7 +21,7 @@ $print-cover: true !default;
     }
 
     // Add extra verso to retain correct folios
-    body.cover {
+    .wrapper.cover {
         page-break-after: left;
     }
 

@@ -4,7 +4,7 @@ $web-previous-publications-page: true !default;
     // Previous-publications page ('Also by the author')
 
     .previous-publications-page {
-        #content {
+        .content {
             margin: $start-depth auto 0 auto;
             text-align: center;
             p {

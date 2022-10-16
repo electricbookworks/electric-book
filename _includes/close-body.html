@@ -5,7 +5,7 @@ otherwise Cheerio will make the tag self-closing, which will break
 in browsers that expect a closing tag. {% endcomment %}
 
 {% unless site.output == "epub" and site.data.settings.epub.javascript.disabled == true %}
-    <script src="{{ path-to-root-directory }}assets/js/bundle.js"> </script>
+    <script data-script-name="bundle" src="{{ path-to-root-directory }}assets/js/bundle.js"> </script>
 {% endunless %}
 
 {% comment %} Add search JS on web and app search pages. {% endcomment %}
@@ -19,6 +19,6 @@ in browsers that expect a closing tag. {% endcomment %}
 {% comment %} Include anything from end-elements.html. {% endcomment %}
 {% include end-elements.html %}
 
-</div><!--#wrapper-->
-</body>
+        </div><!--.wrapper-->
+    </body>
 </html>

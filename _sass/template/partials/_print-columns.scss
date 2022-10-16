@@ -12,7 +12,7 @@ $print-columns: true !default;
     $columns-2-width: ($page-body-width - $columns-2-gap) / 2 !default;
     $columns-3-width: ($page-body-width - $columns-3-gap * 2) / 3 !default;
 
-    #content {
+    .content {
         column-count: $columns-default;
         column-gap: $columns-gap-default;
         // column-fill: auto; // do not balance columns

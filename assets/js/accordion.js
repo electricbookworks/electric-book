@@ -9,15 +9,15 @@
 // Options, defined in _data/settings.yml
 
 // 1. Use CSS selectors to list the headings that will
-//    define each accordion section, e.g. '#content h2'
+//    define each accordion section, e.g. '.content h2'
 var accordionLevel = settings[settings.site.output].accordion.level;
 if (document.body.getAttribute('data-accordion-level')) {
     accordionLevel = document.body.getAttribute('data-accordion-level');
 }
-var accordionHeads = '#content ' + accordionLevel;
+var accordionHeads = '.content ' + accordionLevel;
 
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content [role="tabpanel"] ' + accordionLevel + ':first-of-type';
+var defaultAccordionHead = '.content [role="tabpanel"] ' + accordionLevel + ':first-of-type';
 
 // 3. Auto close last accordion when you open a new one?
 var autoCloseAccordionSections = settings[settings.site.output].accordion.autoClose;
@@ -83,13 +83,13 @@ function ebAccordionSetUpSections(collapserButtons) {
     }
 
     // add role="tablist" to the parent of the role="tab"s
-    var content = document.querySelector('#content');
+    var content = document.querySelector('.content');
     content.setAttribute('role', 'tablist');
 
     // loop through collapserButtons
     collapserButtons.forEach(function (collapserButton) {
 
-        // Only do the rest if if #content is the parent
+        // Only do the rest if if .content is the parent
         // of the collapserButton (i.e. accordion heading).
         // Prevents errors when heading is in a div, e.g. a box.
         if (collapserButton.parentNode === content) {
@@ -145,7 +145,7 @@ function ebAccordionFillSections() {
     'use strict';
 
     // Grab the individual #contents elements of the page
-    var contentItems = document.getElementById('content').childNodes;
+    var contentItems = document.querySelector('.content').childNodes;
 
     // Put all the items in an array.
     var j, contentItemsForSections = [];
@@ -394,12 +394,12 @@ function ebAccordionListenForAnchorClicks(querySelectorString) {
 
     // console.log('Starting ebAccordionListenForAnchorClicks...');
 
-    // listen for clicks on *all* the anchors in #content by default
+    // listen for clicks on *all* the anchors in .content by default
     var allTheAnchors;
     if (querySelectorString) {
         allTheAnchors = document.querySelectorAll(querySelectorString);
     } else {
-        allTheAnchors = document.querySelectorAll('#content a');
+        allTheAnchors = document.querySelectorAll('.content a');
     }
 
     allTheAnchors.forEach(function (oneOfTheAnchors) {

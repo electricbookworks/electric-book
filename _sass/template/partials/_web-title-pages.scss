@@ -7,7 +7,7 @@ $web-title-pages: true !default;
 	.title-page, 
 	.halftitle-page, 
 	.half-title-page {
-		#content {
+		.content {
 			margin: $start-depth auto 0 auto;
 			text-align: center;
 		}

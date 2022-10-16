@@ -159,7 +159,7 @@ function renderIndexCommentsAsTargets (done) {
         })
 
         // Finally, flag that we're done.
-        $('body').attr('data-index-targets', 'loaded')
+        $('.wrapper').attr('data-index-targets', 'loaded')
       },
       parserOptions: {
         // XML mode necessary for epub output
@@ -256,8 +256,8 @@ function renderIndexListReferences (done) {
 
           // Get the book title and translation language (if any)
           // for the HTML page we're processing.
-          const currentBookTitle = $('body').attr('data-title')
-          const currentTranslation = $('body').attr('data-translation')
+          const currentBookTitle = $('.wrapper').attr('data-title')
+          const currentTranslation = $('.wrapper').attr('data-translation')
 
           // Look through the index 'database' of targets
           // Each child in the ebIndexTargets array represents
@@ -339,7 +339,7 @@ function renderIndexListReferences (done) {
         // Get all the indexes on the page, and start processing them.
         function ebIndexPopulate (ebIndexTargets) {
           // Don't do this if the list links are already loaded.
-          if ($('body').attr('data-index-list') === 'loaded') {
+          if ($('.wrapper').attr('data-index-list') === 'loaded') {
             return
           }
 
@@ -371,7 +371,7 @@ function renderIndexListReferences (done) {
             indexListsProcessed += 1
             if (indexListsProcessed === indexLists.length ||
                                 indexLists.length === 1) {
-              $('body').attr('data-index-list', 'loaded')
+              $('.wrapper').attr('data-index-list', 'loaded')
             }
           })
         }
