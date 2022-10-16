@@ -11,6 +11,8 @@ image-set: "images/app"
 collections:
   docs:
     output: false
+  api:
+    output: false
   app:
     output: true
 
@@ -70,6 +72,7 @@ exclude:
   - _docs
 
   # Things we don't need for an app
+  - _api
   - sitemap.xml
   - assets/profiles
   - /*/package.opf
