@@ -133,20 +133,21 @@ Here's a handy checklist for assembling an epub in Sigil. Below, each step is ex
 
 1. **Run the output script** for your OS (e.g. `run-windows.bat` or `run-mac.command`) and choose the epub option.
 1.	**Open first file.** File > Open… and select the first HTML file in `_site/book/text`. (The output script tries to do this for you.)
-2.	**Fix image path.** Fix the path to cover image file in cover HTML.
+2.	**Fix image path.** Older version of Sigil broke the link to `cover.jpg`. If this happens, fix the path to cover image file in your cover HTML.
 2.	**Add book files.** Right-click the Text folder > Add Existing Files… and select the remaining HTML files for the epub.
 	1.	If this doesn't automatically add the `epub.css` file, right-click the Text or Styles folder > Add Existing Files… and select the epub's CSS file from `_site/book/styles`.
 4.	**Generate TOC.** Tools > Table Of Contents > Generate Table Of Contents
 5.	**Add cover to TOC.** Optionally, add the cover HTML to generated TOC with the TOC editor.
 6.	If outputting EPUB3:
 	1. **Change `.html` to `.xhtml`.**Rename all files `.html` to `.xhtml` (select files > Rename > enter only `.xhtml` in replace box).
-	1. **Convert to EPUB3** using the [EPUB3-itizer](https://github.com/kevinhendricks/ePub3-itizer/tree/master/plugin) plugin.
-	1. **Close** current EPUB2. **Open** newly saved EPUB3.
+	1. **Convert to EPUB3** using the [EPUB3-itizer](https://github.com/kevinhendricks/ePub3-itizer/tree/master/plugin) plugin. This is not necessary with newer versions of Sigil, which create EPUB3 by default. (To check your epub version in Sigil, open the `content.opf` file and check the `version=""` attribute in the `<package>` tag. It will be `2.0` for EPUB2 or `3.0` for EPUB3.)
+	1. If you converted from EPUB2 to EPUB3, **close** current EPUB2. **Open** newly saved EPUB3.
 	1. **Add [iBooks XML](https://gist.github.com/arthurattwell/4932d28d874d9b268c6d186ee38d6aa1)** with [AddiBooksXML plugin](https://github.com/dougmassay/addibooksxml-sigil-plugin). Optional.
 	1. **Hide generated in-book TOC** by adding a `hidden=""` attribute to the `nav` element in `nav.xhtml`: `<nav epub:type="toc" id="toc" hidden="">`. Optional.
-5.	**Add file metadata semantics** (right-click HTML files > Add Semantics…)
+5.	**Add file metadata semantics** (right-click HTML files > Add Semantics…). In older versions of Sigil, use the 'Text' label for your first chapter, where a reader would start reading the book. In newer versions of Sigil, use 'Body Matter'.
 6.	**Define cover image.** Right-click the cover JPG and select Cover Image.
-6.	Save, and [validate](#validate-the-epub) with the Flightcrew plugin and separately with EPUBCheck.
+7.	Sigil may incorrectly change the internal links in your contents page (or other files), adding an absolute path to files. You may need to manually **search and replace** to remove the incorrect leading path, and update `.html` extentions in internal links to `.xhtml`.
+8.	Save, and [validate](#validate-the-epub). For EPUB2, you can optionally use the Flightcrew plugin in addition to EPUBCheck.
 
 Depending on your needs, you may also need to:
 
