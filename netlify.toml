@@ -1,0 +1,9 @@
+# See https://docs.netlify.com/configure-builds/file-based-configuration/
+
+# Settings in the [build] context are global and are applied to
+# all contexts unless otherwise overridden by more specific contexts.
+[build.environment]
+
+  # We set NODE_ENW to production because we do not need
+  # Netlify to install devDependencies in package.json.
+  NODE_ENV = "production"
