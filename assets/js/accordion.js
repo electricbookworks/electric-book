@@ -11,8 +11,9 @@
 // 1. Use CSS selectors to list the headings that will
 //    define each accordion section, e.g. '.content h2'
 var accordionLevel = settings[settings.site.output].accordion.level;
-if (document.body.getAttribute('data-accordion-level')) {
-    accordionLevel = document.body.getAttribute('data-accordion-level');
+var accordionData = document.querySelector('[data-accordion-level]');
+if (accordionData) {
+    accordionLevel = accordionData.getAttribute('data-accordion-level');
 }
 var accordionHeads = '.content ' + accordionLevel;
 
@@ -29,7 +30,7 @@ function ebAccordionInit() {
     var pageAccordionOff;
 
     // Check for no-accordion setting on page
-    var accordionPageSetting = document.body.getAttribute('data-accordion-page');
+    var accordionPageSetting = accordionData.getAttribute('data-accordion-page');
     if (accordionPageSetting &&
             (accordionPageSetting === "none")) {
         pageAccordionOff = true;
@@ -55,7 +56,7 @@ function ebAccordionInit() {
 function ebAccordionPageSetting() {
     'use strict';
 
-    var accordionPageSetting = document.body.getAttribute('data-accordion-page');
+    var accordionPageSetting = accordionData.getAttribute('data-accordion-page');
     return accordionPageSetting;
 }
 
