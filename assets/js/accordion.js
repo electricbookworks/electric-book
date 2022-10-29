@@ -11,9 +11,9 @@
 // 1. Use CSS selectors to list the headings that will
 //    define each accordion section, e.g. '.content h2'
 var accordionLevel = settings[settings.site.output].accordion.level;
-var accordionData = document.querySelector('[data-accordion-level]');
-if (accordionData) {
-    accordionLevel = accordionData.getAttribute('data-accordion-level');
+var accordionDataLevelElement = document.querySelector('[data-accordion-level]');
+if (accordionDataLevelElement) {
+    accordionLevel = accordionDataLevelElement.getAttribute('data-accordion-level');
 }
 var accordionHeads = '.content ' + accordionLevel;
 
@@ -24,16 +24,21 @@ var defaultAccordionHead = '.content [role="tabpanel"] ' + accordionLevel + ':fi
 var autoCloseAccordionSections = settings[settings.site.output].accordion.autoClose;
 // --------------------------------------------------------------
 
+// Find where we've set the data-accordion-page flag
+var accordionDataPageElement = document.querySelector('[data-accordion-page');
+
 function ebAccordionInit() {
     'use strict';
 
     var pageAccordionOff;
 
     // Check for no-accordion setting on page
-    var accordionPageSetting = accordionData.getAttribute('data-accordion-page');
-    if (accordionPageSetting &&
-            (accordionPageSetting === "none")) {
-        pageAccordionOff = true;
+    if (accordionDataPageElement) {
+        var accordionPageSetting = accordionDataPageElement.getAttribute('data-accordion-page');
+        if (accordionPageSetting &&
+                (accordionPageSetting === "none")) {
+            pageAccordionOff = true;
+        }
     }
 
     // Check if there are any headings on the page
@@ -56,7 +61,10 @@ function ebAccordionInit() {
 function ebAccordionPageSetting() {
     'use strict';
 
-    var accordionPageSetting = accordionData.getAttribute('data-accordion-page');
+    var accordionPageSetting;
+    if (accordionDataPageElement) {
+        accordionPageSetting = accordionDataPageElement.getAttribute('data-accordion-page');
+    }
     return accordionPageSetting;
 }
 
@@ -452,7 +460,6 @@ function ebAccordionListenForAnchorClicks(querySelectorString) {
                 var targetOfLink = document.getElementById(targetID);
                 // recursively update targetID until we have a data-accordion
                 targetID = ebAccordionFindSection(targetOfLink);
-                console.log('clic')
             }
 
             // now open the right closed accordion
