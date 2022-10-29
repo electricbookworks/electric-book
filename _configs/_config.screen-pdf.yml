@@ -60,9 +60,11 @@ exclude:
   - _api
   - /about.md
   - /contact.md
+  - /deploy.sh
   - /index.md
   - /search.md
   - /sitemap.xml
+  - /test.sh
   - /assets/styles
   - /assets/js/accordion.js
   - /assets/js/annotation.js

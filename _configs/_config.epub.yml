@@ -59,7 +59,9 @@ exclude:
 
   # Exclude files we don't need for epub
   - _api
+  - deploy.sh
   - sitemap.xml
+  - test.sh
   - /assets/fonts
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss

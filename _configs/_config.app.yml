@@ -73,7 +73,9 @@ exclude:
 
   # Things we don't need for an app
   - _api
+  - deploy.sh
   - sitemap.xml
+  - test.sh
   - assets/profiles
   - /*/package.opf
   - /*/toc.ncx
