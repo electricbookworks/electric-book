@@ -1,0 +1,118 @@
+---
+title: "Texte brut"
+style: chapter continued
+---
+
+#### III
+
+Je passai la nuit à Baker street et nous étions en train de prendre notre café au lait le lendemain matin, lorsque le roi de Bohême fit irruption dans le salon.
+
+— Vous l’avez réellement ? cria-t-il en saisissant Sherlock Holmes par les deux épaules et en le regardant anxieusement dans les yeux.
+
+— Pas encore.
+
+— Mais vous avez de l’espoir ?
+
+— J’ai de l’espoir.
+
+— Alors, venez, je n’y tiens plus.
+
+— Il faut héler un fiacre.
+
+— Non, mon coupé est à la porte.
+
+— Cela simplifie les choses. »
+
+Nous descendîmes lestement et nous reprîmes une fois de plus le chemin de Briony Lodge.
+
+— Irène Adler est mariée, dit Holmes.
+
+— Mariée ? depuis quand ?
+
+— Depuis hier.
+
+— Avec qui ?
+
+— Avec un homme de loi anglais du nom de Norton.
+
+— Elle ne l’aime pas, sûrement pas…
+
+— J’espère que si.
+
+— Et pourquoi cela ?
+
+— Parce que cela éviterait à Votre Majesté tout ennui à l’avenir. Si la dame aime son mari, elle n’aime assurément pas Votre Majesté. Si elle n’aime pas Votre Majesté, il n’y a aucune raison pour qu’elle intervienne dans ses projets.
+
+— C’est vrai. Et cependant ! Eh bien ! Si elle avait été de même condition que moi, quelle reine c’eût été ! »
+
+Il se tut et resta pensif jusqu’à notre arrivée à Serpentine avenue.
+
+La porte de Briony Lodge était ouverte. Une femme âgée se tenait sur les marches. Elle nous regarda descendre du coupé d’un œil sardonique.
+
+— M. Sherlock Holmes, je crois ? dit-elle.
+
+— Je suis M. Holmes, répondit mon compagnon en la regardant d’un air étonné et interrogatif.
+
+— Ah ! vraiment ! ma maîtresse m’a dit que vous viendriez probablement. Elle a pris ce matin à Charing Cross, avec son mari, le train de 5 h. 15 pour le continent.
+
+— Quoi ? »
+
+Holmes chancela, blême de chagrin et de surprise.
+
+— Vous dites qu’elle a quitté l’Angleterre ?
+
+— Pour n’y jamais revenir.
+
+— Et les papiers ? demanda le roi d’une voix rauque. Tout est perdu !
+
+— Nous verrons.
+
+<!-- index:
+affaires \\ Un scandale en Bohème \\ lettre -->
+
+Holmes bouscula la servante et se précipita dans le salon, suivi du roi et de moi-même. Les meubles étaient sens dessus dessous, avec des étagères démontées, des tiroirs ouverts, comme si la dame avait tout saccagé avant de partir. Mon ami courut vers le cordon de sonnette, ouvrit nerveusement un panneau à coulisse et y plongeant la main en tira une photographie et une lettre. La photographie était Irène Adler elle-même en robe de soie ; la lettre était adressée : « À M. Sherlock Holmes. À garder jusqu’à ce qu’on vienne la prendre. » Il l’ouvrit et nous la lûmes tous les trois ensemble. Elle était datée de la veille à minuit et en voici le texte :
+
+« Mon cher monsieur Sherlock Holmes,
+
+« Vous avez admirablement monté votre coup. Vous m’avez mise dedans complètement et jusqu’après le cri de « Au feu ! » je n’ai pas eu le moindre soupçon. Mais ensuite, en pensant à la manière dont je m’étais trahie, je me pris à réfléchir. J’avais été, depuis plusieurs mois, mise en garde contre vous. On m’avait dit que si le roi employait un agent, ce serait certainement vous et votre adresse m’avait été donnée. Et, cependant, malgré tout cela, vous m’avez forcée à révéler ce que vous vouliez savoir. Même après, j’eus des doutes ; je trouvais mal de me méfier d’un bon et naïf pasteur. Vous savez que je suis une actrice de profession ; je m’habille facilement en homme et je profite même souvent de l’indépendance que cela me donne. J’envoyai Jean le cocher vous surveiller, je courus dans ma chambre, je revêtis mon costume de marche, comme je l’appelle, et je redescendis au moment où vous veniez de partir. Alors je vous suivis jusqu’à votre porte et je me convainquis ainsi que j’étais réellement un objet d’intérêt pour le célèbre Sherlock Holmes. Puis, je vous souhaitai le bonsoir, plutôt imprudemment, je l’avoue, et j’allai au Temple voir mon mari.
+
+« Nous avons pensé tous deux que notre seule ressource était la fuite puisque nous allions avoir à lutter contre un si terrible antagoniste, de sorte que vous trouverez le nid vide, lorsque vous viendrez demain. Quant à la photographie, votre client peut être tranquille. J’aime et je suis aimée, et l’homme à qui j’ai voué ma foi vaut mieux que lui. Le roi est libre de faire ce qu’il désire ; ses desseins ne seront pas entravés par celle qu’il a cruellement trompée. Je garde seulement cette image pour ma propre sauvegarde et pour conserver une arme qui me mette toujours à l’abri des démarches qu’il pourrait tenter dans l’avenir. Je laisse une photographie qui lui fera peut-être plaisir, et je suis, cher monsieur Sherlock Holmes, bien sincèrement à vous.
+
+Irène Norton, née Adler
+{:.valediction}
+
+— Quelle femme ! oh ! quelle femme ! s’écria le roi de Bohême lorsque nous eûmes tous trois achevé de lire cette épître. Ne vous avais-je pas dit combien elle était vive et décidée ? N’aurait-elle pas été une reine admirable ? N’est-il pas dommage qu’elle n’ait pas été de mon rang ?
+
+— Par ce que j’ai vu de la dame, elle semble n’être pas en effet de même condition que Votre Majesté, dit Holmes froidement. Je regrette de n’avoir pas mené cette affaire à bien.
+
+— Au contraire, cher monsieur, s’écria le roi. Vous avez parfaitement réussi. Je sais que sa parole est inviolable et je suis aussi tranquille sur le sort de cette photographie que si elle eût été brûlée.
+
+— Je suis heureux d’entendre cette affirmation de la bouche de Votre Majesté.
+
+— J’ai contracté une dette immense vis-à-vis de vous. Je vous en prie, dites-moi ce que je dois faire pour vous en remercier. Cette bague…
+
+Il retira de son doigt une bague d’émeraudes disposées en forme de serpent et la posa sur la paume de sa main.
+
+— Votre Majesté a une chose que j’apprécierais bien plus, dit Holmes.
+
+— Dites-moi quoi, je vous en prie !
+
+— Cette photographie.
+
+Le roi le regarda stupéfait.
+
+— La photographie d’Irène ? s’écria-t-il. Certainement, si vous la désirez.
+
+— Je remercie Votre Majesté. Alors il n’y a plus rien à faire ? J’ai l’honneur de vous saluer. »
+
+Il s’inclina et, s’éloignant sans voir la main que le roi lui tendait, il partit avec moi pour rejoindre son domicile.
+
+<!--index:
+-Holmes, Sherlock
+Adler, Irene
+-affaires \\ Un scandale en Bohème
+-->
+
+Et voilà comment un grand scandale menaça le royaume de Bohême et comment les plans les plus savants de Sherlock Holmes furent déjoués par la finesse et l’intelligence d’une femme. Il se moquait auparavant de l’habileté des femmes, mais depuis il y a renoncé. Et quand il parle d’Irène Adler, ou quand il fait allusion à sa photographie, c’est toujours sous cette dénomination dont il a fait un titre honorable : « La femme. »
+
+([La source](https://fr.wikisource.org/wiki/Un_scandale_en_Boh%C3%A8me))

@@ -9,13 +9,25 @@ products:
       - "00-04-copyright-page"
       - "00-05-contents-page"
       - "01-00-text"
-      - "01-01-plain-text"
+      - "01-01-plain-text-1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
     toc:
       - label: "Texto"
         children:
-          - file: "01-01-plain-text"
-            label: "Texto sencillo"
+          - label: "Texto sencillo"
+            file: "01-01-plain-text-1"
             id: "texto-sencillo"
+            children:
+              - label: "I"
+                file: "01-01-plain-text-1"
+                id: "i"
+              - label: "II"
+                file: "01-01-plain-text-2"
+                id: "ii"
+              - label: "III"
+                file: "01-01-plain-text-3"
+                id: "iii"
   web:
     files: # Required for translations to activate language-selector
       - "00-00-cover"
@@ -23,7 +35,9 @@ products:
       - "00-04-copyright-page"
       - "00-05-contents-page"
       - "01-00-text"
-      - "01-01-plain-text"
+      - "01-01-plain-text-1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
     nav:
       - file: "00-00-cover"
         label: "La tapa"
@@ -33,10 +47,22 @@ products:
         label: "Derechos"
       - file: "00-05-contents-page"
         label: "Contenidos"
-      - label: "Texto"
+      - file: "01-01-plain-text-1"
+        label: "Texto"
         children:
-          - file: "01-01-plain-text"
-            label: "Texto sencillo"
+          - label: "Texto sencillo"
+            file: "01-01-plain-text-1"
+            id: "texto-sencillo"
+            children:
+              - label: "I"
+                file: "01-01-plain-text-1"
+                id: "i"
+              - label: "II"
+                file: "01-01-plain-text-2"
+                id: "ii"
+              - label: "III"
+                file: "01-01-plain-text-3"
+                id: "iii"
   screen-pdf:
     files:
       - "00-00-cover"
@@ -44,7 +70,9 @@ products:
       - "00-04-copyright-page"
       - "00-05-contents-page"
       - "01-00-text"
-      - "01-01-plain-text"
+      - "01-01-plain-text-1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
   epub:
     files: # add a value to any file to set any of the guide types listed in http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
       - "00-00-cover": "cover"
@@ -52,7 +80,9 @@ products:
       - "00-04-copyright-page": "copyright-page"
       - "00-05-contents-page": "toc"
       - "01-00-text": "text"
-      - "01-01-plain-text"
+      - "01-01-plain-text-1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
   app:
     files: # Required for translations to activate language-selector
       - "00-00-cover"
@@ -60,4 +90,6 @@ products:
       - "00-04-copyright-page"
       - "00-05-contents-page"
       - "01-00-text"
-      - "01-01-plain-text"
+      - "01-01-plain-text-1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
