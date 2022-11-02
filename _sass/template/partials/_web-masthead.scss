@@ -5,15 +5,12 @@ $web-masthead: true !default;
 
     .masthead {
 
-        // Position
-        display: flex;
-
         // Appearance
         background-color: $masthead-background-color;
         border-bottom: $rule-thickness solid $masthead-border-color;
         color: $masthead-text-color;
         font-family: $font-text-secondary;
-        text-align: center;
+        text-align: $masthead-align;
 
         &:after {
             content: "";
@@ -27,48 +24,47 @@ $web-masthead: true !default;
         }
 
         .masthead-logo {
-            padding: 1rem;
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-left: 0.5rem;
             max-height: $masthead-height;
-            width: 5rem;
-
+            vertical-align: middle;
+            
+            // Default, then use variable
+            width: 2.5rem;
             @if $masthead-logo-width {
                 width: $masthead-logo-width;
             }
 
             img {
-                max-height: 100%;
+                max-height: $masthead-height;
                 max-width: 100%;
+                vertical-align: middle;
             }
 
-            @if $masthead-logo-position == "right" {
-                order: 2;
+            svg {
+                vertical-align: middle;
             }
         }
 
         ul {
 
             // Position
-            display: flex;
-            width: 100%;
-
-            @if $masthead-align == "right" {
-                justify-content: end;
-            } @else if $masthead-align == "center" {
-                justify-content: center;
-            } @else {
-                justify-content: start;
-            }
+            display: inline-block;
+            vertical-align: middle;
 
             // Appearance
             list-style-type: none;
             margin: 0 auto;
             padding: 0.5rem 0.5rem 0.5rem 0;
+            text-align: left;
 
             // Keep masthead height when li is display:none
             min-height: $masthead-height;
 
             li {
                 display: none; // hide masthead breadcrumbs as mobile-first default
+                vertical-align: middle;
 
                 @media only screen and (min-width: $max-width-default) {
                     align-items: center;

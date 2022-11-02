@@ -167,6 +167,8 @@ $print-page-headers-footers-content: true !default;
   // No headers on first pages of chapters
   .chapter {
     prince-page-group: start;
+
+    @include page-continued();
   }
 
   @if $first-page-margin-boxes == blank {
@@ -316,6 +318,8 @@ $print-page-headers-footers-content: true !default;
   // No headers on first pages of frontmatter
   .frontmatter {
     prince-page-group: start;
+
+    @include page-continued();
   }
   @if $first-page-margin-boxes == blank {
     @page frontmatter:first {

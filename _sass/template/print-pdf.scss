@@ -151,6 +151,9 @@ $start-depth: $line-height-default * 6 !default;
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
 $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see http://www.princexml.com/doc/gen-content/#idp54010640
 
+// Other PDF features
+$title-page-logo-width: $paragraph-indent * 3;
+
 // Set the content of headers and footers.
 //
 // * For no content: normal
@@ -384,6 +387,7 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 @import "template/partials/print-mixins--sidenotes";
 @import "template/partials/print-mixins--margin-boxes";
 @import "template/partials/print-mixins--floats";
+@import "template/partials/print-mixins--page-continued";
 
 // Conventional helper classes
 @import "template/partials/print-helpers";
