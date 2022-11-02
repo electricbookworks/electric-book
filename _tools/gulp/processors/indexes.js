@@ -2,7 +2,6 @@
 
 // Import Node modules
 const cheerio = require('gulp-cheerio')
-const debug = require('gulp-debug')
 const gulp = require('gulp')
 
 // Local helpers
@@ -11,7 +10,7 @@ const {
   screenpdfIndexTargets, epubIndexTargets, appIndexTargets
 } = require('../helpers/paths.js')
 const { ebSlugify } = require('../helpers/utilities.js')
-const { output } = require('../helpers/args.js')
+const { format } = require('../helpers/args.js')
 
 // Turn HTML comments for book indexes into anchor tags.
 // This is a pre-processing alternative to assets/js/index-targets.js,
@@ -159,14 +158,13 @@ function renderIndexCommentsAsTargets (done) {
         })
 
         // Finally, flag that we're done.
-        $('.wrapper').attr('data-index-targets', 'loaded')
+        $('body').attr('data-index-targets', 'loaded')
       },
       parserOptions: {
         // XML mode necessary for epub output
         xmlMode: true
       }
     }))
-    .pipe(debug({ title: 'Rendering book-indexing HTML comments as elements in ' }))
     .pipe(gulp.dest('./'))
   done()
 }
@@ -262,6 +260,12 @@ function renderIndexListReferences (done) {
           // Look through the index 'database' of targets
           // Each child in the ebIndexTargets array represents
           // the index anchor targets on one HTML page.
+
+          // Set this counter here, so that links are numbered
+          // sequentially across target HTML files
+          // (e.g. if a range spans two HTML files)
+          let pageReferenceSequenceNumber = 1
+
           ebIndexTargets.forEach(function (pageEntries) {
             // Reset variables
             let titleMatches = false
@@ -309,7 +313,6 @@ function renderIndexListReferences (done) {
 
             if (titleMatches && languageMatches) {
               // Find this entry's page numbers
-              let pageReferenceSequenceNumber = 1
               let rangeOpen = false
               pageEntries.forEach(function (entry) {
                 if (entry.entrySlug === listItemSlug) {
@@ -357,11 +360,11 @@ function renderIndexListReferences (done) {
           let indexListsProcessed = 0
           indexLists.each(function () {
             // Process for epub output by default
-            if (output === 'printpdf') {
+            if (format === 'print-pdf') {
               ebIndexPopulate(printpdfIndexTargets)
-            } else if (output === 'screenpdf') {
+            } else if (format === 'screen-pdf') {
               ebIndexPopulate(screenpdfIndexTargets)
-            } else if (output === 'app') {
+            } else if (format === 'app') {
               ebIndexPopulate(appIndexTargets)
             } else {
               ebIndexPopulate(epubIndexTargets)
@@ -381,7 +384,6 @@ function renderIndexListReferences (done) {
         xmlMode: true
       }
     }))
-    .pipe(debug({ title: 'Rendering book-index links in ' }))
     .pipe(gulp.dest('./'))
   done()
 }

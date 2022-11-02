@@ -368,7 +368,7 @@ function ebIndexInit() {
 
     // Don't run this if the targets are already loaded
     // (e.g. by pre-processing)
-    if (document.body.getAttribute('data-index-targets') === 'loaded') {
+    if (document.querySelector('[data-index-targets]')) {
         return;
     }
 

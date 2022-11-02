@@ -69,9 +69,19 @@ async function epub (argv) {
     await convertXHTMLLinks(argv)
     await convertXHTMLFiles(argv)
     await cleanHTMLFiles(argv)
-    await addToEpub(htmlFilePaths(argv, '.xhtml'), argv.book)
-    await addToEpub(bookAssetPaths(argv, 'images'),
-      argv.book + '/images/epub')
+
+    let htmlDestination = argv.book
+    if (argv.language) {
+      htmlDestination = argv.book + '/' + argv.language
+    }
+    await addToEpub(htmlFilePaths(argv, '.xhtml'), htmlDestination)
+
+    let imagesDestination = argv.book + '/images/epub'
+    if (argv.language) {
+      imagesDestination = argv.book + '/' + argv.language + '/images/epub'
+    }
+    await addToEpub(bookAssetPaths(argv, 'images'), imagesDestination)
+
     await addToEpub(bookAssetPaths(argv, 'styles'),
       argv.book + '/styles')
     await addToEpub(bookAssetPaths(argv, 'images', 'assets'),
@@ -87,20 +97,47 @@ async function epub (argv) {
         '/assets/js/mathjax')
     }
 
-    await addToEpub([process.cwd() + '/_site/' +
-                argv.book + '/package.opf'], '')
+    let opfFile = process.cwd() + '/_site/' +
+      argv.book +
+      '/package.opf'
 
-    const ncxFile = process.cwd() + '/_site/' +
-                argv.book + '/toc.ncx'
+    if (argv.language) {
+      opfFile = process.cwd() + '/_site/' +
+        argv.book + '/' +
+        argv.language +
+        '/package.opf'
+    }
+
+    if (pathExists(opfFile)) {
+      await addToEpub([opfFile], '')
+    }
+
+    let ncxFile = process.cwd() + '/_site/' +
+      argv.book + '/toc.ncx'
+
+    if (argv.language) {
+      ncxFile = process.cwd() + '/_site/' +
+        argv.book + '/' +
+        argv.language +
+        '/toc.ncx'
+    }
+
     if (pathExists(ncxFile)) {
       await addToEpub([ncxFile], '')
     }
+
     await epubZip()
     await epubZipRename(argv)
 
-    const pathToEpub = fsPath.normalize(process.cwd() +
+    let pathToEpub = fsPath.normalize(process.cwd() +
       '/_output/' +
       argv.book + '.epub')
+
+    if (argv.language) {
+      pathToEpub = fsPath.normalize(process.cwd() +
+        '/_output/' +
+        argv.book + '-' + argv.language + '.epub')
+    }
     await epubValidate(pathToEpub)
 
     console.log('Your epub is at ' + pathToEpub)

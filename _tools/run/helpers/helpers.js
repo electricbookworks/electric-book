@@ -484,12 +484,15 @@ async function renderIndexLinks (argv) {
           'gulp',
           ['renderIndexListReferences',
             '--book', argv.book,
-            '--language', argv.language]
+            '--language', argv.language,
+            '--format', argv.format]
         )
       } else {
         indexLinksProcess = spawn(
           'gulp',
-          ['renderIndexListReferences', '--book', argv.book]
+          ['renderIndexListReferences',
+            '--book', argv.book,
+            '--format', argv.format]
         )
       }
       await logProcess(indexLinksProcess, 'Index links')
@@ -946,7 +949,14 @@ async function epubZipRename (argv) {
   return new Promise(function (resolve, reject) {
     const pathToZip = fsPath.normalize(process.cwd() +
               '/_site/epub.zip')
-    const epubFilename = argv.book + '.epub'
+
+    let epubFilename = argv.book + '.epub'
+    if (argv.language) {
+      epubFilename = argv.book + '-' +
+        argv.language +
+        '.epub'
+    }
+
     const pathToEpub = process.cwd() +
               '/_output/' +
               epubFilename
@@ -1098,26 +1108,24 @@ function bookAssetPaths (argv, assetType, folder) {
     formatSubdirectory = argv.format
   }
 
-  let pathToParentAssets, pathToTranslatedAssets
-  if (argv.language) {
-    pathToTranslatedAssets = fsPath.normalize(process.cwd() +
-                '/_site/' +
-                book + '/' +
-                argv.language + '/' +
-                assetType + '/' +
-                formatSubdirectory)
-  } else {
-    pathToParentAssets = fsPath.normalize(process.cwd() +
-                '/_site/' +
-                book + '/' +
-                assetType + '/' +
-                formatSubdirectory)
-  }
+  const pathToTranslatedAssets = fsPath.normalize(process.cwd() +
+        '/_site/' +
+        book + '/' +
+        argv.language + '/' +
+        assetType + '/' +
+        formatSubdirectory)
+
+  const pathToParentAssets = fsPath.normalize(process.cwd() +
+        '/_site/' +
+        book + '/' +
+        assetType + '/' +
+        formatSubdirectory)
 
   // If translated assets exist, use that path,
   // otherwise use the parent assets.
   let pathToAssets
   if (argv.language &&
+            fs.existsSync(pathToTranslatedAssets) &&
             fs.readdirSync(pathToTranslatedAssets).length > 0) {
     pathToAssets = pathToTranslatedAssets
   } else {
@@ -1172,7 +1180,11 @@ function bookIsValid (argv) {
   // in this project, and it was explicitly passed,
   // it's not a valid choice
   if (argv.book && explicitOption('book')) {
-    if (!works().includes(argv.book)) {
+    // Allow any work, plus the `assets` folder
+    const validWorks = works()
+    validWorks.push('assets')
+
+    if (!validWorks.includes(argv.book)) {
       validity = false
 
       if (argv.book === options.book.default) {

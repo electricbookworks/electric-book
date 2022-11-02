@@ -9,7 +9,7 @@ const iconv = require('iconv-lite')
 const rename = require('gulp-rename')
 
 // Local helpers
-const { book } = require('../helpers/args.js')
+const { book, language } = require('../helpers/args.js')
 const { paths } = require('../helpers/paths.js')
 
 // Convert all file names in internal links from .html to .xhtml.
@@ -17,10 +17,17 @@ const { paths } = require('../helpers/paths.js')
 function epubXhtmlLinks (done) {
   'use strict'
 
-  gulp.src([paths.epub.src,
-    '_site/' + book + '/package.opf',
-    '_site/' + book + '/toc.ncx'],
-  { base: './' })
+  let opfFile = '_site/' + book + '/package.opf'
+  if (language) {
+    opfFile = '_site/' + book + '/' + language + '/package.opf'
+  }
+
+  let ncxFile = '_site/' + book + '/toc.ncx'
+  if (language) {
+    ncxFile = '_site/' + book + '/' + language + '/toc.ncx'
+  }
+
+  gulp.src([paths.epub.src, opfFile, ncxFile], { base: './' })
     .pipe(cheerio({
       run: function ($) {
         let target, asciiTarget, newTarget
