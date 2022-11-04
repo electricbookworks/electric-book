@@ -9,8 +9,8 @@ tasks:
   - name: Install dependencies
     init: |
       gem install jekyll:3.9.2
-      && bundle install
-      && npm install
+      bundle install
+      npm install
 
 ports:
   - name: Electric Book server
