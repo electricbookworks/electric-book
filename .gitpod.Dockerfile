@@ -8,6 +8,9 @@ FROM ubuntu:20.04
 # Set environment and user
 ENV HOME=/home/gitpod
 WORKDIR $HOME
+
+# Create the gitpod user. UID must be 33333.
+RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod
 USER gitpod
 
 # Set default locale for the environment
