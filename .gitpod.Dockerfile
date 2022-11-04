@@ -5,8 +5,11 @@
 
 FROM gitpod/workspace-ruby-2
 
+# Need to be root to apt install
+USER root
+
 # Main dependency installation
-RUN apt-get update && apt-get install -y \
+RUN sudo apt-get update && apt-get install -y \
   software-properties-common \
   make \
   gcc \
@@ -18,11 +21,10 @@ RUN apt-get update && apt-get install -y \
   libffi-dev \
   libreadline-dev \
   zlib1g-dev \
-  nodejs \
   graphicsmagick
 
 # Dependencies specifically for Puppeteer on unix
-RUN apt-get install -y \
+RUN sudo apt-get install -y \
   libasound2 \
   libatk1.0-0 \
   libatk-bridge2.0-0 \
@@ -38,10 +40,12 @@ RUN apt-get install -y \
   libxrandr2
 
 # # Clear apt cache to make image smaller
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+RUN sudo apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
-# Add node source for new nodejs, instead of old Ubuntu-installed node
+# Add node source for new nodejs, instead of old Ubuntu-installed node.
+# That install script also prompts to do sudo apt-get install -y nodejs
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+RUN sudo apt-get install -y nodejs
 
 # Install PrinceXML for printing to PDF
 RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb && \
@@ -59,7 +63,7 @@ RUN npm install --global gulp-cli
 
 # Pin RubyGems to 3.0.8
 # (https://github.com/rubygems/rubygems/issues/3068)
-RUN gem update --system 3.0.8 --no-document
+RUN /bin/bash -l -c "gem update --system 3.0.8 --no-document"
 
 # Install latest EBT-compatible Jekyll
-RUN gem install bundler:latest jekyll:3.9.2
+RUN /bin/bash -l -c "gem install bundler jekyll:3.9.2"
