@@ -6,12 +6,11 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - name: Install Jekyll
-    init: gem install jekyll:3.9.2
-  - name: Install Ruby gems
-    init: bundle install
-  - name: Install Node modules
-    init: npm install
+  - name: Install dependencies
+    init: |
+      gem install jekyll:3.9.2
+      && bundle install
+      && npm install
 
 ports:
   - name: Electric Book server
