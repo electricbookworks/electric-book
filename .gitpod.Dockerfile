@@ -60,6 +60,3 @@ RUN npm install -g npm@latest
 
 # Install Gulp cli app
 RUN npm install --global gulp-cli
-
-# Install latest EBT-compatible Jekyll
-RUN /bin/bash -l -c "gem install jekyll:3.9.2"

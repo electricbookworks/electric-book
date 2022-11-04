@@ -6,6 +6,8 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
+  - name: Install Jekyll
+    init: gem install jekyll:3.9.2
   - name: Install Ruby gems
     init: bundle install
   - name: Install Node modules
