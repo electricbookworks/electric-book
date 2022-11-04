@@ -5,6 +5,13 @@
 image:
   file: .gitpod.Dockerfile
 
+tasks:
+  - name: Install dependencies
+    init: |
+      gem install bundler jekyll:3.9.2
+      bundle install
+      npm install
+
 ports:
   - name: Electric Book server
     description: A web output of your Electric Book project
