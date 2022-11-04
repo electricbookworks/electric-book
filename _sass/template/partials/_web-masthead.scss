@@ -29,7 +29,7 @@ $web-masthead: true !default;
             margin-left: 0.5rem;
             max-height: $masthead-height;
             vertical-align: middle;
-            
+
             // Default, then use variable
             width: 2.5rem;
             @if $masthead-logo-width {
