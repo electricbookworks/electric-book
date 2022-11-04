@@ -78,8 +78,3 @@ RUN npm install -g npm@latest
 
 # Install Gulp cli app
 RUN npm install --global gulp-cli
-
-# Create the gitpod user. UID must be 33333.
-RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod
-
-USER gitpod
