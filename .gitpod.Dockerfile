@@ -36,7 +36,8 @@ RUN apt-get update && apt-get install -y \
   nodejs \
   ruby \
   ruby-dev \
-  graphicsmagick
+  graphicsmagick \
+  sudo
 
 # Dependencies specifically for Puppeteer on unix
 RUN apt-get install -y \
@@ -55,7 +56,7 @@ RUN apt-get install -y \
   libxrandr2
 
 # Clear apt cache to make image smaller
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Install PrinceXML for printing to PDF
 RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb && \
@@ -78,11 +79,7 @@ RUN npm install -g npm@latest
 # Install Gulp cli app
 RUN npm install --global gulp-cli
 
-# Copy our project files to the container
-COPY . .
+# Create the gitpod user. UID must be 33333.
+RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod
 
-# Install gems in Gemfile
-RUN bundle install
-
-# Install modules in package.json
-RUN npm install
+USER gitpod
