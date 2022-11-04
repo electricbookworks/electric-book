@@ -5,6 +5,11 @@
 
 FROM ubuntu:20.04
 
+# Set environment and user
+ENV HOME=/home/gitpod
+WORKDIR $HOME
+USER gitpod
+
 # Set default locale for the environment
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
@@ -17,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/$(curl https://ipapi.co/timezone) /etc/localtime
 
-# Add node source for nodejs version 12, instead of Ubuntu installed node (version 10)
+# Add node source for new nodejs, instead of old Ubuntu-installed node
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
 
 # Main dependency installation
@@ -34,10 +39,7 @@ RUN apt-get update && apt-get install -y \
   libreadline-dev \
   zlib1g-dev \
   nodejs \
-  ruby \
-  ruby-dev \
-  graphicsmagick \
-  sudo
+  graphicsmagick
 
 # Dependencies specifically for Puppeteer on unix
 RUN apt-get install -y \
@@ -58,6 +60,22 @@ RUN apt-get install -y \
 # Clear apt cache to make image smaller
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
+# Install Ruby with rvm for better gem control
+# Thanks https://github.com/carpentries-incubator/jekyll-pages-novice/blob/gh-pages/.gitpod.Dockerfile
+RUN rm -f ~/.rvmrc ~/.bashrc.d/70-ruby \
+    && bash -lc " \
+        rvm requirements \
+        && rvm install 2.7.2 \
+        && rvm use 2.7.2 --default \
+        && rvm rubygems current \
+        && gem install bundler --no-document" \
+    && echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*' >> /home/gitpod/.bashrc.d/70-ruby \
+    && echo "rvm_gems_path=/workspace/.rvm" > ~/.rvmrc
+
+# Pin RubyGems to 3.0.8
+# (https://github.com/rubygems/rubygems/issues/3068)
+RUN gem update --system 3.0.8 --no-document
+
 # Install PrinceXML for printing to PDF
 RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb && \
   dpkg -i prince_11.4-1_ubuntu18.04_amd64.deb
@@ -66,12 +84,8 @@ RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb 
 RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.deb && \
   dpkg -i pandoc-2.5-1-amd64.deb
 
-# Pin RubyGems to 3.0.8
-# (https://github.com/rubygems/rubygems/issues/3068)
-RUN gem update --system 3.0.8 --no-document
-
-# Install Bundler and latest EBT-compatible Jekyll
-RUN gem install bundler jekyll:3.9.2
+# Install latest EBT-compatible Jekyll
+RUN gem install jekyll:3.9.2
 
 # Update npm
 RUN npm install -g npm@latest
