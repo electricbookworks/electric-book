@@ -8,7 +8,7 @@ image:
 tasks:
   - name: Install dependencies
     init: |
-      gem install jekyll:3.9.2
+      gem install bundler jekyll:3.9.2
       bundle install
       npm install
 
