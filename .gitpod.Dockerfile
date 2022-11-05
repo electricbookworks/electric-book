@@ -65,7 +65,7 @@ RUN npm install --global gulp-cli
 USER gitpod
 
 # Set paths for Ruby gems
-RUN echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
-RUN echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
-RUN echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
+RUN echo '# Define Ruby Gems path' >> ~/.bashrc
+RUN echo 'export GEM_HOME="$HOME/.rvm/gems/ruby-2.7.6/gems"' >> ~/.bashrc
+RUN echo 'export PATH="$GEM_HOME:$PATH"' >> ~/.bashrc
 RUN bash -lc "source ~/.bashrc"
