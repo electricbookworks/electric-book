@@ -61,6 +61,9 @@ RUN npm install -g npm@latest
 # Install Gulp cli app
 RUN npm install --global gulp-cli
 
+# Switch to the gitpod user
+USER gitpod
+
 # Set paths for Ruby gems
 RUN echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
 RUN echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
