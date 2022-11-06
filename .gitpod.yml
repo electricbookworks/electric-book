@@ -5,12 +5,6 @@
 image:
   file: .gitpod.Dockerfile
 
-tasks:
-  - name: Install dependencies
-    init: |
-      bundle install
-      npm install
-
 ports:
   - name: Electric Book server
     description: A web output of your Electric Book project
