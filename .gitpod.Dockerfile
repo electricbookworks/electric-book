@@ -67,5 +67,5 @@ USER gitpod
 # Set paths for Ruby gems
 RUN echo '# Define Ruby Gems path' >> ~/.bashrc
 RUN echo 'export GEM_HOME="$HOME/.rvm/gems/ruby-2.7.6/gems"' >> ~/.bashrc
-RUN echo 'export PATH="$HOME/.rvm/gems/ruby-2.7.6/bin:$PATH"' >> ~/.bashrc
+RUN echo 'export PATH="$HOME/.rvm/gems/ruby-2.7.6:$PATH"' >> ~/.bashrc
 RUN bash -lc "source ~/.bashrc"
