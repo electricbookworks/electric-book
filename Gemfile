@@ -9,7 +9,9 @@ source 'https://rubygems.org'
 
 # GitHub Pages recommends using the github-pages gem to ensure
 # that your site will build exactly as it will on GitHub Pages.
-# This gem includes the current version of Jekyll used on GitHub Pages.
+# This gem includes the current version of Jekyll used on GitHub Pages,
+# along with the gems listed here:
+# https://github.com/github/pages-gem/blob/master/lib/github-pages/dependencies.rb
 # If you prefer to control your version of Jekyll (recommended if you
 # are not relying on GitHub Pages), then comment out the following line
 # and uncomment the Jekyll version above.
