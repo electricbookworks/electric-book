@@ -6,10 +6,10 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - name: Install Node modules
-    init: npm install
-  - name: Show Electric Book commands
-    command: npm run eb
+  - name: Setup and show EB commands
+    init: |
+      npm install
+      npm run eb
 
 ports:
   - name: Electric Book server
