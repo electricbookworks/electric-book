@@ -19,11 +19,24 @@ The Electric Book template produces **website, ebook, app and print books from a
 
 You'll find [the open-source repository on GitHub](https://github.com/electricbookworks/electric-book).
 
-## Basic features
+- toc
+{:toc}
+
+
+## Skill level
+
+To make books this way, you need some web-development know-how. You'll edit content in markdown with Liquid template tags; edit data in YAML files; commit your changes with Git; enter commands at the command line; and build and serve a static website. Book content is in kramdown markdown, with Liquid tags, and in YAML. Design is done in Sass. Many features are written in Javascript.
+
+If those concepts are not familiar to you, you'll need a web developer on your team to get you going, and to provide you with technical support when you get stuck.
+
+You can also hire [Electric Book Works](https://electricbookworks.com) to provide support or to handle book production for you.
+
+
+## Features
 
 ### Web, mobile, and print
 
-[Once your computer is set up]({{ site.baseurl }}/docs/setup/setting-up-your-computer.html), you can instantly output print PDF, screen PDF, epub, website and app versions of your books from a single content source.
+You can instantly output print PDF, screen PDF, epub, website and app versions of your books from a single content source.
 
 ### Series and collections
 
@@ -35,7 +48,7 @@ The template generates a static website, which is secure, easy to host, and ligh
 
 ### Windows, Mac, Linux
 
-You can use the template on Windows, Mac and Linux computers.
+You can use the template on Windows, Mac and Linux computers. We recommend working in your browser with [Gitpod](https://gitpod.io), in which case you don't need to install anything on your computer.
 
 ### Documentation
 
@@ -43,11 +56,12 @@ The docs you need are embedded in your project, including guidance on [how to ed
 
 ### Online editing
 
-Non-technical team members can make edits, submit changes for review, and explore project history with the [Electric Book Manager](https://manage.electricbook.works). The EBM is separate software that requires setup and [hosting](https://electricbookworks.com/book-hosting).
+Team members can contribute online by either editing files on GitHub directly, or by using Gitpod. Our built-in Gitpod support means you can instantly start editing and generating a website, ebooks and PDFs. [Launch a testing environment here right now](https://gitpod.io/#https://github.com/electricbookworks/electric-book){:target="_blank"}.
 
 ### Export to Word
 
 Sometimes you need your book in MS Word format. For instance, an author might be working on a new edition. You can easily, instantly [export books to MS Word]({{ site.baseurl }}/docs/output/word-output.html).
+
 
 ## Design and layout
 
@@ -57,19 +71,23 @@ Select from dozens of [built-in tags for common book features]({{ site.baseurl }
 
 ### Easy design settings
 
-We deliberately made the template look plain – it's ready for your design decisions. Quickly change the design with [dozens of simple settings]({{ site.baseurl }}/docs/layout/design.html), from fonts and sizes to the position of page numbers and the width of your sidebar. Then add your own CSS stylesheets. [See the Electric Book Works portfolio for examples of what's possible](https://electricbookworks.com/work/).
+We deliberately made this template look plain – it's ready for your design flair. Quickly change the design with [dozens of simple settings]({{ site.baseurl }}/docs/layout/design.html), from fonts and sizes to the position of page numbers and the width of your sidebar. Then add your own CSS stylesheets. [See the Electric Book Works portfolio for examples of what's possible](https://electricbookworks.com/work/).
 
 ### Mathematics
 
-[Include complex maths]({{ site.baseurl }}/docs/editing/maths.html) using LaTex notation. [See a simple demo here](https://deploy-preview-471--electric-book.netlify.app/samples/03-02-maths.html).
+[Include complex maths]({{ site.baseurl }}/docs/editing/maths.html) using LaTex notation.
 
 ### Refined page typography
 
-For high-quality print publishing, [control letter-spacing]({{ site.baseurl }}/docs/editing/classes.html#formatting) in individual paragraphs for page refinement.
+For high-quality print publishing, [control letter-spacing]({{ site.baseurl }}/docs/editing/classes.html#formatting) in individual paragraphs for page refinement. There are many other page-refinement tags available for advanced users.
 
 ### Optimised images
 
 [Automatically convert your master images]({{ site.baseurl }}/docs/images/image-conversions.html) to optimized sizes and color profiles. For instance, CMYK for print, and RGB at different sizes for large vs mobile screens.
+
+### Books indexes with automatic page numbers
+
+Create back-of-the-book indexes where page numbering is automated, and the index works in website and ebook editions, too. [Read more at Electric Book Works](https://electricbookworks.com/thinking/dynamic-digital-book-indexes/).
 
 ### Print PDF profiles
 
@@ -80,7 +98,7 @@ Easily [control colour and PDF profiles]({{ site.baseurl }}/docs/layout/colour-p
 
 ### Translations
 
-[Add translations]({{ site.baseurl }}/docs/setup/translations.html) of a book to a project, and localise features like [landing pages](https://deploy-preview-471--electric-book.netlify.app/fr/) and button text.
+[Add translations]({{ site.baseurl }}/docs/setup/translations.html) of a book to a project, and localise (i.e. provide translations for) landing pages and button text.
 
 ### Variant editions
 
@@ -99,7 +117,7 @@ Users can save their places, and the site will also automatically save their las
 
 ### Search
 
-Search functionality works out of the box. Easily [build and refresh search indexes]({{ site.baseurl }}/docs/setup/search-indexes.html) for websites and apps.
+Easily [build and refresh search indexes]({{ site.baseurl }}/docs/setup/search-indexes.html) for website and app outputs.
 
 ### Interactive questions
 
@@ -122,7 +140,7 @@ Let users click through [slideshows]({{ site.baseurl }}/samples/04-05-slides.htm
 
 ### WordPress compatible
 
-Do you already have a WordPress website? No problem. Electric Book websites are fully compatible with WordPress-driven servers.
+Do you already have a WordPress website? No problem. Electric Book websites are fully compatible with WordPress-driven servers. Just place our generated files in a subfolder on your WordPress server.
 
 ### Members-only option
 
@@ -134,9 +152,9 @@ Do you need to restrict book access to certain users on your WordPress site – 
 
 ### Open-source software
 
-The template is [open-source software](https://github.com/electricbookworks/electric-book), so you never have to worry about being locked out of your own books, or finding yourself at the mercy of one vendor's pricing. You can even change your copy of the software as needed.
+The template is [open-source software](https://github.com/electricbookworks/electric-book), so you never have to worry about being locked out of your own books, or finding yourself at the mercy of one vendor's pricing. You can change anything about the Electric Book software yourself, as needed.
 
-Note that the template does use the excellent [PrinceXML](https://www.princexml.com/) for PDF output. Prince is not open-source, and is available as a free trial. We are [working on open alternatives](https://github.com/electricbookworks/electric-book/issues/382).
+Note that the template does use the excellent [PrinceXML](https://www.princexml.com/) for PDF output. Prince is not open-source, and is available as a free trial. We are [working on providing open-source alternatives](https://github.com/electricbookworks/electric-book/issues/382).
 
 
 ## Technical advantages
@@ -155,7 +173,7 @@ For books with many large images, link to [remote media]({{ site.baseurl }}/docs
 
 ### Continuous deployment
 
-For high-end, technical teams, easily [set up continuous integration and continuous deployment with services like CodeShip](https://gist.github.com/arthurattwell/75cf124f22b9b4dbc6d8504d952f9406).
+Wee provide setup guidance for setting up [free continuous deployment with CodeShip Basic](https://gist.github.com/arthurattwell/75cf124f22b9b4dbc6d8504d952f9406).
 
 ### Packaging projects
 
