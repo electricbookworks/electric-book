@@ -8,6 +8,8 @@ image:
 tasks:
   - name: Install Node modules
     init: npm install
+  - name: Show Electric Book commands
+    command: npm run eb
 
 ports:
   - name: Electric Book server
