@@ -70,13 +70,13 @@ RUN echo 'export GEM_HOME="$HOME/.rvm/gems/ruby-2.7.6"' >> ~/.bashrc
 RUN echo 'export PATH="$HOME/.rvm/gems/ruby-2.7.6:$PATH"' >> ~/.bashrc
 RUN bash -lc "source ~/.bashrc"
 
-# Install dependencies/
-# Note we do this here not in a gitpod init task
+# Install gems.
+# Note we do this here, not in a gitpod `init` task
 # because changes to files outside /workspace,
 # like gem installs, are lost in prebuilds, which
 # only save the /workspace. We could also try installing
-# these dependencies in a before task, but that would run
-# twice, potentially making things slower.
+# these dependencies in a `before` task, but that would
+# run twice, potentially making builds slower.
 # (https://www.gitpod.io/docs/configure/projects/prebuilds#workspace-directory-only)
+COPY Gemfile .
 RUN bash -lc "bundle install"
-RUN bash -lc "npm install"
