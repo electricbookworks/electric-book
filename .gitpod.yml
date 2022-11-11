@@ -5,8 +5,49 @@
 image:
   file: .gitpod.Dockerfile
 
+tasks:
+  - name: Setup and show EB commands
+    init: |
+      npm install
+      npm run eb
+
 ports:
   - name: Electric Book server
-    description: A web output of your Electric Book project 
+    description: A web output of your Electric Book project
     port: 4000
-    onOpen: open-browser
+
+vscode:
+
+  # This extension lets us see live-refreshing PDF outputs
+  # in the browser, e.g. during page refinement.
+  extensions:
+    - yandeu.five-server
+
+github:
+
+  # Tells Gitpod to build workspaces automatically
+  # when these events happen, so that they open quickly.
+  prebuilds:
+
+    # Enable for the default branch (defaults to true)
+    master: true
+
+    # Enable for all branches in this repo (defaults to false)
+    branches: true
+
+    # Enable for pull requests coming from this repo (defaults to true)
+    pullRequests: true
+
+    # Enable for pull requests coming from forks (defaults to false)
+    pullRequestsFromForks: true
+
+    # Add a check to pull requests (defaults to true)
+    addCheck: true
+
+    # Add a "Review in Gitpod" button as a comment
+    # to pull requests (defaults to false)
+    addComment: false
+
+    # Add a "Review in Gitpod" button to the pull request's
+    # description (defaults to false)
+    addBadge: false
