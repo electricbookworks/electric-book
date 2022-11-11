@@ -345,7 +345,7 @@ $web-bookmarks: true !default;
         }
     }
 
-    #content .bookmark-pending {
+    .content .bookmark-pending {
         & > .bookmark-button {
             display: flex;
             z-index: 1; // helps ensure it's always clickable

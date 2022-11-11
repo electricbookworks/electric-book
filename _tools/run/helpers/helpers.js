@@ -445,7 +445,6 @@ async function renderIndexComments (argv) {
   'use strict'
 
   if (projectSettings()['dynamic-indexing'] !== false) {
-
     console.log('Processing indexing comments ...')
 
     try {
@@ -476,7 +475,6 @@ async function renderIndexLinks (argv) {
   'use strict'
 
   if (projectSettings()['dynamic-indexing'] !== false) {
-
     console.log('Adding links to reference indexes ...')
 
     try {
@@ -486,12 +484,15 @@ async function renderIndexLinks (argv) {
           'gulp',
           ['renderIndexListReferences',
             '--book', argv.book,
-            '--language', argv.language]
+            '--language', argv.language,
+            '--format', argv.format]
         )
       } else {
         indexLinksProcess = spawn(
           'gulp',
-          ['renderIndexListReferences', '--book', argv.book]
+          ['renderIndexListReferences',
+            '--book', argv.book,
+            '--format', argv.format]
         )
       }
       await logProcess(indexLinksProcess, 'Index links')
@@ -830,14 +831,23 @@ async function runPrince (argv) {
       console.log('Using PrinceXML licence found at ' + princeLicenseFile)
     }
 
+    // Check if we're using the correct Prince version
     checkPrinceVersion()
+
+    // Get the HTML file to render. If we are merging
+    // input files, we only pass the merged file to Prince.
+    // Unless `--merged false` was passed at the command line.
+    let inputFiles = [fsPath.dirname(htmlFilePaths(argv)[0]) + '/merged.html']
+    if (argv.merged === false) {
+      inputFiles = htmlFilePaths(argv)
+    }
 
     // Currently, node-prince does not seem to
     // log its progress to stdout. Possible WIP:
     // https://github.com/rse/node-prince/pull/7
     prince()
       .license('./' + princeLicenseFile)
-      .inputs(htmlFilePaths(argv))
+      .inputs(inputFiles)
       .output(process.cwd() + '/_output/' + outputFilename(argv))
       .option('javascript')
       .option('verbose')
@@ -939,7 +949,14 @@ async function epubZipRename (argv) {
   return new Promise(function (resolve, reject) {
     const pathToZip = fsPath.normalize(process.cwd() +
               '/_site/epub.zip')
-    const epubFilename = argv.book + '.epub'
+
+    let epubFilename = argv.book + '.epub'
+    if (argv.language) {
+      epubFilename = argv.book + '-' +
+        argv.language +
+        '.epub'
+    }
+
     const pathToEpub = process.cwd() +
               '/_output/' +
               epubFilename
@@ -1091,26 +1108,24 @@ function bookAssetPaths (argv, assetType, folder) {
     formatSubdirectory = argv.format
   }
 
-  let pathToParentAssets, pathToTranslatedAssets
-  if (argv.language) {
-    pathToTranslatedAssets = fsPath.normalize(process.cwd() +
-                '/_site/' +
-                book + '/' +
-                argv.language + '/' +
-                assetType + '/' +
-                formatSubdirectory)
-  } else {
-    pathToParentAssets = fsPath.normalize(process.cwd() +
-                '/_site/' +
-                book + '/' +
-                assetType + '/' +
-                formatSubdirectory)
-  }
+  const pathToTranslatedAssets = fsPath.normalize(process.cwd() +
+        '/_site/' +
+        book + '/' +
+        argv.language + '/' +
+        assetType + '/' +
+        formatSubdirectory)
+
+  const pathToParentAssets = fsPath.normalize(process.cwd() +
+        '/_site/' +
+        book + '/' +
+        assetType + '/' +
+        formatSubdirectory)
 
   // If translated assets exist, use that path,
   // otherwise use the parent assets.
   let pathToAssets
   if (argv.language &&
+            fs.existsSync(pathToTranslatedAssets) &&
             fs.readdirSync(pathToTranslatedAssets).length > 0) {
     pathToAssets = pathToTranslatedAssets
   } else {
@@ -1165,7 +1180,11 @@ function bookIsValid (argv) {
   // in this project, and it was explicitly passed,
   // it's not a valid choice
   if (argv.book && explicitOption('book')) {
-    if (!works().includes(argv.book)) {
+    // Allow any work, plus the `assets` folder
+    const validWorks = works()
+    validWorks.push('assets')
+
+    if (!validWorks.includes(argv.book)) {
       validity = false
 
       if (argv.book === options.book.default) {
@@ -1250,7 +1269,6 @@ async function convertHTMLtoWord (argv) {
   // Clear the previous output folder if it exists,
   // or create the output directory first if it doesn't.
   if (pathExists(outputLocation)) {
-    // await clearFolderContents(outputLocation)
     await fs.emptyDir(outputLocation)
   } else {
     await fs.mkdir(outputLocation, { recursive: true })
@@ -1296,130 +1314,11 @@ async function convertHTMLtoWord (argv) {
   })
 }
 
-// Web output
-async function web (argv) {
-  'use strict'
-
-  try {
-    // await clearFolderContents(process.cwd() + '/_site')
-    await fs.emptyDir(process.cwd() + '/_site')
-    await jekyll(argv)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-// PDF output
-async function pdf (argv) {
-  'use strict'
-
-  try {
-    // await clearFolderContents(process.cwd() + '/_site')
-    await fs.emptyDir(process.cwd() + '/_site')
-    await jekyll(argv)
-    await renderMathjax(argv)
-    await renderIndexComments(argv)
-    await renderIndexLinks(argv)
-    await runPrince(argv)
-    openOutputFile(argv)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-// Epub output
-async function epub (argv) {
-  'use strict'
-
-  try {
-    // await clearFolderContents(process.cwd() + '/_site')
-    await fs.emptyDir(process.cwd() + '/_site')
-    await jekyll(argv)
-    await renderIndexComments(argv)
-    await renderIndexLinks(argv)
-    await convertXHTMLLinks(argv)
-    await convertXHTMLFiles(argv)
-    await cleanHTMLFiles(argv)
-    await addToEpub(htmlFilePaths(argv, '.xhtml'), argv.book)
-    await addToEpub(bookAssetPaths(argv, 'images'),
-      argv.book + '/images/epub')
-    await addToEpub(bookAssetPaths(argv, 'styles'),
-      argv.book + '/styles')
-    await addToEpub(bookAssetPaths(argv, 'images', 'assets'),
-      'assets/images/epub')
-
-    if (pathExists(process.cwd() + '/_site/assets/js/bundle.js')) {
-      await addToEpub([process.cwd() + '/_site/assets/js/bundle.js'],
-        '/assets/js')
-    }
-
-    if (mathjaxEnabled(argv)) {
-      await addToEpub([process.cwd() + '/_site/assets/js/mathjax'],
-        '/assets/js/mathjax')
-    }
-
-    await addToEpub([process.cwd() + '/_site/' +
-                argv.book + '/package.opf'], '')
-
-    const ncxFile = process.cwd() + '/_site/' +
-                argv.book + '/toc.ncx'
-    if (pathExists(ncxFile)) {
-      await addToEpub([ncxFile], '')
-    }
-    await epubZip()
-    await epubZipRename(argv)
-
-    const pathToEpub = fsPath.normalize(process.cwd() +
-      '/_output/' +
-      argv.book + '.epub')
-    await epubValidate(pathToEpub)
-
-    console.log('Your epub is at ' + pathToEpub)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-// App output
-async function app (argv) {
-  'use strict'
-
-  try {
-    // await clearFolderContents(process.cwd() + '/_site')
-    await fs.emptyDir(process.cwd() + '/_site')
-    await jekyll(argv)
-    await fsPromises.mkdir(process.cwd() + '/_site/app/www')
-    await assembleApp()
-
-    if (argv['app-build']) {
-      await cordova(['platform', 'add', argv['app-os']])
-      await cordova(['platform', 'prepare', argv['app-os']])
-
-      // Build the app
-      if (argv['app-release']) {
-        await cordova(['build', argv['app-os']], '--release')
-      } else {
-        await cordova(['build', argv['app-os']])
-      }
-
-      // Run emulator
-      if (argv['app-emulate']) {
-        await cordova(['emulate', argv['app-os']])
-      }
-    } else {
-      console.log('App folders ready in _site/app.')
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 // Word export
 async function exportWord (argv) {
   'use strict'
 
   try {
-    // await clearFolderContents(process.cwd() + '/_site')
     await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
 
@@ -1440,7 +1339,6 @@ async function refreshIndexes (argv) {
   'use strict'
 
   try {
-    // await clearFolderContents(process.cwd() + '/_site')
     await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
 
@@ -1499,18 +1397,32 @@ function newBook (argv) {
 }
 
 module.exports = {
-  app,
-  pdf,
-  web,
-  epub,
+  addToEpub,
+  assembleApp,
+  bookAssetPaths,
+  bookIsValid,
+  cleanHTMLFiles,
+  convertXHTMLFiles,
+  convertXHTMLLinks,
+  cordova,
+  epubValidate,
+  epubZip,
+  epubZipRename,
   exportWord,
-  processImages,
+  htmlFilePaths,
   installGems,
   installNodeModules,
+  jekyll,
   logProcess,
+  mathjaxEnabled,
   newBook,
+  openOutputFile,
   pathExists,
+  processImages,
   refreshIndexes,
-  bookIsValid,
+  renderIndexComments,
+  renderIndexLinks,
+  renderMathjax,
+  runPrince,
   works
 }

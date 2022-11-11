@@ -11,6 +11,8 @@ image-set: "images/app"
 collections:
   docs:
     output: false
+  api:
+    output: false
   app:
     output: true
 
@@ -70,7 +72,10 @@ exclude:
   - _docs
 
   # Things we don't need for an app
+  - _api
+  - deploy.sh
   - sitemap.xml
+  - test.sh
   - assets/profiles
   - /*/package.opf
   - /*/toc.ncx

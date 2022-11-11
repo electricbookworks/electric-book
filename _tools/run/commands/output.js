@@ -3,7 +3,7 @@
 
 // Modules
 
-const helpers = require('../helpers/helpers')
+const { pdf, epub, app, web } = require('../helpers/output')
 
 // Exports
 
@@ -15,16 +15,16 @@ exports.handler = function (argv) {
   switch (argv.format) {
     case 'print-pdf':
     case 'screen-pdf':
-      helpers.pdf(argv)
+      pdf(argv)
       break
     case 'epub':
-      helpers.epub(argv)
+      epub(argv)
       break
     case 'app':
-      helpers.app(argv)
+      app(argv)
       break
     default:
-      helpers.web(argv)
+      web(argv)
       break
   }
 }

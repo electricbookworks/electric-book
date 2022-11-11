@@ -6,8 +6,23 @@ $web-pagination: true !default;
     .pagination {
         clear: both;
         font-family: $font-text-secondary;
-        padding: $line-height-default;
         margin: auto;
+        padding: 1rem;
+
+        // On small screens, pagination fills
+        // the bottom of the screen.
+        position: fixed;
+        bottom: 0;
+        background-color: $color-background;
+        border-top: $rule-thickness solid $color-light;
+        width: 100%;
+
+        @media only screen and (min-width: $break-width-large) {
+            position: inherit;
+            background-color: transparent;
+            border-top: none;
+            width: auto;
+        }
 
         // Clearfix
         &::after {
@@ -20,25 +35,41 @@ $web-pagination: true !default;
             text-decoration: none;
         }
 
-        .pagination-previous {
-            float: left;
-            width: 70%;
-            max-width: 20rem;
+        // Common features of pagination
+        .pagination-previous,
+        .pagination-next {
+            width: 50%;
 
-            .pagination-previous-arrow {
-                margin-left: -1rem;
+            @media only screen and (min-width: $break-width-large) {
+                position: fixed;
+                bottom: 2rem;
+                width: 70%;
+            }
+
+            .pagination-marker {
+                background-color: $color-background;
+                padding: 0.5rem;
+                border-radius: $button-border-radius;
             }
         }
 
-        .pagination-next {
-            float: right;
-            width: 70%;
+        .pagination-previous {
+            float: left; // when not position: fixed
+            left: 2rem;
             max-width: 20rem;
+            padding-right: 0.5rem;
+
+            .pagination-previous-arrow {}
+        }
+
+        .pagination-next {
+            float: right; // when not position: fixed
+            right: 2rem;
+            max-width: 20rem;
+            padding-left: 0.5rem;
             text-align: right;
 
-            .pagination-next-arrow {
-                margin-right: -1rem;
-            }
+            .pagination-next-arrow {}
         }
     }
 }

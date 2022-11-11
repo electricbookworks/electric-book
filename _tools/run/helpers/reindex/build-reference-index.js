@@ -83,8 +83,8 @@ async function buildReferenceIndex (outputFormat) {
             entryTree: JSON.stringify(entriesByLevel),
             id: entry.id,
             range,
-            bookTitle: document.body.getAttribute('data-title'),
-            translationLanguage: document.body.getAttribute('data-translation')
+            bookTitle: document.querySelector('.wrapper').dataset.title,
+            translationLanguage: document.querySelector('.wrapper').dataset.translation
           }
           targetArray.push(entryObject)
         })

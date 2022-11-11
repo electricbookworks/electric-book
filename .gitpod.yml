@@ -5,6 +5,12 @@
 image:
   file: .gitpod.Dockerfile
 
+tasks:
+  - name: Setup and show EB commands
+    init: |
+      npm install
+      npm run eb
+
 ports:
   - name: Electric Book server
     description: A web output of your Electric Book project

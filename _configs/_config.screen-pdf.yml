@@ -6,6 +6,8 @@ image-set: "images/screen-pdf"
 collections:
   docs:
     output: false
+  api:
+    output: false
 exclude:
   # The usual excludes from _config.yml
   - run.js
@@ -55,11 +57,14 @@ exclude:
   - /assets/js/bookmarks.js
 
   # Exclude files we don't need for screen-pdf
+  - _api
   - /about.md
   - /contact.md
+  - /deploy.sh
   - /index.md
   - /search.md
   - /sitemap.xml
+  - /test.sh
   - /assets/styles
   - /assets/js/accordion.js
   - /assets/js/annotation.js

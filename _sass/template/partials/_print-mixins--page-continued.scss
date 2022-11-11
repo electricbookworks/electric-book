@@ -1,0 +1,9 @@
+// Mixin that allows a page with a `continued` style
+// to not have a page-break before it in PDF.
+@mixin page-continued() {
+    &.continued {
+        page-break-before: auto;
+        prince-page-group: auto;
+        margin-top: 0;
+    }
+}

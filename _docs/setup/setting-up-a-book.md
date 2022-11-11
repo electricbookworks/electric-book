@@ -122,6 +122,27 @@ You can do this in two ways:
 
 2.	Alternatively, add the `page-1` class to the first block-level element in the chapter by adding the tag `{:.page-1}` in the line immediately after it. But for this to work, the element must *not* have a CSS float applied to it. So often this doesn't work as well as specifying `page-1` in YAML frontmatter.
 
+### Breaking chapters into smaller web pages
+
+By default, when you generate a PDF, each markdown file – when rendered as part of a book – will start with a page break. This makes sense when each markdown file is a chapter of a book. You want page breaks between chapters.
+
+However, on the web and in apps, each markdown file is a (web) page. There, an entire chapter as one scrolling page can be very long. This is not great for readability. (It also isn't great for SEO or for finding search results.)
+
+So, you can create separate markdown files for each section of your book, no matter how small. Then on the web and in an app, each scrolling page will only be that long.
+
+But now your PDF is full of page breaks! This creates big lumps of white space between sections and bloats your book's page extent.
+
+So, to avoid a page break *in PDF output* before a markdown file, you must add the `continued` tag to its YAML frontmatter, like this:
+
+```
+---
+title: Your Chapter's Subsection Title
+style: chapter continued
+---
+```
+
+Remember that `chapter` is the default page style, so you normally don't have to specify it. But here you are *adding* a style in addition to `chapter` (or `frontmatter` or any other built-in page style listed above), so you must specify both `chapter` and `continued`.
+
 ### File naming
 
 We recommend naming each book's markdown files in alphabetical order. This is easiest using a numbering system, where prelims (frontmatter) files start with `0` or `00`, e.g. `0-1-titlepage.md`, `0-2-copyright.md`, and chapter files are numbered for their chapter number, e.g. `01.md`, `02.md`, and so on. The alphabetical order makes it easy to see the documents in the right order at all times.

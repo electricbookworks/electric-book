@@ -116,6 +116,9 @@ $text-divider-text: "" !default; // Empty leaves space. \2022 is a bullet
 $text-divider-image: "" !default;
 $text-divider-image-width: $line-height-default * 2 !default;
 
+// Other book features
+$title-page-logo-width: 5rem;
+
 // Footer
 $footer-text-color: $color-text-main !default;
 $footer-background-color: $color-accent !default;
@@ -127,13 +130,12 @@ $masthead-background-color: transparent !default;
 $masthead-border-color: transparent !default;
 $masthead-breadcrumb-divider: "\2044" !default; // 2044 is a fraction slash
 $masthead-height: 3.5rem !default;
-$masthead-align: left !default; // left, right or center
+$masthead-align: left !default; // left, right or center (note $nav-position)
 $masthead-logo: true !default; // show logo in masthead?
-$masthead-logo-position: left !default; // left, right
-$masthead-logo-width: 5rem !default;
+$masthead-logo-width: 2.5rem !default;
 
 // Website sidebar/navigation
-$nav-position: "right" !default; // left, right (not same as $masthead-align)
+$nav-position: right !default; // left, right (note $masthead-align)
 $nav-bar-text-size: 0.8em !default;
 $nav-bar-item-collapse: false !default; // Does the nav list fully expand, or collapse until mouseover?
 $nav-bar-close: "\00D7" !default; // &times; ×

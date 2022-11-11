@@ -1,0 +1,123 @@
+---
+title: "Plain text"
+style: chapter continued
+---
+
+#### III.
+
+<!-- index:
+King of Bohemia-
+-->
+
+I slept at Baker Street that night, and we were engaged upon our toast and coffee in the morning when the King of Bohemia rushed into the room.
+
+"You have really got it!" he cried, grasping Sherlock Holmes by either shoulder and looking eagerly into his face.
+
+"Not yet."
+
+"But you have hopes?"
+
+"I have hopes."
+
+"Then, come. I am all impatience to be gone."
+
+"We must have a cab."
+
+"No, my brougham is waiting."
+
+"Then that will simplify matters." We descended and started off once more for Briony Lodge.
+
+"Irene Adler is married," remarked Holmes.
+
+"Married! When?"
+
+"Yesterday."
+
+"But to whom?"
+
+"To an English lawyer named Norton."
+
+"But she could not love him."
+
+"I am in hopes that she does."
+
+"And why in hopes?"
+
+"Because it would spare your Majesty all fear of future annoyance. If the lady loves her husband, she does not love your Majesty. If she does not love your Majesty, there is no reason why she should interfere with your Majesty's plan."
+
+"It is true. And yet--Well! I wish she had been of my own station! What a queen she would have made!" He relapsed into a moody silence, which was not broken until we drew up in Serpentine Avenue.
+
+<!-- index:
+-King of Bohemia
+Briony Lodge
+-->
+
+The door of Briony Lodge was open, and an elderly woman stood upon the steps. She watched us with a sardonic eye as we stepped from the brougham.
+
+"Mr. Sherlock Holmes, I believe?" said she.
+
+"I am Mr. Holmes," answered my companion, looking at her with a questioning and rather startled gaze.
+
+<!-- index:
+Charing Cross-
+-->
+
+"Indeed! My mistress told me that you were likely to call. She left this morning with her husband by the 5:15 train from Charing Cross for the Continent."
+
+<!-- index:
+-Charing Cross
+-->
+
+"What!" Sherlock Holmes staggered back, white with chagrin and surprise. "Do you mean that she has left England?"
+
+"Never to return."
+
+"And the papers?" asked the King hoarsely. "All is lost."
+
+"We shall see." He pushed past the servant and rushed into the drawing-room, followed by the King and myself. The furniture was scattered about in every direction, with dismantled shelves and open drawers, as if the lady had hurriedly ransacked them before her flight. Holmes rushed at the bell-pull, tore back a small sliding shutter, and, plunging in his hand, pulled out a photograph and a letter. The photograph was of Irene Adler herself in evening dress, the letter was superscribed to "Sherlock Holmes, Esq. To be left till called for." My friend tore it open and we all three read it together. It was dated at midnight of the preceding night and ran in this way:
+
+<!-- index:
+Adler, Irene-
+Norton, Irene
+occupations \\ clergy \\ fake
+cases \\ Scandal in Bohemia \\ letter
+-->
+
+> "MY DEAR MR. SHERLOCK HOLMES,--You really did it very well. You took me in completely. Until after the alarm of fire, I had not a suspicion. But then, when I found how I had betrayed myself, I began to think. I had been warned against you months ago. I had been told that if the King employed an agent it would certainly be you. And your address had been given me. Yet, with all this, you made me reveal what you wanted to know. Even after I became suspicious, I found it hard to think evil of such a dear, kind old <!-- index: clergy -->clergyman. But, you know, *I have been trained* as an actress myself. Male costume is nothing new to me. I often take advantage of the freedom which it gives. I sent John, the coachman, to watch you, ran up stairs, got into my walking-clothes, as I call them, and came down just as you departed.
+> 
+> "Well, I followed you to your door, and so made sure that I was really an object of interest to the celebrated Mr. Sherlock Holmes. Then I, rather imprudently, wished you good-night, and started for the Temple to see my husband.
+> 
+> "We both thought the best resource was flight, when pursued by so formidable an antagonist; so you will find the nest empty when you call to-morrow. As to the photograph, your client may rest in peace. I love and am loved by a better man than he. <!-- index: King of Bohemia -->The King may do what he will without hindrance from one whom he has cruelly wronged. I keep it only to safeguard myself, and to preserve a weapon which will always secure me from any steps which he might take in the future. I leave a photograph which he might care to possess; and I remain, dear Mr. Sherlock Holmes,
+> 
+> <!-- index: -Adler, Irene -->"Very truly yours,\\
+> "IRENE NORTON, née ADLER."
+> {:.valediction}
+{:.letter #letter}
+
+"What a woman--oh, what a woman!" cried the King of Bohemia, when we had all three read this epistle. "Did I not tell you how quick and resolute she was? Would she not have made an admirable queen? Is it not a pity that she was not on my level?"
+
+"From what I have seen of the lady she seems indeed to be on a very different level to your Majesty," said Holmes coldly. "I am sorry that I have not been able to bring your Majesty's business to a more successful conclusion."
+
+"On the contrary, my dear sir," cried the King; "nothing could be more successful. I know that her word is inviolate. The photograph is now as safe as if it were in the fire."
+
+"I am glad to hear your Majesty say so."
+
+"I am immensely indebted to you. Pray tell me in what way I can reward you. This ring--" He slipped an emerald snake ring from his finger and held it out upon the palm of his hand.
+
+"Your Majesty has something which I should value even more highly," said Holmes.
+
+"You have but to name it."
+
+"This photograph!"
+
+The King stared at him in amazement.
+
+"Irene's photograph!" he cried. "Certainly, if you wish it."
+
+"I thank your Majesty. Then there is no more to be done in the matter. I have the honour to wish you a very good-morning." He bowed, and, turning away without observing the hand which the King had stretched out to him, he set off in my company for his chambers.
+
+<!-- index:
+-Holmes, Sherlock
+-cases \\ Scandal in Bohemia -->
+
+And that was how a great scandal threatened to affect the kingdom of Bohemia, and how the best plans of Mr. Sherlock Holmes were beaten by a woman's wit. He used to make merry over the cleverness of women, but I have not heard him do it of late. And when he speaks of Irene Adler, or when he refers to her photograph, it is always under the honourable title of the woman.

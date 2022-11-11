@@ -13,7 +13,7 @@ $web-search: true !default;
 
     // Search on search page
 
-    #content {
+    .content {
         .search {
             @include search-box(content);
         }

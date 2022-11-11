@@ -9,19 +9,23 @@
 // Options, defined in _data/settings.yml
 
 // 1. Use CSS selectors to list the headings that will
-//    define each accordion section, e.g. '#content h2'
+//    define each accordion section, e.g. '.content h2'
 var accordionLevel = settings[settings.site.output].accordion.level;
-if (document.body.getAttribute('data-accordion-level')) {
-    accordionLevel = document.body.getAttribute('data-accordion-level');
+var accordionDataLevelElement = document.querySelector('[data-accordion-level]');
+if (accordionDataLevelElement) {
+    accordionLevel = accordionDataLevelElement.getAttribute('data-accordion-level');
 }
-var accordionHeads = '#content ' + accordionLevel;
+var accordionHeads = '.content ' + accordionLevel;
 
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content [role="tabpanel"] ' + accordionLevel + ':first-of-type';
+var defaultAccordionHead = '.content [role="tabpanel"] ' + accordionLevel + ':first-of-type';
 
 // 3. Auto close last accordion when you open a new one?
 var autoCloseAccordionSections = settings[settings.site.output].accordion.autoClose;
 // --------------------------------------------------------------
+
+// Find where we've set the data-accordion-page flag
+var accordionDataPageElement = document.querySelector('[data-accordion-page');
 
 function ebAccordionInit() {
     'use strict';
@@ -29,10 +33,12 @@ function ebAccordionInit() {
     var pageAccordionOff;
 
     // Check for no-accordion setting on page
-    var accordionPageSetting = document.body.getAttribute('data-accordion-page');
-    if (accordionPageSetting &&
-            (accordionPageSetting === "none")) {
-        pageAccordionOff = true;
+    if (accordionDataPageElement) {
+        var accordionPageSetting = accordionDataPageElement.getAttribute('data-accordion-page');
+        if (accordionPageSetting &&
+                (accordionPageSetting === "none")) {
+            pageAccordionOff = true;
+        }
     }
 
     // Check if there are any headings on the page
@@ -55,7 +61,10 @@ function ebAccordionInit() {
 function ebAccordionPageSetting() {
     'use strict';
 
-    var accordionPageSetting = document.body.getAttribute('data-accordion-page');
+    var accordionPageSetting;
+    if (accordionDataPageElement) {
+        accordionPageSetting = accordionDataPageElement.getAttribute('data-accordion-page');
+    }
     return accordionPageSetting;
 }
 
@@ -83,13 +92,13 @@ function ebAccordionSetUpSections(collapserButtons) {
     }
 
     // add role="tablist" to the parent of the role="tab"s
-    var content = document.querySelector('#content');
+    var content = document.querySelector('.content');
     content.setAttribute('role', 'tablist');
 
     // loop through collapserButtons
     collapserButtons.forEach(function (collapserButton) {
 
-        // Only do the rest if if #content is the parent
+        // Only do the rest if if .content is the parent
         // of the collapserButton (i.e. accordion heading).
         // Prevents errors when heading is in a div, e.g. a box.
         if (collapserButton.parentNode === content) {
@@ -145,7 +154,7 @@ function ebAccordionFillSections() {
     'use strict';
 
     // Grab the individual #contents elements of the page
-    var contentItems = document.getElementById('content').childNodes;
+    var contentItems = document.querySelector('.content').childNodes;
 
     // Put all the items in an array.
     var j, contentItemsForSections = [];
@@ -394,12 +403,12 @@ function ebAccordionListenForAnchorClicks(querySelectorString) {
 
     // console.log('Starting ebAccordionListenForAnchorClicks...');
 
-    // listen for clicks on *all* the anchors in #content by default
+    // listen for clicks on *all* the anchors in .content by default
     var allTheAnchors;
     if (querySelectorString) {
         allTheAnchors = document.querySelectorAll(querySelectorString);
     } else {
-        allTheAnchors = document.querySelectorAll('#content a');
+        allTheAnchors = document.querySelectorAll('.content a');
     }
 
     allTheAnchors.forEach(function (oneOfTheAnchors) {
@@ -451,7 +460,6 @@ function ebAccordionListenForAnchorClicks(querySelectorString) {
                 var targetOfLink = document.getElementById(targetID);
                 // recursively update targetID until we have a data-accordion
                 targetID = ebAccordionFindSection(targetOfLink);
-                console.log('clic')
             }
 
             // now open the right closed accordion
@@ -695,7 +703,7 @@ function ebPrepareForAccordion() {
         mutations.forEach(function (mutation) {
             if (mutation.type === "attributes") {
                 if (document.body.getAttribute('data-accordion-active') !== 'true'
-                        && (document.body.getAttribute('data-index-targets') || settings.dynamicIndexing === false)
+                        && (document.querySelector('[data-index-targets]') || settings.dynamicIndexing === false)
                         && document.body.getAttribute('data-ids-assigned')) {
                     ebLoadAccordion();
                 }

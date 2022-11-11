@@ -2,7 +2,7 @@
 /*globals window */
 
 // Shits an element up or down the DOM.
-// Design to run in PDF outputs only.
+// Designed to run in PDF outputs only.
 
 function ebPreviousElement(element) {
     'use strict';

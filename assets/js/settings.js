@@ -26,7 +26,7 @@ var settings = {
         bookmarks: {
             enabled: true,
             elements: {
-                include: '#content [id]',
+                include: '.content [id]',
                 exclude: ''
             }
         },
@@ -42,7 +42,7 @@ var settings = {
         bookmarks: {
             enabled: true,
             elements: {
-                include: '#content [id]',
+                include: '.content [id]',
                 exclude: ''
             }
         },

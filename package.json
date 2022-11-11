@@ -47,6 +47,7 @@
     "gulp-uglify": "^3.0.2",
     "iconv-lite": "^0.6.3",
     "js-yaml": "^4.1.0",
+    "jsdom": "^20.0.1",
     "jszip": "^3.10.1",
     "node-pandoc": "^0.3.0",
     "open": "^8.4.0",

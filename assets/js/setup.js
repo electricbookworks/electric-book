@@ -43,9 +43,9 @@ function ebAssignFingerprints(element, ancestorTagNames) {
     'use strict';
 
     // If we're starting off, with no element provided,
-    // start with the #content div.
+    // start with the .content div.
     if (!element) {
-        element = document.getElementById('content');
+        element = document.querySelector('.content');
     }
 
     // Only fingerprint elements with IDs,
@@ -104,9 +104,9 @@ function ebAssignFingerprints(element, ancestorTagNames) {
 function ebAssignIDs(container) {
     'use strict';
 
-    // If no container provided, use the #content div
+    // If no container provided, use the .content div
     if (!container) {
-        container = document.getElementById('content');
+        container = document.querySelector('.content');
     }
 
     // Count from 1, giving an ID to every element without one

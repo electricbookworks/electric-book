@@ -4,11 +4,11 @@ $print-page-headers-footers-content: true !default;
   // This partial sets page header and footer content.
   // It sets separate content for .frontmatter and .chapter pages.
 
-  // Assign a string to the body data-title attribute.
+  // Assign a string to the .wrapper data-title attribute.
   // In markdown, this is set with header: in a file's YAML frontmatter,
   // and falls back to the page title.
 
-  body {
+  .wrapper {
     string-set:
       page-header attr(data-header),
       page-header-left attr(data-header-left),
@@ -167,6 +167,8 @@ $print-page-headers-footers-content: true !default;
   // No headers on first pages of chapters
   .chapter {
     prince-page-group: start;
+
+    @include page-continued();
   }
 
   @if $first-page-margin-boxes == blank {
@@ -316,6 +318,8 @@ $print-page-headers-footers-content: true !default;
   // No headers on first pages of frontmatter
   .frontmatter {
     prince-page-group: start;
+
+    @include page-continued();
   }
   @if $first-page-margin-boxes == blank {
     @page frontmatter:first {

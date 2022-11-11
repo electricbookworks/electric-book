@@ -1,0 +1,290 @@
+---
+title: "Texto sencillo"
+---
+
+## Texto sencillo
+
+La mayoría de los libros comprenden páginas y páginas de texto continuo. Un buen diseño los hace agradables a la vista y fáciles de leer. El corazón de un diseño es cómo maneja tanto el texto sin formato como las formas especiales como las letras. Hay una [carta hacia el final de este capítulo](#carta){:.show-page-number}.
+
+El texto de este capítulo está tomado de *Adventures of Sherlock Holmes* de Sir Arthur Conan Doyle. Esto fue traducido por Google Translate.
+
+### Un escándalo en Bohemia
+
+#### I.
+
+<!--índice:
+Holmes, Sherlock-
+Adler, Irene-
+casos \\ Escándalo en Bohemia-
+-->
+
+Para Sherlock Holmes ella es siempre LA mujer. Pocas veces le he oído mencionarla con otro nombre. A sus ojos ella eclipsa y predomina todo su sexo. No es que sintiera ninguna emoción similar al amor por Irene Adler. Todas las emociones, y esa en particular, eran abominables para su mente fría, precisa pero admirablemente equilibrada. Él era, supongo, la máquina de razonamiento y observación más perfecta que el mundo haya visto, pero como amante se habría colocado en una posición falsa. Nunca habló de las pasiones más suaves, excepto con una burla y una mueca. Eran cosas admirables para el observador, excelentes para descorrer el velo de los motivos y acciones de los hombres. Pero para el razonador entrenado admitir tales intrusiones en su propio temperamento delicado y finamente ajustado era introducir un factor de distracción que podría arrojar dudas sobre todos sus resultados mentales. Arena en un instrumento sensible, o una grieta en uno de sus propios lentes de alta potencia, no sería más perturbador que una fuerte emoción en una naturaleza como la suya. Y, sin embargo, solo había una mujer para él, y esa mujer era la difunta Irene Adler, de dudosa y cuestionable memoria.
+
+<!-- índice:
+matrimonio
+matrimonio \\ infeliz
+casos \\ Trepoff asesinato
+casos \\ hermanos Atkinson
+casos \\ familia real holandesa -->
+
+Últimamente había visto poco a Holmes. Mi matrimonio nos había alejado el uno del otro. Mi propia felicidad completa y los intereses centrados en el hogar que surgen en torno al hombre que primero se encuentra dueño de su propio establecimiento, fueron suficientes para absorber toda mi atención, mientras que Holmes, que detestaba toda forma de sociedad con toda su alma bohemia, Permaneció en nuestro alojamiento de Baker Street, sepultado entre sus viejos libros, y alternando semana tras semana entre la cocaína y la ambición, el sopor de la droga y la feroz energía de su propia naturaleza aguda. Todavía estaba, como siempre, profundamente atraído por el estudio del crimen, y ocupó sus inmensas facultades y extraordinarios poderes de observación en seguir esas pistas y aclarar aquellos misterios que habían sido abandonados como sin esperanza por la policía oficial. De vez en cuando escuché algún vago relato de sus actos: de su citación a Odessa en el caso del asesinato de Trepoff, de cómo esclareció la singular tragedia de los hermanos Atkinson en Trincomalee y, finalmente, de la misión que había cumplido. con tanta delicadeza y éxito para la familia reinante de Holanda. Sin embargo, más allá de estos signos de su actividad, que simplemente compartí con todos los lectores de la prensa diaria, sabía poco de mi antiguo amigo y compañero.
+
+<!-- índice:
+casos \\ Estudio en escarlata -->
+
+Una noche, era el veinte de marzo de 1888, regresaba de un viaje a un paciente (porque ahora había regresado a la práctica civil), cuando mi camino me llevó a través de Baker Street. Cuando pasé por la bien recordada puerta, que siempre debe estar asociada en mi mente con mi cortejo y con los oscuros incidentes del Estudio en escarlata, se apoderó de mí un vivo deseo de volver a ver a Holmes y saber cómo estaba. empleando sus extraordinarios poderes. Sus habitaciones estaban brillantemente iluminadas e, incluso mientras miraba hacia arriba, vi su figura alta y delgada pasar dos veces en una silueta oscura contra la persiana. Se paseaba por la habitación con rapidez, con entusiasmo, con la cabeza hundida en el pecho y las manos entrelazadas detrás de él. Para mí, que conocía cada uno de sus estados de ánimo y hábitos, su actitud y modales contaban su propia historia. Estaba en el trabajo de nuevo. Había salido de sus sueños creados por las drogas y estaba entusiasmado con el olor de algún nuevo problema. Llamé al timbre y me condujeron a la habitación que antes había sido en parte mía.
+
+<!-- índice:
+lujos \\ puros
+lujos \\ licores
+lujos \\ gasogeno -->
+
+Su actitud no fue efusiva. Rara vez lo era; pero se alegró, creo, de verme. Sin apenas pronunciar palabra, pero con una mirada amable, me indicó un sillón, arrojó su caja de puros e indicó una caja de alcohol y un gasógeno en la esquina. Luego se paró frente al fuego y me miró con su singular estilo introspectivo.
+
+"El matrimonio te sienta bien", comentó. "Creo, Watson, que ha engordado siete libras y media desde que lo vi".
+
+"¡Siete!" Respondí.
+
+De hecho, debería haberlo pensado un poco más. Sólo un poco más, me imagino, Watson. Y en la práctica otra vez, observo. No me dijo que tenía la intención de ponerse los arneses.
+
+"Entonces, ¿cómo lo sabes?"
+
+"Lo veo, lo deduzco. ¿Cómo sé que últimamente te has estado mojando mucho y que tienes una sirvienta de lo más torpe y descuidada?"
+
+-Mi querido Holmes -dije-, esto es demasiado. Seguro que te habrías quemado si hubieras vivido hace unos siglos. Es cierto que el jueves di un paseo por el campo y volví a casa hecho un lío terrible, pero como me he cambiado de ropa, no puedo imaginar cómo lo deduces. En cuanto a Mary Jane, es incorregible, y mi esposa le ha dado aviso, pero ahí, de nuevo, no veo cómo lo resuelves.
+
+Se rió para sí mismo y se frotó las manos largas y nerviosas.
+
+"Es la simplicidad misma", dijo él; mis ojos me dicen que en la parte interior de su zapato izquierdo, justo donde la luz del fuego lo incide, el cuero está marcado por seis cortes casi paralelos. Para quitarle el barro incrustado. De ahí mi doble deducción de que usted había estado afuera en un clima horrible y que tenía un espécimen particularmente maligno de la esclavitud londinense, que cortabotas. En cuanto a su práctica, si un caballero camina en mis habitaciones oliendo a yodoformo, con una marca negra de nitrato de plata en el dedo índice derecho y un bulto en el lado derecho de su sombrero de copa para mostrar dónde ha escondido su estetoscopio, debo ser aburrido, de hecho, si quiero no lo pronuncien como un miembro activo de la profesión médica".
+
+No pude evitar reírme de la facilidad con la que explicaba su proceso de deducción. "Cuando te oigo dar tus razones", le comenté, "la cosa siempre me parece tan ridículamente simple que yo mismo podría hacerlo fácilmente, aunque en cada instancia sucesiva de tu razonamiento estoy desconcertado hasta que explicas tu proceso. Y, sin embargo, creo que mis ojos son tan buenos como los tuyos".
+
+—Así es —respondió, encendiendo un cigarrillo y dejándose caer en un sillón—. Ves, pero no observas. La distinción es clara. Por ejemplo, has visto con frecuencia los escalones que suben desde el vestíbulo hasta esta habitación.
+
+"Frecuentemente."
+
+"¿Con qué frecuencia?"
+
+"Bueno, algunos cientos de veces."
+
+"Entonces, ¿cuántos hay?"
+
+"¿Cuántos? No lo sé".
+
+<!-- índice:
+casos \\ Escándalo en Bohemia \\ carta- -->
+
+"¡Así es! No has observado. Y, sin embargo, has visto. Ese es exactamente mi punto. Ahora, sé que hay diecisiete pasos, porque he visto y observado. Por cierto, ya que estás interesado en estos pequeños problemas, y dado que eres lo suficientemente bueno como para relatar una o dos de mis insignificantes experiencias, puede que te interese esto". Arrojó una hoja de papel grueso, teñido de rosa, que había estado abierta sobre la mesa. "Llegó con el último correo", dijo. "Léelo en voz alta."
+
+La nota no tenía fecha ni firma ni dirección.
+
+—Te visitará esta noche, a las ocho menos cuarto —dijo—, un caballero que desea consultarte sobre un asunto de suma importancia. Tus recientes servicios a una de las casas reales de "Europa ha demostrado que es alguien a quien se le puede confiar con seguridad asuntos que son de una importancia que difícilmente puede exagerarse. Este relato suyo lo hemos recibido de todas partes. Esté en su cámara entonces a esa hora, y no lo tome. mal si su visitante usa una máscara".
+
+"Esto es realmente un misterio", comenté. "¿Qué te imaginas que
+¿significa?"
+
+"Todavía no tengo datos. Es un error capital teorizar antes de tener datos. Insensiblemente, uno comienza a torcer los hechos para adaptarlos a las teorías, en lugar de teorías para adaptarlos a los hechos. Pero la nota en sí. ¿Qué deduce de ella?"
+
+Examiné cuidadosamente la escritura y el papel en el que estaba
+escrito.
+
+"El hombre que lo escribió presumiblemente estaba bien", comenté, esforzándome por imitar los procesos de mi compañero. Ese papel no se podía comprar por menos de media corona el paquete. Es peculiarmente fuerte y rígido.
+
+"Curioso, esa es la palabra misma", dijo Holmes. No es un periódico inglés en absoluto. Sostenlo a contraluz.
+
+Lo hice y vi una "E" grande con una "g" pequeña, una "P" y una "G" grande con una "t" pequeña entretejidas en la textura del papel.
+
+"¿Qué piensas de eso?" preguntó Holmes.
+
+"El nombre del fabricante, sin duda; o su monograma, más bien".
+
+"Para nada. La 'G' con la 't' minúscula significa 'Gesellschaft', que en alemán significa 'Compañía'. Es una contracción habitual como nuestro 'Co.' 'P', por supuesto, significa 'Papier'. Ahora para el 'Ej.' Echemos un vistazo a nuestro diccionario geográfico continental". Sacó un pesado volumen marrón de sus estantes. "Eglow, Eglonitz--aquí estamos, Egria. Está en un país de habla alemana--en Bohemia, no lejos de Carlsbad. 'Notable por ser el escenario de la muerte de Wallenstein, y por sus numerosas fábricas de vidrio y fábricas de papel.' Ja, ja, muchacho, ¿qué piensas de eso? Sus ojos brillaron y envió una gran nube azul triunfante de su cigarrillo.
+
+"El papel fue hecho en Bohemia", le dije.
+
+"Precisamente. Y el hombre que escribió la nota es un alemán. ¿Observa la peculiar construcción de la oración: 'Este relato suyo lo hemos recibido de todas partes'". Un francés o un ruso no podrían haber escrito eso. Es el alemán el que es tan descortés con sus verbos. Solo queda, por lo tanto, descubrir qué quiere este alemán que escribe en papel bohemio y prefiere llevar una máscara a mostrar la cara. Y aquí viene, si no me equivoco, para resolver todas nuestras dudas”.
+
+Mientras hablaba, se oyó el sonido agudo de los cascos de los caballos y el chirrido de las ruedas contra el bordillo, seguido de un fuerte golpe en la campana. Holmes silbó.
+
+"Un par, por el sonido", dijo. "Sí", continuó, mirando por la ventana. Una bonita berlina pequeña y un par de bellezas. Ciento cincuenta guineas cada una. Hay dinero en este caso, Watson, si no hay nada más.
+
+"Creo que será mejor que me vaya, Holmes".
+
+"Ni un poco, doctor. Quédese donde está. Estoy perdido sin mi Boswell. Y esto promete ser interesante. Sería una pena perdérselo".
+
+"Pero su cliente--"
+
+"No le haga caso. Puedo necesitar su ayuda, y él también. Aquí viene. Siéntese en ese sillón, doctor, y bríndenos su mejor atención".
+
+Un paso lento y pesado, que se había oído en las escaleras y en el pasillo, se detuvo inmediatamente frente a la puerta. Luego hubo un golpe fuerte y autoritario.
+
+"¡Adelante!" dijo Holmes.
+
+Entró un hombre que apenas podía medir menos de seis pies y seis pulgadas de altura, con el pecho y las extremidades de un Hércules. Su vestido era rico con una ostentación que, en Inglaterra, se consideraría de mal gusto. Pesadas tiras de astracán estaban acuchilladas a lo largo de las mangas y la parte delantera de su abrigo cruzado, mientras que la capa azul oscuro que le echaban sobre los hombros estaba forrada con seda color fuego y asegurada en el cuello con un broche que consistía en un único broche en llamas. berilo. Las botas que le llegaban hasta la mitad de las pantorrillas y que estaban adornadas en la parte superior con un rico pelaje marrón, completaban la impresión de opulencia bárbara que sugería toda su apariencia. Llevaba un sombrero de ala ancha en la mano, mientras que en la parte superior de la cara, que se extendía hasta más allá de los pómulos, llevaba una máscara de vizard negra, que aparentemente se había ajustado en ese mismo momento, ya que todavía tenía la mano levantada. como él entró. Por la parte inferior de la cara parecía un hombre de carácter fuerte, con un labio grueso y caído, y un mentón largo y recto que sugería una resolución llevada al extremo de la obstinación.
+
+"¿Tenías mi nota?" preguntó con una voz profunda y áspera y un marcado acento alemán. "Te dije que te llamaría". Miró de uno a otro de nosotros, como si no supiera a quién dirigirse.
+
+<!-- índice:
+-casos \\ Escándalo en Bohemia \\ carta -->
+
+"Por favor, tome asiento", dijo Holmes. "Este es mi amigo y colega, el Dr. Watson, quien ocasionalmente es lo suficientemente bueno para ayudarme en mis casos. ¿A quién tengo el honor de dirigirme?"
+
+"Puede dirigirse a mí como el Conde Von Kramm, un noble bohemio. Entiendo que este caballero, su amigo, es un hombre de honor y discreción, a quien puedo confiar un asunto de la más extrema importancia. Si no, debería Prefiero comunicarme contigo a solas.
+
+Me levanté para irme, pero Holmes me agarró por la muñeca y me empujó hacia atrás en mi silla. "Es ambas cosas, o ninguna", dijo. "Puedes decir ante este caballero cualquier cosa que me digas a mí".
+
+El conde encogió sus anchos hombros. "Entonces debo comenzar", dijo, "obligándolos a ambos a un secreto absoluto durante dos años; al final de ese tiempo, el asunto no tendrá importancia. Por el momento, no está de más decir que es de tanta importancia". peso puede tener una influencia sobre la historia europea".
+
+"Lo prometo", dijo Holmes.
+
+"Y yo."
+
+"Disculpen esta máscara", continuó nuestro extraño visitante. "La augusta persona que me emplea desea que su agente sea desconocido para usted, y puedo confesar de inmediato que el título con el que acabo de llamarme no es exactamente el mío".
+
+"Yo era consciente de ello", dijo Holmes secamente.
+
+"Las circunstancias son muy delicadas y se deben tomar todas las precauciones para apagar lo que podría convertirse en un escándalo inmenso y comprometer seriamente a una de las familias reinantes de Europa. Hablando claro, el asunto involucra a la gran Casa de Ormstein, hereditaria reyes de Bohemia".
+
+"Yo también era consciente de eso", murmuró Holmes, acomodándose en su sillón y cerrando los ojos.
+
+Nuestro visitante miró con aparente sorpresa la figura lánguida y holgazana del hombre que sin duda se le había presentado como el razonador más incisivo y el agente más enérgico de Europa. Holmes volvió a abrir lentamente los ojos y miró con impaciencia a su gigantesco cliente.
+
+"Si Su Majestad se dignara exponer su caso", comentó, "podría aconsejarle mejor".
+
+El hombre saltó de su silla y caminó de un lado a otro de la habitación con una agitación incontrolable. Luego, con un gesto de desesperación, se arrancó la máscara de la cara y la arrojó al suelo. "Tienes razón", exclamó; "Soy el Rey. ¿Por qué debería intentar ocultarlo?"
+
+"¿Por qué de hecho?" murmuró Holmes. "Su majestad no había hablado antes de que supiera que me estaba dirigiendo a Wilhelm Gottsreich Sigismond von Ormstein, gran duque de Cassel-Felstein y rey ​​hereditario de Bohemia".
+
+"Pero usted puede comprender", dijo nuestro extraño visitante, sentándose una vez más y pasándose la mano por su frente alta y blanca, "puede comprender que no estoy acostumbrado a hacer tales negocios en mi propia persona. Sin embargo, el asunto era tan delicado que no podía confiarlo a un agente sin ponerme en su poder. He venido de incógnito desde Praga con el fin de consultarle.
+
+"Entonces, consulte por favor", dijo Holmes, cerrando los ojos una vez más.
+
+"Los hechos son brevemente estos: Hace unos cinco años, durante una larga visita a Varsovia, conocí a la conocida aventurera, Irene Adler. El nombre sin duda le resultará familiar".
+
+—Por favor, búsquela en mi índice, doctor —murmuró Holmes sin abrir los ojos. Durante muchos años había adoptado un sistema de archivar todos los párrafos relacionados con hombres y cosas, de modo que era difícil nombrar un tema o una persona sobre la que no pudiera proporcionar información de inmediato. En este caso encontré su biografía intercalada entre la de un rabino hebreo y la de un comandante de estado mayor que había escrito una monografía sobre los peces de aguas profundas.
+
+"¡Déjeme ver!" dijo Holmes. "¡Hum! Nací en Nueva Jersey en el año 1858. Contralto, ¡hum! La Scala, hum! , según tengo entendido, se enredó con esta joven, le escribió algunas cartas comprometedoras y ahora está deseoso de recuperar esas cartas".
+
+"Precisamente así. Pero cómo--"
+
+<!-- índice:
+matrimonio
+matrimonio \\ secreto -->
+
+"¿Hubo un matrimonio secreto?"
+
+"Ninguna."
+
+"¿Sin documentos legales o certificados?"
+
+"Ninguna."
+
+"Entonces no sigo a Su Majestad. Si esta joven debe mostrar sus cartas para chantajear u otros propósitos, ¿cómo va a probar su autenticidad?"
+
+"Ahí está la escritura".
+
+"¡Pooh, pooh! Falsificación".
+
+"Mi papel de notas privado".
+
+"Robado."
+
+"Mi propio sello".
+
+"Imitado".
+
+"Mi fotografía".
+
+"Comprado."
+
+"Ambos estábamos en la fotografía".
+
+"¡Oh, querido! ¡Eso es muy malo! Su Majestad ciertamente ha cometido una indiscreción".
+
+Estaba loco... loco.
+
+"Te has comprometido seriamente".
+
+"Solo era el príncipe heredero entonces. Era joven. Solo tengo treinta ahora".
+
+"Hay que recuperarlo".
+
+"Lo hemos intentado y hemos fallado".
+
+"Su Majestad debe pagar. Debe ser comprado".
+
+"Ella no venderá".
+
+"Robado, entonces."
+
+"Se han hecho cinco intentos. Dos veces, ladrones a mi sueldo saquearon su casa. Una vez desviamos su equipaje cuando viajaba. Dos veces la asaltaron. No hubo resultado".
+
+"¿No hay rastro de ello?"
+
+"Absolutamente ninguno".
+
+Holmes se rió. "Es un problema bastante pequeño", dijo.
+
+-Pero uno muy serio para mí -replicó el rey con reproche-.
+
+"Mucho, de hecho. ¿Y qué se propone hacer con la fotografía?"
+
+"Para arruinarme".
+
+"¿Pero cómo?"
+
+"Estoy a punto de casarme".
+
+"Eso he oído".
+
+"A Clotilde Lothman von Saxe-Meningen, segunda hija del rey de Escandinavia. Puede que conozcas los estrictos principios de su familia. Ella misma es el alma misma de la delicadeza. Una sombra de duda sobre mi conducta llevaría el asunto a un final."
+
+"¿E Irene Adler?"
+
+"Amenaza con enviarles la fotografía. Y lo hará. Sé que lo hará. No la conoces, pero tiene un alma de acero. Tiene el rostro de la más bella de las mujeres, y la mente del más resuelto de los hombres. En lugar de casarme con otra mujer, no hay extremos a los que ella no iría, ninguno".
+
+"¿Estás seguro de que ella no lo ha enviado todavía?"
+
+"Estoy seguro."
+
+"¿Y por qué?"
+
+"Porque ella ha dicho que lo enviaría el día en que se proclamen públicamente los esponsales. Eso será el próximo lunes".
+
+"Oh, entonces todavía tenemos tres días", dijo Holmes con un bostezo. "Eso es muy afortunado, ya que tengo uno o dos asuntos de importancia que investigar en este momento. Su Majestad, por supuesto, ¿se quedará en Londres por el momento?"
+
+"Ciertamente. Me encontrarán en el Langham bajo el nombre del Conde Von Kramm".
+
+"Entonces le enviaré una línea para informarle cómo progresamos".
+
+Por favor, hazlo. Seré todo ansiedad.
+
+"Entonces, ¿en cuanto al dinero?"
+
+"Tienes carta blanca".
+
+"¿Absolutamente?"
+
+Te digo que daría una de las provincias de mi reino por tener esa fotografía.
+
+"¿Y para los gastos presentes?"
+
+El rey sacó una pesada bolsa de cuero de gamuza de debajo de su capa y la colocó sobre la mesa.
+
+"Hay trescientas libras en oro y setecientas en billetes", dijo.
+
+Holmes escribió un recibo en una hoja de su cuaderno y se lo entregó.
+
+—¿Y la dirección de mademoiselle? preguntó.
+
+<!-- índice:
+Logia Briony
+-->
+
+"Es Briony Lodge, Serpentine Avenue, St. John's Wood".
+
+Holmes tomó nota de ello. "Otra pregunta", dijo. "¿Era la fotografía un gabinete?"
+
+"Fue."
+
+"Entonces, buenas noches, Su Majestad, y confío en que pronto tendremos buenas noticias para usted. Y buenas noches, Watson", agregó, mientras las ruedas de la berlina real rodaban por la calle. Si tiene la amabilidad de llamar mañana por la tarde a las tres, me gustaría hablar con usted de este pequeño asunto.

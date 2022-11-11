@@ -262,7 +262,7 @@ function ebIndexGetComments() {
         // NOTE: The last argument [] is a deprecated, optional parameter. However, in
         // IE, the argument is not optional and therefore must be included.
         var treeWalker = document.createTreeWalker(
-            document.getElementById('content'),
+            document.querySelector('.content'),
             NodeFilter.SHOW_COMMENT,
             filter,
             false
@@ -368,7 +368,7 @@ function ebIndexInit() {
 
     // Don't run this if the targets are already loaded
     // (e.g. by pre-processing)
-    if (document.body.getAttribute('data-index-targets') === 'loaded') {
+    if (document.querySelector('[data-index-targets]')) {
         return;
     }
 

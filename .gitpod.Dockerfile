@@ -3,25 +3,13 @@
 # in your browser (i.e. an online development environment).
 # See https://www.gitpod.io/docs/config-docker
 
-FROM ubuntu:20.04
+FROM gitpod/workspace-ruby-2
 
-# Set default locale for the environment
-ENV LC_ALL C.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
-
-# Install dependencies required to set timezone
-RUN apt-get update && apt-get install -y \
-  locales libcurl4 curl
-
-# Set timezone
-RUN ln -snf /usr/share/zoneinfo/$(curl https://ipapi.co/timezone) /etc/localtime
-
-# Add node source for nodejs version 12, instead of Ubuntu installed node (version 10)
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+# Need to be root to apt install
+USER root
 
 # Main dependency installation
-RUN apt-get update && apt-get install -y \
+RUN sudo apt-get update && apt-get install -y \
   software-properties-common \
   make \
   gcc \
@@ -33,13 +21,10 @@ RUN apt-get update && apt-get install -y \
   libffi-dev \
   libreadline-dev \
   zlib1g-dev \
-  nodejs \
-  ruby \
-  ruby-dev \
   graphicsmagick
 
 # Dependencies specifically for Puppeteer on unix
-RUN apt-get install -y \
+RUN sudo apt-get install -y \
   libasound2 \
   libatk1.0-0 \
   libatk-bridge2.0-0 \
@@ -54,8 +39,13 @@ RUN apt-get install -y \
   libxfixes3 \
   libxrandr2
 
-# Clear apt cache to make image smaller
-RUN rm -rf /var/lib/apt/lists/*
+# # Clear apt cache to make image smaller
+RUN sudo apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+
+# Add node source for new nodejs, instead of old Ubuntu-installed node.
+# That install script also prompts to do sudo apt-get install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+RUN sudo apt-get install -y nodejs
 
 # Install PrinceXML for printing to PDF
 RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb && \
@@ -65,24 +55,28 @@ RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb 
 RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.deb && \
   dpkg -i pandoc-2.5-1-amd64.deb
 
-# Pin RubyGems to 3.0.8
-# (https://github.com/rubygems/rubygems/issues/3068)
-RUN gem update --system 3.0.8 --no-document
-
-# Install Bundler and latest EBT-compatible Jekyll
-RUN gem install bundler jekyll:3.9.2
-
 # Update npm
 RUN npm install -g npm@latest
 
 # Install Gulp cli app
 RUN npm install --global gulp-cli
 
-# Copy our project files to the container
-COPY . .
+# Switch to the gitpod user
+USER gitpod
 
-# Install gems in Gemfile
-RUN bundle install
+# Set paths for Ruby gems
+RUN echo '# Define Ruby Gems path' >> ~/.bashrc
+RUN echo 'export GEM_HOME="$HOME/.rvm/gems/ruby-2.7.6"' >> ~/.bashrc
+RUN echo 'export PATH="$HOME/.rvm/gems/ruby-2.7.6:$PATH"' >> ~/.bashrc
+RUN bash -lc "source ~/.bashrc"
 
-# Install modules in package.json
-RUN npm install
+# Install gems.
+# Note we do this here, not in a gitpod `init` task
+# because changes to files outside /workspace,
+# like gem installs, are lost in prebuilds, which
+# only save the /workspace. We could also try installing
+# these dependencies in a `before` task, but that would
+# run twice, potentially making builds slower.
+# (https://www.gitpod.io/docs/configure/projects/prebuilds#workspace-directory-only)
+COPY Gemfile .
+RUN bash -lc "bundle install"

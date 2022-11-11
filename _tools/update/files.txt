@@ -775,6 +775,7 @@ _sass/template/partials/_print-letters.scss
 _sass/template/partials/_print-maths.scss
 _sass/template/partials/_print-mixins--buttons.scss
 _sass/template/partials/_print-mixins--margin-boxes.scss
+_sass/template/partials/_print-mixins--page-continued.scss
 _sass/template/partials/_print-mixins--sidenotes.scss
 _sass/template/partials/_print-notes.scss
 _sass/template/partials/_print-openers.scss
@@ -889,8 +890,10 @@ _tools/run/commands/output.js
 _tools/run/commands/package.js
 _tools/run/commands/reindex.js
 _tools/run/helpers/helpers.js
+_tools/run/helpers/merge/index.js
+_tools/run/helpers/output/index.js
 _tools/run/helpers/options.js
-_tools/run/helpers/package/package.js
+_tools/run/helpers/package/index.js
 _tools/run/helpers/reindex/build-reference-index.js
 _tools/run/helpers/reindex/build-search-index.js
 _tools/run/helpers/requirements.js

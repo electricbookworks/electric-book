@@ -77,8 +77,8 @@ function jumpToSearchResult() {
         }
 
         // add it after the first heading
-        var mainHeading = document.querySelector('#content h1, #content h2, #content h3, #content h4, #content h5, #content h6');
-        var contentDiv = document.querySelector('#content');
+        var mainHeading = document.querySelector('.content h1, .content h2, .content h3, .content h4, .content h5, .content h6');
+        var contentDiv = document.querySelector('.content');
 
         if (settings[settings.site.output].search.jumpBoxLocation
                 && settings[settings.site.output].search.jumpBoxLocation !== 'mainheading'
@@ -102,7 +102,7 @@ function jumpToSearchResult() {
 
 // Ask mark.js to mark all the search terms.
 // We mark both the searchTerm and the search-query stem
-var markInstance = new Mark(document.querySelector("#wrapper"));
+var markInstance = new Mark(document.querySelector(".wrapper"));
 if (searchTerm || getQueryVariable('search_stem')) {
 
     // Create an array containing the search term

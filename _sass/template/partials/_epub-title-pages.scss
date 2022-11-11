@@ -49,7 +49,12 @@ $epub-title-pages: true !default;
 		.titlepage-logo {
 			display: block; // In case the class is applied to the image, not the paragraph
 			margin: $line-height-default auto 0 auto;
-			max-width: 30%;
+
+			max-width: 5rem;
+			@if $title-page-logo-width {
+				max-width: $title-page-logo-width;
+			}
+
 			img {
 				width: 100%;
 			}

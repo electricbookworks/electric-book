@@ -7,7 +7,7 @@ $web-title-pages: true !default;
 	.title-page, 
 	.halftitle-page, 
 	.half-title-page {
-		#content {
+		.content {
 			margin: $start-depth auto 0 auto;
 			text-align: center;
 		}
@@ -52,7 +52,12 @@ $web-title-pages: true !default;
 		.title-page-logo, 
 		.titlepage-logo {
 			display: block; // In case the class is applied to the image, not the paragraph
-			max-width: 30%;
+
+			max-width: 5rem;
+			@if $title-page-logo-width {
+				max-width: $title-page-logo-width;
+			}
+
 			img {
 				width: 100%;
 			}

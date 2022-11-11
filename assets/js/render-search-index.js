@@ -67,7 +67,7 @@ function generateIndex() {
             // Get the page content
             const content = await page.evaluate(
                 function () {
-                    var contentDiv = document.querySelector('#content');
+                    var contentDiv = document.querySelector('.content');
                     var contentText = '';
                     if (contentDiv) {
                         contentText = contentDiv.textContent

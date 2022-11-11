@@ -68,7 +68,7 @@ function displaySearchResults(results, store) {
         appendString += '</div>';
     }
 
-    var searchForm = document.querySelector('#content .search');
+    var searchForm = document.querySelector('.content .search');
     searchForm.parentNode.innerHTML += appendString;
 }
 

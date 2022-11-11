@@ -4,7 +4,7 @@ $web-epigraphs: true !default;
     // Epigraphs
 
     .epigraph-page {
-        #content {
+        .content {
            margin-top: $start-depth;
         }
     }

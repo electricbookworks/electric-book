@@ -108,7 +108,7 @@ async function buildSearchIndex (outputFormat) {
     // Get the page content
     const content = await page.evaluate(
       function () {
-        const contentDiv = document.body.querySelector('#content')
+        const contentDiv = document.body.querySelector('.content')
         let contentText = ''
         if (contentDiv) {
           contentText = contentDiv.textContent
