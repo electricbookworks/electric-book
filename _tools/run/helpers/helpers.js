@@ -606,8 +606,38 @@ function fileList (argv) {
 
   // If there was no files list, oops!
   if (!files) {
-    console.log('Sorry, couldn\'t find a files list in book data.')
-    return []
+    console.log('No files list in book data. Using raw files in ' + book + '.')
+
+    // Let's just use all the markdown files for this book
+    const bookDirectory = fsPath.normalize(process.cwd() + '/' + book + '/')
+    files = []
+
+    // Read the contents of the book directory.
+    // For each file in there, if it ends with .md,
+    // add its name, without the .md, to the files array.
+    if (fs.lstatSync(bookDirectory).isDirectory()) {
+      fs.readdirSync(bookDirectory)
+        .forEach(function (file) {
+          if (file.match(/\.md$/g)) {
+            const fileBasename = file.replace(/\.md$/g, '')
+            files.push(fileBasename)
+          }
+        })
+
+      // If there is an index.md, move it to the front
+      // (https://stackoverflow.com/a/48456512/1781075)
+      if (files.includes('index')) {
+        const indexOfIndexFile = files.findIndex(function (filename) {
+          return filename === 'index'
+        })
+        files.splice(indexOfIndexFile, 1)
+        files.unshift('index')
+      }
+    } else {
+      // Otherwise, return an empty array
+      console.log('Sorry, couldn\'t find files or a files list in book data.')
+      return []
+    }
   }
 
   // Build path to translation's default YAML,

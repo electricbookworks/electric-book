@@ -71,17 +71,49 @@ we check that the folder includes a default key, i.e. a default.yml.
         {% endif %}
     {% endif %}
 
-    {% for file in files-listed-work[1][variant-for-files].products[site-output-for-files].files %}
+    {% comment %} If there is a files list there, use it.
+    Otherwise, just use the markdown/HTML files
+    that exist in the book folder. {% endcomment %}
 
-        {% for file-name in file %}
-            {% if file-name[0] %}
-                /{{ markdown-files-path }}/{{ file-name[0] }}.html,
-            {% else %}
-                /{{ markdown-files-path }}/{{ file-name }}.html,
+    {% comment %} This looks for the files list. {% endcomment %}
+    {% if files-listed-work[1][variant-for-files].products[site-output-for-files].files %}
+
+        {% for file in files-listed-work[1][variant-for-files].products[site-output-for-files].files %}
+
+            {% for file-name in file %}
+                {% if file-name[0] %}
+                    /{{ markdown-files-path }}/{{ file-name[0] }}.html,
+                {% else %}
+                    /{{ markdown-files-path }}/{{ file-name }}.html,
+                {% endif %}
+            {% endfor %}
+
+        {% endfor %}
+
+    {% comment %} And this looks at raw files in the book folder.
+    We ensure that the index.html, if any, file comes first. {% endcomment %}
+    {% else %}
+
+        {% capture files-listed-work-with-slashes %}/{{ files-listed-work[0] }}/{% endcapture %}
+
+        {% assign thesefiles = site.html_pages | where_exp: "page", "page.dir == files-listed-work-with-slashes" %}
+
+        {% capture index-file-url %}{{ files-listed-work-with-slashes }}{% endcapture %}
+
+        {% for file in thesefiles %}
+            {% if file.url == index-file-url %}
+                {{ files-listed-work-with-slashes }}index.html,
+            {% break %}
             {% endif %}
         {% endfor %}
 
-    {% endfor %}
+        {% for file in thesefiles %}
+            {% if file.url contains ".html" and file.url != index-file-url %}
+                {{ file.url }},
+            {% endif %}
+        {% endfor %}
+
+    {% endif %}
 
     {% comment %} Now do the same for translations. {% endcomment %}
 
