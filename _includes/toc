@@ -8,6 +8,10 @@ Now check which output format we're creating, and capture its toc.
 Fall back to print-pdf toc, then web nav list.
 {% endcomment %}
 
+{% comment %} Create a flag for when there is
+no toc in _data/works YAML. {% endcomment %}
+{% assign use-files-for-toc = false %}
+
 {% unless include.start %}
 
     {% if site.output == "print-pdf" %}
@@ -16,7 +20,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif web-nav-tree != nil %}
             {% assign toc = web-nav-tree %}
         {% else %}
-            Please define a TOC or web nav in `_data/works`.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% elsif site.output == "screen-pdf" %}
@@ -27,7 +31,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif web-nav-tree != nil %}
             {% assign toc = web-nav-tree %}
         {% else %}
-            Please define a TOC or web nav in `_data/works`.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% elsif site.output == "epub" %}
@@ -38,7 +42,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif web-nav-tree != nil %}
             {% assign toc = web-nav-tree %}
         {% else %}
-            Please define a TOC or web nav in `_data/works`.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% elsif site.output == "web" %}
@@ -49,7 +53,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif print-pdf-toc != nil %}
             {% assign toc = print-pdf-toc %}
         {% else %}
-            Please define a TOC or web nav in `_data/works`.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% elsif site.output == "app" %}
@@ -64,7 +68,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif print-pdf-toc != nil %}
             {% assign toc = print-pdf-toc %}
         {% else %}
-            Please define a TOC or web nav in `_data/works`.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% else %}
@@ -73,12 +77,20 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif print-pdf-toc != nil %}
             {% assign toc = print-pdf-toc %}
         {% else %}
-            Please define a TOC or web nav in `_data/works`.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% endif %}
 
 {% endunless %}
+
+{% comment %} Are we using files to generate a TOC, or
+are we using the TOC defined in _data/works YAML? {% endcomment %}
+{% if use-files-for-toc == true %}
+
+{% include nav-list-files.html type="toc" %}
+
+{% else %}
 
 {% comment %}
 If the file that called this include didn't specify a start parameter, then
@@ -156,3 +168,6 @@ at the top of the toc, put this in a nav element.{% endcomment %}
 {% if site.output == "epub" and toc-branch == epub-toc or toc-branch == print-pdf-toc or toc-branch == web-nav-tree %}
 </nav>
 {% endif %}
+
+{% endif %}
+{% comment %} if use-files-for-toc {% endcomment %}

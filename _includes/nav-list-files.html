@@ -1,8 +1,10 @@
 {% comment %}
-This is designed as an alternative to generating a nav list based on
-the nav nodes in _data/works files.
+This is designed as an alternative to generating
+a nav or toc list based on those in _data/works files.
+Instead, it directly reads the files in the book folder.
 
-This requires that the metadata include is already run in this context.
+This include requires that the metadata include
+has already been run in this context.
 {% endcomment %}
 
 {% comment %} What book are we rendering a list for? {% endcomment %}
@@ -53,16 +55,23 @@ This requires that the metadata include is already run in this context.
         {% capture nav-files-entry-title %}{{ nav-files-entry-filename | capitalize }}{% endcapture %}
     {% endif %}
 
+    {% comment %} Get the page style. {% endcomment %}
+    {% if file.style and file.style != "" %}
+        {% capture nav-files-entry-style %}{{ file.style }}{% endcapture %}
+    {% endif %}
+
     {% comment %} Add items to arrays. In entry:
     [0]: book
     [1]: file
     [2]: title
-    [3]: language {% endcomment %}
+    [3]: language
+    [4]: style {% endcomment %}
 
     {% assign files-entry = files-entry | push: nav-files-entry-directory %}
     {% assign files-entry = files-entry | push: nav-files-entry-filename %}
     {% assign files-entry = files-entry | push: nav-files-entry-title %}
     {% assign files-entry = files-entry | push: nav-files-entry-translation-language %}
+    {% assign files-entry = files-entry | push: nav-files-entry-style %}
 
     {% if nav-files-entry-filename == "index" %}
         {% assign new-files-tree-books = new-files-tree-books | push: files-entry %}
@@ -73,25 +82,70 @@ This requires that the metadata include is already run in this context.
 {% endfor %}
 
 {% comment %} Render the list. {% endcomment %}
-<ol>
 
-    {% comment %} If we're rendering the relevant book, list its children. {% endcomment %}
+{% comment %}If we're making an epub, put this in a nav element.{% endcomment %}
+{% if site.output == "epub" %}
+<nav epub:type="toc" role="doc-toc" id="toc"{% if site.data.settings.epub.hide-nav == true %} hidden=""{% endif %}>
+{% endif %}
+
+<ol {% if include.type == "toc" %}class="toc-list"{% endif %}>
+
     {% for entry in new-files-tree-pages %}
 
-        {% if is-translation and entry[0] == nav-files-book-directory and entry[3] == language %}
-            <li>
-                <a href="{{ path-to-root-directory }}{{ entry[0] }}/{{ entry[3] }}/{{ entry[1] }}.html">
-                    {{ entry[2] }}
-                </a>
-            </li>
-        {% elsif entry[0] == nav-files-book-directory and entry[3] == null %}
-            <li>
-                <a href="{{ path-to-root-directory }}{{ entry[0] }}/{{ entry[1] }}.html">
-                    {{ entry[2] }}
-                </a>
-            </li>
-        {% endif %}
+        {% comment %} If this is a TOC, do not include certain files:
+        e.g. cover, title-page, copyright-page, contents-page {% endcomment %}
+        {% assign exclude-file-from-toc = false %}
+        {% assign toc-excluded-page-styles = "cover,previous-publications-page,half-title-page,halftitle-page,title-page,copyright-page,contents-page,epigraph-page,dedication-page" | split: "," %}
+        {% for style in toc-excluded-page-styles %}
+            {% if style == entry[4] %}
+                {% assign exclude-file-from-toc = true %}
+                {% break %}
+            {% endif %}
+        {% endfor %}
+
+        {% unless exclude-file-from-toc %}
+
+            {% comment %} If we're rendering the relevant book,
+            list its children. {% endcomment %}
+            {% if is-translation and entry[0] == nav-files-book-directory and entry[3] == language %}
+                <li {% if include.type == "toc" %}class="toc-entry-title"{% endif %}>
+                    <a href="{{ path-to-root-directory }}{{ entry[0] }}/{{ entry[3] }}/{{ entry[1] }}.html">
+
+                        {% if include.type == "toc" %}
+                            <span class="toc-entry-text">
+                        {% endif %}
+
+                        {{ entry[2] }}
+
+                        {% if include.type == "toc" %}
+                            </span>
+                        {% endif %}
+                    </a>
+                </li>
+            {% elsif entry[0] == nav-files-book-directory and entry[3] == null %}
+                <li {% if include.type == "toc" %}class="toc-entry-title"{% endif %}>
+                    <a href="{{ path-to-root-directory }}{{ entry[0] }}/{{ entry[1] }}.html">
+
+                        {% if include.type == "toc" %}
+                            <span class="toc-entry-text">
+                        {% endif %}
+
+                        {{ entry[2] }}
+
+                        {% if include.type == "toc" %}
+                            </span>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endif %}
+
+        {% endunless %}
 
     {% endfor %}
 
 </ol>
+
+{% comment %}If we're making an epub, close the nav element{% endcomment %}
+{% if site.output == "epub" %}
+</nav>
+{% endif %}

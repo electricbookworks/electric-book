@@ -5,7 +5,9 @@
 
     {% for work in site.data.works %}
 
-        {% include files-listed-by-work.html work=work %}
+        {% capture list-of-files-work-directory %}{{ work[0] }}{% endcapture %}
+
+        {% include files-listed-by-work.html directory=list-of-files-work-directory %}
 
     {% endfor %}
 

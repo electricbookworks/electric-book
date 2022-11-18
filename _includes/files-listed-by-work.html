@@ -2,20 +2,37 @@
 designed to be used in files-listed.html as a recursive
 loop through translations and variants. {% endcomment %}
 
-{% comment %} Fallback to default "book" directory. {% endcomment %}
-{% if include.work %}
-    {% assign files-listed-work = include.work %}
+{% comment %} Unless passed an array by this include including itself,
+create an array to store files list in.
+One includes full file paths, the other only filenames. {% endcomment %}
+{% if include.passed-filenames-listed-array %}
+    {% assign filenames-listed-array = include.passed-filenames-listed-array %}
 {% else %}
-    {% assign files-listed-work = site.data.works.book %}
+    {% assign filenames-listed-array = "" | split: "" %}
 {% endif %}
+
+{% if include.passed-files-listed-by-work-array %}
+    {% assign files-listed-by-work-array = include.passed-files-listed-by-work-array %}
+{% else %}
+    {% assign files-listed-by-work-array = "" | split: "" %}
+{% endif %}
+
+{% comment %} Fallback to default "book" directory.
+Note: include.directory should be a string of the book folder name. {% endcomment %}
+{% if include.directory %}
+    {% assign files-listed-work-directory = include.directory %}
+{% else %}
+    {% assign files-listed-work-directory = "book" %}
+{% endif %}
+{% assign files-listed-work = site.data.works[files-listed-work-directory] %}
 
 {% comment %} If this is a translation, we need the parent work name.
 Otherwise, we must make sure there isn't one. {% endcomment %}
-{% assign files-listed-parent-work = nil %}
-{% if include.parent-work %}
-    {% assign files-listed-parent-work = include.parent-work %}
+{% if include.parent-work-directory %}
+    {% assign files-listed-parent-work-directory = include.parent-work-directory %}
+    {% assign files-listed-work = site.data.works[files-listed-parent-work-directory][include.directory] %}
 {% else %}
-    {% assign parent-work-name = nil %}
+    {% assign files-listed-parent-work-directory = nil %}
 {% endif %}
 
 {% comment %} Get the active variant,
@@ -31,12 +48,12 @@ so to skip looping over YAML files (e.g. default.yml or myvariant.yml),
 we check that the folder includes a default key, i.e. a default.yml.
 {% endcomment %}
 
-{% if files-listed-work[1].default %}
+{% if files-listed-work.default %}
 
     {% comment %} Get the path to relevant markdown files. {% endcomment %}
-    {% capture markdown-files-path %}{{ files-listed-work[0] }}{% endcapture %}
-    {% if files-listed-parent-work %}
-        {% capture markdown-files-path %}{{ files-listed-parent-work }}/{{ files-listed-work[0] }}{% endcapture %}
+    {% capture markdown-files-path %}{{ files-listed-work-directory }}{% endcapture %}
+    {% if files-listed-parent-work-directory %}
+        {% capture markdown-files-path %}{{ files-listed-parent-work-directory }}/{{ files-listed-work-directory }}{% endcapture %}
     {% endif %}
 
     {% comment %} Check if we need to inherit a files list.
@@ -50,17 +67,17 @@ we check that the folder includes a default key, i.e. a default.yml.
     {% comment %} If the current variant and its output format
     has a files list, stick with it. Otherwise, provide fallbacks.
     {% endcomment %}
-    {% if files-listed-work[1][current-variant].products[site.output].files and files-listed-work[1][current-variant].products[site.output].files != "" %}
+    {% if files-listed-work[current-variant].products[site.output].files and files-listed-work[current-variant].products[site.output].files != "" %}
         {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
         {% capture variant-for-files %}{{ current-variant }}{% endcapture %}
 
     {% comment %} If the variant has no files, use the default. {% endcomment %}
-    {% elsif files-listed-work[1].default.products[site.output].files and files-listed-work[1].default.products[site.output].files != "" %}
+    {% elsif files-listed-work.default.products[site.output].files and files-listed-work.default.products[site.output].files != "" %}
         {% capture variant-for-files %}default{% endcapture %}
 
         {% comment %} If the output format for the default has no files,
         try fallbacks for app and screen-pdf outputs. {% endcomment %}
-        {% if files-listed-work[1].default.products[site.output].files and files-listed-work[1].default.products[site.output].files != "" %}
+        {% if files-listed-work.default.products[site.output].files and files-listed-work.default.products[site.output].files != "" %}
             {% capture site-output-for-files %}{{ site.output }}{% endcapture %}
         {% else %}
             {% if site.output == "app" %}
@@ -75,17 +92,26 @@ we check that the folder includes a default key, i.e. a default.yml.
     Otherwise, just use the markdown/HTML files
     that exist in the book folder. {% endcomment %}
 
-    {% comment %} This looks for the files list. {% endcomment %}
-    {% if files-listed-work[1][variant-for-files].products[site-output-for-files].files %}
+    {% comment %} Reset this variable. {% endcomment %}
+    {% capture files-listed-path-to-file %}{% endcapture %}
 
-        {% for file in files-listed-work[1][variant-for-files].products[site-output-for-files].files %}
+    {% comment %} This looks for the files list. {% endcomment %}
+    {% if files-listed-work[variant-for-files].products[site-output-for-files].files %}
+
+        {% for file in files-listed-work[variant-for-files].products[site-output-for-files].files %}
 
             {% for file-name in file %}
                 {% if file-name[0] %}
-                    /{{ markdown-files-path }}/{{ file-name[0] }}.html,
+                    {% capture files-listed-path-to-file %}/{{ markdown-files-path }}/{{ file-name[0] }}.html{% endcapture %}
+
+                    {% assign filenames-listed-array = filenames-listed-array | push: file-name[0] %}
                 {% else %}
-                    /{{ markdown-files-path }}/{{ file-name }}.html,
+                    {% capture files-listed-path-to-file %}/{{ markdown-files-path }}/{{ file-name }}.html{% endcapture %}
+
+                    {% assign filenames-listed-array = filenames-listed-array | push: file-name %}
                 {% endif %}
+
+                {% assign files-listed-by-work-array = files-listed-by-work-array | push: files-listed-path-to-file %}
             {% endfor %}
 
         {% endfor %}
@@ -94,22 +120,29 @@ we check that the folder includes a default key, i.e. a default.yml.
     We ensure that the index.html, if any, file comes first. {% endcomment %}
     {% else %}
 
-        {% capture files-listed-work-with-slashes %}/{{ files-listed-work[0] }}/{% endcapture %}
+        {% capture files-listed-work-with-slashes %}/{{ files-listed-work-directory }}/{% endcapture %}
 
-        {% assign thesefiles = site.html_pages | where_exp: "page", "page.dir == files-listed-work-with-slashes" %}
+        {% assign html-files-in-book = site.html_pages | where_exp: "page", "page.dir == files-listed-work-with-slashes" %}
 
         {% capture index-file-url %}{{ files-listed-work-with-slashes }}{% endcapture %}
 
-        {% for file in thesefiles %}
+        {% for file in html-files-in-book %}
             {% if file.url == index-file-url %}
-                {{ files-listed-work-with-slashes }}index.html,
+                {% capture files-listed-path-to-file %}{{ files-listed-work-with-slashes }}index.html{% endcapture %}
+                {% assign files-listed-by-work-array = files-listed-by-work-array | push: files-listed-path-to-file %}
+                {% assign filenames-listed-array = filenames-listed-array | push: "index" %}
             {% break %}
             {% endif %}
         {% endfor %}
 
-        {% for file in thesefiles %}
+        {% for file in html-files-in-book %}
             {% if file.url contains ".html" and file.url != index-file-url %}
-                {{ file.url }},
+                {% capture files-listed-path-to-file %}{{ file.url }}{% endcapture %}
+                {% assign files-listed-by-work-array = files-listed-by-work-array | push: files-listed-path-to-file %}
+
+                {% capture html-file-in-book-basename %}{{ file.name | split: "." | first }}{% endcapture %}
+
+                {% assign filenames-listed-array = filenames-listed-array | push: html-file-in-book-basename %}
             {% endif %}
         {% endfor %}
 
@@ -118,16 +151,32 @@ we check that the folder includes a default key, i.e. a default.yml.
     {% comment %} Now do the same for translations. {% endcomment %}
 
     {% comment %} If this is not a translation,
-    there is no parent-work-name yet, and we need one
+    there is no parent-work-directory yet, and we need one
     for translation paths. {% endcomment %}
-    {% unless parent-work-name %}
-        {% capture parent-work-name %}{{ files-listed-work[0] }}{% endcapture %}
+    {% unless files-listed-parent-work-directory %}
+        {% capture files-listed-parent-work-directory %}{{ files-listed-work-directory }}{% endcapture %}
+
+        {% for files-listed-translation in files-listed-work %}
+
+            {% capture files-listed-translation-directory %}{{ files-listed-translation[0] }}{% endcapture %}
+
+            {% include files-listed-by-work.html
+                directory=files-listed-translation-directory
+                parent-work-directory=files-listed-parent-work-directory
+                passed-files-listed-by-work-array=files-listed-by-work-array
+                passed-filenames-listed-array=filenames-listed-array
+                output="array" %}
+
+        {% endfor %}
     {% endunless %}
 
-    {% for files-listed-translation in files-listed-work[1] %}
-
-        {% include files-listed-by-work.html work=files-listed-translation parent-work=parent-work-name %}
-
-    {% endfor %}
-
 {% endif %}
+
+{% comment %} Shall we output the file list here,
+or just provide an array? By default, output a list.{% endcomment %}
+
+{% unless include.output == "array" %}
+    {% for file in files-listed-by-work-array %}
+        {{ file }},
+    {% endfor %}
+{% endunless %}

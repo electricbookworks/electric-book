@@ -50,15 +50,20 @@ In each file's YAML frontmatter (the info between `---`s at the top) we specify 
 
 When you create your book, we recommend following these conventions for file naming and YAML frontmatter `style` settings:
 
-| Book section                | Sample file               | Style in YAML    |
-|-----------------------------|---------------------------|------------------|
-| Front cover (for the ebook) | `0-0-cover.md`            | `cover`          |
-| Title page                  | `0-1-titlepage.md`        | `title-page`     |
-| Copyright page              | `0-2-copyright.md`        | `copyright-page` |
-| Table of contents           | `0-3-contents.md`         | `contents-page`  |
-| Acknowledgements            | `0-4-acknowledgements.md` | `frontmatter`    |
-| A first chapter             | `1.md`                    | `chapter`        |
-| A second chapter            | `2.md`                    | `chapter`        |
+| Book section                | Example filename          | Style in YAML                |
+| --------------------------- | ------------------------- | ---------------------------- |
+| Front cover (for the ebook) | `0-0-cover.md`            | `cover`                      |
+| Previous publications page  | `0-1-previous.md`         | `previous-publications-page` |
+| Half-title page             | `0-2-halftitle-page.md`   | `halftitle-page`             |
+| Title page                  | `0-3-title-page.md`       | `title-page`                 |
+| Copyright page              | `0-4-copyright.md`        | `copyright-page`             |
+| Table of contents           | `0-5-contents.md`         | `contents-page`              |
+| Epigraph page               | `0-6-epigraph.md`         | `epigraph-page`              |
+| Acknowledgements            | `0-7-acknowledgements.md` | `frontmatter`                |
+| Dedication page             | `0-8-dedication.md`       | `dedication-page`            |
+| Part page                   | `01-part-page.md`         | `part-page`                  |
+| A first chapter             | `01-01.md`                | `chapter`                    |
+| A second chapter            | `01-02.md`                | `chapter`                    |
 
 If you don't set the `style`, the page will default to `style: chapter`. So you actually don't need to ever set `style: chapter` in a YAML header. For most chapters in a book, then, your YAML frontmatter will simply include a chapter title:
 

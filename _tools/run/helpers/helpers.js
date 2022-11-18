@@ -625,13 +625,50 @@ function fileList (argv) {
         })
 
       // If there is an index.md, move it to the front
-      // (https://stackoverflow.com/a/48456512/1781075)
+      // (https://stackoverflow.com/a/48456512/1781075),
+      // unless there is a cover file, in which case omit index.md.
+
+      // Determine if there is a cover file.
+      // This depends on the only word in the filename being 'cover',
+      // e.g. 0-0-cover.html, cover.html. But not 'my-cover.html',
+      // 'cover-page.html' or 'cover-versions-of-songs.html'.
+      let coverFile = false
+      files.forEach(function (filename) {
+        console.log(filename);
+        // Remove all non-alphabetical-characters
+        const filenameWordsOnly = filename.replace(/[^a-zA-Z]/g, '')
+
+        // Is what remains the word 'cover'?
+        if (filenameWordsOnly === 'cover') {
+          coverFile = filename
+          const indexOfCoverFile = files.findIndex(function (filename) {
+            return filename === coverFile
+          })
+
+          // Move it to the front of the array:
+          // remove it first...
+          files.splice(indexOfCoverFile, 1)
+
+          // ... then insert it unless this is a print PDF
+          if (argv.format !== 'print-pdf') {
+            files.unshift(coverFile)
+          }
+        }
+      })
+
       if (files.includes('index')) {
         const indexOfIndexFile = files.findIndex(function (filename) {
           return filename === 'index'
         })
+
+        // Remove 'index' from array
         files.splice(indexOfIndexFile, 1)
-        files.unshift('index')
+
+        // If no cover file, insert 'index' at start of array
+        // unless this is a print PDF
+        if (coverFile === false && argv.format !== 'print-pdf') {
+          files.unshift('index')
+        }
       }
     } else {
       // Otherwise, return an empty array

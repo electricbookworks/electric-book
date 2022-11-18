@@ -63,27 +63,28 @@ See all the metadata gathered for a given page.
 
 ### Book metadata
 
-| Description                           | Source                                                                                                                        | Output tag      | Current result      | Type   | 
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------- | ------------------- | ------ | 
-| Book title                            | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `title`         | {{ title }}         | String | 
-| Book subtitle                         | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `subtitle`      | {{ subtitle }}      | String | 
-| Book creator (e.g. author)            | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `creator`       | {{ creator }}       | String | 
-| Book contributor(s)                   | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `contributor`   | {{ contributor }}   | String | 
-| Book subject                          | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `subject`       | {{ subject }}       | String | 
-| Book description                      | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `description`   | {{ description }}   | String | 
-| Book publisher                        | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `publisher`     | {{ publisher }}     | String | 
-| Book publisher's URL                  | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `publisher-url` | {{ publisher-url }} | String | 
-| Book's date                           | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `date`          | {{ date }}          | String | 
-| Book's modified date                  | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `modified`      | {{ modified }}      | String | 
-| Book type                             | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `type`          | {{ type }}          | String | 
-| Book identifier                       | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `identifier`    | {{ identifier }}    | String | 
-| Book source                           | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `source`        | {{ source }}        | String | 
-| Book language                         | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `language`      | {{ language }}      | String | 
-| Book's relation (i.e. a related work) | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `relation`      | {{ relation }}      | String | 
-| Book's coverage                       | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `coverage`      | {{ coverage }}      | String | 
-| Book rightsholder                     | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `rightsholder`  | {{ rightsholder }}  | String | 
-| Book rights statement                 | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `rights`        | {{ rights }}        | String | 
-| Book's image                          | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `image`         | {{ image }}         | String | 
+| Description                           | Source                                                                                                                           | Output tag           | Current result           | Type   |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ------------------------ | ------ |
+| Book title                            | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `title`              | {{ title }}              | String |
+| Book subtitle                         | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `subtitle`           | {{ subtitle }}           | String |
+| Book creator (e.g. author)            | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `creator`            | {{ creator }}            | String |
+| Book contributor(s)                   | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `contributor`        | {{ contributor }}        | String |
+| Book subject                          | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `subject`            | {{ subject }}            | String |
+| Book description                      | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `description`        | {{ description }}        | String |
+| Book publisher                        | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `publisher`          | {{ publisher }}          | String |
+| Book publisher's URL                  | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `publisher-url`      | {{ publisher-url }}      | String |
+| Book's date                           | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `date`               | {{ date }}               | String |
+| Book's modified date                  | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `modified`           | {{ modified }}           | String |
+| Book type                             | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `type`               | {{ type }}               | String |
+| Book identifier                       | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `identifier`         | {{ identifier }}         | String |
+| Book source                           | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `source`             | {{ source }}             | String |
+| Book language                         | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `language`           | {{ language }}           | String |
+| Book's relation (i.e. a related work) | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `relation`           | {{ relation }}           | String |
+| Book's coverage                       | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `coverage`           | {{ coverage }}           | String |
+| Book rightsholder                     | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `rightsholder`       | {{ rightsholder }}       | String |
+| Book rights statement                 | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `rights`             | {{ rights }}             | String |
+| Book's image                          | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`, or `variants` of `translations` | `image`              | {{ image }}              | String |
+| Book's default start page             | Detected as first markdown file in book                                                                                          | `default-start-page` | {{ default-start-page }} | String |
 
 ### Print-PDF metadata
 

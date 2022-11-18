@@ -13,7 +13,7 @@ const htmlFilePaths = require('../helpers').htmlFilePaths
 // Make IDs in HTML unique by prefixing them
 // with the slug of the filename, and updating
 // any links that point to them.
-function updateIDs (filename, dom) {
+function updateIDs (filename, dom, argv) {
   return new Promise(function (resolve, reject) {
     try {
       // Prefix IDs with a no-spaces, no-fullstops filename
@@ -55,32 +55,51 @@ function updateIDs (filename, dom) {
 
       if (internalLinks) {
         internalLinks.forEach(function (link) {
-          const href = link.getAttribute('href')
+          let href = link.getAttribute('href')
 
           // Initialise variables for the target filename and ID
           let linkFilenameAsPrefix
           let linkID
 
-          // If the href:
-          // - contains text and #, it points to a file and an ID
-          // - starts with #, it points to an ID in this file
-          // - doesn't include #, it points to another file
-          if (href.match(/.+#/)) {
-            linkFilenameAsPrefix = href.split('#').shift()
-              .replace(/[.\s]/g, '-')
-            linkID = href.split('#').pop()
-          } else if (href.startsWith('#')) {
-            linkFilenameAsPrefix = prefix
-            linkID = href.split('#').pop()
-          } else {
-            linkFilenameAsPrefix = href.replace(/[.\s]/g, '-')
+          // If an href contains slashes, it includes a path,
+          // potentially to another book in this project.
+          // If it's in the same book, we can simply remove the path
+          // and only keep the filename.
+          // If it's to another book, we must leave the link as is,
+          // and set a flag that prevents us from changing it later.
+          let hrefIsToThisBook = true
+          if (href.match(/\//)) {
+            const hrefAsArray = href.replace(/^\.\.\//, '').split('/')
+            if (hrefAsArray[0] === argv.book) {
+              href = hrefAsArray.pop()
+            } else {
+              hrefIsToThisBook = false
+            }
           }
 
-          // Change the link to an internal link that uses
-          // the new ID prefix plus the linkID, if any.
-          link.href = '#' + linkFilenameAsPrefix
-          if (linkID) {
-            link.href = '#' + [linkFilenameAsPrefix, linkID].join('-')
+          // If the href:
+          // - is internal to this book, and
+          // - contains text and #, it points to a file and an ID
+          // - starts with #, it points to an ID in this file
+          // - doesn't include #, it points to another file.
+          if (hrefIsToThisBook) {
+            if (href.match(/.+#/)) {
+              linkFilenameAsPrefix = href.split('#').shift()
+                .replace(/[.\s]/g, '-')
+              linkID = href.split('#').pop()
+            } else if (href.startsWith('#')) {
+              linkFilenameAsPrefix = prefix
+              linkID = href.split('#').pop()
+            } else {
+              linkFilenameAsPrefix = href.replace(/[.\s]/g, '-')
+            }
+
+            // Change the link to an internal link that uses
+            // the new ID prefix plus the linkID, if any.
+            link.href = '#' + linkFilenameAsPrefix
+            if (linkID) {
+              link.href = '#' + [linkFilenameAsPrefix, linkID].join('-')
+            }
           }
         })
       }
@@ -116,7 +135,7 @@ async function merge (argv) {
 
         // Update the IDs and links
         const filename = fsPath.basename(filePath)
-        dom = await updateIDs(filename, dom)
+        dom = await updateIDs(filename, dom, argv)
 
         // If this is the first file, we'll use it as our base,
         // to which we'll append the remaining files.

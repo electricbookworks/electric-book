@@ -95,6 +95,11 @@ we fall back to the value in the work's default.yml.
     {% capture identifier %}{{ work[work-variant].identifier }}{% endcapture %}
 {% elsif work.default.identifier and work.default.identifier != "" %}
     {% capture identifier %}{{ work.default.identifier }}{% endcapture %}
+{% else %}
+
+    {% comment %} Since epub requires an identifier,
+    if there isn't one, use a date string as a placeholder. {% endcomment %}
+    {% capture identifier %}{{ site.time | date: '%s'}}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].source and work[work-variant].source != "" %}
@@ -220,16 +225,36 @@ we fall back to the value in the work's default.yml.
     {% capture web-image %}{{ image }}{% endcapture %}
 {% endif %}
 
+{% comment %} Find fallback start-page and contents-page {% endcomment %}
+
+{% capture book-directory-with-slashes %}/{{ book-directory }}/{% endcapture %}
+{% assign potential-start-pages = site.html_pages | where_exp: "page", "page.dir == book-directory-with-slashes" %}
+
+{% comment %} Assign the first file by default. {% endcomment %}
+{% capture default-start-page %}{{ potential-start-pages[0].url | split: "/" | last | split: "." | first }}{% endcapture %}
+
+{% comment %} Then see if there's a better TOC option. {% endcomment %}
+{% for page in potential-start-pages %}
+    {% if page.url contains "contents" or page.url contains "toc" %}
+        {% capture default-start-page %}{{ page.url | split: "/" | last | split: "." | first }}{% endcapture %}
+        {% break %}
+    {% endif %}
+{% endfor %}
+
 {% if work[work-variant].products.web.start-page and work[work-variant].products.web.start-page != "" %}
     {% capture web-start-page %}{{ work[work-variant].products.web.start-page }}{% endcapture %}
 {% elsif work.default.products.web.start-page and work.default.products.web.start-page != "" %}
     {% capture web-start-page %}{{ work.default.products.web.start-page }}{% endcapture %}
+{% else %}
+    {% capture web-start-page %}{{ default-start-page }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.web.contents-page and work[work-variant].products.web.contents-page != "" %}
     {% capture web-contents-page %}{{ work[work-variant].products.web.contents-page }}{% endcapture %}
 {% elsif work.default.products.web.contents-page and work.default.products.web.contents-page != "" %}
     {% capture web-contents-page %}{{ work.default.products.web.contents-page }}{% endcapture %}
+{% else %}
+    {% capture web-contents-page %}{{ default-start-page }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.web.files and work[work-variant].products.web.files != "" %}
@@ -290,6 +315,9 @@ we fall back to the value in the work's default.yml.
     {% assign epub-file-list = work[work-variant].products.epub.files %}
 {% elsif work.default.products.epub.files and work.default.products.epub.files != "" %}
     {% assign epub-file-list = work.default.products.epub.files %}
+{% else %}
+    {% include files-listed-by-work.html output="array" directory=book-directory %}
+    {% assign epub-file-list = filenames-listed-array %}
 {% endif %}
 
 {% if work[work-variant].products.epub.toc and work[work-variant].products.epub.toc != "" %}
@@ -307,6 +335,8 @@ we fall back to the value in the work's default.yml.
     {% capture epub-contents-page %}{{ work[work-variant].products.epub.contents-page }}{% endcapture %}
 {% elsif work.default.products.epub.contents-page and work.default.products.epub.contents-page != "" %}
     {% capture epub-contents-page %}{{ work.default.products.epub.contents-page }}{% endcapture %}
+{% else %}
+    {% capture epub-contents-page %}{{ default-start-page }}{% endcapture %}
 {% endif %}
 
 {% if work[work-variant].products.epub.language and work[work-variant].products.epub.language != "" %}

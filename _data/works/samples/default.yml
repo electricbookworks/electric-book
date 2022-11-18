@@ -1,29 +1,89 @@
+# Information about this book
+
+# The book's main title
 title: "Samples"
+
+# The subtitle, if any
 subtitle: "Sample content for Electric Book print, epub and web output"
-creator: "Arthur Attwell" # E.g. the author
-contributor: "" # E.g. other contributors
-subject: "Publishing" # E.g. BISAC terms (https://www.bisg.org/bisac/bisac-subject-codes) or BIC (https://ns.editeur.org/bic_categories)
-description: >
+
+# The author
+creator: "Arthur Attwell"
+
+# The book's blurb
+description: |
   Sample content demonstrating Electric Book support for a wide range of book features.
-publisher: "Electric Book Works" # E.g. the publisher, imprint or brand name
-publisher-url: ""
-date: "2016-09-01" # YYYY-MM-DD e.g. publication date
-modified: "2016-09-23" # YYYY-MM-DD e.g. date of last revision
-type: "Guide" # e.g. Novel, Poetry, Memoir
-identifier: "978-1-928313-13-7" # e.g. ISBN or UUID
-source: "978-1-928313-13-7" # e.g. parent ISBN or ISTC
-language: "en" # use ISO 639-1, 639-2, or 639-3 codes (in that order of preference)
-relation: "" # e.g. other edition ISBN
-coverage: "" # e.g. geographic place or chronological time span
-rightsholder: "" # who owns the copyright?
-rights: "This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use." # e.g. a copyright statement
+
+# A image representing the book,
+# usually the front cover.
 image: "cover.jpg"
 
-products: # Metadata for each product for this title (only use values that override parent metadata)
+# Other contributors
+contributor: ""
+
+# Publisher, imprint or brand name
+publisher: "Electric Book Works"
+
+# Publisher's website
+publisher-url: ""
+
+# Who owns the copyright?
+rightsholder: ""
+
+# A copyright statement or licence wording
+rights: |
+  This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+# Language code
+# Use ISO 639-1, 639-2, or 639-3 codes
+# (in that order of preference)
+language: "en"
+
+# Official, original publication date
+# YYYY-MM-DD
+date: "2016-09-01"
+
+# Date of last revision
+# YYYY-MM-DD
+modified: "2016-09-23"
+
+# Book type, e.g. Novel, Poetry, Memoir
+type: "Guide"
+
+# Subject areas
+# E.g. BISAC: https://bisg.org/page/BISACEdition
+#      BIC: https://ns.editeur.org/bic_categories
+subject: "Publishing"
+
+# ISBN or UUID
+identifier: "978-1-928313-13-7"
+
+# Parent work's ISBN or ISTC
+# if this is a derivative work.
+source: "978-1-928313-13-7"
+
+# ISBN or ISTC of a related work
+relation: ""
+
+# Any specific place or time this book is about?
+# E.g. geographic place or chronological time span
+coverage: ""
+
+# Details about each product of this work
+products:
+
+  # Details about the print version of this work
   print-pdf:
-    date: "2016-09-01" # YYYY-MM-DD e.g. publication or creation date
-    format: "Print" # e.g. Paperback, Digital download, Digital online
-    identifier: "" # e.g. ISBN or UUID
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Print"
+
+    # E.g. ISBN or UUID. If not specified,
+    # this will inherit the parent ISBN above.
+    identifier: ""
+
+    # Files to include in this format
     files:
       - "00-01-halftitle-page"
       - "00-02-previous-publications-page"
@@ -62,6 +122,10 @@ products: # Metadata for each product for this title (only use values that overr
       - "10-00-indexes"
       - "10-01-traditional-index"
       - "10-02-dynamic-index"
+
+    # The on-page table of contents for this format.
+    # If only specified for print-PDF, this TOC
+    # will also be used for other formats.
     toc:
       - label: "Half title page"
         file: "00-01-halftitle-page"
@@ -196,10 +260,20 @@ products: # Metadata for each product for this title (only use values that overr
           - label: "Dynamic index"
             file: "10-02-dynamic-index"
             id: "dynamic-index"
+
+  # Details about the web version of this work
   web:
-    date: "2016-09-01" # YYYY-MM-DD e.g. publication date or last revision
-    format: "Digital online" # e.g. Paperback, Digital download, Digital online
-    identifier: "" # e.g. ISBN or UUID
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Digital online"
+
+    # E.g. ISBN or UUID
+    identifier: ""
+
+    # Files to include in this format.
+    # On web, this determines pagination order.
     files:
       - "index"
       - "00-01-halftitle-page"
@@ -239,6 +313,11 @@ products: # Metadata for each product for this title (only use values that overr
       - "10-00-indexes"
       - "10-01-traditional-index"
       - "10-02-dynamic-index"
+
+    # The web navigation for this book.
+    # Use same structure as 'toc:',
+    # though your nav might include different
+    # items to those in a book's TOC.
     nav:
       - label: "Frontmatter"
         class: "cover-entry"
@@ -376,16 +455,37 @@ products: # Metadata for each product for this title (only use values that overr
           - label: "Dynamic index"
             file: "10-02-dynamic-index"
             id: "dynamic-index"
-    start-page: "00-05-contents-page" # At which file should users start reading?
-    contents-page: "00-05-contents-page" # Your contents-page file, if you have one.
-  epub:
-    date: "2016-09-01" # YYYY-MM-DD e.g. publication date or last revision
-    format: "Digital download" # e.g. Paperback, Digital download, Digital online
-    identifier: "9780000000000" # e.g. ISBN or UUID
-    image: "cover.jpg"
+
+    # At which file should users start reading?
     start-page: "00-05-contents-page"
+
+    # Your contents-page file, if you have one.
     contents-page: "00-05-contents-page"
-    files: # add a value to any file to set any of the guide types listed in http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
+
+  # Details about the epub version of this work
+  epub:
+
+    # The publication date, if different
+    # from the parent date above.
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Digital download"
+
+    # E.g. ISBN or UUID. Note that an epub
+    # must have an identifier to be valid.
+    identifier: "9780000000000"
+
+    # The epub's cover image
+    image: "cover.jpg"
+
+    # Files to include in this format.
+    # In the epub files list, add a value to any file
+    # to set any of the guide types listed in
+    # http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
+    # Most importantly, the "toc".
+    files:
       - "00-00-cover": "cover"
       - "00-01-halftitle-page"
       - "00-02-previous-publications-page"
@@ -424,11 +524,37 @@ products: # Metadata for each product for this title (only use values that overr
       - "10-00-indexes"
       - "10-01-traditional-index"
       - "10-02-dynamic-index"
+
+    # At which page should readers start reading?
+    # In some ereaders this is determined by the
+    # 'text' value assigned to a file in the
+    # files list below.
+    start-page: "00-05-contents-page"
+
+    # Your contents-page file, if you have one.
+    # An epub must have a contents page for navigation.
+    # Specify it here or with a 'toc' value
+    # at the relevant file in the files list below.
+    contents-page: "00-05-contents-page"
+
+  # Details about the screen-PDF version of this work
   screen-pdf:
-    date: "2016-09-01" # YYYY-MM-DD e.g. publication date or last revision
-    format: "Digital download" # e.g. Paperback, Digital download, Digital online
-    identifier: "" # e.g. ISBN or UUID
+
+    # The publication date, if different
+    # from the parent date above.
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Digital download"
+
+    # E.g. ISBN or UUID
+    identifier: ""
     image: "cover.jpg"
+
+    # Files to include in this format.
+    # Note that a screen PDF usually starts
+    # with a cover file, unlike a print PDF.
     files:
       - "00-00-cover"
       - "00-01-halftitle-page"
@@ -468,10 +594,24 @@ products: # Metadata for each product for this title (only use values that overr
       - "10-00-indexes"
       - "10-01-traditional-index"
       - "10-02-dynamic-index"
+
+  # Details about the app version of this work.
+  # Unless specified here, app details are inherited
+  # from the web format's details above.
   app:
-    date: "2016-09-01" # YYYY-MM-DD e.g. publication date or last revision
-    format: "Digital download" # e.g. Paperback, Digital download, Digital online
-    identifier: "" # e.g. ISBN or UUID
+
+    # The publication date, if different
+    # from the parent date above.
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Digital download"
+
+    # E.g. ISBN or UUID
+    identifier: ""
+
+    # Files to include in this format
     files:
       - "index"
       - "00-01-halftitle-page"
@@ -511,5 +651,9 @@ products: # Metadata for each product for this title (only use values that overr
       - "10-00-indexes"
       - "10-01-traditional-index"
       - "10-02-dynamic-index"
-    start-page: "00-05-contents-page" # At which file should users start reading?
-    contents-page: "00-05-contents-page" # Your contents-page file, if you have one.
+
+    # At which file should users start reading?
+    start-page: "00-05-contents-page"
+
+    # Your contents-page file, if you have one.
+    contents-page: "00-05-contents-page"
