@@ -7,8 +7,10 @@ image:
 
 tasks:
   - name: Setup and show EB commands
+
+    # We use a custom NPM cache to avoid Docker cache issues
     init: |
-      npm install
+      npm install --cache="/home/gitpod/.npm/CustomCacheDir"
       npm run eb
 
 ports:
