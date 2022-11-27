@@ -3,7 +3,7 @@
 // This is typography for the Electric Book template (see http://ebw.co/template).
 // It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
 // It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
-// 
+//
 // How to use it
 // -------------
 // Edit the default variables below.
@@ -145,6 +145,7 @@ $nav-bar-scrollbar: true !default;
 $nav-bar-width: 20rem !default;
 $nav-bar-fixed: true !default; // fixed is not fully supported on many mobile browsers
 $nav-bar-back-button-hide: true !default;
+$nav-bar-accent-color: $color-accent !default; // ideally a color that works behind dark or light text
 $nav-bar-title-color: $color-text-secondary !default;
 $nav-bar-label-color: $color-links !default;
 $nav-bar-label-background-color: $color-background !default;
@@ -154,12 +155,12 @@ $nav-bar-background-color: $color-background !default;
 $nav-bar-search-background-color: $color-background !default;
 $nav-bar-parent-background-color: $color-background !default;
 $nav-bar-parent-text-color: $color-text-main !default;
-$nav-bar-parent-hover-color: $color-accent !default;
+$nav-bar-parent-hover-color: $nav-bar-accent-color !default;
 $nav-bar-parent-text-hover-color: $color-background !default;
 $nav-bar-children-prompt-color: $color-mid !default;
 $nav-bar-child-background-color: $color-light !default;
 $nav-bar-child-text-color: $color-text-main !default;
-$nav-bar-child-hover-color: $color-accent !default;
+$nav-bar-child-hover-color: $nav-bar-accent-color !default;
 $nav-bar-child-text-hover-color: $color-background !default;
 
 // Language selector
