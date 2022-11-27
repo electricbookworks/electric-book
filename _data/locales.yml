@@ -150,6 +150,7 @@ en:
     send: "Send"
     show: "Show"
     hide: "Hide"
+    close: "Close"
   search:
     search-title: "Search"
     placeholder: "Search here..."
@@ -269,6 +270,7 @@ fr:
     send: "Envoyer"
     show: "Montrer"
     hide: "Cacher"
+    close: "Fermer"
   search:
     search-title: "Recherche"
     placeholder: "Cherche ici..."
@@ -669,7 +671,8 @@ es:
     submit: "Enviar"
     send: "Enviar"
     show: "Expandir"
-    hide: "Cerrar"
+    hide: "Ocultar"
+    close: "Cerrar"
   search:
     search-title: "Buscar"
     placeholder: "Busca aquí..."

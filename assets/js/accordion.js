@@ -403,12 +403,15 @@ function ebAccordionListenForAnchorClicks(querySelectorString) {
 
     // console.log('Starting ebAccordionListenForAnchorClicks...');
 
-    // listen for clicks on *all* the anchors in .content by default
+    // listen for clicks on *all* the anchors in .content
+    // and links in any .search-results-nav list,
+    // or those specified by a querySelectorString.
     var allTheAnchors;
     if (querySelectorString) {
         allTheAnchors = document.querySelectorAll(querySelectorString);
     } else {
-        allTheAnchors = document.querySelectorAll('.content a');
+        allTheAnchors = document
+            .querySelectorAll('.content a[href], .search-results-nav a[href]');
     }
 
     allTheAnchors.forEach(function (oneOfTheAnchors) {
@@ -694,7 +697,7 @@ function ebLoadAccordion() {
 }
 
 // Wait for data-index-targets to be loaded
-// and IDs to be assigned
+// and IDs to be assigned, and any search results to be loaded,
 // before applying the accordion.
 function ebPrepareForAccordion() {
     'use strict';
@@ -704,7 +707,8 @@ function ebPrepareForAccordion() {
             if (mutation.type === "attributes") {
                 if (document.body.getAttribute('data-accordion-active') !== 'true'
                         && (document.querySelector('[data-index-targets]') || settings.dynamicIndexing === false)
-                        && document.body.getAttribute('data-ids-assigned')) {
+                        && document.body.getAttribute('data-ids-assigned')
+                        && document.body.getAttribute('data-search-results')) {
                     ebLoadAccordion();
                 }
             }
