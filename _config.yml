@@ -187,13 +187,6 @@ compress_html:
 # DO NOT CHANGE THESE SETTINGS
 # ----------------------------
 
-# Electric Book template version
-# ------------------------------
-# Version of this Electric Book template.
-# This is the last release, not necessarily the current build
-# at github.com/electricbookworks/electric-book
-version: "0.20.0"
-
 # Local-build URL
 # ---------------
 # Leave this unchanged as http://localhost:4000

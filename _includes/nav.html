@@ -12,10 +12,10 @@
         {% endif %}
     </div>
 
-    {% comment %}If docs are generating, and we're on a docs page
-    show a docs heading and version number{% endcomment %}
+    {% comment %}If docs are generating, and we're on a docs page,
+    show a docs heading{% endcomment %}
     {% elsif output-docs == true and is-docs-page == true %}
-    <div class="nav-title">Electric Book docs (v{{ site.version }})</div>
+    <div class="nav-title">Electric Book docs</div>
 
     {% comment %}Otherwise show the nav title or book title.
     The nav-title can be set by adding it to locales.yml.{% endcomment %}

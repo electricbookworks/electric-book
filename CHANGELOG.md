@@ -1,5 +1,7 @@
 # Changelog
 
+After v0.19.0, we no longer track releases with semantic-versioning numbers. Since this is a template rather than auto-updateable software, the value of semantic versioning is limited here. Instead, this changelog will continue to note key changes for those who need to follow along.
+
 ## 0.19.0
 
 * [New CSS structure for themeable design](https://github.com/electricbookworks/electric-book/pull/541)
