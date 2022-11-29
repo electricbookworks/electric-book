@@ -642,28 +642,6 @@ function ebAccordify() {
 
     ebAccordionSetUpSections(collapserButtons);
 
-    if (searchTerm) {
-        // loop through sections
-        var accordionSections = document.querySelectorAll('section[data-accordion-container]');
-        accordionSections.forEach(function (accordionSection) {
-
-            // check for any markjs marks
-            var searchTermsInSection = accordionSection.querySelectorAll('[data-markjs]');
-            var numberOfSearchTermsInSection = searchTermsInSection.length;
-
-            // mark the sections that have the search term inside
-            if (!!numberOfSearchTermsInSection) {
-                var sectionHeaderLink = accordionSection.querySelector('header a');
-                sectionHeaderLink.innerHTML = '<mark>' + sectionHeaderLink.innerHTML + '</mark>';
-
-                // add a mini-summary paragraph
-                var searchResultsMiniSummary = document.createElement('p');
-                searchResultsMiniSummary.innerHTML = numberOfSearchTermsInSection + ' search results for ' + '"<mark>' + searchTerm + '</mark>"';
-                accordionSection.querySelector('header').appendChild(searchResultsMiniSummary);
-            }
-        });
-    }
-
     // if there's no hash, show the first section
     // else (there is a hash, so) show that section
     if (!window.location.hash) {

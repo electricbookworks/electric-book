@@ -182,25 +182,34 @@ function ebSearchTermsOnPage() {
 
 }
 
-// Ask mark.js to mark all the search terms.
-// We mark both the searchTerm and the search-query stem
-var markInstance = new Mark(document.querySelector(".wrapper"));
-if (searchTerm || getQueryVariable('search_stem')) {
+function ebMarkSearchTermsOnPage() {
+    'use strict';
 
-    // Create an array containing the search term
-    // and the search stem to pass to mark.js
-    var arrayToMark = [];
+    // Ask mark.js to mark all the search terms.
+    // We mark both the searchTerm and the search-query stem
+    var markInstance = new Mark(document.querySelector("#content"));
+    if (searchTerm || getQueryVariable('search_stem')) {
 
-    // Add them to the array if they exist
-    if (searchTerm) {
-        arrayToMark.push(searchTerm);
+        // Create an array containing the search term
+        // and the search stem to pass to mark.js
+        var arrayToMark = [];
+
+        // Add them to the array if they exist
+        if (searchTerm) {
+            arrayToMark.push(searchTerm);
+        }
+        if (getQueryVariable('search_stem')) {
+            arrayToMark.push(getQueryVariable('search_stem'));
+        }
+
+        // Mark their instances on the page
+        markInstance.unmark().mark(arrayToMark);
+
+        // Show the search-results nav
+        ebSearchTermsOnPage();
+    } else {
+        document.body.setAttribute('data-search-results', 'none');
     }
-    if (getQueryVariable('search_stem')) {
-        arrayToMark.push(getQueryVariable('search_stem'));
-    }
-
-    // Mark their instances on the page
-    markInstance.unmark().mark(arrayToMark);
 }
 
 // Wait for ids to be on the page, and the indexing stuff,
@@ -216,7 +225,7 @@ function ebPrepareSearchTermsOnPage() {
                 if (document.body.getAttribute('data-index-targets')
                         && document.body.getAttribute('data-ids-assigned')) {
                     readyForSearchTerms = true;
-                    ebSearchTermsOnPage();
+                    ebMarkSearchTermsOnPage();
                     searchTermsObserver.disconnect();
                 }
             }
