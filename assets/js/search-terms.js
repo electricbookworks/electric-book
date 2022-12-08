@@ -187,7 +187,7 @@ function ebMarkSearchTermsOnPage() {
 
     // Ask mark.js to mark all the search terms.
     // We mark both the searchTerm and the search-query stem
-    var markInstance = new Mark(document.querySelector("#content"));
+    var markInstance = new Mark(document.querySelector(".content"));
     if (searchTerm || getQueryVariable('search_stem')) {
 
         // Create an array containing the search term
