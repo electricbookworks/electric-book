@@ -159,8 +159,10 @@
                             {% assign this-book-start-page = this-work.default.products[site.output].start-page %}
                         {% elsif this-work[variant].products.web.start-page and this-work[variant].products.web.start-page != "" %}
                             {% assign this-book-start-page = this-work[variant].products.web.start-page %}
-                        {% else %}
+                        {% elsif this-work.default.products.web.start-page %}
                             {% assign this-book-start-page = this-work.default.products.web.start-page %}
+                        {% else %}
+                            {% assign this-book-start-page = "index" %}
                         {% endif %}                        
 
                         <li {% if site.data.settings[site.output].nav.home.expand-books == true %}class="has-children" {% endif %}>
