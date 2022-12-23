@@ -436,6 +436,8 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 
 // Lightning Source setup
 @import "template/partials/print-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
+// AH Formatter setup
+@import "template/partials/print-setup-ah-formatter"; // AH Formatter-specific overrides
 
 // Theme rules
 @import "theme/print-rules";

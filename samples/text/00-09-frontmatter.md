@@ -5,7 +5,7 @@ style: frontmatter
 
 # Other frontmatter
 
-In a real book, this might be a Preface or a Foreword or some other kind of prefatory section. But right now we just want to show you what it looks like when a book file is generic frontmatter. To keep you entertained as you stare at these pages, here is the first part of Hippolyte Adolphe Taine's Introduction to the *History of English Literature.*
+*In a real book*{:.smallcaps}, this might be a Preface or a Foreword or some other kind of prefatory section. But right now we just want to show you what it looks like when a book file is generic frontmatter. To keep you entertained as you stare at these pages, here is the first part of Hippolyte Adolphe Taine's Introduction to the *History of English Literature.*
 
 History, within a hundred years in Germany, and within sixty years in France, has undergone a transformation owing to a study of literatures.
 {:.first}

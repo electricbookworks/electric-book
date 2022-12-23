@@ -1,0 +1,47 @@
+$print-setup-ah-formatter: false !default;
+$print-cross-refs: true !default;
+@if $print-setup-ah-formatter {
+
+    /* AH Formatter-specific overrides
+     * -------------------------------
+     *
+     */
+
+    /* Cross-references. */
+    @if $print-cross-refs {
+        // Show the page number of a link with a show-page-number class.
+        a.show-page-number::after{
+            content: "\A0(" target-counter(attr(href), page) ")";
+        }
+        // Use `show-page-number-lower-roman` for page refs to
+        // lower-roman pages
+        a.show-page-number-lower-roman::after{
+            content: "\A0(" target-counter(attr(href), page, lower-roman) ")";
+        }
+    }
+    /* Indexes. */
+    .reference-index .references,
+    .reference-index-manual .references {
+        -ah-suppress-duplicate-page-number: true;
+        -ah-merge-sequential-page-numbers: merge;
+        margin-left: 0.5em;
+    }
+    .reference-index a,
+    .reference-index a:first-of-type,
+    .reference-index-manual a,
+    .reference-index-manual a:first-of-type {
+        content: target-counter(attr(href), page);
+    }
+    .reference-index a:first-of-type,
+    .reference-index-manual a:first-of-type {
+        margin-left: 0;
+    }
+    /* AH Formatter V7.2 does not support 'word-break: break-word;'. */
+    a {
+        word-break: keep-all;
+    }
+    pre {
+        word-break: break-all;
+        white-space: pre-wrap;
+    }
+}

@@ -22,6 +22,8 @@
 // Set variables
 // -------------
 
+$print-setup-ah-formatter: true;
+
 // Edition suffix: identifies this edition in page-fitting classes (in _print-fitting.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
 // A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
@@ -53,6 +55,536 @@ $edition-suffix: null;
 // -------------
 // Custom styles
 // -------------
+
+@if $print-setup-ah-formatter {
+
+    /* AH Formatter-specific overrides
+     * -------------------------------
+     */
+
+    @page {
+        /* Size the bottom margin so that the text block is an exact
+         * number of lines.  This stops footnotes, sidenotes, and
+         * other content aligned to the bottom from extending below
+         * the bottom of the last text line.
+         */
+        $lines-per-page: 35 !default;
+        margin-bottom: $page-height - $margin-top - (($lines-per-page - 1) * $line-height-default + $font-size-default);
+    }
+    /* AH Formatter does not implement 'margin-inside' and
+       'margin-outside'. */
+    @page :left {
+        margin-left: $margin-outside;
+        margin-right: $margin-inside;
+    }
+    @page :right {
+        margin-left: $margin-inside;
+        margin-right: $margin-outside;
+    }
+    /* Baseline grid. */
+    :root {
+        font-size: $font-size-default;
+        line-height: $line-height-default;
+        font-family: "Crimson Pro";
+    }
+    body {
+        -ah-baseline-grid: root;
+    }
+    /* The single <body> from each HTML file is now a <div> in the merged
+       HTML file.  Copy the 'string-set' declaration that was
+       specified for <body>. */
+    .__body {
+        string-set:
+            page-header attr(data-header),
+            page-header-left attr(data-header-left),
+            page-header-right attr(data-header-right),
+            page-info attr(data-page-info),
+            book-creator attr(data-creator),
+            book-title attr(data-title);
+    }
+
+    /* Copyright page
+     * --------------
+     */
+
+    /* Vertically align the content on the bottom of the page.
+     */
+    .copyright-page {
+        height: 100%;
+        -ah-display-align: after;
+        -ah-baseline-grid: none;
+        position: inherit;  /* Unset the previous setting. */
+    }
+    /* Align the copyright with the bottom of the text block. */
+    .copyright-page p {
+        margin-bottom: 0;
+    }
+
+    /* Frontispiece
+     * ------------
+     */
+
+    /* Vertically center the frontispiece image on the page.
+     * Do not let the image float.
+     */
+    .frontispiece-page {
+        height: 100%;
+        -ah-display-align: center;
+        -ah-baseline-grid: none;
+    }
+    .frontispiece-page blockquote {
+        float: none;
+    }
+    .frontispiece-page .figure {
+        margin-top: 0;
+    }
+    .frontispiece-page .figure p img:first-child {
+        float: none;
+    }
+
+    /* Frontmatter
+     * -----------
+     */
+    
+    /* Generate a dropped initial letter.
+     */
+    .frontmatter h1 + p::first-letter {
+        -ah-initial-letters: 3;
+    }
+    /* For better appearance, both outdent the dropped letter for better
+     * optical alignment with the edge of the text block and also control
+     * the distance between the letter and adjacent text on each line.
+     * Obviously, these distances are different for different letters.
+     * CSS won't select based on the text content, so rely on the XSLT
+     * to generate a 'data-initial-letter' attribute as a hint.
+     */ 
+    .frontmatter h1 + p[data-initial-letter="I"]::first-letter {
+        text-indent: unquote("calc((-110 div 1024) * 1dcem)");
+        -ah-initial-letters-end-indent: -0.04dcem 0.3dcem;
+    }
+
+    /* Chapters
+     * --------
+     */
+
+    /* Align chapter titles with the baseline grid. */
+    .chapter {margin-top: 71.87402pt;}
+    h2 {-ah-baseline-grid: new;}
+    h2:first-child {
+        /* It would be better for multi-line titles to move up rather than
+           push down the chapter drop. */
+        /*height: 102.922851568pt; margin-top: 0; -ah-display-align: after;*/
+        -ah-baseline-block-snap: none;
+        line-height: 22.5pt;
+    }
+
+    /* Quoted letter
+     * -------------
+     * Allow punctuation to hang in the margins.
+     */
+    blockquote.letter {
+        -ah-hanging-punctuation: first allow-end last;
+    }
+    /* Workaround for valediction containing a line-break rather than
+     * being two paragraphs.
+     */
+    .valediction {
+        -ah-hanging-punctuation: start allow-end last;
+    }
+    /* It's possible to hang punctuation in all paragraphs. */
+    /*
+    p {
+        -ah-hanging-punctuation: allow-end last;
+    }
+    */
+
+    .toc-list {
+        -ah-baseline-grid: none;
+    }
+    blockquote.box {
+        -ah-baseline-grid: new;
+    }
+    /* Sidenotes
+     * ---------
+     */
+    @page {
+        @sidenote {
+            -ah-float: right;
+            width: 35%;
+        }
+    }
+    /* A 'bottom' sidenote is a footnote. */
+    .sidenote.bottom {
+        float: bottom;
+    }
+    /* Every other sidenote floats to the side. */
+    .sidenote:not(.bottom) {
+        float: sidenote;
+        margin-left: $line-height-default * $font-size-smaller;
+        margin-right: 0;
+        /* Undo previous settings. */
+        max-width: inherit;
+        min-width: inherit;
+    }
+    /* Adjust line-height in proportion to reduced font size. */
+    .sidenote {
+        line-height: $line-height-default * $font-size-smaller;
+        -ah-baseline-grid: new;
+        -ah-baseline-block-snap: before border-box;
+    }
+    /* Align the baseline of the first line of the sidenote with the
+       baseline of the body text. */
+    em.sidenote {
+        margin-top: 4pt + 3.049pt - 1pt - 0.25 * $font-size-default * $font-size-smaller;
+        padding-top: 0.25 * $font-size-default * $font-size-smaller;
+        border-top-width: 1pt;
+        -ah-baseline-block-snap: none;
+        -ah-baseline-block-snap: before margin-box;
+    }
+    /* Sidenote at start of first paragraph doesn't have any leading above
+       it. */
+    p:first-of-type em.sidenote {
+        margin-top:3.049pt - 1pt - 0.25 * $font-size-default * $font-size-smaller;
+    }
+    p.sidenote,
+    blockquote.sidenote {
+        margin-top: 2.449pt/*calc(3.049pt - 1pt - 0.25 * $font-size-default * $font-size-smaller)*/;
+        padding-top: 0.25 * $font-size-default * $font-size-smaller;
+        border-top-width: 1pt;
+        -ah-baseline-block-snap: none;
+        box-sizing:border-box;
+    }
+    blockquote.sidenote {
+        margin-top: 3.449pt;
+        padding-top:0.25 * $font-size-default * $font-size-smaller;
+        border-top-width: 1pt;
+        -ah-baseline-block-snap: none;
+        box-sizing: border-box;
+        -ah-baseline-block-snap: before margin-box;
+    }
+    /* Do not display a marker where the sidenote came from. */
+    ::sidenote-call {
+        display: none;
+    }
+
+    /* Footnotes
+     * ---------
+     */
+    div.footnotes {
+        -ah-baseline-grid: new;
+        -ah-baseline-block-snap: none;
+        margin-top: 0;
+    }
+
+    /* Tables
+     * ------
+     */
+
+    /* Reduce line-height in proportion to reduced font size.
+       Use no baseline grid inside the table. */
+    table {
+        line-height: $line-height-default * $font-size-smaller;
+        -ah-baseline-grid: none;
+    }
+
+    /* Lists
+     * -----
+     */
+
+    /* Base the marker width on the current font size. */
+    li {
+        margin-left:1em;
+    }
+    li::marker {
+        width: 1em;
+    }
+
+    /* Paragraphs
+     * ----------
+     */
+
+    p {
+        /* '-ah-flush-zone' nudges the last line of justified text to fill
+         * the line if unadjusted end of the line is within the 'flush
+         * zone'.
+         */
+        -ah-flush-zone: 0.5em;
+        /* '-ah-adjust-last-line-spacing' adjusts the spacing of
+         * the last line of justified text so there's less visual
+         * difference between a possible widely-space second last line
+         * and an unjustified last line with normal spacing between
+         * words.
+         */
+        -ah-adjust-last-line-spacing: true;
+    }
+    .footnotes p {
+        /* Do not adjust last line spacing in endnotes. */
+        -ah-adjust-last-line-spacing: false;
+    }
+    /* Do not justify 'identifiers' paragraph on copyright page or
+     * valediciton of letter.
+     */
+    p.identifiers,
+    p.valediction {
+        text-align: left;
+    }
+
+    p,
+    /* Undo some of the contexts where 'text-indent' is 0. */
+    blockquote + p,
+    .bibliography + p,
+    .box + p,
+    .figure + p,
+    .image-with-caption + p,
+    .video + p,
+    .MathJax_Display + p,
+    .mjpage__block + p,
+    pre + p,
+    div[class*="highlighter-"]+p {
+        text-indent: 1em;
+    }
+
+    /* Set 'text-indent' after a heading, in an li, etc. */
+    h2 + p,
+    h3 + p,
+    h4 + p,
+    h5 + p,
+    h6 + p,
+    li p:first-child,
+    p.image-with-caption {
+        text-indent: 0;
+    }
+
+    /* Columns
+     * -------
+     */
+
+    /* Replicate specifications for columns because there is no longer a
+       single <div id="content"> in merged HTML file. */
+    $print-columns: true !default;
+    @if $print-columns {
+
+        // Columns
+
+        $page-body-width: $page-width - $margin-inside - $margin-outside !default;
+        $columns-gap-default: $line-height-default !default;
+        $columns-1-gap: 0 !default;
+        $columns-2-gap: $columns-gap-default !default;
+        $columns-3-gap: $columns-gap-default !default;
+        $columns-1-width: $page-body-width !default;
+        $columns-2-width: ($page-body-width - $columns-2-gap) / 2 !default;
+        $columns-3-width: ($page-body-width - $columns-3-gap * 2) / 3 !default;
+
+        #content,
+        div[id $= "__content"] {
+            column-count: $columns-default;
+            column-gap: $columns-gap-default;
+            // column-fill: auto; // do not balance columns
+            // Allow document-level overrides by
+            // columns-x class on body element
+            .columns-1 & {
+                column-count: 1;
+                column-gap: $columns-1-gap;
+            }
+            .columns-2 & {
+                column-count: 2;
+                column-gap: $columns-2-gap;
+            }
+            .columns-3 & {
+                column-count: 3;
+                column-gap: $columns-3-gap;
+            }
+        }
+    }
+
+    /* Graphics
+     * --------
+     */
+
+    .figure {
+        -ah-baseline-grid: none;
+    }
+    /* Reduce line height in proportion to reduced font size. */
+    p.caption,
+    p.image-with-caption {
+        line-height: $line-height-default * $font-size-smaller;
+        -ah-baseline-grid: none;
+    }
+    /* Float images rather than leave gaps. */
+    p:not(.image-with-caption) img:first-child {
+        float: top;
+    }
+
+    /* Code listings
+     * -------------
+     */
+
+    /* Indicate lines that wrap. */
+    pre {
+        -ah-line-continued-mark: "\\";
+        -ah-line-continued-mark-offset: -0.8 * $font-size-default - $line-height-default / 2;
+        -ah-line-continued-mark-color: $color-mid;
+        margin: 0;
+    }
+
+    /* Quotes
+     * ------
+     */
+
+    /* Right align the source of the quotation. */
+    .source {
+        text-align: right;
+    }
+    /* When the source follows a block quote, use a negative margin to
+       pull the source closer to the block quote. */
+    p.source {
+        margin-top: -9.2pt;
+        margin-left: 15%;
+        margin-right: $font-size-default;
+        line-height: $line-height-default * $font-size-smaller;
+        -ah-baseline-grid: new;
+        -ah-baseline-block-snap: none;
+    }
+
+    /* Slides
+     * ------
+     */
+    .slides {
+        font-size: $font-size-default * $font-size-smaller;
+        line-height: $line-height-default * $font-size-smaller;
+        -ah-baseline-grid: new;
+    }
+    .slides .figure.summary .figure-source .source {
+        display: block;
+        margin-top: 3.2pt;
+    }
+    /* Unlike other sources, the source in a slide is not already in
+       italics. */
+    .slides .figure.summary .figure-source .source em {
+        font-style: italic;
+    }
+    
+    /* Maths
+     * -----
+     */
+
+    /* No baseline grid inside MathML. */
+    .MathJax_Display,
+    .mjpage__block {
+        -ah-baseline-grid: none;
+        -ah-baseline-block-snap: auto margin-box;
+        display: block;
+    }
+    /* MathJax styles that were lost when HTML files merged into one
+     *  file.
+     */
+    .mjpage .MJX-monospace {
+        font-family: monospace
+    }
+
+    .mjpage .MJX-sans-serif {
+        font-family: sans-serif
+    }
+
+    .mjpage {
+        display: inline;
+        font-style: normal;
+        font-weight: normal;
+        line-height: normal;
+        font-size: 100%;
+        font-size-adjust: none;
+        text-indent: 0;
+        text-align: left;
+        text-transform: none;
+        letter-spacing: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        float: none;
+        direction: ltr;
+        max-width: none;
+        max-height: none;
+        min-width: 0;
+        min-height: 0;
+        border: 0;
+        padding: 0;
+        margin: 0
+    }
+
+    .mjpage * {
+        transition: none;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none
+    }
+
+    .mjx-svg-href {
+        fill: blue;
+        stroke: blue
+    }
+
+    .MathJax_SVG_LineBox {
+        display: table!important
+    }
+
+    .MathJax_SVG_LineBox span {
+        display: table-cell!important;
+        width: 10000em!important;
+        min-width: 0;
+        max-width: none;
+        padding: 0;
+        border: 0;
+        margin: 0
+    }
+
+    .mjpage__block {
+        text-align: center;
+        margin: 1em 0em;
+        position: relative;
+        display: block!important;
+        text-indent: 0;
+        max-width: none;
+        max-height: none;
+        min-width: 0;
+        min-height: 0;
+        width: 100%
+    }
+
+    /* Line numbers
+     * ------------
+     */
+
+    /* Show line number for every fifth line in poetry, starting from the
+     * fifth line.
+     */
+    :root {
+        -ah-line-number-start: 5;
+        -ah-line-number-interval: 5;
+    }
+    .verse {
+        /* Show line numbers. */
+        -ah-line-number: show;
+        -ah-line-number-position: end;
+        /* Restart for each verse. */
+        -ah-line-number-reset: force;
+        /* Line numbers are small and italic. */
+        -ah-line-number-font-size: 5.5pt;
+        -ah-line-number-font-style: italic;
+        -ah-line-number-offset: 5.5pt;
+        /* Do not number runover lines. */
+        -ah-line-number-except-continued-line: true;
+    }
+
+    /* Rely on the XSLT adding a 'data-*' attribute to work around the
+     * poem title also being in an <li> in the same list and making
+     * lines that could be numbered.
+     */
+    .verse li[data-verse-title = 'yes'],
+    .verse li:empty {
+        -ah-line-number: none;
+    }
+}
 
 // Add any custom Sass or CSS here.
 

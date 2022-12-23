@@ -29,6 +29,7 @@ echo Electric Book options
 echo ---------------------
 echo.
 echo 1  Create a print PDF
+echo 1a Create a print PDF using AH Formatter
 echo 2  Create a screen PDF
 echo 3  Run as a website
 echo 4  Create an epub
@@ -41,6 +42,7 @@ echo x  Exit
 echo.
 set /p process=Enter a number and hit return. 
     if "%process%"=="1" goto printpdf
+    if "%process%"=="1a" goto printahf
     if "%process%"=="2" goto screenpdf
     if "%process%"=="3" goto website
     if "%process%"=="4" goto epub
@@ -147,7 +149,7 @@ set /p process=Enter a number and hit return.
             :: (For some reason this has to be run with call)
             set print-pdf-filename=%bookfolder%-%subdirectory%-print
             if "%subdirectory%"=="" set print-pdf-filename=%bookfolder%-print
-            call prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
+	    call prince -v -l file-list -o "%location%_output\%print-pdf-filename%.pdf" --javascript
 
             :: Navigate back to where we began.
             cd "%location%"
@@ -169,6 +171,134 @@ set /p process=Enter a number and hit return.
         set repeat=
         set /p repeat=Enter to run again, or any other key and enter to stop. 
         if "%repeat%"=="" goto printpdfrefresh
+        echo.
+        goto begin
+
+
+    :: :: :: :: :: :: :: :: :: :: :: ::
+    :: PRINT PDF USING AH Formatter  ::
+    :: :: :: :: :: :: :: :: :: :: :: ::
+
+    :printahf
+
+        :: Encouraging message
+        echo.
+        echo Okay, let's make a print-ready PDF.
+        echo.
+
+        :: Remember where we are by assigning a variable to the current directory
+        set location=%~dp0
+
+        :: Ask user which folder to process
+        :printahfchoosefolder
+            set /p bookfolder=Which book folder are we processing? (Hit enter for default 'book' folder.) 
+            if "%bookfolder%"=="" set bookfolder=book
+            if not exist "%bookfolder%\*.*" echo Sorry, %bookfolder% doesn't exist. Try again. && goto printahfchoosefolder
+            echo.
+
+        :: Ask if we're outputting the files from a subdirectory
+        :printahfwhatsubdirectory
+            set /p subdirectory=If you're outputting files in a subdirectory (e.g. a translation), type its name. Otherwise, hit enter. 
+            if not exist "%bookfolder%\%subdirectory%\*.*" echo Sorry, %bookfolder%\%subdirectory% doesn't exist. Try again. && goto printahfwhatsubdirectory
+            echo.
+
+        :: Ask the user to add any extra Jekyll config files, e.g. _config.images.print-ahf.yml
+        :print-ahf-otherconfigs
+            echo.
+            echo Any extra config files?
+            echo Enter filenames (including any relative path), comma separated, no spaces. E.g.
+            echo _configs/_config.myconfig.yml
+            echo If not, just hit return.
+            echo.
+            set /p config=
+            echo.
+
+        :: Ask if we're processing MathJax, so we know whether to process the HTML
+            echo Does this book use MathJax? If yes, enter y. If no, just hit enter. 
+            set /p print-ahf-mathjax=
+
+        :: Loop back to this point to refresh the build and PDF
+        :printahfrefresh
+
+            :: let the user know we're on it!
+            echo Generating HTML...
+
+            :: ...and run Jekyll to build new HTML
+            :: with MathJax enabled if necessary
+            if not "%print-ahf-mathjax%"=="y" goto printahfnomathjax
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,_configs/_config.mathjax-enabled.yml,%config%" || exit /b
+            goto printahfjekylldone
+
+            :: Build Jekyll without MathJax
+            :printahfnomathjax
+            call bundle exec jekyll build --config="_config.yml,_configs/_config.print-pdf.yml,%config%" || exit /b
+
+            :printahfjekylldone
+
+            :: Skip the next step if we're not using MathJax.
+            if not "%print-ahf-mathjax%"=="y" goto printahfaftermathjax
+
+            :: Convert all MathJax LaTeX to MathML
+            if "%subdirectory%"=="" call gulp mathjax --book %bookfolder%
+            if not "%subdirectory%"=="" call gulp mathjax --book %bookfolder% --language %subdirectory%
+            cd "%location%"
+
+            :printahfaftermathjax
+
+            :: Pre-process HTML for book indexes
+            rem echo Creating targets for book-index references...
+            rem if "%subdirectory%"=="" call gulp renderIndexCommentsAsTargets --book %bookfolder%
+            rem if not "%subdirectory%"=="" call gulp renderIndexCommentsAsTargets --book %bookfolder% --language %printahfsubdirectory%
+
+            rem echo Adding link references to book indexes...
+            rem if "%subdirectory%"=="" call gulp renderIndexListReferences --book %bookfolder% --output printpdf
+            rem if not "%subdirectory%"=="" call gulp renderIndexListReferences --book %bookfolder% --language %printahfsubdirectory% --output printpdf
+
+            :: Navigate into the book's folder in _site output
+            cd _site\%bookfolder%\"%subdirectory%\text"
+
+            :: Check if the _output folder exists, or create it if not.
+            :: (this check is currently not working in some setups, disabling it)
+            rem if not exist ..\..\..\_output\nul
+            rem mkdir ..\..\..\_output
+
+            set print-ahf-filename=%bookfolder%-%subdirectory%-print
+
+            :: Let the user know we're merging HTMLs.
+            echo Merging into single HTML file...
+
+	    if "%subdirectory%"=="" set print-ahf-filename=%bookfolder%-print
+
+	    call node %location%/node_modules/xslt3/xslt3.js -it -xsl:%location%/_tools/xslt/eb2ahf.xsl -o:out.html file-list="file:///%location%_site/%bookfolder%/%subdirectory%text/file-list"
+
+            :: Let the user know we're now going to make the PDF
+            echo Creating PDF...
+
+            :: Run AH Formatter, showing progress (-pgbar),
+            :: and saving the resulting PDF to the _output folder.
+	    :: 'formatter-config.xml' enables responsive SVG sizing.
+            AHFCmd -pgbar -x 4 -d out.html -o "%location%_output\%print-ahf-filename%.pdf" -i "%location%_tools\ahf\formatter-config.xml"
+
+            :: Navigate back to where we began.
+            cd "%location%"
+
+            :: Tell the user we're done
+            echo Done! Opening PDF...
+
+            :: Navigate to the _output folder...
+            cd _output
+
+            :: and open the PDF we just created 
+            :: (`start` so the PDF app opens as a separate process, doesn't hold up this script)
+            start %print-ahf-filename%.pdf
+
+            :: Navigate back to where we began.
+            cd ..\
+
+        :: Let the user easily refresh the PDF by running jekyll b and prince again
+        set repeat=
+        set /p repeat=Enter to run again, or any other key and enter to stop. 
+        if "%repeat%"=="" goto printahfrefresh
         echo.
         goto begin
 
