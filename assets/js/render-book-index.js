@@ -62,9 +62,11 @@ function generateTargetsIndex() {
 
             // Check that any index targets for the page have been processed.
             // This is done by assets/js/index-targets.js (in bundle.js).
-            await page.waitForSelector('[data-index-targets]');
+            if (settings.dynamicIndexing !== false) {
+                await page.waitForSelector('[data-index-targets]');
+            }
 
-            // Get the page content. Note: we can only pass serialized data
+            // Note: we can only pass serialized data
             // back to the parent process.
             var indexEntries = await page.evaluate(function () {
 
@@ -119,7 +121,7 @@ function generateTargetsIndex() {
             //   entryText: 'Entry Text',
             //   filename: 'filename.html',
             //   id: '#entry-text--iid-1',
-            //   path: samples/text/filename.html
+            //   path: samples/filename.html
             // }
 
             // Parse the serialized entries and add

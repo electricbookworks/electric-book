@@ -6,6 +6,7 @@
 # or set it to not be modified by automated image processessing.
 # Possible formats: print-pdf, screen-pdf, web, epub, app
 # See the docs for more detail: /docs/images/image-conversions.html#image-settings
+# For advanced SVG options, see /docs/images/svg-processing.html
 #
 # E.g.
 # book:

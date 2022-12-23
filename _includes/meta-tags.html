@@ -1,0 +1,78 @@
+{% comment %} Meta tags for OpenGraph metadata
+and similar uses, e.g. social sharing. {% endcomment %}
+
+
+{% comment %} Page title {% endcomment %}
+
+{% capture meta-tag-title %}{{ project-name }}{% endcapture %}
+{% if page.title and page.title != "" %}
+    {% capture meta-tag-title %}{{ page.title }}{% endcapture %}
+{% elsif title and title != "" %}
+    {% capture meta-tag-title %}{{ title }}{% endcapture %}
+{% endif %}
+
+
+{% comment %} Page URL {% endcomment %}
+
+{% capture meta-tag-url %}{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}{% endcapture %}
+
+
+{% comment %} Page description
+
+In order of preference:
+1. Page description (from page frontmatter)
+2. Book description (from `_data/works` via metadata include)
+3. Project description (from `_data/works` via metadata include)
+{% endcomment %}
+
+{% capture meta-tag-description %}{{ project-description }}{% endcapture %}
+{% if page.description and page.description != "" %}
+    {% capture meta-tag-description %}{{ page.description }}{% endcapture %}
+{% elsif description and description != "" %}
+    {% capture meta-tag-description %}{{ description }}{% endcapture %}
+{% endif %}
+
+
+{% comment %} Image {% endcomment %}
+
+{% capture meta-tag-image-relative %}
+
+    {% comment %} If the page has an image defined for it, use that... {% endcomment %}
+    {% if page.image %}
+
+        {% if is-root-directory == true or is-translation-root-directory == true %}
+            assets/images/web/{{ page.image }}
+        {% else %}
+            {{ book-directory }}/{{ site.image-set }}/{{ page.image }}
+        {% endif %}
+
+    {% comment %} If no page image is defined...
+
+    on non-book pages use the project image,
+    and the translated version for translated home pages.
+    We don't check for the existence of the translated image file,
+    to save build time. Onus on user to add it to assets/[language]. {% endcomment %}
+    {% elsif is-root-directory == true or is-translation-root-directory == true %}
+        {% if is-translation-homepage == true %}
+            assets/{{ language }}/images/web/{{ project-image }}
+        {% else %}
+            assets/images/web/{{ project-image }}
+        {% endif %}
+
+    {% comment %} Otherwise, if there is a web image, use that {% endcomment %}
+    {% elsif web-image != "" %}
+        {{ book-directory }}/{{ site.image-set }}/{{ web-image }}
+
+    {% comment %} Otherwise, if no web-image but there is an image defined
+    for the work or product, use that {% endcomment %}
+    {% elsif image != "" %}
+        {{ book-directory }}/{{ site.image-set }}/{{ image }}
+
+    {% comment %} Or fall back to the project image {% endcomment %}
+    {% else %}
+        assets/images/web/{{ project-image }}
+    {% endif %}
+{% endcapture %}
+
+{% comment %} Add absolute-link prefix to the relative path {% endcomment %}
+{% capture meta-tag-image %}{{ site.canonical-url }}{{ site.baseurl }}/{{ meta-tag-image-relative | strip_newlines | strip }}{% endcapture %}

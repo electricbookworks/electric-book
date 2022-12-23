@@ -1,0 +1,1 @@
+{"id":35,"url":"samples/03-02-maths.html","title":"Mathematics – Samples","description":"Sample content demonstrating Electric Book support for a wide range of book features.","content":"Mathematics Jekyll uses MathJax, which the Electric Book workflow supports. In this repo, MathJax is not enabled at the moment. Enable it in _config.yml to see a mathematics sample here."}

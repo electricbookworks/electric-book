@@ -8,6 +8,10 @@ Now check which output format we're creating, and capture its toc.
 Fall back to print-pdf toc, then web nav list.
 {% endcomment %}
 
+{% comment %} Create a flag for when there is
+no toc in _data/works YAML. {% endcomment %}
+{% assign use-files-for-toc = false %}
+
 {% unless include.start %}
 
     {% if site.output == "print-pdf" %}
@@ -16,7 +20,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif web-nav-tree != nil %}
             {% assign toc = web-nav-tree %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% elsif site.output == "screen-pdf" %}
@@ -27,7 +31,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif web-nav-tree != nil %}
             {% assign toc = web-nav-tree %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% elsif site.output == "epub" %}
@@ -38,7 +42,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif web-nav-tree != nil %}
             {% assign toc = web-nav-tree %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% elsif site.output == "web" %}
@@ -49,7 +53,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif print-pdf-toc != nil %}
             {% assign toc = print-pdf-toc %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% elsif site.output == "app" %}
@@ -64,7 +68,7 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif print-pdf-toc != nil %}
             {% assign toc = print-pdf-toc %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% else %}
@@ -73,12 +77,20 @@ Fall back to print-pdf toc, then web nav list.
         {% elsif print-pdf-toc != nil %}
             {% assign toc = print-pdf-toc %}
         {% else %}
-            Please define a TOC or web nav in meta.yml.
+            {% assign use-files-for-toc = true %}
         {% endif %}
 
     {% endif %}
 
 {% endunless %}
+
+{% comment %} Are we using files to generate a TOC, or
+are we using the TOC defined in _data/works YAML? {% endcomment %}
+{% if use-files-for-toc == true %}
+
+{% include nav-list-files.html type="toc" %}
+
+{% else %}
 
 {% comment %}
 If the file that called this include didn't specify a start parameter, then
@@ -96,13 +108,13 @@ Otherwise, the toc-branch should be the children called by this include recursiv
 {% comment %}If we're not inside a book, we need a path to each file.
 By default, assume we're linking to files in 'book',
 and allow setting a different book directory as a 'book' argument.{% endcomment %}
-{% if is-book-subdirectory %}
+{% if is-book-directory %}
     {% capture toc-path-to-file %}{% endcapture %}
 {% else %}
     {% if include.book %}
-        {% capture toc-path-to-file %}{{ include.book }}/text/{% endcapture %}
+        {% capture toc-path-to-file %}{{ include.book }}/{% endcapture %}
     {% else %}
-        {% capture toc-path-to-file %}book/text/{% endcapture %}
+        {% capture toc-path-to-file %}book/{% endcapture %}
     {% endif %}
 {% endif %}
 
@@ -123,23 +135,17 @@ at the top of the toc, put this in a nav element.{% endcomment %}
     {% comment %}Assume we will use every item in the toc-branch{% endcomment %}
     {% assign include-in-toc = true %}
 
-    {% comment %}If we're outputting a variant, check if a variant toc
-    has been specified. If it has, then it replaced the default toc tree.
-    If we are outputting a variant, and a variant toc is not specified,
-    check which variants, if any, this particular TOC item has specified.
-    Include the item in the TOC only if it is specified in the TOC item's
-    variants list.{% endcomment %}
-    {% if variant and variant-toc == false %}
-        {% assign toc-variants = item.variants | remove: " " | split: "," %}
-        {% for toc-variant in toc-variants %}
-            {% if toc-variant == variant %}
-                {% assign include-in-toc = true %}
-                {% break %}
-            {% else %}
-                {% assign include-in-toc = false %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+    {% comment %} Include the item in the TOC only if it is
+    specified in the TOC item's variants list. {% endcomment %}
+    {% assign toc-variants = item.variants | remove: " " | split: "," %}
+    {% for toc-variant in toc-variants %}
+        {% if toc-variant == variant or toc-variant == "default" %}
+            {% assign include-in-toc = true %}
+            {% break %}
+        {% else %}
+            {% assign include-in-toc = false %}
+        {% endif %}
+    {% endfor %}
 
     {% if include-in-toc == true %}
 
@@ -162,3 +168,6 @@ at the top of the toc, put this in a nav element.{% endcomment %}
 {% if site.output == "epub" and toc-branch == epub-toc or toc-branch == print-pdf-toc or toc-branch == web-nav-tree %}
 </nav>
 {% endif %}
+
+{% endif %}
+{% comment %} if use-files-for-toc {% endcomment %}

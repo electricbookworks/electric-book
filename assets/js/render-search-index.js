@@ -52,10 +52,30 @@ function generateIndex() {
             await page.goto(url);
 
             // Get the page title
-            const title = await page.evaluate(() => document.title.replace(/\"/g, '\'\'').replace(/\s+/g, ' ').trim());
+            const title = await page.evaluate(
+                function () {
+                    const titleElement = document.title;
+                    let titleText = '';
+                    if (titleElement) {
+                        titleText = titleElement
+                            .replace(/\"/g, '\'\'').replace(/\s+/g, ' ').trim()
+                    }
+                    return titleText
+                }
+            );
 
             // Get the page content
-            const content = await page.evaluate(() => document.body.querySelector('#content').textContent.replace(/\"/g, '\'\'').replace(/\s+/g, ' ').trim());
+            const content = await page.evaluate(
+                function () {
+                    var contentDiv = document.querySelector('.content');
+                    var contentText = '';
+                    if (contentDiv) {
+                        contentText = contentDiv.textContent
+                            .replace(/\"/g, '\'\'').replace(/\s+/g, ' ').trim();
+                    }
+                    return contentText;
+                }
+            );
 
             // Write the index entry object.
             // We want this for each page:

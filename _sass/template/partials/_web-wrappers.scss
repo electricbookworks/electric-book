@@ -1,14 +1,14 @@
 $web-wrappers: true !default;
 @if $web-wrappers {
 
-    #wrapper {
+    .wrapper {
         background-color: $color-background;
         overflow-x: hidden; // Prevents horizontal scroll esp. on small screens
     }
 
-    #content {
+    .content {
         clear: none;
-        padding: 0 1em;
+        padding: 0 1rem;
         margin: 0 auto ($line-height-default) auto;
         max-width: $max-width-default;
     }

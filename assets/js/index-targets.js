@@ -39,9 +39,12 @@
 // Note that element names must be uppercase here.
 // (Note: our gulp equivalent uses a different logic
 // that may be more reliable than this.)
+// We include `script` tags so that MathJax blocks,
+// which are in script tags, can also be considered
+// when determining inline vs block-level index tags.
 var ebIndexOptions = {
     blockLevelElements: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6',
-            'P', 'BLOCKQUOTE', 'OL', 'UL', 'TABLE', 'DL', 'DIV']
+            'P', 'BLOCKQUOTE', 'OL', 'UL', 'TABLE', 'DL', 'DIV', 'SCRIPT']
 };
 
 // Process the comments, inserting anchor-tag targets
@@ -58,6 +61,9 @@ function ebIndexProcessComments(comments) {
     if (comments.length < 1) {
         document.body.setAttribute('data-index-targets', 'none');
     }
+
+    // Create a counter for tracking this process
+    var commentCounter = 0;
 
     // Process each comment in the `comments` array.
     comments.forEach(function (comment) {
@@ -120,7 +126,8 @@ function ebIndexProcessComments(comments) {
 
             // Slugify the target text to use in an ID
             // and to check for duplicate instances later.
-            var entrySlug = ebSlugify(line);
+            // The second argument indicates that we are slugifying an index term.
+            var entrySlug = ebSlugify(line, true);
 
             // Add the slug to the array of entries,
             // where will we count occurrences of this entry.
@@ -209,8 +216,13 @@ function ebIndexProcessComments(comments) {
             }
         });
 
+        // Add this comment to the counter
+        commentCounter += 1;
+
         // Add an attribute to flag that we're done.
-        document.body.setAttribute('data-index-targets', 'loaded');
+        if (commentCounter === comments.length) {
+            document.body.setAttribute('data-index-targets', 'loaded');
+        }
     });
 }
 
@@ -250,7 +262,7 @@ function ebIndexGetComments() {
         // NOTE: The last argument [] is a deprecated, optional parameter. However, in
         // IE, the argument is not optional and therefore must be included.
         var treeWalker = document.createTreeWalker(
-            document.getElementById('content'),
+            document.querySelector('.content'),
             NodeFilter.SHOW_COMMENT,
             filter,
             false
@@ -356,7 +368,7 @@ function ebIndexInit() {
 
     // Don't run this if the targets are already loaded
     // (e.g. by pre-processing)
-    if (document.body.getAttribute('data-index-targets') === 'loaded') {
+    if (document.querySelector('[data-index-targets]')) {
         return;
     }
 

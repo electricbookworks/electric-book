@@ -32,7 +32,7 @@ These settings control the content of your masthead in web and app outputs. You 
 - only the project name (setting: `project-name`)
 - the project name and book title (setting: `book-title`)
 - the project name, book title, and page title (setting: `page-title`)
-- full breadcrumbs that include the project name, book title, all labels listed in `nav` in `_data/meta.yml`, and the page title (setting: `breadcrumbs`).
+- full breadcrumbs that include the project name, book title, all labels listed in `nav` in your book's YAML file in `_data/works`, and the page title (setting: `breadcrumbs`).
 
 For example:
 

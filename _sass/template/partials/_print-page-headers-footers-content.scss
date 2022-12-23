@@ -4,11 +4,11 @@ $print-page-headers-footers-content: true !default;
   // This partial sets page header and footer content.
   // It sets separate content for .frontmatter and .chapter pages.
 
-  // Assign a string to the body data-title attribute.
+  // Assign a string to the .wrapper data-title attribute.
   // In markdown, this is set with header: in a file's YAML frontmatter,
   // and falls back to the page title.
 
-  body {
+  .wrapper {
     string-set:
       page-header attr(data-header),
       page-header-left attr(data-header-left),
@@ -167,39 +167,46 @@ $print-page-headers-footers-content: true !default;
   // No headers on first pages of chapters
   .chapter {
     prince-page-group: start;
+
+    @include page-continued();
   }
-  @page chapter:first {
-    @top-center { content: normal; }
-    @top-left { content: normal; }
-    @top-right { content: normal; }
-    @top-left-corner { content: normal; }
-    @top-right-corner { content: normal; }
-    @left-middle { content: normal; }
-    @left-top { content: normal; }
-    @left-bottom { content: normal; }
-    @right-middle { content: normal; }
-    @right-top { content: normal; }
-    @right-bottom { content: normal; }
+
+  @if $first-page-margin-boxes == blank {
+    @page chapter:first {
+      @top-center { content: normal; }
+      @top-left { content: normal; }
+      @top-right { content: normal; }
+      @top-left-corner { content: normal; }
+      @top-right-corner { content: normal; }
+      @left-middle { content: normal; }
+      @left-top { content: normal; }
+      @left-bottom { content: normal; }
+      @right-middle { content: normal; }
+      @right-top { content: normal; }
+      @right-bottom { content: normal; }
+    }
   }
 
   // No headers or footers on blank pages of chapters
-  @page chapter:blank {
-    @top-center { content: normal; }
-    @top-left { content: normal; }
-    @top-right { content: normal; }
-    @top-left-corner { content: normal; }
-    @top-right-corner { content: normal; }
-    @bottom-center { content: normal; }
-    @bottom-left { content: normal; }
-    @bottom-right { content: normal; }
-    @bottom-left-corner { content: normal; }
-    @bottom-right-corner { content: normal; }
-    @left-middle { content: normal; }
-    @left-top { content: normal; }
-    @left-bottom { content: normal; }
-    @right-middle { content: normal; }
-    @right-top { content: normal; }
-    @right-bottom { content: normal; }
+  @if $first-page-margin-boxes == blank {
+    @page chapter:blank {
+      @top-center { content: normal; }
+      @top-left { content: normal; }
+      @top-right { content: normal; }
+      @top-left-corner { content: normal; }
+      @top-right-corner { content: normal; }
+      @bottom-center { content: normal; }
+      @bottom-left { content: normal; }
+      @bottom-right { content: normal; }
+      @bottom-left-corner { content: normal; }
+      @bottom-right-corner { content: normal; }
+      @left-middle { content: normal; }
+      @left-top { content: normal; }
+      @left-bottom { content: normal; }
+      @right-middle { content: normal; }
+      @right-top { content: normal; }
+      @right-bottom { content: normal; }
+    }
   }
 
   // Now we place our content for `.frontmatter` pages
@@ -311,19 +318,23 @@ $print-page-headers-footers-content: true !default;
   // No headers on first pages of frontmatter
   .frontmatter {
     prince-page-group: start;
+
+    @include page-continued();
   }
-  @page frontmatter:first {
-    @top-center { content: normal; }
-    @top-left { content: normal; }
-    @top-right { content: normal; }
-    @top-left-corner { content: normal; }
-    @top-right-corner { content: normal; }
-    @left-middle { content: normal; }
-    @left-top { content: normal; }
-    @left-bottom { content: normal; }
-    @right-middle { content: normal; }
-    @right-top { content: normal; }
-    @right-bottom { content: normal; }
+  @if $first-page-margin-boxes == blank {
+    @page frontmatter:first {
+      @top-center { content: normal; }
+      @top-left { content: normal; }
+      @top-right { content: normal; }
+      @top-left-corner { content: normal; }
+      @top-right-corner { content: normal; }
+      @left-middle { content: normal; }
+      @left-top { content: normal; }
+      @left-bottom { content: normal; }
+      @right-middle { content: normal; }
+      @right-top { content: normal; }
+      @right-bottom { content: normal; }
+    }
   }
 
   // No headers or footers on blank pages of frontmatter

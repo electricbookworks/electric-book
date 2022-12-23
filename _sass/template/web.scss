@@ -3,7 +3,7 @@
 // This is typography for the Electric Book template (see http://ebw.co/template).
 // It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
 // It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
-// 
+//
 // How to use it
 // -------------
 // Edit the default variables below.
@@ -25,8 +25,12 @@ $output-format: "web" !default;
 // Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
 $edition-suffix: null !default;
 
+// The path to the project root, for settings paths to fonts and colour profiles.
+// Override this for translations, which need an extra leading ../
+$path-to-root-directory: "../.." !default;
+
 // Max width of main body area
-$max-width-default: 40em !default;
+$max-width-default: 50rem !default;
 
 // We name font variables for two categories:
 // - 'text' fonts are used for body text and some page features;
@@ -74,12 +78,12 @@ $color-links: $template-blue !default;
 $color-buttons: $color-accent !default;
 $color-buttons-hover: darken( $color-buttons, 20% ) !default;
 $color-highlight: $template-yellow !default;
-$color-notification-low-text: $color-light !default;
-$color-notification-medium-text: $color-light !default;
-$color-notification-high-text: $color-light !default;
-$color-notification-low-background: $template-green !default;
-$color-notification-medium-background: $template-yellow !default;
-$color-notification-high-background: $template-orange !default;
+$color-notification-low-text: $color-text-main !default;
+$color-notification-medium-text: $color-text-main !default;
+$color-notification-high-text: $color-text-main !default;
+$color-notification-low-background: $template-green-light !default;
+$color-notification-medium-background: $template-yellow-light !default;
+$color-notification-high-background: $template-orange-light !default;
 
 // Some features rearrange at certain screen sizes.
 // What are your screen-width break points?
@@ -112,42 +116,51 @@ $text-divider-text: "" !default; // Empty leaves space. \2022 is a bullet
 $text-divider-image: "" !default;
 $text-divider-image-width: $line-height-default * 2 !default;
 
+// Other book features
+$title-page-logo-width: 5rem;
+
 // Footer
 $footer-text-color: $color-text-main !default;
 $footer-background-color: $color-accent !default;
 $footer-border-color: $color-accent !default;
 
 // Website masthead
-$masthead-text-color: $color-light !default;
-$masthead-background-color: $color-accent !default;
-$masthead-border-color: $color-light !default;
+$masthead-text-color: $color-links !default;
+$masthead-background-color: transparent !default;
+$masthead-border-color: transparent !default;
 $masthead-breadcrumb-divider: "\2044" !default; // 2044 is a fraction slash
+$masthead-height: 3.5rem !default;
+$masthead-align: left !default; // left, right or center (note $nav-position)
+$masthead-logo: true !default; // show logo in masthead?
+$masthead-logo-width: 2.5rem !default;
 
 // Website sidebar/navigation
+$nav-position: right !default; // left, right (note $masthead-align)
 $nav-bar-text-size: 0.8em !default;
 $nav-bar-item-collapse: false !default; // Does the nav list fully expand, or collapse until mouseover?
 $nav-bar-close: "\00D7" !default; // &times; ×
 $nav-bar-children-prompt: "+" !default;
 $nav-bar-children-prompt-hide: "\2212" !default; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true !default;
-$nav-bar-width: 15em !default;
+$nav-bar-width: 20rem !default;
 $nav-bar-fixed: true !default; // fixed is not fully supported on many mobile browsers
 $nav-bar-back-button-hide: true !default;
+$nav-bar-accent-color: $color-accent !default; // ideally a color that works behind dark or light text
 $nav-bar-title-color: $color-text-secondary !default;
-$nav-bar-label-color: $color-light !default;
-$nav-bar-label-background-color: $masthead-background-color !default;
-$nav-bar-label-border-color: transparent !default;
+$nav-bar-label-color: $color-links !default;
+$nav-bar-label-background-color: $color-background !default;
+$nav-bar-label-border-color: $color-light !default;
 $nav-bar-border-color: $color-light !default;
 $nav-bar-background-color: $color-background !default;
 $nav-bar-search-background-color: $color-background !default;
 $nav-bar-parent-background-color: $color-background !default;
 $nav-bar-parent-text-color: $color-text-main !default;
-$nav-bar-parent-hover-color: $color-accent !default;
+$nav-bar-parent-hover-color: $nav-bar-accent-color !default;
 $nav-bar-parent-text-hover-color: $color-background !default;
 $nav-bar-children-prompt-color: $color-mid !default;
 $nav-bar-child-background-color: $color-light !default;
 $nav-bar-child-text-color: $color-text-main !default;
-$nav-bar-child-hover-color: $color-accent !default;
+$nav-bar-child-hover-color: $nav-bar-accent-color !default;
 $nav-bar-child-text-hover-color: $color-background !default;
 
 // Language selector
@@ -174,6 +187,12 @@ $bookmark-icon-color-active: $color-accent !default;
 $bookmark-icon-outline-color-inactive: $color-accent !default;
 $bookmark-icon-outline-color-active: $color-accent !default;
 $bookmark-icon-text-size: 1em !default;
+$bookmark-last-location-prompt-color-background: $color-links !default;
+$bookmark-last-location-prompt-color-text: $color-background !default;
+$bookmark-last-location-prompt-color-border: $color-links !default;
+
+// Share icon
+$share-icon-color: $color-accent !default;
 
 // ---------------------------------
 // Set to false to turn partials off
@@ -243,6 +262,7 @@ $web-controls: true !default;
 $web-language-select: true !default;
 $web-annotator: true !default;
 $web-bookmarks: true !default;
+$web-share: true !default;
 
 // Print-out styles
 $web-printout: true !default;
@@ -271,6 +291,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "template/partials/web-mixins--buttons";
 @import "template/partials/web-mixins--sidenotes";
 @import "template/partials/web-mixins--dialogs";
+@import "template/partials/web-mixins--search";
 
 // Structural HTML components
 @import "template/partials/web-wrappers";
@@ -333,6 +354,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "template/partials/web-annotator";
 @import "template/partials/web-language-select";
 @import "template/partials/web-bookmarks";
+@import "template/partials/web-share";
 
 // Print-out styles
 @import "template/partials/web-printout";

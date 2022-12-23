@@ -62,27 +62,27 @@ assets/fonts/UbuntuMono-RI.ttf
 # should not be overwritten by updates.
 
 # assets/images/app/cover.jpg
-# assets/images/app/publisher-logo.jpg
+# assets/images/app/logo.jpg
 # assets/images/epub/cover.jpg
-# assets/images/epub/publisher-logo.jpg
+# assets/images/epub/logo.jpg
 # assets/images/print-pdf/cover.jpg
-# assets/images/print-pdf/publisher-logo.jpg
+# assets/images/print-pdf/logo.jpg
 # assets/images/screen-pdf/cover.jpg
-# assets/images/screen-pdf/publisher-logo.jpg
+# assets/images/screen-pdf/logo.jpg
 # assets/images/web/cover-1024.jpg
 # assets/images/web/cover-2048.jpg
 # assets/images/web/cover-320.jpg
 # assets/images/web/cover-640.jpg
 # assets/images/web/cover-max.jpg
 # assets/images/web/cover.jpg
-# assets/images/web/publisher-logo-1024.jpg
-# assets/images/web/publisher-logo-2048.jpg
-# assets/images/web/publisher-logo-320.jpg
-# assets/images/web/publisher-logo-640.jpg
-# assets/images/web/publisher-logo-max.jpg
-# assets/images/web/publisher-logo.jpg
+# assets/images/web/logo-1024.jpg
+# assets/images/web/logo-2048.jpg
+# assets/images/web/logo-320.jpg
+# assets/images/web/logo-640.jpg
+# assets/images/web/logo-max.jpg
+# assets/images/web/logo.jpg
 # assets/images/_source/cover.jpg
-# assets/images/_source/publisher-logo.jpg
+# assets/images/_source/logo.jpg
 
 
 # Sitewide Javascript
@@ -367,6 +367,7 @@ assets/js/search-store.js
 assets/js/search-terms.js
 assets/js/select-list.js
 assets/js/setup.js
+assets/js/share.js
 assets/js/shift-elements.js
 assets/js/show-hide.js
 assets/js/slides.js
@@ -387,6 +388,8 @@ assets/js/vendor/svg-inject.min.js
 
 # assets/js/search-index-app.js
 # assets/js/search-index-web.js
+# assets/js/search-index-with-docs-app.js
+# assets/js/search-index-with-docs-web.js
 
 
 
@@ -408,11 +411,9 @@ assets/js/vendor/svg-inject.min.js
 # When you rename or add new books to a project.
 # remember to add their equivalent files here as needed.
 
-book/fonts/.gitignore
 book/index.md
 book/package.opf
-book/text/file-list
-book/text/index.md
+book/index.md
 book/toc.ncx
 
 
@@ -434,14 +435,6 @@ gulpfile.js
 
 package-lock.json
 package.json
-
-
-# Output scripts
-# --------------
-
-run-linux.sh
-run-mac.command
-run-windows.bat
 
 
 # Repo search page
@@ -517,7 +510,7 @@ _configs/_config.mathjax-enabled.yml
 # but could be shared for some project families.
 
 # _data/locales.yml
-# _data/meta.yml
+# _data/project.yml
 # _data/settings.yml
 
 
@@ -561,6 +554,7 @@ _docs/output/web-output.md
 _docs/output/word-output.md
 _docs/setup/file-lists.md
 _docs/setup/metadata.md
+_docs/setup/princexml.md
 _docs/setup/quick-start.md
 _docs/setup/search-indexes.md
 _docs/setup/setting-up-a-book.md
@@ -580,7 +574,7 @@ _docs/troubleshooting/troubleshooting.md
 # This is a Jekyll collection of files used
 # when generating epub files.
 
-_epub/fonts/.gitignore
+_epub/assets/fonts/.gitignore
 _epub/META-INF/com.apple.ibooks.display-options.xml
 _epub/META-INF/container.xml
 _epub/mimetype
@@ -595,67 +589,93 @@ _epub/mimetype
 # you can update these includes automatically,
 # wihtout overwriting book-specific values.
 
-_includes/annotate-icon
-_includes/annotate-show-icon
-_includes/annotator.html
-_includes/bookmark-icon
-_includes/bookmarks.html
-_includes/breadcrumbs
-_includes/close-body.html
-_includes/close-content.html
-_includes/controls.html
+_includes/copyright-page
 _includes/cover
-_includes/docs-by-category
-
-# Excluded because this is where you'd add
-# custom features that an EBT update should not overwrite.
-# _includes/end-elements
-
-_includes/epub-navmap.html
-_includes/epub-ncx
-_includes/epub-package
 _includes/figure
-_includes/file-list
-_includes/files-listed.html
-_includes/footer.html
-_includes/globe-icon
-
-# Excluded because this is where you'd add
-# custom features that an EBT update should not overwrite.
-# _includes/head-elements
-
-_includes/head.html
-_includes/history-icon
-_includes/html-entities.html
 _includes/identifiers
 _includes/image
-_includes/item
-_includes/language-select
-_includes/language-select-icon
-_includes/masthead.html
-_includes/mathjax-config
-_includes/mathjax-manifest.xml
-_includes/mcq
+_includes/mathjax-config.html
 _includes/metadata
-_includes/nav-button.html
-_includes/nav-list
-_includes/nav.html
 _includes/page-info
-_includes/pagination
 _includes/question
-_includes/question-secret-code.html
 _includes/quiz
 _includes/random
+_includes/README.md
 _includes/redirect
 _includes/search
 _includes/select
-_includes/sitemap
-_includes/start-content.html
+_includes/title-page
 _includes/toc
 _includes/video
 _includes/vimeo
-_includes/widgets
+_includes/widgets.html
 _includes/youtube
+
+# Excluded because this is where you'd add
+# custom features that an EBT update should not overwrite.
+# _includes/end-elements.html
+
+# The footer HTML is often customised per project
+# _includes/footer.html
+
+# Excluded because this is where you'd add
+# custom features that an EBT update should not overwrite.
+# _includes/head-elements.html
+
+
+_includes/annotator.html
+_includes/bookmarks.html
+_includes/breadcrumbs.html
+_includes/close-body.html
+_includes/close-content.html
+_includes/controls.html
+_includes/docs-by-category.html
+_includes/epub-navmap.html
+_includes/epub-ncx.html
+_includes/epub-package.html
+_includes/files-listed-by-work.html
+_includes/files-listed.html
+_includes/head.html
+_includes/hreflang.html
+_includes/html-entities.html
+_includes/html-title.html
+_includes/language-select-list.html
+_includes/masthead.html
+_includes/mathjax-manifest.xml
+_includes/meta-tags.html
+_includes/metadata-work.html
+_includes/nav-button.html
+_includes/nav-list-files.html
+_includes/nav-list.html
+_includes/nav.html
+_includes/pagination.html
+_includes/question-secret-code.html
+_includes/share.html
+_includes/sitemap.html
+_includes/start-content.html
+_includes/translations-array.html
+
+_includes/icons/annotate-icon.svg
+_includes/icons/annotate-show-icon.svg
+_includes/icons/bookmark-icon.svg
+_includes/icons/buffer.svg
+_includes/icons/delicious.svg
+_includes/icons/email.svg
+_includes/icons/evernote.svg
+_includes/icons/facebook.svg
+_includes/icons/history-icon.svg
+_includes/icons/language-select-icon.svg
+_includes/icons/link.svg
+_includes/icons/linkedin.svg
+_includes/icons/pinterest.svg
+_includes/icons/pocket.svg
+_includes/icons/reddit.svg
+_includes/icons/share-icon.svg
+_includes/icons/stumbleupon.svg
+_includes/icons/tumblr.svg
+_includes/icons/twitter.svg
+_includes/icons/whatsapp.svg
+_includes/icons/wordpress.svg
 
 
 # Layouts
@@ -664,6 +684,9 @@ _includes/youtube
 _layouts/compress.html
 _layouts/default.html
 _layouts/min.html
+_layouts/ncx.html
+_layouts/opf.html
+_layouts/sitemap.html
 _layouts/trim.html
 
 
@@ -751,6 +774,8 @@ _sass/template/partials/_print-index.scss
 _sass/template/partials/_print-letters.scss
 _sass/template/partials/_print-maths.scss
 _sass/template/partials/_print-mixins--buttons.scss
+_sass/template/partials/_print-mixins--margin-boxes.scss
+_sass/template/partials/_print-mixins--page-continued.scss
 _sass/template/partials/_print-mixins--sidenotes.scss
 _sass/template/partials/_print-notes.scss
 _sass/template/partials/_print-openers.scss
@@ -806,6 +831,7 @@ _sass/template/partials/_web-masthead.scss
 _sass/template/partials/_web-maths.scss
 _sass/template/partials/_web-mixins--buttons.scss
 _sass/template/partials/_web-mixins--dialogs.scss
+_sass/template/partials/_web-mixins--search.scss
 _sass/template/partials/_web-mixins--sidenotes.scss
 _sass/template/partials/_web-nav-bar.scss
 _sass/template/partials/_web-notes.scss
@@ -817,6 +843,7 @@ _sass/template/partials/_web-questions.scss
 _sass/template/partials/_web-reset-sequences.scss
 _sass/template/partials/_web-search.scss
 _sass/template/partials/_web-select-questions.scss
+_sass/template/partials/_web-share.scss
 _sass/template/partials/_web-slides.scss
 _sass/template/partials/_web-smallcaps.scss
 _sass/template/partials/_web-sources.scss
@@ -836,14 +863,40 @@ _sass/template/web.scss
 
 # Note that we include this files.txt file here.
 
-_tools/gulp/README.md
-_tools/gulp/functions/.gitignore
-_tools/package/package.js
+_tools/gulp/helpers/args.js
+_tools/gulp/helpers/colour.js
+_tools/gulp/helpers/paths.js
+_tools/gulp/helpers/utilities.js
+_tools/gulp/images/functions/.gitignore
+_tools/gulp/images/README.md
+_tools/gulp/processors/epub.js
+_tools/gulp/processors/images.js
+_tools/gulp/processors/indexes.js
+_tools/gulp/processors/js.js
+_tools/gulp/processors/mathjax.js
+_tools/gulp/processors/svgs.js
+_tools/gulp/processors/yaml.js
 _tools/profiles/Grey_Fogra39L.icc
 _tools/profiles/Grey_Fogra52L.icc
 _tools/profiles/PSOcoated_v3.icc
 _tools/profiles/PSOuncoated_v3_FOGRA52.icc
 _tools/profiles/sRGB_v4_ICC_preference_displayclass.icc
+_tools/run/commands/check.js
+_tools/run/commands/export.js
+_tools/run/commands/images.js
+_tools/run/commands/install.js
+_tools/run/commands/new.js
+_tools/run/commands/output.js
+_tools/run/commands/package.js
+_tools/run/commands/reindex.js
+_tools/run/helpers/helpers.js
+_tools/run/helpers/merge/index.js
+_tools/run/helpers/output/index.js
+_tools/run/helpers/options.js
+_tools/run/helpers/package/index.js
+_tools/run/helpers/reindex/build-reference-index.js
+_tools/run/helpers/reindex/build-search-index.js
+_tools/run/helpers/requirements.js
+_tools/run/index.js
 _tools/update/files.txt
 _tools/update/update.sh
-_tools/zip/zip.js

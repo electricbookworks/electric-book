@@ -50,7 +50,7 @@ function localiseText(pageLanguage) {
     }
 
     // Localise search
-    var searchPageHeading = document.querySelector('.search-page #content h1:first-of-type');
+    var searchPageHeading = document.querySelector('.search-page .content h1:first-of-type');
     if (searchPageHeading
             && locales[pageLanguage].search['search-title']
             && locales[pageLanguage].search['search-title'] !== '') {
@@ -106,27 +106,8 @@ function localiseText(pageLanguage) {
         searchPageHeading.insertAdjacentElement('afterend', searchNotice);
     };
 
-    // We cannot localise the nav/TOC, since the root search page
-    // always uses the parent-language. So we replace the nav
-    // on the search page with a back button instead.
-    // In case we have a back button (`$nav-bar-back-button-hide; true` in scss)
-    // hide that one.
-    var searchNavButtonToReplace = document.querySelector('.search-page [href="#nav"]');
-    var searchNavDivToReplace = document.querySelector('.search-page #nav');
-    var navBackButton = document.querySelector('.nav-back-button');
-    if (searchNavButtonToReplace && navBackButton) {
-        if (document.referrer != "" || window.history.length > 0) {
-            navBackButton.remove();
-            searchNavButtonToReplace.innerHTML = locales[pageLanguage].nav.back;
-            searchNavButtonToReplace.addEventListener('click', function(ev) {
-                ev.preventDefault();
-                window.history.back();
-            });
-        };
-    };
-    if (searchNavDivToReplace) {
-        searchNavDivToReplace.innerHTML = '';
-    }
+    // To do: localise the nav/TOC on search pages. This is tricky since
+    // the root search page always uses the parent-language.
 
     // If no results with GSE, translate 'No results' phrase
     window.addEventListener("load", function (event) {

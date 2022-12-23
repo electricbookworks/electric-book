@@ -7,6 +7,7 @@ $web-figures: true !default;
         clear: both;
         page-break-inside: avoid;
         background-color: inherit;
+        font-family: $font-text-secondary;
         font-size: inherit;
         font-weight: inherit;
         margin: $line-height-default 0;
@@ -17,17 +18,14 @@ $web-figures: true !default;
             page-break-inside: avoid;
             page-break-before: avoid;
             hyphens: none;
-            font-size: $font-size-default * $font-size-smaller;
             &:last-of-type {
                 margin-bottom: 0;
             }
         }
         img, p img {
-            margin: 0 auto;
-            max-height: 80vh;  // ensure figures are always visible
-            max-width: 100%; 
-            object-fit: contain;
             display: block;
+            margin: 0 auto;
+            width: 100%;
         }
 
         // Enable removing max-height on a figure's images
@@ -51,6 +49,7 @@ $web-figures: true !default;
                 display: none;
             }
             .caption {
+                line-height: $line-height-default;
                 margin: 0;
                 text-align: left;
                 text-indent: 0;

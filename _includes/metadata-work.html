@@ -1,0 +1,476 @@
+{% comment %} Metadata for a given work.
+Pass to this include the relevant work as work="",
+where work is the book or book/language folder
+in _data/works. {% endcomment %}
+
+{% comment %} Get the work we're fetching metadata for,
+and set the default to the 'book' folder. {% endcomment %}
+{% assign work = site.data.works[book-directory] %}
+{% if include.work and include.work != "" %}
+    {% assign work = include.work %}
+{% endif %}
+
+{% comment %} Are we getting metadata for a default work type
+or a variant, as defined in its yml filename? {% endcomment %}
+{% assign work-variant = "default" %}
+{% if include.work-variant and include.work-variant != "" %}
+    {% assign work-variant = include.work-variant %}
+{% endif %}
+
+{% comment %} For each metadata entry, we only capture a value
+if one is defined. This is because we might be fetching
+metadata values for, say, a translation or a variant,
+where only values that override the parent are set.
+Also, where a value for a variant isn't available,
+we fall back to the value in the work's default.yml.
+{% endcomment %}
+
+{% if work[work-variant].title and work[work-variant].title != "" %}
+    {% capture title %}{{ work[work-variant].title }}{% endcapture %}
+{% elsif work.default.title and work.default.title != "" %}
+    {% capture title %}{{ work.default.title }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].subtitle and work[work-variant].subtitle != "" %}
+    {% capture subtitle %}{{ work[work-variant].subtitle }}{% endcapture %}
+{% elsif work.default.subtitle and work.default.subtitle != "" %}
+    {% capture subtitle %}{{ work.default.subtitle }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].creator and work[work-variant].creator != "" %}
+    {% capture creator %}{{ work[work-variant].creator }}{% endcapture %}
+{% elsif work.default.creator and work.default.creator != "" %}
+    {% capture creator %}{{ work.default.creator }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].contributor and work[work-variant].contributor != "" %}
+    {% capture contributor %}{{ work[work-variant].contributor }}{% endcapture %}
+{% elsif work.default.contributor and work.default.contributor != "" %}
+    {% capture contributor %}{{ work.default.contributor }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].subject and work[work-variant].subject != "" %}
+    {% capture subject %}{{ work[work-variant].subject }}{% endcapture %}
+{% elsif work.default.subject and work.default.subject != "" %}
+    {% capture subject %}{{ work.default.subject }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].description and work[work-variant].description != "" %}
+    {% capture description %}{{ work[work-variant].description }}{% endcapture %}
+{% elsif work.default.description and work.default.description != "" %}
+    {% capture description %}{{ work.default.description }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].publisher and work[work-variant].publisher != "" %}
+    {% capture publisher %}{{ work[work-variant].publisher }}{% endcapture %}
+{% elsif work.default.publisher and work.default.publisher != "" %}
+    {% capture publisher %}{{ work.default.publisher }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].publisher-url and work[work-variant].publisher-url != "" %}
+    {% capture publisher-url %}{{ work[work-variant].publisher-url }}{% endcapture %}
+{% elsif work.default.publisher-url and work.default.publisher-url != "" %}
+    {% capture publisher-url %}{{ work.default.publisher-url }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].date and work[work-variant].date != "" %}
+    {% capture date %}{{ work[work-variant].date }}{% endcapture %}
+{% elsif work.default.date and work.default.date != "" %}
+    {% capture date %}{{ work.default.date }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].modified and work[work-variant].modified != "" %}
+    {% capture modified %}{{ work[work-variant].modified }}{% endcapture %}
+{% elsif work.default.modified and work.default.modified != "" %}
+    {% capture modified %}{{ work.default.modified }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].type and work[work-variant].type != "" %}
+    {% capture type %}{{ work[work-variant].type }}{% endcapture %}
+{% elsif work.default.type and work.default.type != "" %}
+    {% capture type %}{{ work.default.type }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].identifier and work[work-variant].identifier != "" %}
+    {% capture identifier %}{{ work[work-variant].identifier }}{% endcapture %}
+{% elsif work.default.identifier and work.default.identifier != "" %}
+    {% capture identifier %}{{ work.default.identifier }}{% endcapture %}
+{% else %}
+
+    {% comment %} Since epub requires an identifier,
+    if there isn't one, use a date string as a placeholder. {% endcomment %}
+    {% capture identifier %}{{ site.time | date: '%s'}}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].source and work[work-variant].source != "" %}
+    {% capture source %}{{ work[work-variant].source }}{% endcapture %}
+{% elsif work.default.source and work.default.source != "" %}
+    {% capture source %}{{ work.default.source }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].language and work[work-variant].language != "" %}
+    {% capture language %}{{ work[work-variant].language }}{% endcapture %}
+{% elsif work.default.language and work.default.language != "" %}
+    {% capture language %}{{ work.default.language }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].relation and work[work-variant].relation != "" %}
+    {% capture relation %}{{ work[work-variant].relation }}{% endcapture %}
+{% elsif work.default.relation and work.default.relation != "" %}
+    {% capture relation %}{{ work.default.relation }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].coverage and work[work-variant].coverage != "" %}
+    {% capture coverage %}{{ work[work-variant].coverage }}{% endcapture %}
+{% elsif work.default.coverage and work.default.coverage != "" %}
+    {% capture coverage %}{{ work.default.coverage }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].rightsholder and work[work-variant].rightsholder != "" %}
+    {% capture rightsholder %}{{ work[work-variant].rightsholder }}{% endcapture %}
+{% elsif work.default.rightsholder and work.default.rightsholder != "" %}
+    {% capture rightsholder %}{{ work.default.rightsholder }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].rights and work[work-variant].rights != "" %}
+    {% capture rights %}{{ work[work-variant].rights }}{% endcapture %}
+{% elsif work.default.rights and work.default.rights != "" %}
+    {% capture rights %}{{ work.default.rights }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].image and work[work-variant].image != "" %}
+    {% capture image %}{{ work[work-variant].image }}{% endcapture %}
+{% elsif work.default.image and work.default.image != "" %}
+    {% capture image %}{{ work.default.image }}{% endcapture %}
+{% endif %}
+
+{% comment %} Product metadata {% endcomment %}
+
+{% if work[work-variant].products.print-pdf.date and work[work-variant].products.print-pdf.date != "" %}
+    {% capture print-pdf-date %}{{ work[work-variant].products.print-pdf.date }}{% endcapture %}
+{% elsif work.default.products.print-pdf.date and work.default.products.print-pdf.date != "" %}
+    {% capture print-pdf-date %}{{ work.default.products.print-pdf.date }}{% endcapture %}
+{% else %}
+    {% capture print-pdf-date %}{{ date }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.print-pdf.format and work[work-variant].products.print-pdf.format != "" %}
+    {% capture print-pdf-format %}{{ work[work-variant].products.print-pdf.format }}{% endcapture %}
+{% elsif work.default.products.print-pdf.format and work.default.products.print-pdf.format != "" %}
+    {% capture print-pdf-format %}{{ work.default.products.print-pdf.format }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.print-pdf.identifier and work[work-variant].products.print-pdf.identifier != "" %}
+    {% capture print-pdf-identifier %}{{ work[work-variant].products.print-pdf.identifier }}{% endcapture %}
+{% elsif work.default.products.print-pdf.identifier and work.default.products.print-pdf.identifier != "" %}
+    {% capture print-pdf-identifier %}{{ work.default.products.print-pdf.identifier }}{% endcapture %}
+{% else %}
+    {% capture print-pdf-identifier %}{{ identifier }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.print-pdf.image and work[work-variant].products.print-pdf.image != "" %}
+    {% capture print-pdf-image %}{{ work[work-variant].products.print-pdf.image }}{% endcapture %}
+{% elsif work.default.products.print-pdf.image and work.default.products.print-pdf.image != "" %}
+    {% capture print-pdf-image %}{{ work.default.products.print-pdf.image }}{% endcapture %}
+{% else %}
+    {% capture print-pdf-image %}{{ image }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.print-pdf.files and work[work-variant].products.print-pdf.files != "" %}
+    {% assign print-pdf-file-list = work[work-variant].products.print-pdf.files %}
+{% elsif work.default.products.print-pdf.files and work.default.products.print-pdf.files != "" %}
+    {% assign print-pdf-file-list = work.default.products.print-pdf.files %}
+{% endif %}
+
+{% if work[work-variant].products.print-pdf.toc and work[work-variant].products.print-pdf.toc != "" %}
+    {% assign print-pdf-toc = work[work-variant].products.print-pdf.toc %}
+
+    {% if site.output == "print-pdf" and work-variant != "default" %}
+        {% assign variant-toc = true %}
+    {% endif %}
+
+{% elsif work.default.products.print-pdf.toc and work.default.products.print-pdf.toc != "" %}
+
+    {% assign print-pdf-toc = work.default.products.print-pdf.toc %}
+
+{% endif %}
+
+{% if work[work-variant].products.web.date and work[work-variant].products.web.date != "" %}
+    {% capture web-date %}{{ work[work-variant].products.web.date }}{% endcapture %}
+{% elsif work.default.products.web.date and work.default.products.web.date != "" %}
+    {% capture web-date %}{{ work.default.products.web.date }}{% endcapture %}
+{% else %}
+    {% capture web-date %}{{ date }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.web.format and work[work-variant].products.web.format != "" %}
+    {% capture web-format %}{{ work[work-variant].products.web.format }}{% endcapture %}
+{% elsif work.default.products.web.format and work.default.products.web.format != "" %}
+    {% capture web-format %}{{ work.default.products.web.format }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.web.identifier and work[work-variant].products.web.identifier != "" %}
+    {% capture web-identifier %}{{ work[work-variant].products.web.identifier }}{% endcapture %}
+{% elsif work.default.products.web.identifier and work.default.products.web.identifier != "" %}
+    {% capture web-identifier %}{{ work.default.products.web.identifier }}{% endcapture %}
+{% else %}
+    {% capture web-identifier %}{{ identifier }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.web.image and work[work-variant].products.web.image != "" %}
+    {% capture web-image %}{{ work[work-variant].products.web.image }}{% endcapture %}
+{% elsif work.default.products.web.image and work.default.products.web.image != "" %}
+    {% capture web-image %}{{ work.default.products.web.image }}{% endcapture %}
+{% else %}
+    {% capture web-image %}{{ image }}{% endcapture %}
+{% endif %}
+
+{% comment %} Find fallback start-page and contents-page {% endcomment %}
+
+{% capture book-directory-with-slashes %}/{{ book-directory }}/{% endcapture %}
+{% assign potential-start-pages = site.html_pages | where_exp: "page", "page.dir == book-directory-with-slashes" %}
+
+{% comment %} Assign the first file by default. {% endcomment %}
+{% capture default-start-page %}{{ potential-start-pages[0].url | split: "/" | last | split: "." | first }}{% endcapture %}
+
+{% comment %} Then see if there's a better TOC option. {% endcomment %}
+{% for page in potential-start-pages %}
+    {% if page.url contains "contents" or page.url contains "toc" %}
+        {% capture default-start-page %}{{ page.url | split: "/" | last | split: "." | first }}{% endcapture %}
+        {% break %}
+    {% endif %}
+{% endfor %}
+
+{% if work[work-variant].products.web.start-page and work[work-variant].products.web.start-page != "" %}
+    {% capture web-start-page %}{{ work[work-variant].products.web.start-page }}{% endcapture %}
+{% elsif work.default.products.web.start-page and work.default.products.web.start-page != "" %}
+    {% capture web-start-page %}{{ work.default.products.web.start-page }}{% endcapture %}
+{% else %}
+    {% capture web-start-page %}{{ default-start-page }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.web.contents-page and work[work-variant].products.web.contents-page != "" %}
+    {% capture web-contents-page %}{{ work[work-variant].products.web.contents-page }}{% endcapture %}
+{% elsif work.default.products.web.contents-page and work.default.products.web.contents-page != "" %}
+    {% capture web-contents-page %}{{ work.default.products.web.contents-page }}{% endcapture %}
+{% else %}
+    {% capture web-contents-page %}{{ default-start-page }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.web.files and work[work-variant].products.web.files != "" %}
+    {% assign web-file-list = work[work-variant].products.web.files %}
+{% elsif work.default.products.web.files and work.default.products.web.files != "" %}
+    {% assign web-file-list = work.default.products.web.files %}
+{% endif %}
+
+{% if work[work-variant].products.web.nav and work[work-variant].products.web.nav != "" %}
+    {% assign web-nav-tree = work[work-variant].products.web.nav %}
+{% elsif work.default.products.web.nav and work.default.products.web.nav != "" %}
+    {% assign web-nav-tree = work.default.products.web.nav %}
+{% endif %}
+
+{% if work[work-variant].products.web.toc and work[work-variant].products.web.toc != "" %}
+    {% assign web-toc = work[work-variant].products.web.toc %}
+
+    {% if site.output == "web" and work-variant != "default" %}
+        {% assign variant-toc = true %}
+    {% endif %}
+
+{% elsif work.default.products.web.toc and work.default.products.web.toc != "" %}
+
+    {% assign web-toc = work.default.products.web.toc %}
+{% endif %}
+
+{% if work[work-variant].products.epub.date and work[work-variant].products.epub.date != "" %}
+    {% capture epub-date %}{{ work[work-variant].products.epub.date }}{% endcapture %}
+{% elsif work.default.products.epub.date and work.default.products.epub.date != "" %}
+    {% capture epub-date %}{{ work.default.products.epub.date }}{% endcapture %}
+{% else %}
+    {% capture epub-date %}{{ date }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.epub.format and work[work-variant].products.epub.format != "" %}
+    {% capture epub-format %}{{ work[work-variant].products.epub.format }}{% endcapture %}
+{% elsif work.default.products.epub.format and work.default.products.epub.format != "" %}
+    {% capture epub-format %}{{ work.default.products.epub.format }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.epub.identifier and work[work-variant].products.epub.identifier != "" %}
+    {% capture epub-identifier %}{{ work[work-variant].products.epub.identifier }}{% endcapture %}
+{% elsif work.default.products.epub.identifier and work.default.products.epub.identifier != "" %}
+    {% capture epub-identifier %}{{ work.default.products.epub.identifier }}{% endcapture %}
+{% else %}
+    {% capture epub-identifier %}{{ identifier }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.epub.image and work[work-variant].products.epub.image != "" %}
+    {% capture epub-image %}{{ work[work-variant].products.epub.image }}{% endcapture %}
+{% elsif work.default.products.epub.image and work.default.products.epub.image != "" %}
+    {% capture epub-image %}{{ work.default.products.epub.image }}{% endcapture %}
+{% else %}
+    {% capture epub-image %}{{ image }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.epub.files and work[work-variant].products.epub.files != "" %}
+    {% assign epub-file-list = work[work-variant].products.epub.files %}
+{% elsif work.default.products.epub.files and work.default.products.epub.files != "" %}
+    {% assign epub-file-list = work.default.products.epub.files %}
+{% else %}
+    {% include files-listed-by-work.html output="array" directory=book-directory %}
+    {% assign epub-file-list = filenames-listed-array %}
+{% endif %}
+
+{% if work[work-variant].products.epub.toc and work[work-variant].products.epub.toc != "" %}
+    {% assign epub-toc = work[work-variant].products.epub.toc %}
+
+    {% if site.output == "epub" and work-variant != "default" %}
+        {% assign variant-toc = true %}
+    {% endif %}
+
+{% elsif work.default.products.epub.toc and work.default.products.epub.toc != "" %}
+    {% assign epub-toc = work.default.products.epub.toc %}
+{% endif %}
+
+{% if work[work-variant].products.epub.contents-page and work[work-variant].products.epub.contents-page != "" %}
+    {% capture epub-contents-page %}{{ work[work-variant].products.epub.contents-page }}{% endcapture %}
+{% elsif work.default.products.epub.contents-page and work.default.products.epub.contents-page != "" %}
+    {% capture epub-contents-page %}{{ work.default.products.epub.contents-page }}{% endcapture %}
+{% else %}
+    {% capture epub-contents-page %}{{ default-start-page }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.epub.language and work[work-variant].products.epub.language != "" %}
+    {% capture epub-language %}{{ work[work-variant].products.epub.language }}{% endcapture %}
+{% elsif work.default.products.epub.language and work.default.products.epub.language != "" %}
+    {% capture epub-language %}{{ work.default.products.epub.language }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.screen-pdf.date and work[work-variant].products.screen-pdf.date != "" %}
+    {% capture screen-pdf-date %}{{ work[work-variant].products.screen-pdf.date }}{% endcapture %}
+{% elsif work.default.products.screen-pdf.date and work.default.products.screen-pdf.date != "" %}
+    {% capture screen-pdf-date %}{{ work.default.products.screen-pdf.date }}{% endcapture %}
+{% else %}
+    {% capture screen-pdf-date %}{{ date }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.screen-pdf.format and work[work-variant].products.screen-pdf.format != "" %}
+    {% capture screen-pdf-format %}{{ work[work-variant].products.screen-pdf.format }}{% endcapture %}
+{% elsif work.default.products.screen-pdf.format and work.default.products.screen-pdf.format != "" %}
+    {% capture screen-pdf-format %}{{ work.default.products.screen-pdf.format }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.screen-pdf.identifier and work[work-variant].products.screen-pdf.identifier != "" %}
+    {% capture screen-pdf-identifier %}{{ work[work-variant].products.screen-pdf.identifier }}{% endcapture %}
+{% elsif work.default.products.screen-pdf.identifier and work.default.products.screen-pdf.identifier != "" %}
+    {% capture screen-pdf-identifier %}{{ work.default.products.screen-pdf.identifier }}{% endcapture %}
+{% else %}
+    {% capture screen-pdf-identifier %}{{ identifier }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.screen-pdf.image and work[work-variant].products.screen-pdf.image != "" %}
+    {% capture screen-pdf-image %}{{ work[work-variant].products.screen-pdf.image }}{% endcapture %}
+{% elsif work.default.products.screen-pdf.image and work.default.products.screen-pdf.image != "" %}
+    {% capture screen-pdf-image %}{{ work.default.products.screen-pdf.image }}{% endcapture %}
+{% else %}
+    {% capture screen-pdf-image %}{{ image }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.screen-pdf.files and work[work-variant].products.screen-pdf.files != "" %}
+    {% assign screen-pdf-file-list = work[work-variant].products.screen-pdf.files %}
+{% elsif work.default.products.screen-pdf.files and work.default.products.screen-pdf.files != "" %}
+    {% assign screen-pdf-file-list = work.default.products.screen-pdf.files %}
+{% endif %}
+
+{% if work[work-variant].products.screen-pdf.toc and work[work-variant].products.screen-pdf.toc != "" %}
+    {% assign screen-pdf-toc = work[work-variant].products.screen-pdf.toc %}
+
+    {% if site.output == "screen-pdf" and work-variant != "default" %}
+        {% assign variant-toc = true %}
+    {% endif %}
+
+{% elsif work.default.products.screen-pdf.toc and work.default.products.screen-pdf.toc != "" %}
+
+    {% assign screen-pdf-toc = work.default.products.screen-pdf.toc %}
+{% endif %}
+
+    {% comment %}App metadata inherits web metadata if not specified{% endcomment %}
+    {% if work[work-variant].products.app.date and work[work-variant].products.app.date != "" %}
+        {% capture app-date %}{{ work[work-variant].products.app.date }}{% endcapture %}
+    {% elsif work.default.products.app.date and work.default.products.app.date != "" %}
+        {% capture app-date %}{{ work.default.products.app.date }}{% endcapture %}
+    {% else %}
+        {% capture app-date %}{{ web-date }}{% endcapture %}
+    {% endif %}
+
+    {% if work[work-variant].products.app.format and work[work-variant].products.app.format != "" %}
+        {% capture app-format %}{{ work[work-variant].products.app.format }}{% endcapture %}
+    {% elsif work.default.products.app.format and work.default.products.app.format != "" %}
+        {% capture app-format %}{{ work.default.products.app.format }}{% endcapture %}
+    {% else %}
+        {% capture app-format %}{{ web-format }}{% endcapture %}
+    {% endif %}
+
+    {% if work[work-variant].products.app.identifier and work[work-variant].products.app.identifier != "" %}
+        {% capture app-identifier %}{{ work[work-variant].products.app.identifier }}{% endcapture %}
+    {% elsif work.default.products.app.identifier and work.default.products.app.identifier != "" %}
+        {% capture app-identifier %}{{ work.default.products.app.identifier }}{% endcapture %}
+    {% else %}
+        {% capture app-identifier %}{{ web-identifier }}{% endcapture %}
+    {% endif %}
+
+    {% if work[work-variant].products.app.image and work[work-variant].products.app.image != "" %}
+        {% capture app-image %}{{ work[work-variant].products.app.image }}{% endcapture %}
+    {% elsif work.default.products.app.image and work.default.products.app.image != "" %}
+        {% capture app-image %}{{ work.default.products.app.image }}{% endcapture %}
+    {% else %}
+        {% capture app-image %}{{ web-image }}{% endcapture %}
+    {% endif %}
+
+    {% if work[work-variant].products.app.start-page and work[work-variant].products.app.start-page != "" %}
+        {% capture app-start-page %}{{ work[work-variant].products.app.start-page }}{% endcapture %}
+    {% elsif work.default.products.app.start-page and work.default.products.app.start-page != "" %}
+        {% capture app-start-page %}{{ work.default.products.app.start-page }}{% endcapture %}
+    {% else %}
+        {% capture app-start-page %}{{ web-start-page }}{% endcapture %}
+    {% endif %}
+
+    {% if work[work-variant].products.app.contents-page and work[work-variant].products.app.contents-page != "" %}
+        {% capture app-contents-page %}{{ work[work-variant].products.app.contents-page }}{% endcapture %}
+    {% elsif work.default.products.app.contents-page and work.default.products.app.contents-page != "" %}
+        {% capture app-contents-page %}{{ work.default.products.app.contents-page }}{% endcapture %}
+    {% else %}
+        {% capture app-contents-page %}{{ web-contents-page }}{% endcapture %}
+    {% endif %}
+
+    {% if work[work-variant].products.app.files and work[work-variant].products.app.files != "" %}
+        {% assign app-file-list = work[work-variant].products.app.files %}
+    {% elsif work.default.products.app.files and work.default.products.app.files != "" %}
+        {% assign app-file-list = work.default.products.app.files %}
+    {% else %}
+        {% assign app-file-list = web-file-list %}
+    {% endif %}
+
+    {% if work[work-variant].products.app.nav and work[work-variant].products.app.nav != "" %}
+        {% assign app-nav-tree = work[work-variant].products.app.nav %}
+    {% elsif work.default.products.app.nav and work.default.products.app.nav != "" %}
+        {% assign app-nav-tree = work.default.products.app.nav %}
+    {% else %}
+        {% assign app-nav-tree = web-nav-tree %}
+    {% endif %}
+
+    {% if work[work-variant].products.app.toc and work[work-variant].products.app.toc != "" %}
+        {% assign app-toc = work[work-variant].products.app.toc %}
+
+        {% if site.output == "app" and work-variant != "default" %}
+            {% assign variant-toc = true %}
+        {% endif %}
+
+    {% elsif work.default.products.app.toc and work.default.products.app.toc != "" %}
+        {% assign app-toc = work.default.products.app.toc %}
+    {% else %}
+        {% assign app-toc = web-toc %}
+
+        {% if site.output == "app" and work-variant != "default" %}
+            {% assign variant-toc = true %}
+        {% endif %}
+    {% endif %}

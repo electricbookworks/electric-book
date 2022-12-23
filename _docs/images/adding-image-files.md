@@ -6,10 +6,10 @@ order: 1
 
 # Adding image files
 
-Our template comes with four folders for images, which correspond to output formats: `print-pdf`, `screen-pdf`, `web`, `epub` and `app`.
+Store the original, master versions of your images in your book's `images/_source` folder. You can then have the template generate versions optimised for each output format. These are stored in the `print-pdf`, `screen-pdf`, `web`, `epub` and `app` folders alongside `_source`.
 
-Images files must be saved there. Each folder should contain the same set of images, saved appropriately for each format. For instance, while their file names must be identical, `web` images might be full-colour, 96dpi, and up to 800 pixels wide; while `print-pdf` images might be in greyscale, 300dpi and 2400 pixels wide.
+Each format-specific folder should then contain the same set of images, saved appropriately for each format. For instance, `epub` images might be full-colour at 96dpi and up to 800 pixels wide; while `print-pdf` images might be in greyscale, 300dpi and 2400 pixels wide.
 
-This can be a lot of work! So it's best to store large master versions of your images in the `images/_source` folder for each book and then automate their conversion to the output format folders.
+Images that must be available for pages outside of a book (e.g. on your project's landing page) should be stored in `assets/images/_source` and converted in the same way.
 
-For how to do this, see [Automating image conversions](image-conversions.html).
+For converting images, see [Automating image conversions](image-conversions.html).

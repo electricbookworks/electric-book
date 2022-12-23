@@ -54,7 +54,7 @@ $print-title-pages: true !default;
 		.title-page-logo, 
 		.titlepage-logo {
 			display: block; // In case the class is applied to the image, not the paragraph
-			width: $page-width * 0.2;
+			width: $title-page-logo-width;
 			position: absolute;
 			text-align: center;
 			bottom: 0;

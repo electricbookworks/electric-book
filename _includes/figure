@@ -23,13 +23,25 @@ root directory. {% endcomment %}
     {% capture images %}{{ path-to-root-directory }}{{ include.path }}/{{ site.output }}{% endcapture %}
 {% endif %}
 
+{% comment %} Check the reference. If it's the same as the image name, hide it.
+This allows for figures with IDs but without visible references. {% endcomment %}
+{% assign figure-reference-hidden = false %}
+{% capture figure-reference %}{{ include.reference }}{% endcapture %}
+{% for figure-image in figure-images %}
+    {% if figure-reference == figure-image or figure-reference == "" %}
+        {% assign figure-reference-hidden = true %}
+        {% capture figure-reference %}{{ figure-image | slugify }}{% endcapture %}
+        {% break %}
+    {% endif %}
+{% endfor %}
+
 {% comment %}
 Then create our figure, using multiple images if necessary.
 We have to do funky remove: '<p>' | remove: '</p>' | strip_newlines
 because https://github.com/jekyll/jekyll/issues/2248.
 {% endcomment %}
 
-<div class="figure{% if include.class %} {{ include.class }}{% endif %}"{% if include.reference %} id="{{ include.reference | slugify }}"{% endif %}>
+<div class="figure{% if include.class %} {{ include.class }}{% endif %}"{% if figure-reference %} id="{{ figure-reference | slugify }}"{% endif %}>
 
 <div class="figure-body">
 
@@ -45,7 +57,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
         {% capture image-extension-with-full-stop %}.{{ image-file-extension }}{% endcapture %}
         {% assign image-without-file-extension = image | replace: image-extension-with-full-stop, "" %}
 
-        {% if include.link %}<a href="{{ include.link }}">{% elsif site.output == "web" and  site.data.settings.web.images.open-image-on-click == true %}<a href="{{ images }}/{{ image }}">{% endif %}
+        {% if include.link %}<a href="{{ include.link }}">{% endif %}
 
             {% if site.output == "web" %}
 
@@ -72,7 +84,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
                                     {{ images }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
                                     {{ images }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
                                     {{ images }}/{{ image-without-file-extension }}.{{ image-file-extension }} 1280w"
-                        sizes="(min-width: 600px) 1300px, 100vw"
+                        sizes="auto"
                     {% endunless %}
 
                     alt="{% if include.title %}{{ include.title | markdownify | strip_html }}: {% endif %}{% if include.alt-text %}{{ include.alt-text | markdownify | strip_html }}{% else %}{{ include.caption | markdownify | strip_html }}{% endif %}"
@@ -87,7 +99,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
             {% endif %}
 
-        {% if include.link or site.output == "web" and site.data.settings.web.images.open-image-on-click == true %}</a>{% endif %}
+        {% if include.link %}</a>{% endif %}
     {% endfor %}
 </div>
 {% endif %}
@@ -99,32 +111,31 @@ because https://github.com/jekyll/jekyll/issues/2248.
 {% endif %}
 
 {% if include.markdown and include.markdown != "" %}
-<div class="figure-md">
+<div class="figure-md" markdown="1">
 {{ include.markdown | markdownify }}
 </div>
 {% endif %}
 
 {% if include.title and include.title != "" %}
-<p class="title">
+<p class="title" markdown="1">
 {{ include.title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
 {% endif %}
 
 {% if include.slide-caption and include.slide-caption != "" %}
-<p class="slide-caption">
+<p class="slide-caption" markdown="1">
 {{ include.slide-caption | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
 {% endif %}
 
 {% if include.slide-caption == nil %}
 
-    {% if include.reference or include.caption and include.caption != "" %}
-    <p class="caption">
-    {% if include.reference %}<span class="figure-reference">{{ include.reference }} </span>{% endif %}
-    {{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+    {% if figure-reference-hidden == false or include.caption and include.caption != "" %}
+    <p class="caption" markdown="1">
+    {% if figure-reference and figure-reference-hidden == false %}<span class="figure-reference">{{ figure-reference }} </span>{% endif %}{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
     </p>
 
-{% endif %}
+    {% endif %}
 
 {% endif %}
 
@@ -133,7 +144,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 {% if include.source and include.source != "" %}
 
 <div class="figure-source">
-<p class="source">
+<p class="source" markdown="1">
 {{ include.source | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
 </p>
 </div><!--.figure-source-->

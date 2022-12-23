@@ -9,6 +9,7 @@ $print-figures: true !default;
         margin: $line-height-default 0 0 0;
         page-break-inside: avoid;
         background-color: inherit;
+        font-family: $font-text-secondary;
         font-size: inherit;
         font-weight: inherit;
         color: inherit;
@@ -22,6 +23,11 @@ $print-figures: true !default;
             text-align: left;
             text-indent: 0;
             hyphens: none;
+
+            // We avoid using these variables in outputs like web
+            // where font sizes are set in ems (i.e. proportionally).
+            // But here where we set font sizes in absolute units (pt)
+            // it's safe and useful to control font size in this way.
             font-size: $font-size-default * $font-size-smaller;
         }
         img, p img {
@@ -188,8 +194,10 @@ $print-figures: true !default;
     // Paragraphs that follow figures should:
     // have an indent when following floated figures
     // not have an indent when following fixed figures.
-    .figure + p {
-        text-indent: $paragraph-indent;
+    @if $spaced-paras == false {
+        .figure + p {
+            text-indent: $paragraph-indent;
+        }
     }
     .figure.fixed + p {
         text-indent: 0;

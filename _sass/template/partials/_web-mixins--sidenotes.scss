@@ -8,17 +8,25 @@
     font-size: 1em * $font-size-smaller;
     line-height: $line-height-default * $font-size-smaller;
     font-style: inherit;
-    background-color: white;
     position: relative;
+
     // Sidenotes only float to the right on screens
     // larger than the smallest break point
     @media only screen and (min-width: $break-width-small) {
         float: right;
         margin: 0 0 0.5em 0.5em;
-        max-width: 10em;
+        max-width: $max-width-default / 3;
     }
+
     @media only screen and (min-width: $break-width-large) {
-        margin: 0 -12em ($line-height-default / 2) 2em;
+        margin: 0 -10rem ($line-height-default / 2) 2rem;
+    }
+
+    // Very large screens, sidenotes can be as wide
+    // as half of the content width area
+    @media only screen and (min-width: #{$max-width-default * 2}) {
+        max-width: $max-width-default / 2;
+        margin-right: -(($max-width-default / 2) + 2rem);
     }
 
     // Don't text-indent paragraphs that follow sidenotes that follow a heading.

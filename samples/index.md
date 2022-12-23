@@ -1,7 +1,5 @@
 ---
-# This file redirects the user elsewhere.
-# By default, to the index page in the text folder.
-layout: min
+style: cover
 ---
 
-{% include redirect target="text" %}
+{% include cover %}

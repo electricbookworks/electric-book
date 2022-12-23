@@ -1,20 +1,28 @@
 # Set site.output == "app"
 output: "app"
+
 # Set site.image-set == "images/app"
 image-set: "images/app"
+
 # Turn off documentation
+# Setting output: false actually doesn't work,
+# see https://github.com/jekyll/jekyll/issues/7504
+# so we also exclude the _docs below.
 collections:
   docs:
     output: false
+  api:
+    output: false
   app:
     output: true
+
 # Remove baseurl
 baseurl: ""
+
+# Exclude from this build
 exclude:
   # Build tools
-  - run-linux.sh
-  - run-mac.command
-  - run-windows.bat
+  - run.js
   - Gemfile
   - Gemfile.lock
   - README*
@@ -60,8 +68,14 @@ exclude:
   - /assets/js/page-reference.js
   - /assets/js/bookmarks.js
 
+  # Collections that must not render
+  - _docs
+
   # Things we don't need for an app
+  - _api
+  - deploy.sh
   - sitemap.xml
+  - test.sh
   - assets/profiles
   - /*/package.opf
   - /*/toc.ncx

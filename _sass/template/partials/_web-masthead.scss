@@ -4,12 +4,13 @@ $web-masthead: true !default;
     // Masthead
 
     .masthead {
-        font-family: $font-text-secondary;
+
+        // Appearance
         background-color: $masthead-background-color;
         border-bottom: $rule-thickness solid $masthead-border-color;
-        width: 100%;
-        text-align: center;
         color: $masthead-text-color;
+        font-family: $font-text-secondary;
+        text-align: $masthead-align;
 
         &:after {
             content: "";
@@ -22,18 +23,48 @@ $web-masthead: true !default;
             text-decoration: none;
         }
 
+        .masthead-logo {
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-left: 0.5rem;
+            max-height: $masthead-height;
+            vertical-align: middle;
+
+            // Default, then use variable
+            width: 2.5rem;
+            @if $masthead-logo-width {
+                width: $masthead-logo-width;
+            }
+
+            img {
+                max-height: $masthead-height;
+                max-width: 100%;
+                vertical-align: middle;
+            }
+
+            svg {
+                vertical-align: middle;
+            }
+        }
+
         ul {
-            display: flex;
-            justify-content: center;
+
+            // Position
+            display: inline-block;
+            vertical-align: middle;
+
+            // Appearance
             list-style-type: none;
             margin: 0 auto;
-            padding: 0.5em;
+            padding: 0.5rem 0.5rem 0.5rem 0;
+            text-align: left;
 
             // Keep masthead height when li is display:none
-            min-height: 3.5rem;
+            min-height: $masthead-height;
 
             li {
                 display: none; // hide masthead breadcrumbs as mobile-first default
+                vertical-align: middle;
 
                 @media only screen and (min-width: $max-width-default) {
                     align-items: center;

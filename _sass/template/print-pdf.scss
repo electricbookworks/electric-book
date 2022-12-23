@@ -29,7 +29,7 @@ $output-format: "print-pdf" !default;
 $edition-suffix: null !default;
 
 // The path to the project root, for settings paths to fonts and colour profiles.
-// Override this for translation styles, which need an extra leading ../
+// Override this for translations, which need an extra leading ../
 $path-to-root-directory: "../.." !default;
 
 // First, we set several variables related to overall page setup.
@@ -151,6 +151,9 @@ $start-depth: $line-height-default * 6 !default;
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
 $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see http://www.princexml.com/doc/gen-content/#idp54010640
 
+// Other PDF features
+$title-page-logo-width: $paragraph-indent * 3;
+
 // Set the content of headers and footers.
 //
 // * For no content: normal
@@ -242,6 +245,10 @@ $recto-left-bottom-frontmatter: normal !default;
 $recto-right-frontmatter: normal !default;
 $recto-right-top-frontmatter: normal !default;
 $recto-right-bottom-frontmatter: normal !default;
+
+// Are there headers and footers on the first pages?
+// Set to blank or show.
+$first-page-margin-boxes: blank !default;
 
 // Set styles for headers and footers
 $header-font: $font-text-secondary !default;
@@ -378,6 +385,9 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 // Load general-purpose mixins
 @import "template/partials/print-mixins--buttons";
 @import "template/partials/print-mixins--sidenotes";
+@import "template/partials/print-mixins--margin-boxes";
+@import "template/partials/print-mixins--floats";
+@import "template/partials/print-mixins--page-continued";
 
 // Conventional helper classes
 @import "template/partials/print-helpers";

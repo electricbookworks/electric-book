@@ -4,4 +4,4 @@ title: "About"
 
 # About
 
-{{ site.data.meta.project.description }}
+{{ site.data.project.description }}

@@ -1,0 +1,13 @@
+{% include metadata %}
+
+<!-- This non-printing heading ensures it's still in PDF navigation. -->
+# {{ locale.features.copyright-page }}
+{:.non-printing}
+
+*{{ title }}*
+
+{% if rightsholder and rightsholder != "" %}© {{ rightsholder }}{% elsif creator and creator != "" %}© {{ creator }}{% endif %}
+
+{% include identifiers scheme="ISBN" %}
+
+{{ rights }}

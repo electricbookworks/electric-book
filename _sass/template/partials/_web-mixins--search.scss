@@ -1,0 +1,43 @@
+@mixin search-box($context: content) {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    input {
+        box-sizing: border-box; // means width 100% doesn't extend outside page
+        color: $color-text-secondary;
+        display: inline-block;
+        width: auto;
+
+        @if $context == content {
+            margin: 1rem 0;
+        }
+    }
+
+    input.search-box {
+        flex-grow: 2;
+        flex-shrink: 2;
+        border: 1pt solid $color-light;
+        margin: 1em 0.5rem 1em 1em;
+
+        @if $context == content {
+            margin: 0 1rem 0 0;
+        }
+    }
+
+    input[type="submit"] {
+        background-color: $color-buttons;
+        color: white;
+        cursor: pointer;
+        
+        @if $context == content {
+            border: 0;
+            font-family: $font-text-secondary;
+            font-size: inherit;
+            margin: 0;
+            padding: 0 0.5rem;
+        } @else {
+            margin: 1em 1rem 1em 0.5rem;
+        }
+    }
+}

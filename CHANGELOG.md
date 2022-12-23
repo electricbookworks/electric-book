@@ -1,5 +1,19 @@
 # Changelog
 
+## 23 December 2022
+
+This is a major restructuring of the Electric Book template. It introduces many new features. Notably:
+
+1. We've removed the `/text` folder, moving markdown files up into the book folder, alongside the `images`, `styles` and `fonts` folders. This results in shorter URLs (no `/text/` path) that are better for readability and SEO. It also provides a more intuitive mental model for editing, because markdown files are the foundation of the book, onto which we add images, styles and fonts.
+2. Book metadata (in `_data`) is now split into book-specific files. We've replaced the `meta.yml` file with separate metadata files, where each book gets its own file. This makes it much easier to maintain projects with several books.
+3. We've replaced the interactive output scripts with cross-platform Node commands. Processes (like output or image processing) are run with a single command. This makes it possible to automate commands (e.g. from a web- or Electron-based GUIs in future, or for automated testing). See the new README for details.
+4. We've added a command that checks for basic project structure, and a command that adds a new book folder based on an existing book.
+5. Prototyping a new book is much faster, because it's not necessary to create `nav` and `toc` nodes in book metadata for web navigation to work. Until you do specify those nodes in book metadata, navigation and TOCs will be automatically built from available files. See the `book` folder in the template for an example.
+
+We've also made general improvements to HTML structures, epub structure, and the organisation of Sass files for custom theming. The default styling is a little more elegant, while remaining as unopinionated (aka vanilla) as possible, ready for customisation.
+
+We've removed version numbering from the `_config.yml` file, and won't use semver numbering on releases going forward. Semantic versioning is not that useful for a template (as opposed to an upgradeable software app), and the current master branch here is always the latest version of the template. If we create tagged releases in future, it will be to document major new features, and provide a way to notify those watching this repo.
+
 ## 0.19.0
 
 * [New CSS structure for themeable design](https://github.com/electricbookworks/electric-book/pull/541)

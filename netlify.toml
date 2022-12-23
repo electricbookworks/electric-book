@@ -1,0 +1,13 @@
+# See https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[context.production.environment]
+
+  # We set NODE_ENV to production because we do not need
+  # Netlify to install devDependencies in package.json.
+  NODE_ENV = "production"
+
+[context.deploy-preview.environment]
+  NODE_ENV = "production"
+
+[context.branch-deploy.environment]
+  NODE_ENV = "production"

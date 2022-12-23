@@ -1,0 +1,659 @@
+# Information about this book
+
+# The book's main title
+title: "Samples"
+
+# The subtitle, if any
+subtitle: "Sample content for Electric Book print, epub and web output"
+
+# The author
+creator: "Arthur Attwell"
+
+# The book's blurb
+description: |
+  Sample content demonstrating Electric Book support for a wide range of book features.
+
+# A image representing the book,
+# usually the front cover.
+image: "cover.jpg"
+
+# Other contributors
+contributor: ""
+
+# Publisher, imprint or brand name
+publisher: "Electric Book Works"
+
+# Publisher's website
+publisher-url: ""
+
+# Who owns the copyright?
+rightsholder: ""
+
+# A copyright statement or licence wording
+rights: |
+  This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+# Language code
+# Use ISO 639-1, 639-2, or 639-3 codes
+# (in that order of preference)
+language: "en"
+
+# Official, original publication date
+# YYYY-MM-DD
+date: "2016-09-01"
+
+# Date of last revision
+# YYYY-MM-DD
+modified: "2016-09-23"
+
+# Book type, e.g. Novel, Poetry, Memoir
+type: "Guide"
+
+# Subject areas
+# E.g. BISAC: https://bisg.org/page/BISACEdition
+#      BIC: https://ns.editeur.org/bic_categories
+subject: "Publishing"
+
+# ISBN or UUID
+identifier: "978-1-928313-13-7"
+
+# Parent work's ISBN or ISTC
+# if this is a derivative work.
+source: "978-1-928313-13-7"
+
+# ISBN or ISTC of a related work
+relation: ""
+
+# Any specific place or time this book is about?
+# E.g. geographic place or chronological time span
+coverage: ""
+
+# Details about each product of this work
+products:
+
+  # Details about the print version of this work
+  print-pdf:
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Print"
+
+    # E.g. ISBN or UUID. If not specified,
+    # this will inherit the parent ISBN above.
+    identifier: ""
+
+    # Files to include in this format
+    files:
+      - "00-01-halftitle-page"
+      - "00-02-previous-publications-page"
+      - "00-03-title-page"
+      - "00-04-copyright-page"
+      - "00-05-contents-page"
+      - "00-06-dedication-page"
+      - "00-07-epigraph-page"
+      - "00-08-frontispiece-page"
+      - "00-09-frontmatter"
+      - "01-00-text"
+      - "01-01-plain-text-1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
+      - "01-02-headings"
+      - "01-03-quotes"
+      - "01-04-lists"
+      - "01-05-tables"
+      - "01-06-boxes"
+      - "01-07-notes"
+      - "01-08-dividers"
+      - "01-09-poetry"
+      - "01-10-questions"
+      - "02-00-images"
+      - "02-01-plain-images"
+      - "02-02-figures"
+      - "03-00-code-and-maths"
+      - "03-01-code"
+      - "03-02-maths"
+      - "04-00-interactivity"
+      - "04-01-links-buttons"
+      - "04-02-video"
+      - "04-03-audio"
+      - "04-04-iframes"
+      - "04-05-slides"
+      - "10-00-indexes"
+      - "10-01-traditional-index"
+      - "10-02-dynamic-index"
+
+    # The on-page table of contents for this format.
+    # If only specified for print-PDF, this TOC
+    # will also be used for other formats.
+    toc:
+      - label: "Half title page"
+        file: "00-01-halftitle-page"
+        class: "frontmatter-entry"
+      - label: "Previous publications"
+        file: "00-02-previous-publications-page"
+        class: "frontmatter-entry"
+      - label: "Title page"
+        file: "00-03-title-page"
+        class: "frontmatter-entry"
+      - label: "Copyright"
+        file: "00-04-copyright-page"
+        class: "frontmatter-entry"
+      - label: "Contents"
+        file: "00-05-contents-page"
+        class: "frontmatter-entry"
+      - label: "Dedication"
+        file: "00-06-dedication-page"
+        class: "frontmatter-entry"
+      - label: "Epigraph"
+        file: "00-07-epigraph-page"
+        class: "frontmatter-entry"
+      - label: "Frontispiece"
+        file: "00-08-frontispiece-page"
+        class: "frontmatter-entry"
+      - label: "Other frontmatter"
+        file: "00-09-frontmatter"
+        class: "frontmatter-entry"
+      - label: "Text"
+        children:
+          - label: "Plain text"
+            file: "01-01-plain-text-1"
+            id: "plain-text"
+            children:
+              - label: "I"
+                file: "01-01-plain-text-1"
+                id: "i"
+              - label: "II"
+                file: "01-01-plain-text-2"
+                id: "ii"
+              - label: "III"
+                file: "01-01-plain-text-3"
+                id: "iii"
+          - label: "Headings"
+            file: "01-02-headings"
+            id: "headings"
+          - label: "Quotes"
+            file: "01-03-quotes"
+            id: "quotes"
+            children:
+              - label: "Blockquotes"
+                file: "01-03-quotes"
+                id: "blockquotes"
+              - label: "Pullquotes"
+                file: "01-03-quotes"
+                id: "pullquotes"
+              - label: "Quote sources"
+                file: "01-03-quotes"
+                id: "quote-sources"
+          - label: "Lists"
+            file: "01-04-lists"
+            id: "lists"
+            children:
+              - label: "Simple lists"
+                file: "01-04-lists"
+                id: "simple-lists"
+              - label: "Chapter tables of contents"
+                file: "01-04-lists"
+                id: "chapter-contents"
+              - label: "Bibliographies"
+                file: "01-04-lists"
+                id: "bibliographies"
+              - label: "Definitions and glossaries"
+                file: "01-04-lists"
+                id: "definitions-and-glossaries"
+          - label: "Tables"
+            file: "01-05-tables"
+            id: "tables"
+          - label: "Boxes"
+            file: "01-06-boxes"
+            id: "boxes"
+          - label: "Notes"
+            file: "01-07-notes"
+            id: "notes"
+          - label: "Dividers"
+            file: "01-08-dividers"
+            id: "dividers"
+          - label: "Poetry"
+            file: "01-09-poetry"
+            id: "poetry"
+          - label: "Questions and quizzes"
+            file: "01-10-questions"
+            id: "questions-and-quizzes"
+      - label: "Images"
+        children:
+          - label: "Plain images"
+            file: "02-01-plain-images"
+            id: "plain-images"
+          - label: "Figures"
+            file: "02-02-figures"
+            id: "figures"
+      - label: "Code and mathematics"
+        children:
+          - label: "Code"
+            file: "03-01-code"
+            id: "code"
+          - label: "Mathematics"
+            file: "03-02-maths"
+            id: "mathematics"
+      - label: "Interactivity"
+        children:
+          - label: "Links and buttons"
+            file: "04-01-links-buttons"
+            id: "links-and-buttons"
+          - label: "Video"
+            file: "04-02-video"
+            id: "video"
+          - label: "Audio"
+            file: "04-03-audio"
+            id: "audio"
+          - label: "iFrames"
+            file: "04-04-iframes"
+            id: "iframes"
+          - label: "Slides"
+            file: "04-05-slides"
+            id: "slides"
+      - label: "Indexes"
+        children:
+          - label: "Traditional index"
+            file: "10-01-traditional-index"
+            id: "traditional-index"
+          - label: "Dynamic index"
+            file: "10-02-dynamic-index"
+            id: "dynamic-index"
+
+  # Details about the web version of this work
+  web:
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Digital online"
+
+    # E.g. ISBN or UUID
+    identifier: ""
+
+    # Files to include in this format.
+    # On web, this determines pagination order.
+    files:
+      - "index"
+      - "00-01-halftitle-page"
+      - "00-02-previous-publications-page"
+      - "00-03-title-page"
+      - "00-04-copyright-page"
+      - "00-05-contents-page"
+      - "00-06-dedication-page"
+      - "00-07-epigraph-page"
+      - "00-08-frontispiece-page"
+      - "00-09-frontmatter"
+      - "01-00-text"
+      - "01-01-plain-text-1": "Chapter 1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
+      - "01-02-headings"
+      - "01-03-quotes"
+      - "01-04-lists"
+      - "01-05-tables"
+      - "01-06-boxes"
+      - "01-07-notes"
+      - "01-08-dividers"
+      - "01-09-poetry"
+      - "01-10-questions"
+      - "02-00-images"
+      - "02-01-plain-images"
+      - "02-02-figures"
+      - "03-00-code-and-maths"
+      - "03-01-code"
+      - "03-02-maths"
+      - "04-00-interactivity"
+      - "04-01-links-buttons"
+      - "04-02-video"
+      - "04-03-audio"
+      - "04-04-iframes"
+      - "04-05-slides"
+      - "10-00-indexes"
+      - "10-01-traditional-index"
+      - "10-02-dynamic-index"
+
+    # The web navigation for this book.
+    # Use same structure as 'toc:',
+    # though your nav might include different
+    # items to those in a book's TOC.
+    nav:
+      - label: "Frontmatter"
+        class: "cover-entry"
+        children:
+          - label: "Half title page"
+            file: "00-01-halftitle-page"
+            class: "frontmatter-entry"
+          - label: "Previous publications"
+            file: "00-02-previous-publications-page"
+            class: "frontmatter-entry"
+          - label: "Title page"
+            file: "00-03-title-page"
+            class: "frontmatter-entry"
+          - label: "Copyright"
+            file: "00-04-copyright-page"
+            class: "frontmatter-entry"
+          - label: "Contents"
+            file: "00-05-contents-page"
+            class: "frontmatter-entry"
+          - label: "Dedication"
+            file: "00-06-dedication-page"
+            class: "frontmatter-entry"
+          - label: "Epigraph"
+            file: "00-07-epigraph-page"
+            class: "frontmatter-entry"
+          - label: "Frontispiece"
+            file: "00-08-frontispiece-page"
+            class: "frontmatter-entry"
+          - label: "Other frontmatter"
+            file: "00-09-frontmatter"
+            class: "frontmatter-entry"
+      - label: "Text"
+        children:
+          - label: "Plain text"
+            file: "01-01-plain-text-1"
+            id: "plain-text"
+            children:
+              - label: "I"
+                file: "01-01-plain-text-1"
+                id: "i"
+              - label: "II"
+                file: "01-01-plain-text-2"
+                id: "ii"
+              - label: "III"
+                file: "01-01-plain-text-3"
+                id: "iii"
+          - label: "Headings"
+            file: "01-02-headings"
+            id: "headings"
+          - label: "Quotes"
+            file: "01-03-quotes"
+            id: "quotes"
+            children:
+              - label: "Blockquotes"
+                file: "01-03-quotes"
+                id: "blockquotes"
+              - label: "Pullquotes"
+                file: "01-03-quotes"
+                id: "pullquotes"
+              - label: "Quote sources"
+                file: "01-03-quotes"
+                id: "quote-sources"
+          - label: "Lists"
+            file: "01-04-lists"
+            id: "lists"
+            children:
+              - label: "Simple lists"
+                file: "01-04-lists"
+                id: "simple-lists"
+              - label: "Chapter tables of contents"
+                file: "01-04-lists"
+                id: "chapter-contents"
+              - label: "Bibliographies"
+                file: "01-04-lists"
+                id: "bibliographies"
+              - label: "Definitions and glossaries"
+                file: "01-04-lists"
+                id: "definitions-and-glossaries"
+          - label: "Tables"
+            file: "01-05-tables"
+            id: "tables"
+          - label: "Boxes"
+            file: "01-06-boxes"
+            id: "boxes"
+          - label: "Notes"
+            file: "01-07-notes"
+            id: "notes"
+          - label: "Dividers"
+            file: "01-08-dividers"
+            id: "dividers"
+          - label: "Poetry"
+            file: "01-09-poetry"
+            id: "poetry"
+          - label: "Questions and quizzes"
+            file: "01-10-questions"
+            id: "questions-and-quizzes"
+      - label: "Images"
+        children:
+          - label: "Plain images"
+            file: "02-01-plain-images"
+            id: "plain-images"
+          - label: "Figures"
+            file: "02-02-figures"
+            id: "figures"
+      - label: "Code and mathematics"
+        children:
+          - label: "Code"
+            file: "03-01-code"
+            id: "code"
+          - label: "Mathematics"
+            file: "03-02-maths"
+            id: "mathematics"
+      - label: "Interactivity"
+        children:
+          - label: "Links and buttons"
+            file: "04-01-links-buttons"
+            id: "links-and-buttons"
+          - label: "Video"
+            file: "04-02-video"
+            id: "video"
+          - label: "Audio"
+            file: "04-03-audio"
+            id: "audio"
+          - label: "iFrames"
+            file: "04-04-iframes"
+            id: "iframes"
+          - label: "Slides"
+            file: "04-05-slides"
+            id: "slides"
+      - label: "Indexes"
+        children:
+          - label: "Traditional index"
+            file: "10-01-traditional-index"
+            id: "traditional-index"
+          - label: "Dynamic index"
+            file: "10-02-dynamic-index"
+            id: "dynamic-index"
+
+    # At which file should users start reading?
+    start-page: "00-05-contents-page"
+
+    # Your contents-page file, if you have one.
+    contents-page: "00-05-contents-page"
+
+  # Details about the epub version of this work
+  epub:
+
+    # The publication date, if different
+    # from the parent date above.
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Digital download"
+
+    # E.g. ISBN or UUID. Note that an epub
+    # must have an identifier to be valid.
+    identifier: "9780000000000"
+
+    # The epub's cover image
+    image: "cover.jpg"
+
+    # Files to include in this format.
+    # In the epub files list, add a value to any file
+    # to set any of the guide types listed in
+    # http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.6
+    # Most importantly, the "toc".
+    files:
+      - "00-00-cover": "cover"
+      - "00-01-halftitle-page"
+      - "00-02-previous-publications-page"
+      - "00-03-title-page": "title-page"
+      - "00-04-copyright-page": "copyright-page"
+      - "00-05-contents-page": "toc"
+      - "00-06-dedication-page": "dedication"
+      - "00-07-epigraph-page": "epigraph"
+      - "00-08-frontispiece-page"
+      - "00-09-frontmatter": "preface"
+      - "01-00-text": "text"
+      - "01-01-plain-text-1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
+      - "01-02-headings"
+      - "01-03-quotes"
+      - "01-04-lists"
+      - "01-05-tables"
+      - "01-06-boxes"
+      - "01-07-notes"
+      - "01-08-dividers"
+      - "01-09-poetry"
+      - "01-10-questions"
+      - "02-00-images"
+      - "02-01-plain-images"
+      - "02-02-figures"
+      - "03-00-code-and-maths"
+      - "03-01-code"
+      - "03-02-maths"
+      - "04-00-interactivity"
+      - "04-01-links-buttons"
+      - "04-02-video"
+      - "04-03-audio"
+      - "04-04-iframes"
+      - "04-05-slides"
+      - "10-00-indexes"
+      - "10-01-traditional-index"
+      - "10-02-dynamic-index"
+
+    # At which page should readers start reading?
+    # In some ereaders this is determined by the
+    # 'text' value assigned to a file in the
+    # files list below.
+    start-page: "00-05-contents-page"
+
+    # Your contents-page file, if you have one.
+    # An epub must have a contents page for navigation.
+    # Specify it here or with a 'toc' value
+    # at the relevant file in the files list below.
+    contents-page: "00-05-contents-page"
+
+  # Details about the screen-PDF version of this work
+  screen-pdf:
+
+    # The publication date, if different
+    # from the parent date above.
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Digital download"
+
+    # E.g. ISBN or UUID
+    identifier: ""
+    image: "cover.jpg"
+
+    # Files to include in this format.
+    # Note that a screen PDF usually starts
+    # with a cover file, unlike a print PDF.
+    files:
+      - "00-00-cover"
+      - "00-01-halftitle-page"
+      - "00-02-previous-publications-page"
+      - "00-03-title-page"
+      - "00-04-copyright-page"
+      - "00-05-contents-page"
+      - "00-06-dedication-page"
+      - "00-07-epigraph-page"
+      - "00-08-frontispiece-page"
+      - "00-09-frontmatter"
+      - "01-00-text"
+      - "01-01-plain-text-1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
+      - "01-02-headings"
+      - "01-03-quotes"
+      - "01-04-lists"
+      - "01-05-tables"
+      - "01-06-boxes"
+      - "01-07-notes"
+      - "01-08-dividers"
+      - "01-09-poetry"
+      - "01-10-questions"
+      - "02-00-images"
+      - "02-01-plain-images"
+      - "02-02-figures"
+      - "03-00-code-and-maths"
+      - "03-01-code"
+      - "03-02-maths"
+      - "04-00-interactivity"
+      - "04-01-links-buttons"
+      - "04-02-video"
+      - "04-03-audio"
+      - "04-04-iframes"
+      - "04-05-slides"
+      - "10-00-indexes"
+      - "10-01-traditional-index"
+      - "10-02-dynamic-index"
+
+  # Details about the app version of this work.
+  # Unless specified here, app details are inherited
+  # from the web format's details above.
+  app:
+
+    # The publication date, if different
+    # from the parent date above.
+    date: "2016-09-01"
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Digital download"
+
+    # E.g. ISBN or UUID
+    identifier: ""
+
+    # Files to include in this format
+    files:
+      - "index"
+      - "00-01-halftitle-page"
+      - "00-02-previous-publications-page"
+      - "00-03-title-page"
+      - "00-04-copyright-page"
+      - "00-05-contents-page"
+      - "00-06-dedication-page"
+      - "00-07-epigraph-page"
+      - "00-08-frontispiece-page"
+      - "00-09-frontmatter"
+      - "01-00-text"
+      - "01-01-plain-text-1"
+      - "01-01-plain-text-2"
+      - "01-01-plain-text-3"
+      - "01-02-headings"
+      - "01-03-quotes"
+      - "01-04-lists"
+      - "01-05-tables"
+      - "01-06-boxes"
+      - "01-07-notes"
+      - "01-08-dividers"
+      - "01-09-poetry"
+      - "01-10-questions"
+      - "02-00-images"
+      - "02-01-plain-images"
+      - "02-02-figures"
+      - "03-00-code-and-maths"
+      - "03-01-code"
+      - "03-02-maths"
+      - "04-00-interactivity"
+      - "04-01-links-buttons"
+      - "04-02-video"
+      - "04-03-audio"
+      - "04-04-iframes"
+      - "04-05-slides"
+      - "10-00-indexes"
+      - "10-01-traditional-index"
+      - "10-02-dynamic-index"
+
+    # At which file should users start reading?
+    start-page: "00-05-contents-page"
+
+    # Your contents-page file, if you have one.
+    contents-page: "00-05-contents-page"

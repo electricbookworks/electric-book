@@ -1,0 +1,71 @@
+{% comment %} Adds a clickable list of translations for a file,
+by checking for the existence of translated files, and also
+reading the file list of each translation. To appear in the selector,
+each translated file must both exist and be included in the
+translation's file list in meta.yml.{% endcomment %}
+
+{% include translations-array.html %}
+
+{% comment %} Render the list only if this page has translations. {% endcomment %}
+{% if translations-array.size > 0 %}
+
+<div class="language-select" title="{{ locale.controls.language-select }}">
+
+    {% include icons/language-select-icon.svg %}
+
+    <ul class="language-select-list">
+
+        {% for translation in translations-array %}
+            
+            {% unless translation == language %}
+            
+                <li class="language-select-language language-select-{{ translation }}">
+
+                    {% if is-book-directory %}
+                        
+                        {% if translation == parent-language %}
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="{{ path-to-book-directory }}{{ current-file }}.html">
+                                {{ site.data.locales[translation].local-name }}
+                            </a>
+                        {% else %}
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="{{ path-to-book-directory }}{{ translation }}/{{ current-file }}.html">
+                                {{ site.data.locales[translation].local-name }}
+                            </a>
+                        {% endif %}
+
+                    {% elsif is-root-directory %}
+
+                        {% if translation == parent-language %}
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="{{ current-file }}.html">
+                                {{ site.data.locales[translation].local-name }}
+                            </a>
+                        {% else %}
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="{{ translation }}/{{ current-file }}.html">
+                                {{ site.data.locales[translation].local-name }}
+                            </a>
+                        {% endif %}
+
+                    {% elsif is-translation-homepage %}
+                        
+                        {% if translation == parent-language %}
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="../{{ current-file }}.html">
+                                {{ site.data.locales[translation].local-name }}
+                            </a>
+                        {% else %}
+                            <a title="{{ site.data.locales[translation].controls.language-select }}" href="../{{ translation }}/{{ current-file }}.html">
+                                {{ site.data.locales[translation].local-name }}
+                            </a>
+                        {% endif %}
+
+                    {% endif %}
+
+                </li>
+            
+            {% endunless %}
+
+        {% endfor %}
+
+    </ul>
+</div>
+
+{% endif %}

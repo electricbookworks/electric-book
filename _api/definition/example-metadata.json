@@ -1,0 +1,64 @@
+{
+    "project": {
+      "organisation": "Global Initiative Against Transnational Organized Crime",
+      "url": "https://globalinitiative.net",
+      "email": "secretariat@globalinitiative.net",
+      "name": "Global Initiative Risk Bulletins",
+      "description": "Our regional observatories draw on civil-society networks to provide new data and contextualize trends related to organized-crime networks, illicit trade and state responses to them.",
+      "logo": "logo.svg",
+      "image": "logo.svg",
+      "credit": "",
+      "language": "en",
+      "app-id": "com.example.myapp",
+      "version": "1.0.0"
+    },
+    "works": {
+      "esa-obs-020": {
+        "default": {
+          "title": "Risk Bulletin #20 – September 2021",
+          "subtitle": "",
+          "creator": "Observatory of Illicit Economies in Eastern and Southern Africa",
+          "contributor": "",
+          "subject": "Non-fiction",
+          "description": "Trends, developments and insights into the relationship between criminal economies and instability across Eastern and Southern Africa.\n",
+          "publisher": "Global Initiative Against Transnational Organized Crime",
+          "publisher-url": "https://globalinitiative.net/",
+          "date": "2021-10-01",
+          "modified": "2021-10-01",
+          "type": "Bulletin",
+          "identifier": "",
+          "source": "",
+          "language": "en",
+          "relation": "",
+          "coverage": "",
+          "rightsholder": "",
+          "rights": "All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher.",
+          "image": "cover.jpg",
+          "products": {
+            "print-pdf": { "format": "Print", "files": ["index", "about"] },
+            "web": {
+              "format": "Digital online",
+              "files": ["index"],
+              "start-page": "index",
+              "contents-page": "index"
+            },
+            "epub": {
+              "format": "Digital download",
+              "identifier": "7c3a127a-953e-43ce-a391-e4e07419920e",
+              "start-page": "index",
+              "contents-page": "index",
+              "files": [{ "0-0-cover": "cover" }, { "index": "text" }, "about"],
+              "toc": [
+                { "label": "Cover", "file": "0-0-cover" },
+                { "label": "Risk Bulletin", "file": "index" }
+              ]
+            },
+            "screen-pdf": {
+              "format": "Digital download",
+              "files": ["index", "about"]
+            }
+          }
+        }
+      }
+    }
+}

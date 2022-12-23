@@ -44,3 +44,9 @@ accordion: expand
 ## Setting the accordion heading level
 
 By default, the content accordion collapses on `h2`s. You can change this in `_data/settings.yml` by setting the `accordion-level`.
+
+You can override that level per page by specifying an `accordion-level` in a page's YAML fronmatter, e.g.:
+
+``` yaml
+accordion-level: h3
+```

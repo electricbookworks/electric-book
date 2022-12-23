@@ -25,9 +25,6 @@ prose:
     - package-lock.json
     - package.json
     - _prose.yml
-    - run-linux.sh
-    - run-mac.command
-    - run-windows.bat
     - search.md
 
     # Root folders
@@ -59,7 +56,6 @@ prose:
     # Book subfolders and files
     - /*/*/.gitignore
     - /*/*/0-0-cover.md
-    - /*/*/file-list
 
     # Translation folders and files
     - /*/*/.gitignore
@@ -73,7 +69,6 @@ prose:
     # Translation subfolders and files
     - /*/*/*/.gitignore
     - /*/*/*/0-0-cover.md
-    - /*/*/*/file-list
 
   media: "media"
   metadata:

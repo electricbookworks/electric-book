@@ -19,7 +19,7 @@ Also see the ['Settings'](../setup/settings.html#svg-injection) section in Setup
 
 Our built-in image-preparation process automatically optimises SVG images, for instance by removing unnecessary data from their code. This happens when you run the 'Convert source images to output formats' option in the output script.
 
-We use a library called [SVGO](https://github.com/svg/svgo) for this optimisation. SVGO has many configuration options. We've carefully preset options based on our experience, and they are written into the `images:svg` task in `gulpfile.js`. If you need to change them, tread carefully and be careful not to overwrite your changes if you update `gulpfile.js` (e.g. by copying the latest version from the template or another project).
+> Technical note: We use a library called [SVGO](https://github.com/svg/svgo) for this optimisation. SVGO has many configuration options. We've carefully preset options based on our experience, and they are written into `_tools/gulp/processors/svgs.js`. If you need to change them, tread carefully and be careful not to overwrite your changes if you update this or related files, for instance by copying the latest version from the template or another project.
 
 
 ## Manipulating SVGs automatically
@@ -30,7 +30,7 @@ This can be tedious to do manually, or impossible to do in tools like Adobe Illu
 
 So, the Electric Book template includes a way for you to write Javascript functions that manipulate your SVGs for you during image processing. These functions run *after* SVGO optimisation.
 
-These functions are in scripts saved to book specific folders in `_tools/gulp/images/functions`. You can create one file and function per SVG image, or one file and function that applies to *all* SVGs images in a book.
+These functions are in scripts saved to book specific folders in `_tools/gulp/images/functions`. You can create one file and function per SVG image, or one file and function that applies to *all* SVGs images in a book. You can also have a function run only on the SVG for a particular output format (e.g. `print-pdf`),
 
 
 ### Single-image functions
@@ -44,9 +44,11 @@ Add a file for the relevant SVG to the `_tools/gulp/images/functions` folder, in
 
 For example, `naples_svg.js` will contain a function that runs on the `naples.svg` file in the `samples` book. It should be in `_tools/gulp/images/functions/samples`.
 
+If you want the file to only apply to a particular output format, place it in a sub-folder named after that format. E.g. `_tools/gulp/images/functions/samples/print-pdf/naples_svg.js`. If there is a file with the same name for both all formats and a specific output format, the all-formats function will run first, followed by the output-specific one.
+
 Behind the scenes, the function will be run by [gulp-edit-xml](https://www.npmjs.com/package/gulp-edit-xml), which parses SVG files as Javascript objects. For more detail on this approach and syntax, see the docs for [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js). In particular, note that:
 
-- you refer to your SVG as `xml` in your function.
+- you refer to your SVG as `xml` in your function, and the SVG element as `xml.svg`
 - your script must include an `exports` statement after the function. E.g. `exports.naples_svg = naples_svg;`
 
 Here is a full example of a file that would be saved as `_tools/gulp/images/functions/naples_svg.js`, and which inserts a font-face import into an SVG. (Note that this function will entirely replace any existing `<style>` element in the SVG.)

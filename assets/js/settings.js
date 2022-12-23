@@ -8,12 +8,17 @@
 // NB: The generated settings load in client-side Javascript, so
 // do not include any settings that should not be publicly available.
 
+// Make Jekyll metadata available to Liquid
+{% include metadata %}
+
 // Create default settings object
 var settings = {
     site: {
         baseurl: '',
-        output: 'web'
+        output: 'web',
+        docs: false
     },
+    dynamicIndexing: true,
     web: {
         images: {
             lazyload: true
@@ -21,7 +26,7 @@ var settings = {
         bookmarks: {
             enabled: true,
             elements: {
-                include: '#content [id]',
+                include: '.content [id]',
                 exclude: ''
             }
         },
@@ -37,7 +42,7 @@ var settings = {
         bookmarks: {
             enabled: true,
             elements: {
-                include: '#content [id]',
+                include: '.content [id]',
                 exclude: ''
             }
         },
@@ -62,6 +67,10 @@ settings.site.baseurl = '{{ site.baseurl }}';
 
 {% if site.output %}
 settings.site.output = '{{ site.output }}';
+{% endif %}
+
+{% if site.data.settings.dynamic-indexing != nil %}
+settings.dynamicIndexing = {{ site.data.settings.dynamic-indexing }}
 {% endif %}
 
 // Override default settings from settings.yml
@@ -105,4 +114,8 @@ settings.app.accordion.autoClose = {{ site.data.settings.app.accordion-auto-clos
 
 {% if site.data.settings.app.search.jump-box-location != nil %}
 settings.app.search.jumpBoxLocation = '{{ site.data.settings.app.search.jump-box-location }}';
+{% endif %}
+
+{% if output-docs %}
+settings.site.docs = true;
 {% endif %}

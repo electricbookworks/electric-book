@@ -1,0 +1,107 @@
+# Information about this book
+
+# The book's main title
+title: "Template"
+
+# The subtitle, if any
+subtitle: ""
+
+# The author
+creator: ""
+
+# Other contributors
+contributor: ""
+
+# The book's blurb
+description: |
+  The Electric Book's blank template.
+
+# A image representing the book,
+# usually the front cover.
+image: "cover.jpg"
+
+# Publisher, imprint or brand name
+publisher: ""
+
+# Publisher's website
+publisher-url: ""
+
+# Who owns the copyright?
+rightsholder: ""
+
+# A copyright statement or licence wording
+rights: |
+  All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher.
+
+# Language code
+# Use ISO 639-1, 639-2, or 639-3 codes
+# (in that order of preference)
+language: "en"
+
+# Official, original publication date
+# YYYY-MM-DD
+date: "2022-01-01"
+
+# Date of last revision
+# YYYY-MM-DD
+modified: "2022-01-01"
+
+# Book type, e.g. Novel, Poetry, Memoir
+type: ""
+
+# Subject areas
+# E.g. BISAC: https://bisg.org/page/BISACEdition
+#      BIC: https://ns.editeur.org/bic_categories
+subject: ""
+
+# ISBN or UUID
+identifier: ""
+
+# Parent work's ISBN or ISTC
+# if this is a derivative work.
+source: ""
+
+# ISBN or ISTC of a related work
+relation: ""
+
+# Any specific place or time this book is about?
+# E.g. geographic place or chronological time span
+coverage: ""
+
+# Details about each product of this work
+products:
+
+  # Details about the print version of this work
+  print-pdf:
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Print"
+
+  # Details about the website version of this work
+  web:
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Online" # e.g. Paperback, Digital download, Digital online
+
+  # Details about the epub version of this work
+  epub:
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "Ebook" # e.g. Paperback, Digital download, Digital online
+
+  # Details about the screen-PDF version of this work
+  screen-pdf:
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "PDF" # e.g. Paperback, Digital download, Digital online
+
+  # Details about the app version of this work
+  app:
+
+    # Format
+    # e.g. Paperback, Digital download, Digital online
+    format: "App" # e.g. Paperback, Digital download, Digital online

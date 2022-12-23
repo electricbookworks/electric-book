@@ -10,7 +10,9 @@ _tests/log*
 _data/secrets*
 _app/platforms
 _app/plugins
+_prince
 .DS_Store
+.vscode*
 
 # If your team needs strict node-package
 # version management, comment out this line

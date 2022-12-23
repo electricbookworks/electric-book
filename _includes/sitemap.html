@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+{% include metadata %}
+
+  {% comment %} Include landing pages {% endcomment %}
+
+  <url>
+    <loc>{{ site.canonical-url }}{{ site.baseurl }}/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  {% for lang in all-languages %}
+    {% unless lang == project-language %}
+
+      {% comment %} Check if the page exists {% endcomment %}
+      {% capture translation-landing-page-url %}/{{ lang }}/{% endcapture %}
+      {% for page in site.pages %}
+          {% if page.url == translation-landing-page-url %}
+
+            <url>
+              <loc>{{ site.canonical-url }}{{ site.baseurl }}/{{ lang }}/</loc>
+              <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+              <changefreq>monthly</changefreq>
+              <priority>0.5</priority>
+            </url>
+
+          {% endif %}
+      {% endfor %}
+    {% endunless %}
+  {% endfor %}
+
+  {% comment %} Include search page {% endcomment %}
+  <url>
+    <loc>{{ site.canonical-url }}{{ site.baseurl }}/search.html</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  {% comment %} Include book-directory files as listed in meta.yml {% endcomment %}
+  {% include files-listed.html %}
+  {% for path in array-of-files %}
+    <url>
+      <loc>{{ site.canonical-url }}{{ site.baseurl }}{{ path | replace: "/index.html", "/" }}</loc>
+      <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.5</priority>
+    </url>
+  {% endfor %}
+
+</urlset>

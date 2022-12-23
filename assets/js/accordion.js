@@ -7,15 +7,25 @@
 
 // --------------------------------------------------------------
 // Options, defined in _data/settings.yml
-//
+
 // 1. Use CSS selectors to list the headings that will
-//    define each accordion section, e.g. '#content h2'
-var accordionHeads = '#content ' + settings[settings.site.output].accordion.level;
+//    define each accordion section, e.g. '.content h2'
+var accordionLevel = settings[settings.site.output].accordion.level;
+var accordionDataLevelElement = document.querySelector('[data-accordion-level]');
+if (accordionDataLevelElement) {
+    accordionLevel = accordionDataLevelElement.getAttribute('data-accordion-level');
+}
+var accordionHeads = '.content ' + accordionLevel;
+
 // 2. Which heading's section should we show by default?
-var defaultAccordionHead = '#content ' + settings[settings.site.output].accordion.level + ':first-of-type';
+var defaultAccordionHead = '.content [role="tabpanel"] ' + accordionLevel + ':first-of-type';
+
 // 3. Auto close last accordion when you open a new one?
 var autoCloseAccordionSections = settings[settings.site.output].accordion.autoClose;
 // --------------------------------------------------------------
+
+// Find where we've set the data-accordion-page flag
+var accordionDataPageElement = document.querySelector('[data-accordion-page');
 
 function ebAccordionInit() {
     'use strict';
@@ -23,10 +33,12 @@ function ebAccordionInit() {
     var pageAccordionOff;
 
     // Check for no-accordion setting on page
-    var accordionPageSetting = document.body.getAttribute('data-accordion-page');
-    if (accordionPageSetting &&
-            (accordionPageSetting === "none")) {
-        pageAccordionOff = true;
+    if (accordionDataPageElement) {
+        var accordionPageSetting = accordionDataPageElement.getAttribute('data-accordion-page');
+        if (accordionPageSetting &&
+                (accordionPageSetting === "none")) {
+            pageAccordionOff = true;
+        }
     }
 
     // Check if there are any headings on the page
@@ -49,7 +61,10 @@ function ebAccordionInit() {
 function ebAccordionPageSetting() {
     'use strict';
 
-    var accordionPageSetting = document.body.getAttribute('data-accordion-page');
+    var accordionPageSetting;
+    if (accordionDataPageElement) {
+        accordionPageSetting = accordionDataPageElement.getAttribute('data-accordion-page');
+    }
     return accordionPageSetting;
 }
 
@@ -77,47 +92,53 @@ function ebAccordionSetUpSections(collapserButtons) {
     }
 
     // add role="tablist" to the parent of the role="tab"s
-    var content = document.querySelector('#content');
+    var content = document.querySelector('.content');
     content.setAttribute('role', 'tablist');
 
     // loop through collapserButtons
     collapserButtons.forEach(function (collapserButton) {
 
-        // make a section to move the collapsing content into
-        var section = document.createElement('section');
-        section.setAttribute('role', 'tabpanel');
-        section.setAttribute('aria-labelledby', collapserButton.id);
-        section.setAttribute('data-accordion-container', collapserButton.id);
+        // Only do the rest if if .content is the parent
+        // of the collapserButton (i.e. accordion heading).
+        // Prevents errors when heading is in a div, e.g. a box.
+        if (collapserButton.parentNode === content) {
 
-        // add the section to the doc
-        content.insertBefore(section, collapserButton);
+            // make a section to move the collapsing content into
+            var section = document.createElement('section');
+            section.setAttribute('role', 'tabpanel');
+            section.setAttribute('aria-labelledby', collapserButton.id);
+            section.setAttribute('data-accordion-container', collapserButton.id);
 
-
-        // make a header, add it to the section
-        var header = document.createElement('header');
-
-        //  move the toggle to the header
-        header.appendChild(collapserButton);
-
-        // make a link for this id
-        var accordionLink = document.createElement('a');
-        accordionLink.href = '#' + collapserButton.id;
-        accordionLink.innerHTML = collapserButton.innerHTML;
-
-        // Add the link inside the toggle
-        collapserButton.innerHTML = accordionLink.outerHTML;
-        collapserButton.setAttribute('role', 'tab');
-
-        // add the header to the section
-        section.appendChild(header);
+            // add the section to the doc
+            content.insertBefore(section, collapserButton);
 
 
-        // make a div for the rest of the contents
-        var container = document.createElement('div');
-        container.setAttribute('data-container', true);
+            // make a header, add it to the section
+            var header = document.createElement('header');
 
-        // add it to the section
-        section.appendChild(container);
+            //  move the toggle to the header
+            header.appendChild(collapserButton);
+
+            // make a link for this id
+            var accordionLink = document.createElement('a');
+            accordionLink.href = '#' + collapserButton.id;
+            accordionLink.innerHTML = collapserButton.innerHTML;
+
+            // Add the link inside the toggle
+            collapserButton.innerHTML = accordionLink.outerHTML;
+            collapserButton.setAttribute('role', 'tab');
+
+            // add the header to the section
+            section.appendChild(header);
+
+
+            // make a div for the rest of the contents
+            var container = document.createElement('div');
+            container.setAttribute('data-container', true);
+
+            // add it to the section
+            section.appendChild(container);
+        }
     });
 
     ebAccordionFillSections();
@@ -133,7 +154,7 @@ function ebAccordionFillSections() {
     'use strict';
 
     // Grab the individual #contents elements of the page
-    var contentItems = document.getElementById('content').childNodes;
+    var contentItems = document.querySelector('.content').childNodes;
 
     // Put all the items in an array.
     var j, contentItemsForSections = [];
@@ -170,7 +191,7 @@ function ebAccordionFillSections() {
 function ebAccordionHideThisSection(targetID) {
     'use strict';
 
-    console.log('Hiding only section ' + targetID);
+    // console.log('Hiding only section ' + targetID);
     var tabPanel = document.querySelector('[role="tabpanel"][aria-labelledby="' + targetID + '"]');
     tabPanel.querySelector('[role="tab"]')
         .setAttribute('data-accordion', 'closed');
@@ -382,12 +403,15 @@ function ebAccordionListenForAnchorClicks(querySelectorString) {
 
     // console.log('Starting ebAccordionListenForAnchorClicks...');
 
-    // listen for clicks on *all* the anchors in #content by default
+    // listen for clicks on *all* the anchors in .content
+    // and links in any .search-results-nav list,
+    // or those specified by a querySelectorString.
     var allTheAnchors;
     if (querySelectorString) {
         allTheAnchors = document.querySelectorAll(querySelectorString);
     } else {
-        allTheAnchors = document.querySelectorAll('#content a');
+        allTheAnchors = document
+            .querySelectorAll('.content a[href], .search-results-nav a[href]');
     }
 
     allTheAnchors.forEach(function (oneOfTheAnchors) {
@@ -399,13 +423,11 @@ function ebAccordionListenForAnchorClicks(querySelectorString) {
 
         oneOfTheAnchors.addEventListener("click", function (event) {
 
-            event.stopPropagation();
-
             // If the link was clicked with a modifier key pressed
             // (e.g. Ctrl + click), assume user wants a new tab,
             // and do not continue processing this here.
             if (event.metaKey || event.ctrlKey || event.shiftKey) {
-                console.log('User was pressing Ctrl, Shift or the meta key.');
+                // console.log('User was pressing Ctrl, Shift or the meta key.');
                 return;
             }
 
@@ -458,9 +480,11 @@ function ebAccordionListenForHeadingClicks() {
     // also listen for heading clicks
     var allTheToggleHeaders = document.querySelectorAll('[data-accordion]');
     allTheToggleHeaders.forEach(function (oneOfTheToggleHeaders) {
-        oneOfTheToggleHeaders.addEventListener("click", function () {
+        oneOfTheToggleHeaders.addEventListener("click", function (event) {
             // simulate anchor click
-            event.target.querySelector('a').click();
+            if (event.target.querySelector('a')) {
+                event.target.querySelector('a').click();
+            }
         });
     });
 }
@@ -471,13 +495,16 @@ function ebAccordionListenForNavClicks() {
     // also listen for nav clicks
     var navLinks = document.querySelectorAll('#nav [href]');
     navLinks.forEach(function (navLink) {
-        navLink.addEventListener("click", function () {
+        navLink.addEventListener("click", function (event) {
             // get the section and click to open it if it's closed
-            var theSection = document.getElementById(event.target.hash.replace(/.*#/, ''));
-            // simulate anchor click, if it's closed
-            if (theSection) {
-                if (theSection.getAttribute('data-accordion') === 'closed') {
-                    theSection.querySelector('a').click();
+            var theTarget = document.getElementById(event.target.hash.replace(/.*#/, ''));
+            if (theTarget) {
+                var targetSection = document.getElementById(ebAccordionFindSection(theTarget));
+                // simulate anchor click, if it's closed
+                if (targetSection) {
+                    if (targetSection.getAttribute('data-accordion') === 'closed') {
+                        targetSection.querySelector('a').click();
+                    }
                 }
             }
         });
@@ -534,7 +561,7 @@ function ebAccordionListenForHashChange() {
 
         ebAccordionShow(targetAccordionID);
         if (autoCloseAccordionSections === true) {
-            console.log('Hiding other sections...');
+            // console.log('Hiding other sections...');
             ebAccordionHideAllExceptThisOne(targetAccordionID);
         }
     });
@@ -569,7 +596,7 @@ function ebAccordionShowAllButton() {
         button.innerHTML = locales[pageLanguage].accordion['show-all'];
     } else {
 
-        var firstSection = document.querySelector(defaultAccordionHead);
+        var firstSection = document.querySelector('section[role="tabpanel"]');
 
         if (firstSection) {
             // Create a wrapper for the button
@@ -607,37 +634,13 @@ function ebAccordify() {
         return;
     }
 
-    // exit if this isn't a chapter
-    var thisIsNotAChapter = (document.querySelector('body').getAttribute('class').indexOf('chapter') === -1);
-    var thisHasNoH2s = (document.querySelector(accordionHeads) === null);
-    var thisIsEndmatter = (document.querySelector('body').getAttribute('class').indexOf('endmatter') !== -1);
-    if (thisIsNotAChapter || thisHasNoH2s || thisIsEndmatter) {
+    // exit if this page must not accordify
+    var pageHasNoAccordionHeads = (document.querySelector(accordionHeads) === null);
+    if (pageHasNoAccordionHeads) {
         return;
     }
 
     ebAccordionSetUpSections(collapserButtons);
-
-    if (searchTerm) {
-        // loop through sections
-        var accordionSections = document.querySelectorAll('section[data-accordion-container]');
-        accordionSections.forEach(function (accordionSection) {
-
-            // check for any markjs marks
-            var searchTermsInSection = accordionSection.querySelectorAll('[data-markjs]');
-            var numberOfSearchTermsInSection = searchTermsInSection.length;
-
-            // mark the sections that have the search term inside
-            if (!!numberOfSearchTermsInSection) {
-                var sectionHeaderLink = accordionSection.querySelector('header a');
-                sectionHeaderLink.innerHTML = '<mark>' + sectionHeaderLink.innerHTML + '</mark>';
-
-                // add a mini-summary paragraph
-                var searchResultsMiniSummary = document.createElement('p');
-                searchResultsMiniSummary.innerHTML = numberOfSearchTermsInSection + ' search results for ' + '"<mark>' + searchTerm + '</mark>"';
-                accordionSection.querySelector('header').appendChild(searchResultsMiniSummary);
-            }
-        });
-    }
 
     // if there's no hash, show the first section
     // else (there is a hash, so) show that section
@@ -672,7 +675,7 @@ function ebLoadAccordion() {
 }
 
 // Wait for data-index-targets to be loaded
-// and IDs to be assigned
+// and IDs to be assigned, and any search results to be loaded,
 // before applying the accordion.
 function ebPrepareForAccordion() {
     'use strict';
@@ -681,8 +684,9 @@ function ebPrepareForAccordion() {
         mutations.forEach(function (mutation) {
             if (mutation.type === "attributes") {
                 if (document.body.getAttribute('data-accordion-active') !== 'true'
-                        && document.body.getAttribute('data-index-targets')
-                        && document.body.getAttribute('data-ids-assigned')) {
+                        && (document.querySelector('[data-index-targets]') || settings.dynamicIndexing === false)
+                        && document.body.getAttribute('data-ids-assigned')
+                        && document.body.getAttribute('data-search-results')) {
                     ebLoadAccordion();
                 }
             }

@@ -266,7 +266,8 @@ $web-bookmarks: true !default;
         }
     }
 
-    // Icons (_includes/bookmark-icon, _includes/history-icon)
+    // Icons (_includes/template/bookmark-icon.svg,
+    // _includes/template/icons/history-icon.svg)
     svg[class*="icon"] {
         // Avoid Firefox bug where tapping selects SVG as text
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1286882
@@ -344,7 +345,7 @@ $web-bookmarks: true !default;
         }
     }
 
-    #content .bookmark-pending {
+    .content .bookmark-pending {
         & > .bookmark-button {
             display: flex;
             z-index: 1; // helps ensure it's always clickable
@@ -400,9 +401,10 @@ $web-bookmarks: true !default;
 
     .last-location-prompt {
         align-items: center;
-        background: $color-background;
-        border: $rule-thickness solid $bookmark-icon-outline-color-active;
+        background: $bookmark-last-location-prompt-color-background;
+        border: $rule-thickness solid $bookmark-last-location-prompt-color-border;
         border-radius: $button-border-radius 0 0 $button-border-radius;
+        color: $bookmark-last-location-prompt-color-text;
         display: flex;
         font-family: $font-text-secondary;
         font-size: 1rem;
@@ -411,11 +413,11 @@ $web-bookmarks: true !default;
         margin: ($bookmark-icon-text-size / 8) -0.3em 0.25rem 0; // must touch icon, magic number
         padding: 0.1rem 0.5rem;
         position: fixed;
-        top: 0.75rem;
+        top: 3.5rem; // below masthead
         right: 0;
 
         a {
-            color: $color-links;
+            color: $bookmark-last-location-prompt-color-text;
             text-decoration: none;
             white-space: nowrap;
         }
@@ -432,7 +434,7 @@ $web-bookmarks: true !default;
         // Close button
         button {
             background-color: transparent;
-            color: $color-links;
+            color: $bookmark-last-location-prompt-color-text;
             font-size: 0.9rem; // align in box
             padding-bottom: 0.4rem; // align in box
         }

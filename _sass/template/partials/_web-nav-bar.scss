@@ -9,8 +9,13 @@ $nav-bar-back-button-hide: false !default;
         display: flex;
         position: absolute;
         top: 0;
-        left: 0;
         margin: 0;
+
+        @if $nav-position == "left" {
+            left: 0;
+        } @else {
+            right: 0;
+        }
     }
 
     .nav-back-button {
@@ -22,6 +27,7 @@ $nav-bar-back-button-hide: false !default;
         border-radius: $button-border-radius;
         padding: 0.25rem 0.5rem;
         cursor: pointer;
+        margin: 0.5rem 0 0.5rem 0.5rem;
 
         @if $nav-bar-back-button-hide {
             display: none;
@@ -93,7 +99,12 @@ $nav-bar-back-button-hide: false !default;
             max-width: $nav-bar-width;
             position: absolute;
             top: 0;
-            left: 0;
+
+            @if $nav-position == "left" {
+                left: 0;
+            } @else {
+                right: 0;
+            }
         }
 
         // Reset position to fixed if $nav-bar-fixed: true
@@ -149,7 +160,7 @@ $nav-bar-back-button-hide: false !default;
                         // Make link fill entire li area
                         display: inline-block;
                         width: 100%;
-                        padding: 0 1rem;
+                        padding: 0 1.5rem 0 1rem; // space for open/close button
                         color: $nav-bar-parent-text-color;
                         text-decoration: none;
 
@@ -167,7 +178,7 @@ $nav-bar-back-button-hide: false !default;
                         background-color: $nav-bar-child-hover-color;
 
                         a {
-                            color: $nav-bar-child-text-hover-color;
+                            color: $nav-bar-child-text-color;
                         }
 
                         li {
@@ -251,9 +262,15 @@ $nav-bar-back-button-hide: false !default;
         .nav-title {
             color: $nav-bar-title-color;
             font-size: $font-size-default * 1.5;
+            font-weight: bold;
             line-height: $line-height-default * 0.75;
             margin: 1rem 0;
             padding: 0 1rem;
+
+            a {
+                color: $nav-bar-title-color;
+                text-decoration: none;
+            }
         }
 
     } // #nav
@@ -297,6 +314,7 @@ $nav-bar-back-button-hide: false !default;
 
     [data-nav-close] {
         background-color: transparent;
+        font-size: $font-size-default * $font-size-bigger;
 
         &:after {
             content: $nav-bar-close;

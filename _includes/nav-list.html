@@ -1,0 +1,121 @@
+{% comment %}
+The nav list might be created from the files or nav list in `_data/works`.
+Choose this option in _data/settings.yml at web > nav > source.
+It also includes any items in _data/nav.yml, below the book entries.
+{% endcomment %}
+
+{% unless include.project-nav == true %}
+
+  {% comment %}
+  How this works:
+  1. Since the metadata include has already run, the current file name is available
+      as "current-file", so we can work out when it's the active nav item.
+  2. The "nav-tree" variable has been defined in the include tag that included this file,
+      usually starting with the nav list in `_data/works` stored by metadata as "web-nav-tree".
+  3. To include children items in that tree, this file includes itself recursively,
+      redefining "nav-tree" each time as the children of the nav-tree it received before.
+  4. Turtles all the way down, as deep as the nav tree in `_data/works` goes.
+
+  Credit to Christian Specht for the inspiration:
+  https://christianspecht.de/2014/06/18/building-a-pseudo-dynamic-tree-menu-with-jekyll/
+  {% endcomment %}
+
+  {% comment %}If this is neither a book directory nor a docs page,
+  such as the home page or project search page...{% endcomment %}
+  {% if is-book-directory != true is-book-subdirectory != true and is-docs-page != true %}
+
+    {% comment %}Get an array of all the pages we've output to check against{% endcomment %}
+    {% assign site-pages-page-list = "" | split: "" %}
+    {% for page in site.pages %}
+      {% capture site-pages-page-name %}{{ page.name | split: "." | first }}{% endcapture %}
+      {% assign site-pages-page-list = site-pages-page-list | push: site-pages-page-name %}
+    {% endfor %}
+
+    {% comment %}Create a nav list{% endcomment %}
+    <ol>
+
+      {% for item in include.nav-tree | sort: "order" %}
+          <li class="{% unless site-pages-page-list contains item.file %}no-file{% endunless %}
+          {% if item.children == nil %} no-children{% else %} has-children{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
+              <a {% if item.file != nil %}href="{{ path-to-root-directory }}{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
+                  {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+              </a>
+              {% if item.children != nil %}
+                {% include nav-list.html nav-tree=item.children directory=include.directory %}
+              {% endif %}
+          </li>
+      {% endfor %}
+
+    </ol>
+
+  {% comment %}Otherwise, we're in a book directory,
+  and we're not on a docs page, create the full book nav.{% endcomment %}
+  {% else %}
+
+    {% comment %}Get an array of existing pages to check against{% endcomment %}
+    {% assign site-pages-in-book = site.pages | where_exp: 'p', 'p.path contains book-directory' %}
+    {% assign nav-tree-page-list = "" | split: "" %}
+    {% for page in site-pages-in-book %}
+      {% capture nav-tree-page-name %}{{ page.name | split: "." | first }}{% endcapture %}
+      {% assign nav-tree-page-list = nav-tree-page-list | push: nav-tree-page-name %}
+    {% endfor %}
+
+    <ol>
+      {% for item in include.nav-tree | sort: "order" %}
+        <li class="{% if item.file == current-file %}active{% endif %}
+        {% unless nav-tree-page-list contains item.file %}no-file{% endunless %}
+        {% if item.link == 'none' %}no-link{% endif %}
+        {% if item.children == nil %}no-children{% else %}has-children{% endif %}
+        {% if item.class != nil %}{{ item.class }}{% endif %}">
+            <a {% if item.file != nil and item.link != "none" %}href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %}
+              class="{% if item.file == current-file %}active{% endif %}">
+                {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+            </a>
+            {% if item.children != nil %}
+              {% include nav-list.html nav-tree=item.children %}
+            {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+
+  {% endif %}
+
+{% comment %}Create the nav.yml nav list{% endcomment %}
+{% else %}
+
+  <ol class="project-nav">
+
+    {% for item in include.nav-tree | sort: "order" %}
+
+      <li class="{% unless site-pages-page-list contains item.file %}no-file{% endunless %}
+      {% if item.children == nil %} no-children{% else %} has-children{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
+
+        {% comment %} Check if a translation exists.
+        If not, use the project-language/project-language version. {% endcomment %}
+        {% if is-translation %}
+
+          {% assign translated-file-exists = false %}
+          {% capture translated-file-with-path %}{{ language }}/{{ item.file }}.md{% endcapture %}
+          {% for page in site.pages %}
+            {% if page.path == translated-file-with-path %}
+              {% assign translated-file-exists = true %}
+            {% endif %}
+          {% endfor %}
+
+        {% endif %}
+
+        <a {% if item.file != nil %}href="{{ path-to-root-directory }}{% if is-translation and translated-file-exists %}{{ language }}/{% endif %}{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
+            {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+        </a>
+
+        {% if item.children != nil %}
+          {% include nav-list.html nav-tree=item.children project-nav=true %}
+        {% endif %}
+
+      </li>
+
+    {% endfor %}
+
+  </ol>
+
+{% endunless %}

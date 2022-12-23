@@ -10,11 +10,7 @@ order: 4
 * Page contents
 {:toc}
 
-Run the template's `run-` script for your operating system and follow the prompts. For these to work, you must already have Jekyll installed and working.
-
-* On Windows, run `run-windows.bat` by double-clicking it from your file explorer.
-* On Linux, run `run-linux.sh`. You may have to run it from a terminal, and first enter `chmod +x run-linux.sh` to give it permissions, then `./run-linux.sh`.
-* On Mac OSX, double-click `run-mac.command` in Finder. You may need to give the file permission to run first. To do this, in a Terminal in the same folder as the script, type `chmod +x run-mac.command`.
+Run `npm run electric-book` on the command line to see app-related options.
 
 App output and this documentation is still experimental and a work in progress. It requires that you have Apache Cordova installed, and Android Studio (for Android apps), X Code (for iOS apps) or Visual Studio (for Windows apps).
 
@@ -58,7 +54,7 @@ These are useful resources:
 
 ## iOS
 
-This is work-in-progress. On an up-to-date Mac with X-Code, run the `run-mac.command` script and use the app option.
+This is work-in-progress.
 
 See '[Add remote media](#add-remote-media)' below before using the script.
 
@@ -127,7 +123,7 @@ Here are the detailed steps:
     1. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... and select the correct app that appears. This will sign the app with the correct certificate. (You may only have to do this once.)
     1. However, this unsets the default language that Cordova adds to non-release builds. So under `CordovaApp.Windows10 (Universal Windows)` open `package.windows10.appxmanifest` and add the language code to the 'Default language' field. You can also correct the description, which Visual Studio or Cordova aren't getting right currently.
     1. Now create an app package upload file. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Create App Packages.
-    2. When setting the version number, we use the same version as the project version in `_data/meta.yml`, with an extra zero (e.g. if the `meta.yml` version number is `1.0.5`, your Windows app version number will be `1.0.5.0`.
+    2. When setting the version number, we use the same version as the project version in `_data/project.yml`, with an extra zero (e.g. if the `project.yml` version number is `1.0.5`, your Windows app version number will be `1.0.5.0`.
     4. In the 'Generate app bundle' listbox, select 'Always'.
     3. Select the three architecture configurations ('x86', 'x64', and 'ARM') in the Select and Configure Packages dialog. Deselect the 'Neutral' option.
     5. Click Create and hold thumbs.

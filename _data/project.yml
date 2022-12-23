@@ -1,0 +1,32 @@
+# The name of the organisation or entity that owns this project
+organisation: "Electric Book Works"
+
+# A live web address for the organisation
+url: "http://ebw.co/template"
+
+# The default contact email address
+email: "support@electricbookworks.com"
+
+# The name of the project of books in this folder.
+name: "The Electric Book template"
+
+# A one-liner about this project. Useful for Open Graph metadata.
+description: "This is Electric Book template, a way to build websites, books and ebooks from the same master content. Created and maintained by Electric Book Works."
+
+# The logo of the organisation, saved web-ready in /assets
+logo: "logo.svg"
+
+# An image in /assets/images/web that stands for the project
+image: "cover.jpg"
+
+# Credit line, by default in the footer, overidden in locales.yml
+credit: "Built with the [Electric Book](https://ebw.co/template)"
+
+# Primary language code for this project as a whole
+language: "en"
+
+# App bundle ID unique across all app stores
+app-id: com.example.myapp
+
+# Version. You must change this with each app update
+version: "1.0.0"

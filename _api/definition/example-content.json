@@ -1,0 +1,16 @@
+[
+  {
+    "id": 0,
+    "url": "esa-obs-020/index.html",
+    "title": "Summary | Risk Bulletin #20 – September 2021",
+    "description": "Trends, developments and insights into the relationship between criminal economies and instability across Eastern and Southern Africa.",
+    "json": "api/content/esa-obs-020/index/index.json"
+  },
+  {
+    "id": 1,
+    "url": "esa-obs-022/index.html",
+    "title": "Summary | Risk Bulletin #22 – December 2021",
+    "description": "Trends, developments and insights into the relationship between criminal economies and instability across Eastern and Southern Africa.",
+    "json": "api/content/esa-obs-022/index/index.json"
+  }
+]

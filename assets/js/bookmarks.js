@@ -44,11 +44,12 @@
 function ebBookmarkableElements() {
     'use strict';
 
-    // Include anything in #content with an ID...
+    // Include anything in .content with an ID...
     var bookmarkableElements = document.querySelectorAll(settings.web.bookmarks.elements.include);
     // ... but exclude elements with data-bookmarkable="no",
     // or whose ancestors have data-bookmarkable="no",
     // or who are MathJax elements
+    // or are footnote references
     // or those specified in settings.web.bookmarks.elements.exclude
     // (We also check for '[data-bookmarkable="no"]' there,
     // bacause settings.web.bookmarks.elements.exclude may be empty.)
@@ -56,6 +57,7 @@ function ebBookmarkableElements() {
         if (element.getAttribute('data-bookmarkable') !== 'no'
                 && !element.closest('[data-bookmarkable="no"]')
                 && !element.id.startsWith('MathJax-')
+                && !element.id.startsWith('fnref:')
                 && !element.matches('[data-bookmarkable="no"]', settings.web.bookmarks.elements.exclude)) {
             return true;
         }
@@ -326,44 +328,50 @@ function ebBookmarksMarkBookmarks(bookmarks) {
 function ebBookmarksConfirmDelete(button, bookmark) {
     'use strict';
 
-    // Hide the existing button
-    button.style.display = 'none';
-    var confirmButton = document.createElement('button');
-    confirmButton.classList = button.classList;
-    confirmButton.id = 'bookmarkConfirmDelete';
-    button.parentElement.appendChild(confirmButton);
+    // Only run if a delete button exists and a bookmark argument.
+    // E.g. if there are no bookmarks after deletion,
+    // there is no button, nor its parent element.
+    if (button && bookmark && button.parentElement) {
 
-    // If we've been passed a bookmark type as a string
-    // we want to delete all bookmarks. Otherwise,
-    // we want to delete a single bookmark.
-    if (typeof bookmark === 'string') {
-        confirmButton.innerHTML = locales[pageLanguage].bookmarks['delete-all-bookmarks-confirm'];
-    } else {
-        confirmButton.innerHTML = locales[pageLanguage].bookmarks['delete-bookmark-confirm'];
-    }
-
-    // Remove the confirmation after three seconds unclicked
-    window.setTimeout(function () {
-        confirmButton.remove();
-        button.style.display = 'inline-block';
-    }, 2000);
-
-    function confirmed() {
-        confirmButton.remove();
-        button.style.display = 'inline-block';
+        // Hide the existing button
+        button.style.display = 'none';
+        var confirmButton = document.createElement('button');
+        confirmButton.classList = button.classList;
+        confirmButton.id = 'bookmarkConfirmDelete';
+        button.parentElement.appendChild(confirmButton);
 
         // If we've been passed a bookmark type as a string
-        // we want to delete all bookmarks of that type.
-        // Otherwise, delete the specific bookmark object.
+        // we want to delete all bookmarks. Otherwise,
+        // we want to delete a single bookmark.
         if (typeof bookmark === 'string') {
-            ebBookmarksDeleteAllBookmarks(bookmark);
+            confirmButton.innerHTML = locales[pageLanguage].bookmarks['delete-all-bookmarks-confirm'];
         } else {
-            ebBookmarksDeleteBookmark(bookmark);
+            confirmButton.innerHTML = locales[pageLanguage].bookmarks['delete-bookmark-confirm'];
         }
-    }
 
-    // If the confirmation button is clicked, return the original text
-    confirmButton.addEventListener('click', confirmed);
+        // Remove the confirmation after three seconds unclicked
+        window.setTimeout(function () {
+            confirmButton.remove();
+            button.style.display = 'inline-block';
+        }, 2000);
+
+        function confirmed() {
+            confirmButton.remove();
+            button.style.display = 'inline-block';
+
+            // If we've been passed a bookmark type as a string
+            // we want to delete all bookmarks of that type.
+            // Otherwise, delete the specific bookmark object.
+            if (typeof bookmark === 'string') {
+                ebBookmarksDeleteAllBookmarks(bookmark);
+            } else {
+                ebBookmarksDeleteBookmark(bookmark);
+            }
+        }
+
+        // If the confirmation button is clicked, return the original text
+        confirmButton.addEventListener('click', confirmed);
+    }
 }
 
 // List bookmarks for user
@@ -498,7 +506,7 @@ function ebBookmarksListBookmarks(bookmarks) {
     // Copy to the last-locations list, too
     var deleteAllBookmarksListItemLastLocations = deleteAllBookmarksListItem.cloneNode(true);
     lastLocationsList.appendChild(deleteAllBookmarksListItemLastLocations);
-    deleteAllBookmarksListItemLastLocations.addEventListener('click', function () {
+    deleteAllBookmarksListItemLastLocations.addEventListener('click', function (event) {
         ebBookmarksConfirmDelete(event.target, 'lastLocation');
     });
 
@@ -598,7 +606,7 @@ function ebBookmarksElementID(element) {
     // use its hash, otherwise use the first
     // visible element in the viewport.
     if (!element) {
-        element = document.querySelector('[data-bookmark="onscreen"]');
+        element = document.querySelector('[data-bookmark="onscreen"]') || document.body;
     }
     if (element.id) {
         return element.id;
@@ -683,7 +691,7 @@ function ebBookmarksSetBookmark(type, element, description) {
     var bookmark = {
         sessionDate: ebBookmarksSessionDate(),
         type: type,
-        bookTitle: document.body.dataset.title,
+        bookTitle: document.querySelector('.wrapper').dataset.title,
         pageTitle: pageTitle,
         sectionHeading: sectionHeading,
         description: description, // potential placeholder for a user-input description
@@ -1188,7 +1196,7 @@ function ebBookmarksInit() {
     }
 }
 
-// Wait for data-index-targets to be loaded
+// Wait for IDs and fingerprints to be loaded
 // and IDs to be assigned
 // before applying the accordion.
 function ebPrepareForBookmarks() {

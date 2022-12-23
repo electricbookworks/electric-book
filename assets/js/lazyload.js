@@ -1,5 +1,6 @@
 /*jslint browser */
-/*globals window, IntersectionObserver, SVGInject, settings */
+/*globals window, IntersectionObserver, SVGInject,
+    MutationObserver, settings */
 
 // Add observer
 var ebImageObserverConfig = {
@@ -75,7 +76,30 @@ function ebLazyLoadImages() {
     }
 }
 
+// Wait for data-index-targets to be loaded
+// and IDs to be assigned before lazyloading.
+// Otherwise intersectionObserver can miss images,
+// though I don't know why :-(
+function ebPrepareForLazyLoading() {
+    'use strict';
+
+    var lazyImagesObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            if (mutation.type === "attributes") {
+                if (document.body.getAttribute('data-index-targets')
+                        && document.body.getAttribute('data-ids-assigned')) {
+                    ebLazyLoadImages();
+                }
+            }
+        });
+    });
+
+    lazyImagesObserver.observe(document.body, {
+        attributes: true // listen for attribute changes
+    });
+}
+
 // Go when the document is loaded and if lazyLoad enabled
 if (settings.web.images.lazyload) {
-  document.addEventListener('DOMContentLoaded', ebLazyLoadImages());
+    ebPrepareForLazyLoading();
 }

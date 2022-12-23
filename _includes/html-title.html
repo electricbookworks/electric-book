@@ -1,0 +1,44 @@
+{% comment %}
+Determine the HTML <title>. Default is project title in `_data/project.yml`.
+If we're in a book, the metadata include sets the book title as 'title'.
+If the page has a title in its YAML frontmatter, append it after a n-dash,
+unless (a) this is the home page, in which case only use the page title, or
+(b) it's the same as the project/book title, in which case don't duplicate.
+{% endcomment %}
+
+{% comment %} Define divider. En dash by default.
+We use the entity code to be valid in epub XML. {% endcomment %}
+{% capture html-title-divider %} &#8211; {% endcapture %}
+{% if site.data.settings[site.output].page-tags.html-title-divider and site.data.settings[site.output].page-tags.html-title-divider != ""  %}
+    {% capture html-title-divider %}{{ site.data.settings[site.output].page-tags.html-title-divider }}{% endcapture %}
+{% endif %}
+
+{% capture html-title %}{{ project-name }}{% endcapture %}
+{% if title and title != "" %}
+    {% capture html-title %}{{ title }}{% endcapture %}
+{% endif %}
+{% if page.title and page.title != "" and html-title != page.title %}
+    {% if is-homepage %}
+        {% capture html-title %}{{ page.title }}{% endcapture %}
+    {% else %}
+        {% capture html-title %}{{ page.title }}{{ html-title-divider }}{{ html-title }}{% endcapture %}
+    {% endif %}
+{% endif %}
+
+{% comment %}
+If we're generating a PDF, the first HTML doc in the file list will set
+the entire PDF document title. So if we are outputting more than one file,
+we want the doc name to be the book title, not only the first doc's title.
+{% endcomment %}
+
+{% if site.output == "print-pdf" %}
+    {% if print-pdf-file-list.size > 1 %}
+        {% capture html-title %}{{ title }}{% endcapture %}
+    {% endif %}
+{% elsif site.output == "screen-pdf" %}
+    {% if screen-pdf-file-list.size > 1 %}
+        {% capture html-title %}{{ title }}{% endcapture %}
+    {% endif %}
+{% endif %}
+
+{% capture book-title %}{{ title }}{% endcapture %}

@@ -1,4 +1,4 @@
-/* jslint browser */
+/*jslint browser */
 /*globals window, ebSlugify, ebIndexTargets */
 
 // Check the page for reference indexes.
@@ -70,17 +70,24 @@ function ebIndexFindLinks(listItem) {
     buildTree(listItem);
 
     // Reconstruct the reference's text value from the tree
-    // and save its slug.
-    var listItemSlug = ebSlugify(listItemTree.join(' \\ '));
+    // and save its slug. The second argument indicates that we are slugifying
+    // an index term.
+    var listItemSlug = ebSlugify(listItemTree.join(' \\ '), true);
 
     // Get the book title and translation language (if any)
     // for the HTML page we're processing.
-    var currentBookTitle = document.body.getAttribute('data-title');
-    var currentTranslation = document.body.getAttribute('data-translation');
+    var currentBookTitle = document.querySelector('.wrapper').dataset.title;
+    var currentTranslation = document.querySelector('.wrapper').dataset.translation;
 
     // Look through the index 'database' of targets
     // Each child in the ebIndexTargets array represents
     // the index anchor targets on one HTML page.
+
+    // Set this counter here, so that links are numbered
+    // sequentially across target HTML files
+    // (e.g. if a range spans two HTML files)
+    var pageReferenceSequenceNumber = 1;
+
     ebIndexTargets.forEach(function (pageEntries) {
 
         // First, check if the entries for this page
@@ -103,7 +110,6 @@ function ebIndexFindLinks(listItem) {
         if (titleMatches && languageMatches) {
 
             // Find this entry's page numbers
-            var pageReferenceSequenceNumber = 1;
             var rangeOpen = false;
             pageEntries.forEach(function (entry) {
 
@@ -156,7 +162,7 @@ function ebIndexPopulate() {
 
         // Flag when we're done
         if (indexListsProcessed === indexLists.length
-                    || indexLists.length === 1) {
+                || indexLists.length === 1) {
             document.body.setAttribute('data-index-list', 'loaded');
         }
         indexListsProcessed += 1;

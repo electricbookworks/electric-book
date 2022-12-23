@@ -5,7 +5,7 @@ $epub-toc: true !default;
 
 	.contents-page {
 
-		#content { // Only applies to #content in contents-page, i.e. not to the nav or footer
+		.content { // Only applies to .content in contents-page, i.e. not to the nav or footer
 
 			ol, ul {
 				list-style-type: none;
@@ -29,7 +29,7 @@ $epub-toc: true !default;
 	// TOCs in individual pages, created in kramdown
 	// with a placeholder ol/ul followed by {:toc}
 
-	#content {
+	.content {
 
 		#markdown-toc, .markdown-toc {
 			font-family: $font-text-secondary;
@@ -48,7 +48,7 @@ $epub-toc: true !default;
 				}
 			}
 		} // #markdown-toc
-	} // #content
+	} // .content
 
 	// Hide hidden nav element
 	nav[hidden] {

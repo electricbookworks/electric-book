@@ -9,9 +9,6 @@ order: 7
 
 The process of setting up a new book is covered very briefly in our [quick-start section](quick-start.html#quick-new-book-setup). This is a slightly longer explanation. For much more detail, read the various sections [listed on the docs starting page](../).
 
-> Once you've followed the instructions below to set up your book (or at any point if you're curious), and you want to actually output a book, run the `run-` script for your operating system, which you'll find in the main project folder. In Windows and Mac, you can just double-click it. (On Mac and Linux, you do need to [give it permission first](https://stackoverflow.com/a/5126052/1781075).) The first time you run it, start with the 'Install or update dependencies' option.
-{:.box}
-
 * TOC
 {:toc}
 
@@ -29,8 +26,9 @@ To create a new book in a new project:
     *   `index.md`: Replace our template text with your own. Usually, a link to each book is useful, e.g. `[Space Potatoes](space-potatoes)`.
     *   `README.md`: Replace our template text with any notes your collaborators might need to know about your project. (The README file is usually only read in the context of editing the files in your folder/repo.)
 1.  Optionally, rename the `book` folder with a one-word, lowercase version of your book's title (e.g. `space-potatoes`). Use only lowercase letters and no spaces. If you're creating more than one book, make a folder for each book. (In one-book projects, we usually just leave it called `book`.)
-1.	In `_data`, edit the `meta.yml` file, filling in your project info and info about at least your first book.
-1.  Inside a book's `text` folder, add a markdown file for each piece of your book, e.g. one file per chapter. Our template contains files we consider minimum requirements for most books: a cover, a title page, a copyright page, a contents page, and a chapter.
+1. Open `_data/project.yml` and replace the template values with your project's information.
+1.	In `_data/works`, edit the book's `default.yml` file, filling in your project info and info about at least your first book. If your book is called 'my-sci-fi', you'll need to copy and edit `_data/works/book/default.yml` as `_data/works/my-sci-fi/default.yml`.
+1.  Inside a book's folder, add a markdown file for each piece of your book, e.g. one file per chapter. Our template contains files we consider minimum requirements for most books: a cover, a title page, a copyright page, a contents page, and a chapter.
 1.  Inside each book's folder, store images in the `images/_source` folder. Add a `cover.jpg` image of your book's front cover there, too.
 1. In each book's `styles` folder, edit the values in `print-pdf.scss`, `screen-pdf.scss`, `web.scss` and `epub.scss`.
 
@@ -52,15 +50,20 @@ In each file's YAML frontmatter (the info between `---`s at the top) we specify 
 
 When you create your book, we recommend following these conventions for file naming and YAML frontmatter `style` settings:
 
-| Book section                | Sample file               | Style in YAML    |
-|-----------------------------|---------------------------|------------------|
-| Front cover (for the ebook) | `0-0-cover.md`            | `cover`          |
-| Title page                  | `0-1-titlepage.md`        | `title-page`     |
-| Copyright page              | `0-2-copyright.md`        | `copyright-page` |
-| Table of contents           | `0-3-contents.md`         | `contents-page`  |
-| Acknowledgements            | `0-4-acknowledgements.md` | `frontmatter`    |
-| A first chapter             | `1.md`                    | `chapter`        |
-| A second chapter            | `2.md`                    | `chapter`        |
+| Book section                | Example filename          | Style in YAML                |
+| --------------------------- | ------------------------- | ---------------------------- |
+| Front cover (for the ebook) | `0-0-cover.md`            | `cover`                      |
+| Previous publications page  | `0-1-previous.md`         | `previous-publications-page` |
+| Half-title page             | `0-2-halftitle-page.md`   | `halftitle-page`             |
+| Title page                  | `0-3-title-page.md`       | `title-page`                 |
+| Copyright page              | `0-4-copyright.md`        | `copyright-page`             |
+| Table of contents           | `0-5-contents.md`         | `contents-page`              |
+| Epigraph page               | `0-6-epigraph.md`         | `epigraph-page`              |
+| Acknowledgements            | `0-7-acknowledgements.md` | `frontmatter`                |
+| Dedication page             | `0-8-dedication.md`       | `dedication-page`            |
+| Part page                   | `01-part-page.md`         | `part-page`                  |
+| A first chapter             | `01-01.md`                | `chapter`                    |
+| A second chapter            | `01-02.md`                | `chapter`                    |
 
 If you don't set the `style`, the page will default to `style: chapter`. So you actually don't need to ever set `style: chapter` in a YAML header. For most chapters in a book, then, your YAML frontmatter will simply include a chapter title:
 
@@ -124,6 +127,27 @@ You can do this in two ways:
 
 2.	Alternatively, add the `page-1` class to the first block-level element in the chapter by adding the tag `{:.page-1}` in the line immediately after it. But for this to work, the element must *not* have a CSS float applied to it. So often this doesn't work as well as specifying `page-1` in YAML frontmatter.
 
+### Breaking chapters into smaller web pages
+
+By default, when you generate a PDF, each markdown file – when rendered as part of a book – will start with a page break. This makes sense when each markdown file is a chapter of a book. You want page breaks between chapters.
+
+However, on the web and in apps, each markdown file is a (web) page. There, an entire chapter as one scrolling page can be very long. This is not great for readability. (It also isn't great for SEO or for finding search results.)
+
+So, you can create separate markdown files for each section of your book, no matter how small. Then on the web and in an app, each scrolling page will only be that long.
+
+But now your PDF is full of page breaks! This creates big lumps of white space between sections and bloats your book's page extent.
+
+So, to avoid a page break *in PDF output* before a markdown file, you must add the `continued` tag to its YAML frontmatter, like this:
+
+```
+---
+title: Your Chapter's Subsection Title
+style: chapter continued
+---
+```
+
+Remember that `chapter` is the default page style, so you normally don't have to specify it. But here you are *adding* a style in addition to `chapter` (or `frontmatter` or any other built-in page style listed above), so you must specify both `chapter` and `continued`.
+
 ### File naming
 
 We recommend naming each book's markdown files in alphabetical order. This is easiest using a numbering system, where prelims (frontmatter) files start with `0` or `00`, e.g. `0-1-titlepage.md`, `0-2-copyright.md`, and chapter files are numbered for their chapter number, e.g. `01.md`, `02.md`, and so on. The alphabetical order makes it easy to see the documents in the right order at all times.
@@ -140,6 +164,4 @@ We recommend adding a few descriptive words to your filenames after the numbers 
 
 Alongside the content files in a book's folder is an `images` folder, for images that belong to that book only.
 
-A book's folder should only ever need to contain markdown files and images. If you're embedding other kinds of media you could add folders for that alongside `images`. We don't recommend sharing images or media between books, in case you want to move a book from one project to another later. (So, for example, copy the publisher logo into each book's `images` folder separately.)
-
-If your project home page requires images, keep those in `/assets/images`, so that you can link to them from any page.
+See ['Adding image files'](../images/adding-image-files.html) for more detail.

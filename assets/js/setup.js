@@ -43,9 +43,9 @@ function ebAssignFingerprints(element, ancestorTagNames) {
     'use strict';
 
     // If we're starting off, with no element provided,
-    // start with the #content div.
+    // start with the .content div.
     if (!element) {
-        element = document.getElementById('content');
+        element = document.querySelector('.content');
     }
 
     // Only fingerprint elements with IDs,
@@ -104,29 +104,35 @@ function ebAssignFingerprints(element, ancestorTagNames) {
 function ebAssignIDs(container) {
     'use strict';
 
-    // If no container provided, use the #content div
+    // If no container provided, use the .content div
     if (!container) {
-        container = document.getElementById('content');
+        container = document.querySelector('.content');
     }
 
     // Count from 1, giving an ID to every element without one
     var elementCounter = 1;
     var idCounter = 1;
     var elementsToID = container.querySelectorAll(ebElementsToGetIDs);
-    elementsToID.forEach(function (element) {
-        elementCounter += 1;
-        if (!element.id) {
-            element.id = 'eb-' + idCounter;
-            idCounter += 1;
-        }
-        // Once done, set status, e.g. for the accordion and bookmarking.
-        // elementsToID indexes from 0, and elementCounter starts at 1, so
-        // we're done when elementCounter > the number of elementsToID.
-        if (elementCounter > elementsToID.length) {
-            document.body.setAttribute('data-ids-assigned', 'true');
-            ebAssignFingerprints();
-        }
-    });
+
+    if (elementsToID.length > 0) {
+        elementsToID.forEach(function (element) {
+            elementCounter += 1;
+            if (!element.id) {
+                element.id = 'eb-' + idCounter;
+                idCounter += 1;
+            }
+            // Once done, set status, e.g. for the accordion and bookmarking.
+            // elementsToID indexes from 0, and elementCounter starts at 1, so
+            // we're done when elementCounter > the number of elementsToID.
+            if (elementCounter > elementsToID.length) {
+                document.body.setAttribute('data-ids-assigned', 'true');
+                ebAssignFingerprints();
+            }
+        });
+    } else {
+        document.body.setAttribute('data-ids-assigned', 'true');
+        ebAssignFingerprints();
+    }
 }
 
 // Assign IDs and data-fingerprint attributes

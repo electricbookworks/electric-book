@@ -1,0 +1,234 @@
+{% comment %}
+Note: the sharing URLs used below are often
+changed by social networks. You may need to
+update them from time to time.
+{% endcomment %}
+
+{% comment %} Get tags for query parameters
+and clean them for use in URLs. {% endcomment %}
+
+{% include meta-tags.html %}
+{% assign share-title = meta-tag-title | escape | strip_newlines | strip_html | replace: "#", ""%}
+{% assign share-url = meta-tag-url | escape | strip_newlines | strip_html | replace: "#", ""%}
+{% assign share-description = meta-tag-description | escape | strip_newlines | strip_html | replace: "#", ""%}
+{% assign share-image = meta-tag-image | escape | strip_newlines | strip_html | replace: "#", ""%}
+
+
+{% if locale.share and locale.share != "" %}
+
+    <div class="share">
+
+        <div class="share-button">
+            {% include icons/share-icon.svg %}
+        </div>
+
+        {% comment %} Hidden till JS shows it. {% endcomment %}
+        <div id="share-links" class="share-links visuallyhidden">
+
+            <span class="share-links-close">Close</span>
+
+            <ul>
+
+                {% if locale.share.twitter and locale.share.twitter != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://twitter.com/intent/tweet?url={{ share-url }}&text={{ share-title }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/twitter.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.twitter }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.facebook and locale.share.facebook != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://www.facebook.com/sharer.php?u={{ share-url }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/facebook.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.facebook }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% comment %} Note: The LinkedIn sharer will error if the page
+                has not been fetched by LinkedIn before. {% endcomment %}
+                {% if locale.share.linkedin and locale.share.linkedin != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share-url }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/linkedin.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.linkedin }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.whatsapp and locale.share.whatsapp != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://wa.me/?text={{ share-title}}+{{ share-url }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/whatsapp.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.whatsapp }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.pinterest and locale.share.pinterest != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://pinterest.com/pin/create/bookmarklet/?media={{ share-image }}&url={{ share-url }}&description={{ share-description }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/pinterest.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.pinterest }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.buffer and locale.share.buffer != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://bufferapp.com/add?text={{ share-title }}&url={{ share-url }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/buffer.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.buffer }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.tumblr and locale.share.tumblr != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://www.tumblr.com/share/link?url={{ share-url }}&name={{ share-title }}&description={{ share-description }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/tumblr.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.tumblr }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.reddit and locale.share.reddit != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://reddit.com/submit?url={{ share-url }}&title={{ share-title }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/reddit.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.reddit }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.stumbleupon and locale.share.stumbleupon != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://www.stumbleupon.com/submit?url={{ share-url }}&title={{ share-title }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/stumbleupon.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.stumbleupon }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.delicious and locale.share.delicious != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://delicious.com/save?v=5&provider={{ project-organisation }}&noui&jump=close&url={{ share-url }}&title={{ share-title }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/delicious.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.delicious }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.evernote and locale.share.evernote != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://www.evernote.com/clip.action?url={{ share-url }}&title={{ share-title }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/evernote.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.evernote }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.wordpress and locale.share.wordpress != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://wordpress.com/press-this.php?u={{ share-url }}&t={{ share-title }}&s={{ share-description }}&i={{ share-image }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/wordpress.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.wordpress }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.pocket and locale.share.pocket != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://getpocket.com/save?url={{ share-url }}&title={{ share-title }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/pocket.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.pocket }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.email and locale.share.email != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="mailto:?subject={{ share-title }}&body={{ share-url }}%0D%0A%0D%0A{{ share-description | strip_html | url_encode }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/email.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.email }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if locale.share.link and locale.share.link != "" %}
+                    <li class="share-link share-copy-link">
+                        <span class="share-link-content"><!-- where other items have links -->
+                            <span class="share-link-icon">
+                                {% include icons/link.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                <span class="copy-to-clipboard" data-copy-text="{{ share-url }}" data-copy-button-text="{{ locale.copy.copy }}">{{ locale.share.link }}</span>
+                            </span>
+                        </span>
+                    </li>
+                {% endif %}
+
+                </ul>
+            </div>
+
+    </div>
+
+{% endif %}

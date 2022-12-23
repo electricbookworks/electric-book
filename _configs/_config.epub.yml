@@ -6,13 +6,13 @@ image-set: "images/epub"
 collections:
   docs:
     output: false
+  api:
+    output: false
   epub:
     output: true
 exclude:
   # The usual excludes from _config.yml
-  - run-linux.sh
-  - run-mac.command
-  - run-windows.bat
+  - run.js
   - Gemfile
   - Gemfile.lock
   - README*
@@ -58,7 +58,10 @@ exclude:
   - /assets/js/bookmarks.js
 
   # Exclude files we don't need for epub
+  - _api
+  - deploy.sh
   - sitemap.xml
+  - test.sh
   - /assets/fonts
   - /*/styles/print-pdf.scss
   - /*/styles/screen-pdf.scss

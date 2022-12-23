@@ -6,6 +6,7 @@ Get the file metadata.
 {% comment %}
 Get the epub TOC
 {% endcomment %}
+{% assign minimal-navmap = false %}
 {% if epub-toc and epub-toc != "" %}
     {% assign toc = epub-toc %}
 {% elsif print-pdf-toc and print-pdf-toc != "" %}
@@ -13,8 +14,19 @@ Get the epub TOC
 {% elsif web-nav-tree and web-nav-tree != "" %}
     {% assign toc = web-nav-tree %}
 {% else %}
-    Please define a TOC or web nav in meta.yml.
+    {% assign minimal-navmap = true %}
 {% endif %}
+
+{% if minimal-navmap %}
+
+<navPoint id="navPoint-1" playOrder="1">
+    <navLabel>
+        <text>{{ title }}</text>
+    </navLabel>
+    <content src="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}{{ default-start-page }}.html"/>
+</navPoint>
+
+{% else %}
 
 {% comment %}
 If the file that called this include didn't specify a start parameter, then
@@ -72,17 +84,17 @@ as the include calls itself for each list of children.
             </navLabel>
 
             {% comment %}If the item has no file to link to, use its first child's file,
-            because NCS requires a valid src in <content>.
-            Note: this means the first child must also have an ID specified in meta.yml,
+            because NCX requires a valid src in <content>.
+            Note: this means the first child must also have an ID specified in `_data/works`,
             for a fragment identifier that is different from the parent.{% endcomment %}
             <content
                 {% if item.file and item.file != "" %}
-                    src="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
+                    src="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}{{ item.file }}.html{% if item.id and item.id != "" %}#{{ item.id }}{% endif %}"
                 {% else %}
 
                     {% assign children-with-file = item.children | where_exp: "item", "item.file" %}
 
-                    src="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}text/{{ children-with-file[0].file }}.html"
+                    src="{{ book-directory }}/{% if is-translation == true %}{{ book-subdirectory }}/{% endif %}{{ children-with-file[0].file }}.html"
                 {% endif %} />
 
             {% comment %}If there are child items, run this include again here,
@@ -96,3 +108,6 @@ as the include calls itself for each list of children.
     </navPoint>
 
 {% endfor %}
+
+{% endif %}
+{% comment %} if minimal-navmap {% endcomment %}

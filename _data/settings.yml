@@ -14,11 +14,11 @@ electric-book-manager-key: ""
 # where `include metadata` has been used, in if statements like
 # {% if variant == "somename" %}Variant text!{% endif %}
 # Variant names must be one word, lowercase. Hyphens are allowed.
-# Add variant book metadata to meta.yml, and output settings here.
+# Add variant book metadata to `_data/works`, and output settings here.
 # --------------
 # Active variant
 # --------------
-# Add the active variant (defined in meta.yml) to activate it:
+# Add the active variant (defined in `_data/works`) to activate it:
 active-variant: ""
 # ---------------
 # Variant options
@@ -33,6 +33,13 @@ variants:
     epub-stylesheet: ""
     app-stylesheet: ""
   - variant: yourvariant
+
+# ----------------------------------------------------------
+# Indexing settings
+# ------------
+# Choose whether to disable dynamic indexing (false to disable).
+# Disabling dynamic indexing will speed up outputs.
+dynamic-indexing: true
 
 # ----------------------------------------------------------
 # Print-PDF settings
@@ -60,10 +67,12 @@ web:
   # Pagination
   # ----------
   pagination: true
-  # Choose 'direction' for 'Next/Previous' pagination,
-  # or 'titles' to show page titles at pagination,
-  # or 'arrows' to use only arrows.
-  pagination-type: "arrows"
+  # Choose one of:
+  # - 'direction' for 'Next/Previous' pagination,
+  # - 'titles' to show page titles at pagination,
+  # - 'title-arrows' to show page titles and arrows,
+  # - 'arrows' to use only arrows.
+  pagination-type: "title-arrows"
   # --------
   # Masthead
   # --------
@@ -111,9 +120,8 @@ web:
   # Images management
   # -----------------
   images:
+    # Load images only when they come into view?
     lazyload: true
-    # Do you want images to open as a standalone file when clicked?
-    open-image-on-click: true
   # -----------------
   # Bookmarks
   # -----------------
@@ -121,12 +129,12 @@ web:
   # --------------
   # Navigation
   # --------------
+  nav:
   # On your landing page, should books in the nav expand
   # to include chapters? Expanding many chapters can
   # make your pages much bigger and slower. true/false
-  nav:
     home:
-      expand-books: false
+      expand-books: true
   # --------------
   # Search
   # --------------
@@ -137,6 +145,17 @@ web:
     # the element before which the box should be shown.
     # Or for the main page heading, use the default 'mainHeading'.
     jump-box-location: "mainHeading"
+    # If you need to point the search form at a different URL,
+    # add it here in full, including a trailing slash, e.g.
+    # https://example.com/
+    search-url: ""
+    # Set the parameter name to use for search URLs. Default is "query".
+    search-url-parameter: ""
+    # Add any extra, static parameters you might need
+    # as a list, set `name` and `value` for each one. E.g.
+    # static-url-parameters:
+    #   - name: "type"
+    #     value: "riskbulletins"
   # --------------
   # Monetization
   # --------------
@@ -146,6 +165,11 @@ web:
   monetization:
     enabled: false
     ilp-pointer: ""
+  # --------------
+  # Page tags and metadata
+  # --------------
+  page-tags:
+    html-title-divider: " &ndash; "
 
 # ----------------------------------------------------------
 # Epub settings
@@ -196,10 +220,12 @@ app:
   # Pagination
   # ----------
   pagination: true
-  # Choose 'direction' for 'Next/Previous' pagination,
-  # or 'titles' to show page titles at pagination,
-  # or 'arrows' to use only arrows.
-  pagination-type: "arrows"
+  # Choose one of:
+  # - 'direction' for 'Next/Previous' pagination,
+  # - 'titles' to show page titles at pagination,
+  # - 'title-arrows' to show page titles and arrows,
+  # - 'arrows' to use only arrows.
+  pagination-type: "title-arrows"
   # --------
   # Masthead
   # --------
@@ -234,12 +260,12 @@ app:
   # --------------
   # Navigation
   # --------------
+  nav:
   # On your landing page, should books in the nav expand
   # to include chapters? Expanding many chapters can
   # make your pages much bigger and slower. true/false
-  nav:
     home:
-      expand-books: false
+      expand-books: true
   # --------------
   # Search
   # --------------
@@ -250,6 +276,22 @@ app:
     # the element before which the box should be shown.
     # Or for the main page heading, use the default 'mainHeading'.
     jump-box-location: "mainHeading"
+    # If you need to point the search form at a different URL,
+    # add it here in full, including a trailing slash, e.g.
+    # https://example.com/
+    search-url: ""
+    # Set the parameter name to use for search URLs. Default is "query".
+    search-url-parameter: ""
+    # Add any extra, static parameters you might need
+    # as a list, set `name` and `value` for each one. E.g.
+    # static-url-parameters:
+    #   - name: "type"
+    #     value: "riskbulletins"
+  # --------------
+  # Page tags and metadata
+  # --------------
+  page-tags:
+    html-title-divider: " &ndash; "
 
 # ----------------------------------------------------------
 # External media settings

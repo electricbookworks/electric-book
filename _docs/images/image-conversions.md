@@ -14,12 +14,39 @@ You can automate the conversion of images to various outputs. Then you only need
 
 This will automatically optimise, convert and save your images to the output folders, including specifying the correct [colour profiles](../layout/colour-profiles.html) and creating multiple image sizes for web output.
 
-> Note: To do this on your computer, you need to have GraphicsMagick and Node installed, and to have run `npm install` in the project root to install the `node_modules`. This can be done easily by running the 'Update and install dependencies' option in the `run-` output script for your operating system.
+> Note: To do this on your computer, you need to have GraphicsMagick and Node installed, and to have run `npm install` in the project root to install the `node_modules`.
 {:.box}
 
 ## Using the output script
 
-Run the `run-` output script for your operating system, then choose 'Convert source images to output formats' and answer the prompts.
+Run the output script with the relevant options, e.g.
+
+```shell
+npm run electric-book -- images
+```
+
+for images in the default `book` folder.
+
+```shell
+npm run electric-book -- images --book samples
+```
+
+will process images in the `samples` book folder.
+
+The options `--folder` and `--dir` are aliases for `--book`. So this is exactly the same as the above command:
+
+```shell
+npm run electric-book -- images --dir samples
+```
+
+And this:
+
+```shell
+npm run electric-book -- images --dir assets
+```
+
+will process images in the `assets` folder, which is for images that must be available to pages outside of books, such as your project's landing page.
+
 
 ## Using gulp directly
 
@@ -53,6 +80,8 @@ This automatic image processing will apply the same size and colour profiles to 
 You might want to change the color space of specific images in, say, print-PDF output. Or you might want to exclude an image from any optimisation or modification; for example, you might have a hand-coded SVG that should not be changed at all by our default optimisation settings.
 
 You can apply these settings in `_data/images.yml`.
+
+Also see [SVG processing](svg-processing.html) for advanced techniques for modifying SVGs during processing.
 
 ### Color spaces
 

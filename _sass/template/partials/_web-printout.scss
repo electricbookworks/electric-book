@@ -28,11 +28,11 @@ $web-printout: true !default;
             font-size: 1rem;
         }
 
-        #wrapper {
+        .wrapper {
             background: none;
         }
 
-        #content,
+        .content,
         .footer-content {
             max-width: 60em;
         }
