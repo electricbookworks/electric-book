@@ -5,10 +5,11 @@
 This is a major restructuring of the Electric Book template. It introduces many new features. Notably:
 
 1. We've removed the `/text` folder, moving markdown files up into the book folder, alongside the `images`, `styles` and `fonts` folders. This results in shorter URLs (no `/text/` path) that are better for readability and SEO. It also provides a more intuitive mental model for editing, because markdown files are the foundation of the book, onto which we add images, styles and fonts.
-2. Book metadata (in `_data`) is now split into book-specific files. We've replaced the `meta.yml` file with separate metadata files, where each book gets its own file. This makes it much easier to maintain projects with several books.
-3. We've replaced the interactive output scripts with cross-platform Node commands. Processes (like output or image processing) are run with a single command. This makes it possible to automate commands (e.g. from a web- or Electron-based GUIs in future, or for automated testing). See the new README for details.
-4. We've added a command that checks for basic project structure, and a command that adds a new book folder based on an existing book.
-5. Prototyping a new book is much faster, because it's not necessary to create `nav` and `toc` nodes in book metadata for web navigation to work. Until you do specify those nodes in book metadata, navigation and TOCs will be automatically built from available files. See the `book` folder in the template for an example.
+2. For PDF output, by default all HTML files are merged into one HTML file. This means you can create shorter web pages (e.g. subsections of chapters), but still avoid page breaks between them in PDF output.
+3. Book metadata (in `_data`) is now split into book-specific files. We've replaced the `meta.yml` file with separate metadata files, where each book gets its own file. This makes it much easier to maintain projects with several books.
+4. We've replaced the interactive output scripts with cross-platform Node commands. Processes (like output or image processing) are run with a single command. This makes it possible to automate commands (e.g. from a web- or Electron-based GUIs in future, or for automated testing). See the new README for details.
+5. We've added a command that checks for basic project structure, and a command that adds a new book folder based on an existing book.
+6. Prototyping a new book is much faster, because it's not necessary to create `nav` and `toc` nodes in book metadata for web navigation to work. Until you do specify those nodes in book metadata, navigation and TOCs will be automatically built from available files. See the `book` folder in the template for an example.
 
 We've also made general improvements to HTML structures, epub structure, and the organisation of Sass files for custom theming. The default styling is a little more elegant, while remaining as unopinionated (aka vanilla) as possible, ready for customisation.
 
