@@ -137,8 +137,9 @@ $print-figures: true !default;
             float: none;
             margin-top: $line-height-default;
         }
+
         // Thumbnail figures
-        &.thumbnail {
+        &.thumbnail, &.pdf-thumbnail {
             max-width: 25%;
             float: right;
             margin: 0 0 0 $paragraph-indent;

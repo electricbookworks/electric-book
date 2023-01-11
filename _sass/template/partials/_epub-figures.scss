@@ -72,9 +72,12 @@ $epub-figures: true !default;
         //         max-height: inherit;
         //     }
         // }
-        // No media queries here as in web-figures, because older ereaders don't support them properly.
+
+        // No media queries here as in web-figures,
+        // because older ereaders don't support them properly.
+
         // Thumbnail figures
-        &.thumbnail {
+        &.thumbnail, &.epub-thumbnail {
             max-width: 25%;
             float: right;
             margin: 0 0 0 $paragraph-indent;

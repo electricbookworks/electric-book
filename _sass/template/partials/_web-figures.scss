@@ -83,8 +83,9 @@ $web-figures: true !default;
         //         }
         //     }
         // }
+
         // Thumbnail figures
-        &.thumbnail {
+        &.thumbnail, &.web-thumbnail {
             max-width: 25%;
             float: right;
             margin: 0 0 0 $paragraph-indent;
