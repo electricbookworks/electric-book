@@ -9,10 +9,14 @@
 # And add or comment out files for your project as appropriate.
 
 
-# Dot files
-# ---------
+# Dot files and vendor configs
+# ----------------------------
 
+.github/workflows/build-checker.yml
 .gitignore
+.gitpod.Dockerfile
+.gitpod.yml
+netlify.toml
 
 
 # Sitewide font files
@@ -63,12 +67,16 @@ assets/fonts/UbuntuMono-RI.ttf
 
 # assets/images/app/cover.jpg
 # assets/images/app/logo.jpg
+# assets/images/app/logo.svg
 # assets/images/epub/cover.jpg
 # assets/images/epub/logo.jpg
+# assets/images/epub/logo.svg
 # assets/images/print-pdf/cover.jpg
 # assets/images/print-pdf/logo.jpg
+# assets/images/print-pdf/logo.svg
 # assets/images/screen-pdf/cover.jpg
 # assets/images/screen-pdf/logo.jpg
+# assets/images/screen-pdf/logo.svg
 # assets/images/web/cover-1024.jpg
 # assets/images/web/cover-2048.jpg
 # assets/images/web/cover-320.jpg
@@ -81,8 +89,10 @@ assets/fonts/UbuntuMono-RI.ttf
 # assets/images/web/logo-640.jpg
 # assets/images/web/logo-max.jpg
 # assets/images/web/logo.jpg
+# assets/images/web/logo.svg
 # assets/images/_source/cover.jpg
 # assets/images/_source/logo.jpg
+# assets/images/_source/logo.svg
 
 
 # Sitewide Javascript
