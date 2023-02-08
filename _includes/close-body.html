@@ -4,6 +4,9 @@ in epub and PDF outputs, we must include a space between the script tags,
 otherwise Cheerio will make the tag self-closing, which will break
 in browsers that expect a closing tag. {% endcomment %}
 
+{% comment %} Include anything from end-elements.html. {% endcomment %}
+{% include end-elements.html %}
+
 {% unless site.output == "epub" and site.data.settings.epub.javascript.disabled == true %}
     <script data-script-name="bundle" src="{{ path-to-root-directory }}assets/js/bundle.js"> </script>
 {% endunless %}
@@ -15,9 +18,6 @@ in browsers that expect a closing tag. {% endcomment %}
         <script src="{{ path-to-root-directory }}assets/js/search-notifications.js"></script>
     {% endif %}
 {% endif %}
-
-{% comment %} Include anything from end-elements.html. {% endcomment %}
-{% include end-elements.html %}
 
         </div><!--.wrapper-->
     </body>
