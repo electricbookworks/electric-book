@@ -36,6 +36,10 @@ $web-masthead: true !default;
                 width: $masthead-logo-width;
             }
 
+            @if $masthead-logo == false {
+                display: none;
+            }
+
             img {
                 max-height: $masthead-height;
                 max-width: 100%;
