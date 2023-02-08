@@ -43,4 +43,4 @@ as body text despite CSS rules for em size.
 {% include image
    file=project-logo
    class="title-page-logo"
-   path="assets/images" %}
+   folder="assets" %}
