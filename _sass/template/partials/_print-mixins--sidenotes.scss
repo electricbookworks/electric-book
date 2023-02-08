@@ -43,6 +43,10 @@
         // on paras that follow sidenotes that follow paras.
         & + p {
             text-indent: $paragraph-indent;
+
+            &.first {
+                text-indent: 0;
+            }
         }
     }
     @if $spaced-paras {
