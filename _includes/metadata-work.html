@@ -7,7 +7,7 @@ in _data/works. {% endcomment %}
 and set the default to the 'book' folder. {% endcomment %}
 {% assign work = site.data.works[book-directory] %}
 {% if include.work and include.work != "" %}
-    {% assign work = include.work %}
+    {% assign work = site.data.works[include.work] %}
 {% endif %}
 
 {% comment %} Are we getting metadata for a default work type
