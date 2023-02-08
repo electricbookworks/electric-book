@@ -146,16 +146,16 @@ web:
     # Or for the main page heading, use the default 'mainHeading'.
     jump-box-location: "mainHeading"
     # If you need to point the search form at a different URL,
-    # add it here in full, including a trailing slash, e.g.
-    # https://example.com/
+    # add it here in full, e.g. "https://google.com/search"
     search-url: ""
     # Set the parameter name to use for search URLs. Default is "query".
+    # Google uses "q".
     search-url-parameter: ""
     # Add any extra, static parameters you might need
     # as a list, set `name` and `value` for each one. E.g.
     # static-url-parameters:
-    #   - name: "type"
-    #     value: "riskbulletins"
+    #   - name: "as_sitesearch"
+    #     value: "electricbookworks.com"
   # --------------
   # Monetization
   # --------------
@@ -277,16 +277,17 @@ app:
     # Or for the main page heading, use the default 'mainHeading'.
     jump-box-location: "mainHeading"
     # If you need to point the search form at a different URL,
-    # add it here in full, including a trailing slash, e.g.
-    # https://example.com/
+    # add it here in full, e.g. "https://google.com/search"
+    # https://google.com/search
     search-url: ""
     # Set the parameter name to use for search URLs. Default is "query".
+    # Google uses "q".
     search-url-parameter: ""
     # Add any extra, static parameters you might need
     # as a list, set `name` and `value` for each one. E.g.
     # static-url-parameters:
-    #   - name: "type"
-    #     value: "riskbulletins"
+    #   - name: "as_sitesearch"
+    #     value: "electricbookworks.com"
   # --------------
   # Page tags and metadata
   # --------------
