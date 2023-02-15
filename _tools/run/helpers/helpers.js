@@ -530,6 +530,33 @@ async function convertXHTMLLinks (argv) {
   }
 }
 
+// Add ARIA roles to elements in epubs
+async function addAriaRoles (argv) {
+  'use strict'
+  console.log('Adding ARIA roles ...')
+
+  try {
+    let addAriaRolesProcess
+    if (argv.language) {
+      addAriaRolesProcess = spawn(
+        'gulp',
+        ['epubAriaRoles',
+          '--book', argv.book,
+          '--language', argv.language]
+      )
+    } else {
+      addAriaRolesProcess = spawn(
+        'gulp',
+        ['epubAriaRoles', '--book', argv.book]
+      )
+    }
+    await logProcess(addAriaRolesProcess, 'Sidenotes ARIA role')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // Converts .html files to .xhtml, e.g. for epub output
 async function convertXHTMLFiles (argv) {
   'use strict'
@@ -1464,6 +1491,7 @@ function newBook (argv) {
 }
 
 module.exports = {
+  addAriaRoles,
   addToEpub,
   assembleApp,
   bookAssetPaths,

@@ -12,6 +12,27 @@ const rename = require('gulp-rename')
 const { book, language } = require('../helpers/args.js')
 const { paths } = require('../helpers/paths.js')
 
+// Add role="note" to all sidenote.
+function epubAriaRoles (done) {
+  'use strict'
+
+  gulp.src([paths.epub.src], { base: './' })
+    .pipe(cheerio({
+      run: function ($) {
+        // Add note role to sidenotes
+        $('[class*="sidenote"]').each(function () {
+          $(this).attr('role', 'note')
+        })
+      },
+      parserOptions: {
+        xmlMode: true
+      }
+    }))
+    .pipe(debug({ title: 'Converting internal links to .xhtml in ' }))
+    .pipe(gulp.dest('./'))
+  done()
+}
+
 // Convert all file names in internal links from .html to .xhtml.
 // This is required for epub output to avoid EPUBCheck warnings.
 function epubXhtmlLinks (done) {
@@ -98,3 +119,4 @@ function epubCleanHtmlFiles () {
 exports.epubXhtmlLinks = epubXhtmlLinks
 exports.epubXhtmlFiles = epubXhtmlFiles
 exports.epubCleanHtmlFiles = epubCleanHtmlFiles
+exports.epubAriaRoles = epubAriaRoles

@@ -5,7 +5,7 @@ const { parallel } = require('gulp')
 
 // Import tasks
 const {
-  epubXhtmlLinks, epubXhtmlFiles, epubCleanHtmlFiles
+  epubXhtmlLinks, epubXhtmlFiles, epubCleanHtmlFiles, epubAriaRoles
 } = require('./_tools/gulp/processors/epub.js')
 
 const {
@@ -57,6 +57,7 @@ exports.images = parallel(
 exports.epubXhtmlLinks = epubXhtmlLinks
 exports.epubXhtmlFiles = epubXhtmlFiles
 exports.epubCleanHtmlFiles = epubCleanHtmlFiles
+exports.epubAriaRoles = epubAriaRoles
 
 exports.renderIndexCommentsAsTargets = renderIndexCommentsAsTargets
 exports.renderIndexListReferences = renderIndexListReferences
