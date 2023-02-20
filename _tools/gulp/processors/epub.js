@@ -28,7 +28,7 @@ function epubAriaRoles (done) {
         xmlMode: true
       }
     }))
-    .pipe(debug({ title: 'Converting internal links to .xhtml in ' }))
+    .pipe(debug({ title: 'Adding ARIA roles in ' }))
     .pipe(gulp.dest('./'))
   done()
 }
