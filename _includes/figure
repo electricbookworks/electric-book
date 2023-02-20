@@ -16,6 +16,16 @@ Then get the total number of images in the array.
 {% assign figure-images = image-list | split: "," %}
 {% assign number-of-images = figure-images | size %}
 
+{% comment %} Do the same for alt text,
+since each image has its own. They should be
+separated with |s. {% endcomment %}
+{% assign alt-text-array-raw = include.alt-text | split: "|" %}
+{% assign alt-text-array = "" | split: "" %}
+{% for alt-text in alt-text-array-raw %}
+    {% capture alt-text-array-entry %}{{ alt-text | strip }}{% endcapture %}
+    {% assign alt-text-array = alt-text-array | push: alt-text-array-entry %}
+{% endfor %}
+
 {% comment %} Allow tag to override default images location,
 where 'path=""' can specify a path relative to the site's
 root directory. {% endcomment %}
@@ -48,6 +58,8 @@ because https://github.com/jekyll/jekyll/issues/2248.
 {% if include.image or include.images %}
 <div class="figure-images contains-{{ number-of-images }}">
 
+    {% assign alt-text-counter = 0 %}
+
     {% for image in figure-images %}
 
         {% comment %} Get the file extension and the filename without it,
@@ -72,7 +84,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
                             sizes="(min-width: 600px) 1300px, 100vw"
                         {% endunless %}
 
-                        alt="{% if include.title %}{{ include.title | markdownify | strip_html }}: {% endif %}{% if include.alt-text %}{{ include.alt-text | markdownify | strip_html }}{% else %}{{ include.caption | markdownify | strip_html }}{% endif %}"
+                        alt="{% if include.title %}{{ include.title | markdownify | strip_html }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html }}{% else %}{{ include.caption | markdownify | strip_html }}{% endif %}"
                         {% if include.image-height != nil %} class="height-{{ include.image-height }}"{% endif %}
                     />
                 </noscript>
@@ -87,19 +99,22 @@ because https://github.com/jekyll/jekyll/issues/2248.
                         sizes="auto"
                     {% endunless %}
 
-                    alt="{% if include.title %}{{ include.title | markdownify | strip_html }}: {% endif %}{% if include.alt-text %}{{ include.alt-text | markdownify | strip_html }}{% else %}{{ include.caption | markdownify | strip_html }}{% endif %}"
+                    alt="{% if include.title %}{{ include.title | markdownify | strip_html }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html }}{% else %}{{ include.caption | markdownify | strip_html }}{% endif %}"
                     class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}"
                 />
 
             {% else %}
 
                 <img src="{{ images }}/{{ image }}"
-                    alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if include.alt-text %}{{ include.alt-text }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html }}"
+                    alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html }}"
                     class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
 
             {% endif %}
 
         {% if include.link %}</a>{% endif %}
+
+        {% assign alt-text-counter = alt-text-counter | plus: 1 %}
+
     {% endfor %}
 </div>
 {% endif %}

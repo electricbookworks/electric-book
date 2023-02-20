@@ -49,7 +49,7 @@ Here is a full example:
 {% raw %}
 ```
 {% include figure
-   images="mydog.jpg, yourdog.jpg"
+   images="mydog.jpg"
    html="<table></table>"
    markdown="A *bad* example."
    reference="Figure 1.2a"
@@ -71,6 +71,22 @@ caption="Blake's illustration for 'The Tyger'."
 caption='Blake's illustration for "The Tyger".'
 caption="Blake's illustration for “The Tyger”."
 ```
+
+### Multiple images and alt text
+
+You can have multiple images in the same figure. Include each image's filename in a comma-separated list.
+
+Each image needs its own alt text. To do this, include each image's alt text in order, separated by `|`.
+
+{% raw %}
+```
+{% include figure
+   images="mydog.jpg, yourdog.jpg"
+   caption="Our dogs."
+   alt-text="A chocolate-coloured labrador | A grey husky."
+%}
+```
+{% endraw %}
 
 ### Rotating figures
 
