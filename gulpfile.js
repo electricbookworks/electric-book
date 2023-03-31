@@ -20,7 +20,6 @@ const {
 } = require('./_tools/gulp/processors/indexes.js')
 
 const { js } = require('./_tools/gulp/processors/js.js')
-const { mathjax } = require('./_tools/gulp/processors/mathjax.js')
 const { svgsPrintPDF, svgsScreenPDF, svgsWeb, svgsEpub, svgsApp } = require('./_tools/gulp/processors/svgs.js')
 const { yaml } = require('./_tools/gulp/processors/yaml.js')
 
@@ -62,7 +61,6 @@ exports.renderIndexCommentsAsTargets = renderIndexCommentsAsTargets
 exports.renderIndexListReferences = renderIndexListReferences
 
 exports.js = js
-exports.mathjax = mathjax
 
 exports.svgs = parallel(
   svgsPrintPDF,
