@@ -3,7 +3,10 @@ $print-maths: true !default;
 
     // Math
 
-    math {}
+    math[display="block"] {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
     // Automatic fractions
 

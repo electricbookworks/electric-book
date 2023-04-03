@@ -46,10 +46,10 @@ async function pdf (argv) {
   try {
     await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
-    await renderMathjax(argv)
     await renderIndexComments(argv)
     await renderIndexLinks(argv)
     await merge(argv)
+    await renderMathjax(argv)
     await runPrince(argv)
     openOutputFile(argv)
   } catch (error) {

@@ -107,14 +107,3 @@ media-types:
   txt: "text/plain"
   js: "application/javascript"
   unknown: "application/octet-stream"
-
-# Since some books in this project might not use MathJax,
-# we disable it by default in epub output, and
-# activate it manually on output from the output script,
-# which will override this setting.
-# (If we don't disable MathJax here, and it is enabled
-# in _config.yml, Jekyll will list the MathJax files
-# in the OPF manifest of all epubs, even if they don't need
-# MathJax, but the output script will not actually copy
-# the MathJax files into the epub package.)
-mathjax-enabled: false
