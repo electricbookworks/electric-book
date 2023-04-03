@@ -7,7 +7,7 @@ in _data/works. {% endcomment %}
 and set the default to the 'book' folder. {% endcomment %}
 {% assign work = site.data.works[book-directory] %}
 {% if include.work and include.work != "" %}
-    {% assign work = site.data.works[include.work] %}
+    {% assign work = include.work %}
 {% endif %}
 
 {% comment %} Are we getting metadata for a default work type
@@ -144,7 +144,7 @@ we fall back to the value in the work's default.yml.
     {% capture image %}{{ work.default.image }}{% endcapture %}
 {% endif %}
 
-{% comment %} Product metadata {% endcomment %}
+{% comment %} Print-PDF metadata {% endcomment %}
 
 {% if work[work-variant].products.print-pdf.date and work[work-variant].products.print-pdf.date != "" %}
     {% capture print-pdf-date %}{{ work[work-variant].products.print-pdf.date }}{% endcapture %}
@@ -194,6 +194,8 @@ we fall back to the value in the work's default.yml.
     {% assign print-pdf-toc = work.default.products.print-pdf.toc %}
 
 {% endif %}
+
+{% comment %} Web metadata {% endcomment %}
 
 {% if work[work-variant].products.web.date and work[work-variant].products.web.date != "" %}
     {% capture web-date %}{{ work[work-variant].products.web.date }}{% endcapture %}
@@ -281,6 +283,8 @@ we fall back to the value in the work's default.yml.
     {% assign web-toc = work.default.products.web.toc %}
 {% endif %}
 
+{% comment %} Epub metadata {% endcomment %}
+
 {% if work[work-variant].products.epub.date and work[work-variant].products.epub.date != "" %}
     {% capture epub-date %}{{ work[work-variant].products.epub.date }}{% endcapture %}
 {% elsif work.default.products.epub.date and work.default.products.epub.date != "" %}
@@ -345,6 +349,8 @@ we fall back to the value in the work's default.yml.
     {% capture epub-language %}{{ work.default.products.epub.language }}{% endcapture %}
 {% endif %}
 
+{% comment %} Screen-PDF metadata {% endcomment %}
+
 {% if work[work-variant].products.screen-pdf.date and work[work-variant].products.screen-pdf.date != "" %}
     {% capture screen-pdf-date %}{{ work[work-variant].products.screen-pdf.date }}{% endcapture %}
 {% elsif work.default.products.screen-pdf.date and work.default.products.screen-pdf.date != "" %}
@@ -379,6 +385,10 @@ we fall back to the value in the work's default.yml.
     {% assign screen-pdf-file-list = work[work-variant].products.screen-pdf.files %}
 {% elsif work.default.products.screen-pdf.files and work.default.products.screen-pdf.files != "" %}
     {% assign screen-pdf-file-list = work.default.products.screen-pdf.files %}
+
+    {% comment %} Fall back to print-PDF file list {% endcomment %}
+{% else %}
+    {% assign screen-pdf-file-list = print-pdf-file-list %}
 {% endif %}
 
 {% if work[work-variant].products.screen-pdf.toc and work[work-variant].products.screen-pdf.toc != "" %}
@@ -389,11 +399,16 @@ we fall back to the value in the work's default.yml.
     {% endif %}
 
 {% elsif work.default.products.screen-pdf.toc and work.default.products.screen-pdf.toc != "" %}
-
     {% assign screen-pdf-toc = work.default.products.screen-pdf.toc %}
+
+    {% comment %} Fall back to print-PDF TOC {% endcomment %}
+{% else %}
+    {% assign screen-pdf-toc = print-pdf-toc %}
 {% endif %}
 
-    {% comment %}App metadata inherits web metadata if not specified{% endcomment %}
+    {% comment %} App metadata {% endcomment %}
+    {% comment %} Inherits web metadata if not specified {% endcomment %}
+
     {% if work[work-variant].products.app.date and work[work-variant].products.app.date != "" %}
         {% capture app-date %}{{ work[work-variant].products.app.date }}{% endcapture %}
     {% elsif work.default.products.app.date and work.default.products.app.date != "" %}
