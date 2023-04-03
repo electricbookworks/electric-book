@@ -1,5 +1,12 @@
 #! /usr/bin/env -S node -r esm
 
+// --------------------------------------------------
+// This script is not currently being used by default.
+// _tools/run/helpers/helpers.js uses tex2mml-page.js instead.
+// This is here is case a project needs SVG math output,
+// in which case helpers.js can be modified to use it.
+// --------------------------------------------------
+
 // This script is adapted from
 // https://github.com/mathjax/MathJax-demos-node/blob/master/component/tex2svg-page
 // The main adaptation is that it accepts an extra argument
