@@ -57,7 +57,7 @@
                             {% assign translated-home-page-exists = true %}
                         {% endif %}
                     {% endfor %}
-                    
+
                 {% endif %}
 
                 <li>
@@ -69,6 +69,21 @@
                 </li>
             </ol>
         {% endunless %}
+
+        {% if site.data.settings[site.output].nav.project-nav.position != "after" %}
+
+            {% comment %} Include the nav.yml items for this language, if any. {% endcomment %}
+            {% if site.data.nav[language] %}
+                {% assign project-nav-tree = site.data.nav[language] %}
+            {% else %}
+                {% assign project-nav-tree = site.data.nav[project-language] %}
+            {% endif %}
+
+            {% if project-nav-tree %}
+                {% include nav-list.html nav-tree=project-nav-tree project-nav=true %}
+            {% endif %}
+
+        {% endif %}
 
         {% comment %}If docs are on (i.e. output set to true in _config.yml),
         show the docs nav.{% endcomment %}
@@ -163,7 +178,7 @@
                             {% assign this-book-start-page = this-work.default.products.web.start-page %}
                         {% else %}
                             {% assign this-book-start-page = "index" %}
-                        {% endif %}                        
+                        {% endif %}
 
                         <li {% if site.data.settings[site.output].nav.home.expand-books == true %}class="has-children" {% endif %}>
 
@@ -210,15 +225,19 @@
 
         {% endif %}
 
-        {% comment %} Include the nav.yml items for this language, if any. {% endcomment %}
-        {% if site.data.nav[language] %}
-            {% assign project-nav-tree = site.data.nav[language] %}
-        {% else %}
-            {% assign project-nav-tree = site.data.nav[project-language] %}
-        {% endif %}
+        {% if site.data.settings[site.output].nav.project-nav.position == "after" %}
 
-        {% if project-nav-tree %}
-            {% include nav-list.html nav-tree=project-nav-tree project-nav=true %}
+            {% comment %} Include the nav.yml items for this language, if any. {% endcomment %}
+            {% if site.data.nav[language] %}
+                {% assign project-nav-tree = site.data.nav[language] %}
+            {% else %}
+                {% assign project-nav-tree = site.data.nav[project-language] %}
+            {% endif %}
+
+            {% if project-nav-tree %}
+                {% include nav-list.html nav-tree=project-nav-tree project-nav=true %}
+            {% endif %}
+
         {% endif %}
 
     </div>

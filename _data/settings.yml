@@ -130,11 +130,16 @@ web:
   # Navigation
   # --------------
   nav:
-  # On your landing page, should books in the nav expand
-  # to include chapters? Expanding many chapters can
-  # make your pages much bigger and slower. true/false
     home:
+      # On your landing page, should books in the nav expand
+      # to include chapters? Expanding many chapters can
+      # make your pages much bigger and slower. true/false
       expand-books: true
+    project-nav:
+      # Should your project navigation (in _data/nav.html)
+      # appear before or after your book navigation?
+      # Default is before.
+      position: before
   # --------------
   # Search
   # --------------
@@ -261,11 +266,16 @@ app:
   # Navigation
   # --------------
   nav:
-  # On your landing page, should books in the nav expand
-  # to include chapters? Expanding many chapters can
-  # make your pages much bigger and slower. true/false
     home:
+      # On your landing page, should books in the nav expand
+      # to include chapters? Expanding many chapters can
+      # make your pages much bigger and slower. true/false
       expand-books: true
+    project-nav:
+      # Should your project navigation (in _data/nav.html)
+      # appear before or after your book navigation?
+      # Default is before.
+      position: before
   # --------------
   # Search
   # --------------
