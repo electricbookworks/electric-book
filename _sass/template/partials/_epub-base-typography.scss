@@ -61,6 +61,19 @@ $epub-base-typography: true !default;
         }
     }
 
+    @if not $spaced-paras {
+        $floated-element-classes: sidenote;
+        @each $class in $floated-element-classes {
+            p + .#{$class} + p {
+                text-indent: $paragraph-indent;
+
+                &.first {
+                    text-indent: 0;
+                }
+            }
+        }
+    }
+
     // Lists
 
     ol, ul {

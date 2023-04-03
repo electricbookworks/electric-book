@@ -69,6 +69,20 @@ $convert-images-to-color-profile: false !default;
             text-indent: $paragraph-indent;
         }
     }
+
+    @if not $spaced-paras {
+        $floated-element-classes: sidenote;
+        @each $class in $floated-element-classes {
+            p + .#{$class} + p {
+                text-indent: $paragraph-indent;
+
+                &.first {
+                    text-indent: 0;
+                }
+            }
+        }
+    }
+
     a {
         text-decoration: none;
         color: $color-links;
