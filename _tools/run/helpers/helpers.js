@@ -416,20 +416,26 @@ async function renderMathjax (argv) {
     if (mathjaxEnabled(argv) || argv.mathjax) {
       console.log('Rendering MathJax...')
 
-      let mathJaxProcess
-      if (argv.language) {
-        mathJaxProcess = spawn(
-          'gulp',
-          ['mathjax',
-            '--book', argv.book,
-            '--language', argv.language]
-        )
-      } else {
-        mathJaxProcess = spawn(
-          'gulp',
-          ['mathjax', '--book', argv.book]
-        )
+      // Get the HTML file(s) to render. If we are merging
+      // input files, we only pass the merged file,
+      // Unless `--merged false` was passed at the command line.
+      let inputFiles = [fsPath.dirname(htmlFilePaths(argv)[0]) + '/merged.html']
+      if (argv.merged === false || ['web', 'epub', 'app'].includes(argv.format)) {
+        inputFiles = htmlFilePaths(argv)
       }
+
+      // Get the MathJax script
+      const mathJaxScript = process.cwd() +
+      '/_tools/run/helpers/mathjax/tex2mml-page.js'
+
+      // Process MathJax
+      let mathJaxProcess
+      inputFiles.forEach(function (path) {
+        mathJaxProcess = spawn(
+          'node',
+          ['-r', 'esm', mathJaxScript, path, path, argv.format]
+        )
+      })
       await logProcess(mathJaxProcess, 'Rendering MathJax')
       return true
     } else {

@@ -48,8 +48,8 @@ $print-notes: true !default;
         float: footnote;
         font-size: $font-size-default * $font-size-smaller;
         footnote-style-position: inside;
-        text-indent: -($line-height-default);
-        margin-left: $line-height-default;
+        text-indent: -($paragraph-indent);
+        margin-left: $paragraph-indent;
         // Rule above
         &:first-of-type {
             border-top: $rule-thickness solid $color-text-secondary;
@@ -73,8 +73,8 @@ $print-notes: true !default;
     // from inheriting blockquote indentation by
     // reiterating properties that blockquote might override.
     blockquote .page-footnote {
-        text-indent: -($line-height-default);
-        margin-left: $line-height-default;
+        text-indent: -($paragraph-indent);
+        margin-left: $paragraph-indent;
     }
 
     // The page-footnotes area

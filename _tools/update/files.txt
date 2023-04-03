@@ -883,7 +883,6 @@ _tools/gulp/processors/epub.js
 _tools/gulp/processors/images.js
 _tools/gulp/processors/indexes.js
 _tools/gulp/processors/js.js
-_tools/gulp/processors/mathjax.js
 _tools/gulp/processors/svgs.js
 _tools/gulp/processors/yaml.js
 _tools/profiles/Grey_Fogra39L.icc
@@ -900,6 +899,8 @@ _tools/run/commands/output.js
 _tools/run/commands/package.js
 _tools/run/commands/reindex.js
 _tools/run/helpers/helpers.js
+_tools/run/helpers/mathjax/tex2mml-page.js
+_tools/run/helpers/mathjax/tex2svg-page.js
 _tools/run/helpers/merge/index.js
 _tools/run/helpers/output/index.js
 _tools/run/helpers/options.js
