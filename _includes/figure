@@ -51,7 +51,7 @@ We have to do funky remove: '<p>' | remove: '</p>' | strip_newlines
 because https://github.com/jekyll/jekyll/issues/2248.
 {% endcomment %}
 
-<div class="figure{% if include.class %} {{ include.class }}{% endif %}"{% if figure-reference %} id="{{ figure-reference | slugify }}"{% endif %}>
+<div class="figure{% if include.class %} {{ include.class }}{% endif %}"{% if figure-reference %} id="{{ figure-reference | slugify }}"{% endif %} role="figure" {% if include.caption %}aria-labelledby="{{ figure-reference | slugify }}-caption"{% endif %}>
 
 <div class="figure-body">
 
@@ -146,7 +146,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 {% if include.slide-caption == nil %}
 
     {% if figure-reference-hidden == false or include.caption and include.caption != "" %}
-    <p class="caption" markdown="1">
+    <p class="caption" markdown="1" id="{{ figure-reference | slugify }}-caption">
     {% if figure-reference and figure-reference-hidden == false %}<span class="figure-reference">{{ figure-reference }} </span>{% endif %}{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
     </p>
 
