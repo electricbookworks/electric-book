@@ -536,27 +536,27 @@ async function convertXHTMLLinks (argv) {
   }
 }
 
-// Add ARIA roles to elements in epubs
-async function addAriaRoles (argv) {
+// Run HTML transformations on elements in epubs
+async function epubHTMLTransformations (argv) {
   'use strict'
   console.log('Adding ARIA roles ...')
 
   try {
-    let addAriaRolesProcess
+    let epubHTMLTransformationsProcess
     if (argv.language) {
-      addAriaRolesProcess = spawn(
+      epubHTMLTransformationsProcess = spawn(
         'gulp',
-        ['epubAriaRoles',
+        ['runEpubTransformations',
           '--book', argv.book,
           '--language', argv.language]
       )
     } else {
-      addAriaRolesProcess = spawn(
+      epubHTMLTransformationsProcess = spawn(
         'gulp',
-        ['epubAriaRoles', '--book', argv.book]
+        ['runEpubTransformations', '--book', argv.book]
       )
     }
-    await logProcess(addAriaRolesProcess, 'Sidenotes ARIA role')
+    await logProcess(epubHTMLTransformationsProcess, 'Sidenotes ARIA role')
     return true
   } catch (error) {
     console.log(error)
@@ -667,7 +667,6 @@ function fileList (argv) {
       // 'cover-page.html' or 'cover-versions-of-songs.html'.
       let coverFile = false
       files.forEach(function (filename) {
-        console.log(filename);
         // Remove all non-alphabetical-characters
         const filenameWordsOnly = filename.replace(/[^a-zA-Z]/g, '')
 
@@ -1497,7 +1496,7 @@ function newBook (argv) {
 }
 
 module.exports = {
-  addAriaRoles,
+  epubHTMLTransformations,
   addToEpub,
   assembleApp,
   bookAssetPaths,

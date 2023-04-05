@@ -85,6 +85,12 @@ defaults:
       contains-svg: true
 ```
 
+## HTML transformations
+
+You may want to make universal changes to your epubs' HTML when epubs are generated. These are called transformations. The template already includes one simple transformation for accessibility purposes: the `epubAriaSidenotes` transformation gives all elements with the class `sidenote` the ARIA attribute `role="note"`.
+
+To add a transformation, add a file containing a single function to `_tools/gulp/transformations/epub`. For the structure of the function, copy one of the existing files there. For syntax, these functions use [Cheerio](https://cheerio.js.org/docs/api/classes/Cheerio#manipulation-methods).
+
 ## Troubleshooting
 
 Epubs are notoriously hard to make, largely because validation is so strict. Here are some tips that may be useful when troubleshooting.
