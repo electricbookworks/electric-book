@@ -4,11 +4,22 @@ $epub-helpers: true !default;
     .visuallyhidden {
 
         // See https://webaim.org/techniques/css/invisiblecontent/
-        position:absolute;
-        left:-10000px;
-        top:auto;
-        width:1px;
-        height:1px;
-        overflow:hidden;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+
+        // This is the traditional approach, most likely
+        // to work reliably on older epub readers.
+        left: -10000px;
+        top: auto;
+
+        // This additional approach works on Kindle,
+        // which otherwise leaves big visual gaps where
+        // this element appears in the text.
+        clip: rect(1px, 1px, 1px, 1px);
+        clip-path: inset(50%);
+        margin: -1px;
+        padding: 0;
     }
 }
