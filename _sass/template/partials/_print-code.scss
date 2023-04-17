@@ -10,12 +10,10 @@ $print-code: true !default;
         font-size: 90%;
     	line-height: $line-height-default;
     	white-space: pre-wrap;
-    	background-color: $color-light;
     	padding: 0.1em 0.3em;
     	border-radius: 0.2em;
     }
     pre {
-        background-color: $color-light;
         border-radius: 0.2em;
         margin: $line-height-default 0;
         padding: $line-height-default / 2;

@@ -7,10 +7,32 @@ const del = require('del')
 const gulp = require('gulp')
 const iconv = require('iconv-lite')
 const rename = require('gulp-rename')
+const fsPath = require('path')
 
 // Local helpers
 const { book, language } = require('../helpers/args.js')
 const { paths } = require('../helpers/paths.js')
+const epubTransformations = require('require-all')(fsPath.join(__dirname, '/../transformations/epub'))
+
+// Run epub transformations from scripts in transformations/epub
+function runEpubTransformations (done) {
+  'use strict'
+
+  gulp.src([paths.epub.src], { base: './' })
+    .pipe(cheerio({
+      run: function ($) {
+        Object.keys(epubTransformations).forEach(async function (transformation) {
+          epubTransformations[transformation][transformation]($)
+        })
+      },
+      parserOptions: {
+        xmlMode: true
+      }
+    }))
+    .pipe(debug({ title: 'Performing epub HTML transformations ...' }))
+    .pipe(gulp.dest('./'))
+  done()
+}
 
 // Convert all file names in internal links from .html to .xhtml.
 // This is required for epub output to avoid EPUBCheck warnings.
@@ -98,3 +120,4 @@ function epubCleanHtmlFiles () {
 exports.epubXhtmlLinks = epubXhtmlLinks
 exports.epubXhtmlFiles = epubXhtmlFiles
 exports.epubCleanHtmlFiles = epubCleanHtmlFiles
+exports.runEpubTransformations = runEpubTransformations

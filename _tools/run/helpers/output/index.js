@@ -23,7 +23,8 @@ const {
   renderIndexComments,
   renderIndexLinks,
   renderMathjax,
-  runPrince
+  runPrince,
+  epubHTMLTransformations
 } = require('../helpers.js')
 const merge = require('../merge')
 
@@ -64,6 +65,7 @@ async function epub (argv) {
   try {
     await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
+    await epubHTMLTransformations(argv)
     await renderIndexComments(argv)
     await renderIndexLinks(argv)
     await convertXHTMLLinks(argv)

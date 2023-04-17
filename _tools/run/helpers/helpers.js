@@ -536,6 +536,33 @@ async function convertXHTMLLinks (argv) {
   }
 }
 
+// Run HTML transformations on elements in epubs
+async function epubHTMLTransformations (argv) {
+  'use strict'
+  console.log('Adding ARIA roles ...')
+
+  try {
+    let epubHTMLTransformationsProcess
+    if (argv.language) {
+      epubHTMLTransformationsProcess = spawn(
+        'gulp',
+        ['runEpubTransformations',
+          '--book', argv.book,
+          '--language', argv.language]
+      )
+    } else {
+      epubHTMLTransformationsProcess = spawn(
+        'gulp',
+        ['runEpubTransformations', '--book', argv.book]
+      )
+    }
+    await logProcess(epubHTMLTransformationsProcess, 'Sidenotes ARIA role')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // Converts .html files to .xhtml, e.g. for epub output
 async function convertXHTMLFiles (argv) {
   'use strict'
@@ -640,7 +667,6 @@ function fileList (argv) {
       // 'cover-page.html' or 'cover-versions-of-songs.html'.
       let coverFile = false
       files.forEach(function (filename) {
-        console.log(filename);
         // Remove all non-alphabetical-characters
         const filenameWordsOnly = filename.replace(/[^a-zA-Z]/g, '')
 
@@ -1470,6 +1496,7 @@ function newBook (argv) {
 }
 
 module.exports = {
+  epubHTMLTransformations,
   addToEpub,
   assembleApp,
   bookAssetPaths,
