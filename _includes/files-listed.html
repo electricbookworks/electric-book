@@ -5,6 +5,14 @@
 
     {% for work in site.data.works %}
 
+        {% comment %} If this work is not published, skip it. {% endcomment %}
+        {% if work[1][variant].published == false %}
+            {% continue %}
+        {% endif %}
+        {% if work[1].default.published == false %}
+            {% continue %}
+        {% endif %}
+
         {% capture list-of-files-work-directory %}{{ work[0] }}{% endcapture %}
 
         {% include files-listed-by-work.html directory=list-of-files-work-directory %}
