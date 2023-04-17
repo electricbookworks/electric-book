@@ -88,6 +88,8 @@ Each image needs its own alt text. To do this, include each image's alt text in 
 ```
 {% endraw %}
 
+Each image matches each piece of alt text in order. If you include multiple images in a figure, make sure you provide separate alt text for each image. If you don't, some images will have no alt text.
+
 ### Rotating figures
 
 If you need to rotate a large figure on the page, add the `rotate` class. E.g.
