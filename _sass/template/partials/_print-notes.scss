@@ -42,48 +42,26 @@ $print-notes: true !default;
         margin: ($line-height-default * 0.75) 0 0 0;
     }
 
-    // True footnotes (we call them page-footnotes for clarity)
-    // For styling see https://www.princexml.com/doc-prince/#footnote-calls
-    .page-footnote {
-        float: footnote;
-        font-size: $font-size-default * $font-size-smaller;
-        footnote-style-position: inside;
-        text-indent: -($paragraph-indent);
-        margin-left: $paragraph-indent;
-        // Rule above
-        &:first-of-type {
-            border-top: $rule-thickness solid $color-text-secondary;
-            padding-top: $line-height-default;
-        }
-        p {
-            margin-bottom: 0;
-            text-indent: 0;
-            &:first-of-type {
-            }
-        }
-    }
-        // The numbers in front of footnote text
-        *::footnote-marker {
-            float: left;
-            font-size: $font-size-default * $font-size-smaller;
-            width: 0;
-        }
-
-    // Avoid page-footnotes created by footnotes.js
-    // from inheriting blockquote indentation by
-    // reiterating properties that blockquote might override.
-    blockquote .page-footnote {
-        text-indent: -($paragraph-indent);
-        margin-left: $paragraph-indent;
-    }
-
     // The page-footnotes area
     @page {
+        counter-reset: manual-footnote;
+
         @footnote {
+            border-top: $rule-thickness solid $color-text-main;
             margin-top: $line-height-default / 2;
             padding-top: $line-height-default / 2;
             font-size: $font-size-default * $font-size-smaller;
         }
+    }
+
+    // True footnotes (we call them page-footnotes for clarity)
+    // For styling see https://www.princexml.com/doc-prince/#footnote-calls
+
+    // The numbers in front of footnote text
+    *::footnote-marker {
+        float: left;
+        font-size: $font-size-default * $font-size-smaller;
+        width: 0;
     }
 
     // The page-footnote references in body text
@@ -94,9 +72,56 @@ $print-notes: true !default;
         font-size: $font-size-default * 0.7;
         vertical-align: super;
         line-height: none;
+
         // Shift down
         top: $font-size-default / 4;
         position: relative;
     }
 
+    .page-footnote {
+        float: footnote;
+        font-size: $font-size-default * $font-size-smaller;
+        footnote-style-position: inside; // a prince-only property
+        text-indent: -($paragraph-indent);
+        margin-left: $paragraph-indent;
+
+        p {
+            margin-bottom: 0;
+            text-indent: 0;
+        }
+    }
+
+    // Avoid page-footnotes created by footnotes.js
+    // from inheriting blockquote indentation by
+    // reiterating properties that blockquote might override.
+    blockquote .page-footnote {
+        text-indent: -($paragraph-indent);
+        margin-left: $paragraph-indent;
+    }
+
+    // Footnotes created with one-by-one 'move-to-footnote'
+    // class need a different kind of counter, because
+    // in a document with some endnotes and some manual footnotes,
+    // they need to have a different numbering system.
+    // Otherwise, they'll appear at the bottom of the page
+    // but be numbered in order with the endnotes.
+
+    .page-footnote {
+        counter-increment: manual-footnote;
+
+        &::footnote-call {
+            content: counter(manual-footnote, asterisks);
+            font-size: $font-size-default * 0.7;
+            vertical-align: super;
+            line-height: none;
+
+            // Shift down
+            top: $font-size-default / 4;
+            position: relative;
+        }
+
+        &::footnote-marker {
+            content: counter(manual-footnote, asterisks);
+        }
+    }
 }
