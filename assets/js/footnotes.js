@@ -56,7 +56,6 @@ function ebMoveEndnoteToFootnote (noteReference) {
 
   // Make a div.page-footnote
   var pageFootnote = document.createElement('div')
-  // pageFootnote.className += ' page-footnote'
   pageFootnote.classList.add('page-footnote')
   pageFootnote.id = footnoteReferenceID
 
