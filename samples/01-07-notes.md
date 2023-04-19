@@ -4,20 +4,21 @@ title: "Notes"
 
 ## Notes
 
-In Electric Book themes, we aim to support three kinds of notes: footnotes, sidenotes, and (what we call) footer notes.
+In Electric Book themes, we aim to support four kinds of notes: endnotes, footnotes, sidenotes, and (what we call) footer notes.
 
--	**Footnotes**, which appear at the end of a document (web page or book chapter). In book parlance, they are therefore actually endnotes, but we call them footnotes because that's what kramdown calls them. To create them in markdown, follow the [kramdown syntax for footnotes](https://kramdown.gettalong.org/syntax.html#footnotes):
+- **Endnotes** appear at the end of a document (web page or book chapter). In technical markdown terms, these are called footnotes, because on the web they appear at the bottom of a web page. To create them in markdown, follow the [kramdown syntax for footnotes](https://kramdown.gettalong.org/syntax.html#footnotes):
 	-   put a `[^1]` where the footnote reference should appear (the `1` there can be any numbers or letters, and should be different for each footnote in a document);
 	-   anywhere in the document (we recommend after the paragraph containing the footnote reference), put `[^1]: Your footnote text here.`.
--	**Sidenotes** appear in a box to the right of the text. On wide screens, they might float far right of the text. On narrower screens, the text might wrap around them. In print, the text might wrap around them, too, or they might appear in an otherwise empty sidebar space. To create a sidenote, give the paragraph a `{:.sidenote}` tag. If the sidenote includes more than one paragraph, put them in a `<div class="sidenote" markdown="1"> ... </div>`.
--	**Footer notes**, which in print are sidenotes at the bottom of the page. By adding `.bottom` to the `{:.sidenote}` tag, your sidenote should sit at the bottom of the page rather than on the right with text wrap, replicating a traditional footnote. So the markdown looks like this:
+- **Footnotes** appear at the bottom of the page. To distinguish these from what markdown calls 'footnotes', we sometimes call these 'on-page footnotes'. To create these, use the same syntax as for endnotes (above), but add a `move-to-footnote` class to the footnote text. This section of the samples book demonstrates endnotes with a few on-page footnotes. We only support these in PDF output.
+- **Sidenotes** appear in a box to the right of the text. On wide screens, they might float far right of the text. On narrower screens, the text might wrap around them. In print, the text might wrap around them, too, or they might appear in an otherwise empty sidebar space. To create a sidenote, give the paragraph a `{:.sidenote}` tag. If the sidenote includes more than one paragraph, put them in a `<div class="sidenote" markdown="1"> ... </div>`.
+- **Footer notes**, which in print are sidenotes at the bottom of the page. By adding `.bottom` to the `{:.sidenote}` tag, your sidenote should sit at the bottom of the page rather than on the right with text wrap, replicating a traditional footnote. So the markdown looks like this:
 
 	```md
 	This is a sidenote at the bottom of the page in print.
 	{:.sidenote .bottom}
 	```
 
-	On screen, these might just be regular sidenotes.
+	This only affects PDF output. In other outputs, these remain regular sidenotes.
 
 ### Principles of Network Architecture Emerging from Comparisons of the Cerebral Cortex in Large and Small Brains
 {: title="Principles of Network Architecture" }
@@ -70,14 +71,17 @@ Finally, how a computational device scales may take advantage of how it is made 
 [^1]: Finlay BL, Darlington RB. Linked regularities in the development and evolution of mammalian brains. Science. 1995; 268(5217): 1578–1584. pmid:7777856 doi: 10.1126/science.7777856
 
 [^2]: Miller KD. Canonical computations of cerebral cortex. Current Opinion in Neurobiology, 2016; 37: 75–84. doi: 10.1016/j.conb.2016.01.008. pmid:26868041
+      {:.move-to-footnote}
 
 [^3]: Bastos AM, Usrey WM, Adams RA, Mangun GR, Fries P, Friston KJ. Canonical microcircuits for predictive coding. Neuron, 2012; 76(4): 695–711. doi: 10.1016/j.neuron.2012.10.038. pmid:23177956
+      {:.move-to-footnote}
 
 [^4]: Krubitzer L. In search of a unifying theory of complex brain evolution. Annals NY Acad Sci. 2009: 1156: 44–67. doi: 10.1111/j.1749-6632.2009.04421.x
 
 [^5]: O'Reilly RC, Herd SA, Pauli WM. Computational models of cognitive control. Current Opinion in Neurobiology, 2010; 20(2), 257–261. doi: 10.1016/j.conb.2010.01.008. pmid:20185294
 
 [^6]: Finlay BL, Uchiyama R. Developmental mechanisms channeling cortical evolution. Trends Neurosci. 2015;38(2):69–76. doi: 10.1016/j.tins.2014.11.004. pmid:25497421
+      {:.move-to-footnote}
 
 [^7]: Kaas J. Why is brain size so important: design problems and solutions as neocortex gets bigger or smaller. Brain and Mind. 2000;1:7–23.
 

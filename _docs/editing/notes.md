@@ -14,7 +14,7 @@ There are various options for notes.
 
 ## Endnotes
 
-Endnotes appear at the end of a document (a web page or book chapter). In kramdown and on the web these are often called footnotes. To create them in markdown, follow the [kramdown syntax for footnotes](https://kramdown.gettalong.org/syntax.html#footnotes):
+Endnotes appear at the end of a document (a web page or book chapter). In markdown these are usually called footnotes (because on the web they appear at the bottom of the web page). To create them in markdown, follow the [kramdown syntax for footnotes](https://kramdown.gettalong.org/syntax.html#footnotes):
 
 *	put a `[^1]` where the footnote reference should appear (the `1` there can be any numbers or letters, and should be different for each footnote in a document);
 *	anywhere in the document (we recommend after the paragraph containing the footnote reference), put `[^1]: Your footnote text here.`.
@@ -47,6 +47,8 @@ To create true bottom-of-page footnotes, as opposed to endnotes, use the same sy
   [^20]: The text of the note.
          {:.move-to-footnote}
   ```
+
+Note that converting endnotes to footnotes only affects PDF output. Web, epub and app outputs will still use endnotes.
 
 > Technically, `footnotes.js` and `_print-notes.scss` convert endnotes completely from kramdown footnotes to [PrinceXML footnotes](https://www.princexml.com/doc-prince/#footnotes). They may look similar by default, but they are different elements and can be styled separately.
 {:.box}
