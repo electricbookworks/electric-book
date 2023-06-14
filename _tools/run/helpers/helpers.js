@@ -965,6 +965,39 @@ async function runPrince (argv) {
       inputFiles = htmlFilePaths(argv)
     }
 
+    // Get the book's stylesheet, so we can pass it
+    // to Prince as a user stylesheet.
+    // By passing a user style sheet, we give SVGs
+    // that are referenced as `img src=""`
+    // access to the stylesheet, including its font-faces.
+
+    // Default CSS filename
+    let styleSheetFilename = argv.format + '.css'
+
+    // Check the project settings for an active variant,
+    // and any variant-specific stylesheets we should use.
+    if (projectSettings() &&
+        projectSettings()['active-variant'] &&
+        projectSettings()['active-variant'] !== '' &&
+        projectSettings().variants) {
+      // Loop through the variants in project settings
+      // to find the active variant. Then return
+      // the format-specific stylesheet name there.
+      projectSettings().variants.forEach(function (variantEntry) {
+        if (variantEntry.variant === projectSettings()['active-variant'] &&
+            variantEntry[argv.format + '-stylesheet'] &&
+            variantEntry[argv.format + '-stylesheet'] !== '') {
+          styleSheetFilename = variantEntry[argv.format + '-stylesheet']
+        }
+      })
+    }
+
+    // Apply the stylesheet with that name
+    // that we find in the styles folder beside
+    // the first HTML document we're rendering.
+    const stylesheet = fsPath.dirname(htmlFilePaths(argv)[0]) +
+      '/styles/' + styleSheetFilename
+
     // Currently, node-prince does not seem to
     // log its progress to stdout. Possible WIP:
     // https://github.com/rse/node-prince/pull/7
@@ -972,8 +1005,26 @@ async function runPrince (argv) {
       .license('./' + princeLicenseFile)
       .inputs(inputFiles)
       .output(process.cwd() + '/_output/' + outputFilename(argv))
+      .option('style', stylesheet)
       .option('javascript')
-      .option('verbose')
+      .option('tagged-pdf')
+      // These options add too much logging
+      // to be useful, but are available if needed.
+      // .option('verbose')
+      // .option('debug')
+
+      // We use set forced to true for these
+      // (the third parameter passed for an option)
+      // because they are new and not necessarily
+      // supported by the installed version
+      // of node-prince.
+      .option('fail-dropped-content', true, true)
+      .option('fail-missing-glyphs', true, true)
+      // The following option is very strict,
+      // and can cause an unnecessary number of failures
+      // especially when working on maths books.
+      // .option('no-system-fonts', true, true)
+
       .timeout(100 * 1000) // required for larger books
       .on('stderr', function (line) { console.log(line) })
       .on('stdout', function (line) { console.log(line) })
