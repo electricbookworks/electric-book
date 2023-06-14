@@ -13,14 +13,17 @@ $web-code: true !default;
         padding: 0.1em 0.3em;
         border-radius: 0.2em;
     }
+
     pre {
         border-radius: 0.2em;
         margin: $line-height-default 0;
-        padding: $line-height-default / 2;
+        padding: 0 $paragraph-indent;
         clear: left;
+
         code {
             padding: 0;
         }
+
         & + p {
            text-indent: 0;
         }

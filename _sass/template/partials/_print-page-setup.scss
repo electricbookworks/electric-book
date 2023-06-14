@@ -14,7 +14,9 @@ $print-page-setup: true !default;
 		prince-trim: $trim;
 		prince-pdf-page-colorspace: $colorspace;
 	}
-	/* Name our book-part styles as divs. PrinceXML needs the pages named for @page rules. */
+
+	// Name our book-part styles as divs.
+	// PrinceXML needs the pages named for @page rules.
 	.cover {
 		page: cover;
 	}
@@ -40,7 +42,7 @@ $print-page-setup: true !default;
 		page: contents-page;
 	}
 	.frontmatter {
-		page: frontmatter; /* Use for any other frontmatter */
+		page: frontmatter; // Use for any other frontmatter
 	}
 	.part-page {
 		page: part-page;
@@ -48,5 +50,4 @@ $print-page-setup: true !default;
 	.chapter {
 		page: chapter;
 	}
-
 }

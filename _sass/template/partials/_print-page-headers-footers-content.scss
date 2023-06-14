@@ -19,7 +19,7 @@ $print-page-headers-footers-content: true !default;
   }
 
   // Assign strings to use in headers and footers for each level of heading (h1-h6),
-  // to be called by the header and footer variables ($verso-top-center etc.).
+  // to be called by the header and footer variables ($verso-top-right etc.).
   // For each heading, we use the title attribute, with the heading text as fallback.
   // h1 also sets the string for h2, in case there is no h2 on the page yet.
   //
