@@ -32,6 +32,7 @@ $web-language-select: true !default;
         &:hover {
             .language-select-list {
                 display: block;
+                margin: 0;
                 position: fixed;
             }
         }
