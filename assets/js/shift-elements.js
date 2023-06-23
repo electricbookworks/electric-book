@@ -66,20 +66,14 @@ function ebShiftDown(element) {
     }
 }
 
-window.onload = function () {
-    'use strict';
+var elementsToShiftUp = document.querySelectorAll('[class*="shift-up"]');
+var i;
+for (i = 0; i < elementsToShiftUp.length; i += 1) {
+    ebShiftUp(elementsToShiftUp[i]);
+}
 
-    console.log('Checking for elements to shift...');
-
-    var elementsToShiftUp = document.querySelectorAll('[class*="shift-up"]');
-    var i;
-    for (i = 0; i < elementsToShiftUp.length; i += 1) {
-        ebShiftUp(elementsToShiftUp[i]);
-    }
-
-    var elementsToShiftDown = document.querySelectorAll('[class*="shift-down"]');
-    var j;
-    for (j = 0; j < elementsToShiftDown.length; j += 1) {
-        ebShiftDown(elementsToShiftDown[j]);
-    }
-};
+var elementsToShiftDown = document.querySelectorAll('[class*="shift-down"]');
+var j;
+for (j = 0; j < elementsToShiftDown.length; j += 1) {
+    ebShiftDown(elementsToShiftDown[j]);
+}
