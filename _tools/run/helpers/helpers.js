@@ -602,6 +602,38 @@ function projectSettings () {
   return settings
 }
 
+// Get variant settings
+function variantSettings (argv) {
+  // Create an object for default settings
+  const settings = {
+    active: false,
+    stylesheet: argv.format + '.css'
+  }
+
+  // Check the project settings for an active variant.
+  if (projectSettings() &&
+      projectSettings()['active-variant'] &&
+      projectSettings()['active-variant'] !== '') {
+    settings.active = projectSettings()['active-variant']
+  }
+
+  // Check for the variant-specific stylesheet we should use.
+  if (settings.active && projectSettings().variants) {
+    // Loop through the variants in project settings
+    // to find the active variant. Then return
+    // the format-specific stylesheet name there.
+    projectSettings().variants.forEach(function (variantEntry) {
+      if (variantEntry.variant === projectSettings()['active-variant'] &&
+          variantEntry[argv.format + '-stylesheet'] &&
+          variantEntry[argv.format + '-stylesheet'] !== '') {
+        settings.stylesheet = variantEntry[argv.format + '-stylesheet']
+      }
+    })
+  }
+
+  return settings
+}
+
 // Get the filelist for a format
 function fileList (argv) {
   'use strict'
@@ -614,11 +646,7 @@ function fileList (argv) {
   }
 
   // Check for variant-edition output
-  let variant = false
-  if (projectSettings()['active-variant'] &&
-            projectSettings()['active-variant'] !== '') {
-    variant = projectSettings()['active-variant']
-  }
+  const variant = variantSettings(argv).active
 
   let book = 'book' // default
   if (argv.book) {
@@ -976,20 +1004,8 @@ async function runPrince (argv) {
 
     // Check the project settings for an active variant,
     // and any variant-specific stylesheets we should use.
-    if (projectSettings() &&
-        projectSettings()['active-variant'] &&
-        projectSettings()['active-variant'] !== '' &&
-        projectSettings().variants) {
-      // Loop through the variants in project settings
-      // to find the active variant. Then return
-      // the format-specific stylesheet name there.
-      projectSettings().variants.forEach(function (variantEntry) {
-        if (variantEntry.variant === projectSettings()['active-variant'] &&
-            variantEntry[argv.format + '-stylesheet'] &&
-            variantEntry[argv.format + '-stylesheet'] !== '') {
-          styleSheetFilename = variantEntry[argv.format + '-stylesheet']
-        }
-      })
+    if (variantSettings(argv).active && variantSettings(argv).stylesheet) {
+      styleSheetFilename = variantSettings(argv).stylesheet
     }
 
     // Apply the stylesheet with that name
@@ -1308,20 +1324,39 @@ function bookAssetPaths (argv, assetType, folder) {
 
   console.log('Using files in ' + pathToAssets)
 
-  // Create an array of files
-  const files = fs.readdirSync(pathToAssets)
+  // For styles, we only return a single path
+  // to the stylesheet in the paths array.
+  // Otherwise, we create one or more paths.
+  let paths
+  if (assetType === 'styles') {
+    // Set the default stylesheet filename
+    let styleSheetFilename = argv.format + '.css'
 
-  // Extract filenames from file objects,
-  // and prepend path to each filename.
-  const paths = files.map(function (filename) {
-    if (typeof filename === 'object') {
-      return fsPath.normalize(pathToAssets + '/' +
-                    Object.keys(filename)[0])
-    } else {
-      return fsPath.normalize(pathToAssets + '/' +
-                    filename)
+    // Get any active variant stylesheet
+    if (variantSettings(argv).active) {
+      styleSheetFilename = variantSettings(argv).stylesheet
     }
-  })
+
+    // Add the stylesheet's path to the paths array
+    const stylesheetPath = fsPath.normalize(pathToAssets +
+      styleSheetFilename)
+    paths = [stylesheetPath]
+  } else {
+    // Create an array of files
+    const files = fs.readdirSync(pathToAssets)
+
+    // Extract filenames from file objects,
+    // and prepend path to each filename.
+    paths = files.map(function (filename) {
+      if (typeof filename === 'object') {
+        return fsPath.normalize(pathToAssets + '/' +
+                      Object.keys(filename)[0])
+      } else {
+        return fsPath.normalize(pathToAssets + '/' +
+                      filename)
+      }
+    })
+  }
 
   return paths
 }
@@ -1599,5 +1634,6 @@ module.exports = {
   renderIndexLinks,
   renderMathjax,
   runPrince,
+  variantSettings,
   works
 }

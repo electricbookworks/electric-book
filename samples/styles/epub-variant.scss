@@ -1,10 +1,10 @@
 ---
-# Example variant stylesheet for print PDF.
+# Example variant stylesheet for epub.
 # A variant stylesheet must replace the default
 # stylesheet in this folder entirely.
 ---
 
 $edition-suffix: null;
-@import 'template/print-pdf';
+@import 'template/epub';
 
-// Add variant styles here.
+// Add variant custom styles here.
