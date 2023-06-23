@@ -1,0 +1,23 @@
+$pdf-bibliographies: true !default;
+@if $pdf-bibliographies {
+
+    // Bibliographies set as lists
+
+    .bibliography {
+        text-indent: 0;
+        margin: $line-height-default 0;
+    }
+    .bibliography + p {
+        text-indent: 0; // paragraphs after bibliographies should be flush left
+    }
+    ul.bibliography {
+        list-style-type: none;
+        padding: 0;
+        margin: $line-height-default 0;
+    }
+    ul.bibliography li {
+        text-indent: $paragraph-indent * (-2);
+        margin-left: $paragraph-indent * 2;
+    }
+
+}

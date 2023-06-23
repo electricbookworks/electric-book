@@ -1,0 +1,22 @@
+$pdf-page-setup-lightning-source: false !default;
+@if $pdf-page-setup-lightning-source {
+
+    /* Page setup for Ingram POD colour pages
+     * --------------------------------------------
+     *
+     * Removes bleed on inside edges
+     * Adjusts trim accordingly
+     * Removes crop marks as required
+     */
+
+    @page:left { 
+        prince-bleed: 3mm 0 3mm 3mm !important;
+        prince-trim: 0 3mm 0 0 !important;
+        marks: none !important;
+    }
+    @page:right { 
+        prince-bleed: 3mm 3mm 3mm 0 !important;
+        prince-trim: 0 0 0 3mm !important;
+        marks: none !important;
+    }
+}

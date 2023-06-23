@@ -1,0 +1,9 @@
+$pdf-reset-sequences: true !default;
+@if $pdf-reset-sequences {
+
+    // After certain elements, don't indent paragraphs
+    // and remove any top-margin inadvertently added with .first or similar.
+    // Many partials include their own reset sequences like this.
+    // This partial should be included after all others, as a fallback.
+
+}

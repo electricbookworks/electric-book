@@ -29,7 +29,7 @@ You can output print PDFs for sending to high-end printers, or screen PDFs, for 
 We often have to create print PDFs for Ingram Spark, Lightning Source and similar print-on-demand providers. Their needs are unusual and specific. In most cases, you can get a Lightning Source-compatible PDF by turning on the Lightning Source setting in your book's `print-pdf.scss` file:
 
 ``` scss
-$print-page-setup-lightning-source: true;
+$pdf-page-setup-lightning-source: true;
 ```
 
 This is set off (`false`) by default. This setting:

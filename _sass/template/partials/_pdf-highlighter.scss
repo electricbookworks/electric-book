@@ -1,0 +1,11 @@
+$pdf-highlighter: true !default;
+@if $pdf-highlighter {
+
+    // Highlighter
+
+    .highlighter,
+    a[href="highlighter"] {
+        background-color: yellow;
+    }
+
+}

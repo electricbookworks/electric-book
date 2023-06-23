@@ -1,0 +1,30 @@
+$pdf-sources: true !default;
+@if $pdf-sources {
+
+    // Styles not covered by the default blockquote element in base-typography
+    // The source of a quotation, e.g. a name or book title, that appears after the quote
+    p.source {
+        font-size: $font-size-default * $font-size-smaller;
+        margin: 0 0 $line-height-default 0;
+        text-indent: 0;
+    	page-break-before: avoid;
+
+        em {
+            font-style: normal;
+        }
+
+        + p {
+            text-indent: 0;
+        }
+    }
+
+    em.source,
+    strong.source,
+    span.source {
+        display: block;
+        page-break-before: avoid;
+        margin: 0 0 $line-height-default 0;
+        font-size: $font-size-default * $font-size-smaller;
+        font-weight: inherit;
+    }
+}

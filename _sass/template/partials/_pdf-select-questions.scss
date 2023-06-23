@@ -1,0 +1,19 @@
+$pdf-select-questions: true !default;
+@if $pdf-select-questions {
+
+    // Select lists
+
+    .select-list {
+        border: 0;
+        border-bottom: $rule-thickness solid $color-text-main;
+
+        option {
+
+            &.select-list-placeholder {
+                display: inline-block;
+                min-width: $paragraph-indent * 3;
+            }
+        }
+    }
+
+}

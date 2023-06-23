@@ -1,0 +1,90 @@
+$pdf-verse: true !default;
+@if $pdf-verse {
+
+	// Verse, poetry, lyrics
+
+	.verse {
+		text-indent: 0;
+		margin: $line-height-default 0;
+		hyphens: none;
+	}
+	.verse + p {
+		text-indent: 0; // Paragraphs after verse should be flush left
+	}
+	ul.verse {
+		list-style-type: none;
+		padding: 0;
+		margin: $line-height-default 0;
+	}
+	// Hanging indent for runover lines.
+	ul.verse li {
+		text-indent: $paragraph-indent * (-2);
+		margin-left: $paragraph-indent * 2;
+	}
+
+	// Indents for lines of verse. 
+	// In markdown, add {:.indent-x} to the start of the list item text, e.g. -	{:.indent-3}My line of poetry indented 3em
+	// Note that indentation here includes the ul.verse li margin-left above.
+
+	@for $i from 1 through 60 {
+		ul.verse li.indent-#{$i} {
+			margin-left: ($paragraph-indent * 2) + $i * $paragraph-indent;
+		}
+	}
+
+	// Verse in a blockquote centres on its longest line, which is best-practice poetry layout
+	blockquote.verse {
+		color: inherit;
+		margin-top: 0;
+		width: 100%;
+	    padding: 0;
+	}
+	blockquote.verse h1, 
+	blockquote.verse h2,
+	blockquote.verse h3, 
+	blockquote.verse h4,
+	blockquote.verse h5, 
+	blockquote.verse h6 {
+		margin-bottom: $line-height-default;
+	}
+	blockquote.verse ul {
+		margin-bottom: 0; // Already gets its space after from ul.verse
+	}
+
+	// If verse is in a list, we can preserve line breaks and white space
+	ul.verse li {
+		white-space: pre-wrap;
+
+		// When a footnote is inside verse, do not let
+		// it inherit the pre-wrap
+		.page-footnote {
+			white-space: normal;
+		}
+	}
+	ul.verse li h1,
+	ul.verse li h2,
+	ul.verse li h3,
+	ul.verse li h4,
+	ul.verse li h5,
+	ul.verse li h6 {
+		margin-bottom: 0; margin-top: 0; // Overrides extra line-breaks caused by li pre-wrap
+	} 
+
+	// If a line is blank it's an empty list item. That will collapse away by default, so we add a blank line back in.
+	ul.verse li:empty:after {
+		content: " ";
+	}
+
+	// In print, the width and visual centering of verse is controlled by specifying how wide, in per cent, you want your poem to be.
+	// We use a different approach on screen.
+
+	blockquote.verse ul.verse {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	@for $i from 1 through 100 {
+	  .width-#{$i}, .width-#{$i} .verse { width: $i * 1%; };
+	}
+
+}

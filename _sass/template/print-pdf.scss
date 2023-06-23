@@ -20,9 +20,9 @@ $output-format: "print-pdf" !default;
 // Theme variables
 @import "theme/colors";
 @import "template/colors";
-@import "theme/print-variables";
+@import "theme/pdf-variables";
 
-// Edition suffix: identifies this edition in page-fitting classes (in _print-fitting.scss).
+// Edition suffix: identifies this edition in page-fitting classes (in _pdf-fitting.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
 // A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
 // If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.
@@ -304,71 +304,71 @@ $show-baseline-grid: false !default;
 // ---------------------------------
 
 // Reset PrinceXML CSS
-$print-css-reset: true !default;
+$pdf-css-reset: true !default;
 
 // Conventional helper classes
-$print-helpers: true !default;
+$pdf-helpers: true !default;
 
 // Add default font-face rules
-$print-font-faces: true !default;
+$pdf-font-faces: true !default;
 
 // Page setup and control, avoid changing these
-$print-pdf-view: true !default; // Sets the default initial view on PDFs
-$print-page-setup: true !default; // Sets up the page from your variables
-$print-page-break-tools: true !default; // Provides classes for semantic page breaks
-$print-hide-non-printing: true !default; // Hides anything .non-printing
-$print-fitting: true !default; // Classes for floating, tracking, shrinking, etc.
-$print-hyphenation: true !default; // Sets hyphenation dictionary
+$pdf-pdf-view: true !default; // Sets the default initial view on PDFs
+$pdf-page-setup: true !default; // Sets up the page from your variables
+$pdf-page-break-tools: true !default; // Provides classes for semantic page breaks
+$pdf-hide-non-printing: true !default; // Hides anything .non-printing
+$pdf-fitting: true !default; // Classes for floating, tracking, shrinking, etc.
+$pdf-hyphenation: true !default; // Sets hyphenation dictionary
 
 // Book features
-$print-start-on-recto-or-verso: true !default; // Starts chapters on a left- or right-hand-page
-$print-page-start-depth: true !default; // Sets a top margin on opening pages
-$print-base-typography: true !default; // Default typography for HTML elements
-$print-columns: true !default;
-$print-buttons: true !default;
-$print-verse: true !default; // Default typography for verse, poetry, lyrics
-$print-bibliographies: true !default;
-$print-dialogue: true !default;
-$print-epigraphs: true !default;
-$print-dedications: true !default;
-$print-glossaries: true !default; // Including .glossary
-$print-highlighter: true !default;
-$print-pullquotes: true !default; // Supports .pullquote
-$print-boxes: true !default;
-$print-code: true !default; // For computer code and preformatted text
-$print-tables: true !default;
-$print-figures: true !default;
-$print-notes: true !default; // Footnotes, endnotes, sidenotes
-$print-previous-publications-page: true !default; // The 'also by the author' frontmatter apge
-$print-title-pages: true !default; // Half-title and title pages
-$print-copyright-page: true !default;
-$print-toc: true !default; // Tables of contents
-$print-cover: true !default; // Front-cover image for PDF ebooks
-$print-video: true !default;
-$print-smallcaps: true !default;
-$print-maths: true !default;
-$print-letters: true !default;
-$print-sources: true !default;
-$print-openers: true !default;
-$print-index: true !default;
-$print-questions: true !default;
-$print-select-questions: true !default;
-$print-cross-refs: true !default;
-$print-slides: true !default;
-$print-sidebar: false !default; // Note that this is disabled by default here and in the partial, remove !default to override partial
-$print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
-$print-page-headers-footers-content: true !default; // Sets content for headers and footers
-$print-page-headers-footers-style: true !default; // Sets styling for headers and footers
-$print-page-setup-lightning-source: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
+$pdf-start-on-recto-or-verso: true !default; // Starts chapters on a left- or right-hand-page
+$pdf-page-start-depth: true !default; // Sets a top margin on opening pages
+$pdf-base-typography: true !default; // Default typography for HTML elements
+$pdf-columns: true !default;
+$pdf-buttons: true !default;
+$pdf-verse: true !default; // Default typography for verse, poetry, lyrics
+$pdf-bibliographies: true !default;
+$pdf-dialogue: true !default;
+$pdf-epigraphs: true !default;
+$pdf-dedications: true !default;
+$pdf-glossaries: true !default; // Including .glossary
+$pdf-highlighter: true !default;
+$pdf-pullquotes: true !default; // Supports .pullquote
+$pdf-boxes: true !default;
+$pdf-code: true !default; // For computer code and preformatted text
+$pdf-tables: true !default;
+$pdf-figures: true !default;
+$pdf-notes: true !default; // Footnotes, endnotes, sidenotes
+$pdf-previous-publications-page: true !default; // The 'also by the author' frontmatter apge
+$pdf-title-pages: true !default; // Half-title and title pages
+$pdf-copyright-page: true !default;
+$pdf-toc: true !default; // Tables of contents
+$pdf-cover: true !default; // Front-cover image for PDF ebooks
+$pdf-video: true !default;
+$pdf-smallcaps: true !default;
+$pdf-maths: true !default;
+$pdf-letters: true !default;
+$pdf-sources: true !default;
+$pdf-openers: true !default;
+$pdf-index: true !default;
+$pdf-questions: true !default;
+$pdf-select-questions: true !default;
+$pdf-cross-refs: true !default;
+$pdf-slides: true !default;
+$pdf-sidebar: true !default;
+$pdf-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
+$pdf-page-headers-footers-content: true !default; // Sets content for headers and footers
+$pdf-page-headers-footers-style: true !default; // Sets styling for headers and footers
+$pdf-page-setup-lightning-source: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
 // Theme imports
-@import "theme/print-imports";
+@import "theme/pdf-imports";
 
-// Default font-face rules added by print-font-faces partial below.
+// Default font-face rules added by pdf-font-faces partial below.
 // Or add @font-face rules for fonts you specify here.
 // Add the actual font files to `../fonts` or `../../assets/fonts`.
 // Use #{$path-to-root-directory} to allow overriding per translation. E.g.:
@@ -380,72 +380,72 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 // ---------------------
 
 // Reset PrinceXML CSS
-@import "template/partials/print-css-reset";
+@import "template/partials/pdf-css-reset";
 
 // Load general-purpose mixins
-@import "template/partials/print-mixins--buttons";
-@import "template/partials/print-mixins--sidenotes";
-@import "template/partials/print-mixins--margin-boxes";
-@import "template/partials/print-mixins--floats";
-@import "template/partials/print-mixins--page-continued";
+@import "template/partials/pdf-mixins--buttons";
+@import "template/partials/pdf-mixins--sidenotes";
+@import "template/partials/pdf-mixins--margin-boxes";
+@import "template/partials/pdf-mixins--floats";
+@import "template/partials/pdf-mixins--page-continued";
 
 // Conventional helper classes
-@import "template/partials/print-helpers";
+@import "template/partials/pdf-helpers";
 
 // Add font-face rules
-@import "template/partials/print-font-faces";
+@import "template/partials/pdf-font-faces";
 
 // Page setup and control, avoid changing these
-@import "template/partials/print-pdf-view"; // Sets the default initial view on PDFs
-@import "template/partials/print-sidebar"; // redefines margins if $print-sidebar is true
-@import "template/partials/print-page-setup"; // Sets up the page from your variables
-@import "template/partials/print-page-break-tools"; // Provides classes for semantic page breaks
-@import "template/partials/print-hide-non-printing"; // Hides anything .non-printing
-@import "template/partials/print-fitting"; // Classes for floating, tracking, shrinking, etc.
-@import "template/partials/print-hyphenation"; // Sets hyphenation dictionary
-@import "template/partials/print-baseline-grid"; // Shows a baseline grid
+@import "template/partials/pdf-pdf-view"; // Sets the default initial view on PDFs
+@import "template/partials/pdf-sidebar"; // redefines margins if $pdf-sidebar is true
+@import "template/partials/pdf-page-setup"; // Sets up the page from your variables
+@import "template/partials/pdf-page-break-tools"; // Provides classes for semantic page breaks
+@import "template/partials/pdf-hide-non-printing"; // Hides anything .non-printing
+@import "template/partials/pdf-fitting"; // Classes for floating, tracking, shrinking, etc.
+@import "template/partials/pdf-hyphenation"; // Sets hyphenation dictionary
+@import "template/partials/pdf-baseline-grid"; // Shows a baseline grid
 
 // Book features
-@import "template/partials/print-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
-@import "template/partials/print-page-start-depth"; // Sets a top margin on opening pages
-@import "template/partials/print-base-typography"; // Default typography for HTML elements
-@import "template/partials/print-columns";
-@import "template/partials/print-buttons";
-@import "template/partials/print-verse"; // Default typography for verse, poetry, lyrics
-@import "template/partials/print-bibliographies";
-@import "template/partials/print-dialogue";
-@import "template/partials/print-epigraphs";
-@import "template/partials/print-dedications";
-@import "template/partials/print-glossaries"; // Including .glossary
-@import "template/partials/print-highlighter";
-@import "template/partials/print-pullquotes"; // Supports .pullquote
-@import "template/partials/print-boxes";
-@import "template/partials/print-code"; // For computer code and preformatted text
-@import "template/partials/print-tables";
-@import "template/partials/print-figures";
-@import "template/partials/print-notes"; // Footnotes, endnotes, sidenotes
-@import "template/partials/print-previous-publications-page"; // Also by the author page in frontmatter
-@import "template/partials/print-title-pages"; // Half-title and title pages
-@import "template/partials/print-copyright-page";
-@import "template/partials/print-toc"; // Tables of contents
-@import "template/partials/print-video";
-@import "template/partials/print-cover"; // Front-cover image for PDF ebooks
-@import "template/partials/print-smallcaps";
-@import "template/partials/print-maths";
-@import "template/partials/print-letters";
-@import "template/partials/print-sources";
-@import "template/partials/print-openers";
-@import "template/partials/print-index";
-@import "template/partials/print-questions";
-@import "template/partials/print-select-questions";
-@import "template/partials/print-cross-refs";
-@import "template/partials/print-slides";
-@import "template/partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
-@import "template/partials/print-page-headers-footers-content"; // Sets content for headers and footers
-@import "template/partials/print-page-headers-footers-style"; // Sets styling for headers and footers
+@import "template/partials/pdf-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
+@import "template/partials/pdf-page-start-depth"; // Sets a top margin on opening pages
+@import "template/partials/pdf-base-typography"; // Default typography for HTML elements
+@import "template/partials/pdf-columns";
+@import "template/partials/pdf-buttons";
+@import "template/partials/pdf-verse"; // Default typography for verse, poetry, lyrics
+@import "template/partials/pdf-bibliographies";
+@import "template/partials/pdf-dialogue";
+@import "template/partials/pdf-epigraphs";
+@import "template/partials/pdf-dedications";
+@import "template/partials/pdf-glossaries"; // Including .glossary
+@import "template/partials/pdf-highlighter";
+@import "template/partials/pdf-pullquotes"; // Supports .pullquote
+@import "template/partials/pdf-boxes";
+@import "template/partials/pdf-code"; // For computer code and preformatted text
+@import "template/partials/pdf-tables";
+@import "template/partials/pdf-figures";
+@import "template/partials/pdf-notes"; // Footnotes, endnotes, sidenotes
+@import "template/partials/pdf-previous-publications-page"; // Also by the author page in frontmatter
+@import "template/partials/pdf-title-pages"; // Half-title and title pages
+@import "template/partials/pdf-copyright-page";
+@import "template/partials/pdf-toc"; // Tables of contents
+@import "template/partials/pdf-video";
+@import "template/partials/pdf-cover"; // Front-cover image for PDF ebooks
+@import "template/partials/pdf-smallcaps";
+@import "template/partials/pdf-maths";
+@import "template/partials/pdf-letters";
+@import "template/partials/pdf-sources";
+@import "template/partials/pdf-openers";
+@import "template/partials/pdf-index";
+@import "template/partials/pdf-questions";
+@import "template/partials/pdf-select-questions";
+@import "template/partials/pdf-cross-refs";
+@import "template/partials/pdf-slides";
+@import "template/partials/pdf-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
+@import "template/partials/pdf-page-headers-footers-content"; // Sets content for headers and footers
+@import "template/partials/pdf-page-headers-footers-style"; // Sets styling for headers and footers
 
 // Lightning Source setup
-@import "template/partials/print-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
+@import "template/partials/pdf-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
 
 // Theme rules
-@import "theme/print-rules";
+@import "theme/pdf-rules";

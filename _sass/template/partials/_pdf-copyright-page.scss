@@ -1,0 +1,26 @@
+$pdf-copyright-page: true !default;
+@if $pdf-copyright-page {
+
+    // Copyright page
+
+    .copyright-page {
+        position: absolute;
+        bottom: 0;    
+        font-size: $font-size-default * $font-size-smaller;
+        line-height: $line-height-default * $font-size-smaller;
+        hyphens: none; // Prince will not hyphenate here
+        h1 {
+            margin: ($line-height-default * $font-size-smaller) 0;
+        }
+        p {
+            margin: 0 0 ($line-height-default * $font-size-smaller) 0;
+            text-indent: 0;
+        }
+        .identifiers {
+            .identifier-scheme {}
+            .identifier-format {}
+            .identifier-id {}
+        }
+    }
+
+}

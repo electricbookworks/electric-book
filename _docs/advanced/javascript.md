@@ -32,12 +32,12 @@ To limit a script to a given book or format, wrap the script tag in [Liquid cont
 
 (The `include metadata` tag fetches all kinds of information about the page, including which `book-directory` it's in.)
 
-To limit a script to a given output format, use `site.output`:
+To limit a script to a given output format, use `site.output`, e.g.:
 
 {% raw %}
 ``` html
-{% if site.output == "print-pdf" %}
-<script src="{{ site.baseurl }}/assets/js/print-headers.js"></script>
+{% if site.output == "print-pdf" or site.output == "screen-pdf" %}
+<script src="{{ site.baseurl }}/assets/js/my-pdf-headers.js"></script>
 {% endif %}
 ```
 {% endraw %}

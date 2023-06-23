@@ -50,7 +50,7 @@ To create true bottom-of-page footnotes, as opposed to endnotes, use the same sy
 
 Note that converting endnotes to footnotes only affects PDF output. Web, epub and app outputs will still use endnotes.
 
-> Technically, `footnotes.js` and `_print-notes.scss` convert endnotes completely from kramdown footnotes to [PrinceXML footnotes](https://www.princexml.com/doc-prince/#footnotes). They may look similar by default, but they are different elements and can be styled separately.
+> Technically, `footnotes.js` and `_pdf-notes.scss` convert endnotes completely from kramdown footnotes to [PrinceXML footnotes](https://www.princexml.com/doc-prince/#footnotes). They may look similar by default, but they are different elements and can be styled separately.
 {:.box}
 
 ## Sidenotes

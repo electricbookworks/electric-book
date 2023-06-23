@@ -1,0 +1,272 @@
+$pdf-figures: true !default;
+@if $pdf-figures {
+
+    // Figures
+
+    .figure {
+        clear: both;
+        float: bottom; // By default all figures float to the bottoms of their pages. See margins.
+        margin: $line-height-default 0 0 0;
+        page-break-inside: avoid;
+        background-color: inherit;
+        font-family: $font-text-secondary;
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+        padding: 0;
+        width: 100%;
+        box-sizing: border-box;
+
+        p {
+            clear: both;
+            page-break-inside: avoid;
+            page-break-before: avoid;
+            text-align: left;
+            text-indent: 0;
+            hyphens: none;
+
+            // We avoid using these variables in outputs like web
+            // where font sizes are set in ems (i.e. proportionally).
+            // But here where we set font sizes in absolute units (pt)
+            // it's safe and useful to control font size in this way.
+            font-size: $font-size-default * $font-size-smaller;
+        }
+
+        img, p img {
+            width: auto;
+            max-width: 100%;
+            max-height: 100%; // Prevents image from expanding below a parent p set to a specific height
+            margin: 0 auto 0 auto;
+        }
+
+        .figure-body {
+
+            .figure-images {
+                text-align: center;
+                margin-bottom: $line-height-default;
+            }
+
+            .figure-html, .figure-md {}
+
+            .title {}
+
+            // Descriptions are hidden by default, and used for image alt text
+            .description {
+                display: none;
+            }
+
+            .caption {
+                margin: 0;
+                text-align: left;
+                text-indent: 0;
+                .figure-reference {
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .figure-source {
+            .source {}
+        }
+
+        // For older markdown-only figure syntax, the last para is the caption
+        // Note doesn't allow for multi-para captions – have to use line breaks :(
+        p:last-of-type {
+            margin: 0;
+            text-align: left;
+            text-indent: 0;
+        }
+
+        // Other floats
+        &.float-bottom {
+            float: bottom;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-bottom-next {
+            float: bottom next;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-top {
+            float: top;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-top-next {
+            float: top next;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-inside {
+            float: inside;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-outside {
+            float: outside;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-left {
+            float: left;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-right {
+            float: right;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-top {
+            float: column-top;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-top-next {
+            float: column-top next;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-bottom {
+            float: column-bottom;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-column-bottom-next {
+            float: column-bottom next;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-column-top-corner {
+            float: column-top-corner;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-top-corner-next {
+            float: column-top-corner next;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-bottom-corner {
+            float: column-bottom-corner;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-column-bottom-corner-next {
+            float: column-bottom-corner next;
+            margin: $line-height-default 0 0 0;
+        }
+
+        // Figures that do not float
+        &.fixed {
+            clear: both;
+            float: none;
+            margin-top: $line-height-default;
+        }
+
+        // Thumbnail figures
+        &.thumbnail, &.pdf-thumbnail {
+            max-width: 25%;
+            float: right;
+            margin: 0 0 0 $paragraph-indent;
+            padding: 0;
+            img {
+                padding: 0;
+            }
+        }
+
+        // Allow user to set figure width as a percentage
+        @for $i from 1 through 100 {
+            &.width-#{$i} {
+                width: $i * 1%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+    }
+
+    // Experimental. Effectively overrides 'unless-fit' to reduce ugly instances
+    // of indented images in lists beside floated, non-indented images.
+    ol li .figure, ul li .figure {
+        display: inline-block;
+    }
+
+    // For another way to fit images to size, see _pdf-fitting.scss
+
+    // Paragraphs that follow figures should:
+    // have an indent when following floated figures
+    // not have an indent when following fixed figures.
+    @if $spaced-paras == false {
+        .figure + p {
+            text-indent: $paragraph-indent;
+        }
+    }
+
+    .figure.fixed + p {
+        text-indent: 0;
+    }
+
+    // Paragraphs that start with an image
+    .image-with-caption {
+        font-size: $font-size-default * $font-size-smaller;
+        margin: $line-height-default 0;
+        text-align: left;
+        page-break-inside: avoid;
+
+        img {
+            display: block;
+            margin: $line-height-default auto;
+        }
+
+        & + p {
+            text-indent: 0;
+        }
+    }
+
+    // -------------------------------------------------------------------------------
+    // Rotated figures
+    // -------------------------------------------------------------------------------
+
+    // To make rotated figures work:
+    // 1. In the markdown/HTML, add class="rotate" to the figure(s) you want to rotate.
+    // 2. On building, rotate.js wraps each rotating figure in two wrapper divs,
+    //    figure-rotator and, wrapping that, figure-rotator-wrapper.
+    // 4. Then we do some maths to work out the proportions of our content area.
+    // 5. Then see the notes in the Sass below.
+
+    // Get the proportions we need
+    $rotator-content-width: $page-width - $margin-inside - $margin-outside;
+    $rotator-content-height: $page-height - $margin-top - $margin-bottom;
+    $rotator-content-wh-ratio: (1 - $rotator-content-width/$rotator-content-height) * 100%;
+
+    .figure-rotator-wrapper {
+        // First we float the wrapper to the top of the page,
+        // and set its height and width to match the content area.
+        float: top;
+        height: $rotator-content-height;
+        width: $rotator-content-width;
+
+        .figure-rotator {
+            // First we reverse the rotating div's proportions.
+            height: $rotator-content-width;
+            width: $rotator-content-height;
+            // Then we get this div into its new position:
+            // 1. We choose to rotate from the bottom-left corner.
+            transform-origin: bottom left;
+            // 2. Rotate the div anti-clockwise 90%.
+            // 3. Shift the div right by its own (now) width.
+            // 4. Shift the div down by the proportion of the content area's width:height.
+            // Now it's exactly in position.
+            transform: rotate(-90deg) translatey(100%) translatex(-($rotator-content-wh-ratio));
+            // Finally we set it to display: table, for the vertical centering to come below.
+            display: table;
+
+            .figure {
+                // First, override the float and margins that figures get by default.
+                float: none;
+                margin: 0;
+                // Set the height and width to the reverse of the content area.
+                height: $rotator-content-width;
+                width: $rotator-content-height;
+                // Center the figure on the page ('vertically' if you're looking sideways!).
+                display: table-cell;
+                vertical-align: middle;
+
+                .figure-body {
+
+                    table {
+                        // Adjust the margins that tables in figures inherit.
+                        margin: 0 0 $line-height-default 0; // overrides inherited margin
+                    }
+                }
+            }
+        }
+    }
+}

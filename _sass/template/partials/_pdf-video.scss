@@ -1,0 +1,71 @@
+$pdf-video: true !default;
+@if $pdf-video {
+
+    // Video
+    // Works specifically with our video includes
+
+    .video {
+        font-family: $font-text-secondary;
+        margin: 1em 0;
+        position: relative; // positions child element play button correctly
+        img {
+            width: 100%;
+        }
+        .video-link {}
+        .video-description {
+            font-size: $font-size-default * 0.8;
+            margin: ($line-height-default / 2) 0;
+            text-align: left;
+        }
+        .video-wrapper {
+            position: relative;
+            // Add play button before iframe loads
+            &:before {
+                content: "\25b6";
+                position: absolute;
+                font-size: $font-size-default * 3;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+                color: white;
+            }
+            // Create placeholder with 16:9 aspect ratio
+            // when there is no image to display
+            &.video-no-image {
+                width: 100%;
+                padding-bottom: 56.25%;
+                background-color: $color-mid;
+                border-radius: $box-border-radius;
+            }
+        }
+        // Don't indent a paragraph after a video.
+        & + p {
+            text-indent: 0;
+        }
+
+        .video-options {
+
+            // Hidden in PDF by default, but designed so that
+            // this can be overridden in custom CSS with
+            // .video .video-options { display: block; }
+            display: none;
+
+            color: $color-text-secondary;
+            font-size: $font-size-default * 0.8;
+            margin: ($line-height-default / 2) $paragraph-indent 0 $paragraph-indent;
+            position: relative;
+
+            .video-options-label {
+                font-weight: bold;
+            }
+
+            .video-options-content {
+
+                > :last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

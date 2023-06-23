@@ -1,0 +1,183 @@
+$path-to-root-directory: "../.." !default;
+$pdf-font-faces: true !default;
+@if $pdf-font-faces {
+
+    // Crimson Pro https://github.com/Fonthausen/CrimsonPro
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-ExtraLight.ttf);
+        font-weight: 200;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-ExtraLightItalic.ttf);
+        font-weight: 200;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Light.ttf);
+        font-weight: 300;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-LightItalic.ttf);
+        font-weight: 300;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Regular.ttf);
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Italic.ttf);
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Medium.ttf);
+        font-weight: 500;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-MediumItalic.ttf);
+        font-weight: 500;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-SemiBold.ttf);
+        font-weight: 600;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-SemiBoldItalic.ttf);
+        font-weight: 600;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Bold.ttf);
+        font-weight: bold;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-BoldItalic.ttf);
+        font-weight: bold;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-ExtraBold.ttf);
+        font-weight: 800;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-ExtraBoldItalic.ttf);
+        font-weight: 800;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Black.ttf);
+        font-weight: 900;
+    }
+    @font-face {
+        font-family: "Crimson Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-BlackItalic.ttf);
+        font-weight: 900;
+        font-style: italic;
+    }
+
+    // Source Sans Pro https://www.google.com/fonts/specimen/Source+Sans+Pro
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-Black.ttf);
+        font-weight: 900;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-BlackIt.ttf);
+        font-weight: 900;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-Bold.ttf);
+        font-weight: 700;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-BoldIt.ttf);
+        font-weight: 700;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-ExtraLight.ttf);
+        font-weight: 200;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-ExtraLightIt.ttf);
+        font-weight: 200;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-It.ttf);
+        font-weight: 400;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-Light.ttf);
+        font-weight: 300;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-LightIt.ttf);
+        font-weight: 300;
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-Regular.ttf);
+        font-weight: 400;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-Semibold.ttf);
+        font-weight: 600;
+    }
+    @font-face {
+        font-family: "Source Sans Pro";
+        src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-SemiboldIt.ttf);
+        font-weight: 600;
+        font-style: italic;
+    }
+
+    // Ubuntu Mono http://font.ubuntu.com/
+    @font-face {
+        font-family: "Ubuntu Mono";
+        src: url(#{$path-to-root-directory}/assets/fonts/UbuntuMono-R.ttf);
+    }
+    @font-face {
+        font-family: "Ubuntu Mono";
+        src: url(#{$path-to-root-directory}/assets/fonts/UbuntuMono-RI.ttf);
+        font-style: italic;
+    }
+    @font-face {
+        font-family: "Ubuntu Mono";
+        src: url(#{$path-to-root-directory}/assets/fonts/UbuntuMono-B.ttf);
+        font-weight: bold;
+    }
+    @font-face {
+        font-family: "Ubuntu Mono";
+        src: url(#{$path-to-root-directory}/assets/fonts/UbuntuMono-BI.ttf);
+        font-weight: bold;
+        font-style: italic;
+    }
+
+}
