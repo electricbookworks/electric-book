@@ -209,9 +209,14 @@ separate HTML files are merged into one body element.
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    {% comment %}Set canonical URL{% endcomment %}
+    {% comment %}
+    Self referencing canonicals help tell search engines
+    a specific URL is the master copy of a page avoiding problems
+    caused by ‘duplicate’ content appearing on multiple URLs.
+    https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls
+    {% endcomment %}
     {% if site.canonical-url and site.canonical-url != "" %}
-        <link rel="canonical" href="{{ site.canonical-url }}">
+        <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.canonical-url }}">
     {% endif %}
 
     {% comment %}Add favicon{% endcomment %}
