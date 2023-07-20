@@ -635,7 +635,13 @@ function fileList (argv) {
 
   // Get the files list
   const metadata = yaml.load(fs.readFileSync(pathToDefaultYAML, 'utf8'))
-  let files = metadata.products[format].files
+
+  let files
+  if (metadata.products[format] && metadata.products[format].files) {
+    files = metadata.products[format].files
+  } else {
+    files = metadata.products['print-pdf'].files
+  }
 
   // If there was no files list, oops!
   if (!files) {
