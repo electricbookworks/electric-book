@@ -1,5 +1,5 @@
-$pdf-page-headers-footers-content: true !default;
-@if $pdf-page-headers-footers-content {
+$pdf-margin-box-content: true !default;
+@if $pdf-margin-box-content {
 
   // This partial sets page header and footer content.
   // It sets separate content for .frontmatter and .chapter pages.

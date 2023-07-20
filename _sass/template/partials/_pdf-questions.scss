@@ -3,8 +3,6 @@ $pdf-questions: true !default;
 
     // Question formatting
 
-    $main-text-width: $page-width - $margin-inside - $margin-outside !default;
-
     .question {
         box-sizing: border-box; // to include padding in the width
         margin: $line-height-default 0;

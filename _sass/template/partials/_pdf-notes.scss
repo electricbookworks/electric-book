@@ -35,15 +35,11 @@ $pdf-notes: true !default;
     .sidenote {
         @include sidenote();
 
-        @if $pdf-sidebar == true {
-            @include sidebar();
-        }
-
         // Sidenotes that appear at the bottom of the page, aka footer notes.
         &.bottom {
             float: bottom;
-            max-width: 100%;
-            width: $main-text-width;
+            max-width: none;
+            width: 100%;
             margin: ($line-height-default * 0.75) 0 0 0;
         }
     }

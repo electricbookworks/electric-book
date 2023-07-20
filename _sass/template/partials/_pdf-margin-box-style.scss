@@ -1,0 +1,218 @@
+$pdf-margin-box-style: true !default;
+@if $pdf-margin-box-style {
+
+  // Styling of headers and footers
+
+  // Let's define our header typography as a mixin
+  // Note we don't set margins here. 
+  // By default the header will center vertically in the margin box. 
+  // Control its position with `vertical-align: top` and then `margin-top`.
+
+  // Verso
+  @page chapter:left {
+    @top-center {
+      @include margin-box-top-center(verso);
+    }
+    @top-right {
+      @include margin-box-top-right(verso);
+    }
+    @top-left {
+      @include margin-box-top-left(verso);
+    }
+    @top-right-corner {
+      @include margin-box-top-right-corner();
+    }
+    @top-left-corner {
+      @include margin-box-top-left-corner();
+    }
+    @bottom-center {
+      @include margin-box-bottom-center(verso);
+    }
+    @bottom-left {
+      @include margin-box-bottom-left(verso);
+    }
+    @bottom-right {
+      @include margin-box-bottom-right(verso);
+    }
+    @bottom-left-corner {
+      @include margin-box-bottom-left-corner();
+    }
+    @bottom-right-corner {
+      @include margin-box-bottom-right-corner();
+    }
+    @left-middle {
+      @include margin-box-left-middle();
+    }
+    @left-top {
+      @include margin-box-left-top();
+    }
+    @left-bottom {
+      @include margin-box-left-bottom();
+    }
+    @right-middle {
+      @include margin-box-right-middle();
+    }
+    @right-top {
+      @include margin-box-right-top();
+    }
+    @right-bottom {
+      @include margin-box-right-bottom();
+    }
+  }
+
+  // Recto
+  @page chapter:right {
+    @top-center {
+      @include margin-box-top-center(recto);
+    }
+    @top-right {
+      @include margin-box-top-right(recto);
+    }
+    @top-left {
+      @include margin-box-top-left(recto);
+    }
+    @top-right-corner {
+      @include margin-box-top-right-corner();
+    }
+    @top-left-corner {
+      @include margin-box-top-left-corner();
+    }
+    @bottom-center {
+      @include margin-box-bottom-center(recto);
+    }
+    @bottom-left {
+      @include margin-box-bottom-left(recto);
+    }
+    @bottom-right {
+      @include margin-box-bottom-right(recto);
+    }
+    @bottom-left-corner {
+      @include margin-box-bottom-left-corner();
+    }
+    @bottom-right-corner {
+      @include margin-box-bottom-right-corner();
+    }
+    @left-middle {
+      @include margin-box-left-middle();
+    }
+    @left-top {
+      @include margin-box-left-top();
+    }
+    @left-bottom {
+      @include margin-box-left-bottom();
+    }
+    @right-middle {
+      @include margin-box-right-middle();
+    }
+    @right-top {
+      @include margin-box-right-top();
+    }
+    @right-bottom {
+      @include margin-box-right-bottom();
+    }
+  }
+
+  // Verso
+  @page frontmatter:left {
+    @top-center {
+      @include margin-box-top-center(verso, true);
+    }
+    @top-right {
+      @include margin-box-top-right(verso);
+    }
+    @top-left {
+      @include margin-box-top-left(verso);
+    }
+    @top-right-corner {
+      @include margin-box-top-right-corner();
+    }
+    @top-left-corner {
+      @include margin-box-top-left-corner();
+    }
+    @bottom-center {
+      @include margin-box-bottom-center(verso, true);
+    }
+    @bottom-left {
+      @include margin-box-bottom-left(verso);
+    }
+    @bottom-right {
+      @include margin-box-bottom-right(verso);
+    }
+    @bottom-left-corner {
+      @include margin-box-bottom-left-corner();
+    }
+    @bottom-right-corner {
+      @include margin-box-bottom-right-corner();
+    }
+    @left-middle {
+      @include margin-box-left-middle();
+    }
+    @left-top {
+      @include margin-box-left-top();
+    }
+    @left-bottom {
+      @include margin-box-left-bottom();
+    }
+    @right-middle {
+      @include margin-box-right-middle();
+    }
+    @right-top {
+      @include margin-box-right-top();
+    }
+    @right-bottom {
+      @include margin-box-right-bottom();
+    }
+  }
+
+  // Recto
+  @page frontmatter:right {
+    @top-center {
+      @include margin-box-top-center(recto, true);
+    }
+    @top-right {
+      @include margin-box-top-right(recto);
+    }
+    @top-left {
+      @include margin-box-top-left(recto);
+    }
+    @top-right-corner {
+      @include margin-box-top-right-corner();
+    }
+    @top-left-corner {
+      @include margin-box-top-left-corner();
+    }
+    @bottom-center {
+      @include margin-box-bottom-center(recto, true);
+    }
+    @bottom-left {
+      @include margin-box-bottom-left(recto);
+    }
+    @bottom-right {
+      @include margin-box-bottom-right(recto);
+    }
+    @bottom-left-corner {
+      @include margin-box-bottom-left-corner();
+    }
+    @bottom-right-corner {
+      @include margin-box-bottom-right-corner();
+    }
+    @left-middle {
+      @include margin-box-left-middle();
+    }
+    @left-top {
+      @include margin-box-left-top();
+    }
+    @left-bottom {
+      @include margin-box-left-bottom();
+    }
+    @right-middle {
+      @include margin-box-right-middle();
+    }
+    @right-top {
+      @include margin-box-right-top();
+    }
+    @right-bottom {
+      @include margin-box-right-bottom();
+    }
+  }
+}

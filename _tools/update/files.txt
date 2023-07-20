@@ -790,8 +790,8 @@ _sass/template/partials/_pdf-mixins--sidenotes.scss
 _sass/template/partials/_pdf-notes.scss
 _sass/template/partials/_pdf-openers.scss
 _sass/template/partials/_pdf-page-break-tools.scss
-_sass/template/partials/_pdf-page-headers-footers-content.scss
-_sass/template/partials/_pdf-page-headers-footers-style.scss
+_sass/template/partials/_pdf-margin-box-content.scss
+_sass/template/partials/_pdf-margin-box-style.scss
 _sass/template/partials/_pdf-page-setup-lightning-source.scss
 _sass/template/partials/_pdf-page-setup.scss
 _sass/template/partials/_pdf-page-start-depth.scss
@@ -809,6 +809,7 @@ _sass/template/partials/_pdf-start-on-recto-or-verso.scss
 _sass/template/partials/_pdf-tables.scss
 _sass/template/partials/_pdf-title-pages.scss
 _sass/template/partials/_pdf-toc.scss
+_sass/template/partials/_pdf-variables.scss
 _sass/template/partials/_pdf-verse.scss
 _sass/template/partials/_pdf-video.scss
 _sass/template/partials/_web-accordion.scss

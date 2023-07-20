@@ -16,7 +16,7 @@ $pdf-slides: true !default;
             display: inline-block;
             width: 100%;
             padding: 0;
-            margin: 0;
+            margin: 0 0 $line-height-default 0;
             border: 0;
             vertical-align: top;
             counter-increment: slide; // for numbering slides
@@ -197,19 +197,22 @@ $pdf-slides: true !default;
 
         .slides {
             column-count: 3;
-            column-gap: $grid-unit-width;
-            margin-outside: -($sidebar-text-width + $sidebar-margin-inside); // -60mm;
+            column-gap: $sidebar-gap-width;
+            margin-outside: -($sidebar-content-width + $sidebar-gap-width);
             margin-inside: 0;
+            width: $content-width;
+            background-color: pink; // debugging
 
             .figure {
-                width: $sidebar-text-width;
+                display: inline-block;
+                box-sizing: border-box;
 
                 // When there are only two slides (a summary and two figures)
                 // we shift those inside to avoid the empty third column.
                 // This CSS selects the second and third of three siblings.
                 &:nth-child(2):nth-last-child(2),
                 &:nth-child(3):nth-last-child(1) {
-                    margin-outside: $sidebar-text-width + $sidebar-margin-inside;
+                    // margin-outside: $sidebar-content-width + $sidebar-gap-width;
                 }
 
                 // When there are four slides, there is a chance they fall into
@@ -228,22 +231,17 @@ $pdf-slides: true !default;
                 }
 
                 .figure-body {
-                    width: $sidebar-text-width;
+                    width: 100%;
                     float: none;
                 }
 
                 &.summary {
-                    margin-outside: $sidebar-text-width + $sidebar-margin-inside;
+                    display: block;
                     width: $main-text-width;
 
                     .figure-body {
-                        width: $main-text-width;
+                        width: 100%;
                     }
-                }
-                
-                .figure-source {
-                    width: $sidebar-text-width;
-                    margin-outside: -($sidebar-text-width + $sidebar-margin-inside);
                 }
             }
         }
