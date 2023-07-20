@@ -554,7 +554,6 @@ products:
 
     # E.g. ISBN or UUID
     identifier: ""
-    image: "cover.jpg"
 
     # Files to include in this format.
     # Note that a screen PDF usually starts
