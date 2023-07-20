@@ -173,7 +173,7 @@ For books with many large images, link to [remote media]({{ site.baseurl }}/docs
 
 ### Continuous deployment
 
-Wee provide setup guidance for setting up [free continuous deployment with CodeShip Basic](https://gist.github.com/arthurattwell/75cf124f22b9b4dbc6d8504d952f9406).
+We provide setup guidance for setting up [free continuous deployment with CodeShip Basic](https://gist.github.com/arthurattwell/75cf124f22b9b4dbc6d8504d952f9406).
 
 ### Packaging projects
 
