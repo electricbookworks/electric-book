@@ -201,7 +201,6 @@ $pdf-slides: true !default;
             margin-outside: -($sidebar-content-width + $sidebar-gap-width);
             margin-inside: 0;
             width: $content-width;
-            background-color: pink; // debugging
 
             .figure {
                 display: inline-block;
