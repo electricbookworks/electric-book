@@ -12,8 +12,7 @@ $pdf-slides: true !default;
         orphans: 1; // ensures a column balance when containing only three slides
 
         .figure {
-            float: none; // don't float like normal figures, all of .slides floats instead
-            display: inline-block;
+            float: none;
             width: 100%;
             padding: 0;
             margin: 0 0 $line-height-default 0;
@@ -39,6 +38,7 @@ $pdf-slides: true !default;
             }
 
             .title {
+                break-before: auto;
                 color: $color-accent;
                 display: block;
                 font-weight: bold;
@@ -70,13 +70,13 @@ $pdf-slides: true !default;
             // Show full summary figure in pdf output
             &.summary {
                 column-span: all;
-                display: block;
+                width: $main-text-width;
                 margin-bottom: $line-height-default;
                 counter-reset: slide -1; // we do not number the summary figure, only subsequent figures in .slides
 
-                .figure-body {
-                    float: inside;
-                }
+                // .figure-body {
+                //     float: inside;
+                // }
 
                 .figure-images {
                     display: block;
@@ -104,7 +104,6 @@ $pdf-slides: true !default;
 
                 .figure-source {
                     width: 100%;
-                    float: outside;
                     display: inline-block;
 
                     .source {
@@ -118,8 +117,22 @@ $pdf-slides: true !default;
                     clear: both;
                 }
             }
+
+            // We can control some slide layouts by
+            // adding a `column-break-after` class
+            // to one of the figures in .slides.
+            &.column-break-after {
+                display: block;
+                column-break-after: always;
+            }
+
+            // same thing, but after
+            &.column-break-before {
+                display: block;
+                column-break-before: always;
+            }
         }
-        
+
         // Other floats
         &.float-bottom {
             float: bottom;
@@ -196,50 +209,33 @@ $pdf-slides: true !default;
     @if $pdf-sidebar {
 
         .slides {
-            column-count: 3;
-            column-gap: $sidebar-gap-width;
-            margin-outside: -($sidebar-content-width + $sidebar-gap-width);
-            margin-inside: 0;
-            width: $content-width;
 
-            .figure {
-                display: inline-block;
-                box-sizing: border-box;
+            &.wide {
+                column-count: 3;
+                column-gap: $sidebar-gap-width;
+                margin-outside: -($sidebar-gap-width + $sidebar-content-width);
+                width: $content-width;
 
-                // When there are only two slides (a summary and two figures)
-                // we shift those inside to avoid the empty third column.
-                // This CSS selects the second and third of three siblings.
-                &:nth-child(2):nth-last-child(2),
-                &:nth-child(3):nth-last-child(1) {
-                    // margin-outside: $sidebar-content-width + $sidebar-gap-width;
-                }
+                .figure {
 
-                // When there are four slides, there is a chance they fall into
-                // the first two columns, leaving the third blank. We can only
-                // control for this manually, adding a `column-break-after` class
-                // to one of the figures in .slides.
-                &.column-break-after {
-                    display: block;
-                    column-break-after: always;
-                }
+                    // When there are only two slides (a summary and two figures)
+                    // we shift those inside to avoid the empty third column.
+                    // This CSS selects the second and third of three siblings.
+                    // When this doesn't work, you need to use .column-break-after
+                    // or .column-break-before (see above).
+                    &:nth-child(2):nth-last-child(2),
+                    &:nth-child(3):nth-last-child(1) {
+                        margin-outside: $sidebar-content-width + $sidebar-gap-width;
+                    }
 
-                // same thing, but after
-                &.column-break-before {
-                    display: block;
-                    column-break-before: always;
-                }
+                    &.summary {
+                        margin-outside: $content-width - $main-text-width;
+                        width: $main-text-width;
 
-                .figure-body {
-                    width: 100%;
-                    float: none;
-                }
-
-                &.summary {
-                    display: block;
-                    width: $main-text-width;
-
-                    .figure-body {
-                        width: 100%;
+                        &.wide {
+                            margin-right: 0;
+                            width: 100%;
+                        }
                     }
                 }
             }
