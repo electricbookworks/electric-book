@@ -427,7 +427,7 @@ $pdf-page-setup-lightning-source: false !default; // Removes crop marks and sets
 @import "template/partials/pdf-code"; // For computer code and preformatted text
 @import "template/partials/pdf-tables";
 @import "template/partials/pdf-figures";
-@import "template/partials/pdf-notes"; // Footnotes, endnotes, sidenotes // CRASHES PRINCE
+@import "template/partials/pdf-notes"; // Footnotes, endnotes, sidenotes
 @import "template/partials/pdf-previous-publications-page"; // Also by the author page in frontmatter
 @import "template/partials/pdf-title-pages"; // Half-title and title pages
 @import "template/partials/pdf-copyright-page";
