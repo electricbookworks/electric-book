@@ -68,6 +68,10 @@ relation: ""
 # E.g. geographic place or chronological time span
 coverage: ""
 
+# Keywords that describe this project, comma-separated.
+# Used, for example, in PDF metadata.
+keywords: ""
+
 # Details about each product of this work
 products:
 

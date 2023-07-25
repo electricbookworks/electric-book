@@ -89,11 +89,14 @@ $convert-images-to-color-profile: false !default;
         // Let long urls break over lines
         // (See https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/)
         overflow-wrap: break-word;
-         word-wrap: break-word;
-         word-break: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
     }
     em, strong {
-        line-height: 100%; // Prevents some fonts from expanding/contracting a line's line height when em, strong present
+
+        // Prevent some fonts from expanding/contracting
+        // a line's line height when em, strong present
+        line-height: 100%;
     }
 
     // Lists
@@ -254,5 +257,4 @@ $convert-images-to-color-profile: false !default;
             // margin-bottom: $line-height-default;
         }
     }
-
 }

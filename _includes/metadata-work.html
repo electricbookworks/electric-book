@@ -126,6 +126,12 @@ we fall back to the value in the work's default.yml.
     {% capture coverage %}{{ work.default.coverage }}{% endcapture %}
 {% endif %}
 
+{% if work[work-variant].keywords and work[work-variant].keywords != "" %}
+    {% capture keywords %}{{ work[work-variant].keywords }}{% endcapture %}
+{% elsif work.default.keywords and work.default.keywords != "" %}
+    {% capture keywords %}{{ work.default.keywords }}{% endcapture %}
+{% endif %}
+
 {% if work[work-variant].rightsholder and work[work-variant].rightsholder != "" %}
     {% capture rightsholder %}{{ work[work-variant].rightsholder }}{% endcapture %}
 {% elsif work.default.rightsholder and work.default.rightsholder != "" %}
@@ -356,6 +362,7 @@ we fall back to the value in the work's default.yml.
 {% elsif work.default.products.screen-pdf.date and work.default.products.screen-pdf.date != "" %}
     {% capture screen-pdf-date %}{{ work.default.products.screen-pdf.date }}{% endcapture %}
 {% else %}
+    {% comment %} Fall back to project date. {% endcomment %}
     {% capture screen-pdf-date %}{{ date }}{% endcapture %}
 {% endif %}
 
@@ -363,6 +370,9 @@ we fall back to the value in the work's default.yml.
     {% capture screen-pdf-format %}{{ work[work-variant].products.screen-pdf.format }}{% endcapture %}
 {% elsif work.default.products.screen-pdf.format and work.default.products.screen-pdf.format != "" %}
     {% capture screen-pdf-format %}{{ work.default.products.screen-pdf.format }}{% endcapture %}
+
+    {% comment %} Cannot inherit print-PDF format value because
+    they are fundamentally different formats. {% endcomment %}
 {% endif %}
 
 {% if work[work-variant].products.screen-pdf.identifier and work[work-variant].products.screen-pdf.identifier != "" %}
@@ -370,6 +380,8 @@ we fall back to the value in the work's default.yml.
 {% elsif work.default.products.screen-pdf.identifier and work.default.products.screen-pdf.identifier != "" %}
     {% capture screen-pdf-identifier %}{{ work.default.products.screen-pdf.identifier }}{% endcapture %}
 {% else %}
+
+    {% comment %} Fall back to project identifier. {% endcomment %}
     {% capture screen-pdf-identifier %}{{ identifier }}{% endcapture %}
 {% endif %}
 
@@ -378,6 +390,8 @@ we fall back to the value in the work's default.yml.
 {% elsif work.default.products.screen-pdf.image and work.default.products.screen-pdf.image != "" %}
     {% capture screen-pdf-image %}{{ work.default.products.screen-pdf.image }}{% endcapture %}
 {% else %}
+
+    {% comment %} Fall back to project image. {% endcomment %}
     {% capture screen-pdf-image %}{{ image }}{% endcapture %}
 {% endif %}
 

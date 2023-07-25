@@ -3,4 +3,4 @@ title: "Images"
 style: part-page
 ---
 
-# Images
+# Part 2: Images

@@ -68,6 +68,10 @@ relation: ""
 # E.g. geographic place or chronological time span
 coverage: ""
 
+# Keywords that describe this project, comma-separated.
+# Used, for example, in PDF metadata.
+keywords: "Publishing, layout, books, ebooks, web books"
+
 # Details about each product of this work
 products:
 
@@ -154,7 +158,7 @@ products:
       - label: "Other frontmatter"
         file: "00-09-frontmatter"
         class: "frontmatter-entry"
-      - label: "Text"
+      - label: "Part 1: Text"
         children:
           - label: "Plain text"
             file: "01-01-plain-text-1"
@@ -219,7 +223,7 @@ products:
           - label: "Questions and quizzes"
             file: "01-10-questions"
             id: "questions-and-quizzes"
-      - label: "Images"
+      - label: "Part 2: Images"
         children:
           - label: "Plain images"
             file: "02-01-plain-images"
@@ -227,7 +231,7 @@ products:
           - label: "Figures"
             file: "02-02-figures"
             id: "figures"
-      - label: "Code and mathematics"
+      - label: "Part 3: Code and mathematics"
         children:
           - label: "Code"
             file: "03-01-code"
@@ -235,7 +239,7 @@ products:
           - label: "Mathematics"
             file: "03-02-maths"
             id: "mathematics"
-      - label: "Interactivity"
+      - label: "Part 4: Interactivity"
         children:
           - label: "Links and buttons"
             file: "04-01-links-buttons"
@@ -252,7 +256,7 @@ products:
           - label: "Slides"
             file: "04-05-slides"
             id: "slides"
-      - label: "Indexes"
+      - label: "Part 5: Indexes"
         children:
           - label: "Traditional index"
             file: "10-01-traditional-index"
@@ -349,7 +353,7 @@ products:
           - label: "Other frontmatter"
             file: "00-09-frontmatter"
             class: "frontmatter-entry"
-      - label: "Text"
+      - label: "Part 1: Text"
         children:
           - label: "Plain text"
             file: "01-01-plain-text-1"
@@ -414,7 +418,7 @@ products:
           - label: "Questions and quizzes"
             file: "01-10-questions"
             id: "questions-and-quizzes"
-      - label: "Images"
+      - label: "Part 2: Images"
         children:
           - label: "Plain images"
             file: "02-01-plain-images"
@@ -422,7 +426,7 @@ products:
           - label: "Figures"
             file: "02-02-figures"
             id: "figures"
-      - label: "Code and mathematics"
+      - label: "Part 3: Code and mathematics"
         children:
           - label: "Code"
             file: "03-01-code"
@@ -430,7 +434,7 @@ products:
           - label: "Mathematics"
             file: "03-02-maths"
             id: "mathematics"
-      - label: "Interactivity"
+      - label: "Part 4: Interactivity"
         children:
           - label: "Links and buttons"
             file: "04-01-links-buttons"
@@ -447,7 +451,7 @@ products:
           - label: "Slides"
             file: "04-05-slides"
             id: "slides"
-      - label: "Indexes"
+      - label: "Part 5: Indexes"
         children:
           - label: "Traditional index"
             file: "10-01-traditional-index"
@@ -550,7 +554,6 @@ products:
 
     # E.g. ISBN or UUID
     identifier: ""
-    image: "cover.jpg"
 
     # Files to include in this format.
     # Note that a screen PDF usually starts
