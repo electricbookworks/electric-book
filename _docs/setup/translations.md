@@ -69,14 +69,14 @@ Your new translation stylesheet might have this content:
 
 $hyphenation: auto;
 $hyphenation-dictionary: "hyphenation.dic";
-@import 'partials/print-hyphenation'
+@import 'partials/pdf-hyphenation'
 ```
 
 This snippet:
 
 1. Uses three-hyphen YAML frontmatter so that Jekyll processes the Sass file.
 2. Sets new values for Sass variables `$hyphenation` and `$hyphenation-dictionary` that may be different from your parent-language styles. The `$hyphenation-dictionary` value points to a `hyphenation.dic` file saved alongside the translation stylesheet.
-3. Imports the relevant Sass partial `_print-hyphenation.scss` to override the parent-language version of the same partial.
+3. Imports the relevant Sass partial `_pdf-hyphenation.scss` to override the parent-language version of the same partial.
 
 ### Images
 

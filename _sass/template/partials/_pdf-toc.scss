@@ -1,0 +1,65 @@
+$pdf-toc: true !default;
+@if $pdf-toc {
+
+	// Table of Contents pages
+	// Also adds page numbers to any block of links classed as .page-ref-list
+
+	// Regarding classes for frontmatter entries in TOCs:
+	// a.frontmatter-reference is legacy, we now prefer
+	// li.frontmatter-entry a
+
+	.contents-page,
+	.page-ref-list {
+		ul, ol {
+			list-style-type: none;
+			text-align: left; // overrides possible justify applied in Sass configs
+			ul, ol {
+				margin-left: $paragraph-indent;
+			}
+		}
+		li {
+			margin: 0;
+			a {
+				.toc-entry-text {
+					display: inline-block;
+					max-width: 90%;
+				}
+			}
+			a::after { 
+				content: leader(" ") target-counter(attr(href), page);
+			}
+			a.frontmatter-reference::after {
+				content: leader(" ") target-counter(attr(href), page, $frontmatter-reference-style);
+			}
+			&.frontmatter-entry, &.frontmatter-reference {
+				a::after {
+					content: leader(" ") target-counter(attr(href), page, $frontmatter-reference-style);
+				}
+			}
+			&.cover-entry {
+				display: none; // Hide the cover in the table of contents, e.g. if it's there from web nav
+			}
+		}
+	}
+
+	// TOCs in individual pages
+	// As created in kramdown with a placeholder ol/ul followed by {:toc}
+
+	#markdown-toc {
+		font-family: $font-text-secondary;
+		list-style-type: none;
+		margin: $line-height-default 0;
+			li {
+				margin: 0;
+				ol, ul {
+					list-style-type: none;
+					margin-bottom: 0;
+					margin-left: $paragraph-indent;
+				}
+			}
+		a::after {
+			content: leader(" ") target-counter(attr(href), page);
+		}
+	}
+
+}

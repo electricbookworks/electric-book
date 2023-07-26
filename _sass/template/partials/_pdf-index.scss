@@ -1,0 +1,61 @@
+$pdf-index: true !default;
+@if $pdf-index {
+
+	// Index
+
+	// .reference-index-manual is for indexes that
+	// are manually created, and should not be processed
+	// by our dynamic-indexing scripts to save build time.
+
+	.reference-index,
+	.reference-index-manual {
+		columns: 2;
+		font-size: $font-size-default * $font-size-smaller;
+		margin: $line-height-default 0 0 0;
+		li {
+			list-style-type: none;
+			margin: 0 0 0 ($paragraph-indent * 1);
+			text-indent: $paragraph-indent * (-1);
+			text-align: left;
+			li {
+				margin: 0 0 0 ($paragraph-indent / 2);
+			}
+		}
+		a {
+			// content: target-counter(attr(href), page);
+
+			// We use a prince-script function to insert the page-reference string.
+			// The function takes four arguments:
+			//   - its name (indexPageReference)
+			//   - the target page number (target-counter(attr(href), page))
+			//   - the position of the reference in a list of page references
+			// 	   ('default', 'first', 'to')
+			//   - a string to prepend (e.g. ', ' or an en dash: '\2013')
+			content: prince-script(indexPageReference, target-counter(attr(href), page), 'default', ', ');
+
+			&:first-of-type {
+				content: prince-script(indexPageReference, target-counter(attr(href), page), 'first', '');
+			}
+
+			// Space between entry and first reference number
+			&:first-of-type {
+				margin-left: .5em;
+			}
+
+			// If this starts a range, use an en dash not a comma
+			&.index-range-to {
+				content: prince-script(indexPageReference, target-counter(attr(href), page), 'to', '\2013');
+			}
+		}
+		// To hide but not delete duplicate entries.
+		.duplicate {
+			display: none;
+		}
+	}
+	// For links in main body text that jump to index.
+	a.indexed {
+		color: inherit;
+		text-decoration: none;
+	}
+
+}

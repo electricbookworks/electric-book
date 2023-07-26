@@ -602,6 +602,38 @@ function projectSettings () {
   return settings
 }
 
+// Get variant settings
+function variantSettings (argv) {
+  // Create an object for default settings
+  const settings = {
+    active: false,
+    stylesheet: argv.format + '.css'
+  }
+
+  // Check the project settings for an active variant.
+  if (projectSettings() &&
+      projectSettings()['active-variant'] &&
+      projectSettings()['active-variant'] !== '') {
+    settings.active = projectSettings()['active-variant']
+  }
+
+  // Check for the variant-specific stylesheet we should use.
+  if (settings.active && projectSettings().variants) {
+    // Loop through the variants in project settings
+    // to find the active variant. Then return
+    // the format-specific stylesheet name there.
+    projectSettings().variants.forEach(function (variantEntry) {
+      if (variantEntry.variant === projectSettings()['active-variant'] &&
+          variantEntry[argv.format + '-stylesheet'] &&
+          variantEntry[argv.format + '-stylesheet'] !== '') {
+        settings.stylesheet = variantEntry[argv.format + '-stylesheet']
+      }
+    })
+  }
+
+  return settings
+}
+
 // Get the filelist for a format
 function fileList (argv) {
   'use strict'
@@ -614,11 +646,7 @@ function fileList (argv) {
   }
 
   // Check for variant-edition output
-  let variant = false
-  if (projectSettings()['active-variant'] &&
-            projectSettings()['active-variant'] !== '') {
-    variant = projectSettings()['active-variant']
-  }
+  const variant = variantSettings(argv).active
 
   let book = 'book' // default
   if (argv.book) {
@@ -846,77 +874,104 @@ async function cleanHTMLFiles (argv) {
 function checkPrinceVersion () {
   'use strict'
 
-  // Get globally installed Prince version, if any
-  const installedPrince = function () {
-    return new Promise(function (resolve, reject) {
-      // Check local node_modules for Prince binary ...
-      if (prince().config.binary.includes('node_modules')) {
-        childProcess.execFile(prince().config.binary, ['--version'], function (error, stdout, stderr) {
-          if (error !== null) {
-            console.log('Could not get Prince version:\n')
-            reject(error)
-            return
-          }
-          const m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)/)
-          if (!(m !== null && typeof m[1] !== 'undefined')) {
-            error = 'Prince version check returned unexpected output:\n' + stdout + stderr
-            reject(error)
-            return
-          }
-          resolve(m[1])
-        })
-      } else {
-        // ... or else check the global PATH
-        which('prince', function (error, filename) {
-          if (error) {
-            console.log('Prince not found in PATH:\n')
-            reject(error)
-            return
-          }
-          childProcess.execFile(filename, ['--version'], function (error, stdout, stderr) {
+  return new Promise(function (resolve, reject) {
+    // Get globally installed Prince version, if any
+    const installedPrince = function () {
+      return new Promise(function (resolve, reject) {
+        // Check local node_modules for Prince binary ...
+        if (prince().config.binary.includes('node_modules')) {
+          childProcess.execFile(prince().config.binary, ['--version'], function (error, stdout, stderr) {
             if (error !== null) {
               console.log('Could not get Prince version:\n')
               reject(error)
               return
             }
-            const m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)/)
+            const m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)(\s*\w*\s*Books)*/)
             if (!(m !== null && typeof m[1] !== 'undefined')) {
               error = 'Prince version check returned unexpected output:\n' + stdout + stderr
               reject(error)
               return
             }
-            resolve(m[1])
+            let version
+            if (m[2] && m[2].includes('Books')) {
+              version = 'books-' + m[1]
+            } else {
+              version = m[1]
+            }
+            resolve(version)
           })
-        })
-      }
-    })
-  }
-
-  // Check global Prince version vs version defined in package.json
-  installedPrince().then(function (installedVersion) {
-    const packageJSON = require(process.cwd() + '/package.json')
-
-    let preferredPrinceVersion
-
-    if (packageJSON.prince && packageJSON.prince.version) {
-      preferredPrinceVersion = packageJSON.prince.version
-
-      if (installedVersion !== preferredPrinceVersion) {
-        console.log('\nWARNING: your installed Prince version is ' + installedVersion +
-                        ' but your project requires ' + preferredPrinceVersion + '\n' +
-                        'You should delete node_modules/prince and run: npm install\n')
-      } else {
-        console.log('Prince version matches preferred version in package.json.')
-      }
+        } else {
+          // ... or else check the global PATH
+          const binaries = ['prince', 'prince-books']
+          binaries.forEach(function (binary) {
+            which(binary, function (error, filename) {
+              if (error) {
+                console.log('Prince not found in PATH:\n')
+                reject(error)
+                return
+              }
+              childProcess.execFile(filename, ['--version'], function (error, stdout, stderr) {
+                if (error !== null) {
+                  console.log('Could not get Prince version:\n')
+                  reject(error)
+                  return
+                }
+                const m = stdout.match(/^Prince\s+(\d+(?:\.\d+)?)/)
+                if (!(m !== null && typeof m[1] !== 'undefined')) {
+                  error = 'Prince version check returned unexpected output:\n' + stdout + stderr
+                  reject(error)
+                  return
+                }
+                resolve(m[1])
+              })
+            })
+          })
+        }
+      })
     }
-  }, function (error) {
-    console.log(error)
+
+    // Check global Prince version vs version defined in package.json,
+    // and return the relevant version string.
+    installedPrince().then(function (installedVersion) {
+      const packageJSON = require(process.cwd() + '/package.json')
+
+      let preferredPrinceVersion
+
+      if (packageJSON.prince && packageJSON.prince.version) {
+        preferredPrinceVersion = packageJSON.prince.version
+
+        if (installedVersion !== preferredPrinceVersion) {
+          console.log('\nWARNING: your installed Prince version is ' + installedVersion +
+                          ' but your project requires ' + preferredPrinceVersion + '\n' +
+                          'You should delete node_modules/prince and run: npm install\n')
+        } else {
+          console.log('Prince version matches preferred version in package.json.')
+        }
+      }
+
+      // Return the preferred Prince version if there is one,
+      // otherwise return the installed version
+      let result
+      if (preferredPrinceVersion) {
+        result = preferredPrinceVersion
+      } else if (installedVersion) {
+        result = installedVersion
+      } else {
+        result = undefined
+      }
+      resolve(result)
+    }, function (error) {
+      reject(error)
+    })
   })
 }
 
 // Run Prince
 async function runPrince (argv) {
   'use strict'
+
+  // Check if we're using the correct Prince version
+  await checkPrinceVersion()
 
   return new Promise(function (resolve, reject) {
     console.log('Rendering HTML to PDF with PrinceXML...')
@@ -936,9 +991,6 @@ async function runPrince (argv) {
       console.log('Using PrinceXML licence found at ' + princeLicenseFile)
     }
 
-    // Check if we're using the correct Prince version
-    checkPrinceVersion()
-
     // Get the HTML file to render. If we are merging
     // input files, we only pass the merged file to Prince.
     // Unless `--merged false` was passed at the command line.
@@ -947,6 +999,27 @@ async function runPrince (argv) {
       inputFiles = htmlFilePaths(argv)
     }
 
+    // Get the book's stylesheet, so we can pass it
+    // to Prince as a user stylesheet.
+    // By passing a user style sheet, we give SVGs
+    // that are referenced as `img src=""`
+    // access to the stylesheet, including its font-faces.
+
+    // Default CSS filename
+    let styleSheetFilename = argv.format + '.css'
+
+    // Check the project settings for an active variant,
+    // and any variant-specific stylesheets we should use.
+    if (variantSettings(argv).active && variantSettings(argv).stylesheet) {
+      styleSheetFilename = variantSettings(argv).stylesheet
+    }
+
+    // Apply the stylesheet with that name
+    // that we find in the styles folder beside
+    // the first HTML document we're rendering.
+    const stylesheet = fsPath.dirname(htmlFilePaths(argv)[0]) +
+      '/styles/' + styleSheetFilename
+
     // Currently, node-prince does not seem to
     // log its progress to stdout. Possible WIP:
     // https://github.com/rse/node-prince/pull/7
@@ -954,13 +1027,31 @@ async function runPrince (argv) {
       .license('./' + princeLicenseFile)
       .inputs(inputFiles)
       .output(process.cwd() + '/_output/' + outputFilename(argv))
+      .option('style', stylesheet)
       .option('javascript')
-      .option('verbose')
+      .option('tagged-pdf')
+      // These options add too much logging
+      // to be useful, but are available if needed.
+      // .option('verbose')
+      // .option('debug')
+
+      // We use set forced to true for these
+      // (the third parameter passed for an option)
+      // because they are new and not necessarily
+      // supported by the installed version
+      // of node-prince.
+      .option('fail-dropped-content', true, true)
+      .option('fail-missing-glyphs', true, true)
+      // The following option is very strict,
+      // and can cause an unnecessary number of failures
+      // especially when working on maths books.
+      // .option('no-system-fonts', true, true)
+
       .timeout(100 * 1000) // required for larger books
       .on('stderr', function (line) { console.log(line) })
       .on('stdout', function (line) { console.log(line) })
       .execute()
-      .then(function (executionResult) {
+      .then(function () {
         resolve()
       }, function (error) {
         console.log(error)
@@ -1239,20 +1330,39 @@ function bookAssetPaths (argv, assetType, folder) {
 
   console.log('Using files in ' + pathToAssets)
 
-  // Create an array of files
-  const files = fs.readdirSync(pathToAssets)
+  // For styles, we only return a single path
+  // to the stylesheet in the paths array.
+  // Otherwise, we create one or more paths.
+  let paths
+  if (assetType === 'styles') {
+    // Set the default stylesheet filename
+    let styleSheetFilename = argv.format + '.css'
 
-  // Extract filenames from file objects,
-  // and prepend path to each filename.
-  const paths = files.map(function (filename) {
-    if (typeof filename === 'object') {
-      return fsPath.normalize(pathToAssets + '/' +
-                    Object.keys(filename)[0])
-    } else {
-      return fsPath.normalize(pathToAssets + '/' +
-                    filename)
+    // Get any active variant stylesheet
+    if (variantSettings(argv).active) {
+      styleSheetFilename = variantSettings(argv).stylesheet
     }
-  })
+
+    // Add the stylesheet's path to the paths array
+    const stylesheetPath = fsPath.normalize(pathToAssets +
+      styleSheetFilename)
+    paths = [stylesheetPath]
+  } else {
+    // Create an array of files
+    const files = fs.readdirSync(pathToAssets)
+
+    // Extract filenames from file objects,
+    // and prepend path to each filename.
+    paths = files.map(function (filename) {
+      if (typeof filename === 'object') {
+        return fsPath.normalize(pathToAssets + '/' +
+                      Object.keys(filename)[0])
+      } else {
+        return fsPath.normalize(pathToAssets + '/' +
+                      filename)
+      }
+    })
+  }
 
   return paths
 }
@@ -1530,5 +1640,6 @@ module.exports = {
   renderIndexLinks,
   renderMathjax,
   runPrince,
+  variantSettings,
   works
 }

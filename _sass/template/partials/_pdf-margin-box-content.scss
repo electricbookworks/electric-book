@@ -1,0 +1,379 @@
+$pdf-margin-box-content: true !default;
+@if $pdf-margin-box-content {
+
+  // This partial sets page header and footer content.
+  // It sets separate content for .frontmatter and .chapter pages.
+
+  // Assign a string to the .wrapper data-title attribute.
+  // In markdown, this is set with header: in a file's YAML frontmatter,
+  // and falls back to the page title.
+
+  .wrapper {
+    string-set:
+      page-header attr(data-header),
+      page-header-left attr(data-header-left),
+      page-header-right attr(data-header-right),
+      page-info attr(data-page-info),
+      book-creator attr(data-creator),
+      book-title attr(data-title);
+  }
+
+  // Assign strings to use in headers and footers for each level of heading (h1-h6),
+  // to be called by the header and footer variables ($verso-top-right etc.).
+  // For each heading, we use the title attribute, with the heading text as fallback.
+  // h1 also sets the string for h2, in case there is no h2 on the page yet.
+  //
+  // Note string-set lets us define multiple values, which can be used as fallbacks.
+  // Like font-family settings, later strings are fallbacks for earlier strings.
+  h1 { 
+    string-set: 
+      h1-text content(),
+      h2-text content(),
+      h1-title attr(title),
+      h2-title attr(title);
+  }
+  h2 {
+    string-set: 
+      h2-text content(), 
+      h2-title attr(title); 
+  }
+  h3 { 
+    string-set: 
+      h3-text content(), 
+      h3-title attr(title); 
+  }
+  h4 { 
+    string-set: 
+      h4-text content(), 
+      h4-title attr(title); 
+  }
+  h5 { 
+    string-set: 
+      h5-text content(), 
+      h5-title attr(title);
+  }
+  h6 { 
+    string-set: 
+      h6-text content(), 
+      h6-title attr(title); 
+  }
+
+  // Now we place our content for `.chapter` pages
+
+  // Verso
+  @page chapter:left {
+    @top-center {
+      content: $verso-top;
+    }
+    @top-right {
+      content: $verso-top-right;
+    }
+    @top-left {
+      content: $verso-top-left;
+    }
+    @top-right-corner {
+      content: $verso-top-right-corner;
+    }
+    @top-left-corner {
+      content: $verso-top-left-corner;
+    }
+    @bottom-center {
+      content: $verso-bottom;
+    }
+    @bottom-left {
+      content: $verso-bottom-left;
+    }
+    @bottom-right {
+      content: $verso-bottom-right;
+    }
+    @bottom-left-corner {
+      content: $verso-bottom-left-corner;
+    }
+    @bottom-right-corner {
+      content: $verso-bottom-right-corner;
+    }
+    @left-middle {
+      content: $verso-left;
+    }
+    @left-top {
+      content: $verso-left-top;
+    }
+    @left-bottom {
+      content: $verso-left-bottom;
+    }
+    @right-middle {
+      content: $verso-right;
+    }
+    @right-top {
+      content: $verso-right-top;
+    }
+    @right-bottom {
+      content: $verso-right-bottom;
+    }
+  }
+
+  // Recto
+  @page chapter:right {
+    @top-center {
+      content: $recto-top;
+    }
+    @top-right {
+      content: $recto-top-right;
+    }
+    @top-left {
+      content: $recto-top-left;
+    }
+    @top-right-corner {
+      content: $recto-top-right-corner;
+    }
+    @top-left-corner {
+      content: $recto-top-left-corner;
+    }
+    @bottom-center {
+      content: $recto-bottom;
+    }
+    @bottom-left {
+      content: $recto-bottom-left;
+    }
+    @bottom-right {
+      content: $recto-bottom-right;
+    }
+    @bottom-left-corner {
+      content: $recto-bottom-left-corner;
+    }
+    @bottom-right-corner {
+      content: $recto-bottom-right-corner;
+    }
+    @left-middle {
+      content: $recto-left;
+    }
+    @left-top {
+      content: $recto-left-top;
+    }
+    @left-bottom {
+      content: $recto-left-bottom;
+    }
+    @right-middle {
+      content: $recto-right;
+    }
+    @right-top {
+      content: $recto-right-top;
+    }
+    @right-bottom {
+      content: $recto-right-bottom;
+    }
+  }
+
+  // No headers on first pages of chapters
+  .chapter {
+    prince-page-group: start;
+
+    @include page-continued();
+  }
+
+  @if $first-page-margin-boxes == blank {
+    @page chapter:first {
+      @top-center { content: normal; }
+      @top-left { content: normal; }
+      @top-right { content: normal; }
+      @top-left-corner { content: normal; }
+      @top-right-corner { content: normal; }
+      @left-middle { content: normal; }
+      @left-top { content: normal; }
+      @left-bottom { content: normal; }
+      @right-middle { content: normal; }
+      @right-top { content: normal; }
+      @right-bottom { content: normal; }
+    }
+  }
+
+  // No headers or footers on blank pages of chapters
+  @if $first-page-margin-boxes == blank {
+    @page chapter:blank {
+      @top-center { content: normal; }
+      @top-left { content: normal; }
+      @top-right { content: normal; }
+      @top-left-corner { content: normal; }
+      @top-right-corner { content: normal; }
+      @bottom-center { content: normal; }
+      @bottom-left { content: normal; }
+      @bottom-right { content: normal; }
+      @bottom-left-corner { content: normal; }
+      @bottom-right-corner { content: normal; }
+      @left-middle { content: normal; }
+      @left-top { content: normal; }
+      @left-bottom { content: normal; }
+      @right-middle { content: normal; }
+      @right-top { content: normal; }
+      @right-bottom { content: normal; }
+    }
+  }
+
+  // Now we place our content for `.frontmatter` pages
+
+  // Verso
+  @page frontmatter:left {
+    @top-center {
+      content: $verso-top-frontmatter;
+    }
+    @top-right {
+      content: $verso-top-right-frontmatter;
+    }
+    @top-left {
+      content: $verso-top-left-frontmatter;
+    }
+    @top-right-corner {
+      content: $verso-top-right-corner-frontmatter;
+    }
+    @top-left-corner {
+      content: $verso-top-left-corner-frontmatter;
+    }
+    @bottom-center {
+      content: $verso-bottom-frontmatter;
+    }
+    @bottom-left {
+      content: $verso-bottom-left-frontmatter;
+    }
+    @bottom-right {
+      content: $verso-bottom-right-frontmatter;
+    }
+    @bottom-left-corner {
+      content: $verso-bottom-left-corner-frontmatter;
+    }
+    @bottom-right-corner {
+      content: $verso-bottom-right-corner-frontmatter;
+    }
+    @left-middle {
+      content: $verso-left-frontmatter;
+    }
+    @left-top {
+      content: $verso-left-top-frontmatter;
+    }
+    @left-bottom {
+      content: $verso-left-bottom-frontmatter;
+    }
+    @right-middle {
+      content: $verso-right-frontmatter;
+    }
+    @right-top {
+      content: $verso-right-top-frontmatter;
+    }
+    @right-bottom {
+      content: $verso-right-bottom-frontmatter;
+    }
+  }
+
+  // Recto
+  @page frontmatter:right {
+    @top-center {
+      content: $recto-top-frontmatter;
+    }
+    @top-right {
+      content: $recto-top-right-frontmatter;
+    }
+    @top-left {
+      content: $recto-top-left-frontmatter;
+    }
+    @top-right-corner {
+      content: $recto-top-right-corner-frontmatter;
+    }
+    @top-left-corner {
+      content: $recto-top-left-corner-frontmatter;
+    }
+    @bottom-center {
+      content: $recto-bottom-frontmatter;
+    }
+    @bottom-left {
+      content: $recto-bottom-left-frontmatter;
+    }
+    @bottom-right {
+      content: $recto-bottom-right-frontmatter;
+    }
+    @bottom-left-corner {
+      content: $recto-bottom-left-corner-frontmatter;
+    }
+    @bottom-right-corner {
+      content: $recto-bottom-right-corner-frontmatter;
+    }
+    @left-middle {
+      content: $recto-left-frontmatter;
+    }
+    @left-top {
+      content: $recto-left-top-frontmatter;
+    }
+    @left-bottom {
+      content: $recto-left-bottom-frontmatter;
+    }
+    @right-middle {
+      content: $recto-right-frontmatter;
+    }
+    @right-top {
+      content: $recto-right-top-frontmatter;
+    }
+    @right-bottom {
+      content: $recto-right-bottom-frontmatter;
+    }
+  }
+
+  // No headers on first pages of frontmatter
+  .frontmatter {
+    prince-page-group: start;
+
+    @include page-continued();
+  }
+  @if $first-page-margin-boxes == blank {
+    @page frontmatter:first {
+      @top-center { content: normal; }
+      @top-left { content: normal; }
+      @top-right { content: normal; }
+      @top-left-corner { content: normal; }
+      @top-right-corner { content: normal; }
+      @left-middle { content: normal; }
+      @left-top { content: normal; }
+      @left-bottom { content: normal; }
+      @right-middle { content: normal; }
+      @right-top { content: normal; }
+      @right-bottom { content: normal; }
+    }
+  }
+
+  // No headers or footers on blank pages of frontmatter
+  @page frontmatter:blank {
+    @top-center { content: normal; }
+    @top-left { content: normal; }
+    @top-right { content: normal; }
+    @top-left-corner { content: normal; }
+    @top-right-corner { content: normal; }
+    @bottom-center { content: normal; }
+    @bottom-left { content: normal; }
+    @bottom-right { content: normal; }
+    @bottom-left-corner { content: normal; }
+    @bottom-right-corner { content: normal; }
+    @left-middle { content: normal; }
+    @left-top { content: normal; }
+    @left-bottom { content: normal; }
+    @right-middle { content: normal; }
+    @right-top { content: normal; }
+    @right-bottom { content: normal; }
+  }
+
+  // Allow page-n to start page numbering at a given page
+  @for $i from 1 through 1200 {
+    .page-#{$i} {
+      counter-reset: page #{$i};
+    }
+  }
+
+  // Add page info to trim area
+  @page {
+    @prince-overlay {
+      color: #bbbbbb;
+      content: string(page-info);
+      font-family: sans-serif;
+      font-size: 7pt;
+      margin-bottom: -($margin-bottom + $page-info-offset);
+      vertical-align: bottom;
+    }
+  }
+
+}

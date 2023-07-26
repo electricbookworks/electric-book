@@ -80,7 +80,12 @@ $web-base-typography: true !default;
 
     ol, ul {
         list-style-position: outside;
-        margin: 0 0 $line-height-default $paragraph-indent;
+
+        // We have to use a large left margin to prevent
+        // markers from disappearing off the browser window.
+        // Lists inherit zero padding from the body element.
+        // See https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Consistent_list_indentation
+        margin: 0 0 $line-height-default ($paragraph-indent * 2);
     }
     ol {
         list-style-type: decimal;

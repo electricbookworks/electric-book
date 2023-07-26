@@ -1,0 +1,19 @@
+$pdf-dedications: true !default;
+@if $pdf-dedications {
+
+    // Dedications
+
+    .dedication-page {
+        margin-top: $start-depth;
+    }
+    p.dedication {
+    	text-indent: 0;
+    	text-align: center;
+    }
+    // Paragraphs after dedications
+    .dedication + p {
+        text-indent: 0;
+        margin-top: $line-height-default;
+    }
+
+}

@@ -1,0 +1,65 @@
+$path-to-root-directory: "../.." !default;
+$pdf-pdf-view: true !default;
+@if $pdf-pdf-view {
+
+    // Set the initial default view when this PDF is opened. See http://www.princexml.com/forum/topic/2650/prince-pdf
+    @prince-pdf {
+        // PDF/X-1a and PDF/A-3b do not support FitPage, open actions
+        // or in-document Javascript.
+        // prince-pdf-open-action: zoom(fitpage); // none | print | command(NamedAction)
+        // prince-pdf-script: "";
+        prince-pdf-page-layout: two-page-right; // single-page snaps to single pages | one-column scrolls single pages| two-column | two-column-left | two-column-right | two-page-left for no cover page | two-page-right to show cover page
+        prince-pdf-page-mode: show-bookmarks; // auto | show-attachments | show-bookmarks | fullscreen
+        prince-pdf-paper-tray: auto; // auto | pick-tray-by-pdf-size
+        prince-pdf-print-scaling: auto; // auto | none
+        prince-pdf-color-options: use-#{$black-ink}-black; // takes two values, use-true-black (/DeviceGray black in the PDF) and use-rich-black (/DeviceRGB black in PDF)
+        prince-pdf-profile: $pdf-profile;
+        prince-pdf-display-doc-title: true; // only supported from Prince 13
+        // Note colour profiles are stored in the non-generated Jekyll root, not in _site
+        prince-pdf-output-intent: url("#{$path-to-root-directory}/../_tools/profiles/#{$color-profile}");
+        @if $output-format == "print-pdf" {
+            prince-filter-resolution: 300dpi;
+        } @else {
+            prince-filter-resolution: 200dpi;
+        }
+    }
+
+    // Make the PDF page labels (numbers in PDF navigation) match the numbers of the book pages
+    // First, set the default for all pages (in case we create new ones in custom CSS)
+    @page {
+        prince-pdf-page-label: counter(page);
+    }
+
+    // Then set specific page labels for pages we support out of the box
+    @page cover {
+        prince-pdf-page-label: counter(page, lower-alpha);
+    }
+    @page halftitle-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page title-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page previous-publications-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page copyright-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page frontispiece-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page dedication-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page contents-page {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page frontmatter {
+        prince-pdf-page-label: counter(page, $frontmatter-reference-style);
+    }
+    @page chapter {
+        prince-pdf-page-label: counter(page);
+    }
+
+}

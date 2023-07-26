@@ -102,6 +102,7 @@ function svgProcess (outputFormat) {
           name: 'preset-default',
           params: {
             overrides: {
+              cleanupEnableBackground: true,
               cleanupIDs: {prefix: prefix + '-', minify: true},
               cleanupListOfValues: true,
               convertShapeToPath: false,

@@ -1,0 +1,54 @@
+// Set defaults
+$pdf-hyphenation: true !default;
+$hyphenation: manual !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic". Overrides PrinceXML built-in hyphenation.
+$hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
+$hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
+$hyphenate-lines: 2 !default; // Preferred maximum number of consecutive lines ending with hyphens
+
+@if $pdf-hyphenation {
+
+    // Hyphenation
+
+    // Basic hyphenation variables
+    p, ul, ol, dl {
+        hyphens: $hyphenation;
+        hyphenate-after: $hyphenate-after; // Minimum letters on new line after hyphen
+        hyphenate-before: $hyphenate-before; // Minimum letters at end of line before hyphen
+        hyphenate-lines: $hyphenate-lines; // Maximum number of consecutive lines ending with hyphens
+    }
+
+    // Is a hyphenation dictionary specified?
+    // If not, don't use one, and let Prince use its default.
+    p, ul, ol, dl {
+        @if $hyphenation-dictionary == "" {}
+        @else {
+            prince-hyphenate-patterns: url("#{$hyphenation-dictionary}");
+        }
+    }
+
+    // In addition, if we have a custom dictionary,
+    // override all Prince built-in dictionaries.
+    :root,
+    :lang(da),
+    :lang(de),
+    :lang(en),
+    :lang(en-US),
+    :lang(es),
+    :lang(fi),
+    :lang(fr),
+    :lang(is),
+    :lang(it),
+    :lang(lt),
+    :lang(pl),
+    :lang(pt),
+    :lang(ru),
+    :lang(sl),
+    :lang(sv) {
+        @if $hyphenation-dictionary == "" {}
+        @else {
+            prince-hyphenate-patterns: url("#{$hyphenation-dictionary}");
+        }
+    }
+
+}

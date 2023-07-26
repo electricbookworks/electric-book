@@ -1,0 +1,70 @@
+$pdf-title-pages: true !default;
+@if $pdf-title-pages {
+
+	// Halftitle-page and title-page
+
+	.titlepage, 
+	.title-page, 
+	.halftitle-page, 
+	.half-title-page {
+		margin: $start-depth auto 0 auto;
+		text-align: center;
+		p {
+			text-indent: 0;
+			hyphens: none;
+			text-align: center;
+		}
+		.half-title-page-title, 
+		.halftitle-page-title, 
+		.halftitlepage-title, 
+		.title-page-title, 
+		.titlepage-title {
+			font-weight: bold;
+			font-family: $font-display-main;
+			font-size: $font-size-default * $font-size-bigger;
+			line-height: $line-height-default * $font-size-bigger;
+			margin: 0;
+			string-set: book-title content();
+		}
+		.title-page-subtitle, 
+		.titlepage-subtitle {
+			font-family: $font-display-main;
+			font-size: $font-size-default * $font-size-bigger;
+			line-height: $line-height-default * $font-size-bigger;
+			margin: $line-height-default 0 0 0;
+			string-set: book-subtitle content();
+		}
+		.title-page-author, 
+		.titlepage-author {
+			font-size: $font-size-default * $font-size-bigger;
+			line-height: $line-height-default * $font-size-bigger;
+			margin: ($line-height-default * 4) 0;
+			string-set: book-author content();
+		}
+		.title-page-publisher, 
+		.titlepage-publisher {
+			position: absolute;
+			bottom: 0;
+			text-align: center;
+			text-indent: 0;
+		//	Now we'll center the block on the page
+			transform: translateX(-50%);
+		    margin-left: 50%;
+		}
+		.title-page-logo, 
+		.titlepage-logo {
+			display: block; // In case the class is applied to the image, not the paragraph
+			width: $title-page-logo-width;
+			position: absolute;
+			text-align: center;
+			bottom: 0;
+		//	Now we'll center the block on the page
+			transform: translateX(-50%);
+		    margin-left: 50%;
+			img {
+				width: 100%;
+			}
+		}
+	}
+
+}

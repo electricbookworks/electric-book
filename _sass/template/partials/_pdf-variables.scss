@@ -1,0 +1,13 @@
+// Calculate main text width, which
+// is used by various partials, especially
+// when a parent element extends into the sidebar.
+$main-text-width: $page-width - $margin-inside - $margin-outside;
+
+// Content width is the main text width plus
+// any sidebar width.
+$content-width: $main-text-width;
+
+@if $pdf-sidebar {
+	$main-text-width: $page-width - $margin-inside - $margin-outside - $sidebar-content-width - $sidebar-gap-width;
+	$content-width: $page-width - $margin-inside - $margin-outside;
+}

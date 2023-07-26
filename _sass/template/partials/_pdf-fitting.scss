@@ -1,0 +1,63 @@
+$pdf-fitting: true !default;
+@if $pdf-fitting {
+
+  // Typographic control for fitting text and elements on fixed pages
+  // These classes include an optional edition suffix, 
+  // for producing different layouts from the same source markdown/HTML.
+
+  @include floats();
+
+  // If a paragraph would normally be flush left after an element, 
+  // but that element is floated away, it should get its indent back,
+  // unless we're not spacing paragraphs.
+  @if $spaced-paras == false {
+    .float-top#{$edition-suffix} + p,
+    .float-bottom#{$edition-suffix} + p,
+    .float-top-next#{$edition-suffix} + p {
+      text-indent: $paragraph-indent;
+    }
+  }
+
+  // These classes control letter-spacing (tracking), usually to save widows and orphans.
+  @for $i from 1 through 100 {
+    $add-space: $i * 0.001em;
+    .tighten-#{$i}#{$edition-suffix} {
+      letter-spacing: $letter-spacing-text - $add-space;
+      font-style: inherit;
+      background-color: $highlight-tightened;
+    }
+    .loosen-#{$i}#{$edition-suffix} {
+      letter-spacing: $letter-spacing-text + $add-space;
+      font-style: inherit;
+      background-color: $highlight-loosened;
+    }
+  }
+
+  // These classes set the height of any element relative to the $line-height-default.
+  // Especially useful for controlling the height of images to retain a baseline grid.
+  // $line-height-default should be set in a non-relative unit, like points,
+  // otherwise you'll get exponential differences in height.
+  @for $i from 1 through 100 {
+    $height: $i * $line-height-default;
+    .height-#{$i}#{$edition-suffix} {
+      height: $height;
+    }
+  }
+  // Sets the height of images inside any element
+  // e.g. the images in a figure
+  @for $i from 1 through 100 {
+    $height: $i * $line-height-default;
+    .image-height-#{$i}#{$edition-suffix} img,
+    img.image-height-#{$i}#{$edition-suffix} {
+      height: $height;
+    }
+  }
+
+  // Prevent spans from breaking over a line
+  span, em, strong {
+    &.keep-together#{$edition-suffix} {
+      white-space: nowrap;
+    }
+  }
+
+}

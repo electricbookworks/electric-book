@@ -1,0 +1,22 @@
+$pdf-dialogue: true !default;
+@if $pdf-dialogue {
+
+    // Dialogue
+    // Using definition list element, dl
+
+    dl.dialogue {
+        dt {
+            clear: inside; // lets sidebar elements float beside
+            float: left;
+            min-width: $paragraph-indent * 2;
+            padding-right: ($paragraph-indent * 0.25);
+            &:after {
+                content: ": "
+            }
+        }
+        dd {
+            margin: 0 0 0 ($paragraph-indent * 2.25); // match width + padding of dt
+        }
+    }
+
+}

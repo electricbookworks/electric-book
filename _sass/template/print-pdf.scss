@@ -6,9 +6,10 @@
 // 
 // How to use it
 // -------------
-// Edit the default variables below.
-// Comment/uncomment or add font imports below.
-// Add your own custom CSS at the bottom.
+// This file includes almost all of the variables
+// you might need to set for your project.
+// Then set your own values and create styles and
+// new Sass partials for your project in _sass/theme.
 
 // -------------
 // Set variables
@@ -20,9 +21,9 @@ $output-format: "print-pdf" !default;
 // Theme variables
 @import "theme/colors";
 @import "template/colors";
-@import "theme/print-variables";
+@import "theme/pdf-variables";
 
-// Edition suffix: identifies this edition in page-fitting classes (in _print-fitting.scss).
+// Edition suffix: identifies this edition in page-fitting classes (in _pdf-fitting.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
 // A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
 // If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.
@@ -33,8 +34,8 @@ $edition-suffix: null !default;
 $path-to-root-directory: "../.." !default;
 
 // First, we set several variables related to overall page setup.
-$page-width: 152mm !default;
-$page-height: 229mm !default;
+$page-width: 178mm !default;
+$page-height: 254mm !default;
 $margin-top: 60pt !default; // set in points to align with baseline grid
 $margin-bottom: 60pt !default;
 $margin-outside: 20mm !default;
@@ -45,20 +46,18 @@ $crop-marks: crop !default; // crop | none
 $page-info-offset: 5mm !default;
 $columns-default: 1 !default;
 
-// Optional sidebar setup
-// If you want a sidebar, set these values and change $print-sidebar
-// to 'true' in the list of partials below, where it is disabled by default.
-// For guidance on sidebar variables, see partials/_pdf-sidebar.scss.
-// 1. Set the margin between the page edge and the sidebar:
-$sidebar-margin-outside: 10mm !default;
-// 2. The number of 'columns' in your page grid:
-$grid-columns: 3 !default;
-// 3. As a single integer, set the ratio of the column width to column-gap width.
-//    That is, how wide is a column, as a multiple of the column-gap?
-//    A higher number makes the column wider, and the gap smaller.
-//    A lower number makes the column narrower, and the gap wider.
-$column-gap-ratio: 10 !default;
-// 4. Then use @mixin sidebar() to move elements into the sidebar
+// Optional sidebar setup.
+// Sidebars only work when using Prince v15 or later,
+// or Prince for Books 20220701 or later.
+// If you do not want a sidebar, set $pdf-sidebar to false:
+$pdf-sidebar: true !default;
+// Width of the sidebar content:
+$sidebar-content-width: 30mm;
+// The gap between sidebar content and the body text area:
+$sidebar-gap-width: 5mm;
+// Which page styles have a sidebar? These correspond to
+// the styles used in markdown YAML frontmatter as `page: ""`
+$pages-with-sidebar: frontmatter, chapter;
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
@@ -174,77 +173,80 @@ $title-page-logo-width: $paragraph-indent * 3;
 // * For an em space: "\2003"
 // * For other special characters, see CSS (ISO) at https://brajeshwar.github.io/entities/
 
+// To see the margin boxes highlighted, set this to true.
+$show-margin-boxes: false;
+
 // Verso (left-hand-page)
 $verso-top: string(page-header) !default;
-$verso-top-left: normal !default;
-$verso-top-right: normal !default;
-$verso-top-left-corner: normal !default;
-$verso-top-right-corner: normal !default;
+$verso-top-left: "" !default;
+$verso-top-right: "" !default;
+$verso-top-left-corner: "" !default;
+$verso-top-right-corner: "" !default;
 $verso-bottom: counter(page) !default;
-$verso-bottom-left: normal !default;
-$verso-bottom-right: normal !default;
-$verso-bottom-left-corner: normal !default;
-$verso-bottom-right-corner: normal !default;
-$verso-left: normal !default;
-$verso-left-top: normal !default;
-$verso-left-bottom: normal !default;
-$verso-right: normal !default;
-$verso-right-top: normal !default;
-$verso-right-bottom: normal !default;
+$verso-bottom-left: "" !default;
+$verso-bottom-right: "" !default;
+$verso-bottom-left-corner: "" !default;
+$verso-bottom-right-corner: "" !default;
+$verso-left: "" !default;
+$verso-left-top: "" !default;
+$verso-left-bottom: "" !default;
+$verso-right: "" !default;
+$verso-right-top: "" !default;
+$verso-right-bottom: "" !default;
 
 // Recto (right-hand-page)
 $recto-top: string(h2-title, last) !default;
-$recto-top-left: normal !default;
-$recto-top-right: normal !default;
-$recto-top-left-corner: normal !default;
-$recto-top-right-corner: normal !default;
+$recto-top-left: "" !default;
+$recto-top-right: "" !default;
+$recto-top-left-corner: "" !default;
+$recto-top-right-corner: "" !default;
 $recto-bottom: counter(page) !default;
-$recto-bottom-left: normal !default;
-$recto-bottom-right: normal !default;
-$recto-bottom-left-corner: normal !default;
-$recto-bottom-right-corner: normal !default;
-$recto-left: normal !default;
-$recto-left-top: normal !default;
-$recto-left-bottom: normal !default;
-$recto-right: normal !default;
-$recto-right-top: normal !default;
-$recto-right-bottom: normal !default;
+$recto-bottom-left: "" !default;
+$recto-bottom-right: "" !default;
+$recto-bottom-left-corner: "" !default;
+$recto-bottom-right-corner: "" !default;
+$recto-left: "" !default;
+$recto-left-top: "" !default;
+$recto-left-bottom: "" !default;
+$recto-right: "" !default;
+$recto-right-top: "" !default;
+$recto-right-bottom: "" !default;
 
 // Verso (left-hand-page) for .frontmatter pages (`style: frontmatter`)
 $verso-top-frontmatter: string(page-header) !default;
-$verso-top-left-frontmatter: normal !default;
-$verso-top-right-frontmatter: normal !default;
-$verso-top-left-corner-frontmatter: normal !default;
-$verso-top-right-corner-frontmatter: normal !default;
+$verso-top-left-frontmatter: "" !default;
+$verso-top-right-frontmatter: "" !default;
+$verso-top-left-corner-frontmatter: "" !default;
+$verso-top-right-corner-frontmatter: "" !default;
 $verso-bottom-frontmatter: counter(page, $frontmatter-reference-style) !default;
-$verso-bottom-left-frontmatter: normal !default;
-$verso-bottom-right-frontmatter: normal !default;
-$verso-bottom-left-corner-frontmatter: normal !default;
-$verso-bottom-right-corner-frontmatter: normal !default;
-$verso-left-frontmatter: normal !default;
-$verso-left-top-frontmatter: normal !default;
-$verso-left-bottom-frontmatter: normal !default;
-$verso-right-frontmatter: normal !default;
-$verso-right-top-frontmatter: normal !default;
-$verso-right-bottom-frontmatter: normal !default;
+$verso-bottom-left-frontmatter: "" !default;
+$verso-bottom-right-frontmatter: "" !default;
+$verso-bottom-left-corner-frontmatter: "" !default;
+$verso-bottom-right-corner-frontmatter: "" !default;
+$verso-left-frontmatter: "" !default;
+$verso-left-top-frontmatter: "" !default;
+$verso-left-bottom-frontmatter: "" !default;
+$verso-right-frontmatter: "" !default;
+$verso-right-top-frontmatter: "" !default;
+$verso-right-bottom-frontmatter: "" !default;
 
 // Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
 $recto-top-frontmatter: string(h2-title, last) !default;
-$recto-top-left-frontmatter: normal !default;
-$recto-top-right-frontmatter: normal !default;
-$recto-top-left-corner-frontmatter: normal !default;
-$recto-top-right-corner-frontmatter: normal !default;
+$recto-top-left-frontmatter: "" !default;
+$recto-top-right-frontmatter: "" !default;
+$recto-top-left-corner-frontmatter: "" !default;
+$recto-top-right-corner-frontmatter: "" !default;
 $recto-bottom-frontmatter: counter(page, $frontmatter-reference-style) !default;
-$recto-bottom-left-frontmatter: normal !default;
-$recto-bottom-right-frontmatter: normal !default;
-$recto-bottom-left-corner-frontmatter: normal !default;
-$recto-bottom-right-corner-frontmatter: normal !default;
-$recto-left-frontmatter: normal !default;
-$recto-left-top-frontmatter: normal !default;
-$recto-left-bottom-frontmatter: normal !default;
-$recto-right-frontmatter: normal !default;
-$recto-right-top-frontmatter: normal !default;
-$recto-right-bottom-frontmatter: normal !default;
+$recto-bottom-left-frontmatter: "" !default;
+$recto-bottom-right-frontmatter: "" !default;
+$recto-bottom-left-corner-frontmatter: "" !default;
+$recto-bottom-right-corner-frontmatter: "" !default;
+$recto-left-frontmatter: "" !default;
+$recto-left-top-frontmatter: "" !default;
+$recto-left-bottom-frontmatter: "" !default;
+$recto-right-frontmatter: "" !default;
+$recto-right-top-frontmatter: "" !default;
+$recto-right-bottom-frontmatter: "" !default;
 
 // Are there headers and footers on the first pages?
 // Set to blank or show.
@@ -265,8 +267,8 @@ $header-space-from-top: $margin-top / 2 + ($line-height-default / 4) !default; /
 $header-space-from-text: $line-height-default !default;
 $footer-space-from-bottom: $margin-bottom / 2 !default;
 $footer-space-from-text: $line-height-default !default;
-$header-text-align: center !default;
-$footer-text-align: center !default;
+$header-text-align: outside !default;
+$footer-text-align: outside !default;
 $header-text-color: $color-text-main !default;
 $footer-text-color: $color-text-main !default;
 $left-margin-font: $header-font !default;
@@ -304,71 +306,70 @@ $show-baseline-grid: false !default;
 // ---------------------------------
 
 // Reset PrinceXML CSS
-$print-css-reset: true !default;
+$pdf-css-reset: true !default;
 
 // Conventional helper classes
-$print-helpers: true !default;
+$pdf-helpers: true !default;
 
 // Add default font-face rules
-$print-font-faces: true !default;
+$pdf-font-faces: true !default;
 
 // Page setup and control, avoid changing these
-$print-pdf-view: true !default; // Sets the default initial view on PDFs
-$print-page-setup: true !default; // Sets up the page from your variables
-$print-page-break-tools: true !default; // Provides classes for semantic page breaks
-$print-hide-non-printing: true !default; // Hides anything .non-printing
-$print-fitting: true !default; // Classes for floating, tracking, shrinking, etc.
-$print-hyphenation: true !default; // Sets hyphenation dictionary
+$pdf-pdf-view: true !default; // Sets the default initial view on PDFs
+$pdf-page-setup: true !default; // Sets up the page from your variables
+$pdf-page-break-tools: true !default; // Provides classes for semantic page breaks
+$pdf-hide-non-printing: true !default; // Hides anything .non-printing
+$pdf-fitting: true !default; // Classes for floating, tracking, shrinking, etc.
+$pdf-hyphenation: true !default; // Sets hyphenation dictionary
 
 // Book features
-$print-start-on-recto-or-verso: true !default; // Starts chapters on a left- or right-hand-page
-$print-page-start-depth: true !default; // Sets a top margin on opening pages
-$print-base-typography: true !default; // Default typography for HTML elements
-$print-columns: true !default;
-$print-buttons: true !default;
-$print-verse: true !default; // Default typography for verse, poetry, lyrics
-$print-bibliographies: true !default;
-$print-dialogue: true !default;
-$print-epigraphs: true !default;
-$print-dedications: true !default;
-$print-glossaries: true !default; // Including .glossary
-$print-highlighter: true !default;
-$print-pullquotes: true !default; // Supports .pullquote
-$print-boxes: true !default;
-$print-code: true !default; // For computer code and preformatted text
-$print-tables: true !default;
-$print-figures: true !default;
-$print-notes: true !default; // Footnotes, endnotes, sidenotes
-$print-previous-publications-page: true !default; // The 'also by the author' frontmatter apge
-$print-title-pages: true !default; // Half-title and title pages
-$print-copyright-page: true !default;
-$print-toc: true !default; // Tables of contents
-$print-cover: true !default; // Front-cover image for PDF ebooks
-$print-video: true !default;
-$print-smallcaps: true !default;
-$print-maths: true !default;
-$print-letters: true !default;
-$print-sources: true !default;
-$print-openers: true !default;
-$print-index: true !default;
-$print-questions: true !default;
-$print-select-questions: true !default;
-$print-cross-refs: true !default;
-$print-slides: true !default;
-$print-sidebar: false !default; // Note that this is disabled by default here and in the partial, remove !default to override partial
-$print-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
-$print-page-headers-footers-content: true !default; // Sets content for headers and footers
-$print-page-headers-footers-style: true !default; // Sets styling for headers and footers
-$print-page-setup-lightning-source: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
+$pdf-start-on-recto-or-verso: true !default; // Starts chapters on a left- or right-hand-page
+$pdf-page-start-depth: true !default; // Sets a top margin on opening pages
+$pdf-base-typography: true !default; // Default typography for HTML elements
+$pdf-columns: true !default;
+$pdf-buttons: true !default;
+$pdf-verse: true !default; // Default typography for verse, poetry, lyrics
+$pdf-bibliographies: true !default;
+$pdf-dialogue: true !default;
+$pdf-epigraphs: true !default;
+$pdf-dedications: true !default;
+$pdf-glossaries: true !default; // Including .glossary
+$pdf-highlighter: true !default;
+$pdf-pullquotes: true !default; // Supports .pullquote
+$pdf-boxes: true !default;
+$pdf-code: true !default; // For computer code and preformatted text
+$pdf-tables: true !default;
+$pdf-figures: true !default;
+$pdf-notes: true !default; // Footnotes, endnotes, sidenotes
+$pdf-previous-publications-page: true !default; // The 'also by the author' frontmatter apge
+$pdf-title-pages: true !default; // Half-title and title pages
+$pdf-copyright-page: true !default;
+$pdf-toc: true !default; // Tables of contents
+$pdf-cover: true !default; // Front-cover image for PDF ebooks
+$pdf-video: true !default;
+$pdf-smallcaps: true !default;
+$pdf-maths: true !default;
+$pdf-letters: true !default;
+$pdf-sources: true !default;
+$pdf-openers: true !default;
+$pdf-index: true !default;
+$pdf-questions: true !default;
+$pdf-select-questions: true !default;
+$pdf-cross-refs: true !default;
+$pdf-slides: true !default;
+$pdf-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
+$pdf-margin-box-content: true !default; // Sets content for headers and footers
+$pdf-margin-box-style: true !default; // Sets styling for headers and footers
+$pdf-page-setup-lightning-source: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
 // Theme imports
-@import "theme/print-imports";
+@import "theme/pdf-imports";
 
-// Default font-face rules added by print-font-faces partial below.
+// Default font-face rules added by pdf-font-faces partial below.
 // Or add @font-face rules for fonts you specify here.
 // Add the actual font files to `../fonts` or `../../assets/fonts`.
 // Use #{$path-to-root-directory} to allow overriding per translation. E.g.:
@@ -380,72 +381,75 @@ $print-page-setup-lightning-source: false !default; // Removes crop marks and se
 // ---------------------
 
 // Reset PrinceXML CSS
-@import "template/partials/print-css-reset";
+@import "template/partials/pdf-css-reset";
 
-// Load general-purpose mixins
-@import "template/partials/print-mixins--buttons";
-@import "template/partials/print-mixins--sidenotes";
-@import "template/partials/print-mixins--margin-boxes";
-@import "template/partials/print-mixins--floats";
-@import "template/partials/print-mixins--page-continued";
+// General-purpose calculated variables
+@import "template/partials/pdf-variables";
+
+// General-purpose mixins
+@import "template/partials/pdf-mixins--buttons";
+@import "template/partials/pdf-mixins--sidenotes";
+@import "template/partials/pdf-mixins--margin-boxes";
+@import "template/partials/pdf-mixins--floats";
+@import "template/partials/pdf-mixins--page-continued";
 
 // Conventional helper classes
-@import "template/partials/print-helpers";
+@import "template/partials/pdf-helpers";
 
 // Add font-face rules
-@import "template/partials/print-font-faces";
+@import "template/partials/pdf-font-faces";
 
 // Page setup and control, avoid changing these
-@import "template/partials/print-pdf-view"; // Sets the default initial view on PDFs
-@import "template/partials/print-sidebar"; // redefines margins if $print-sidebar is true
-@import "template/partials/print-page-setup"; // Sets up the page from your variables
-@import "template/partials/print-page-break-tools"; // Provides classes for semantic page breaks
-@import "template/partials/print-hide-non-printing"; // Hides anything .non-printing
-@import "template/partials/print-fitting"; // Classes for floating, tracking, shrinking, etc.
-@import "template/partials/print-hyphenation"; // Sets hyphenation dictionary
-@import "template/partials/print-baseline-grid"; // Shows a baseline grid
+@import "template/partials/pdf-pdf-view"; // Sets the default initial view on PDFs
+@import "template/partials/pdf-sidebar"; // redefines margins if $pdf-sidebar is true
+@import "template/partials/pdf-page-setup"; // Sets up the page from your variables
+@import "template/partials/pdf-page-break-tools"; // Provides classes for semantic page breaks
+@import "template/partials/pdf-hide-non-printing"; // Hides anything .non-printing
+@import "template/partials/pdf-fitting"; // Classes for floating, tracking, shrinking, etc.
+@import "template/partials/pdf-hyphenation"; // Sets hyphenation dictionary
+@import "template/partials/pdf-baseline-grid"; // Shows a baseline grid
 
 // Book features
-@import "template/partials/print-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
-@import "template/partials/print-page-start-depth"; // Sets a top margin on opening pages
-@import "template/partials/print-base-typography"; // Default typography for HTML elements
-@import "template/partials/print-columns";
-@import "template/partials/print-buttons";
-@import "template/partials/print-verse"; // Default typography for verse, poetry, lyrics
-@import "template/partials/print-bibliographies";
-@import "template/partials/print-dialogue";
-@import "template/partials/print-epigraphs";
-@import "template/partials/print-dedications";
-@import "template/partials/print-glossaries"; // Including .glossary
-@import "template/partials/print-highlighter";
-@import "template/partials/print-pullquotes"; // Supports .pullquote
-@import "template/partials/print-boxes";
-@import "template/partials/print-code"; // For computer code and preformatted text
-@import "template/partials/print-tables";
-@import "template/partials/print-figures";
-@import "template/partials/print-notes"; // Footnotes, endnotes, sidenotes
-@import "template/partials/print-previous-publications-page"; // Also by the author page in frontmatter
-@import "template/partials/print-title-pages"; // Half-title and title pages
-@import "template/partials/print-copyright-page";
-@import "template/partials/print-toc"; // Tables of contents
-@import "template/partials/print-video";
-@import "template/partials/print-cover"; // Front-cover image for PDF ebooks
-@import "template/partials/print-smallcaps";
-@import "template/partials/print-maths";
-@import "template/partials/print-letters";
-@import "template/partials/print-sources";
-@import "template/partials/print-openers";
-@import "template/partials/print-index";
-@import "template/partials/print-questions";
-@import "template/partials/print-select-questions";
-@import "template/partials/print-cross-refs";
-@import "template/partials/print-slides";
-@import "template/partials/print-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
-@import "template/partials/print-page-headers-footers-content"; // Sets content for headers and footers
-@import "template/partials/print-page-headers-footers-style"; // Sets styling for headers and footers
+@import "template/partials/pdf-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
+@import "template/partials/pdf-page-start-depth"; // Sets a top margin on opening pages
+@import "template/partials/pdf-base-typography"; // Default typography for HTML elements
+@import "template/partials/pdf-columns";
+@import "template/partials/pdf-buttons";
+@import "template/partials/pdf-verse"; // Default typography for verse, poetry, lyrics
+@import "template/partials/pdf-bibliographies";
+@import "template/partials/pdf-dialogue";
+@import "template/partials/pdf-epigraphs";
+@import "template/partials/pdf-dedications";
+@import "template/partials/pdf-glossaries"; // Including .glossary
+@import "template/partials/pdf-highlighter";
+@import "template/partials/pdf-pullquotes"; // Supports .pullquote
+@import "template/partials/pdf-boxes";
+@import "template/partials/pdf-code"; // For computer code and preformatted text
+@import "template/partials/pdf-tables";
+@import "template/partials/pdf-figures";
+@import "template/partials/pdf-notes"; // Footnotes, endnotes, sidenotes
+@import "template/partials/pdf-previous-publications-page"; // Also by the author page in frontmatter
+@import "template/partials/pdf-title-pages"; // Half-title and title pages
+@import "template/partials/pdf-copyright-page";
+@import "template/partials/pdf-toc"; // Tables of contents
+@import "template/partials/pdf-video";
+@import "template/partials/pdf-cover"; // Front-cover image for PDF ebooks
+@import "template/partials/pdf-smallcaps";
+@import "template/partials/pdf-maths";
+@import "template/partials/pdf-letters";
+@import "template/partials/pdf-sources";
+@import "template/partials/pdf-openers";
+@import "template/partials/pdf-index";
+@import "template/partials/pdf-questions";
+@import "template/partials/pdf-select-questions";
+@import "template/partials/pdf-cross-refs";
+@import "template/partials/pdf-slides";
+@import "template/partials/pdf-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
+@import "template/partials/pdf-margin-box-content"; // Sets content for headers and footers
+@import "template/partials/pdf-margin-box-style"; // Sets styling for headers and footers
 
 // Lightning Source setup
-@import "template/partials/print-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
+@import "template/partials/pdf-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
 
 // Theme rules
-@import "theme/print-rules";
+@import "theme/pdf-rules";

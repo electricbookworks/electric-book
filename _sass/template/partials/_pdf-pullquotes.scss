@@ -1,0 +1,21 @@
+@mixin pullquote($font-size: $font-size-default * 1.4, $line-height: $line-height-default) {
+	text-indent: 0;
+	font-size: $font-size;
+	text-align: center;
+	margin: $line-height-default 0;
+	line-height: $line-height;
+	& + p {
+		text-indent: 0;
+	}
+}
+
+$pdf-pullquotes: true !default;
+@if $pdf-pullquotes {
+
+    // Pull quotes
+
+     .pullquote {
+		 @include pullquote();
+    }
+
+}

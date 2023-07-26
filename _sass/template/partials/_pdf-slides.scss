@@ -1,0 +1,244 @@
+$pdf-slides: true !default;
+@if $pdf-slides {
+
+    .slides {
+        float: bottom;
+        margin-top: $line-height-default;
+        margin-bottom: 0;
+        column-count: 2;
+        column-gap: $paragraph-indent;
+        column-fill: balance; // default anyway, but making it explicit here
+        widows: 1; // ensures a column balance when containing only three slides
+        orphans: 1; // ensures a column balance when containing only three slides
+
+        .figure {
+            float: none;
+            width: 100%;
+            padding: 0;
+            margin: 0 0 $line-height-default 0;
+            border: 0;
+            vertical-align: top;
+            counter-increment: slide; // for numbering slides
+
+            .figure-body {
+                width: 100%;
+                float: none;
+            }
+
+            .figure-images {
+                display: none;
+            }
+
+            .figure-html {
+                display: none;
+            }
+
+            .figure-md {
+                display: none;
+            }
+
+            .title {
+                break-before: auto;
+                color: $color-accent;
+                display: block;
+                font-weight: bold;
+                margin-bottom: 0;
+                text-align: left;
+
+                &:before {
+                    content: counter(slide, decimal) ". ";
+                }
+            }
+
+            .caption {
+                display: none;
+            }
+
+            .description {
+                display: block;
+                text-align: left;
+            }
+
+            .figure-source {
+                display: none;
+
+                .source {
+                    display: none;
+                }
+            }
+
+            // Show full summary figure in pdf output
+            &.summary {
+                column-span: all;
+                width: $main-text-width;
+                margin-bottom: $line-height-default;
+                counter-reset: slide -1; // we do not number the summary figure, only subsequent figures in .slides
+
+                // .figure-body {
+                //     float: inside;
+                // }
+
+                .figure-images {
+                    display: block;
+                }
+
+                .figure-html {
+                    display: block;
+                }
+
+                .figure-md {
+                    display: block;
+                }
+
+                .title {
+                    display: none;
+                }
+
+                .caption {
+                    display: block;
+                }
+
+                .description {
+                    display: none;
+                }
+
+                .figure-source {
+                    width: 100%;
+                    display: inline-block;
+
+                    .source {
+                        display: inline-block;
+                    }
+                }
+
+                &:after {
+                    content: "";
+                    display: block;
+                    clear: both;
+                }
+            }
+
+            // We can control some slide layouts by
+            // adding a `column-break-after` class
+            // to one of the figures in .slides.
+            &.column-break-after {
+                display: block;
+                column-break-after: always;
+            }
+
+            // same thing, but after
+            &.column-break-before {
+                display: block;
+                column-break-before: always;
+            }
+        }
+
+        // Other floats
+        &.float-bottom {
+            float: bottom;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-bottom-next {
+            float: bottom next;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-top {
+            float: top;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-top-next {
+            float: top next;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-inside {
+            float: inside;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-outside {
+            float: outside;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-left {
+            float: left;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-right {
+            float: right;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-top {
+            float: column-top;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-top-next {
+            float: column-top next;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-bottom {
+            float: column-bottom;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-column-bottom-next {
+            float: column-bottom next;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-column-top-corner {
+            float: column-top-corner;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-top-corner-next {
+            float: column-top-corner next;
+            margin: 0 0 $line-height-default 0;
+        }
+        &.float-column-bottom-corner {
+            float: column-bottom-corner;
+            margin: $line-height-default 0 0 0;
+        }
+        &.float-column-bottom-corner-next {
+            float: column-bottom-corner next;
+            margin: $line-height-default 0 0 0;
+        }
+        // No float
+        &.fixed {
+            clear: both;
+            float: none;
+            margin-top: $line-height-default;
+        }
+    }
+
+    @if $pdf-sidebar {
+
+        .slides {
+
+            &.wide {
+                column-count: 3;
+                column-gap: $sidebar-gap-width;
+                margin-outside: -($sidebar-gap-width + $sidebar-content-width);
+                width: $content-width;
+
+                .figure {
+
+                    // When there are only two slides (a summary and two figures)
+                    // we shift those inside to avoid the empty third column.
+                    // This CSS selects the second and third of three siblings.
+                    // When this doesn't work, you need to use .column-break-after
+                    // or .column-break-before (see above).
+                    &:nth-child(2):nth-last-child(2),
+                    &:nth-child(3):nth-last-child(1) {
+                        margin-outside: $sidebar-content-width + $sidebar-gap-width;
+                    }
+
+                    &.summary {
+                        margin-outside: $content-width - $main-text-width;
+                        width: $main-text-width;
+
+                        &.wide {
+                            margin-right: 0;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

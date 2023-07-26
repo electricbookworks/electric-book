@@ -21,6 +21,25 @@ It is important for everyone working on a project to use the same version of Pri
   }
 ```
 
+### Non-semver Prince versions
+
+Prince for Books and prince latest builds do not use semantic versioning. If you want to use those, you need a slightly different syntax for setting the Prince version.
+
+For Prince for books, use `books-YYYMMDD`, e.g.:
+
+```json
+  "prince": {
+    "version": "books-20220701"
+  }
+```
+
+For a latest build, use `YYYMMDD`, e.g.:
+
+```json
+  "prince": {
+    "version": "20220701"
+  }
+```
 
 ## Adding a Prince license
 

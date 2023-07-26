@@ -23,9 +23,9 @@ $output-format: "screen-pdf" !default;
 // Theme variables
 @import "theme/colors";
 @import "template/colors";
-@import "theme/print-variables";
+@import "theme/pdf-variables";
 
-// Edition suffix: identifies this edition in page-fitting classes (in _print-fitting.scss).
+// Edition suffix: identifies this edition in page-fitting classes (in _pdf-fitting.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
 // A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
 // If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.

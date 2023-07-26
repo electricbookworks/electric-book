@@ -1,0 +1,16 @@
+$pdf-page-start-depth: true !default;
+@if $pdf-page-start-depth {
+
+    // Start these layouts with a big top margin
+
+    .halftitle-page, .half-title-page,
+    .title-page,
+    .dedication-page,
+    .epigraph-page,
+    .contents-page,
+    .frontmatter,
+    .chapter {
+        margin-top: $start-depth;
+    }
+
+}

@@ -1,0 +1,22 @@
+$pdf-sidebar: true !default;
+
+@if $pdf-sidebar {
+
+    @each $page-style in $pages-with-sidebar {
+        @page #{$page-style}:left {
+            @leftnote {
+                box-sizing: border-box;
+                padding-right: $sidebar-gap-width;
+                width: $sidebar-content-width + $sidebar-gap-width;
+            }
+        }
+
+        @page #{$page-style}:right {
+            @rightnote {
+                box-sizing: border-box;
+                padding-left: $sidebar-gap-width;
+                width: $sidebar-content-width + $sidebar-gap-width;
+            }
+        }
+    }
+}

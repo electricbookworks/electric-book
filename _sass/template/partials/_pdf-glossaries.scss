@@ -1,0 +1,23 @@
+$pdf-glossaries: true !default;
+@if $pdf-glossaries {
+
+    // Definition lists used in a simple glossary
+    // Note dl rules are also defined in base typography
+
+    .glossary {
+        color: inherit;
+        dt {
+            float: left;
+            color: inherit;
+            &:after {
+                content: ":\00a0";
+            }
+        }
+        dd {
+            ul, ol {
+                clear: left;
+            }
+        }
+    }
+
+}

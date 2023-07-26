@@ -1,0 +1,129 @@
+// Footnotes
+
+// kramdown gives footnote references the class .footnote
+// and the div containing the footnotes .footnotes.
+// In books, we call these endnotes. To avoid confusion,
+// here we will call true footnotes 'page-footnotes'.
+// Styling for sup and sub is in base typography
+
+$pdf-notes: true !default;
+@if $pdf-notes {
+
+    // Footnote reference in text, and see
+    // *::footnote-call below
+    .footnote {
+        line-height: inherit;
+        // Ensure footnote refs in headings are small
+        font-size: $font-size-default * $font-size-smaller;
+    }
+
+    // Footnotes section
+    .footnotes {
+        margin: $line-height-default 0 0 0;
+        font-size: $font-size-default * $font-size-smaller;
+        line-height: $line-height-default * $font-size-smaller;
+        p {
+            text-indent: 0;
+        }
+    }
+    // Hide the link back to the footnote reference from the footnote text.
+    .reversefootnote {
+        display: none;
+    }
+
+    // Sidenotes
+    .sidenote {
+        @include sidenote();
+
+        // Sidenotes that appear at the bottom of the page, aka footer notes.
+        &.bottom {
+            float: bottom;
+            max-width: none;
+            width: 100%;
+            margin: ($line-height-default * 0.75) 0 0 0;
+        }
+    }
+
+    // The page-footnotes area
+    @page {
+        counter-reset: manual-footnote;
+
+        @footnote {
+            border-top: $rule-thickness solid $color-text-main;
+            margin-top: $line-height-default / 2;
+            padding-top: $line-height-default / 2;
+            font-size: $font-size-default * $font-size-smaller;
+        }
+    }
+
+    // True footnotes (we call them page-footnotes for clarity)
+    // For styling see https://www.princexml.com/doc-prince/#footnote-calls
+
+    // The numbers in front of footnote text
+    *::footnote-marker {
+        float: left;
+        font-size: $font-size-default * $font-size-smaller;
+        width: 0;
+    }
+
+    // The page-footnote references in body text
+    // Note that other <sup> styling is defined in
+    // _pdf-base-typography.scss
+    *::footnote-call {
+        content: counter(footnote);
+        font-size: $font-size-default * 0.7;
+        vertical-align: super;
+        line-height: none;
+
+        // Shift down
+        top: $font-size-default / 4;
+        position: relative;
+    }
+
+    .page-footnote {
+        float: footnote;
+        font-size: $font-size-default * $font-size-smaller;
+        footnote-style-position: inside; // a prince-only property
+        text-indent: -($paragraph-indent);
+        margin-left: $paragraph-indent;
+
+        p {
+            margin-bottom: 0;
+            text-indent: 0;
+        }
+    }
+
+    // Avoid page-footnotes created by footnotes.js
+    // from inheriting blockquote indentation by
+    // reiterating properties that blockquote might override.
+    blockquote .page-footnote {
+        text-indent: -($paragraph-indent);
+        margin-left: $paragraph-indent;
+    }
+
+    // Footnotes created with one-by-one 'move-to-footnote'
+    // class need a different kind of counter, because
+    // in a document with some endnotes and some manual footnotes,
+    // they need to have a different numbering system.
+    // Otherwise, they'll appear at the bottom of the page
+    // but be numbered in order with the endnotes.
+
+    .page-footnote {
+        counter-increment: manual-footnote;
+
+        &::footnote-call {
+            content: counter(manual-footnote, asterisks);
+            font-size: $font-size-default * 0.7;
+            vertical-align: super;
+            line-height: none;
+
+            // Shift down
+            top: $font-size-default / 4;
+            position: relative;
+        }
+
+        &::footnote-marker {
+            content: counter(manual-footnote, asterisks);
+        }
+    }
+}

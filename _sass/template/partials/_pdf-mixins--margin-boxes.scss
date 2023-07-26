@@ -1,0 +1,230 @@
+// Mixins for page margin-box styles
+
+// Set common styles for top, bottom, right, left
+
+@mixin margin-box-top-common() {
+  color: $header-text-color;
+  font-family: $header-font;
+  font-size: $header-font-size;
+  font-weight: $header-font-weight;
+  letter-spacing: $header-letter-spacing;
+  line-height: 1;
+  padding-bottom: $header-space-from-text;
+  padding-top: $header-space-from-top;
+  text-align: $header-text-align;
+  text-transform: $header-case;
+  vertical-align: top;
+}
+
+@mixin margin-box-bottom-common() {
+  color: $footer-text-color;
+  font-family: $footer-font;
+  font-size: $footer-font-size;
+  font-weight: $footer-font-weight;
+  letter-spacing: $footer-letter-spacing;
+  line-height: 1;
+  padding-bottom: $footer-space-from-bottom;
+  padding-top: $footer-space-from-text;
+  text-align: $footer-text-align;
+  text-transform: $footer-case;
+  vertical-align: bottom;
+}
+
+@mixin margin-box-left-common() {
+  color: $left-margin-text-color;
+  font-family: $left-margin-font;
+  font-size: $left-margin-font-size;
+  font-weight: $left-margin-font-weight;
+  letter-spacing: $left-margin-letter-spacing;
+  line-height: 1;
+  padding-left: $left-margin-space-from-edge;
+  padding-right: $left-margin-space-from-text;
+  text-align: $left-margin-text-align;
+  text-transform: $left-margin-case;
+  vertical-align: $left-margin-alignment;
+}
+
+@mixin margin-box-right-common() {
+  color: $right-margin-text-color;
+  font-family: $right-margin-font;
+  font-size: $right-margin-font-size;
+  font-weight: $right-margin-font-weight;
+  letter-spacing: $right-margin-letter-spacing;
+  line-height: 1;
+  padding-left: $right-margin-space-from-text;
+  padding-right: $right-margin-space-from-edge;
+  text-align: $right-margin-text-align;
+  text-transform: $right-margin-case;
+  vertical-align: $right-margin-alignment;
+}
+
+// Now we use those in box-specific mixins
+
+@mixin margin-box-top-center($side: verso, $frontmatter: false) {
+
+  @if $show-margin-boxes {
+    background-color: pink;
+  }
+
+  @include margin-box-top-common();
+}
+
+@mixin margin-box-top-left($side: recto) {
+
+  @if $show-margin-boxes {
+    background-color: yellow;
+  }
+
+  @include margin-box-top-common();
+
+  @if $pdf-sidebar and $sidebar-content-width > 0 {
+
+    @if $side == verso {
+      width: $sidebar-content-width + $sidebar-gap-width;
+    }
+  }
+}
+
+@mixin margin-box-top-right($side: verso) {
+
+  @if $show-margin-boxes {
+    background-color: aliceblue;
+  }
+
+  @include margin-box-top-common();
+
+  @if $pdf-sidebar and $sidebar-content-width > 0 {
+    @if $side == recto {
+      width: $sidebar-content-width + $sidebar-gap-width;
+    }
+  }
+}
+
+@mixin margin-box-top-left-corner() {
+
+  @if $show-margin-boxes {
+    background-color: brown;
+  }
+
+  @include margin-box-top-common();
+}
+
+@mixin margin-box-top-right-corner() {
+
+  @if $show-margin-boxes {
+    background-color: purple;
+  }
+
+  @include margin-box-top-common();
+}
+
+@mixin margin-box-bottom-center($side: verso, $frontmatter: false) {
+
+  @if $show-margin-boxes {
+    background-color: lightblue;
+  }
+
+  @include margin-box-bottom-common();
+}
+
+@mixin margin-box-bottom-left($side: recto) {
+
+  @if $show-margin-boxes {
+    background-color: salmon;
+  }
+
+  @include margin-box-bottom-common();
+
+  @if $pdf-sidebar and $sidebar-content-width > 0 {
+    @if $side == verso {
+      width: $sidebar-content-width + $sidebar-gap-width;
+    }
+  }
+}
+
+@mixin margin-box-bottom-right($side: verso) {
+
+  @if $show-margin-boxes {
+    background-color: gray;
+  }
+
+  @include margin-box-bottom-common();
+
+  @if $pdf-sidebar and $sidebar-content-width > 0 {
+    @if $side == recto {
+      width: $sidebar-content-width + $sidebar-gap-width;
+    }
+  }
+}
+
+@mixin margin-box-bottom-left-corner() {
+
+  @if $show-margin-boxes {
+    background-color: indianred;
+  }
+
+  @include margin-box-bottom-common();
+}
+
+@mixin margin-box-bottom-right-corner() {
+
+  @if $show-margin-boxes {
+    background-color: orange;
+  }
+
+  @include margin-box-bottom-common();
+}
+
+@mixin margin-box-left-middle() {
+
+  @if $show-margin-boxes {
+    background-color: beige;
+  }
+
+  @include margin-box-left-common();
+}
+
+@mixin margin-box-left-top() {
+
+  @if $show-margin-boxes {
+    background-color: blueviolet;
+  }
+
+  @include margin-box-left-common();
+}
+
+@mixin margin-box-left-bottom() {
+
+  @if $show-margin-boxes {
+    background-color: lightgreen;
+  }
+
+  @include margin-box-left-common();
+}
+
+@mixin margin-box-right-middle() {
+
+  @if $show-margin-boxes {
+    background-color: lightgoldenrodyellow;
+  }
+
+  @include margin-box-right-common();
+}
+
+@mixin margin-box-right-top() {
+
+  @if $show-margin-boxes {
+    background-color: lightseagreen;
+  }
+
+  @include margin-box-right-common();
+}
+
+@mixin margin-box-right-bottom() {
+
+  @if $show-margin-boxes {
+    background-color: coral;
+  }
+
+  @include margin-box-right-common();
+}

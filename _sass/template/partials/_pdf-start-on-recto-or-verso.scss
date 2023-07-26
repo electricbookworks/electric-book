@@ -1,0 +1,48 @@
+$pdf-start-on-recto-or-verso: true !default;
+@if $pdf-start-on-recto-or-verso {
+
+    // Halftitle and title pages will always start on a right
+    .halftitle-page, .half-title-page,
+    .title-page {
+        page-break-before: right;
+    }
+
+    // By default, these page styles start on right-hand pages only
+    .frontmatter, 
+    .dedication-page, 
+    .epigraph-page, 
+    .contents-page, 
+    .part-page,
+    .chapter,
+    .page-1,
+    // Need to make this very specific to override .chapter setting below
+    .chapter.page-1 { 
+        page-break-before: right;
+
+        @include page-continued();
+    }
+
+    // But they can be overriden by the $start-on variable
+    .frontmatter, 
+    .dedication-page, 
+    .epigraph-page, 
+    .contents-page, 
+    .part-page,
+    .chapter 
+    { 
+        page-break-before: $start-on;
+
+        @include page-continued();
+    }
+
+    // Let user start any element on right, e.g. with
+    // `style: chapter start-on-right`
+    .start-on-right, .start-on-recto {
+        page-break-before: right;
+    }
+
+    // Also see:
+    // _pdf-page-break-tools.scss
+    // _pdf-front-cover.scss
+
+}

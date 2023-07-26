@@ -1,0 +1,10 @@
+---
+# Example variant stylesheet for epub.
+# A variant stylesheet must replace the default
+# stylesheet in this folder entirely.
+---
+
+$edition-suffix: null;
+@import 'template/epub';
+
+// Add variant custom styles here.

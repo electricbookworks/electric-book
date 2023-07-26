@@ -1,0 +1,256 @@
+$pdf-questions: true !default;
+@if $pdf-questions {
+
+    // Question formatting
+
+    .question {
+        box-sizing: border-box; // to include padding in the width
+        margin: $line-height-default 0;
+        // Add some space around images when they're placed with markdown,
+        // rather than in figure includes.
+        p img:only-child {
+            box-sizing: border-box;
+            border: ($line-height-default / 2) solid white; // adds white space, same as other figures in boxes
+            max-width: $main-text-width - $line-height-default;
+        }
+        table {
+            width: auto;
+        }
+        .figure {
+            width: auto;
+            float: none;
+            margin-top: $line-height-default;
+            img {
+                border: ($line-height-default / 2) solid white; // adds artwork space around images with none
+                margin-bottom: 0; // overrides default, which adds $line-height-default
+            }
+            .figure-body {
+                width: 100%; // avoid inheriting explicit width from main .figure
+            }
+            .figure-images {
+                img {
+                    max-width: $main-text-width - ($line-height-default * 2); // width subtracted for mcq padding and white border around image
+                }
+                &.contains-2, &.contains-4, &.contains-8, &.contains-10 {
+                    text-align: justify;
+                    text-align-last: justify;
+                    img {
+                        max-width: ($main-text-width / 2) - ($line-height-default * 2);
+                        padding: 0;
+                        border: 1mm solid white;
+                    }
+                }
+            }
+            &.figure-no-source {
+                // If a figure has no source, caption or reference, then any description
+                // which is hidden, is the last child. In that case, we need no space
+                // below figure-images.
+                &.figure-no-caption {
+                    .figure-images:nth-last-child(2) {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            // Less space between two figures in one question
+            & + .figure {
+                margin-top: -($line-height-default / 2)!important;
+            }
+            // Not sure why we need this given float: none, but it seems necessary
+            // to stop text that follows the figure from wrapping/overlapping it.
+            &:after {
+                content: " ";
+                display: block;
+                clear: both;
+            }
+            & + p {
+                text-indent: 0;
+            }
+        }
+        // Add space before paragraphs that follow .question, and no indent
+        & + p,
+        & + .box + p,
+        & + .sidenote + p,
+        & + .footnote-detail + p    {
+            margin-top: $line-height-default;
+            text-indent: 0;
+        }
+        &.page-break-before {
+            margin-top: 0;
+        }
+        .question-content {
+            // Don't allow a page break before the first
+            // element in a question, i.e. before the question number
+            page-break-before: avoid;
+            // Don't add space after the last item
+            // before the (hidden) question-feedback starts
+            & > *:nth-last-child(2):not(.question-feedback) {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    // Quiz groups, quiz and question numbering.
+    // Questions are gathered in quizzes,
+    // and quizzes can be grouped together, e.g. as a single section or as a complete exam.
+
+    .quiz-group {
+        counter-reset: quiz-group 0 quiz 0;
+    }
+    .quiz {
+        counter-reset: quiz; // question numbering restarts in each quiz...
+        .quiz-group & {
+            counter-reset: none; // ...except when quizzes are grouped together.
+        }
+        &:before {
+            counter-increment: quiz-group;
+            // content: counter(quiz-group); // Uncomment to number quizzes
+        }
+        // Don't number if there is only one quiz in the group
+        &:only-child:before {
+            content: normal;
+        }
+        .question {
+            counter-reset: question;
+            margin-left: $paragraph-indent; // with &:before margin-left, creates hanging indent
+            &:before {
+                counter-increment: quiz;
+                content: counter(quiz) ".";
+                float: left;
+                margin-right: 0.25em;
+                margin-left: -($paragraph-indent); // with parent's margin-left, creates hanging indent
+                page-break-after: avoid;
+            }
+            &:only-of-type:before {
+                content: normal;
+            }
+        }
+        .question ol.sub-questions {
+            list-style-type: none;
+            li {
+                margin-left: $paragraph-indent * 1.5; // with &:before margin-left, creates hanging indent
+                text-indent: -($paragraph-indent * 1.5); // with parent's margin-left, creates hanging indent
+                &:before {
+                    counter-increment: question;
+                    content: counter(quiz) "." counter(question);
+                    display: inline-block;
+                    width: $line-height-default * 1.5;
+                    text-indent: 0; // not to inherit from parent
+                }
+            }
+        }
+    }
+
+    // Marks
+
+    .quiz-group {
+        .quiz-group-total-marks {
+            font-family: $font-text-secondary;
+            font-weight: bold;
+            text-align: right;
+            page-break-before: avoid;
+        }
+    }
+    .quiz {
+        .quiz-total-marks {
+            font-family: $font-text-secondary;
+            font-weight: bold;
+            text-align: right;
+            page-break-before: avoid;
+            clear: right;
+        }
+    }
+    .question {
+        li {
+            // Avoid marks appearing beside wrong text
+            clear: right;
+        }
+        em.marks, strong.marks {
+            font-style: normal;
+            font-weight: normal;
+            float: right;
+            margin-left: 1em;
+            text-indent: 0; // don't inherit parent text-indent
+        }
+        .question-total-marks {
+            font-family: $font-text-secondary;
+            font-weight: bold;
+            text-align: right;
+            page-break-before: avoid;
+            clear: right;
+            &:before {
+                content: "[";
+            }
+            &:after {
+                content: "]";
+            }
+        }
+    }
+
+    // Inputs
+
+    .question {
+        input.fill-in-blank {
+            display: inline;
+            width: 8em;
+            padding: 0.2em;
+            line-height: 1;
+            margin: 0;
+            border-width: 0 0 $rule-thickness 0;
+        }
+    }
+
+    // Question feedback
+
+    .question {
+        // We don't show the feedback in PDF
+        .question-feedback {
+            display: none;
+        }
+    }
+
+    // Multiple-choice questions
+
+    .mcq {
+        // We don't show the feedback in PDF
+        .mcq-feedback {
+            display: none;
+        }
+        // Checkboxes for unordered lists in MCQs
+        ul.mcq-options {
+            li {
+                list-style: none;
+                &:before {
+                    content: "\2009";
+                    float: left;
+                    display: inline-block;
+                    border: 0.75pt solid $color-text-main;
+                    width: $font-size-default / 2;
+                    height: $font-size-default / 2;
+                    margin-left: -$paragraph-indent;
+                    margin-top: $line-height-default / 4;
+                }
+            }
+        }
+        // Because of the hidden mcq-answers/mcq-feedback, we can't add bottom padding
+        // with :last-child. So in these elements, we control spacing with
+        // margin-top rather than the usual margin-bottom. We do have to
+        // nuke this with !important :( This may change in future.
+        p, ul, ol, blockquote {
+            margin-bottom: 0 !important;
+            margin-top: $line-height-default !important;
+            &:first-child {
+                margin-top: 0 !important;
+            }
+        }
+        // Except the element after the first heading, which has no margin-top
+        h1:first-child + *,
+        h2:first-child + *,
+        h3:first-child + *,
+        h4:first-child + *,
+        h5:first-child + *,
+        h6:first-child + * {
+            margin-top: 0 !important;
+        }
+    }
+
+}

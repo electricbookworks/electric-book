@@ -10,7 +10,7 @@ You can gather a number of figures into a set of slides. On the web and in apps,
 [See the docs](https://electricbookworks.github.io/electric-book/docs/editing/slides.html) for how to create a slide sequence like this.
 {% endif %}
 
-<div class="slides">
+<div class="slides wide">
 
 {% include figure
     image="cats.jpg"
@@ -43,6 +43,7 @@ You can gather a number of figures into a set of slides. On the web and in apps,
     slide-caption="Some of the initial primitive outlines are erased, and further details and shadows are added."
     alt-text="Some of the initial primitive outlines are erased, and further details and shadows are added."
     title="Further detail and shadows"
+    class="column-break-before"
 %}
 
 </div>

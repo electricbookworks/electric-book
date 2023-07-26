@@ -1,0 +1,26 @@
+$pdf-previous-publications-page: true !default;
+@if $pdf-previous-publications-page {
+
+    // Previous-publications page ('Also by the author')
+
+    .previous-publications-page {
+        margin: $start-depth auto 0 auto;
+        text-align: center;
+        p {
+            text-indent: 0;
+            margin-bottom: $line-height-default / 2;
+            text-align: center;
+            hyphens: none;
+        }
+        h1, h2 {
+            font-size: $font-size-default * 1.25;
+            margin: 0 0 ($line-height-default) 0;
+            text-align: center;
+        }
+        h3, h4, h5, h6 {
+            text-align: center;
+            font-size: $font-size-default;
+        }
+    }
+
+}
