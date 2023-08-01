@@ -67,6 +67,9 @@ have different behaviour for web or app. {% endcomment %}
 
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
 
+    {% comment %} Load Prince-specific utilities. {% endcomment %}
+    {% include_relative vendor/prince-box-info.js %}
+
     {% comment %}This script gives every heading a title attribute.
     This is useful to Prince, which can use title attributes for running heads.
     By default, we only load it for PDF outputs.{% endcomment %}
@@ -84,6 +87,10 @@ have different behaviour for web or app. {% endcomment %}
     {% comment %}This script detects the page number we are on and provides
     the relevant page cross-reference text as generated content.{% endcomment %}
     {% include_relative page-reference.js %}
+
+    {% comment %} This aligns elements to a baseline grid,
+    where tagged as such. {% endcomment %}
+    {% include_relative baseline-grid.js %}
 
 {% endif %}
 
