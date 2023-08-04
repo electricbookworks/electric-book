@@ -6,21 +6,22 @@ $pdf-code: true !default;
     // and blocks of <code> are in <pre> tags.
 
     code {
-    	font-family: $font-code;
+        font-family: $font-code;
         font-size: 90%;
-    	line-height: $line-height-default;
-    	white-space: pre-wrap;
-    	padding: 0.1em 0.3em;
-    	border-radius: 0.2em;
+        line-height: 1;
+        white-space: pre-wrap;
+        padding: 0.1em 0.3em;
+        border-radius: 0.2em;
     }
 
     pre {
         border-radius: 0.2em;
+        line-height: $line-height-default;
         margin: $line-height-default 0;
         padding: 0 $paragraph-indent;
 
         code {
-        	padding: 0;
+            padding: 0;
         }
 
         & + p {
@@ -34,7 +35,6 @@ $pdf-code: true !default;
     // https://github.com/jekyll/jekyll/issues/3738
     // and https://github.com/jekyll/jekyll/issues/4905
     div[class*="highlighter-"] + p {
-	   text-indent: 0;
+       text-indent: 0;
     }
-
 }
