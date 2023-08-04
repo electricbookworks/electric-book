@@ -1040,6 +1040,7 @@ async function runPrince (argv) {
       // because they are new and not necessarily
       // supported by the installed version
       // of node-prince.
+      .option('max-passes', 3, true)
       .option('fail-dropped-content', true, true)
       .option('fail-missing-glyphs', true, true)
       // The following option is very strict,
