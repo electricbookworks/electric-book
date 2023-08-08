@@ -69,11 +69,11 @@ function ebAlignToGrid (querySelectorString) {
           element.style.marginBottom = newMarginBottom + 'pt'
 
           // Debugging
-          console.log('Grid value: ' + gridValue)
-          console.log('Height: ' + height)
-          console.log('Difference: ' + difference)
-          console.log('Original margin-bottom: ' + elementMarginBottom)
-          console.log('New margin-bottom ' + newMarginBottom)
+          // console.log('Grid value: ' + gridValue)
+          // console.log('Height: ' + height)
+          // console.log('Difference: ' + difference)
+          // console.log('Original margin-bottom: ' + elementMarginBottom)
+          // console.log('New margin-bottom ' + newMarginBottom)
         }
       }
     })
