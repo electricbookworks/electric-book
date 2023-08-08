@@ -88,8 +88,7 @@ have different behaviour for web or app. {% endcomment %}
     the relevant page cross-reference text as generated content.{% endcomment %}
     {% include_relative page-reference.js %}
 
-    {% comment %} This aligns elements to a baseline grid,
-    where tagged as such. {% endcomment %}
+    {% comment %} This aligns elements to a baseline grid. {% endcomment %}
     {% include_relative baseline-grid.js %}
 
 {% endif %}
