@@ -100,6 +100,7 @@ assets/fonts/UbuntuMono-RI.ttf
 
 assets/js/accordion.js
 assets/js/annotation.js
+assets/js/baseline-grid.js
 assets/js/bookmarks.js
 assets/js/bundle.js
 assets/js/copy-to-clipboard.js
