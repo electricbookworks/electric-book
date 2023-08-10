@@ -58,6 +58,11 @@ $sidebar-gap-width: 5mm;
 // Which page styles have a sidebar? These correspond to
 // the styles used in markdown YAML frontmatter as `page: ""`
 $pages-with-sidebar: frontmatter, chapter;
+// Which pages should not have a sidebar?
+// This is for overriding sidebars on pages that
+// would be included in $pages-with-sidebar,
+// were it not for this page style.
+$pages-without-sidebar: index-page;
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
