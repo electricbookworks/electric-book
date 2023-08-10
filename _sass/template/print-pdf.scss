@@ -149,7 +149,7 @@ $start-on: right !default; // right | left | auto
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
 // Set it in multiples of $line-height-default to preserve your baseline grid.
-$start-depth: $line-height-default * 6 !default;
+$start-depth: 0 !default;
 
 // Style of page numbers on frontmatter pages
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
