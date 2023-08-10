@@ -15,9 +15,9 @@ function ebAlignToGrid (querySelectorString) {
   // We use margin, not padding, because in testing it has been
   // more reliable (e.g. padding on a table doesn't add space).
 
-  let elementsToAlign = document.querySelectorAll('h1, h2, h3, h4, h5, img, math[display="block"], p, ol, ul, table, .figure-images, .video, .box, .align-to-baseline')
+  let elementsToAlign = document.querySelectorAll('.content h1, .content h2, .content h3, .content h4, .content h5, .content math[display="block"], .content p, .content ol, .content ul, .content table, .content .figure, .content .video, .content .box, .content .align-to-baseline')
 
-  const elementsToLeave = document.querySelectorAll('li > p')
+  const elementsToLeave = document.querySelectorAll('.content li > p, .content .figure *')
 
   if (querySelectorString) {
     elementsToAlign = document.querySelectorAll(querySelectorString)
@@ -68,7 +68,22 @@ function ebAlignToGrid (querySelectorString) {
           // Give the element that new margin-bottom
           element.style.marginBottom = newMarginBottom + 'pt'
 
+          // Now, the next princeBox might have a margin-top,
+          // and if that margin-top is great than this element's
+          // newMarginBottom, Prince may follow CSS standards
+          // for collapsing vertical margins and only use the
+          // larger margin, rendering our newMarginBottom as zero.
+          // But we can't know what the next princeBox is visually,
+          // because it might not be the next element in the DOM
+          // (e.g. if that's a sidenote or a floated figure).
+          // So we can't solve for this, and have to rely on
+          // this script fixing the baseline grid again lower down
+          // on the page, in the event that margin-collapsing
+          // has broken it in this one place.
+
           // Debugging
+          // console.log(element.tagName)
+          // if (element.id) { console.log('#' + element.id) }
           // console.log('Grid value: ' + gridValue)
           // console.log('Height: ' + height)
           // console.log('Difference: ' + difference)
