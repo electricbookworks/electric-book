@@ -1,5 +1,6 @@
 ---
 title: "Traditional index"
+style: chapter index-page
 ---
 
 ## Traditional index

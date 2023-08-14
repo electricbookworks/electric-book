@@ -15,39 +15,13 @@ $pdf-page-setup: true !default;
 		prince-pdf-page-colorspace: $colorspace;
 	}
 
-	// Name our book-part styles as divs.
-	// PrinceXML needs the pages named for @page rules.
-	.cover {
-		page: cover;
-	}
-	.halftitle-page, .half-title-page {
-		page: halftitle-page;
-	}
-	.title-page {
-		page: title-page;
-	}
-	.previous-publications-page {
-		page: previous-publications-page;
-	}
-	.copyright-page {
-		page: copyright-page;
-	}
-	.dedication-page {
-		page: dedication-page;
-	}
-	.frontispiece-page {
-		page: frontispiece-page;
-	}
-	.contents-page {
-		page: contents-page;
-	}
-	.frontmatter {
-		page: frontmatter; // Use for any other frontmatter
-	}
-	.part-page {
-		page: part-page;
-	}
-	.chapter {
-		page: chapter;
+	// Give names to pages
+
+	$named-page-styles: cover, halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, frontispiece-page, contents-page, frontmatter, part-page, chapter, $pages-with-sidebar, $pages-without-sidebar;
+
+	@each $page-style in $named-page-styles {
+		.wrapper.#{$page-style} {
+			page: $page-style;
+		}
 	}
 }
