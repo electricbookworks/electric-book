@@ -28,8 +28,9 @@ function ebAlignToGrid (querySelectorString) {
 
     // Get the baseline grid. We assume it is the line-height
     // applied to the body element. Need to convert CSS strings to numbers.
-    const gridValuePt = window.getComputedStyle(document.body).lineHeight
-    const gridValue = parseFloat(gridValuePt.replace('pt', ''))
+    // In Prince, getComputedStyle().lineHeight always returns a value in pt.
+    const gridValueWithUnit = window.getComputedStyle(document.body).lineHeight
+    const gridValue = parseFloat(gridValueWithUnit.replace(/[a-z]+/, ''))
 
     // For each element:
     // 1. measure its height
@@ -84,6 +85,7 @@ function ebAlignToGrid (querySelectorString) {
           // Debugging
           // console.log(element.tagName)
           // if (element.id) { console.log('#' + element.id) }
+          // console.log('Grid value with unit: ' + gridValueWithUnit)
           // console.log('Grid value: ' + gridValue)
           // console.log('Height: ' + height)
           // console.log('Difference: ' + difference)
