@@ -2,7 +2,7 @@
 
 // Lint with JS Standard
 
-function ebAlignToGrid (querySelectorString) {
+function ebAlignToGrid (querySelectorToAlign, querySelectorToLeave) {
   // Get all elements we want aligned with baseline grid.
   // Note that unlike InDesign we do not force elements
   // to the next baseline unit. Rather, we add margin-bottom
@@ -17,10 +17,14 @@ function ebAlignToGrid (querySelectorString) {
 
   let elementsToAlign = document.querySelectorAll('.content h1, .content h2, .content h3, .content h4, .content h5, .content math[display="block"], .content p, .content ol, .content ul, .content table, .content .figure, .content .video, .content .box, .content .align-to-baseline')
 
-  const elementsToLeave = document.querySelectorAll('.content li > p, .content .figure *')
+  let elementsToLeave = document.querySelectorAll('.content li > p, .content .figure *')
 
-  if (querySelectorString) {
-    elementsToAlign = document.querySelectorAll(querySelectorString)
+  if (querySelectorToAlign) {
+    elementsToAlign = document.querySelectorAll(querySelectorToAlign)
+  }
+
+  if (querySelectorToLeave) {
+    elementsToLeave = document.querySelectorAll(querySelectorToLeave)
   }
 
   if (elementsToAlign) {
@@ -99,12 +103,16 @@ function ebAlignToGrid (querySelectorString) {
   // Layout changes may have knock-on effects,
   // so we run this again. The max number of iterations
   // is passed to Prince (in helpers.js) as `max-passes`.
-  Prince.registerPostLayoutFunc(ebAlignToGrid)
+  Prince.registerPostLayoutFunc(function () {
+    ebAlignToGrid()
+  })
 }
 
 // See https://www.princexml.com/doc/javascript/#multi-pass-formatting
 // Check if the Prince object exists,
 // in case we're inspecting in a browser.
 if (typeof Prince === 'object') {
-  Prince.registerPostLayoutFunc(ebAlignToGrid)
+  Prince.registerPostLayoutFunc(function () {
+    ebAlignToGrid()
+  })
 }
