@@ -19,4 +19,21 @@ $pdf-sidebar: true !default;
             }
         }
     }
+
+    @each $page-style in $pages-without-sidebar {
+        @page #{$page-style}:left {
+            @leftnote {
+                padding-right: 0;
+                width: 0;
+            }
+        }
+
+        @page #{$page-style}:right {
+            @rightnote {
+                box-sizing: border-box;
+                padding-left: 0;
+                width: 0;
+            }
+        }
+    }
 }

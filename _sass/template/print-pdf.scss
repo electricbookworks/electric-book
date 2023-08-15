@@ -58,6 +58,11 @@ $sidebar-gap-width: 5mm;
 // Which page styles have a sidebar? These correspond to
 // the styles used in markdown YAML frontmatter as `page: ""`
 $pages-with-sidebar: frontmatter, chapter;
+// Which pages should not have a sidebar?
+// This is for overriding sidebars on pages that
+// would be included in $pages-with-sidebar,
+// were it not for this page style.
+$pages-without-sidebar: index-page;
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
@@ -139,12 +144,12 @@ $text-divider-image-height: $line-height-default !default;
 // Should chapters start on a right-hand page (recto) or on any page?
 // This setting applies to the frontmatter, dedication-page, epigraph-page and chapter page styles.
 // (The halftitle-page, title-page and contents-page page styles always start on a recto.)
-$start-on: right !default; // right or auto or left ()
+$start-on: right !default; // right | left | auto
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
 // Set it in multiples of $line-height-default to preserve your baseline grid.
-$start-depth: $line-height-default * 6 !default;
+$start-depth: 0 !default;
 
 // Style of page numbers on frontmatter pages
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}

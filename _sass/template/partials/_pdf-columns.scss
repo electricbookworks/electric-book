@@ -15,6 +15,17 @@ $pdf-columns: true !default;
     .content {
         column-count: $columns-default;
         column-gap: $columns-gap-default;
+
+        // When column-count is 1, Prince collapses
+        // margin-top on the first heading in a div,
+        // which we don't want. So we use auto,
+        // which should default to one column anyway,
+        // but doesn't cause the unexpected behaviour.
+
+        @if $columns-default == 1 {
+            column-count: auto;
+        }
+
         // column-fill: auto; // do not balance columns
         // Allow document-level overrides by
         // columns-x class on body element
