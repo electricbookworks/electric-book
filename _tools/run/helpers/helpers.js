@@ -1030,7 +1030,7 @@ async function runPrince (argv) {
       .option('style', stylesheet)
       .option('javascript')
 
-      // If your project uses and old version of Prince,
+      // If your project uses an old version of Prince,
       // you will need to uncomment unsupported options:
       // tagged-pdf, max-passes, fail-dropped-content,
       // fail-missing-glyphs

@@ -69,7 +69,7 @@ function ebAlignToGrid (querySelectorString) {
           element.style.marginBottom = newMarginBottom + 'pt'
 
           // Now, the next princeBox might have a margin-top,
-          // and if that margin-top is great than this element's
+          // and if that margin-top is greater than this element's
           // newMarginBottom, Prince may follow CSS standards
           // for collapsing vertical margins and only use the
           // larger margin, rendering our newMarginBottom as zero.

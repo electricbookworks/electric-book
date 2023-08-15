@@ -56,7 +56,7 @@ And to add manual hyphens to improve spacing, use discretionary hyphens (aka sof
 
 ### Baseline-grid alignment
 
-Most elements will be automatically aligned to the baseline grid, which is the book's default line height. (This is done handled by `assets/js/baseline-grid.js`.)
+Most elements will be automatically aligned to the baseline grid, which is the book's default line height. (This is done by `assets/js/baseline-grid.js`.)
 
 Our baseline grid works a little differently to what you might have seen in InDesign. Here, if an element's height is not a multiple of the baseline grid, we add space (as `margin-bottom`) to the bottom of the element to make its height a multiple of the default line height. This means the *next* element will begin on the baseline grid.
 
