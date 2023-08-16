@@ -1029,7 +1029,13 @@ async function runPrince (argv) {
       .output(process.cwd() + '/_output/' + outputFilename(argv))
       .option('style', stylesheet)
       .option('javascript')
+
+      // If your project uses an old version of Prince,
+      // you will need to uncomment unsupported options:
+      // tagged-pdf, max-passes, fail-dropped-content,
+      // fail-missing-glyphs
       .option('tagged-pdf')
+
       // These options add too much logging
       // to be useful, but are available if needed.
       // .option('verbose')
@@ -1040,11 +1046,13 @@ async function runPrince (argv) {
       // because they are new and not necessarily
       // supported by the installed version
       // of node-prince.
+      .option('max-passes', 3, true)
       .option('fail-dropped-content', true, true)
-      .option('fail-missing-glyphs', true, true)
-      // The following option is very strict,
+
+      // The following options are very strict,
       // and can cause an unnecessary number of failures
       // especially when working on maths books.
+      // .option('fail-missing-glyphs', true, true)
       // .option('no-system-fonts', true, true)
 
       .timeout(100 * 1000) // required for larger books

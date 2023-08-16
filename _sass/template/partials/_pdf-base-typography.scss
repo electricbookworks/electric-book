@@ -244,6 +244,17 @@ $convert-images-to-color-profile: false !default;
         }
     }
 
+    // Paragraphs that contain only an image.
+    // This class is created by mark-parents.js.
+    .p-img-only-child-parent {
+        margin: $line-height-default 0;
+        text-indent: 0;
+
+        & + p {
+            text-indent: 0;
+        }
+    }
+
     // An option to change the default text-indented paragraphs
     // and close-up lists etc. to have space-between instead.
     @if $spaced-paras {

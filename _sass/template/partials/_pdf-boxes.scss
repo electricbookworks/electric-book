@@ -11,7 +11,7 @@
     font-size: inherit;
     border: $rule-thickness solid $color-accent;
     margin: $line-height-default 0;
-    padding: $line-height-default;
+    padding: ($line-height-default - $rule-thickness) $line-height-default;
     // No text-indent on paragraphs after boxes
     & + p {
         text-indent: 0;
@@ -59,18 +59,17 @@ $pdf-boxes: true !default;
 
     // A regular paragraph as a box
     p.box {
-        padding-bottom: $line-height-default;
+        padding-bottom: $line-height-default - $rule-thickness;
         text-indent: 0;
     }
     // A list as a box
     ol.box,
     ul.box {
-        padding: $line-height-default;
+        padding: ($line-height-default - $rule-thickness) line-height-default;
     }
     // A regular list item as a box
     li.box {
-        padding: $line-height-default;
+        padding: ($line-height-default - $rule-thickness) line-height-default;
         margin-left: $paragraph-indent;
     }
-
 }

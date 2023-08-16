@@ -100,6 +100,7 @@ assets/fonts/UbuntuMono-RI.ttf
 
 assets/js/accordion.js
 assets/js/annotation.js
+assets/js/baseline-grid.js
 assets/js/bookmarks.js
 assets/js/bundle.js
 assets/js/copy-to-clipboard.js
@@ -388,6 +389,7 @@ assets/js/videos.js
 
 assets/js/vendor/elasticlunr.min.js
 assets/js/vendor/mark.min.js
+assets/js/vendor/prince-box-info.js
 assets/js/vendor/svg-inject.min.js
 
 # This is usually project-specific, so not updated by default

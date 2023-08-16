@@ -54,6 +54,16 @@ For instance, to save widows and orphans, you can tighten letter-spacing by addi
 
 And to add manual hyphens to improve spacing, use discretionary hyphens (aka soft hyphens) by adding the HTML entity `&shy;` where you want the soft hyphen.
 
+### Baseline-grid alignment
+
+Most elements will be automatically aligned to the baseline grid, which is the book's default line height. (This is done by `assets/js/baseline-grid.js`.)
+
+Our baseline grid works a little differently to what you might have seen in InDesign. Here, if an element's height is not a multiple of the baseline grid, we add space (as `margin-bottom`) to the bottom of the element to make its height a multiple of the default line height. This means the *next* element will begin on the baseline grid.
+
+If an element is not being automatically adjusted in this way (e.g. it's a `div` with a custom class that `baseline-grid.js` doesn't know about), you can trigger alignment by giving it the class `align-to-baseline`.
+
+If an element *is* being aligned but you don't want it to be, you can give it the class `release-from-baseline-grid` to turn off its alignment.
+
 ### Faster print refinement
 
 When refining print layout (e.g. fixing widows and orphans), this happens:
