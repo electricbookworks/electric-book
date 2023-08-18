@@ -52,17 +52,17 @@ $columns-default: 1 !default;
 // If you do not want a sidebar, set $pdf-sidebar to false:
 $pdf-sidebar: true !default;
 // Width of the sidebar content:
-$sidebar-content-width: 30mm;
+$sidebar-content-width: 30mm !default;
 // The gap between sidebar content and the body text area:
-$sidebar-gap-width: 5mm;
+$sidebar-gap-width: 5mm !default;
 // Which page styles have a sidebar? These correspond to
 // the styles used in markdown YAML frontmatter as `page: ""`
-$pages-with-sidebar: frontmatter, chapter;
+$pages-with-sidebar: frontmatter, chapter !default;
 // Which pages should not have a sidebar?
 // This is for overriding sidebars on pages that
 // would be included in $pages-with-sidebar,
 // were it not for this page style.
-$pages-without-sidebar: index-page;
+$pages-without-sidebar: index-page !default;
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
