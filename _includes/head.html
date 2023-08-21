@@ -19,8 +19,8 @@
     <meta name="date" content="{{ date }}"/>
     <meta name="generator" content="Electric Book"/>
 
-    {% comment %}If this is a translation with its own styles,
-    load the parent styles first, then translation styles override them.{% endcomment %}
+    {% comment %} If this is a translation with its own styles,
+    load the parent styles first, then translation styles override them. {% endcomment %}
     {% if is-translation and translation-styles-exist %}
         <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ print-pdf-stylesheet }}" />
     {% endif %}
@@ -69,8 +69,8 @@ separate HTML files are merged into one body element.
     <meta name="date" content="{{ date }}"/>
     <meta name="generator" content="Electric Book"/>
 
-    {% comment %}If this is a translation with its own styles,
-    load the parent styles first, then translation styles override them.{% endcomment %}
+    {% comment %} If this is a translation with its own styles,
+    load the parent styles first, then translation styles override them. {% endcomment %}
     {% if is-translation and translation-styles-exist %}
         <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ screen-pdf-stylesheet }}" />
     {% endif %}
@@ -102,19 +102,19 @@ separate HTML files are merged into one body element.
 
     <title>{{ html-title }}</title>
 
-    {% comment %}This full meta tag is necessary for Kindle's character encoding to work.{% endcomment %}
+    {% comment %} This full meta tag is necessary for Kindle's character encoding to work. {% endcomment %}
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-    {% comment %}If this is a translation with its own styles,
-    load the parent styles first, then translation styles override them.{% endcomment %}
+    {% comment %} If this is a translation with its own styles,
+    load the parent styles first, then translation styles override them. {% endcomment %}
     {% if is-translation and translation-styles-exist %}
         <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ epub-stylesheet }}" />
     {% endif %}
 
     <link rel="stylesheet" type="text/css" href="{{ path-to-styles-directory }}/{{ epub-stylesheet }}" />
 
-    {% comment %}Metadata defined in page frontmatter overrides
-    project metadata, which is the default from `_data/works`.{% endcomment %}
+    {% comment %} Metadata defined in page frontmatter overrides
+    project metadata, which is the default from `_data/works`. {% endcomment %}
     {% if page.title %}{% capture title %}{{ page.title }}{% endcapture %}{% endif %}
     {% if page.language %}{% capture language %}{{ page.language }}{% endcapture %}{% endif %}
     {% if page.creator %}{% capture creator %}{{ page.creator }}{% endcapture %}{% endif %}
@@ -170,8 +170,8 @@ separate HTML files are merged into one body element.
     {% endcomment %}
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https://fonts.googleapis.com https://www.youtube.com http://player.vimeo.com; style-src 'self' 'unsafe-inline'; media-src * content:; img-src 'self' data: content:;{% if site.mathjax-enabled == true %} script-src 'self' 'unsafe-inline' 'unsafe-eval';{% endif %}">
 
-    {% comment %}OpenGraph metadata. While apps might not use this metadata,
-    descriptions etc. are useful for search indexing.{% endcomment %}
+    {% comment %} OpenGraph metadata. While apps might not use this metadata,
+    descriptions etc. are useful for search indexing. {% endcomment %}
 
     {% include meta-tags.html %}
 
@@ -184,14 +184,14 @@ separate HTML files are merged into one body element.
     {% comment %} Reuse OG description for generic meta description tag {% endcomment %}
     <meta name="description" content="{{ meta-tag-description }}" />
 
-    {% comment %}If we're not in a book subdirectory, load the project stylesheet.
+    {% comment %} If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-root-directory == true or page.collection == "docs" or is-translation-root-directory == true %}
         <link rel="stylesheet" type="text/css" media="all" href="{{ path-to-root-directory }}assets/styles/{{ app-stylesheet }}" />
     {% else %}
 
-        {% comment %}If this is a translation with its own styles,
-        load the parent styles first, then translation styles override them.{% endcomment %}
+        {% comment %} If this is a translation with its own styles,
+        load the parent styles first, then translation styles override them. {% endcomment %}
         {% if is-translation and translation-styles-exist %}
             <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ app-stylesheet }}" />
         {% endif %}
@@ -242,10 +242,10 @@ separate HTML files are merged into one body element.
         <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.canonical-url }}">
     {% endif %}
 
-    {% comment %}Add favicon{% endcomment %}
+    {% comment %} Add favicon {% endcomment %}
     <link rel="icon" type="image/png" href="{{ path-to-root-directory }}assets/images/web/favicon.png">
 
-    {% comment %}OpenGraph metadata{% endcomment %}
+    {% comment %} OpenGraph metadata {% endcomment %}
 
     {% include meta-tags.html %}
 
@@ -258,14 +258,14 @@ separate HTML files are merged into one body element.
     {% comment %} Reuse OG description for generic meta description tag {% endcomment %}
     <meta name="description" content="{{ meta-tag-description }}" />
 
-    {% comment %}If we're not in a book subdirectory, load the project stylesheet.
+    {% comment %} If we're not in a book subdirectory, load the project stylesheet.
     Otherwise, load the styles for this book. {% endcomment %}
     {% if is-root-directory == true or page.collection == "docs" or page.collection == "api" or is-translation-root-directory == true %}
         <link rel="stylesheet" type="text/css" media="all" href="{{ site.baseurl }}/assets/styles/{{ web-stylesheet }}" />
     {% else %}
 
-        {% comment %}If this is a translation with its own styles,
-        load the parent styles first, then translation styles override them.{% endcomment %}
+        {% comment %} If this is a translation with its own styles,
+        load the parent styles first, then translation styles override them. {% endcomment %}
         {% if is-translation and translation-styles-exist %}
             <link rel="stylesheet" type="text/css" href="{{ path-to-parent-styles-directory }}/{{ web-stylesheet }}" />
         {% endif %}
@@ -274,7 +274,7 @@ separate HTML files are merged into one body element.
 
     {% endif %}
 
-    {% comment %}Enable web monetization{% endcomment %}
+    {% comment %} Enable web monetization {% endcomment %}
     {% if site.data.settings.web.monetization.enabled == true %}
         <meta name="monetization" content={{ site.data.settings.web.monetization.ilp-pointer }}>
     {% endif %}
