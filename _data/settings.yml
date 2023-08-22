@@ -175,6 +175,19 @@ web:
   # --------------
   page-tags:
     html-title-divider: " &ndash; "
+  # --------------
+  # SEO
+  # --------------
+  seo:
+    # Use 'noindex' here to prevent Google (etc.) from
+    # including your site in its search results.
+    # The 'live: index' option applies only to builds
+    # that use _config.live.yml. All default and other builds
+    # are 'development' builds. Set 'development: noindex'
+    # to prevent Google (etc.) from indexing those.
+    indexing:
+      development: index
+      live: index
 
 # ----------------------------------------------------------
 # Epub settings
