@@ -8,6 +8,12 @@ whether output-docs == true. {% endcomment %}
 {% comment %} Get the array-of-files to include in the index {% endcomment %}
 {% include files-listed.html %}
 
+{% comment %} Get site.pages as site-pages-for-search and sort it.
+Otherwise, different Ruby infrastructure will sort
+this differently, causing different search results. {% endcomment %}
+{% assign site-pages-for-search = site.pages %}
+{% assign site-pages-for-search = site-pages-for-search | sort: "url" %}
+
 {% comment %} Create an index number. This helps us check that
 the files in this store match those in the index. {% endcomment %}
 {% assign search-store-loop-index = -1 %}
@@ -19,7 +25,7 @@ Also, Jekyll sets page.url for index.html pages as the path
 to the folder, not the file. So we check for that. {% endcomment %}
 var store = [
     {% for url-from-array in array-of-files %}
-        {% for page in site.pages %}
+        {% for page in site-pages-for-search %}
             {% if page.url == url-from-array %}
                 {
                     'title': {% if page.title and page.title != "" %}{{ page.title | jsonify }}{% else %}{{ page.url | replace: "/"," " | jsonify }}{% endif %},
