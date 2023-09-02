@@ -31,5 +31,5 @@
 {% comment %} Clean up space in the list {% endcomment %}
 {% capture list-of-files %}{{ list-of-files | strip_newlines | replace: " ", "" }}{% endcapture %}
 
-{% comment %} Put the list in an array {% endcomment %}
-{% assign array-of-files = list-of-files | replace: "'", "" | split: "," %}
+{% comment %} Put the list in an array and sort it {% endcomment %}
+{% assign array-of-files = list-of-files | replace: "'", "" | split: "," | sort %}
