@@ -8,7 +8,6 @@ image:
 tasks:
   - name: Setup and show EB commands
     init: |
-      npm install
       npm run eb
 
 ports:
