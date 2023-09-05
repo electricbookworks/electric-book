@@ -45,10 +45,6 @@ RUN sudo apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 # Add node source for new nodejs, instead of old Ubuntu-installed node.
 # https://github.com/nodesource/distributions/wiki/How-to-migrate-to-the-new-repository
 
-# Remove the GPG keyring file associated with the old repository
-RUN sudo rm /etc/apt/keyrings/nodesource.gpg
-# Remove the old repository's list file
-RUN sudo rm /etc/apt/sources.list.d/nodesource.list
 # Define the desired Node.js major version
 RUN NODE_MAJOR=18
 # Update local package index
