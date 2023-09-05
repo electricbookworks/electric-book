@@ -35,13 +35,13 @@ github:
     master: true
 
     # Enable for all branches in this repo (defaults to false)
-    branches: false
+    branches: true
 
     # Enable for pull requests coming from this repo (defaults to true)
-    pullRequests: false
+    pullRequests: true
 
     # Enable for pull requests coming from forks (defaults to false)
-    pullRequestsFromForks: false
+    pullRequestsFromForks: true
 
     # Add a check to pull requests (defaults to true)
     addCheck: true
