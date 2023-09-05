@@ -10,8 +10,7 @@ tasks:
 
     # We use a custom NPM cache to avoid Docker cache issues
     init: |
-      export npm_config_cache=/home/gitpod/.npm/CustomCacheDir
-      npm install
+      npm install --cache="/home/gitpod/.npm/CustomCacheDir"
       npm run eb
 
 ports:
@@ -36,13 +35,13 @@ github:
     master: true
 
     # Enable for all branches in this repo (defaults to false)
-    branches: true
+    branches: false
 
     # Enable for pull requests coming from this repo (defaults to true)
-    pullRequests: true
+    pullRequests: false
 
     # Enable for pull requests coming from forks (defaults to false)
-    pullRequestsFromForks: true
+    pullRequestsFromForks: false
 
     # Add a check to pull requests (defaults to true)
     addCheck: true
