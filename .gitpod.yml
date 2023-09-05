@@ -11,6 +11,7 @@ tasks:
     # We use a custom NPM cache to avoid Docker cache issues
     init: |
       npm install --cache="/home/gitpod/.npm/CustomCacheDir"
+      sudo chown -R 33333:33333 "/home/gitpod/.npm/CustomCacheDir"
       npm run eb
 
 ports:
