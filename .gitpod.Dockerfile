@@ -78,6 +78,9 @@ RUN npm install --global gulp-cli
 # Switch to the gitpod user
 USER gitpod
 
+# Let gitpod own the NPM cache dir
+RUN sudo chown -R 33333:33333 "$HOME/gitpod/.npm/CustomCacheDir"
+
 # Set paths for Ruby gems
 RUN echo '# Define Ruby Gems path' >> ~/.bashrc
 RUN echo 'export GEM_HOME="$HOME/.rvm/gems/ruby-2.7.6"' >> ~/.bashrc
