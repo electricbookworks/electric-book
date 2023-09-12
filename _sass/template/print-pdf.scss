@@ -62,7 +62,7 @@ $pages-with-sidebar: frontmatter, chapter !default;
 // This is for overriding sidebars on pages that
 // would be included in $pages-with-sidebar,
 // were it not for this page style.
-$pages-without-sidebar: endmatter !default;
+$pages-without-sidebar: index-page !default;
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
