@@ -111,35 +111,19 @@ $pdf-figures: true !default;
             margin: 0 0 $line-height-default 0;
         }
         &.float-column-top {
-            float: column-top;
+            float: column top;
             margin: 0 0 $line-height-default 0;
         }
         &.float-column-top-next {
-            float: column-top next;
+            float: column top next;
             margin: 0 0 $line-height-default 0;
         }
         &.float-column-bottom {
-            float: column-bottom;
+            float: column bottom;
             margin: $line-height-default 0 0 0;
         }
         &.float-column-bottom-next {
-            float: column-bottom next;
-            margin: $line-height-default 0 0 0;
-        }
-        &.float-column-top-corner {
-            float: column-top-corner;
-            margin: 0 0 $line-height-default 0;
-        }
-        &.float-column-top-corner-next {
-            float: column-top-corner next;
-            margin: 0 0 $line-height-default 0;
-        }
-        &.float-column-bottom-corner {
-            float: column-bottom-corner;
-            margin: $line-height-default 0 0 0;
-        }
-        &.float-column-bottom-corner-next {
-            float: column-bottom-corner next;
+            float: column bottom next;
             margin: $line-height-default 0 0 0;
         }
 
