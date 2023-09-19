@@ -393,7 +393,7 @@ $pdf-slides: true !default;
 $pdf-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $pdf-margin-box-content: true !default; // Sets content for headers and footers
 $pdf-margin-box-style: true !default; // Sets styling for headers and footers
-$pdf-page-setup-lightning-source: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
+$pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
