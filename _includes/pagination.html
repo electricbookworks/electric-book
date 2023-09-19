@@ -8,8 +8,8 @@ use direction="next" or direction="previous". {% endcomment %}
 
 {% include metadata %}
 
-{% comment %} Only paginate book chapters,
-not pages like landing and search pages. {% endcomment %}
+{% comment %} Only paginate parts of books, not external-to-book
+pages like landing and search pages. {% endcomment %}
 {% assign paginate-this-page = false %}
 
 {% if is-book-directory %}

@@ -115,7 +115,7 @@ $black-ink: true !default; // true or rich (true for pure black or rich for rich
 $convert-images-to-color-profile: false !default; // 'true' may convert true black to rich black in images
 
 // We name font variables for two categories:
-// - 'text' fonts are used for body text and some page features;
+// - 'text' fonts are used for body text and some page features
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
