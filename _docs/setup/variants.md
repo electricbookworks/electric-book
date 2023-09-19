@@ -30,7 +30,7 @@ This content will only output when the active-variant is `myvariant`.
 ```
 {% endraw %}
 
-For the `variant` tag to work, you must include the page's metadata at the start of the markdown document. After the YAML frontmatter (the `---`s), add:
+For the `variant` tag to work, you must include the page's metadata at the start of the markdown document. After the top-of-page YAML (the `---`s), add:
 
 {% raw %}
 ```md

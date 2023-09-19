@@ -193,7 +193,7 @@ $title-page-logo-width: $paragraph-indent * 3;
 // * For the book's title: string(book-title)
 // * For the book's creator (usually the author): string(book-creator)
 // * For the body element's title attribute: string(page-header)
-//   Set this body title attribute with `header: Your Title` in a file's YAML frontmatter.
+//   Set this body title attribute with `header: Your Title` in a file's top-of-page YAML.
 //   If you don't set a page header in YAML, string(page-header) will fallback to the page title.
 //   You can also set string(page-header-left) and string(page-header-right) with page YAML
 //   `header-left: "Your Left Header"` and `header-right: "Your Right Header"` respectively.

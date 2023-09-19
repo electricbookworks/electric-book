@@ -49,7 +49,7 @@ If not, use category names.{% endcomment %}
     {% for cat in cat-list %}
 
         {% comment %}Capitalise the first letter of the category name,
-        in case of lowercase category names in YAML frontmatter.{% endcomment %}
+        in case of lowercase category names in top-of-page YAML.{% endcomment %}
         <li class="has-children">
             {% if include.title %}
                 <span class="docs-list-title">{{ include.title }}</span>

@@ -32,7 +32,7 @@ To create true bottom-of-page footnotes, as opposed to endnotes, use the same sy
     notes: footnotes
   ```
 
-- To convert all endnotes to footnotes in a **single markdown document** (e.g. a particular chapter), specify this in the document's YAML page frontmatter. E.g.:
+- To convert all endnotes to footnotes in a **single markdown document** (e.g. a particular chapter), specify this in the document's top-of-page YAML. E.g.:
 
    ``` md
    ---

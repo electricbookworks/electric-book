@@ -24,9 +24,9 @@ Include a question in your book file with the `include question` tag:
 
 ## Multiple-choice questions
 
-If your question file includes a `correct` value in its YAML frontmatter, it will be rendered as an interactive multiple-choice question.
+If your question file includes a `correct` value in its top-of-page YAML, it will be rendered as an interactive multiple-choice question.
 
-MCQ files must include the correct answer option(s) in their YAML frontmatter to be rendered as interactive MCQs in web and app output. They should include feedback for each answer option. Here is an example of an MCQ markdown file:
+MCQ files must include the correct answer option(s) in their top-of-page YAML to be rendered as interactive MCQs in web and app output. They should include feedback for each answer option. Here is an example of an MCQ markdown file:
 
 ``` md
 ---
@@ -66,7 +66,7 @@ You can gather several questions into a quiz using the `include quiz` tag:
 ```
 {% endraw %}
 
-If each question file has a `marks` value in its YAML frontmatter, a quiz will add up those marks and show the total.
+If each question file has a `marks` value in its top-of-page YAML, a quiz will add up those marks and show the total.
 
 ### Applying classes to quizzes
 
@@ -92,7 +92,7 @@ You can collect quizzes into quiz-groups, for instance to create exam papers. To
 
 You can create a quiz group in one of two ways:
 
-1. If an entire markdown file represents a quiz group (e.g. it's a single exam paper), add `quiz-group` to the `style: ` values in the file's YAML frontmatter. For instance:
+1. If an entire markdown file represents a quiz group (e.g. it's a single exam paper), add `quiz-group` to the `style: ` values in the file's top-of-page YAML. For instance:
 
    ``` md
    ---

@@ -41,14 +41,19 @@ Each markdown file in `space-potatoes` is a part of a book, such as a table of c
 ---
 ~~~
 
-And between those `---`s, we can and should specify some information about that part. This information is called YAML frontmatter.
+And between those `---`s, we can and should specify some information about that part. This information is written in YAML syntax.
 
-In each file's YAML frontmatter (the info between `---`s at the top) we specify the book-part's `title` and (sometimes) the book-part's `style` to use for that part. The `style` specifies what kind of book-part it is, such as a `title-page` or `chapter`.
-
-> Technical note: the `style` YAML sets the class attribute of the output HTML's `<body>` element. Themes use that class to control CSS and page structure.
 {:.box}
+Note: the YAML between triple hyphens at the start of a markdown document is technically referred to as 'YAML frontmatter'. We don't use that term here, in order to avoid confusion with book frontmatter, also known as prelim pages. In these docs, we say 'top-of-page YAML'.
 
-When you create your book, we recommend following these conventions for file naming and YAML frontmatter `style` settings:
+In each file's top-of-page YAML (the info between `---`s at the top) we specify the book-part's `title` and (sometimes) the book-part's `style` to use for that part. The `style` specifies what kind of book-part it is, such as `title-page`.
+
+If a page has a `style` set, it must include one of `default-page`, `frontmatter-page`, or `endmatter-page` in order to get margin-box content, like running heads and page numbers. Including `style` *without* one of these effectively turns off margin boxes, which may be your intention, for instance on a `title-page`, which never has running heads or page numbers.
+
+{:.box}
+Technical note: the `style` YAML sets the class attribute of the output HTML's `<body>` element. That class is then used for CSS.
+
+When you create your book, we recommend following these conventions for file naming and top-of-page YAML `style` settings:
 
 | Book section                | Example filename          | Style in YAML                |
 | --------------------------- | ------------------------- | ---------------------------- |
@@ -141,7 +146,7 @@ So, you can create separate markdown files for each section of your book, no mat
 
 But now your PDF is full of page breaks! This creates big lumps of white space between sections and bloats your book's page extent.
 
-So, to avoid a page break *in PDF output* before a markdown file, you must add the `continued` tag to its YAML frontmatter, like this:
+So, to avoid a page break *in PDF output* before a markdown file, you must add the `continued` tag to its top-of-page YAML, like this:
 
 ```
 ---
