@@ -1,6 +1,6 @@
 ---
 title: "Other frontmatter"
-style: frontmatter
+style: frontmatter-page
 ---
 
 # Other frontmatter

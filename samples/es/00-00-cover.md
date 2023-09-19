@@ -1,6 +1,6 @@
 ---
 title: La tapa
-style: cover
+style: cover-page
 ---
 
 {% include cover %}

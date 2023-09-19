@@ -37,3 +37,80 @@ $pdf-sidebar: true !default;
         }
     }
 }
+
+// Set width of top-corner
+@if $pdf-sidebar and $align-top-header-with-body {
+
+    @each $page-style in $pages-with-sidebar {
+        @page #{$page-style}:left {
+            @top-left {
+
+                // We don't want to set a width if there is content here,
+                // because then the width will not stretch to accommodate it.
+                @if index($frontmatter-page-styles, $page-style) {
+                    @if $verso-top-left-frontmatter == normal {
+                        width: $sidebar-content-width + $sidebar-gap-width;
+                    }
+                }
+                @else if $verso-top-left == normal {
+                    width: $sidebar-content-width + $sidebar-gap-width;
+                }
+            }
+            @bottom-left {
+                @if index($frontmatter-page-styles, $page-style) {
+                    @if $verso-bottom-left-frontmatter == normal {
+                        width: $sidebar-content-width + $sidebar-gap-width;
+                    }
+                }
+                @else if $verso-bottom-left == normal {
+                    width: $sidebar-content-width + $sidebar-gap-width;
+                }
+            }
+        }
+
+        @page #{$page-style}:right {
+            @top-right {
+                @if index($frontmatter-page-styles, $page-style) {
+                    @if $verso-top-right-frontmatter == normal {
+                        width: $sidebar-content-width + $sidebar-gap-width;
+                    }
+                }
+                @else if $verso-top-right == normal {
+                    width: $sidebar-content-width + $sidebar-gap-width;
+                }
+            }
+            @bottom-right {
+                @if index($frontmatter-page-styles, $page-style) {
+                    @if $verso-bottom-right-frontmatter == normal {
+                        width: $sidebar-content-width + $sidebar-gap-width;
+                    }
+                }
+                @else if $verso-bottom-right == normal {
+                    width: $sidebar-content-width + $sidebar-gap-width;
+                }
+            }
+        }
+    }
+
+    // Then reset back to `width: auto` for $pages-without-sidebar,
+    // which can include page styles that were also in $pages-with-sidebar.
+    @each $page-style in $pages-without-sidebar {
+        @page #{$page-style}:left {
+            @top-left {
+                width: auto;
+            }
+            @bottom-left {
+                width: auto;
+            }
+        }
+
+        @page #{$page-style}:right {
+            @top-right {
+                width: auto;
+            }
+            @bottom-right {
+                width: auto;
+            }
+        }
+    }
+}

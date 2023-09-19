@@ -2,11 +2,11 @@ $pdf-cover: true !default;
 @if $pdf-cover {
 
     // Cover-page styling. Creates a single-page low-res cover for web PDFs.
-    @page cover {
-    	margin: 0;
+    @page cover-page {
+        margin: 0 0 0 0;
     }
-    .wrapper.cover,
-    div.cover {
+
+    .wrapper.cover-page {
         margin: 0;
         padding: 0;
     }

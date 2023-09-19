@@ -1,6 +1,6 @@
 ---
 title: "Cover"
-style: cover
+style: cover-page
 ---
 
 {% include cover %}

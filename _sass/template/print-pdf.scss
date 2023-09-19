@@ -46,6 +46,30 @@ $crop-marks: crop !default; // crop | none
 $page-info-offset: 5mm !default;
 $columns-default: 1 !default;
 
+// A list of all named page styles.
+// Note: assume that each named page has different
+// margin-box treatment, and they are not compatible, i.e.
+// you can't use more than one page style for a document.
+$named-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page, cover-page, halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page, contents-page, frontmatter-page, part-page, endmatter-page;
+
+// Page styles, especially for margin boxes.
+$default-page-styles: default-page, chapter-page, frontmatter-page, contents-page, endmatter-page !default;
+$frontmatter-page-styles: frontmatter-page, halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, contents-page, dedication-page, epigraph-page, frontispiece-page !default;
+$endmatter-page-styles: endmatter-page !default;
+
+// Page styles with no top, bottom, right, left
+// margin-box styles or content on their first pages
+$top-empty-first-page-styles: default-page, chapter-page, frontmatter-page, contents-page, endmatter-page !default;
+$bottom-empty-first-page-styles: contents-page !default;
+$left-empty-first-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page !default;
+$right-empty-first-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page !default;
+
+// Page styles with no margin-boxes at all
+$top-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
+$bottom-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
+$left-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
+$right-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
+
 // Optional sidebar setup.
 // Sidebars only work when using Prince v15 or later,
 // or Prince for Books 20220701 or later.
@@ -56,13 +80,15 @@ $sidebar-content-width: 30mm !default;
 // The gap between sidebar content and the body text area:
 $sidebar-gap-width: 5mm !default;
 // Which page styles have a sidebar? These correspond to
-// the styles used in markdown YAML frontmatter as `page: ""`
-$pages-with-sidebar: frontmatter, chapter !default;
+// the styles used in markdown top-of-page YAML as `page: ""`
+$pages-with-sidebar: default-page !default;
 // Which pages should not have a sidebar?
 // This is for overriding sidebars on pages that
 // would be included in $pages-with-sidebar,
 // were it not for this page style.
-$pages-without-sidebar: index-page !default;
+$pages-without-sidebar: frontmatter-page, endmatter-page !default;
+// Align top margin-boxes with body text when sidebar is on
+$align-top-header-with-body: true !default;
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
@@ -141,15 +167,17 @@ $text-divider-text: "" !default; // Empty leaves space. \2022 is a bullet
 $text-divider-image: "" !default;
 $text-divider-image-height: $line-height-default !default;
 
-// Should chapters start on a right-hand page (recto) or on any page?
-// This setting applies to the frontmatter, dedication-page, epigraph-page and chapter page styles.
-// (The halftitle-page, title-page and contents-page page styles always start on a recto.)
-$start-on: right !default; // right | left | auto
+// Which page styles start on a right-hand page (recto) or on any page?
+$start-on-recto: default-page, chapter-page, frontmatter-page, endmatter-page, part-page, dedication-page, epigraph-page !default;
+$start-on-verso: null !default;
+$start-on-recto-or-verso: null !default;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
 // Set it in multiples of $line-height-default to preserve your baseline grid.
 $start-depth: 0 !default;
+// Which page styles use this start-depth?
+$start-depth-page-styles: halftitle-page, half-title-page, title-page, dedication-page, epigraph-page, part-page !default;
 
 // Style of page numbers on frontmatter pages
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
@@ -404,15 +432,17 @@ $pdf-page-setup-lightning-source: false !default; // Removes crop marks and sets
 // Add font-face rules
 @import "template/partials/pdf-font-faces";
 
-// Page setup and control, avoid changing these
+// Page setup and control
 @import "template/partials/pdf-pdf-view"; // Sets the default initial view on PDFs
-@import "template/partials/pdf-sidebar"; // redefines margins if $pdf-sidebar is true
 @import "template/partials/pdf-page-setup"; // Sets up the page from your variables
+@import "template/partials/pdf-margin-box-content"; // Sets content for headers and footers
+@import "template/partials/pdf-margin-box-style"; // Sets styling for headers and footers
+@import "template/partials/pdf-sidebar"; // redefines margins if $pdf-sidebar is true
 @import "template/partials/pdf-page-break-tools"; // Provides classes for semantic page breaks
 @import "template/partials/pdf-hide-non-printing"; // Hides anything .non-printing
-@import "template/partials/pdf-fitting"; // Classes for floating, tracking, shrinking, etc.
 @import "template/partials/pdf-hyphenation"; // Sets hyphenation dictionary
 @import "template/partials/pdf-baseline-grid"; // Shows a baseline grid
+@import "template/partials/pdf-page-setup-ingram"; // Removes crop marks and sets 3mm trim for Ingram POD
 
 // Book features
 @import "template/partials/pdf-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
@@ -449,12 +479,12 @@ $pdf-page-setup-lightning-source: false !default; // Removes crop marks and sets
 @import "template/partials/pdf-select-questions";
 @import "template/partials/pdf-cross-refs";
 @import "template/partials/pdf-slides";
-@import "template/partials/pdf-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
-@import "template/partials/pdf-margin-box-content"; // Sets content for headers and footers
-@import "template/partials/pdf-margin-box-style"; // Sets styling for headers and footers
 
-// Lightning Source setup
-@import "template/partials/pdf-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
+// Classes for floating, tracking, shrinking, etc.
+@import "template/partials/pdf-fitting";
+
+// Resets p indents, margins after other elements. Must be last @import in list.
+@import "template/partials/pdf-reset-sequences";
 
 // Theme rules
 @import "theme/pdf-rules";

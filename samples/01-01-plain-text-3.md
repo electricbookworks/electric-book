@@ -1,6 +1,6 @@
 ---
 title: "Plain text"
-style: chapter continued
+style: default-page continued
 ---
 
 #### III.

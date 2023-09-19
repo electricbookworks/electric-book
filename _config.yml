@@ -231,13 +231,10 @@ sass:
 # For technical details, see http://jekyllrb.com/docs/configuration/#front-matter-defaults.
 defaults:
   -
-    scope: # Sets default page frontmatter for all files in this project (an empty string "" for path means all files).
+    # Set default page style for all files in project
+    # (empty string "" for path means all files)
+    scope:
       path: ""
     values:
       layout: "default"
-      style: "chapter"
-  -
-    scope: # Sets default page frontmatter for all files in this project (an empty string "" for path means all files).
-      path: "_items"
-    values:
-      layout: "min"
+      style: "default-page"

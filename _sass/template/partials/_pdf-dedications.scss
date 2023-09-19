@@ -3,9 +3,6 @@ $pdf-dedications: true !default;
 
     // Dedications
 
-    .dedication-page {
-        margin-top: $start-depth;
-    }
     p.dedication {
     	text-indent: 0;
     	text-align: center;
