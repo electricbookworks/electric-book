@@ -23,6 +23,7 @@ $pdf-sidebar: true !default;
     @each $page-style in $pages-without-sidebar {
         @page #{$page-style}:left {
             @leftnote {
+                box-sizing: border-box;
                 padding-right: 0;
                 width: 0;
             }
