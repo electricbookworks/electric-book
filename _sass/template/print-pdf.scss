@@ -38,8 +38,8 @@ $page-width: 178mm !default;
 $page-height: 254mm !default;
 $margin-top: 60pt !default; // set in points to align with baseline grid
 $margin-bottom: 60pt !default;
-$margin-outside: 20mm !default;
-$margin-inside: 20mm !default;
+$margin-outside: 15mm !default;
+$margin-inside: 15mm !default;
 $bleed: 3mm !default;
 $trim: 3mm !default;
 $crop-marks: crop !default; // crop | none
@@ -78,7 +78,7 @@ $pdf-sidebar: true !default;
 // Width of the sidebar content:
 $sidebar-content-width: 30mm !default;
 // The gap between sidebar content and the body text area:
-$sidebar-gap-width: 5mm !default;
+$sidebar-gap-width: 3mm !default;
 // Which page styles have a sidebar? These correspond to
 // the styles used in markdown top-of-page YAML as `page: ""`
 $pages-with-sidebar: default-page !default;
@@ -137,7 +137,7 @@ $text-align: justify !default; // left or right or inside or outside or justify 
 $orphans: 1 !default; // Minimum number of lines that must be left at the bottom of the first page
 $widows: 1 !default; // Minimum number of lines that must be left at the top of the second page
 $letter-spacing-text: 0em !default; // Default letter-spacing for p, ul, ol, dl. Set in ems, e.g. 0.01em for 10/1000s of an em.
-$math-size-percent: 85%; // Adjust this to make math character size match your body font
+$math-size-percent: 85% !default; // Adjust this to make math character size match your body font
 
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
@@ -175,7 +175,8 @@ $start-on-recto-or-verso: null !default;
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
 // Set it in multiples of $line-height-default to preserve your baseline grid.
-$start-depth: 0 !default;
+$start-depth: $line-height-default * 15 !default;
+
 // Which page styles use this start-depth?
 $start-depth-page-styles: halftitle-page, half-title-page, title-page, dedication-page, epigraph-page, part-page !default;
 
@@ -184,7 +185,7 @@ $start-depth-page-styles: halftitle-page, half-title-page, title-page, dedicatio
 $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see http://www.princexml.com/doc/gen-content/#idp54010640
 
 // Other PDF features
-$title-page-logo-width: $paragraph-indent * 3;
+$title-page-logo-width: $paragraph-indent * 3 !default;
 
 // Set the content of headers and footers.
 //
@@ -207,83 +208,79 @@ $title-page-logo-width: $paragraph-indent * 3;
 // * For other special characters, see CSS (ISO) at https://brajeshwar.github.io/entities/
 
 // To see the margin boxes highlighted, set this to true.
-$show-margin-boxes: false;
+$show-margin-boxes: false !default;
 
 // Verso (left-hand-page)
 $verso-top: string(page-header) !default;
-$verso-top-left: "" !default;
-$verso-top-right: "" !default;
-$verso-top-left-corner: "" !default;
-$verso-top-right-corner: "" !default;
+$verso-top-left: normal !default;
+$verso-top-right: normal !default;
+$verso-top-left-corner: normal !default;
+$verso-top-right-corner: normal !default;
 $verso-bottom: counter(page) !default;
-$verso-bottom-left: "" !default;
-$verso-bottom-right: "" !default;
-$verso-bottom-left-corner: "" !default;
-$verso-bottom-right-corner: "" !default;
-$verso-left: "" !default;
-$verso-left-top: "" !default;
-$verso-left-bottom: "" !default;
-$verso-right: "" !default;
-$verso-right-top: "" !default;
-$verso-right-bottom: "" !default;
+$verso-bottom-left: normal !default;
+$verso-bottom-right: normal !default;
+$verso-bottom-left-corner: normal !default;
+$verso-bottom-right-corner: normal !default;
+$verso-left: normal !default;
+$verso-left-top: normal !default;
+$verso-left-bottom: normal !default;
+$verso-right: normal !default;
+$verso-right-top: normal !default;
+$verso-right-bottom: normal !default;
 
 // Recto (right-hand-page)
 $recto-top: string(h2-title, last) !default;
-$recto-top-left: "" !default;
-$recto-top-right: "" !default;
-$recto-top-left-corner: "" !default;
-$recto-top-right-corner: "" !default;
+$recto-top-left: normal !default;
+$recto-top-right: normal !default;
+$recto-top-left-corner: normal !default;
+$recto-top-right-corner: normal !default;
 $recto-bottom: counter(page) !default;
-$recto-bottom-left: "" !default;
-$recto-bottom-right: "" !default;
-$recto-bottom-left-corner: "" !default;
-$recto-bottom-right-corner: "" !default;
-$recto-left: "" !default;
-$recto-left-top: "" !default;
-$recto-left-bottom: "" !default;
-$recto-right: "" !default;
-$recto-right-top: "" !default;
-$recto-right-bottom: "" !default;
+$recto-bottom-left: normal !default;
+$recto-bottom-right: normal !default;
+$recto-bottom-left-corner: normal !default;
+$recto-bottom-right-corner: normal !default;
+$recto-left: normal !default;
+$recto-left-top: normal !default;
+$recto-left-bottom: normal !default;
+$recto-right: normal !default;
+$recto-right-top: normal !default;
+$recto-right-bottom: normal !default;
 
 // Verso (left-hand-page) for .frontmatter pages (`style: frontmatter`)
-$verso-top-frontmatter: string(page-header) !default;
-$verso-top-left-frontmatter: "" !default;
-$verso-top-right-frontmatter: "" !default;
-$verso-top-left-corner-frontmatter: "" !default;
-$verso-top-right-corner-frontmatter: "" !default;
-$verso-bottom-frontmatter: counter(page, $frontmatter-reference-style) !default;
-$verso-bottom-left-frontmatter: "" !default;
-$verso-bottom-right-frontmatter: "" !default;
-$verso-bottom-left-corner-frontmatter: "" !default;
-$verso-bottom-right-corner-frontmatter: "" !default;
-$verso-left-frontmatter: "" !default;
-$verso-left-top-frontmatter: "" !default;
-$verso-left-bottom-frontmatter: "" !default;
-$verso-right-frontmatter: "" !default;
-$verso-right-top-frontmatter: "" !default;
-$verso-right-bottom-frontmatter: "" !default;
+$verso-top-frontmatter: normal !default;
+$verso-top-left-frontmatter: string(page-header) !default;
+$verso-top-right-frontmatter: normal !default;
+$verso-top-left-corner-frontmatter: normal !default;
+$verso-top-right-corner-frontmatter: normal !default;
+$verso-bottom-frontmatter: normal !default;
+$verso-bottom-left-frontmatter: counter(page, $frontmatter-reference-style) !default;
+$verso-bottom-right-frontmatter: normal !default;
+$verso-bottom-left-corner-frontmatter: normal !default;
+$verso-bottom-right-corner-frontmatter: normal !default;
+$verso-left-frontmatter: normal !default;
+$verso-left-top-frontmatter: normal !default;
+$verso-left-bottom-frontmatter: normal !default;
+$verso-right-frontmatter: normal !default;
+$verso-right-top-frontmatter: normal !default;
+$verso-right-bottom-frontmatter: normal !default;
 
 // Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
-$recto-top-frontmatter: string(h2-title, last) !default;
-$recto-top-left-frontmatter: "" !default;
-$recto-top-right-frontmatter: "" !default;
-$recto-top-left-corner-frontmatter: "" !default;
-$recto-top-right-corner-frontmatter: "" !default;
-$recto-bottom-frontmatter: counter(page, $frontmatter-reference-style) !default;
-$recto-bottom-left-frontmatter: "" !default;
-$recto-bottom-right-frontmatter: "" !default;
-$recto-bottom-left-corner-frontmatter: "" !default;
-$recto-bottom-right-corner-frontmatter: "" !default;
-$recto-left-frontmatter: "" !default;
-$recto-left-top-frontmatter: "" !default;
-$recto-left-bottom-frontmatter: "" !default;
-$recto-right-frontmatter: "" !default;
-$recto-right-top-frontmatter: "" !default;
-$recto-right-bottom-frontmatter: "" !default;
-
-// Are there headers and footers on the first pages?
-// Set to blank or show.
-$first-page-margin-boxes: blank !default;
+$recto-top-frontmatter: normal !default;
+$recto-top-left-frontmatter: normal !default;
+$recto-top-right-frontmatter: string(h2-title, last) !default;
+$recto-top-left-corner-frontmatter: normal !default;
+$recto-top-right-corner-frontmatter: normal !default;
+$recto-bottom-frontmatter: normal !default;
+$recto-bottom-left-frontmatter: normal !default;
+$recto-bottom-right-frontmatter: counter(page, $frontmatter-reference-style) !default;
+$recto-bottom-left-corner-frontmatter: normal !default;
+$recto-bottom-right-corner-frontmatter: normal !default;
+$recto-left-frontmatter: normal !default;
+$recto-left-top-frontmatter: normal !default;
+$recto-left-bottom-frontmatter: normal !default;
+$recto-right-frontmatter: normal !default;
+$recto-right-top-frontmatter: normal !default;
+$recto-right-bottom-frontmatter: normal !default;
 
 // Set styles for headers and footers
 $header-font: $font-text-secondary !default;
