@@ -539,7 +539,7 @@ async function convertXHTMLLinks (argv) {
 // Run HTML transformations on elements in epubs
 async function epubHTMLTransformations (argv) {
   'use strict'
-  console.log('Adding ARIA roles ...')
+  console.log('Running epub HTML transformations ...')
 
   try {
     let epubHTMLTransformationsProcess
@@ -556,7 +556,7 @@ async function epubHTMLTransformations (argv) {
         ['runEpubTransformations', '--book', argv.book]
       )
     }
-    await logProcess(epubHTMLTransformationsProcess, 'Sidenotes ARIA role')
+    await logProcess(epubHTMLTransformationsProcess, 'Run epub HTML transformations')
     return true
   } catch (error) {
     console.log(error)
