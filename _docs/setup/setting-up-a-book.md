@@ -91,8 +91,7 @@ Page styles we've built into the template include:
 *	`epigraph-page` for an epigraph page
 *	`frontispiece-page` for a frontispiece page
 *	`frontmatter-page` for other prelim pages not accounted for otherwise
-*	`reference-index-page` for the index at the back of a book
-*	`endmatter-page` for other endmatter pages not accounted for otherwise
+*	`endmatter-page` for endmatter pages
 *	`default-page` for a book's default chapter page (and the global default)
 
 Note that they all end with `-page`. Use only one `-page` style for a document. If you use more than one, only one of them will be applied.
