@@ -1055,7 +1055,8 @@ async function runPrince (argv) {
       // .option('fail-missing-glyphs', true, true)
       // .option('no-system-fonts', true, true)
 
-      .timeout(100 * 1000) // required for larger books
+      .timeout(100 * 100000) // large timeout required for large books
+      .maxbuffer(10 * 1024) // show progress more often
       .on('stderr', function (line) { console.log(line) })
       .on('stdout', function (line) { console.log(line) })
       .execute()
