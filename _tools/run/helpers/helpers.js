@@ -1057,7 +1057,7 @@ async function runPrince (argv) {
 
       .timeout(100 * 100000) // large timeout required for large books
       .maxbuffer(10 * 1024) // show progress more often
-      .on('stderr', function (line) { console.log(line) })
+      .on('stderr', function (line) { console.error(line) })
       .on('stdout', function (line) { console.log(line) })
       .execute()
       .then(function () {
