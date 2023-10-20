@@ -73,6 +73,14 @@
             -prince-float: wide;
         }
 
+        &.pdf-align-top {
+            -prince-float: sidenote align-top;
+        }
+
+        &.pdf-align-bottom {
+            -prince-float: sidenote align-bottom;
+        }
+
     } @else {
 
         // This version of the mixin assumes there is no sidebar,

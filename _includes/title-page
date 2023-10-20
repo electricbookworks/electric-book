@@ -20,27 +20,54 @@ as body text despite CSS rules for em size.
 
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
    <p class="title-page-title">
-      {{ title }}
+      {% if include.title %}
+          {{ include.title }}
+      {% else %}
+         {{ title }}
+      {% endif %}
    </p>
 {% else %}
    <h1 class="title-page-title">
-      {{ title }}
+      {% if include.title %}
+          {{ include.title }}
+      {% else %}
+         {{ title }}
+      {% endif %}
    </h1>
 {% endif %}
 
 <p class="title-page-subtitle">
-   {{ subtitle }}
+   {% if include.subtitle %}
+       {{ include.subtitle }}
+   {% else %}
+      {{ subtitle }}
+   {% endif %}
 </p>
 
 <p class="title-page-author">
-   {{ creator }}
+   {% if include.author %}
+       {{ include.author }}
+   {% else %}
+      {{ creator }}
+   {% endif %}
 </p>
 
 <p class="title-page-contributor">
-   {{ contributor }}
+   {% if include.contributor %}
+       {{ include.contributor }}
+   {% else %}
+      {{ contributor }}
+   {% endif %}
 </p>
 
+{% if include.logo %}
 {% include image
-   file=project-logo
+   file=include.logo
    class="title-page-logo"
    folder="assets" %}
+{% else %}
+   {% include image
+      file=project-logo
+      class="title-page-logo"
+      folder="assets" %}
+{% endif %}

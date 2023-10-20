@@ -16,35 +16,19 @@
       margin-top: 0;
     }
     &.float-column-top#{$edition-suffix} {
-      float: column-top;
+      float: column top;
       margin-top: 0;
     }
     &.float-column-bottom#{$edition-suffix} {
-      float: column-bottom;
+      float: column bottom;
       margin-bottom: 0;
     }
     &.float-column-top-next#{$edition-suffix} {
-      float: column-top next;
+      float: column top next;
       margin-top: 0;
     }
     &.float-column-bottom-next#{$edition-suffix} {
-      float: column-bottom next;
-      margin-bottom: 0;
-    }
-    &.float-column-top-corner#{$edition-suffix} {
-      float: column-top-corner next;
-      margin-top: 0;
-    }
-    &.float-column-bottom-corner#{$edition-suffix} {
-      float: column-bottom-corner next;
-      margin-bottom: 0;
-    }
-    &.float-column-top-corner-next#{$edition-suffix} {
-      float: column-top-corner next;
-      margin-top: 0;
-    }
-    &.float-column-bottom-corner-next#{$edition-suffix} {
-      float: column-bottom-corner next;
+      float: column bottom next;
       margin-bottom: 0;
     }
   } @else {
@@ -63,35 +47,19 @@
       margin-top: 0;
     }
     .float-column-top#{$edition-suffix} {
-      float: column-top;
+      float: column top;
       margin-top: 0;
     }
     .float-column-bottom#{$edition-suffix} {
-      float: column-bottom;
+      float: column bottom;
       margin-bottom: 0;
     }
     .float-column-top-next#{$edition-suffix} {
-      float: column-top next;
+      float: column top next;
       margin-top: 0;
     }
     .float-column-bottom-next#{$edition-suffix} {
-      float: column-bottom next;
-      margin-bottom: 0;
-    }
-    .float-column-top-corner#{$edition-suffix} {
-      float: column-top-corner next;
-      margin-top: 0;
-    }
-    .float-column-bottom-corner#{$edition-suffix} {
-      float: column-bottom-corner next;
-      margin-bottom: 0;
-    }
-    .float-column-top-corner-next#{$edition-suffix} {
-      float: column-top-corner next;
-      margin-top: 0;
-    }
-    .float-column-bottom-corner-next#{$edition-suffix} {
-      float: column-bottom-corner next;
+      float: column bottom next;
       margin-bottom: 0;
     }
   }

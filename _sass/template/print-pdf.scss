@@ -111,7 +111,7 @@ $text-align: justify !default; // left or right or inside or outside or justify 
 $orphans: 1 !default; // Minimum number of lines that must be left at the bottom of the first page
 $widows: 1 !default; // Minimum number of lines that must be left at the top of the second page
 $letter-spacing-text: 0em !default; // Default letter-spacing for p, ul, ol, dl. Set in ems, e.g. 0.01em for 10/1000s of an em.
-$math-size-percent: 85%; // Adjust this to make math character size match your body font
+$math-size-percent: 85% !default; // Adjust this to make math character size match your body font
 
 // Do you want space between paragraphs, rather than a text-indent? true or false
 $spaced-paras: false !default;
@@ -155,8 +155,13 @@ $start-depth: 0 !default;
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
 $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see http://www.princexml.com/doc/gen-content/#idp54010640
 
+// Elements that float. When these are surrounded by paragraphs,
+// the following paragraph should be indented when we are not
+// using $spaced-paras.
+$floated-element-classes: sidenote !default;
+
 // Other PDF features
-$title-page-logo-width: $paragraph-indent * 3;
+$title-page-logo-width: $paragraph-indent * 3 !default;
 
 // Set the content of headers and footers.
 //
@@ -179,7 +184,7 @@ $title-page-logo-width: $paragraph-indent * 3;
 // * For other special characters, see CSS (ISO) at https://brajeshwar.github.io/entities/
 
 // To see the margin boxes highlighted, set this to true.
-$show-margin-boxes: false;
+$show-margin-boxes: false !default;
 
 // Verso (left-hand-page)
 $verso-top: string(page-header) !default;
