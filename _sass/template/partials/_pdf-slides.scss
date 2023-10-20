@@ -10,6 +10,7 @@ $pdf-slides: true !default;
         column-fill: balance; // default anyway, but making it explicit here
         widows: 1; // ensures a column balance when containing only three slides
         orphans: 1; // ensures a column balance when containing only three slides
+        text-align: inside;
 
         .figure {
             float: none;
@@ -167,35 +168,19 @@ $pdf-slides: true !default;
             margin: 0 0 $line-height-default 0;
         }
         &.float-column-top {
-            float: column-top;
+            float: column top;
             margin: 0 0 $line-height-default 0;
         }
         &.float-column-top-next {
-            float: column-top next;
+            float: column top next;
             margin: 0 0 $line-height-default 0;
         }
         &.float-column-bottom {
-            float: column-bottom;
+            float: column bottom;
             margin: $line-height-default 0 0 0;
         }
         &.float-column-bottom-next {
-            float: column-bottom next;
-            margin: $line-height-default 0 0 0;
-        }
-        &.float-column-top-corner {
-            float: column-top-corner;
-            margin: 0 0 $line-height-default 0;
-        }
-        &.float-column-top-corner-next {
-            float: column-top-corner next;
-            margin: 0 0 $line-height-default 0;
-        }
-        &.float-column-bottom-corner {
-            float: column-bottom-corner;
-            margin: $line-height-default 0 0 0;
-        }
-        &.float-column-bottom-corner-next {
-            float: column-bottom-corner next;
+            float: column bottom next;
             margin: $line-height-default 0 0 0;
         }
         // No float
@@ -211,22 +196,12 @@ $pdf-slides: true !default;
         .slides {
 
             &.wide {
+                -prince-float: wide;
                 column-count: 3;
                 column-gap: $sidebar-gap-width;
-                margin-outside: -($sidebar-gap-width + $sidebar-content-width);
                 width: $content-width;
 
                 .figure {
-
-                    // When there are only two slides (a summary and two figures)
-                    // we shift those inside to avoid the empty third column.
-                    // This CSS selects the second and third of three siblings.
-                    // When this doesn't work, you need to use .column-break-after
-                    // or .column-break-before (see above).
-                    &:nth-child(2):nth-last-child(2),
-                    &:nth-child(3):nth-last-child(1) {
-                        margin-outside: $sidebar-content-width + $sidebar-gap-width;
-                    }
 
                     &.summary {
                         margin-outside: $content-width - $main-text-width;

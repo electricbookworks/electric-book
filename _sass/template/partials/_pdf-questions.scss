@@ -78,9 +78,6 @@ $pdf-questions: true !default;
             margin-top: 0;
         }
         .question-content {
-            // Don't allow a page break before the first
-            // element in a question, i.e. before the question number
-            page-break-before: avoid;
             // Don't add space after the last item
             // before the (hidden) question-feedback starts
             & > *:nth-last-child(2):not(.question-feedback) {

@@ -43,8 +43,22 @@ RUN sudo apt-get install -y \
 RUN sudo apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Add node source for new nodejs, instead of old Ubuntu-installed node.
-# That install script also prompts to do sudo apt-get install -y nodejs
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+# https://github.com/nodesource/distributions/wiki/How-to-migrate-to-the-new-repository
+
+# Update local package index
+RUN sudo apt-get update
+# Install necessary packages for downloading and verifying new repository information
+RUN sudo apt-get install -y ca-certificates curl gnupg
+# Create a directory for the new repository's keyring, if it doesn't exist
+RUN sudo mkdir -p /etc/apt/keyrings
+# Download the new repository's GPG key and save it in the keyring directory
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+# Add the new repository's source list with its GPG key for package verification
+# Note: `node_20` means Node version 20. Update in future as needed.
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+# Update local package index to recognize the new repository
+RUN sudo apt-get update
+# Install Node.js from the new repository
 RUN sudo apt-get install -y nodejs
 
 # Install PrinceXML for printing to PDF
@@ -63,6 +77,9 @@ RUN npm install --global gulp-cli
 
 # Switch to the gitpod user
 USER gitpod
+
+# Let gitpod own the NPM cache dir
+RUN sudo chown -R 33333:33333 "$HOME/.npm"
 
 # Set paths for Ruby gems
 RUN echo '# Define Ruby Gems path' >> ~/.bashrc

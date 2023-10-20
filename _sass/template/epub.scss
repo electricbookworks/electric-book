@@ -111,7 +111,12 @@ $text-divider-image: "" !default;
 $text-divider-image-width: $line-height-default !default;
 
 // Other features
-$title-page-logo-width: 5rem;
+$title-page-logo-width: 5rem !default;
+
+// Elements that float. When these are surrounded by paragraphs,
+// the following paragraph should be indented when we are not
+// using $spaced-paras.
+$floated-element-classes: sidenote !default;
 
 // ---------------------------------
 // Set to false to turn partials off

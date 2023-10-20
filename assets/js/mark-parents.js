@@ -21,23 +21,24 @@
 // Set the child element's class at Options below.
 
 // Options: use querySelectorAll strings, comma-separated
-const ebMarkParentsOfTheseChildren = 'p > img:only-child'
+// - `p > img:only-child`: paragraphs that contain only an image
+// - `.slides .figure:nth-child(3):nth-last-child(1)`: slides that contain a summary and only two sub-slides
+const ebMarkParentsOfTheseChildren = 'p > img:only-child, .slides .figure:nth-child(3):nth-last-child(1)'
 
 // Promote
 function ebMarkParent (child, prefix) {
   'use strict'
 
   // If the child has a classlist, copy those class names
-  // to the parent with a '-parent' suffix. This creates elegant classnames.
-  // Otherwise, add a class to the parent made from the selector we've used.
+  // to the parent with a '-parent' suffix. This creates elegant classnames for CSS.
+  // Then add a class to the parent made from the selector we've used.
   if (child.classList.length > 0) {
     let i
     for (i = 0; i < child.classList.length; i += 1) {
       child.parentNode.classList.add(child.classList[i] + '-parent')
     }
-  } else {
-    child.parentNode.classList.add(prefix + '-parent')
   }
+  child.parentNode.classList.add(prefix + '-parent')
 }
 
 // Find the child elements we're after and, if we find any,
