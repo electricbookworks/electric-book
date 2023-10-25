@@ -32,6 +32,12 @@ To create a new book in a new project:
 1.  Inside each book's folder, store images in the `images/_source` folder. Add a `cover.jpg` image of your book's front cover there, too.
 1. In each book's `styles` folder, edit the values in `print-pdf.scss`, `screen-pdf.scss`, `web.scss` and `epub.scss`.
 
+### Marking a book as 'unpublished'
+
+Sometimes you are working on a book but you do not yet want it to be included in places like navigation lists and the content API. To mark it as unpublished, add `published: false` to its `default.yml` file.
+
+Its HTML files will still be generated (unless you exclude them in a `_config` file), but it will not be listed in places that draw book data from `_data/works`.
+
 ## Creating book content
 
 Each markdown file in `space-potatoes` is a part of a book, such as a table of contents or a chapter. Each file must start with:

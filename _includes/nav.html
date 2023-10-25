@@ -119,6 +119,14 @@
                         {% assign this-work = work[1] %}
                     {% endif %}
 
+                    {% comment %} If this work is not published, skip it. {% endcomment %}
+                    {% if this-work[variant].published == false %}
+                        {% continue %}
+                    {% endif %}
+                    {% if this-work.default.published == false %}
+                        {% continue %}
+                    {% endif %}
+
                     {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}
                     {% if this-work[variant].products[site.output].nav and this-work[variant].products[site.output].nav != "" %}
                         {% assign home-nav-work-tree = this-work[variant].products[site.output].nav %}
@@ -154,6 +162,14 @@
                             {% endif %}
                         {% else %}
                             {% assign this-work = work[1] %}
+                        {% endif %}
+
+                        {% comment %} If this work is not published, skip it. {% endcomment %}
+                        {% if this-work[variant].published == false %}
+                            {% continue %}
+                        {% endif %}
+                        {% if this-work.default.published == false %}
+                            {% continue %}
                         {% endif %}
 
                         {% comment %}Use the relevant output's nav, all fallback to web nav.{% endcomment %}

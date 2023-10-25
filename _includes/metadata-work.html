@@ -25,6 +25,14 @@ Also, where a value for a variant isn't available,
 we fall back to the value in the work's default.yml.
 {% endcomment %}
 
+{% comment %} We assume a work is published unless `published` is false. {% endcomment %}
+{% assign published = true %}
+{% if work[work-variant].published == false %}
+    {% assign published = false %}
+{% elsif work.default.published == false %}
+    {% assign published = false %}
+{% endif %}
+
 {% if work[work-variant].title and work[work-variant].title != "" %}
     {% capture title %}{{ work[work-variant].title }}{% endcapture %}
 {% elsif work.default.title and work.default.title != "" %}
