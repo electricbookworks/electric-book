@@ -239,7 +239,7 @@ separate HTML files are merged into one body element.
     https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls
     {% endcomment %}
     {% if site.canonical-url and site.canonical-url != "" %}
-        <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.canonical-url }}">
+        <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.canonical-url }}">
     {% endif %}
 
     {% comment %} Add favicon {% endcomment %}
