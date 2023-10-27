@@ -103,7 +103,8 @@
             {% comment %}If there is only one book, don't include its title{% endcomment %}
             {% if number-of-works == 1 %}
 
-                {% for work in site.data.works | sort: "order" %}
+                {% assign site-data-works = site.data.works | sort %}
+                {% for work in site-data-works %}
 
                     {% comment %} Assume the _data/works book dir is named
                     the same as the book directory. {% endcomment %}
@@ -148,7 +149,8 @@
             {% else %}
 
                 <ol class="nav-book-list">
-                    {% for work in site.data.works | sort: "order" %}
+                    {% assign site-data-works = site.data.works | sort %}
+                    {% for work in site-data-works %}
 
                         {% comment %} Assume the _data/works book dir is named
                         the same as the book directory. {% endcomment %}
