@@ -55,7 +55,7 @@ blockquote:before {
 
 ```
 
-Note the three-hyphen YAML frontmatter, which tells Jekyll to process the file.
+Note the top-of-page YAML between triple hyphens, which tells Jekyll to process the file.
 
 An important, advanced example is custom [hyphenation](../editing/hyphenation.html). If your book's parent language is English, and you've used auto hyphenation with a custom hyphenation dictionary, you do not want your French translation to use your English hyphenation patterns. You want different custom hyphenation patterns for French. So in `book/fr/styles` you'll add a stylesheet for each output format, and a new custom hyphenation dictionary.
 
@@ -74,7 +74,7 @@ $hyphenation-dictionary: "hyphenation.dic";
 
 This snippet:
 
-1. Uses three-hyphen YAML frontmatter so that Jekyll processes the Sass file.
+1. Uses top-of-page YAML, between triple hyphens, so that Jekyll processes the Sass file.
 2. Sets new values for Sass variables `$hyphenation` and `$hyphenation-dictionary` that may be different from your parent-language styles. The `$hyphenation-dictionary` value points to a `hyphenation.dic` file saved alongside the translation stylesheet.
 3. Imports the relevant Sass partial `_pdf-hyphenation.scss` to override the parent-language version of the same partial.
 

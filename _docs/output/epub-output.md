@@ -68,7 +68,7 @@ See the [Javascript](../advanced/javascript.html) section for more detail.
 
 If you include SVG images *inline* in an epub file – that is, the `<svg>` markup itself is in the final HTML, not just linked in an `<img src="*.svg">` element, you need to indicate that the file includes an inline SVG. This is because for an epub to be valid, the `package.opf` file must flag when a file includes inline SVGs.
 
-In order to do this, you must add this to the file's YAML frontmatter:
+In order to do this, you must add this to the file's top-of-page YAML:
 
 ```yaml
 contains-svg: true

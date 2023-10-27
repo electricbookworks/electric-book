@@ -64,12 +64,14 @@ $web-base-typography: true !default;
     }
 
     @if not $spaced-paras {
-        @each $class in $floated-element-classes {
-            p + .#{$class} + p {
-                text-indent: $paragraph-indent;
+        @if $floated-element-classes {
+            @each $class in $floated-element-classes {
+                p + .#{$class} + p {
+                    text-indent: $paragraph-indent;
 
-                &.first {
-                    text-indent: 0;
+                    &.first {
+                        text-indent: 0;
+                    }
                 }
             }
         }
@@ -234,7 +236,7 @@ $web-base-typography: true !default;
     // Also see -figures partial
 
     // Standalone images
-    // (Markdown default puts images on their own line 
+    // (Markdown default puts images on their own line
     // into paragraphs like this.)
     p img:only-child {
         margin: $line-height-default auto;

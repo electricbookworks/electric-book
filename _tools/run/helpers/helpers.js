@@ -539,7 +539,7 @@ async function convertXHTMLLinks (argv) {
 // Run HTML transformations on elements in epubs
 async function epubHTMLTransformations (argv) {
   'use strict'
-  console.log('Adding ARIA roles ...')
+  console.log('Running epub HTML transformations ...')
 
   try {
     let epubHTMLTransformationsProcess
@@ -556,7 +556,7 @@ async function epubHTMLTransformations (argv) {
         ['runEpubTransformations', '--book', argv.book]
       )
     }
-    await logProcess(epubHTMLTransformationsProcess, 'Sidenotes ARIA role')
+    await logProcess(epubHTMLTransformationsProcess, 'Run epub HTML transformations')
     return true
   } catch (error) {
     console.log(error)
@@ -1055,8 +1055,9 @@ async function runPrince (argv) {
       // .option('fail-missing-glyphs', true, true)
       // .option('no-system-fonts', true, true)
 
-      .timeout(100 * 10000) // required for larger books
-      .on('stderr', function (line) { console.log(line) })
+      .timeout(100 * 100000) // large timeout required for large books
+      .maxbuffer(10 * 1024) // show progress more often
+      .on('stderr', function (line) { console.error(line) })
       .on('stdout', function (line) { console.log(line) })
       .execute()
       .then(function () {

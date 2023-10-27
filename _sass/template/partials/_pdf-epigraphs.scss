@@ -3,9 +3,6 @@ $pdf-epigraphs: true !default;
 
     // Epigraphs 
 
-    .epigraph-page {
-        margin-top: $start-depth;
-    }
     .epigraph {
         text-indent: 0;
         padding: 0 ($paragraph-indent * 2);

@@ -7,7 +7,6 @@ $pdf-title-pages: true !default;
 	.title-page, 
 	.halftitle-page, 
 	.half-title-page {
-		margin: $start-depth auto 0 auto;
 		text-align: center;
 		p {
 			text-indent: 0;

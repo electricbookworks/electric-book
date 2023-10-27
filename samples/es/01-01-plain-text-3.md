@@ -1,6 +1,6 @@
 ---
 title: "Texto sencillo"
-style: chapter continued
+style: default-page continued
 ---
 
 #### III.

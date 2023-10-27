@@ -1,6 +1,6 @@
 ---
 title: "Dynamic index"
-style: chapter index-page
+style: endmatter-page
 ---
 
 ## Dynamic index

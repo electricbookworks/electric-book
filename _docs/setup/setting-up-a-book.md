@@ -47,31 +47,37 @@ Each markdown file in `space-potatoes` is a part of a book, such as a table of c
 ---
 ~~~
 
-And between those `---`s, we can and should specify some information about that part. This information is called YAML frontmatter.
+And between those `---`s, we can and should specify some information about that part. This information is written in YAML syntax.
 
-In each file's YAML frontmatter (the info between `---`s at the top) we specify the book-part's `title` and (sometimes) the book-part's `style` to use for that part. The `style` specifies what kind of book-part it is, such as a `title-page` or `chapter`.
-
-> Technical note: the `style` YAML sets the class attribute of the output HTML's `<body>` element. Themes use that class to control CSS and page structure.
 {:.box}
+Note: the YAML between triple hyphens at the start of a markdown document is technically referred to as 'YAML frontmatter'. We don't use that term here, in order to avoid confusion with book frontmatter, also known as prelim pages. In these docs, we say 'top-of-page YAML'.
 
-When you create your book, we recommend following these conventions for file naming and YAML frontmatter `style` settings:
+In each file's top-of-page YAML (the info between `---`s at the top) we specify the book-part's `title` and (sometimes) the book-part's `style` to use for that part. The `style` specifies what kind of book-part it is, such as `title-page`.
+
+If a page has a `style` set, it must include one of `default-page`, `frontmatter-page`, or `endmatter-page` in order to get margin-box content, like running heads and page numbers. Including `style` *without* one of these effectively turns off margin boxes, which may be your intention, for instance on a `title-page`, which never has running heads or page numbers.
+
+{:.box}
+Technical note: the `style` YAML sets the class attribute of the output HTML's `<body>` element. That class is then used for CSS.
+
+When you create your book, we recommend following these conventions for file naming and top-of-page YAML `style` settings:
 
 | Book section                | Example filename          | Style in YAML                |
 | --------------------------- | ------------------------- | ---------------------------- |
-| Front cover (for the ebook) | `0-0-cover.md`            | `cover`                      |
+| Front cover (for the ebook) | `0-0-cover.md`            | `cover-page`                 |
 | Previous publications page  | `0-1-previous.md`         | `previous-publications-page` |
 | Half-title page             | `0-2-halftitle-page.md`   | `halftitle-page`             |
 | Title page                  | `0-3-title-page.md`       | `title-page`                 |
 | Copyright page              | `0-4-copyright.md`        | `copyright-page`             |
 | Table of contents           | `0-5-contents.md`         | `contents-page`              |
 | Epigraph page               | `0-6-epigraph.md`         | `epigraph-page`              |
-| Acknowledgements            | `0-7-acknowledgements.md` | `frontmatter`                |
+| Acknowledgements            | `0-7-acknowledgements.md` | `frontmatter-page`           |
 | Dedication page             | `0-8-dedication.md`       | `dedication-page`            |
 | Part page                   | `01-part-page.md`         | `part-page`                  |
-| A first chapter             | `01-01.md`                | `chapter`                    |
-| A second chapter            | `01-02.md`                | `chapter`                    |
+| A first chapter             | `01-01-chapter-1.md`      | `default-page`               |
+| A second chapter            | `01-02-chapter-2.md`      | `default-page`               |
+| Index                       | `50-01-index.md`          | `endmatter-page`             |
 
-If you don't set the `style`, the page will default to `style: chapter`. So you actually don't need to ever set `style: chapter` in a YAML header. For most chapters in a book, then, your YAML frontmatter will simply include a chapter title:
+If you don't set the `style`, the page will default to `style: default-page`. So you actually don't need to set `style: default-page` in a YAML header. For most chapters in a book, then, your page YAML will simply include a chapter title:
 
 ~~~
 ---
@@ -81,8 +87,7 @@ title: "Chapter One: What are Space Potatoes?"
 
 Page styles we've built into the template include:
 
-*	`index` for the home page of a collection
-*	`cover` for a front cover, which will appear in ebook editions
+*	`cover-page` for a front cover, which will appear in ebook editions
 *	`halftitle-page` for a book's halftitle page
 *	`previous-publications-page` for a book's list of the author's previous publications
 *	`title-page` for a book's title page
@@ -91,10 +96,13 @@ Page styles we've built into the template include:
 *	`dedication-page` for a dedication page
 *	`epigraph-page` for an epigraph page
 *	`frontispiece-page` for a frontispiece page
-*	`frontmatter` for other prelim pages not accounted for otherwise
-*	`chapter` for a book's default chapter page (and the global default)
+*	`frontmatter-page` for other prelim pages not accounted for otherwise
+*	`endmatter-page` for endmatter pages
+*	`default-page` for a book's default chapter page (and the global default)
 
-You can also invent your own page styles, and use them in your custom CSS instead of these, though you may get unexpected results if you've been relying on a theme for existing styles like `chapter`.
+Note that they all end with `-page`. Use only one `-page` style for a document. If you use more than one, only one of them will be applied.
+
+You can also invent your own page styles, and use them in your custom CSS instead of these.
 
 ### Set 'page number one'
 
@@ -105,7 +113,7 @@ Many books have two 'page ones':
 
 You should specify those pages so that Prince knows where to start numbering when creating PDFs.
 
-Why? Well, for example, in print output if you use `frontmatter` on a book-part, by default it will have roman-numeral page numbers. When the first `chapter` starts, it will have decimal page numbers. However, the page numbering will be consecutive from roman through decimal. That is, it will run 'ix, x, 11, 12'. You reset the numbering to 1 at the start of the first `chapter` to avoid this.
+Why? Well, for example, in print output if you use `frontmatter-page` on a book-part, by default it will have roman-numeral page numbers. When the first `default-page` starts, it will have decimal page numbers. However, the page numbering will be consecutive from roman through decimal. That is, it will run 'ix, x, 11, 12'. You reset the numbering to 1 at the start of the first chapter to avoid this.
 
 You reset page numbering by adding the class `page-1` to the first block-level element on the relevant page.
 
@@ -125,13 +133,13 @@ You can do this in two ways:
 	~~~
 	---
 	title: Chapter One
-	style: chapter page-1
+	style: default-page page-1
 	---
 	~~~
 
-	Remember that `chapter` is the default, so you normally don't have to specify it. *But* if you want to *add* a class in addition to `chapter`, you must specify both classes. This is because, if you were to use `style: page-1` in a YAML header, the class `page-1` would override the default `style: chapter`, not add to it.
+	Remember that `default-page` is the default, so you normally don't have to specify it. *But* if you want to *add* a class in addition to `default-page`, you must specify both classes. This is because, if you were to use `style: page-1` in a YAML header, the class `page-1` would override and replace the default `style: default-page`, not add to it.
 
-2.	Alternatively, add the `page-1` class to the first block-level element in the chapter by adding the tag `{:.page-1}` in the line immediately after it. But for this to work, the element must *not* have a CSS float applied to it. So often this doesn't work as well as specifying `page-1` in YAML frontmatter.
+2.	Alternatively, add the `page-1` class to the first block-level element in the chapter by adding the tag `{:.page-1}` in the line immediately after it. But for this to work, the element must *not* have a CSS float applied to it. So often this doesn't work as well as specifying `page-1` in top-of-page YAML.
 
 ### Breaking chapters into smaller web pages
 
@@ -143,16 +151,16 @@ So, you can create separate markdown files for each section of your book, no mat
 
 But now your PDF is full of page breaks! This creates big lumps of white space between sections and bloats your book's page extent.
 
-So, to avoid a page break *in PDF output* before a markdown file, you must add the `continued` tag to its YAML frontmatter, like this:
+So, to avoid a page break *in PDF output* before a markdown file, you must add the `continued` tag to its top-of-page YAML, like this:
 
 ```
 ---
 title: Your Chapter's Subsection Title
-style: chapter continued
+style: default-page continued
 ---
 ```
 
-Remember that `chapter` is the default page style, so you normally don't have to specify it. But here you are *adding* a style in addition to `chapter` (or `frontmatter` or any other built-in page style listed above), so you must specify both `chapter` and `continued`.
+Remember that `default-page` is the default page style, so you normally don't have to specify it. But here you are *adding* a style in addition to `default-page` (or `frontmatter-page` or any other built-in page style listed above), so you must specify both `default-page` and `continued`.
 
 ### File naming
 

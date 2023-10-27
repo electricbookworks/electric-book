@@ -3,7 +3,7 @@ $web-cover: true !default;
 
 	// Cover image. This is useful for landing pages for individual books.
 
-	.wrapper.cover {
+	.wrapper.cover-page {
 		.content {
 			margin: 0 auto;
 			padding: 0;
@@ -14,7 +14,7 @@ $web-cover: true !default;
 		}
 	}
 	p.cover,
-	.wrapper div.cover {
+	.wrapper.cover-page div.cover {
 		max-height: 90vh;
 		max-width: 100vw;
 		margin: 0 auto;
@@ -27,5 +27,4 @@ $web-cover: true !default;
 		max-width: 100vw;
 		border: $rule-thickness solid $color-light;
 	}
-
 }

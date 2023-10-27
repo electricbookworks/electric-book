@@ -76,13 +76,6 @@
   }
 
   @include margin-box-top-common();
-
-  @if $pdf-sidebar and $sidebar-content-width > 0 {
-
-    @if $side == verso {
-      width: $sidebar-content-width + $sidebar-gap-width;
-    }
-  }
 }
 
 @mixin margin-box-top-right($side: verso) {
@@ -92,12 +85,6 @@
   }
 
   @include margin-box-top-common();
-
-  @if $pdf-sidebar and $sidebar-content-width > 0 {
-    @if $side == recto {
-      width: $sidebar-content-width + $sidebar-gap-width;
-    }
-  }
 }
 
 @mixin margin-box-top-left-corner() {
@@ -134,12 +121,6 @@
   }
 
   @include margin-box-bottom-common();
-
-  @if $pdf-sidebar and $sidebar-content-width > 0 {
-    @if $side == verso {
-      width: $sidebar-content-width + $sidebar-gap-width;
-    }
-  }
 }
 
 @mixin margin-box-bottom-right($side: verso) {
@@ -149,12 +130,6 @@
   }
 
   @include margin-box-bottom-common();
-
-  @if $pdf-sidebar and $sidebar-content-width > 0 {
-    @if $side == recto {
-      width: $sidebar-content-width + $sidebar-gap-width;
-    }
-  }
 }
 
 @mixin margin-box-bottom-left-corner() {
@@ -227,4 +202,25 @@
   }
 
   @include margin-box-right-common();
+}
+
+@mixin blank-page-margin-boxes($page-style: "") {
+  @page #{$page-style}:blank {
+    @top-center { content: normal; }
+    @top-left { content: normal; }
+    @top-right { content: normal; }
+    @top-left-corner { content: normal; }
+    @top-right-corner { content: normal; }
+    @bottom-center { content: normal; }
+    @bottom-left { content: normal; }
+    @bottom-right { content: normal; }
+    @bottom-left-corner { content: normal; }
+    @bottom-right-corner { content: normal; }
+    @left-middle { content: normal; }
+    @left-top { content: normal; }
+    @left-bottom { content: normal; }
+    @right-middle { content: normal; }
+    @right-top { content: normal; }
+    @right-bottom { content: normal; }
+  }
 }

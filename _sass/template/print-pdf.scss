@@ -38,13 +38,37 @@ $page-width: 178mm !default;
 $page-height: 254mm !default;
 $margin-top: 60pt !default; // set in points to align with baseline grid
 $margin-bottom: 60pt !default;
-$margin-outside: 20mm !default;
-$margin-inside: 20mm !default;
+$margin-outside: 15mm !default;
+$margin-inside: 15mm !default;
 $bleed: 3mm !default;
 $trim: 3mm !default;
 $crop-marks: crop !default; // crop | none
 $page-info-offset: 5mm !default;
 $columns-default: 1 !default;
+
+// A list of all named page styles.
+// Note: assume that each named page has different
+// margin-box treatment, and they are not compatible, i.e.
+// you can't use more than one page style for a document.
+$named-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page, cover-page, halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page, contents-page, frontmatter-page, part-page, endmatter-page !default;
+
+// Page styles, especially for margin boxes.
+$default-page-styles: default-page, chapter-page, frontmatter-page, contents-page, endmatter-page !default;
+$frontmatter-page-styles: frontmatter-page, halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, contents-page, dedication-page, epigraph-page, frontispiece-page !default;
+$endmatter-page-styles: endmatter-page !default;
+
+// Page styles with no top, bottom, right, left
+// margin-box styles or content on their first pages
+$top-empty-first-page-styles: default-page, chapter-page, frontmatter-page, contents-page, endmatter-page !default;
+$bottom-empty-first-page-styles: contents-page !default;
+$left-empty-first-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page !default;
+$right-empty-first-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page !default;
+
+// Page styles with no margin-boxes at all
+$top-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
+$bottom-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
+$left-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
+$right-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
 
 // Optional sidebar setup.
 // Sidebars only work when using Prince v15 or later,
@@ -54,15 +78,17 @@ $pdf-sidebar: true !default;
 // Width of the sidebar content:
 $sidebar-content-width: 30mm !default;
 // The gap between sidebar content and the body text area:
-$sidebar-gap-width: 5mm !default;
+$sidebar-gap-width: 3mm !default;
 // Which page styles have a sidebar? These correspond to
-// the styles used in markdown YAML frontmatter as `page: ""`
-$pages-with-sidebar: frontmatter, chapter !default;
+// the styles used in markdown top-of-page YAML as `page: ""`
+$pages-with-sidebar: default-page !default;
 // Which pages should not have a sidebar?
 // This is for overriding sidebars on pages that
 // would be included in $pages-with-sidebar,
 // were it not for this page style.
-$pages-without-sidebar: index-page !default;
+$pages-without-sidebar: frontmatter-page, endmatter-page !default;
+// Align top margin-boxes with body text when sidebar is on
+$align-top-header-with-body: true !default;
 
 // Colours
 $colorspace: cmyk !default; // auto | none | rgb | cmyk | gray
@@ -89,7 +115,7 @@ $black-ink: true !default; // true or rich (true for pure black or rich for rich
 $convert-images-to-color-profile: false !default; // 'true' may convert true black to rich black in images
 
 // We name font variables for two categories:
-// - 'text' fonts are used for body text and some page features;
+// - 'text' fonts are used for body text and some page features
 // - 'display' fonts are used for headings and similar short-string features.
 // For each category, we set a main font and a secondary font, allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
@@ -141,15 +167,18 @@ $text-divider-text: "" !default; // Empty leaves space. \2022 is a bullet
 $text-divider-image: "" !default;
 $text-divider-image-height: $line-height-default !default;
 
-// Should chapters start on a right-hand page (recto) or on any page?
-// This setting applies to the frontmatter, dedication-page, epigraph-page and chapter page styles.
-// (The halftitle-page, title-page and contents-page page styles always start on a recto.)
-$start-on: right !default; // right | left | auto
+// Which page styles start on a right-hand page (recto) or on any page?
+$start-on-recto: default-page, chapter-page, frontmatter-page, endmatter-page, part-page, dedication-page, epigraph-page !default;
+$start-on-verso: null !default;
+$start-on-recto-or-verso: null !default;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
 // Set it in multiples of $line-height-default to preserve your baseline grid.
-$start-depth: 0 !default;
+$start-depth: $line-height-default * 15 !default;
+
+// Which page styles use this start-depth?
+$start-depth-page-styles: halftitle-page, half-title-page, title-page, dedication-page, epigraph-page, part-page !default;
 
 // Style of page numbers on frontmatter pages
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
@@ -163,6 +192,11 @@ $floated-element-classes: sidenote !default;
 // Other PDF features
 $title-page-logo-width: $paragraph-indent * 3 !default;
 
+// Elements that float. When these are surrounded by paragraphs,
+// the following paragraph should be indented when we are not
+// using $spaced-paras.
+$floated-element-classes: sidenote !default;
+
 // Set the content of headers and footers.
 //
 // * For no content: normal
@@ -170,7 +204,7 @@ $title-page-logo-width: $paragraph-indent * 3 !default;
 // * For the book's title: string(book-title)
 // * For the book's creator (usually the author): string(book-creator)
 // * For the body element's title attribute: string(page-header)
-//   Set this body title attribute with `header: Your Title` in a file's YAML frontmatter.
+//   Set this body title attribute with `header: Your Title` in a file's top-of-page YAML.
 //   If you don't set a page header in YAML, string(page-header) will fallback to the page title.
 //   You can also set string(page-header-left) and string(page-header-right) with page YAML
 //   `header-left: "Your Left Header"` and `header-right: "Your Right Header"` respectively.
@@ -188,79 +222,75 @@ $show-margin-boxes: false !default;
 
 // Verso (left-hand-page)
 $verso-top: string(page-header) !default;
-$verso-top-left: "" !default;
-$verso-top-right: "" !default;
-$verso-top-left-corner: "" !default;
-$verso-top-right-corner: "" !default;
+$verso-top-left: normal !default;
+$verso-top-right: normal !default;
+$verso-top-left-corner: normal !default;
+$verso-top-right-corner: normal !default;
 $verso-bottom: counter(page) !default;
-$verso-bottom-left: "" !default;
-$verso-bottom-right: "" !default;
-$verso-bottom-left-corner: "" !default;
-$verso-bottom-right-corner: "" !default;
-$verso-left: "" !default;
-$verso-left-top: "" !default;
-$verso-left-bottom: "" !default;
-$verso-right: "" !default;
-$verso-right-top: "" !default;
-$verso-right-bottom: "" !default;
+$verso-bottom-left: normal !default;
+$verso-bottom-right: normal !default;
+$verso-bottom-left-corner: normal !default;
+$verso-bottom-right-corner: normal !default;
+$verso-left: normal !default;
+$verso-left-top: normal !default;
+$verso-left-bottom: normal !default;
+$verso-right: normal !default;
+$verso-right-top: normal !default;
+$verso-right-bottom: normal !default;
 
 // Recto (right-hand-page)
 $recto-top: string(h2-title, last) !default;
-$recto-top-left: "" !default;
-$recto-top-right: "" !default;
-$recto-top-left-corner: "" !default;
-$recto-top-right-corner: "" !default;
+$recto-top-left: normal !default;
+$recto-top-right: normal !default;
+$recto-top-left-corner: normal !default;
+$recto-top-right-corner: normal !default;
 $recto-bottom: counter(page) !default;
-$recto-bottom-left: "" !default;
-$recto-bottom-right: "" !default;
-$recto-bottom-left-corner: "" !default;
-$recto-bottom-right-corner: "" !default;
-$recto-left: "" !default;
-$recto-left-top: "" !default;
-$recto-left-bottom: "" !default;
-$recto-right: "" !default;
-$recto-right-top: "" !default;
-$recto-right-bottom: "" !default;
+$recto-bottom-left: normal !default;
+$recto-bottom-right: normal !default;
+$recto-bottom-left-corner: normal !default;
+$recto-bottom-right-corner: normal !default;
+$recto-left: normal !default;
+$recto-left-top: normal !default;
+$recto-left-bottom: normal !default;
+$recto-right: normal !default;
+$recto-right-top: normal !default;
+$recto-right-bottom: normal !default;
 
 // Verso (left-hand-page) for .frontmatter pages (`style: frontmatter`)
-$verso-top-frontmatter: string(page-header) !default;
-$verso-top-left-frontmatter: "" !default;
-$verso-top-right-frontmatter: "" !default;
-$verso-top-left-corner-frontmatter: "" !default;
-$verso-top-right-corner-frontmatter: "" !default;
-$verso-bottom-frontmatter: counter(page, $frontmatter-reference-style) !default;
-$verso-bottom-left-frontmatter: "" !default;
-$verso-bottom-right-frontmatter: "" !default;
-$verso-bottom-left-corner-frontmatter: "" !default;
-$verso-bottom-right-corner-frontmatter: "" !default;
-$verso-left-frontmatter: "" !default;
-$verso-left-top-frontmatter: "" !default;
-$verso-left-bottom-frontmatter: "" !default;
-$verso-right-frontmatter: "" !default;
-$verso-right-top-frontmatter: "" !default;
-$verso-right-bottom-frontmatter: "" !default;
+$verso-top-frontmatter: normal !default;
+$verso-top-left-frontmatter: string(page-header) !default;
+$verso-top-right-frontmatter: normal !default;
+$verso-top-left-corner-frontmatter: normal !default;
+$verso-top-right-corner-frontmatter: normal !default;
+$verso-bottom-frontmatter: normal !default;
+$verso-bottom-left-frontmatter: counter(page, $frontmatter-reference-style) !default;
+$verso-bottom-right-frontmatter: normal !default;
+$verso-bottom-left-corner-frontmatter: normal !default;
+$verso-bottom-right-corner-frontmatter: normal !default;
+$verso-left-frontmatter: normal !default;
+$verso-left-top-frontmatter: normal !default;
+$verso-left-bottom-frontmatter: normal !default;
+$verso-right-frontmatter: normal !default;
+$verso-right-top-frontmatter: normal !default;
+$verso-right-bottom-frontmatter: normal !default;
 
 // Recto (right-hand-page) for .frontmatter pages (`style: frontmatter`)
-$recto-top-frontmatter: string(h2-title, last) !default;
-$recto-top-left-frontmatter: "" !default;
-$recto-top-right-frontmatter: "" !default;
-$recto-top-left-corner-frontmatter: "" !default;
-$recto-top-right-corner-frontmatter: "" !default;
-$recto-bottom-frontmatter: counter(page, $frontmatter-reference-style) !default;
-$recto-bottom-left-frontmatter: "" !default;
-$recto-bottom-right-frontmatter: "" !default;
-$recto-bottom-left-corner-frontmatter: "" !default;
-$recto-bottom-right-corner-frontmatter: "" !default;
-$recto-left-frontmatter: "" !default;
-$recto-left-top-frontmatter: "" !default;
-$recto-left-bottom-frontmatter: "" !default;
-$recto-right-frontmatter: "" !default;
-$recto-right-top-frontmatter: "" !default;
-$recto-right-bottom-frontmatter: "" !default;
-
-// Are there headers and footers on the first pages?
-// Set to blank or show.
-$first-page-margin-boxes: blank !default;
+$recto-top-frontmatter: normal !default;
+$recto-top-left-frontmatter: normal !default;
+$recto-top-right-frontmatter: string(h2-title, last) !default;
+$recto-top-left-corner-frontmatter: normal !default;
+$recto-top-right-corner-frontmatter: normal !default;
+$recto-bottom-frontmatter: normal !default;
+$recto-bottom-left-frontmatter: normal !default;
+$recto-bottom-right-frontmatter: counter(page, $frontmatter-reference-style) !default;
+$recto-bottom-left-corner-frontmatter: normal !default;
+$recto-bottom-right-corner-frontmatter: normal !default;
+$recto-left-frontmatter: normal !default;
+$recto-left-top-frontmatter: normal !default;
+$recto-left-bottom-frontmatter: normal !default;
+$recto-right-frontmatter: normal !default;
+$recto-right-top-frontmatter: normal !default;
+$recto-right-bottom-frontmatter: normal !default;
 
 // Set styles for headers and footers
 $header-font: $font-text-secondary !default;
@@ -370,7 +400,7 @@ $pdf-slides: true !default;
 $pdf-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $pdf-margin-box-content: true !default; // Sets content for headers and footers
 $pdf-margin-box-style: true !default; // Sets styling for headers and footers
-$pdf-page-setup-lightning-source: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
+$pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
@@ -409,15 +439,17 @@ $pdf-page-setup-lightning-source: false !default; // Removes crop marks and sets
 // Add font-face rules
 @import "template/partials/pdf-font-faces";
 
-// Page setup and control, avoid changing these
+// Page setup and control
 @import "template/partials/pdf-pdf-view"; // Sets the default initial view on PDFs
-@import "template/partials/pdf-sidebar"; // redefines margins if $pdf-sidebar is true
 @import "template/partials/pdf-page-setup"; // Sets up the page from your variables
+@import "template/partials/pdf-margin-box-content"; // Sets content for headers and footers
+@import "template/partials/pdf-margin-box-style"; // Sets styling for headers and footers
+@import "template/partials/pdf-sidebar"; // redefines margins if $pdf-sidebar is true
 @import "template/partials/pdf-page-break-tools"; // Provides classes for semantic page breaks
 @import "template/partials/pdf-hide-non-printing"; // Hides anything .non-printing
-@import "template/partials/pdf-fitting"; // Classes for floating, tracking, shrinking, etc.
 @import "template/partials/pdf-hyphenation"; // Sets hyphenation dictionary
 @import "template/partials/pdf-baseline-grid"; // Shows a baseline grid
+@import "template/partials/pdf-page-setup-ingram"; // Removes crop marks and sets 3mm trim for Ingram POD
 
 // Book features
 @import "template/partials/pdf-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
@@ -454,12 +486,12 @@ $pdf-page-setup-lightning-source: false !default; // Removes crop marks and sets
 @import "template/partials/pdf-select-questions";
 @import "template/partials/pdf-cross-refs";
 @import "template/partials/pdf-slides";
-@import "template/partials/pdf-reset-sequences"; // Resets p indents, margins after other elements. Must be last @import in list.
-@import "template/partials/pdf-margin-box-content"; // Sets content for headers and footers
-@import "template/partials/pdf-margin-box-style"; // Sets styling for headers and footers
 
-// Lightning Source setup
-@import "template/partials/pdf-page-setup-lightning-source"; // Removes crop marks and sets 3mm trim for Lightning Source
+// Classes for floating, tracking, shrinking, etc.
+@import "template/partials/pdf-fitting";
+
+// Resets p indents, margins after other elements. Must be last @import in list.
+@import "template/partials/pdf-reset-sequences";
 
 // Theme rules
 @import "theme/pdf-rules";

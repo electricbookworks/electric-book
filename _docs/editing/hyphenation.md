@@ -35,14 +35,14 @@ To use a custom dictionary, save the dictionary file to your `styles` folder, an
 $hyphenation-dictionary: "hyphenation.dic";
 ```
 
-In `hyphenation.dic`, you can add patterns as described above. If your `hyphenation.doc` starts with three-hyphen YAML frontmatter, Jekyll will process it, and you can use Liquid tags for extra power. For example, you can include other hyphenation pattern files saved alongside `hyphenation.dic`:
+In `hyphenation.dic`, you can add patterns as described above. If your `hyphenation.doc` starts with YAML between three hyphens, Jekyll will process it, and you can use Liquid tags for extra power. For example, you can include other hyphenation pattern files saved alongside `hyphenation.dic`:
 
 {% raw %}
 ``` md
 ---
-# This YAML frontmatter makes Jekyll process this file.
-# So you can use Liquid tags to include files such as
-# other hyphenation dictionaries, e.g.
+# This YAML makes Jekyll process this file.
+# So you can use Liquid tags to include files
+# such as other hyphenation dictionaries, e.g.
 # `{% include_relative hyph-en-gb.pat %}`
 # or to use hyphenation in certain cases, e.g. variants.
 ---

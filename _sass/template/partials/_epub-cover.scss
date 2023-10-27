@@ -2,7 +2,7 @@ $epub-cover: true !default;
 @if $epub-cover {
 
 	// Cover image. Forms the cover image in epubs.
-	.wrapper.cover,
+	.wrapper.cover-page,
 	div.cover {
 		margin: 0;
 		padding: 0;
@@ -20,5 +20,4 @@ $epub-cover: true !default;
 		max-width: 100%;
 		border: $rule-thickness solid $color-light;
 	}
-
 }

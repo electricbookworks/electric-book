@@ -8,19 +8,22 @@ $pdf-copyright-page: true !default;
         bottom: 0;    
         font-size: $font-size-default * $font-size-smaller;
         line-height: $line-height-default * $font-size-smaller;
-        hyphens: none; // Prince will not hyphenate here
-        h1 {
-            margin: ($line-height-default * $font-size-smaller) 0;
+        hyphens: none;
+        text-align: left;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: inherit;
+            font-size: inherit;
+            margin: ($line-height-default * 0.5) 0 ($line-height-default * 0.5) 0;
+            text-align: inherit;
         }
-        p {
+        p, ol, ul {
             margin: 0 0 ($line-height-default * $font-size-smaller) 0;
+            text-align: inherit;
             text-indent: 0;
-        }
-        .identifiers {
-            .identifier-scheme {}
-            .identifier-format {}
-            .identifier-id {}
+
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
     }
-
 }

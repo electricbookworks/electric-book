@@ -1,6 +1,6 @@
 ---
 title: "Texte brut"
-style: chapter continued
+style: default-page continued
 ---
 
 #### II

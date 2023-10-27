@@ -119,6 +119,11 @@ $text-divider-image-width: $line-height-default * 2 !default;
 // Other book features
 $title-page-logo-width: 5rem !default;
 
+// Elements that float. When these are surrounded by paragraphs,
+// the following paragraph should be indented when we are not
+// using $spaced-paras.
+$floated-element-classes: sidenote !default;
+
 // Footer
 $footer-text-color: $color-text-main !default;
 $footer-background-color: $color-accent !default;
