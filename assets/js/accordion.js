@@ -1,30 +1,21 @@
-/* global window, ebLazyLoadImages, videoShow
-    locales, pageLanguage, Element, HTMLDocument,
-    settings, Node, MutationObserver */
-
-// console.log('Debugging accordions.js');
+/* jslint browser */
+/*
+global window, settings, ebLazyLoadImages, videoShow, locales,
+pageLanguage, Element, HTMLDocument, Node, MutationObserver
+*/
 
 // --------------------------------------------------------------
-// Options, defined in _data/settings.yml
-
+// Options
+//
 // 1. Use CSS selectors to list the headings that will
-//    define each accordion section, e.g. '.content h2'
-let accordionLevel = settings[settings.site.output].accordion.level
-const accordionDataLevelElement = document.querySelector('[data-accordion-level]')
-if (accordionDataLevelElement) {
-  accordionLevel = accordionDataLevelElement.getAttribute('data-accordion-level')
-}
-const accordionHeads = '.content ' + accordionLevel
-
+//    define each accordion section, e.g. '#content h2'
+const headingLevel = settings.web.accordion.level
+const accordionHeads = '.content > ' + headingLevel
 // 2. Which heading's section should we show by default?
-const defaultAccordionHead = '.content [role="tabpanel"] ' + accordionLevel + ':first-of-type'
-
+const defaultAccordionHead = '.content > ' + headingLevel + ':first-of-type'
 // 3. Auto close last accordion when you open a new one?
-const autoCloseAccordionSections = settings[settings.site.output].accordion.autoClose
+const autoCloseAccordionSections = false
 // --------------------------------------------------------------
-
-// Find where we've set the data-accordion-page flag
-const accordionDataPageElement = document.querySelector('[data-accordion-page')
 
 function ebAccordionInit () {
   'use strict'
@@ -32,39 +23,45 @@ function ebAccordionInit () {
   let pageAccordionOff
 
   // Check for no-accordion setting on page
-  if (accordionDataPageElement) {
-    const accordionPageSetting = accordionDataPageElement.getAttribute('data-accordion-page')
-    if (accordionPageSetting &&
-                (accordionPageSetting === 'none')) {
-      pageAccordionOff = true
-    }
+  const accordionPageSetting = ebAccordionPageSetting()
+  const accordionBookSetting = ebAccordionBookSetting()
+
+  // First, check the book-level setting
+  if (accordionBookSetting === false) {
+    pageAccordionOff = true
+  } else {
+    pageAccordionOff = false
   }
 
-  // Check if there are any headings on the page
-  // to make into an accordion.
-  const availableAccordionHeads = document.querySelectorAll(accordionHeads)
-  let noAccordionHeadings = false
-  if (!availableAccordionHeads ||
-            availableAccordionHeads.length === 0) {
-    noAccordionHeadings = true
+  // If the accordion is turned off for this page
+  if (accordionPageSetting && (accordionPageSetting === 'none')) {
+    pageAccordionOff = true
+  }
+
+  // If the accordion is turned on for this page
+  if (accordionPageSetting === 'true') {
+    pageAccordionOff = false
   }
 
   return navigator.userAgent.indexOf('Opera Mini') === -1 &&
-            document.querySelectorAll !== 'undefined' &&
-            window.addEventListener !== 'undefined' &&
-            !!Array.prototype.forEach &&
-            !pageAccordionOff &&
-            !noAccordionHeadings
+    document.querySelectorAll !== 'undefined' &&
+    window.addEventListener !== 'undefined' &&
+    !!Array.prototype.forEach &&
+    !pageAccordionOff
 }
 
 function ebAccordionPageSetting () {
   'use strict'
 
-  let accordionPageSetting
-  if (accordionDataPageElement) {
-    accordionPageSetting = accordionDataPageElement.getAttribute('data-accordion-page')
-  }
+  const accordionPageSetting = document.body.querySelector('.wrapper').getAttribute('data-accordion-page')
   return accordionPageSetting
+}
+
+function ebAccordionBookSetting () {
+  'use strict'
+
+  const accordionBookSetting = settings.web.accordion.enabled
+  return accordionBookSetting
 }
 
 function ebAccordionDefaultAccordionHeadID () {
@@ -72,7 +69,7 @@ function ebAccordionDefaultAccordionHeadID () {
 
   let defaultAccordionHeadID
 
-  // Get the default accordion section's id
+  // Get the default accordion section's ID
   if (defaultAccordionHead !== '') {
     defaultAccordionHeadID = document.querySelector(defaultAccordionHead).id
     if (!defaultAccordionHeadID) {
@@ -82,67 +79,68 @@ function ebAccordionDefaultAccordionHeadID () {
   return defaultAccordionHeadID
 }
 
-function ebAccordionSetUpSections (collapserButtons) {
+function ebAccordionSetUpSections (sectionHeadings) {
   'use strict'
 
-  // Exit if there are no accordionHeads
-  if (!document.querySelector(accordionHeads)) {
-    return
-  }
+  // Loop through sectionHeadings, rearranging elements
+  // to create an accessible accordion with sections
+  // that look like this:
 
-  // add role="tablist" to the parent of the role="tab"s
-  const content = document.querySelector('.content')
-  content.setAttribute('role', 'tablist')
+  // <h2>
+  //     <button id="header-title..." aria-controls="section-title...">
+  //         <span>Section title</span>
+  //         <span>+</span>
+  //     </button>
+  // </h2>
+  // <section id="section-title..." aria-labelledby="header-title...">
+  //     Section content
+  // </section>
 
-  // loop through collapserButtons
-  collapserButtons.forEach(function (collapserButton) {
-    // Only do the rest if if .content is the parent
-    // of the collapserButton (i.e. accordion heading).
-    // Prevents errors when heading is in a div, e.g. a box.
-    if (collapserButton.parentNode === content) {
-      // make a section to move the collapsing content into
-      const section = document.createElement('section')
-      section.setAttribute('role', 'tabpanel')
-      section.setAttribute('aria-labelledby', collapserButton.id)
-      section.setAttribute('data-accordion-container', collapserButton.id)
+  sectionHeadings.forEach(function (sectionHeading) {
+    // Get the ID of the heading
+    const headingID = sectionHeading.id
 
-      // add the section to the doc
-      content.insertBefore(section, collapserButton)
+    // Create a button element to put inside the heading
+    const headingButton = document.createElement('button')
+    headingButton.setAttribute('id', 'header-' + headingID)
+    headingButton.setAttribute('aria-expanded', 'false')
+    headingButton.setAttribute('aria-controls', 'section-' + headingID)
 
-      // make a header, add it to the section
-      const header = document.createElement('header')
+    // Move the heading text into a span
+    const headingSpan = document.createElement('span')
+    headingSpan.innerHTML = sectionHeading.innerHTML
+    sectionHeading.innerHTML = ''
 
-      //  move the toggle to the header
-      header.appendChild(collapserButton)
+    // Move the text span into the button
+    headingButton.appendChild(headingSpan)
 
-      // make a link for this id
-      const accordionLink = document.createElement('a')
-      accordionLink.href = '#' + collapserButton.id
-      accordionLink.innerHTML = collapserButton.innerHTML
+    // Move the button into the heading
+    sectionHeading.appendChild(headingButton)
 
-      // Add the link inside the toggle
-      collapserButton.innerHTML = accordionLink.outerHTML
-      collapserButton.setAttribute('role', 'tab')
+    // Add a +/- indicator to show open/closed section
+    const expandedIndicator = document.createElement('span')
+    expandedIndicator.setAttribute('aria-hidden', 'true')
+    expandedIndicator.innerHTML = '+'
 
-      // add the header to the section
-      section.appendChild(header)
+    headingButton.appendChild(expandedIndicator)
 
-      // make a div for the rest of the contents
-      const container = document.createElement('div')
-      container.setAttribute('data-container', true)
+    // Create a section element to correspond with the heading
+    const contentSection = document.createElement('section')
+    contentSection.setAttribute('id', 'section-' + headingID)
+    contentSection.setAttribute('aria-labelledby', 'header-' + headingID)
+    contentSection.setAttribute('aria-hidden', 'true')
 
-      // add it to the section
-      section.appendChild(container)
-    }
+    // Now we have the heading and all its children, and an empty section
+    // The heading is still where it should be in the DOM,
+    // so we can put the section after it
+    sectionHeading.insertAdjacentElement('afterend', contentSection)
+
+    // Add label to section heading so that it's not "empty"
+    sectionHeading.setAttribute('aria-labelledby', 'header-' + headingID)
   })
 
   ebAccordionFillSections()
-
-  // If there is more than one section,
-  // add an 'expand all/close all' button
-  if (collapserButtons.length > 1) {
-    ebAccordionShowAllButton()
-  }
+  ebAccordionShowAllButton()
 }
 
 function ebAccordionFillSections () {
@@ -151,10 +149,15 @@ function ebAccordionFillSections () {
   // Grab the individual #contents elements of the page
   const contentItems = document.querySelector('.content').childNodes
 
-  // Put all the items in an array.
+  // Put all the items in an array, selecting only
+  // elements and text items that match the mathjax \[ pattern.
   let j; const contentItemsForSections = []
   for (j = 0; j < contentItems.length; j += 1) {
-    contentItemsForSections.push(contentItems[j])
+    if (contentItems[j].nodeType === Node.ELEMENT_NODE) {
+      contentItemsForSections.push(contentItems[j])
+    } else if (contentItems[j].nodeValue.includes('[')) {
+      contentItemsForSections.push(contentItems[j])
+    }
   }
 
   // We don't know where our first section is yet
@@ -165,161 +168,169 @@ function ebAccordionFillSections () {
     // If this is an element (not a text or comment node), and
     // if this is a section, update currentSection, then move on
     if (contentItem.nodeType === Node.ELEMENT_NODE) {
-      if (contentItem.getAttribute('role') === 'tabpanel') {
+      if (contentItem.nodeName === 'SECTION' && contentItem.hasAttribute('aria-labelledby')) {
         currentSection = contentItem
         return
       }
     }
 
-    // Have we reached the first section yet? if not, move on
+    // Have we reached the first section yet? If not, move on
     if (!currentSection) {
       return
     }
 
-    // Otherwise, move it inside the currentSection's data-container
-    currentSection.querySelector('[data-container]')
-      .appendChild(contentItem)
+    // Leave the headings outside the section
+    if (contentItem.nodeName.toLowerCase() === headingLevel) {
+      return
+    }
+
+    // Leave the pagination arrows outside the section
+    if (contentItem.classList && contentItem.classList.contains('pagination')) {
+      return
+    };
+
+    // Otherwise, move the element inside the section
+    currentSection.appendChild(contentItem)
   })
+}
+
+function ebAccordionCloseSection (heading) {
+  // Given a heading element, apply all the changes needed
+  // to close the corresponding section
+
+  heading.querySelector('button').setAttribute('aria-expanded', 'false')
+  heading.querySelector('span[aria-hidden]').innerHTML = '+'
+
+  const section = heading.nextElementSibling
+  section.setAttribute('aria-hidden', 'true')
+}
+
+function ebAccordionOpenSection (heading) {
+  // Given a heading element, apply all the changes needed
+  // to open the corresponding section
+
+  heading.querySelector('button').setAttribute('aria-expanded', 'true')
+  heading.querySelector('span[aria-hidden]').innerHTML = '–'
+
+  const section = heading.nextElementSibling
+  section.setAttribute('aria-hidden', 'false')
 }
 
 function ebAccordionHideThisSection (targetID) {
   'use strict'
 
-  // console.log('Hiding only section ' + targetID);
-  const tabPanel = document.querySelector('[role="tabpanel"][aria-labelledby="' + targetID + '"]')
-  tabPanel.querySelector('[role="tab"]')
-    .setAttribute('data-accordion', 'closed')
-  tabPanel.querySelector('[data-container]')
-    .setAttribute('aria-expanded', 'false')
+  const heading = document.getElementById(targetID)
+
+  ebAccordionCloseSection(heading)
 }
 
 function ebAccordionHideAll () {
   'use strict'
 
-  const tabPanels = document.querySelectorAll('[role="tabpanel"]')
-  tabPanels.forEach(function (current) {
-    current.querySelector('[role="tab"]')
-      .setAttribute('data-accordion', 'closed')
-    current.querySelector('[data-container]')
-      .setAttribute('aria-expanded', 'false')
+  const headings = document.querySelectorAll(accordionHeads)
+
+  headings.forEach(function (heading) {
+    ebAccordionCloseSection(heading)
   })
 }
 
 function ebAccordionShowAll () {
   'use strict'
 
-  // console.log('expanding all');
+  const headings = document.querySelectorAll(accordionHeads)
 
-  const tabPanels = document.querySelectorAll('[role="tabpanel"]')
-  tabPanels.forEach(function (current) {
-    current.querySelector('[role="tab"]')
-      .setAttribute('data-accordion', 'open')
-    current.querySelector('[data-container]')
-      .setAttribute('aria-expanded', 'true')
+  headings.forEach(function (heading) {
+    ebAccordionOpenSection(heading)
   })
 }
 
 function ebAccordionHideAllExceptThisOne (targetID) {
   'use strict'
 
-  // console.log('Starting ebAccordionHideAllExceptThisOne...');
+  const headings = document.querySelectorAll(accordionHeads)
 
-  const tabPanels = document.querySelectorAll('[role="tabpanel"]')
-  tabPanels.forEach(function (tabPanel) {
-    // if it's the one we just clicked, skip it
-    if (tabPanel.getAttribute('aria-labelledby') === targetID) {
+  headings.forEach(function (heading) {
+    // iIf it's the one we just clicked, skip it
+    if (heading.id === targetID) {
       return
     }
 
-    // otherwise, hide it
-    tabPanel.querySelector('[role="tab"]')
-      .setAttribute('data-accordion', 'closed')
-    tabPanel.querySelector('[data-container]')
-      .setAttribute('aria-expanded', 'false')
+    // Otherwise, hide it
+    ebAccordionCloseSection(heading)
   })
 }
 
 function ebAccordionCheckParent (node) {
   'use strict'
 
-  // if (node !== null) {
-  //     console.log('Checking for parent element of "' + node.innerText.substring(0, 20) + '..."');
-  // }
-
-  // if there is no parent, or something went wrong, exit
+  // If there is no parent, or something went wrong, exit
   if (!node) {
     return false
   }
+
   if (!node.parentNode) {
     return false
   }
-  if (node.tagName === 'BODY') {
-    // console.log('Parent node is the body element. We\'re done looking.');
 
+  // If the parent is the body element, exit
+  if (node.tagName === 'BODY') {
     return false
   }
 
-  const nodeParent = node.parentNode
-
-  // console.log('nodeParent is "' + nodeParent.innerText.substring(0, 20) + '..."');
-
-  const parentAttribute = nodeParent.getAttribute('data-accordion-container')
-
-  // if there's a parent, check if it's got data-accordion-container
-  // and return that value, which is copied from the id of the section heading
-  if (parentAttribute) {
-    return nodeParent.getAttribute('data-accordion-container')
+  // If it is an accordion section, return its ID
+  if (node.nodeName === 'SECTION') {
+    return node.id
   }
-  // if (!parentAttribute) {
-  //     console.log('Parent node of "' + node.innerText.substring(0, 20) + '..." is not an accordion section');
-  // }
 
+  // If it's an accordion heading, return the ID of the
+  // corresponding accordion section
+  if (node.nodeName.toLowerCase() === headingLevel) {
+    return 'section-' + node.id
+  }
+
+  // If it has a parent, check whether that parent is
+  // an accordion section, and return its ID
+  const nodeParent = node.parentNode
+  const parentIsSection = (nodeParent.nodeName === 'SECTION')
+  if (parentIsSection) {
+    return nodeParent.id
+  }
+
+  // Else, recurse upwards
   return ebAccordionCheckParent(nodeParent)
 }
 
-// find and return containing section
-// (the aria-labelledby attribute matches the ID)
 function ebAccordionFindSection (targetToCheck) {
+  // Find and return containing section
+
   'use strict'
 
-  // if (targetToCheck !== null) {
-  //     console.log('Finding section that contains: ' + targetToCheck.outerHTML.substring(0, 80));
-  // }
-
-  // work recursively up the DOM looking for the section
+  // Work recursively up the DOM looking for the section
   return ebAccordionCheckParent(targetToCheck)
 }
 
 function ebWhichTarget (targetID) {
   'use strict'
 
-  // console.log('Starting ebWhichTarget...');
-
   let targetToCheck
 
-  // if we're given an ID, use it
   if (targetID) {
-    // console.log('Using targetID ' + targetID);
-
+    // If we're given an ID, use it
     // Decode the targetID URI in case it's not ASCII
-    // console.log('targetID encoded: ' + targetID);
     targetID = decodeURIComponent(targetID)
-    // console.log('targetID decoded: ' + targetID);
 
     targetToCheck = document.getElementById(targetID)
   } else {
-    // else use the hash
+    // Else use the hash
     let trimmedHash = window.location.hash.replace('#', '')
 
     // Decode the trimmedHash in case it's not ASCII
-    // console.log('Using trimmedHash; encoded: ' + trimmedHash);
     trimmedHash = decodeURIComponent(trimmedHash)
-    // console.log('using trimmedHash; decoded: ' + trimmedHash);
 
     targetToCheck = document.getElementById(trimmedHash)
   }
 
-  // if the ID doesn't exist, exit
+  // If the ID doesn't exist, exit
   if (!targetToCheck) {
     return false
   }
@@ -329,9 +340,6 @@ function ebWhichTarget (targetID) {
 
 function ebAccordionShow (targetID) {
   'use strict'
-
-  // console.log('Starting ebAccordionShow...');
-  // console.log('ebAccordionShow\'s targetID is: ' + targetID);
 
   const targetToCheck = ebWhichTarget(targetID)
   if (!targetToCheck) {
@@ -345,29 +353,20 @@ function ebAccordionShow (targetID) {
     ebAccordionShowDefaultSection()
   }
 
-  // set the accordion, then work down to toggle and content div
-  const sectionTarget = '[aria-labelledby="' + sectionID + '"]'
-  const sectionToShow = document.querySelector(sectionTarget)
-
-  // update the tab
+  // Show and load the contents of the section
+  const sectionToShow = document.getElementById(sectionID)
   if (sectionToShow) {
-    const tab = sectionToShow.querySelector('[role="tab"]')
-    tab.setAttribute('data-accordion', 'open')
+    const heading = sectionToShow.previousElementSibling
 
-    // update the tab contents
-    const tabContents = sectionToShow.querySelector('[data-container]')
-    tabContents.setAttribute('aria-expanded', 'true')
+    ebAccordionOpenSection(heading)
 
-    // lazyload the images inside
-    const lazyimages = sectionToShow.querySelectorAll('[data-src]')
-
-    // console.log('lazyimages: ' + lazyimages.innerHTML);
-
+    // Lazyload the images inside
+    const lazyimages = sectionToShow.querySelectorAll('[data-srcset]')
     if (lazyimages.innerHTML !== undefined) {
       ebLazyLoadImages(lazyimages)
     }
 
-    // if we have a slideline in this section, check if it's a portrait one
+    // If we have a slideline in this section, check if it's a portrait one
     const slidelinesInThisSection = sectionToShow.querySelectorAll('.slides')
 
     slidelinesInThisSection.forEach(function (slidelineInThisSection) {
@@ -389,71 +388,42 @@ function ebAccordionShow (targetID) {
   }
 }
 
-function ebAccordionListenForAnchorClicks (querySelectorString) {
+function ebAccordionListenForAnchorClicks () {
   'use strict'
 
-  // console.log('Starting ebAccordionListenForAnchorClicks...');
-
-  // listen for clicks on *all* the anchors in .content
-  // and links in any .search-results-nav list,
-  // or those specified by a querySelectorString.
-  let allTheAnchors
-  if (querySelectorString) {
-    allTheAnchors = document.querySelectorAll(querySelectorString)
-  } else {
-    allTheAnchors = document
-      .querySelectorAll('.content a[href], .search-results-nav a[href]')
-  }
-
+  // Listen for clicks on *all* the anchors (;_;)
+  const allTheAnchors = document.querySelectorAll('#content a[href], .search-results-nav a[href]')
   allTheAnchors.forEach(function (oneOfTheAnchors) {
-    // if it's an external link, exit
+    // If it's an external link, exit
     if (oneOfTheAnchors.target === '_blank') {
       return
     }
 
     oneOfTheAnchors.addEventListener('click', function (event) {
-      // If the link was clicked with a modifier key pressed
-      // (e.g. Ctrl + click), assume user wants a new tab,
-      // and do not continue processing this here.
-      if (event.metaKey || event.ctrlKey || event.shiftKey) {
-        // console.log('User was pressing Ctrl, Shift or the meta key.');
-        return
-      }
+      event.stopPropagation()
 
       // Declare targetID so JSLint knows it's coming in this function.
       let targetID
 
-      // ignore target blank / rel noopener links
+      // Ignore target blank / rel noopener links
       if (event.target.getAttribute('rel') === 'noopener') {
         return
       }
 
-      // get the target ID by removing any file path and the #
+      // Get the target ID by removing any file path and the #
       if (event.target.hasAttribute('href')) {
-        targetID = event.target.getAttribute('href').replace(/\?.+/, '').replace(/.*#/, '')
-        // console.log('The targetID is: ' + targetID);
+        targetID = event.target.getAttribute('href').replace(/.*#/, '')
       } else {
         return
       }
-      // if it's an open accordion, close it
-      if (event.target.parentNode.getAttribute('data-accordion') === 'open') {
-        event.preventDefault()
-        ebAccordionHideThisSection(targetID)
-        return
-      }
 
-      // did we click on a thing that wasn't an accordion?
-      // which section / accordion is it inside?
-      if (!event.target.parentNode.getAttribute('data-accordion')) {
-        // console.log('We clicked on something that is not an accordion. Now to find targetID ' + targetID + ' in the DOM...');
+      // Find the target of the link in the DOM
+      const targetOfLink = document.getElementById(targetID)
 
-        // find the target of the link in the DOM
-        const targetOfLink = document.getElementById(targetID)
-        // recursively update targetID until we have a data-accordion
-        targetID = ebAccordionFindSection(targetOfLink)
-      }
+      // Recursively update targetID until we have an accordion section
+      targetID = ebAccordionFindSection(targetOfLink)
 
-      // now open the right closed accordion
+      // Now open the right closed accordion
       ebAccordionShow(targetID)
       if (autoCloseAccordionSections === true) {
         ebAccordionHideAllExceptThisOne(targetID)
@@ -465,13 +435,15 @@ function ebAccordionListenForAnchorClicks (querySelectorString) {
 function ebAccordionListenForHeadingClicks () {
   'use strict'
 
-  // also listen for heading clicks
-  const allTheToggleHeaders = document.querySelectorAll('[data-accordion]')
-  allTheToggleHeaders.forEach(function (oneOfTheToggleHeaders) {
-    oneOfTheToggleHeaders.addEventListener('click', function (event) {
-      // simulate anchor click
-      if (event.target.querySelector('a')) {
-        event.target.querySelector('a').click()
+  // Expand an accordion section if its heading is clicked
+  const headings = document.querySelectorAll(accordionHeads)
+  headings.forEach(function (heading) {
+    heading.addEventListener('click', function () {
+      const button = heading.querySelector('button')
+      if (button.getAttribute('aria-expanded') === 'true') {
+        ebAccordionHideThisSection(heading.id)
+      } else {
+        ebAccordionShow(heading.id)
       }
     })
   })
@@ -480,19 +452,18 @@ function ebAccordionListenForHeadingClicks () {
 function ebAccordionListenForNavClicks () {
   'use strict'
 
-  // also listen for nav clicks
+  // Also listen for nav clicks
   const navLinks = document.querySelectorAll('#nav [href]')
+
   navLinks.forEach(function (navLink) {
     navLink.addEventListener('click', function (event) {
-      // get the section and click to open it if it's closed
-      const theTarget = document.getElementById(event.target.hash.replace(/.*#/, ''))
-      if (theTarget) {
-        const targetSection = document.getElementById(ebAccordionFindSection(theTarget))
-        // simulate anchor click, if it's closed
-        if (targetSection) {
-          if (targetSection.getAttribute('data-accordion') === 'closed') {
-            targetSection.querySelector('a').click()
-          }
+      // Get the section and click to open it if it's closed
+      const theHeading = document.getElementById(event.target.hash.replace(/.*#/, ''))
+
+      // Simulate anchor click, if it's closed
+      if (theHeading) {
+        if (theHeading.querySelector('button').getAttribute('aria-expanded') === 'false') {
+          theHeading.click()
         }
       }
     })
@@ -502,55 +473,58 @@ function ebAccordionListenForNavClicks () {
 function ebAccordionListenForHashChange () {
   'use strict'
 
-  // console.log('Starting ebAccordionListenForHashChange...');
-
   window.addEventListener('hashchange', function (event) {
     // Don't treat this like a normal click on a link
     event.preventDefault()
 
-    // get the target ID from the hash,
-    // removing any query parameters
-    let targetID = window.location.hash.replace(/\?.+/, '')
-    // console.log('targetID encoded: ' + targetID);
+    // Get the target ID from the hash
+    let targetID = window.location.hash
 
     targetID = decodeURIComponent(targetID)
-    // console.log('targetID decoded: ' + targetID);
 
-    // get the target of the link
+    // Get the target of the link
     const targetOfLink = document.getElementById(targetID.replace(/.*#/, ''))
-    // console.log('targetOfLink: ' + targetOfLink.innerHTML);
 
-    // check if it's in the viewport already
+    // Check if it's in the viewport already
     const targetRect = targetOfLink.getBoundingClientRect()
+
     const targetInViewport = targetRect.top >= -targetRect.height &&
-                targetRect.left >= -targetRect.width &&
-                targetRect.bottom <= targetRect.height + window.innerHeight &&
-                targetRect.right <= targetRect.width + window.innerWidth
-    // console.log('targetInViewport of ' + targetOfLink + ": " + targetInViewport);
+      targetRect.left >= -targetRect.width &&
+      targetRect.bottom <= targetRect.height + window.innerHeight &&
+      targetRect.right <= targetRect.width + window.innerWidth
 
-    // check if it's an accordion
-    const targetAccordionStatus = targetOfLink.getAttribute('data-accordion')
-    // console.log('targetAccordionStatus: ' + targetAccordionStatus);
+    // If it's in a closed section, all dimensions will be = 0
+    // If it's in an open section, dimensions will be > 0
+    const targetInOpenSection = targetRect.width > 0 &&
+      targetRect.height > 0 &&
+      targetRect.x > 0 &&
+      targetRect.y > 0
 
-    // if it's in the viewport and it's not an accordion, then exit
-    if (targetInViewport && !targetAccordionStatus) {
+    // Check if it's an accordion
+    const targetAccordionStatus = targetOfLink.querySelector('button[aria-expanded]')
+
+    // If it's in the viewport and it's not an accordion header, then exit
+    if (targetInViewport && targetInOpenSection && !targetAccordionStatus) {
       return
     }
 
-    // if it's an accordion and it's closed, open it / jump to it
-    if (targetAccordionStatus === 'closed') {
-      targetOfLink.querySelector('a').click()
+    // If it's an accordion and it's closed, open it / jump to it
+    if (targetAccordionStatus && targetAccordionStatus.getAttribute('aria-expanded') === 'false') {
+      targetOfLink.click()
       return
     }
 
-    // otherwise, open the appropriate accordion
+    // Otherwise, open the appropriate accordion
     const targetAccordionID = ebAccordionFindSection(targetOfLink)
 
     ebAccordionShow(targetAccordionID)
+
     if (autoCloseAccordionSections === true) {
-      // console.log('Hiding other sections...');
       ebAccordionHideAllExceptThisOne(targetAccordionID)
     }
+
+    // Now that the target is visible, scroll to it
+    targetOfLink.scrollIntoView()
   })
 }
 
@@ -560,7 +534,6 @@ function ebAccordionShowDefaultSection () {
   ebAccordionShow(ebAccordionDefaultAccordionHeadID())
 }
 
-// Add a close-all button to close all sections
 function ebAccordionCloseAllButton () {
   'use strict'
   const button = document.querySelector('.accordion-show-all-button')
@@ -571,9 +544,15 @@ function ebAccordionCloseAllButton () {
     ebAccordionHideAll()
     ebAccordionShowAllButton()
   })
+  // Close all when keyboard is used
+  button.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      ebAccordionHideAll()
+      ebAccordionShowAllButton()
+    }
+  })
 }
 
-// Add an expand-all button to open all sections
 function ebAccordionShowAllButton () {
   'use strict'
 
@@ -582,7 +561,7 @@ function ebAccordionShowAllButton () {
     button = document.querySelector('.accordion-show-all-button')
     button.innerHTML = locales[pageLanguage].accordion['show-all']
   } else {
-    const firstSection = document.querySelector('section[role="tabpanel"]')
+    const firstSection = document.querySelector(defaultAccordionHead)
 
     if (firstSection) {
       // Create a wrapper for the button
@@ -594,6 +573,7 @@ function ebAccordionShowAllButton () {
       button = document.createElement('a')
       button.classList.add('accordion-show-all-button')
       button.innerHTML = locales[pageLanguage].accordion['show-all']
+      button.setAttribute('tabindex', '0')
       buttonWrapper.insertAdjacentElement('afterbegin', button)
     }
   }
@@ -604,37 +584,63 @@ function ebAccordionShowAllButton () {
       ebAccordionShowAll()
       ebAccordionCloseAllButton()
     })
+    // Show all when keyboard access is used
+    button.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        ebAccordionShowAll()
+        ebAccordionCloseAllButton()
+      }
+    })
   }
 }
 
 function ebAccordify () {
   'use strict'
 
-  // Signal that we're loading the accordion
+  // Early exit for older browsers
+  if (!ebAccordionInit()) {
+    return
+  }
+
   document.body.setAttribute('data-accordion-active', 'true')
 
-  // exit if there aren't any headings
-  const collapserTargets = accordionHeads
-  const collapserButtons = document.querySelectorAll(collapserTargets)
-  if (!collapserButtons) {
+  // Exit if there aren't any headings
+  const sectionHeadings = document.querySelectorAll(accordionHeads)
+  if (!sectionHeadings) {
     return
   }
 
-  // exit if this page must not accordify
-  const pageHasNoAccordionHeads = (document.querySelector(accordionHeads) === null)
-  if (pageHasNoAccordionHeads) {
-    return
+  // Exit if this isn't a chapter
+  const thisIsFrontmatter = (document.querySelector('.wrapper').classList.contains('frontmatter-page'))
+  const thisIsNotAChapter = !(document.querySelector('.wrapper').classList.contains('default-page'))
+  const thisHasNoH2s = (document.querySelector(accordionHeads) === null)
+  const thisIsEndmatter = (document.querySelector('.wrapper').classList.contains('endmatter-page'))
+  if (thisIsFrontmatter || thisIsNotAChapter || thisHasNoH2s || thisIsEndmatter) {
+    // override if accordion is set to true for the page
+    const thisPageHasAccordionProperty = (document.querySelector('.wrapper[data-accordion-page]'))
+    if (!thisPageHasAccordionProperty) {
+      return
+    }
   }
 
-  ebAccordionSetUpSections(collapserButtons)
+  ebAccordionSetUpSections(sectionHeadings)
 
-  // if there's no hash, show the first section
-  // else (there is a hash, so) show that section
+  ebAccordionShowAllButton()
+
+  // If accordion-open-first="false", don't open any sections
+  if (document.querySelector('.wrapper').getAttribute('data-accordion-open-first')) {
+    if (document.querySelector('.wrapper').getAttribute('data-accordion-open-first') === 'false') {
+      return
+    }
+  }
+
+  // Else if there's no hash, show the first section
   if (!window.location.hash) {
     ebAccordionShowDefaultSection()
     return
   }
 
+  // Else (there is a hash, so) show that section
   ebAccordionHideAll()
   ebAccordionShow()
 }
@@ -660,28 +666,38 @@ function ebLoadAccordion () {
   }
 }
 
+function ebCheckAccordionReady () {
+  return (document.body.getAttribute('data-accordion-active') !== 'true' &&
+  (document.body.getAttribute('data-index-targets') !== null || settings.dynamicIndexing === false) &&
+  document.body.getAttribute('data-ids-assigned') !== null &&
+  document.body.getAttribute('data-search-results') !== null)
+}
+
 // Wait for data-index-targets to be loaded
 // and IDs to be assigned, and any search results to be loaded,
 // before applying the accordion.
 function ebPrepareForAccordion () {
   'use strict'
 
-  const accordionObserver = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      if (mutation.type === 'attributes') {
-        if (document.body.getAttribute('data-accordion-active') !== 'true' &&
-                        (document.querySelector('[data-index-targets]') || settings.dynamicIndexing === false) &&
-                        document.body.getAttribute('data-ids-assigned') &&
-                        document.body.getAttribute('data-search-results')) {
-          ebLoadAccordion()
+  if (ebCheckAccordionReady()) {
+    // If the requirements are already met, just go ahead
+    ebLoadAccordion()
+  } else {
+    // Otherwise wait for the requirements
+    const accordionObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'attributes') {
+          if (ebCheckAccordionReady()) {
+            ebLoadAccordion()
+          }
         }
-      }
+      })
     })
-  })
 
-  accordionObserver.observe(document.body, {
-    attributes: true // listen for attribute changes
-  })
+    accordionObserver.observe(document.body, {
+      attributes: true // Listen for attribute changes
+    })
+  }
 }
 
 window.onload = ebPrepareForAccordion()
