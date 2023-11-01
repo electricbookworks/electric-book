@@ -563,6 +563,38 @@ async function epubHTMLTransformations (argv) {
   }
 }
 
+// Run HTML transformations on elements in pdf
+async function pdfHTMLTransformations (argv) {
+  'use strict'
+  console.log('Running HTML transformations ...')
+
+  try {
+    let pdfHTMLTransformationsProcess
+    if (argv.language) {
+      pdfHTMLTransformationsProcess = spawn(
+        'gulp',
+        ['runPDFTransformations',
+          '--book', argv.book,
+          '--language', argv.language,
+          '--format', argv.format,
+          '--merged', argv.merged]
+      )
+    } else {
+      pdfHTMLTransformationsProcess = spawn(
+        'gulp',
+        ['runPDFTransformations',
+          '--book', argv.book,
+          '--format', argv.format,
+          '--merged', argv.merged]
+      )
+    }
+    await logProcess(pdfHTMLTransformationsProcess, 'Run HTML transformations')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // Converts .html files to .xhtml, e.g. for epub output
 async function convertXHTMLFiles (argv) {
   'use strict'
@@ -1643,6 +1675,7 @@ module.exports = {
   newBook,
   openOutputFile,
   pathExists,
+  pdfHTMLTransformations,
   processImages,
   refreshIndexes,
   renderIndexComments,

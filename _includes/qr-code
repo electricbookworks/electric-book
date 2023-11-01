@@ -1,0 +1,28 @@
+{% comment %} The text in include.data will be turned
+into a QR code by Javascript before output. QR codes
+are only included in PDF output.{% endcomment %}
+
+{% if site.output == "print-pdf" or site.output == "screen-pdf" %}
+
+    {% comment %} JS transformations saves images directly
+    to the output _site folder. So QR code images are not
+    in version control or remote-media repos.
+
+    Don't indent the following div or in markdown it will
+    render as code. {% endcomment %}
+
+<div class="qr-code {{ include.class }}" data-qr-content="{{ include.content }}" data-qr-filename="{{ include.content | slugify }}.svg">
+    <img src="images/{{ site.output }}/{{ include.content | slugify }}.svg">
+    <div class="qr-code-content">
+
+        {% if include.show-content and include.show-content != "false" %}
+            <a href="{{ include.content }}">{{ include.content }}</a>
+        {% endif %}
+
+    </div>
+    <div class="qr-code-caption">
+        {{ include.caption | markdownify }}
+    </div>
+</div>
+
+{% endif %}

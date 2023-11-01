@@ -245,6 +245,7 @@ $web-maths: true !default;
 $web-notes: true !default;
 $web-openers: true !default;
 $web-pullquotes: true !default;
+$web-qr-codes: true !default;
 $web-sources: true !default;
 $web-tables: true !default;
 $web-letters: true !default;
@@ -336,6 +337,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "template/partials/web-maths";
 @import "template/partials/web-notes";
 @import "template/partials/web-openers";
+@import "template/partials/web-qr-codes";
 @import "template/partials/web-pullquotes";
 @import "template/partials/web-sources";
 @import "template/partials/web-tables";

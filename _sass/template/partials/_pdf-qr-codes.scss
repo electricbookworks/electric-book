@@ -1,0 +1,11 @@
+$pdf-qr-codes: true !default;
+@if $pdf-qr-codes {
+
+    .qr-code {
+        @include sidenote();
+
+        img {
+            height: $line-height-default * 4;
+        }
+    }
+}

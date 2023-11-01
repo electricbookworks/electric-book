@@ -114,6 +114,7 @@ const paths = {
   },
   text: {
     src: '_site/' + book + language + '/*.html',
+    merged: ['_site/' + book + language + '/merged.html'],
     dest: '_site/' + book + language + '/'
   },
   epub: {

@@ -9,6 +9,10 @@ const {
 } = require('./_tools/gulp/processors/epub.js')
 
 const {
+  runPDFTransformations
+} = require('./_tools/gulp/processors/pdf.js')
+
+const {
   imagesPrintPDF, imagesScreenPDF,
   imagesEpub, imagesApp, imagesWeb,
   imagesSmall, imagesMedium, imagesLarge,
@@ -57,6 +61,8 @@ exports.epubXhtmlLinks = epubXhtmlLinks
 exports.epubXhtmlFiles = epubXhtmlFiles
 exports.epubCleanHtmlFiles = epubCleanHtmlFiles
 exports.runEpubTransformations = runEpubTransformations
+
+exports.runPDFTransformations = runPDFTransformations
 
 exports.renderIndexCommentsAsTargets = renderIndexCommentsAsTargets
 exports.renderIndexListReferences = renderIndexListReferences

@@ -187,7 +187,7 @@ $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see
 // Elements that float. When these are surrounded by paragraphs,
 // the following paragraph should be indented when we are not
 // using $spaced-paras.
-$floated-element-classes: sidenote !default;
+$floated-element-classes: sidenote, qr-code !default;
 
 // Other PDF features
 $title-page-logo-width: $paragraph-indent * 3 !default;
@@ -393,6 +393,7 @@ $pdf-letters: true !default;
 $pdf-sources: true !default;
 $pdf-openers: true !default;
 $pdf-index: true !default;
+$pdf-qr-codes: true !default;
 $pdf-questions: true !default;
 $pdf-select-questions: true !default;
 $pdf-cross-refs: true !default;
@@ -482,6 +483,7 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 @import "template/partials/pdf-sources";
 @import "template/partials/pdf-openers";
 @import "template/partials/pdf-index";
+@import "template/partials/pdf-qr-codes";
 @import "template/partials/pdf-questions";
 @import "template/partials/pdf-select-questions";
 @import "template/partials/pdf-cross-refs";

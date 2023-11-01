@@ -6,6 +6,11 @@ title: "Plain text"
 
 Most books comprise pages and pages of running text. A good design makes them lovely to look at and easy to read. The heart of a design is how it handles both plain text and special forms like letters. There is a [letter towards the end of this chapter](01-01-plain-text-3.html#letter){:.show-page-number}.
 
+{% include qr-code
+  content="https://electricbookworks.github.io/electric-book/samples/01-01-plain-text-1.html"
+  caption="Scan the code to see this page online."
+%}
+
 The text for this chapter is taken from Sir Arthur Conan Doyle's *Adventures of Sherlock Holmes*.
 
 ### A Scandal in Bohemia
