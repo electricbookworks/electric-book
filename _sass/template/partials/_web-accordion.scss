@@ -4,14 +4,15 @@ $web-accordion: true !default;
     // Accordions
     button[aria-expanded] {
         
-        // This should match the value of accordion-level in _data/settings.yml
-        @extend h3;
-
-        background-color: $color-background;
-        color: $black;
-        font-size: 1em;
-        margin-right: 0.4em;
-        padding-right: $line-height-default;
+        background-color: inherit;
+        border: inherit;
+        color: inherit;
+        font-size: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        padding: inherit;
+        text-align: inherit;
         width: 100%;
 
         display: flex;
@@ -28,10 +29,6 @@ $web-accordion: true !default;
     // overlap with next section.
     section[aria-labelledby] {
         clear: both;
-    }
-
-    button[aria-expanded="true"] {
-        margin-top: $line-height-default;
     }
 
     section[aria-hidden="true"] {
