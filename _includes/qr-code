@@ -13,13 +13,13 @@ are only included in PDF output.{% endcomment %}
 
 <div class="qr-code {{ include.class }}" data-qr-content="{{ include.content }}" data-qr-filename="{{ include.content | slugify }}.svg">
     <img src="images/{{ site.output }}/{{ include.content | slugify }}.svg">
-    <div class="qr-code-content">
 
-        {% if include.show-content and include.show-content != "false" %}
+    {% if include.show-content and include.show-content != "false" %}
+        <div class="qr-code-content">
             <a href="{{ include.content }}">{{ include.content }}</a>
-        {% endif %}
+        </div>
+    {% endif %}
 
-    </div>
     <div class="qr-code-caption">
         {{ include.caption | markdownify }}
     </div>
