@@ -1,4 +1,3 @@
-/* jslint browser */
 /*
 global window, settings, ebLazyLoadImages, videoShow, locales,
 pageLanguage, Element, HTMLDocument, Node, MutationObserver
@@ -130,9 +129,9 @@ function ebAccordionSetUpSections (sectionHeadings) {
     contentSection.setAttribute('aria-labelledby', 'header-' + headingID)
     contentSection.setAttribute('aria-hidden', 'true')
 
-    // Now we have the heading and all its children, and an empty section
+    // Now we have the heading and all its children, and an empty section.
     // The heading is still where it should be in the DOM,
-    // so we can put the section after it
+    // so we can put the section after it.
     sectionHeading.insertAdjacentElement('afterend', contentSection)
 
     // Add label to section heading so that it's not "empty"
@@ -250,7 +249,7 @@ function ebAccordionHideAllExceptThisOne (targetID) {
   const headings = document.querySelectorAll(accordionHeads)
 
   headings.forEach(function (heading) {
-    // iIf it's the one we just clicked, skip it
+    // If it's the one we just clicked, skip it
     if (heading.id === targetID) {
       return
     }
@@ -402,7 +401,6 @@ function ebAccordionListenForAnchorClicks () {
     oneOfTheAnchors.addEventListener('click', function (event) {
       event.stopPropagation()
 
-      // Declare targetID so JSLint knows it's coming in this function.
       let targetID
 
       // Ignore target blank / rel noopener links
