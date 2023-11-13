@@ -2,47 +2,36 @@ $web-accordion: true !default;
 @if $web-accordion {
 
     // Accordions
-    [role="tab"] {
-        position: relative;
-        padding-right: $line-height-default;
+    button[aria-expanded] {
+        
+        background-color: inherit;
+        border: inherit;
+        color: inherit;
+        font-size: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        padding: inherit;
+        text-align: inherit;
+        width: 100%;
+
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        
         &:hover {
+            background-color: $color-background;
             cursor: pointer;
-        }
-        a {
-            color: $color-accent;
-            text-decoration: none;
-            &:first-of-type {
-                margin-right: 0.4em;
-            }
-        }
-        &:after {
-            position: absolute;
-            top: 0;
-            right: 0;
         }
     }
 
     // Don't let floating elements from previous section
     // overlap with next section.
-    [role="tabpanel"] {
+    section[aria-labelledby] {
         clear: both;
     }
 
-    [data-accordion="closed"] {
-        font-size: $font-size-default;
-        &:after {
-            content: $nav-bar-children-prompt;
-        }
-    }
-
-    [data-accordion="open"] {
-        margin-top: $line-height-default;
-        &:after {
-            content: $nav-bar-children-prompt-hide;
-        }
-    }
-
-    [aria-expanded="false"] {
+    section[aria-hidden="true"] {
         display: none;
     }
 
