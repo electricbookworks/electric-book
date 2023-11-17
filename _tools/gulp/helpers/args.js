@@ -44,7 +44,7 @@ if (format === '' && !args.silent) {
 }
 
 // Get whether we are using merged.html
-let merged = true
+let merged = 'true'
 if (args.merged && args.merged.trim() !== '') {
   merged = args.merged
 }
