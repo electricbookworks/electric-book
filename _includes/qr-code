@@ -4,9 +4,9 @@ are only included in PDF output.{% endcomment %}
 
 {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
 
-    {% comment %} JS transformations saves images directly
-    to the output _site folder. So QR code images are not
-    in version control or remote-media repos.
+    {% comment %} JS-driven HTML transformation saves images
+    directly to the output _site folder. So QR code images
+    are not in version control or remote-media repos.
 
     Don't indent the following div or in markdown it will
     render as code. {% endcomment %}
