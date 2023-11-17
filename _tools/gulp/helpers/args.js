@@ -43,6 +43,13 @@ if (format === '' && !args.silent) {
   console.log('If processing for a specific format, use the --format argument, e.g. gulp --format printpdf. No hyphens.')
 }
 
+// Get whether we are using merged.html
+let merged = 'true'
+if (args.merged && args.merged.trim() !== '') {
+  merged = args.merged
+}
+
 exports.book = book
 exports.language = language
 exports.format = format
+exports.merged = merged

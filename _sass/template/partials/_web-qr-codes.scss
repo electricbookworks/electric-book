@@ -1,0 +1,8 @@
+$web-qr-codes: true !default;
+@if $web-qr-codes {
+
+    // Currently not shown
+    .qr-code {
+        display: none;
+    }
+}

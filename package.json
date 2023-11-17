@@ -54,6 +54,7 @@
     "path": "^0.12.7",
     "prince": "github:electricbookworks/node-prince",
     "puppeteer": "^16.1.1",
+    "qrcode": "^1.5.3",
     "require-all": "^3.0.0",
     "standard": "^17.0.0",
     "which": "^2.0.2",

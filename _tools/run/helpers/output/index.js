@@ -12,6 +12,7 @@ const {
   convertXHTMLFiles,
   convertXHTMLLinks,
   cordova,
+  epubHTMLTransformations,
   epubValidate,
   epubZip,
   epubZipRename,
@@ -20,11 +21,11 @@ const {
   mathjaxEnabled,
   openOutputFile,
   pathExists,
+  pdfHTMLTransformations,
   renderIndexComments,
   renderIndexLinks,
   renderMathjax,
-  runPrince,
-  epubHTMLTransformations
+  runPrince
 } = require('../helpers.js')
 const merge = require('../merge')
 
@@ -50,6 +51,7 @@ async function pdf (argv) {
     await renderIndexComments(argv)
     await renderIndexLinks(argv)
     await merge(argv)
+    await pdfHTMLTransformations(argv)
     await renderMathjax(argv)
     await runPrince(argv)
     openOutputFile(argv)
