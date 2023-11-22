@@ -51,8 +51,8 @@ async function pdf (argv) {
     await renderIndexComments(argv)
     await renderIndexLinks(argv)
     await merge(argv)
-    await pdfHTMLTransformations(argv)
     await renderMathjax(argv)
+    await pdfHTMLTransformations(argv)
     await runPrince(argv)
     openOutputFile(argv)
   } catch (error) {
