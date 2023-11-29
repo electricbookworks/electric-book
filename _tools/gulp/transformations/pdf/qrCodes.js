@@ -27,7 +27,7 @@ function qrCodes ($) {
     if (filename && data) {
       qrCode.toFile(imageLocation + filename, data, {
         margin: '0',
-        type: 'svg'
+        type: 'png'
       }, function (err) {
         if (err) throw err
         console.log('Generated QR code ' + filename + ' for ' + data)
