@@ -11,8 +11,8 @@ are only included in PDF output.{% endcomment %}
     Don't indent the following div or in markdown it will
     render as code. {% endcomment %}
 
-<div class="qr-code {{ include.class }}" data-qr-content="{{ include.content }}" data-qr-filename="{{ include.content | slugify }}.svg">
-    <img src="images/{{ site.output }}/{{ include.content | slugify }}.svg">
+<div class="qr-code {{ include.class }}" data-qr-content="{{ include.content }}" data-qr-filename="{{ include.content | slugify }}.png">
+    <img src="images/{{ site.output }}/{{ include.content | slugify }}.png">
 
     {% if include.show-content and include.show-content != "false" %}
         <div class="qr-code-content">
