@@ -36,7 +36,9 @@ remote-media:
 
 ### Testing new images with remote media
 
-Sometimes, you want to test a new image (e.g. an SVG you're editing iteratively). Once it's committed to version control, the image will load from a remote-media repo, which is served online. But you don't want to commit the new image to version control until you've got it right. So you need to load the testing version temporarily, to see it in place, while you work on it.
+Sometimes, you want to test a new image (e.g. an SVG you're editing iteratively). Once it's committed to version control, the image will load from a remote-media repo, which is served online. But you don't want to commit the new image to version control until you've got it right. You also don't want to spin up an entire separate media repo just to test a few new images.
+
+So you need to load the testing version temporarily, to see it in place, while you work on it.
 
 To do this, create a fresh copy of the Electric Book template for testing with. Unless your book is in its repo's `book` folder, rename the `book` folder in the testing template to match the name of your book. Let's say it's called `spacepotatoes`. Put *only* your testing image in `spacepotatoes/images/_source`. Then, as you would with any book, process the images using the command `npm run eb -- images -b spacepotatoes`. You should now have generated copies of your testing images for each output format in `spacepotatoes/images/`. 
 
@@ -46,7 +48,7 @@ Now you can serve your testing image(s) by running this command in the testing t
 npx http-server --cors
 ```
 
-That will run a website version of your testing template, and its URL will appear in the terminal. Copy the URL. (If you're using GitPod, GitPod will route this URL through another public-facing URL, and prompt you about that. You need the GitPod URL.)
+That will run a website version of your testing template, and its URL will appear in the terminal. Copy the URL.
 
 Set that URL as the `testing` url in `settings.yml`:
 
@@ -66,6 +68,7 @@ Some notes on constraints and troubleshooting:
 - Testing images don't work at all on `live` builds, which are generally only used for live/production builds of websites.
 - Testing images work in web and PDF outputs only. For PDF testing images to work, all `remote-media` locations should be URLs, not local file paths. That is, they must start with `http`. This is because the script that loads testing images needs to check over HTTP whether a testing image exists.
 - Testing images do not work with epub or app outputs. Those outputs require images to exist locally (i.e. in the content repo) when building. Instead, you can temporarily replace the relevant images with their testing versions before you generate an epub or app.
+- If you're using GitPod, GitPod will route your `http-server` URL through a public-facing GitPod URL, and prompt you about that. You need the GitPod URL for `testing` in `settings.yml`. You may also need to go to 'Ports', in a tab beside 'Terminal', and make the URL's port public.
 - If your testing images are very large, PDF output may stall, because Prince has to fetch each image just to check that it exists. If your PDF output is stalling with testing images, try reducing their file size, or testing with screen PDF rather than print PDF output. Screen PDF images are generally smaller than print PDF images.
 
 ## Structuring external-media files
