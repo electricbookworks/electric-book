@@ -18,7 +18,7 @@ jobs:
                 ruby-version: 2.7
 
             - name: Install Bundler
-              run: gem install bundler
+              run: gem install bundler -v 2.4.22
 
             - name: Bundle install
               run: bundle install
