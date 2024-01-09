@@ -1,4 +1,4 @@
-/* global SVGInject */
+/* global ebCheckForPage, settings, SVGInject */
 
 // This script helps get sensible SVGs into our pages.
 // It first injects all SVGs linked as img tags
@@ -87,6 +87,19 @@ SVGInject.setOptions({
   }
 })
 
+//  Get the testing version of the SVG, if any
+function ebGetTestingSvgSrc (svgSrc) {
+  const devImages = settings.remoteMedia.development
+  const testImages = settings.remoteMedia.testing
+  const svgTestingSrc = svgSrc.replace(devImages, testImages)
+
+  if (ebCheckForPage(svgTestingSrc)) {
+    return svgTestingSrc
+  } else {
+    return false
+  }
+}
+
 // Run svg-inject.min.js on all images
 // that have an 'inject-svg' class.
 function ebInjectSVGs () {
@@ -94,6 +107,12 @@ function ebInjectSVGs () {
   const ebSVGsToInject = document.querySelectorAll('img.inject-svg:not(.no-inject-svg)')
   let i
   for (i = 0; i < ebSVGsToInject.length; i += 1) {
+    const svgSrc = ebSVGsToInject[i].dataset.src
+
+    // If it exists, use the testing version
+    if (svgSrc && ebGetTestingSvgSrc(svgSrc)) {
+      ebSVGsToInject[i].dataset.src = ebGetTestingSvgSrc(svgSrc)
+    }
     SVGInject(ebSVGsToInject[i])
   }
 }

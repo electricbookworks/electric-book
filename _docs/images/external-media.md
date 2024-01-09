@@ -24,6 +24,8 @@ remote-media:
   development: "https://dev.superpotatoes.com/media"
 ```
 
+Note: never include a trailing slash at the end of your `remote-media` URLs. If you do, the resulting full URL to images will include two slashes. If you're using SVGs, they will not be injected properly for CORS reasons.
+
 To disable external media, comment out the relevant settings, e.g. to only use remote media for development, but not for a live website:
 
 ``` yaml
@@ -31,6 +33,40 @@ remote-media:
   # live: ""
   development: "https://dev.superpotatoes.com/media"
 ```
+
+### Testing new images with remote media
+
+Sometimes, you want to test a new image (e.g. an SVG you're editing iteratively). Once it's committed to version control, the image will load from a remote-media repo, which is served online. But you don't want to commit the new image to version control until you've got it right. So you need to load the testing version temporarily, to see it in place, while you work on it.
+
+To do this, create a fresh copy of the Electric Book template for testing with. Unless your book is in its repo's `book` folder, rename the `book` folder in the testing template to match the name of your book. Let's say it's called `spacepotatoes`. Put *only* your testing image in `spacepotatoes/images/_source`. Then, as you would with any book, process the images using the command `npm run eb -- images -b spacepotatoes`. You should now have generated copies of your testing images for each output format in `spacepotatoes/images/`. 
+
+Now you can serve your testing image(s) by running this command in the testing template (then entering `y` if prompted):
+
+```sh
+npx http-server --cors
+```
+
+That will run a website version of your testing template, and its URL will appear in the terminal. Copy the URL. (If you're using GitPod, GitPod will route this URL through another public-facing URL, and prompt you about that. You need the GitPod URL.)
+
+Set that URL as the `testing` url in `settings.yml`:
+
+``` yaml
+remote-media:
+  # live: ""
+  development: "https://dev.superpotatoes.com/media"
+  testing: "https://mytestingbranch.superpotatoes.com/media"
+```
+
+Now, when you build your book as a website or PDF, you'll see the testing image.
+
+Images will first load from the `development` URL, but if any images exist at your `testing` URL, they will be replaced with your testing versions.
+
+Some notes on constraints and troubleshooting:
+
+- Testing images don't work at all on `live` builds, which are generally only used for live/production builds of websites.
+- Testing images work in web and PDF outputs only. For PDF testing images to work, all `remote-media` locations should be URLs, not local file paths. That is, they must start with `http`. This is because the script that loads testing images needs to check over HTTP whether a testing image exists.
+- Testing images do not work with epub or app outputs. Those outputs require images to exist locally (i.e. in the content repo) when building. Instead, you can temporarily replace the relevant images with their testing versions before you generate an epub or app.
+- If your testing images are very large, PDF output may stall, because Prince has to fetch each image just to check that it exists. If your PDF output is stalling with testing images, try reducing their file size, or testing with screen PDF rather than print PDF output. Screen PDF images are generally smaller than print PDF images.
 
 ## Structuring external-media files
 
