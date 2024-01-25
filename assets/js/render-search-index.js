@@ -43,6 +43,17 @@ function generateIndex () {
         })
       }
 
+      // Ignore requests to images, to speed up page loads
+      await page.setRequestInterception(true)
+
+      page.on('request', (req) => {
+        if (req.resourceType() === 'image') {
+          req.abort()
+        } else {
+          req.continue()
+        }
+      })
+
       // Go to the page URL
       await page.goto(url)
 
