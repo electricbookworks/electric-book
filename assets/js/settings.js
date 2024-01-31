@@ -54,6 +54,10 @@ var settings = {
         search: {
             jumpBoxLocation: 'mainHeading'
         }
+    },
+    remoteMedia: {
+        development: '{{ site.data.settings.remote-media.development }}',
+        testing: '{{ site.data.settings.remote-media.testing }}'
     }
 };
 

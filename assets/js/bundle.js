@@ -41,6 +41,8 @@ layout: null
 
 {% endif %}
 
+{% include_relative testing-images.js %}
+
 {% if site.output == "web" and site.build != "live" and site.data.settings.web.annotator.development == true %}
     {% include_relative annotation.js %}
 {% elsif site.output == "web" and site.build == "live" and site.data.settings.web.annotator.live == true %}
