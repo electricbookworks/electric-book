@@ -168,6 +168,14 @@ function configString (argv) {
     string += ',_configs/' + argv.configs.replace(/'/g, '').replace(/"/g, '')
   }
 
+  // Add OS-specific app configs, if we're building an app and those configs exist
+  if (argv.format === 'app') {
+    if (argv['app-os'] &&
+        pathExists(process.cwd() + '/_configs/_config.app.' + argv['app-os'] + '.yml')) {
+      string += ',_configs/_config.app.' + argv['app-os'] + '.yml'
+    }
+  }
+
   // Add MathJax config if --mathjax=true
   if (argv.mathjax) {
     string += ',_configs/_config.mathjax-enabled.yml'
