@@ -22,7 +22,7 @@ $output-format: "web" !default;
 @import "template/colors";
 @import "theme/web-variables";
 
-// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-layout-utilities.scss).
 $edition-suffix: null !default;
 
 // The path to the project root, for settings paths to fonts and colour profiles.
@@ -261,7 +261,7 @@ $web-docs: true !default;
 
 // Type-control classes
 $web-smallcaps: true !default;
-$web-fitting: true !default;  // E.g. tracking and shrinking
+$web-layout-utilities: true !default;  // E.g. tracking and shrinking
 
 // Controls
 $web-controls: true !default;
@@ -354,7 +354,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 
 // Type-control classes
 @import "template/partials/web-smallcaps";
-@import "template/partials/web-fitting";  // E.g. tracking and shrinking
+@import "template/partials/web-layout-utilities";  // E.g. tracking and shrinking
 
 // User features
 @import "template/partials/web-controls";

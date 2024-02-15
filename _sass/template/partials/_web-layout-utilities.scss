@@ -1,0 +1,23 @@
+$web-layout-utilities: true !default;
+@if $web-layout-utilities {
+
+  // Shrink the font size.
+  // Useful for wide tables.
+  .shrink {
+      font-size: 0.7em;
+  }
+
+  // Prevent spans from breaking over a line
+  span, em, strong {
+    &.keep-together#{$edition-suffix} {
+      white-space: nowrap;
+    }
+  }
+
+  // If it's not feasible to automate the correct indent on a para,
+  // an editor's fallback is to indent it manually this way.
+  .web-indent#{$edition-suffix} {
+    text-indent: $paragraph-indent;
+  }
+
+}

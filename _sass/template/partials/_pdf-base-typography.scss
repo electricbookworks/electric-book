@@ -70,6 +70,12 @@ $convert-images-to-color-profile: false !default;
         }
     }
 
+    // Indent paragraphs that are visually subsequent,
+    // but separated by floated elements in the DOM.
+    // We allow for up to three floated elements between
+    // paragraphs. After that, editors should use `.pdf-indent`
+    // as a page-refinment override.
+
     @if not $spaced-paras {
         @if $floated-element-classes {
             @each $class in $floated-element-classes {
@@ -78,6 +84,26 @@ $convert-images-to-color-profile: false !default;
 
                     &.first {
                         text-indent: 0;
+                    }
+                }
+
+                @each $second-sibling-class in $floated-element-classes {
+                    p + .#{$class} + .#{$second-sibling-class} + p {
+                        text-indent: $paragraph-indent;
+
+                        &.first {
+                            text-indent: 0;
+                        }
+                    }
+
+                    @each $third-sibling-class in $floated-element-classes {
+                        p + .#{$class} + .#{$second-sibling-class} + .#{$third-sibling-class} + p {
+                            text-indent: $paragraph-indent;
+
+                            &.first {
+                                text-indent: 0;
+                            }
+                        }
                     }
                 }
             }
