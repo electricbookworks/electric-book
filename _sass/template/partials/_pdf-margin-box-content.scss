@@ -446,4 +446,23 @@ $pdf-margin-box-content: true !default;
       vertical-align: bottom;
     }
   }
+
+  // Add registration marks on print PDFs
+
+  @if $output-format == "print-pdf" {
+
+    @if $registration-marks == true {
+
+      @page:left {
+        @left-middle {
+          @include registration-marks(left);
+        }
+      }
+      @page:right {
+        @right-middle {
+          @include registration-marks(right);
+        }
+      }
+    }
+  }
 }
