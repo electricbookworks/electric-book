@@ -61,6 +61,8 @@ exclude:
   # Exclude files we don't need for epub
   - _api
   - deploy.sh
+  - fr
+  - netlify.toml
   - sitemap.xml
   - test.sh
   - /assets/fonts
