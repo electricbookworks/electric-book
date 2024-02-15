@@ -28,7 +28,8 @@ function ebLazyLoadImages () {
   // If IntersectionObserver is supported,
   // and lazyloading is on in settings.yml (loaded in settings.js),
   // create a new one that will use it on all the lazyImages.
-  if (Object.prototype.hasOwnProperty.call(window, 'IntersectionObserver')) {
+  if (Object.prototype.hasOwnProperty.call(window, 'IntersectionObserver') &&
+      settings.web.images.lazyload) {
     const lazyImageObserver = new IntersectionObserver(function
     (entries, lazyImageObserver) {
       entries.forEach(function (entry) {
@@ -62,6 +63,7 @@ function ebLazyLoadImages () {
     })
   } else {
     // If the browser doesn't support IntersectionObserver,
+    // or we're not lazy-loading in settings,
     // just change all data-src to src and data-srcset to srcset.
     lazyImages.forEach(function (lazyImage) {
       if (lazyImage.dataset.src) {
@@ -97,7 +99,4 @@ function ebPrepareForLazyLoading () {
   })
 }
 
-// Go when the document is loaded and if lazyLoad enabled
-if (settings.web.images.lazyload) {
-  ebPrepareForLazyLoading()
-}
+ebPrepareForLazyLoading()
