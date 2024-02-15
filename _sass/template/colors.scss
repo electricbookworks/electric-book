@@ -1,26 +1,57 @@
-// Colours
-$template-green: #009E7F !default;
-$template-blue: #5f738c !default;
-$template-yellow: #ffd54d !default;
-$template-orange: #ff7c4d !default;
+// CYMK values for print output,
+// RGB/hex values for other outputs.
+// We set both these sets in explicit
+// if/else blocks because !default values
+// do not override ones set previously.
+// The first !default we set wins.
 
-$template-green-light: #D0FFFF !default;
-$template-blue-light: #C9DEFA !default;
-$template-yellow-light: #FFFFBD !default;
-$template-orange-light: #FFECB5 !default;
+// Since variables are scoped to their @if statement,
+// we must initialise them first.
+// https://stackoverflow.com/a/15372344/1781075
+
+// Colours
+$template-green: null;
+$template-blue: null;
+$template-yellow: null;
+$template-orange: null;
+
+$template-green-light: null;
+$template-blue-light: null;
+$template-yellow-light: null;
+$template-orange-light: null;
 
 // Blacks
-$black: #262626 !default;
-$grey-dark: #333333 !default;
-$grey-mid: #999999 !default;
-$grey-light: #cccccc !default;
-$white: #FFF !default;
-$white-mid: #f9f9f9 !default;
+$black: null;
+$grey-dark: null;
+$grey-mid: null;
+$grey-light: null;
+$white: null;
+$white-mid: null;
 
+// Then we set the actual !default values.
 
-// CYMK values for print output
+@if $output-format != "print-pdf" {
 
-@if $output-format == "print-pdf" {
+    // Colours
+    $template-green: #009E7F !default;
+    $template-blue: #5f738c !default;
+    $template-yellow: #ffd54d !default;
+    $template-orange: #ff7c4d !default;
+
+    $template-green-light: #D0FFFF !default;
+    $template-blue-light: #C9DEFA !default;
+    $template-yellow-light: #FFFFBD !default;
+    $template-orange-light: #FFECB5 !default;
+
+    // Blacks
+    $black: #262626 !default;
+    $grey-dark: #333333 !default;
+    $grey-mid: #999999 !default;
+    $grey-light: #cccccc !default;
+    $white: #FFF !default;
+    $white-mid: #f9f9f9 !default;
+
+} @else {
 
     // Colours
     $template-green: cmyk(62%, 0%, 12%, 38%) !default;
@@ -39,5 +70,4 @@ $white-mid: #f9f9f9 !default;
     $grey-mid: cmyk(0%, 0%, 0%, 40%) !default;
     $grey-light: cmyk(0%, 0%, 0%, 20%) !default;
     $white: cmyk(0%, 0%, 0%, 0%) !default;
-
 }

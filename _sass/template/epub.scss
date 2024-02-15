@@ -19,7 +19,7 @@ $output-format: "epub" !default;
 
 // Theme variables
 @import "theme/colors";
-@import "template/colors";
+@import "colors";
 @import "theme/epub-variables";
 
 // Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
