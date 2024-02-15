@@ -56,7 +56,7 @@
     @if $pdf-sidebar {
 
         width: $sidebar-content-width;
-        -prince-float: sidenote;
+        float: sidenote;
 
         // -prince-clear: end; // not sure this is necessary in all cases
         // -prince-sidenote-placement: top; // may not be necessary
@@ -70,15 +70,15 @@
         min-width: auto;
 
         @if $wide == true {
-            -prince-float: wide;
+            float: wide;
         }
 
         &.pdf-align-top {
-            -prince-float: sidenote align-top;
+            float: sidenote align-top;
         }
 
         &.pdf-align-bottom {
-            -prince-float: sidenote align-bottom;
+            float: sidenote align-bottom;
         }
 
     } @else {

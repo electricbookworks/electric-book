@@ -196,7 +196,7 @@ $pdf-slides: true !default;
         .slides {
 
             &.wide {
-                -prince-float: wide;
+                float: wide;
                 column-count: 3;
                 column-gap: $sidebar-gap-width;
                 width: $content-width;
