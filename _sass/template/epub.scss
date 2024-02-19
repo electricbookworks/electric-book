@@ -19,10 +19,10 @@ $output-format: "epub" !default;
 
 // Theme variables
 @import "theme/colors";
-@import "template/colors";
+@import "colors";
 @import "theme/epub-variables";
 
-// Edition suffix: identifies this edition in certain classes (e.g. in _epub-fitting.scss).
+// Edition suffix: identifies this edition in certain classes (e.g. in _epub-layout-utilities.scss).
 $edition-suffix: null !default;
 
 // The path to the project root, for settings paths to fonts and colour profiles.
@@ -172,7 +172,7 @@ $epub-select-questions: true !default;
 
 // Type-control classes
 $epub-smallcaps: true !default;
-$epub-fitting: true !default;
+$epub-layout-utilities: true !default;
 
 // Logic (if this then that)
 $epub-reset-sequences: true !default;
@@ -248,7 +248,7 @@ $epub-reset-sequences: true !default;
 
 // Type-control classes
 @import "template/partials/epub-smallcaps";
-@import "template/partials/epub-fitting";
+@import "template/partials/epub-layout-utilities";
 
 // Logic (if this then that)
 @import "template/partials/epub-reset-sequences";

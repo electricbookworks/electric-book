@@ -1,8 +1,8 @@
-$pdf-fitting: true !default;
-@if $pdf-fitting {
+$pdf-layout-utilities: true !default;
+@if $pdf-layout-utilities {
 
-  // Typographic control for fitting text and elements on fixed pages
-  // These classes include an optional edition suffix, 
+  // Typographic control for refining layout of text and elements.
+  // Some classes include an optional edition suffix,
   // for producing different layouts from the same source markdown/HTML.
 
   @include floats();
@@ -16,6 +16,12 @@ $pdf-fitting: true !default;
     .float-top-next#{$edition-suffix} + p {
       text-indent: $paragraph-indent;
     }
+  }
+
+  // If it's not feasible to automate the correct indent on a para,
+  // an editor's fallback is to indent it manually this way.
+  .pdf-indent#{$edition-suffix} {
+    text-indent: $paragraph-indent;
   }
 
   // These classes control letter-spacing (tracking), usually to save widows and orphans.

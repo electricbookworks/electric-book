@@ -25,7 +25,7 @@ $output-format: "screen-pdf" !default;
 @import "template/colors";
 @import "theme/pdf-variables";
 
-// Edition suffix: identifies this edition in page-fitting classes (in _pdf-fitting.scss).
+// Edition suffix: identifies this edition in page-layout-utilities classes (in _pdf-layout-utilities.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
 // A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
 // If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.
@@ -38,7 +38,7 @@ $path-to-root-directory: "../.." !default;
 // First, we set several variables related to overall page setup.
 $bleed: 0 !default;
 $trim: 0 !default;
-$crop-marks: none !default; // crop | none
+$crop-marks: none !default; // crop | crop cross | cross | none
 
 // Colours
 $colorspace: rgb !default; // auto | none | rgb | cmyk | gray

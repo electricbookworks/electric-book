@@ -17,6 +17,7 @@ $pdf-pdf-view: true !default;
         prince-pdf-display-doc-title: true; // only supported from Prince 13
         // Note colour profiles are stored in the non-generated Jekyll root, not in _site
         prince-pdf-output-intent: url("#{$path-to-root-directory}/../_tools/profiles/#{$color-profile}");
+        prince-pdf-color-conversion: output-intent; // converts all colours to the above colour profile
         @if $output-format == "print-pdf" {
             prince-filter-resolution: 300dpi;
         } @else {

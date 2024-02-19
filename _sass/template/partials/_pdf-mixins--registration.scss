@@ -1,0 +1,13 @@
+@mixin cmyk-registration-svg() {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32.537" height="32.537" viewBox="0.104 0.104 32.537 32.537" xml:space="preserve"><path fill="none" stroke="white" stroke-width="3.389" stroke-miterlimit="10" d="M29.931 16.373c0 7.489-6.068 13.56-13.558 13.56-7.483 0-13.557-6.072-13.557-13.56 0-7.486 6.074-13.554 13.557-13.554 7.489 0 13.558 6.068 13.558 13.554zM.104 16.373h32.538M16.373.104v32.538" /><path fill="none" stroke="white" stroke-width="3.389" stroke-miterlimit="10" d="M24.508 16.373a8.13 8.13 0 0 1-8.135 8.135 8.134 8.134 0 0 1-8.135-8.135 8.139 8.139 0 0 1 8.135-8.135 8.136 8.136 0 0 1 8.135 8.135z" /><path fill="none" stroke="cmyk(100,100,100,100)" stroke-width=".678" stroke-miterlimit="10" d="M29.931 16.373c0 7.489-6.068 13.56-13.558 13.56-7.483 0-13.557-6.072-13.557-13.56 0-7.486 6.074-13.554 13.557-13.554 7.489 0 13.558 6.068 13.558 13.554zM.104 16.373h32.538M16.373.104v32.538" /><path fill="cmyk(100,100,100,100)" d="M24.508 16.373a8.13 8.13 0 0 1-8.135 8.135 8.134 8.134 0 0 1-8.135-8.135 8.139 8.139 0 0 1 8.135-8.135 8.136 8.136 0 0 1 8.135 8.135" /><path fill="none" stroke="white" stroke-width=".678" stroke-miterlimit="10" d="M8.239 16.373h16.269M16.373 8.239v16.269" /></svg>')!important;
+}
+
+@mixin registration-marks($text-align: left) {
+    @include cmyk-registration-svg();
+    margin-outside: -($margin-outside)!important;
+    margin-inside: 0!important;
+    padding: 0!important;
+    text-align: outside!important;
+    vertical-align: middle!important;
+    width: $margin-outside;
+}

@@ -81,6 +81,11 @@
             float: sidenote align-bottom;
         }
 
+        &.float-top,
+        &.pdf-float-top {
+            -prince-float-placement: top;
+        }
+
     } @else {
 
         // This version of the mixin assumes there is no sidebar,
