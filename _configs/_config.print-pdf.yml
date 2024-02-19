@@ -62,7 +62,9 @@ exclude:
   - /about.md
   - /contact.md
   - /deploy.sh
+  - /fr
   - /index.md
+  - /netlify.toml
   - /search.md
   - /sitemap.xml
   - /test.sh

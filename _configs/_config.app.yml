@@ -75,6 +75,8 @@ exclude:
   # Things we don't need for an app
   - _api
   - deploy.sh
+  - fr
+  - netlify.toml
   - sitemap.xml
   - test.sh
   - assets/profiles
