@@ -13,34 +13,25 @@ function ebSVGFontFixes (svg) {
   'use strict'
 
   // Get the elements in the SVG with font-family set
-  const ebFontFixElements = svg.querySelectorAll('[font-family]')
+  const ebFontFixElements = svg.querySelectorAll('[font-family], [style]')
 
   // What fonts do we want to change the names of?
   // Optionally add a new font-weight, e.g. for 'OpenSans-Bold',
   // which should be Open Sans with a bold weight.
+  // Note that some apps include quotes around properties.
   const fontsToChange = [
     {
-      oldFontFace: 'OpenSans-Regular',
-      newFontFace: 'Open Sans'
+      oldFontFace: 'SourceSansPro-Regular',
+      newFontFace: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif'
     },
     {
-      oldFontFace: 'OpenSans-Bold',
-      newFontFace: 'Open Sans',
+      oldFontFace: '"SourceSansPro-Regular"',
+      newFontFace: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif'
+    },
+    {
+      oldFontFace: '"SourceSansPro-Bold"',
+      newFontFace: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
       newFontWeight: 'bold'
-    },
-    {
-      oldFontFace: 'Inter-Regular',
-      newFontFace: 'Inter'
-    },
-    {
-      oldFontFace: 'Inter-Medium',
-      newFontFace: 'Inter',
-      newFontWeight: '500'
-    },
-    {
-      oldFontFace: 'Inter-Italic',
-      newFontFace: 'Inter',
-      newFontStyle: 'italic'
     }
   ]
 
@@ -67,10 +58,10 @@ function ebSVGFontFixes (svg) {
       // Change font properties in style attributes
       if (ebFontFixElements[i].style.fontFamily === fontsToChange[j].oldFontFace) {
         ebFontFixElements[i].style.fontFamily = fontsToChange[j].newFontFace
-        if (ebFontFixElements[i].style.fontWeight) {
+        if (ebFontFixElements[i].style.fontWeight || fontsToChange[j].newFontWeight) {
           ebFontFixElements[i].style.fontWeight = fontsToChange[j].newFontWeight
         }
-        if (ebFontFixElements[i].style.fontStyle) {
+        if (ebFontFixElements[i].style.fontStyle || fontsToChange[j].newFontStyle) {
           ebFontFixElements[i].style.fontStyle = fontsToChange[j].newFontStyle
         }
       }
