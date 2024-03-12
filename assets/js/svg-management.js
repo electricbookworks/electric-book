@@ -13,34 +13,25 @@ function ebSVGFontFixes (svg) {
   'use strict'
 
   // Get the elements in the SVG with font-family set
-  const ebFontFixElements = svg.querySelectorAll('[font-family]')
+  const ebFontFixElements = svg.querySelectorAll('[font-family], [style]')
 
   // What fonts do we want to change the names of?
   // Optionally add a new font-weight, e.g. for 'OpenSans-Bold',
   // which should be Open Sans with a bold weight.
+  // Note that some apps include quotes around properties.
   const fontsToChange = [
     {
-      oldFontFace: 'OpenSans-Regular',
-      newFontFace: 'Open Sans'
+      oldFontFace: 'SourceSansPro-Regular',
+      newFontFace: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif'
     },
     {
-      oldFontFace: 'OpenSans-Bold',
-      newFontFace: 'Open Sans',
+      oldFontFace: '"SourceSansPro-Regular"',
+      newFontFace: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif'
+    },
+    {
+      oldFontFace: '"SourceSansPro-Bold"',
+      newFontFace: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
       newFontWeight: 'bold'
-    },
-    {
-      oldFontFace: 'Inter-Regular',
-      newFontFace: 'Inter'
-    },
-    {
-      oldFontFace: 'Inter-Medium',
-      newFontFace: 'Inter',
-      newFontWeight: '500'
-    },
-    {
-      oldFontFace: 'Inter-Italic',
-      newFontFace: 'Inter',
-      newFontStyle: 'italic'
     }
   ]
 
@@ -67,10 +58,10 @@ function ebSVGFontFixes (svg) {
       // Change font properties in style attributes
       if (ebFontFixElements[i].style.fontFamily === fontsToChange[j].oldFontFace) {
         ebFontFixElements[i].style.fontFamily = fontsToChange[j].newFontFace
-        if (ebFontFixElements[i].style.fontWeight) {
+        if (ebFontFixElements[i].style.fontWeight || fontsToChange[j].newFontWeight) {
           ebFontFixElements[i].style.fontWeight = fontsToChange[j].newFontWeight
         }
-        if (ebFontFixElements[i].style.fontStyle) {
+        if (ebFontFixElements[i].style.fontStyle || fontsToChange[j].newFontStyle) {
           ebFontFixElements[i].style.fontStyle = fontsToChange[j].newFontStyle
         }
       }
@@ -78,12 +69,86 @@ function ebSVGFontFixes (svg) {
   }
 }
 
+// Get a title and desc to use in the SVG
+function ebSVGInjectImageData (img) {
+  // To define the title and description for an SVG:
+  // - the img title attribute, if any, becomes the SVG title
+  // - the img alt text, if any, text becomes the SVG desc.
+  // But if the img has no title attribute:
+  // - if the img is in a figure with a caption,
+  //   use the caption text for the SVG title
+  // - otherwise use alt text as the title, and omit the desc,
+  //   which would simply duplicate the title.
+
+  let title, desc
+
+  // Get a description for the SVG <desc>
+  if (img.alt) {
+    desc = img.alt
+  }
+
+  // Get text for the SVG <title>
+  if (img.title) {
+    title = img.title
+  } else if (img.closest('.figure') &&
+      img.closest('.figure').querySelector('.caption')) {
+    title = img.closest('.figure').querySelector('.caption').innerText
+  } else if (img.alt) {
+    title = img.alt
+    desc = ''
+  }
+
+  return {
+    title,
+    desc
+  }
+}
+
+// Include a title and desc in the SVG
+function ebSVGInjectTitleDesc (svg, imgData) {
+  // The SVGInject vendor script does not include alt text
+  // in injected SVGs. So we need to compensate for that.
+  // SVGInject does support turning an image's title="" attribute
+  // into an SVG <title> element. This isn't enough for us.
+  // We get info about the image in ebSVGInjectImageData
+  // and then add it to the SVG using SVGInject's afterLoad property.
+  // We use <desc>, too, because alt text on complex images can be long,
+  // and that would be inappropriate for a <title>, especially
+  // if a shorter title exists in the form of a figure caption.
+
+  if (imgData.desc) {
+    if (svg.querySelector('desc')) {
+      svg.querySelector('desc').remove()
+    }
+
+    svg.desc = imgData.desc
+    const descElement = document.createElementNS('http://www.w3.org/2000/svg', 'desc')
+    descElement.textContent = imgData.desc
+    svg.insertAdjacentElement('afterbegin', descElement)
+  }
+
+  if (imgData.title) {
+    if (svg.querySelector('title')) {
+      svg.querySelector('title').remove()
+    }
+
+    svg.title = imgData.title
+    const titleElement = document.createElementNS('http://www.w3.org/2000/svg', 'title')
+    titleElement.textContent = imgData.title
+    svg.insertAdjacentElement('afterbegin', titleElement)
+  }
+}
+
+// We need a global variable to store image data
+// that SVGInject.setOptions can read globally.
+let ebSVGInjectCurrentImageData = {}
+
 // SVGInject options (https://github.com/iconfu/svg-inject#svginject)
-// - run the font fixes after injecting SVGs
 SVGInject.setOptions({
   afterLoad: function (svg) {
     'use strict'
     ebSVGFontFixes(svg)
+    ebSVGInjectTitleDesc(svg, ebSVGInjectCurrentImageData)
   }
 })
 
@@ -94,6 +159,7 @@ function ebInjectSVGs () {
   const ebSVGsToInject = document.querySelectorAll('img.inject-svg:not(.no-inject-svg)')
   let i
   for (i = 0; i < ebSVGsToInject.length; i += 1) {
+    ebSVGInjectCurrentImageData = ebSVGInjectImageData(ebSVGsToInject[i])
     SVGInject(ebSVGsToInject[i])
   }
 }
