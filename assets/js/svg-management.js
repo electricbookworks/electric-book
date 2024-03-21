@@ -111,7 +111,7 @@ function ebSVGInjectTitleDesc (svg, imgData) {
   // SVGInject does support turning an image's title="" attribute
   // into an SVG <title> element. This isn't enough for us.
   // We get info about the image in ebSVGInjectImageData
-  // and then add it to the SVG using SVGInject's afterLoad property.
+  // and then add it to the SVG using SVGInject's beforeInject property.
   // We use <desc>, too, because alt text on complex images can be long,
   // and that would be inappropriate for a <title>, especially
   // if a shorter title exists in the form of a figure caption.
@@ -139,29 +139,32 @@ function ebSVGInjectTitleDesc (svg, imgData) {
   }
 }
 
-// We need a global variable to store image data
-// that SVGInject.setOptions can read globally.
-let ebSVGInjectCurrentImageData = {}
-
 // SVGInject options (https://github.com/iconfu/svg-inject#svginject)
+// - run the font fixes after injecting SVGs
 SVGInject.setOptions({
   afterLoad: function (svg) {
-    'use strict'
     ebSVGFontFixes(svg)
-    ebSVGInjectTitleDesc(svg, ebSVGInjectCurrentImageData)
   }
 })
 
 // Run svg-inject.min.js on all images
 // that have an 'inject-svg' class.
 function ebInjectSVGs () {
-  'use strict'
   const ebSVGsToInject = document.querySelectorAll('img.inject-svg:not(.no-inject-svg)')
-  let i
-  for (i = 0; i < ebSVGsToInject.length; i += 1) {
-    ebSVGInjectCurrentImageData = ebSVGInjectImageData(ebSVGsToInject[i])
-    SVGInject(ebSVGsToInject[i])
-  }
+
+  ebSVGsToInject.forEach(function (img) {
+    // Set the beforeInject option for each image
+    // so that each SVG receives the correct <title> and <desc>
+
+    SVGInject.setOptions({
+      beforeInject: function (img, svg) {
+        ebSVGInjectTitleDesc(svg, ebSVGInjectImageData(img))
+      }
+    })
+
+    // Then inject the SVG
+    SVGInject(img)
+  })
 }
 
 // Go
