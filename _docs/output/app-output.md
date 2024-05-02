@@ -88,18 +88,18 @@ We're still working on the signing process, which is done in X Code.
 
 ## Windows
 
-You must have Visual Studio installed with all requirements for Cordova Windows Apps installed. The basic process will be:
+You must have the latest version of Visual Studio and Cordova (with the prerequisites for Electron) installed. The basic process will be:
 
 1. Create a listing in the Microsoft app store. (Once-off.)
-1. Check that `google-play-expansion-file` is not enabled in `settings.yml`.
-1. Build app HTML with Jekyll.
-2. Add the Windows app platform files with Cordova.
-3. Build the app for release with Visual Studio.
+2. Check that `google-play-expansion-file` is not enabled in `settings.yml`.
+3. Build app HTML with Jekyll.
+4. Add the Windows app platform files with Cordova.
+5. Build the app for release with Visual Studio.
 
 Here are the detailed steps:
 
 1. [Create a listing in the Microsoft app store](https://developer.microsoft.com/en-us/dashboard/). Some of the forms you need to complete may only work in Edge (!). If this is already done, perhaps check that it's up to date and add any release notes.
-1. Create or check that you have a `secrets.yml` file in `_data` with the `windows` `package-identity-name`, `publisher-id` and `publisher-display-name` filled in. (And remember *never* to commit secrets to version control.)
+2. Create or check that you have a `secrets.yml` file in `_data` with the `windows` `package-identity-name`, `publisher-id` and `publisher-display-name` filled in. (And remember *never* to commit secrets to version control.)
    - You get the package identity name from the Windows & Xbox dashboard on the Microsoft website, under 'Product management > Product identity'.
    - You can get the `publisher-id` value there from your Windows developer settings.
    - If you're creating a one-language translation app, this should have a section for the language. E.g.:
@@ -136,16 +136,15 @@ Here are the detailed steps:
           publisher-display-name: "Electric Book Works"
       ```
 
-1. Ensure that `google-play-expansion-file-enabled` is not set in `_data/settings.yml` (that's only for Android).
-1. Use the output script to create the app-ready HTML only. If you're creating a translation app, when the output script asks for extra config files, enter the relevant config file for that language. E.g. for French: `_configs/_config.app.fr.yml`
-2. If you're using external media, copy the images from the remote media repo manually to `_site/app/www/book/images` (or the equivalent translation images folder; see '[Add remote media](#add-remote-media)' below for more detail).
-2. At a command prompt in the repo root, run `cd _site/app && cordova platform rm windows && cordova platform add windows && cordova build windows`
-3. Open Visual Studio. From there, open the Cordova solution file (`.sln`) in `_site/app/platforms/windows`, and deploy and and build for your local machine to test. (You should be able to click the '► Local machine' button in the toolbar.)
-4. We recommend building a Release version (not a Debug version) to test that the app works when fully signed. To do this:
+3. Ensure that `google-play-expansion-file-enabled` is not set in `_data/settings.yml` (that's only for Android).
+4. If you're using external media, you'll need to copy the images from the remote media repo manually to the images folder in the main book repo (or the equivalent translation images folder there). See '[Add remote media](#add-remote-media)' below for detailed steps.
+5. At a command prompt in the repo root, run: `npm run eb -- output -f app -o electron -d true` to build the app.
+6. To check through the app locally, open the .exe file named for the app within the `_site\app\platforms\electron\build\win-unpacked` folder.
+7. We recommend building a Release version (not a Debug version) to test that the app works when fully signed. To do this:
     1. Associate the app with an app listing in the store. Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... (You may only have to do this once.)
     2. Under `CordovaApp.Windows10 (Universal Windows)` open `package.windows10.appxmanifest` and add the language code to the 'Default language' field. You can also correct the description, which Visual Studio or Cordova aren't getting right currently. Save the file.
     3. In the toolbar, select 'Release' instead of 'Debug' and select your computer's architecture in the next box (usually 'x64'). Then click the '► Local machine' button in the toolbar. (Sometimes you get an error and have to enter the language again in the 'Default language' field. Then retry '► Local machine'.) If the process works and you're on Windows, it should install the app to your computer, where you should open and test it.
-5. To prepare for the Windows store, use Visual Studio following the guidance in [this article](https://docs.microsoft.com/en-us/windows/uwp/packaging/packaging-uwp-apps). In short, you will:
+8. To prepare for the Windows store, use Visual Studio following the guidance in [this article](https://docs.microsoft.com/en-us/windows/uwp/packaging/packaging-uwp-apps). In short, you will:
     1. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Associate App with the Store... and select the correct app that appears. This will sign the app with the correct certificate. (You may only have to do this once.)
     1. However, this unsets the default language that Cordova adds to non-release builds. So under `CordovaApp.Windows10 (Universal Windows)` open `package.windows10.appxmanifest` and add the language code to the 'Default language' field. You can also correct the description, which Visual Studio or Cordova aren't getting right currently.
     1. Now create an app package upload file. Use VS's Solution Explorer (a panel on the right, which you can show with View > Solution Explorer). Right-click `CordovaApp.Windows10 (Universal Windows)` then select Store > Create App Packages.
@@ -155,8 +154,8 @@ Here are the detailed steps:
     5. Click Create and hold thumbs.
     6. Validate your app before you submit it to Dev Center. To validate, leave the Local machine option selected and click Launch Windows App Certification Kit.
 
-6. Run the app locally to check that it works. If you're debugging, if your WACK reports show failures, the event logs are in `C:\ProgramData\Microsoft\Windows\WER\ReportArchive`.
-7. Visual Studio saves the `.appxupload` file in `\_site\app\platforms\windows\AppPackages`. Remember to save the `appxupload` for backup, because it'll get overwritten the next time you build. If the app release is working, upload it to the Dev Center.
+9. Run the app locally to check that it works. If you're debugging, if your WACK reports show failures, the event logs are in `C:\ProgramData\Microsoft\Windows\WER\ReportArchive`.
+10. Visual Studio saves the `.appxupload` file in `\_site\app\platforms\windows\AppPackages`. Remember to save the `appxupload` for backup, because it'll get overwritten the next time you build. If the app release is working, upload it to the Dev Center.
 
 ### Troubleshooting
 
@@ -168,6 +167,6 @@ Here are the detailed steps:
 
 If your project uses remote-media (storing images in a separate project), you need to:
 
-1. Generate the app HTML using the output script.
-2. Manually, temporarily, copy `/book/images/app` folder from your external-media project to `_site/app/www/book/images` in your main project. If you're building a translation, this should be the equivalent translation images folder, e.g. copy `/book/fr/images/app` to `_site/app/www/book/fr/images` for French.
-3. Build the app with Cordova by running this from the project root: `cd _site/app && cordova platform rm windows && cordova platform add windows@6.0.0 && cordova build windows`
+1. Generate the app HTML by running this from the project root: `npm run eb -- output -f app -o electron -d true`.
+2. Manually, temporarily, copy `/book/images/app` folder from your external-media project to the images folder in your main project. If you're building a translation, this should be the equivalent translation images folder, e.g. copy `/book/fr/images/app` to `book/fr/images` for French.
+3. Rebuild the app HTML, to now include the images, by running this command again from the project root: `npm run eb -- output -f app -o electron -d true`.
