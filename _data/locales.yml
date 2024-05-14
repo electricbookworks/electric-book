@@ -228,6 +228,8 @@ en:
     # stumbleupon: "Stumbleupon"
     # tumblr: "Tumblr"
     # wordpress: "WordPress"
+  expandable-box:
+    read-more: 'Expand'
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
