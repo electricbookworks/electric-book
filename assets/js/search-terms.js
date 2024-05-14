@@ -1,5 +1,5 @@
-/* global locales, pageLanguage, Mark,
-    ebTruncatedString, MutationObserver */
+/* global locales, pageLanguage, Mark, settings, ebTruncatedString,
+MutationObserver */
 
 // get query search term from GET query string
 function getQueryVariable (variable) {
@@ -54,7 +54,8 @@ function ebSearchTermsOnPage () {
   if (searchTerms) {
     searchTerms = Array.from(searchTerms).filter(function (term) {
       if (term.closest('noscript') ||
-                    term.closest('#nav')) {
+          term.closest('#nav') ||
+          term.closest('.mtext')) {
         return false
       } else {
         return true
@@ -139,15 +140,26 @@ function ebSearchTermsOnPage () {
 
         // If the link has not already been used,
         // continue to add it to the list.
-        if (parentTextElement && links.indexOf(parentTextElement) === -1) {
+        if (parentTextElement && links.indexOf(parentTextElement) === -1 && !(parentTextElement.classList.contains('mtext'))) {
           // Add this link to the links array
           links.push(parentTextElement)
 
           // If there is a snippet, use that to create a link
           // to the relevant snippet
           if (parentTextElement.id) {
+            let extraMathText
+            // Remove duplicated MathJax text from search result link
+            if (parentTextElement.querySelector('nobr[aria-hidden="true"]')) {
+              extraMathText = parentTextElement.querySelector('nobr[aria-hidden="true"]').innerText
+            }
+
+            let text = parentTextElement.innerText
+
+            if (extraMathText) {
+              text = text.replace(extraMathText, '')
+            }
             // Truncate the text
-            const text = ebTruncatedString(parentTextElement.innerText, 60, ' …')
+            text = ebTruncatedString(text, 60, ' …')
 
             // Create a link containing the text,
             // and put the link in a list item.
@@ -205,28 +217,38 @@ function ebMarkSearchTermsOnPage () {
   }
 }
 
+function ebReadyForSearchTerms () {
+  return (
+    (document.body.getAttribute('data-index-targets') !== null ||
+      settings.dynamicIndexing === false) &&
+     document.body.getAttribute('data-ids-assigned') &&
+     document.body.getAttribute('data-mathjax-rendered')
+  )
+}
+
 // Wait for ids to be on the page, and the indexing stuff,
 // before marking search terms, so that IDs are stable.
 function ebPrepareSearchTermsOnPage () {
   'use strict'
 
-  const searchTermsObserver = new MutationObserver(function (mutations) {
-    let readyForSearchTerms = false
-    mutations.forEach(function (mutation) {
-      if (mutation.type === 'attributes' && readyForSearchTerms === false) {
-        if (document.body.getAttribute('data-index-targets') &&
-                        document.body.getAttribute('data-ids-assigned')) {
-          readyForSearchTerms = true
-          ebMarkSearchTermsOnPage()
-          searchTermsObserver.disconnect()
+  if (ebReadyForSearchTerms()) {
+    ebMarkSearchTermsOnPage()
+  } else {
+    const searchTermsObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'attributes') {
+          if (ebReadyForSearchTerms()) {
+            ebMarkSearchTermsOnPage()
+            searchTermsObserver.disconnect()
+          }
         }
-      }
+      })
     })
-  })
 
-  searchTermsObserver.observe(document.body, {
-    attributes: true // listen for attribute changes
-  })
+    searchTermsObserver.observe(document.body, {
+      attributes: true // listen for attribute changes
+    })
+  }
 }
 
 // Start
