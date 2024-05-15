@@ -108,9 +108,9 @@ Le roi le regarda stupéfait.
 Il s’inclina et, s’éloignant sans voir la main que le roi lui tendait, il partit avec moi pour rejoindre son domicile.
 
 <!--index:
--Holmes, Sherlock
+~Holmes, Sherlock
 Adler, Irene
--affaires \\ Un scandale en Bohème
+~affaires \\ Un scandale en Bohème
 -->
 
 Et voilà comment un grand scandale menaça le royaume de Bohême et comment les plans les plus savants de Sherlock Holmes furent déjoués par la finesse et l’intelligence d’une femme. Il se moquait auparavant de l’habileté des femmes, mais depuis il y a renoncé. Et quand il parle d’Irène Adler, ou quand il fait allusion à sa photographie, c’est toujours sous cette dénomination dont il a fait un titre honorable : « La femme. »
