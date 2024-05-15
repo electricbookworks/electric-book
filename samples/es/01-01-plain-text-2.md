@@ -17,7 +17,7 @@ Eran cerca de las cuatro cuando se abrió la puerta y entró en la habitación u
 
 —No puedo imaginarlo. Supongo que ha estado observando los hábitos, y tal vez la casa, de la señorita Irene Adler.
 
-<!-- índice:
+<!-- index:
 Logia Briony
 -->
 
@@ -27,13 +27,13 @@ Logia Briony
 
 "¿Y qué hay de Irene Adler?" Yo pregunté.
 
-<!-- índice:
+<!-- index:
 Logia Briony
 -->
 
 "Oh, ella ha bajado la cabeza de todos los hombres en esa parte. Ella es la cosa más delicada debajo de un sombrero en este planeta. Eso dice Serpentine-maullidos, a un hombre. Vive tranquilamente, canta en conciertos, conduce a las cinco todos los días, y regresa a las siete en punto para la cena. Rara vez sale a otras horas, excepto cuando ella canta. Solo tiene un visitante masculino, pero mucho de él. Es moreno, guapo y apuesto, nunca llama menos de una vez. un día, y a menudo dos veces. Es el señor Godfrey Norton, del Inner Temple. Vea las ventajas de un cochero como confidente. Lo habían llevado a casa una docena de veces desde Serpentine-mews, y sabían todo sobre él. Había escuchado todo lo que tenían que decir, comencé a caminar de un lado a otro cerca de Briony Lodge una vez más y a pensar en mi plan de campaña.
 
-<!-- índice:
+<!-- index:
 Logia Briony
 -->
 
@@ -41,7 +41,7 @@ Logia Briony
 
 "Te sigo de cerca", respondí.
 
-<!-- índice:
+<!-- index:
 Logia Briony
 -->
 
@@ -122,7 +122,7 @@ Y cuando yo levante mi mano, entonces, arrojarás a la habitación lo que te dé
 
 "Eso es excelente. Creo que, tal vez, es casi el momento de prepararme para el nuevo papel que tengo que desempeñar".
 
-<!-- índice:
+<!-- index:
 ocupaciones \\ clero
 ocupaciones \\ clero \\ Inconformista -->
 

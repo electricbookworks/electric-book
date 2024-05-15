@@ -97,7 +97,7 @@ function ebIndexProcessComments (comments) {
       // https://stackoverflow.com/a/41183617/1781075
       // and remove any leading or trailing hyphens.
       const entriesByLevel = rawEntriesByLevel.map(function (str) {
-        return str.trim().replace(/^-+|-+$/, '')
+        return str.trim().replace(/^~+|~+$/, '')
       })
 
       // Check for starting or ending hyphens.
@@ -112,11 +112,11 @@ function ebIndexProcessComments (comments) {
       let from = false
       let to = false
 
-      if (line.substring(0, 1) === '-') {
+      if (line.substring(0, 1) === '~') {
         to = true
         line = line.substring(1)
       }
-      if (line.substring(line.length - 1) === '-') {
+      if (line.substring(line.length - 1) === '~') {
         from = true
         line = line.substring(0, line.length - 1)
       }

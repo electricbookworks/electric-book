@@ -166,7 +166,7 @@ async function app (argv) {
 
       // Build the app
       if (argv['app-release']) {
-        await cordova(['build', argv['app-os']], '--release')
+        await cordova(['build', argv['app-os'], '--release'])
       } else {
         await cordova(['build', argv['app-os']])
       }
