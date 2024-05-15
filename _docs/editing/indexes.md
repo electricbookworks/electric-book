@@ -96,11 +96,11 @@ occupations \\ clergy \\ Nonconformist
 
 Concepts listed in an index are sometimes discussed in a book over long passages, rather than in one word-specific location. For instance, in a book on French literature, several pages might be dedicated to discussing the work of Albert Camus. The index might list 'Camus, Albert 25–28'.
 
-When you tag concepts in the book's text, and you want to reference a range like this, you need to note where the range begins and ends. Do this by adding a hyphen at the end or start of your tag's entry. You'd tag the start of the Camus section like this:
+When you tag concepts in the book's text, and you want to reference a range like this, you need to note where the range begins and ends. Do this by adding a tilde at the end or start of your tag's entry. You'd tag the start of the Camus section like this:
 
 ``` md
 <!--index:
-Camus, Albert-
+Camus, Albert~
 -->
 ```
 
@@ -108,15 +108,15 @@ And you'd tag the end of the discussion like this:
 
 ``` md
 <!--index:
--Camus, Albert
+~Camus, Albert
 -->
 ```
 
-To end a range for a nested entry, the hyphen goes at the start of the entire line, not the subentry term:
+To end a range for a nested entry, the tilde goes at the start of the entire line, not the subentry term:
 
 ``` md
 <!--index:
--cases \\ Scandal in Bohemia
+~cases \\ Scandal in Bohemia
 -->
 ```
 
