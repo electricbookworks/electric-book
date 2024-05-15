@@ -5,8 +5,8 @@ style: default-page continued
 
 #### III.
 
-<!-- índice:
-Rey de Bohemia-
+<!-- index:
+Rey de Bohemia~
 -->
 
 Dormí en Baker Street esa noche, y estábamos ocupados con nuestro café y tostadas por la mañana cuando el rey de Bohemia entró corriendo en la habitación.
@@ -47,8 +47,8 @@ Pero ella no podía amarlo.
 
 "Es cierto. Y sin embargo... ¡Bueno! ¡Ojalá hubiera sido de mi propia posición! ¡Qué reina habría sido!" Volvió a sumirse en un taciturno silencio, que no se rompió hasta que nos detuvimos en Serpentine Avenue.
 
-<!-- índice:
--Rey de Bohemia
+<!-- index:
+~Rey de Bohemia
 Logia Briony
 -->
 
@@ -58,14 +58,14 @@ La puerta de Briony Lodge estaba abierta y una anciana estaba de pie en los esca
 
 -Soy el señor Holmes -respondió mi acompañante, mirándola con una mirada inquisitiva y algo sobresaltada.
 
-<!-- índice:
-Charing Cross-
+<!-- index:
+Charing Cross~
 -->
 
 "¡Ciertamente! Mi ama me dijo que era probable que llamaras. Se fue esta mañana con su esposo en el tren de las 5:15 desde Charing Cross hacia el continente".
 
-<!-- índice:
--Charing Cross
+<!-- index:
+~Charing Cross
 -->
 
 "¡Qué!" Sherlock Holmes retrocedió tambaleándose, blanco de disgusto y sorpresa. "¿Quieres decir que se ha ido de Inglaterra?"
@@ -76,7 +76,7 @@ Charing Cross-
 
 "Veremos." Empujó al sirviente y entró corriendo en el salón, seguido por el rey y por mí. Los muebles estaban esparcidos por todas partes, con estantes desmantelados y cajones abiertos, como si la señora los hubiera saqueado apresuradamente antes de su vuelo. Holmes se apresuró a accionar el timbre, abrió una pequeña persiana corredera y, metiendo la mano, sacó una fotografía y una carta. La fotografía era de la propia Irene Adler en traje de noche, la carta estaba escrita como "Sherlock Holmes, Esq. Se dejará hasta que se llame". Mi amigo lo abrió y los tres lo leímos juntos. Estaba fechado a la medianoche de la noche anterior y decía así:
 
-<!-- índice:
+<!-- index:
 Adler, Irene
 Norton, Irene
 ocupaciones \\ clero \\ falso
@@ -87,9 +87,9 @@ casos \\ Escándalo en Bohemia \\ carta
 >
 > "Bueno, te seguí hasta tu puerta, y así me aseguré de que yo era realmente un objeto de interés para el célebre Sr. Sherlock Holmes. Luego, con bastante imprudencia, te deseé buenas noches y me dirigí al Templo para verte". mi esposo.
 >
-> "Ambos pensamos que el mejor recurso era huir, cuando nos persigue un antagonista tan temible; así que encontrarás el nido vacío cuando llames mañana. En cuanto a la fotografía, tu cliente puede descansar en paz. Amo y soy amado por un hombre mejor que él. <!-- índice: Rey de Bohemia -->El rey puede hacer lo que quiera sin impedimento de alguien a quien ha agraviado cruelmente. Lo guardo solo para protegerme y para preservar un arma que siempre me protegerá de cualquier paso que pueda dar en el futuro. Dejo una fotografía que tal vez quiera poseer, y quedo, querido Sr. Sherlock Holmes,
+> "Ambos pensamos que el mejor recurso era huir, cuando nos persigue un antagonista tan temible; así que encontrarás el nido vacío cuando llames mañana. En cuanto a la fotografía, tu cliente puede descansar en paz. Amo y soy amado por un hombre mejor que él. <!-- index: Rey de Bohemia -->El rey puede hacer lo que quiera sin impedimento de alguien a quien ha agraviado cruelmente. Lo guardo solo para protegerme y para preservar un arma que siempre me protegerá de cualquier paso que pueda dar en el futuro. Dejo una fotografía que tal vez quiera poseer, y quedo, querido Sr. Sherlock Holmes,
 >
-> <!-- index: -Adler, Irene -->"Muy atentamente,\\
+> <!-- index: ~Adler, Irene -->"Muy atentamente,\\
 > "IRENE NORTON, de soltera ADLER".
 > {:.valediction}
 {:.letter #carta}
@@ -116,8 +116,8 @@ El Rey lo miró asombrado.
 
 "Le agradezco a Su Majestad. Entonces no hay más que hacer al respecto. Tengo el honor de desearle muy buenos días". Hizo una reverencia y, dándose la vuelta sin observar la mano que el rey le había tendido, se dirigió en mi compañía a sus aposentos.
 
-<!-- índice:
--Holmes, Sherlock
--casos \\ Escándalo en Bohemia -->
+<!-- index:
+~Holmes, Sherlock
+~casos \\ Escándalo en Bohemia -->
 
 Y así fue como un gran escándalo amenazó con afectar al reino de Bohemia, y como los mejores planes del señor Sherlock Holmes fueron derrotados por el ingenio de una mujer. Solía divertirse con la inteligencia de las mujeres, pero últimamente no lo he oído hacerlo. Y cuando habla de Irene Adler, o cuando se refiere a su fotografía, es siempre bajo el honroso título de la mujer.

@@ -6,7 +6,7 @@ style: default-page continued
 #### III.
 
 <!-- index:
-King of Bohemia-
+King of Bohemia~
 -->
 
 I slept at Baker Street that night, and we were engaged upon our toast and coffee in the morning when the King of Bohemia rushed into the room.
@@ -48,7 +48,7 @@ I slept at Baker Street that night, and we were engaged upon our toast and coffe
 "It is true. And yet--Well! I wish she had been of my own station! What a queen she would have made!" He relapsed into a moody silence, which was not broken until we drew up in Serpentine Avenue.
 
 <!-- index:
--King of Bohemia
+~King of Bohemia
 Briony Lodge
 -->
 
@@ -59,13 +59,13 @@ The door of Briony Lodge was open, and an elderly woman stood upon the steps. Sh
 "I am Mr. Holmes," answered my companion, looking at her with a questioning and rather startled gaze.
 
 <!-- index:
-Charing Cross-
+Charing Cross~
 -->
 
 "Indeed! My mistress told me that you were likely to call. She left this morning with her husband by the 5:15 train from Charing Cross for the Continent."
 
 <!-- index:
--Charing Cross
+~Charing Cross
 -->
 
 "What!" Sherlock Holmes staggered back, white with chagrin and surprise. "Do you mean that she has left England?"
@@ -77,7 +77,7 @@ Charing Cross-
 "We shall see." He pushed past the servant and rushed into the drawing-room, followed by the King and myself. The furniture was scattered about in every direction, with dismantled shelves and open drawers, as if the lady had hurriedly ransacked them before her flight. Holmes rushed at the bell-pull, tore back a small sliding shutter, and, plunging in his hand, pulled out a photograph and a letter. The photograph was of Irene Adler herself in evening dress, the letter was superscribed to "Sherlock Holmes, Esq. To be left till called for." My friend tore it open and we all three read it together. It was dated at midnight of the preceding night and ran in this way:
 
 <!-- index:
-Adler, Irene-
+Adler, Irene~
 Norton, Irene
 occupations \\ clergy \\ fake
 cases \\ Scandal in Bohemia \\ letter
@@ -89,7 +89,7 @@ cases \\ Scandal in Bohemia \\ letter
 > 
 > "We both thought the best resource was flight, when pursued by so formidable an antagonist; so you will find the nest empty when you call to-morrow. As to the photograph, your client may rest in peace. I love and am loved by a better man than he. <!-- index: King of Bohemia -->The King may do what he will without hindrance from one whom he has cruelly wronged. I keep it only to safeguard myself, and to preserve a weapon which will always secure me from any steps which he might take in the future. I leave a photograph which he might care to possess; and I remain, dear Mr. Sherlock Holmes,
 > 
-> <!-- index: -Adler, Irene -->"Very truly yours,\\
+> <!-- index: ~Adler, Irene -->"Very truly yours,\\
 > "IRENE NORTON, née ADLER."
 > {:.valediction}
 {:.letter #letter}
@@ -117,7 +117,7 @@ The King stared at him in amazement.
 "I thank your Majesty. Then there is no more to be done in the matter. I have the honour to wish you a very good-morning." He bowed, and, turning away without observing the hand which the King had stretched out to him, he set off in my company for his chambers.
 
 <!-- index:
--Holmes, Sherlock
--cases \\ Scandal in Bohemia -->
+~Holmes, Sherlock
+~cases \\ Scandal in Bohemia -->
 
 And that was how a great scandal threatened to affect the kingdom of Bohemia, and how the best plans of Mr. Sherlock Holmes were beaten by a woman's wit. He used to make merry over the cleverness of women, but I have not heard him do it of late. And when he speaks of Irene Adler, or when he refers to her photograph, it is always under the honourable title of the woman.

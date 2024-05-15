@@ -18,9 +18,9 @@ The text for this chapter is taken from Sir Arthur Conan Doyle's *Adventures of 
 #### I.
 
 <!--index:
-Holmes, Sherlock-
+Holmes, Sherlock~
 Adler, Irene
-cases \\ Scandal in Bohemia-
+cases \\ Scandal in Bohemia~
 -->
 
 To Sherlock Holmes she is always THE woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind. He was, I take it, the most perfect reasoning and observing machine that the world has seen, but as a lover he would have placed himself in a false position. He never spoke of the softer passions, save with a gibe and a sneer. They were admirable things for the observer--excellent for drawing the veil from men's motives and actions. But for the trained reasoner to admit such intrusions into his own delicate and finely adjusted temperament was to introduce a distracting factor which might throw a doubt upon all his mental results. Grit in a sensitive instrument, or a crack in one of his own high-power lenses, would not be more disturbing than a strong emotion in a nature such as his. And yet there was but one woman to him, and that woman was the late Irene Adler, of dubious and questionable memory.
@@ -77,7 +77,7 @@ I could not help laughing at the ease with which he explained his process of ded
 "How many? I don't know."
 
 <!-- index:
-cases \\ Scandal in Bohemia \\ letter- -->
+cases \\ Scandal in Bohemia \\ letter~ -->
 
 "Quite so! You have not observed. And yet you have seen. That is just my point. Now, I know that there are seventeen steps, because I have both seen and observed. By-the-way, since you are interested in these little problems, and since you are good enough to chronicle one or two of my trifling experiences, you may be interested in this." He threw over a sheet of thick, pink-tinted note-paper which had been lying open upon the table. "It came by the last post," said he. "Read it aloud."
 
@@ -130,7 +130,7 @@ A man entered who could hardly have been less than six feet six inches in height
 "You had my note?" he asked with a deep harsh voice and a strongly marked German accent. "I told you that I would call." He looked from one to the other of us, as if uncertain which to address.
 
 <!-- index:
--cases \\ Scandal in Bohemia \\ letter -->
+~cases \\ Scandal in Bohemia \\ letter -->
 
 "Pray take a seat," said Holmes. "This is my friend and colleague, Dr. Watson, who is occasionally good enough to help me in my cases. Whom have I the honour to address?"
 

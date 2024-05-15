@@ -9,9 +9,9 @@ title: "Texte brut"
 #### I
 
 <!--index:
-Holmes, Sherlock-
+Holmes, Sherlock~
 Adler, Irene
-affaires \\ Un scandale en Bohème-
+affaires \\ Un scandale en Bohème~
 -->
 
 Pour Sherlock Holmes c’est toujours « la femme ». Il ne parle jamais d’elle que sous cette dénomination ; à ses yeux elle éclipse le sexe faible tout entier. Ne croyez pourtant pas qu’il ait eu de l’amour, voire même de l’affection pour Irène Adler. Tous les sentiments violents et celui-là en particulier sont contraires à son caractère froid, méthodique et admirablement équilibré. Holmes est bien la machine animée et observatrice la plus parfaite qu’on puisse rencontrer, mais je ne vois pas mon personnage dans le rôle d’amoureux. Il ne m’a jamais parlé d’amour qu’avec un geste de mépris et un sourire railleur. Pour lui qui a mission d’observer et de déduire, la passion chez les autres est un secours puissant ; elle détermine sans cesse les mobiles secrets qui ont porté l’accusé à son crime ; mais le logicien de profession aurait grand tort de se laisser envahir par le sentiment ; cela équivaudrait à introduire dans des rouages fins et délicats un facteur étranger qui y porterait la plus grande perturbation ; le sentiment pourrait influer sur ses déductions. Une émotion violente pour une nature comme la sienne équivaudrait à un grain de sable dans un instrument de précision ou à une fêlure sur un de ses microscopes les plus puissants. Et cependant pour lui il n’y avait qu’une femme au monde et cette femme était feue Irène Adler, de mémoire douteuse.
@@ -55,7 +55,7 @@ Je ne pus m’empêcher de rire en l’entendant développer si naturellement so
 — Combien ? Je n’en sais rien.
 
 <!-- index:
-affaires \\ Un scandale en Bohème \\ lettre- -->
+affaires \\ Un scandale en Bohème \\ lettre~ -->
 
 — Parfaitement. Vous n’avez pas observé. Et cependant vous avez vu ; c’est bien ce que je vous disais. Moi, par contre, je sais qu’il y a dix-sept marches, parce que je ne me suis pas contenté de voir, j’ai observé. À propos, puisque vous vous plaisez à étudier mes problèmes et que vous avez même eu la bonté de publier quelques-uns de mes succès, tout insignifiants qu’ils fussent, ceci vous intéressera peut-être. »
 
@@ -120,7 +120,7 @@ C’était un homme d’au moins six pieds six pouces qui se présenta devant no
 Il nous regardait alternativement, ne sachant auquel de nous deux il devait s’adresser.
 
 <!-- index:
--affaires \\ Un scandale en Bohème \\ lettre -->
+~affaires \\ Un scandale en Bohème \\ lettre -->
 
 — Je vous en prie, prenez un siège, dit Holmes. Je vous présente mon collègue et ami le D<small><small><sup>r</sup></small></small> Watson, qui veut bien à l’occasion m’assister dans les enquêtes que j’ai à faire. À qui ai-je l’honneur de parler ?
 
