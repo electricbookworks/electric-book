@@ -72,4 +72,26 @@ $pdf-boxes: true !default;
         padding: ($line-height-default - $rule-thickness) line-height-default;
         margin-left: $paragraph-indent;
     }
+
+    // Expandable boxes
+    .expandable-box {
+        @include box();
+
+        h3:first-child,
+        h4:first-child,
+        h5:first-child,
+        h6:first-child {
+            font-style: normal;
+        }
+    
+        .expandable-box-preview {
+            font-style: italic;
+        }
+
+        // First paragraph after preview should be indented, as though the preview
+        // is part of the main box content
+        .expandable-box-preview ~ p {
+            text-indent: $font-size-default;
+        }
+    }
 }
