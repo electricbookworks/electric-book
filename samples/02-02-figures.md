@@ -15,9 +15,10 @@ To ensure EPUB2 compatibility (which requires valid XHTML 1.1), we don't use the
 
 {% include figure
    image="naples.svg"
-   caption="A map of Naples"
+   caption="A map of Naples and surrounding areas"
    link="https://en.wikipedia.org/wiki/Naples"
-   alt-text="A map showing the location of Naples."
+   alt-text="A map showing the location of Naples among surrounding areas in Italy."
+   title="A map of Naples and surrounding areas"
    reference="Figure 1"
 %}
 
