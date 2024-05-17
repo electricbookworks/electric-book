@@ -32,13 +32,14 @@ In the tag for each figure, we can define the following information:
 * a reference (e.g. 'Figure 1.2', which will appear in front of the caption)
 * a link (clicking the image opens this link; without it, by default clicking the image opens the image file)
 * a caption (appears below the image)
-* a title (can be used to title descriptive text)
+* a slide-caption (appears below the image in slidelines)
+* a title (serves as the title attribute that becomes a mouseover tooltip, and an SVG's accessibility title)
 * alt text (a description of the image, e.g. for screen readers)
 * a source (appears below the figure)
 * the height of the image in lines
 * a [class](classes.html) (for styling the layout of a given figure).
 
-The template uses that information differently depending on the output format. For instance, on the web and in the epub, the alt text is the text that screen-readers will read aloud to visually impaired users who can't see an image; and we don't need to display it in print.
+The template uses that information differently depending on the output format. For instance, on the web and in the epub, the alt text is the text that screen-readers will read aloud to visually impaired users who can't see an image; and we don't need to display it in print. The `title` is important for accessibility when your image is an SVG.
 
 A caption and alt text are similar, but not the same. A caption usually provides information about the figure, while alt text describes its appearance for someone who can't see the image.
 
@@ -72,23 +73,24 @@ caption='Blake's illustration for "The Tyger".'
 caption="Blake's illustration for “The Tyger”."
 ```
 
-### Multiple images and alt text
+### Multiple images and titles and alt text
 
 You can have multiple images in the same figure. Include each image's filename in a comma-separated list.
 
-Each image needs its own alt text. To do this, include each image's alt text in order, separated by `|`.
+Each image needs its own alt text, and can have its own title. To do this for alt text, include each image's alt text in order, separated by `|`. Do the same for `title` if each image has a different title.
 
 {% raw %}
 ```
 {% include figure
    images="mydog.jpg, yourdog.jpg"
    caption="Our dogs."
-   alt-text="A chocolate-coloured labrador | A grey husky."
+   alt-text="A chocolate-coloured labrador. | A grey husky."
+   title="Labrador | Husky"
 %}
 ```
 {% endraw %}
 
-Each image matches each piece of alt text in order. If you include multiple images in a figure, make sure you provide separate alt text for each image. If you don't, some images will have no alt text.
+Each image matches each piece of alt text (or title) in order. If you include multiple images in a figure, make sure you provide separate alt text for each image. If you don't, some images will have no alt text. Titles are less important for accessibility, and are therefore optional.
 
 ### Rotating figures
 
