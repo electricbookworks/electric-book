@@ -6,6 +6,7 @@
 {% assign image = "" %}
 {% assign image-file-extension = "" %}
 {% assign image-alt = "" %}
+{% assign image-title = "" %}
 
 {% comment %} Get the image and its file extension.
 Let user use `file` or `src` for the image file,
@@ -26,6 +27,15 @@ in a way that allows for full stops in filenames. {% endcomment %}
 {% comment %} Capture and clean any alt text. {% endcomment %}
 {% if include.alt %}
     {% capture image-alt %}{{ include.alt 
+    | replace: "&nbsp;", " "
+    | replace: "&shy;", ""
+    | markdownify
+    | strip_html }}{% endcapture %}
+{% endif %}
+
+{% comment %} Capture and clean any title text. {% endcomment %}
+{% if include.title %}
+    {% capture image-title %}{{ include.title 
     | replace: "&nbsp;", " "
     | replace: "&shy;", ""
     | markdownify
@@ -72,7 +82,8 @@ is not available in web output {% endcomment %}
 
         class="{% if include.class %}{{ include.class }}{% endif %}{% if image-file-extension == 'svg' %} inject-svg{% endif %}"
         {% if include.id %} id="{{ include.id }}"{% endif %}
-        {% if image-alt %} alt="{{ image-alt }}"{% endif %} />
+        {% if image-alt and image-alt !="" %} alt="{{ image-alt }}"{% endif %}
+        {% if image-title and image-title != "" %} title="{{ image-title }}"{% endif %} />
 
 </noscript>
 {% endif %}
@@ -94,6 +105,7 @@ is not available in web output {% endcomment %}
 
     class="{% if include.class %}{{ include.class }}{% endif %}{% if image-file-extension == 'svg' %} inject-svg{% endif %}"
     {% if include.id %} id="{{ include.id }}"{% endif %}
-    {% if image-alt %} alt="{{ image-alt }}"{% endif %} />
+    {% if image-alt and image-alt !="" %} alt="{{ image-alt }}"{% endif %}
+    {% if image-title and image-title != "" %} title="{{ image-title }}"{% endif %} />
 
 {% endcapture %}{{ image-tag | strip_newlines | strip }}
