@@ -77,12 +77,7 @@ $epub-boxes: true !default;
     
         .expandable-box-preview {
             font-style: italic;
-        }
-
-        // First paragraph after preview should be indented, as though the preview
-        // is part of the main box content
-        .expandable-box-preview ~ p {
-            text-indent: $font-size-default;
+            margin-bottom: $line-height-default;
         }
     }
 }
