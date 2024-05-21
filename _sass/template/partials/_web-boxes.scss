@@ -64,4 +64,50 @@ $web-boxes: true !default;
     // A regular list item as a box
     li.box {}
 
+    // Expandable boxes
+    .expandable-box {
+        @include box();
+
+        h3:first-child,
+        h4:first-child,
+        h5:first-child,
+        h6:first-child {
+            font-style: normal;
+            
+            strong {
+
+            }
+        }
+    
+        .toggle {
+            color: inherit;
+            cursor: pointer;
+            float: right;
+        
+            &:after {
+            content: " –";
+            }
+            
+            &.closed:after {
+            content: " +";
+            }
+            
+            &.open:after {
+            content: " \2013";
+            }
+        }
+    
+        .expandable-box-preview {
+            & p:last-of-type,
+            & ol:last-of-type,
+            & ul:last-of-type {
+                margin-bottom: $line-height-default;
+            }
+    
+            .preview-read-more {
+                display: block;
+                margin: $line-height-default auto 0;
+            }
+        }
+    }
 }

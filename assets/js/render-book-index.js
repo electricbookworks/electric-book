@@ -53,6 +53,15 @@ function generateTargetsIndex () {
         })
       }
 
+      // Ignore requests to images, to speed up page loads
+      page.on('request', (req) => {
+        if (req.resourceType() === 'image') {
+          req.abort()
+        } else {
+          req.continue()
+        }
+      })
+
       // Go to the page path.
       // Puppeteer requires the protocol (file://) on OSX.
       await page.goto('file://' + path)

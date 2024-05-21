@@ -22,9 +22,13 @@ function naples_svg (xml) { // eslint-disable-line
 
   // Get all the paths and groups (which have fills)
   // and put them in a single array for updating.
-  const paths = xml.svg.path
+  let elementsToChange = xml.svg.path
   const groups = xml.svg.g
-  const elementsToChange = paths.concat(groups)
+  if (elementsToChange && groups) {
+    elementsToChange = elementsToChange.concat(groups)
+  } else if (groups) {
+    elementsToChange = groups
+  }
 
   // For each element, update the fill colour
   // if it matches an old colour in `colors`.

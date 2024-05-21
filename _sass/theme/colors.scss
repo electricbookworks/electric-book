@@ -1,11 +1,16 @@
 // Theme colours
-$example-blue: #009ACD !default;
 
-// CYMK values for print output
+// See _sass/template/colors.scss
+// for more code comments on the
+// recommended structure of this file.
 
-@if $output-format == "print-pdf" {
+$example-blue: null;
 
-    // Theme colours
+@if $output-format != "print-pdf" {
+
+    $example-blue: #009ACD !default;
+
+} @else {
+
     $example-blue: cmyk(80%, 20%, 0%, 20%) !default;
-
 }

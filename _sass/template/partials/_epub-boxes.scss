@@ -64,4 +64,20 @@ $epub-boxes: true !default;
     // A regular list item as a box
     li.box {}
 
+    // Expandable boxes
+    .expandable-box {
+        @include box();
+
+        h3:first-child,
+        h4:first-child,
+        h5:first-child,
+        h6:first-child {
+            font-style: normal;
+        }
+    
+        .expandable-box-preview {
+            font-style: italic;
+            margin-bottom: $line-height-default;
+        }
+    }
 }

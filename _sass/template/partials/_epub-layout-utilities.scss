@@ -1,5 +1,5 @@
-$epub-fitting: true !default;
-@if $epub-fitting {
+$epub-layout-utilities: true !default;
+@if $epub-layout-utilities {
 
   // These classes control letter-spacing (tracking) in print, 
   // usually to save widows and orphans.
@@ -29,6 +29,12 @@ $epub-fitting: true !default;
     &.keep-together#{$edition-suffix} {
       white-space: nowrap;
     }
+  }
+
+  // If it's not feasible to automate the correct indent on a para,
+  // an editor's fallback is to indent it manually this way.
+  .epub-indent#{$edition-suffix} {
+    text-indent: $paragraph-indent;
   }
 
 }

@@ -30,6 +30,7 @@ layout: null
     {% include_relative show-hide.js %}
     {% include_relative copy-to-clipboard.js %}
     {% include_relative share.js %}
+    {% include_relative expandable-box.js %}
 
     {% if site.data.settings.web.svg.inject == true %}
         {% include_relative vendor/svg-inject.min.js %}
@@ -90,8 +91,9 @@ have different behaviour for web or app. {% endcomment %}
     the relevant page cross-reference text as generated content.{% endcomment %}
     {% include_relative page-reference.js %}
 
-    {% comment %} This aligns elements to a baseline grid. {% endcomment %}
-    {% include_relative baseline-grid.js %}
+    {% comment %} This aligns elements to a baseline grid.
+    This is experimental, so it's commented out by default. {% endcomment %}
+    {% comment %} {% include_relative baseline-grid.js %} {% endcomment %}
 
 {% endif %}
 

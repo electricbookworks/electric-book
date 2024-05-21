@@ -10,6 +10,7 @@ $pdf-page-setup: true !default;
     margin-inside: $margin-inside;
     padding: 0;
     marks: $crop-marks;
+    prince-mark-offset: $crop-marks-offset;
     prince-bleed: $bleed;
     prince-trim: $trim;
     prince-pdf-page-colorspace: $colorspace;

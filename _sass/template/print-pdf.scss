@@ -23,7 +23,7 @@ $output-format: "print-pdf" !default;
 @import "template/colors";
 @import "theme/pdf-variables";
 
-// Edition suffix: identifies this edition in page-fitting classes (in _pdf-fitting.scss).
+// Edition suffix: identifies this edition in page-layout-utilities classes (in _pdf-layout-utilities.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
 // A suffix '-schools-edn' would mean only tags with that suffix would apply to that edition, e.g. {:.tighten-schools-edn}
 // If you're only planning one edition and use default tags ({:.tighten} not {:.tighten-schools-edn}), leave as null.
@@ -40,11 +40,16 @@ $margin-top: 60pt !default; // set in points to align with baseline grid
 $margin-bottom: 60pt !default;
 $margin-outside: 15mm !default;
 $margin-inside: 15mm !default;
-$bleed: 3mm !default;
-$trim: 3mm !default;
-$crop-marks: crop !default; // crop | none
-$page-info-offset: 5mm !default;
+$bleed: 5mm !default;
+$trim: 10mm !default;
+$crop-marks: crop !default; // crop | crop cross | cross | none
+$crop-marks-offset: 8mm !default;
+$page-info-offset: 10mm !default;
 $columns-default: 1 !default;
+
+// Some printers like CMYK-registration marks on PDFs.
+// If you set this to true, don't use 'cross' in $crop-marks.
+$registration-marks: true !default; // occupies left- and right-middle margin boxes
 
 // A list of all named page styles.
 // Note: assume that each named page has different
@@ -359,7 +364,7 @@ $pdf-pdf-view: true !default; // Sets the default initial view on PDFs
 $pdf-page-setup: true !default; // Sets up the page from your variables
 $pdf-page-break-tools: true !default; // Provides classes for semantic page breaks
 $pdf-hide-non-printing: true !default; // Hides anything .non-printing
-$pdf-fitting: true !default; // Classes for floating, tracking, shrinking, etc.
+$pdf-layout-utilities: true !default; // Classes for floating, tracking, shrinking, etc.
 $pdf-hyphenation: true !default; // Sets hyphenation dictionary
 
 // Book features
@@ -429,10 +434,11 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 
 // General-purpose mixins
 @import "template/partials/pdf-mixins--buttons";
-@import "template/partials/pdf-mixins--sidenotes";
-@import "template/partials/pdf-mixins--margin-boxes";
 @import "template/partials/pdf-mixins--floats";
+@import "template/partials/pdf-mixins--margin-boxes";
 @import "template/partials/pdf-mixins--page-continued";
+@import "template/partials/pdf-mixins--registration";
+@import "template/partials/pdf-mixins--sidenotes";
 
 // Conventional helper classes
 @import "template/partials/pdf-helpers";
@@ -490,7 +496,7 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 @import "template/partials/pdf-slides";
 
 // Classes for floating, tracking, shrinking, etc.
-@import "template/partials/pdf-fitting";
+@import "template/partials/pdf-layout-utilities";
 
 // Resets p indents, margins after other elements. Must be last @import in list.
 @import "template/partials/pdf-reset-sequences";

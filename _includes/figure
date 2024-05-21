@@ -84,7 +84,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
                             sizes="(min-width: 600px) 1300px, 100vw"
                         {% endunless %}
 
-                        alt="{% if include.title %}{{ include.title | markdownify | strip_html }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html }}{% else %}{{ include.caption | markdownify | strip_html }}{% endif %}"
+                        alt="{% if include.title %}{{ include.title | markdownify | strip_html | strip }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html | strip }}{% else %}{{ include.caption | markdownify | strip_html | strip }}{% endif %}"
                         {% if include.image-height != nil %} class="height-{{ include.image-height }}"{% endif %}
                     />
                 </noscript>
@@ -99,14 +99,14 @@ because https://github.com/jekyll/jekyll/issues/2248.
                         sizes="auto"
                     {% endunless %}
 
-                    alt="{% if include.title %}{{ include.title | markdownify | strip_html }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html }}{% else %}{{ include.caption | markdownify | strip_html }}{% endif %}"
+                    alt="{% if include.title %}{{ include.title | markdownify | strip_html | strip }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html | strip }}{% else %}{{ include.caption | markdownify | strip_html | strip }}{% endif %}"
                     class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}"
                 />
 
             {% else %}
 
                 <img src="{{ images }}/{{ image }}"
-                    alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html }}"
+                    alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html | strip }}"
                     class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
 
             {% endif %}

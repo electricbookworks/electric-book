@@ -69,7 +69,8 @@ function ebAccordionDefaultAccordionHeadID () {
   let defaultAccordionHeadID
 
   // Get the default accordion section's ID
-  if (defaultAccordionHead !== '') {
+  if (document.querySelector(defaultAccordionHead) &&
+      document.querySelector(defaultAccordionHead).id) {
     defaultAccordionHeadID = document.querySelector(defaultAccordionHead).id
     if (!defaultAccordionHeadID) {
       defaultAccordionHeadID = 'defaultAccordionSection'

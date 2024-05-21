@@ -117,3 +117,23 @@ Just as he did so he heard a heavy voice say, "Now, then, lass, git along!" Then
 "He will say he didn't meet us coming this way," thought Henry, "so they will hunt for us the other way. And that will give us time to cover a lot more ground."
 
 He dropped asleep just as the roosters all over the valley began to answer each other.
+
+### Expandable boxes
+
+Expandable boxes can be toggled open and closed. They allow you to group more content together on a page without overwhelming readers. They can contain an optional descriptive preview.
+
+<div class="expandable-box" markdown="1">
+
+#### **Expandable box** A box that can expand
+
+<div class="expandable-box-preview" markdown="1">
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pulvinar condimentum dui a ullamcorper. Integer eu purus in dui gravida luctus. Nulla imperdiet ante odio, vitae feugiat quam rhoncus sit amet. Phasellus porta leo at massa semper, et placerat erat posuere. Etiam suscipit eu justo a tempus.
+
+</div>
+
+Suspendisse potenti. Vivamus dapibus eu lorem ut posuere. Vivamus at volutpat justo, eget efficitur sapien. Nunc ac bibendum lacus. Nunc egestas auctor ex, id aliquam erat convallis a. Etiam ac dui sed erat dictum vehicula vitae sit amet augue. Maecenas malesuada orci nisi, non aliquet elit fringilla at. Aliquam vitae dui at nisl elementum ullamcorper at ac ligula. Duis tristique sollicitudin ex, id mollis lacus pretium sed.
+
+Ut odio nulla, tempor ac felis vitae, mollis luctus enim. Nam in elit ut ipsum hendrerit tincidunt. Maecenas condimentum sit amet lacus ut lacinia. Nulla facilisi. Vivamus ut malesuada dui, vitae blandit sem. Pellentesque venenatis malesuada orci non convallis. Mauris id commodo felis. Curabitur urna massa, volutpat quis elementum at, imperdiet vitae lorem. Aliquam blandit finibus nunc, at bibendum urna elementum a. Cras ut sapien vitae purus semper scelerisque non sit amet enim. Nam pharetra magna risus, id interdum sapien posuere sit amet. Pellentesque id dui erat. Aliquam ac condimentum metus. Proin sit amet consequat velit. Nunc mauris est, accumsan nec volutpat egestas, eleifend ac nulla. 
+
+</div>

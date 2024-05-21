@@ -12,7 +12,33 @@ order: 4
 
 Run `npm run electric-book` on the command line to see app-related options.
 
-App output and this documentation is still experimental and a work in progress. It requires that you have Apache Cordova installed, and Android Studio (for Android apps), X Code (for iOS apps) or Visual Studio (for Windows apps).
+App output and this documentation is still experimental and a work in progress.
+
+The Electric Book app output will produce HTML and configuration files for building apps. It requires Apache Cordova to be installed. To complete the building process, you will also need to have Android Studio (for Android apps), X Code (for iOS apps) or Visual Studio (for Windows apps) installed.
+
+## OS-specific config files
+
+You may have a reason to tell Jekyll which app operating system you're building for. That is, Android, iOS, or Windows. For example, if you have content that should only appear in Windows apps, you could wrap it in if/else tags like this:
+
+{% raw %}
+```liquid
+{% if site.app-os == 'windows' %}
+Microsoft rocks!
+{% endif %}
+```
+{% endraw %}
+
+The `site.app-os` variable is set in the relevant app config file for each app operating system in `_configs`.
+
+For the above example, when you generate the app and specify that you are building for Windows, your output command will be:
+
+```sh
+npm run eb -- output --format app --app-os windows
+```
+
+The Electric Book output script will automatically check for the presence of a config file named for the app operating system you're building for. For example, the default app output (Android) will look for `_configs/_config.app.android.yml`. And the iOS app output will look for `_configs/_config.app.ios.yml`.
+
+If the relevant config file exists, it will be included in the build process.
 
 ## Android
 

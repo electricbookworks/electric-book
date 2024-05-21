@@ -12,15 +12,15 @@ El texto de este capítulo está tomado de *Adventures of Sherlock Holmes* de Si
 
 #### I.
 
-<!--índice:
-Holmes, Sherlock-
-Adler, Irene-
-casos \\ Escándalo en Bohemia-
+<!-- index:
+Holmes, Sherlock~
+Adler, Irene~
+casos \\ Escándalo en Bohemia~
 -->
 
 Para Sherlock Holmes ella es siempre LA mujer. Pocas veces le he oído mencionarla con otro nombre. A sus ojos ella eclipsa y predomina todo su sexo. No es que sintiera ninguna emoción similar al amor por Irene Adler. Todas las emociones, y esa en particular, eran abominables para su mente fría, precisa pero admirablemente equilibrada. Él era, supongo, la máquina de razonamiento y observación más perfecta que el mundo haya visto, pero como amante se habría colocado en una posición falsa. Nunca habló de las pasiones más suaves, excepto con una burla y una mueca. Eran cosas admirables para el observador, excelentes para descorrer el velo de los motivos y acciones de los hombres. Pero para el razonador entrenado admitir tales intrusiones en su propio temperamento delicado y finamente ajustado era introducir un factor de distracción que podría arrojar dudas sobre todos sus resultados mentales. Arena en un instrumento sensible, o una grieta en uno de sus propios lentes de alta potencia, no sería más perturbador que una fuerte emoción en una naturaleza como la suya. Y, sin embargo, solo había una mujer para él, y esa mujer era la difunta Irene Adler, de dudosa y cuestionable memoria.
 
-<!-- índice:
+<!-- index:
 matrimonio
 matrimonio \\ infeliz
 casos \\ Trepoff asesinato
@@ -29,12 +29,12 @@ casos \\ familia real holandesa -->
 
 Últimamente había visto poco a Holmes. Mi matrimonio nos había alejado el uno del otro. Mi propia felicidad completa y los intereses centrados en el hogar que surgen en torno al hombre que primero se encuentra dueño de su propio establecimiento, fueron suficientes para absorber toda mi atención, mientras que Holmes, que detestaba toda forma de sociedad con toda su alma bohemia, Permaneció en nuestro alojamiento de Baker Street, sepultado entre sus viejos libros, y alternando semana tras semana entre la cocaína y la ambición, el sopor de la droga y la feroz energía de su propia naturaleza aguda. Todavía estaba, como siempre, profundamente atraído por el estudio del crimen, y ocupó sus inmensas facultades y extraordinarios poderes de observación en seguir esas pistas y aclarar aquellos misterios que habían sido abandonados como sin esperanza por la policía oficial. De vez en cuando escuché algún vago relato de sus actos: de su citación a Odessa en el caso del asesinato de Trepoff, de cómo esclareció la singular tragedia de los hermanos Atkinson en Trincomalee y, finalmente, de la misión que había cumplido. con tanta delicadeza y éxito para la familia reinante de Holanda. Sin embargo, más allá de estos signos de su actividad, que simplemente compartí con todos los lectores de la prensa diaria, sabía poco de mi antiguo amigo y compañero.
 
-<!-- índice:
+<!-- index:
 casos \\ Estudio en escarlata -->
 
 Una noche, era el veinte de marzo de 1888, regresaba de un viaje a un paciente (porque ahora había regresado a la práctica civil), cuando mi camino me llevó a través de Baker Street. Cuando pasé por la bien recordada puerta, que siempre debe estar asociada en mi mente con mi cortejo y con los oscuros incidentes del Estudio en escarlata, se apoderó de mí un vivo deseo de volver a ver a Holmes y saber cómo estaba. empleando sus extraordinarios poderes. Sus habitaciones estaban brillantemente iluminadas e, incluso mientras miraba hacia arriba, vi su figura alta y delgada pasar dos veces en una silueta oscura contra la persiana. Se paseaba por la habitación con rapidez, con entusiasmo, con la cabeza hundida en el pecho y las manos entrelazadas detrás de él. Para mí, que conocía cada uno de sus estados de ánimo y hábitos, su actitud y modales contaban su propia historia. Estaba en el trabajo de nuevo. Había salido de sus sueños creados por las drogas y estaba entusiasmado con el olor de algún nuevo problema. Llamé al timbre y me condujeron a la habitación que antes había sido en parte mía.
 
-<!-- índice:
+<!-- index:
 lujos \\ puros
 lujos \\ licores
 lujos \\ gasogeno -->
@@ -71,8 +71,8 @@ No pude evitar reírme de la facilidad con la que explicaba su proceso de deducc
 
 "¿Cuántos? No lo sé".
 
-<!-- índice:
-casos \\ Escándalo en Bohemia \\ carta- -->
+<!-- index:
+casos \\ Escándalo en Bohemia \\ carta~ -->
 
 "¡Así es! No has observado. Y, sin embargo, has visto. Ese es exactamente mi punto. Ahora, sé que hay diecisiete pasos, porque he visto y observado. Por cierto, ya que estás interesado en estos pequeños problemas, y dado que eres lo suficientemente bueno como para relatar una o dos de mis insignificantes experiencias, puede que te interese esto". Arrojó una hoja de papel grueso, teñido de rosa, que había estado abierta sobre la mesa. "Llegó con el último correo", dijo. "Léelo en voz alta."
 
@@ -124,8 +124,8 @@ Entró un hombre que apenas podía medir menos de seis pies y seis pulgadas de a
 
 "¿Tenías mi nota?" preguntó con una voz profunda y áspera y un marcado acento alemán. "Te dije que te llamaría". Miró de uno a otro de nosotros, como si no supiera a quién dirigirse.
 
-<!-- índice:
--casos \\ Escándalo en Bohemia \\ carta -->
+<!-- index:
+~casos \\ Escándalo en Bohemia \\ carta -->
 
 "Por favor, tome asiento", dijo Holmes. "Este es mi amigo y colega, el Dr. Watson, quien ocasionalmente es lo suficientemente bueno para ayudarme en mis casos. ¿A quién tengo el honor de dirigirme?"
 
@@ -167,7 +167,7 @@ El hombre saltó de su silla y caminó de un lado a otro de la habitación con u
 
 "Precisamente así. Pero cómo--"
 
-<!-- índice:
+<!-- index:
 matrimonio
 matrimonio \\ secreto -->
 
@@ -277,7 +277,7 @@ Holmes escribió un recibo en una hoja de su cuaderno y se lo entregó.
 
 —¿Y la dirección de mademoiselle? preguntó.
 
-<!-- índice:
+<!-- index:
 Logia Briony
 -->
 
