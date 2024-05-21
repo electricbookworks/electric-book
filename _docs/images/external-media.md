@@ -65,8 +65,7 @@ Images will first load from the `development` URL, but if any images exist at yo
 
 Some notes on constraints and troubleshooting:
 
-- Testing images don't work at all on `live` builds, which are generally only used for live/production builds of websites.
-- Testing images work in web and PDF outputs only. For PDF testing images to work, all `remote-media` locations should be URLs, not local file paths. That is, they must start with `http`. This is because the script that loads testing images needs to check over HTTP whether a testing image exists.
+- Testing images work in web and PDF outputs only. For PDF testing images to work, the `remote-media > testing` location should be a full URL, not local file path. That is, it must start with `http`. This is because the script that loads testing images needs to check over HTTP whether a testing image exists.
 - Testing images do not work with epub or app outputs. Those outputs require images to exist locally (i.e. in the content repo) when building. Instead, you can temporarily replace the relevant images with their testing versions before you generate an epub or app.
 - If you're using GitPod, GitPod will route your `http-server` URL through a public-facing GitPod URL, and prompt you about that. You need the GitPod URL for `testing` in `settings.yml`. You may also need to go to 'Ports', in a tab beside 'Terminal', and make the URL's port public.
 - If your testing images are very large, PDF output may stall, because Prince has to fetch each image just to check that it exists. If your PDF output is stalling with testing images, try reducing their file size, or testing with screen PDF rather than print PDF output. Screen PDF images are generally smaller than print PDF images.
