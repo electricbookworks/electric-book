@@ -147,19 +147,6 @@ SVGInject.setOptions({
   }
 })
 
-//  Get the testing version of the SVG, if any
-function ebGetTestingSvgSrc (svgSrc) {
-  const devImages = settings.remoteMedia.development
-  const testImages = settings.remoteMedia.testing
-  const svgTestingSrc = svgSrc.replace(devImages, testImages)
-
-  if (ebCheckForPage(svgTestingSrc)) {
-    return svgTestingSrc
-  } else {
-    return false
-  }
-}
-
 // Run svg-inject.min.js on all images
 // that have an 'inject-svg' class.
 function ebInjectSVGs () {
