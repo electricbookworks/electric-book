@@ -48,6 +48,7 @@ separate HTML files are merged into one body element.
         {% if site.data.settings.print-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
         data-creator="{% if creator %}{{ creator }}{% else %}{{ project.project-organisation }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 
@@ -92,6 +93,7 @@ separate HTML files are merged into one body element.
         {% if site.data.settings.screen-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
         data-creator="{% if creator %}{{ creator }}{% else %}{{ project.project-organisation }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 
@@ -144,6 +146,7 @@ separate HTML files are merged into one body element.
 <body>
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
         data-title="{% if book-title %}{{ book-title }}{% else %}{{ page.title }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 
@@ -212,6 +215,7 @@ separate HTML files are merged into one body element.
         {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
         {% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 
@@ -294,6 +298,7 @@ separate HTML files are merged into one body element.
         {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
         {% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 {% endif %}
