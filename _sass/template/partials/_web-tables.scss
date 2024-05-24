@@ -19,7 +19,8 @@ $web-tables: true !default;
 			overflow-x: auto;
 		}
 	}
-	thead, th, .table-subhead {
+
+	thead, th {
 		page-break-after: avoid;
 		font-weight: bold;
 	}

@@ -10,7 +10,7 @@ $pdf-tables: true !default;
 		width: 100%;
 		max-width: $page-width - $margin-inside - $margin-outside;
 	}
-	thead, th, .table-subhead {
+	thead, th {
 		font-weight: bold;
 		page-break-after: avoid;
 	}
