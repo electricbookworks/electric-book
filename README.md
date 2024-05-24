@@ -9,7 +9,7 @@ A Jekyll template for creating books in multiple formats:
 - [Cordova](https://cordova.apache.org/)-ready files for for Android, Windows and iOS apps
 - MS Word outputs for old-school editing.
 
-[Read the guide](https://electricbookworks.github.io/electric-book/) for much more. The guide *is* the template in action as a website.
+[Read the guide](https://electricbookworks.github.io/electric-book/) for much more. The guide *is* the template in action as a website. You can also [download PDF and epub versions of the sample book](https://www.dropbox.com/scl/fo/uskmdm77do6s16r4mbwy4/AIrPyibgt3AFLumX-FFzYjk?rlkey=vuyn7dysx5w1d9texgemsioix&st=3nouz3mx&dl=0) that the template generates by default.
 
 
 ## Expertise required
