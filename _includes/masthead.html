@@ -1,7 +1,7 @@
 <div class="masthead">
 
     <div class="masthead-logo">
-        <a href="{{ project-url }}">
+        <a href="{% if page.masthead-logo-link %}{{ page.masthead-logo-link }}{% else %}{{ path-to-root-directory }}{% endif %}">
             {% include image file=project-logo folder="assets" %}
         </a>
     </div>
