@@ -55,10 +55,16 @@ $font-code: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", 
 // So do not use a unitless value for line-height,
 // and don't use percentages, which will break layouts
 // computed by multiplying this value.
-$font-size-default: 1.2rem !default;
-$line-height-default: 1.8rem !default;
-$font-size-smaller: 0.7 !default; // How much smaller than font-size-default for features like sidenotes and footers?
-$font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
+$font-size-default: 1.3rem !default;
+$line-height-default: 2rem !default;
+
+// How many times bigger than font-size-default
+// for features like headings and pullquotes?
+$font-size-bigger: 2 !default;
+
+// How much smaller than font-size-default
+// for features like sidenotes and footers?
+$font-size-smaller: 0.8 !default;
 
 // Do you want space between paragraphs, rather than a text-indent?
 // true or false
@@ -116,7 +122,7 @@ $opener-image-height: 40vh;
 // Variables here apply to p, ul, ol, dl.
 // Note: Most browsers and ereaders do not support hyphenation rules.
 // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
-$hyphenation: manual !default; 
+$hyphenation: manual !default;
 
 // Path to dictionary file, relative to `/book/styles`.
 // E.g. "../../assets/hyph.dic".
@@ -168,7 +174,7 @@ $masthead-logo-width: 2.5rem !default;
 
 // Website sidebar/navigation
 $nav-position: right !default; // left, right (note $masthead-align)
-$nav-bar-text-size: 0.8rem !default;
+$nav-bar-text-size: 1rem !default;
 
 // Does the nav list fully expand, or collapse until mouseover?
 $nav-bar-item-collapse: false !default;
