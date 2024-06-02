@@ -20,7 +20,7 @@ logo: "logo.svg"
 image: "cover.jpg"
 
 # Credit line, by default in the footer, overidden in locales.yml
-credit: "Built with the [Electric Book](https://ebw.co/template)"
+credit: "Built with the [Electric Book template](https://ebw.co/template)."
 
 # Primary language code for this project as a whole
 language: "en"
