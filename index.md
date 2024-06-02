@@ -9,15 +9,33 @@ opener-image-alt-text: "An illustration of an enormous book. It is open, and its
 
 {% include metadata %}
 
-# Book-making with super&shy;powers
+# Book-making with superpowers
 {:.no_toc}
 
-The Electric Book template produces **website, ebook, app and print books from a single content source.** It is [packed with features for professional book production](#basic-features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. The template includes:
+The Electric Book template produces **web books, ebooks, and print books from a single content source.** It is [packed with features for professional book production](#basic-features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. {% if  output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
 
-- [a blank book](book/0-3-contents.html) to start working into,
-- [a book of sample features](samples/index.html) to learn from,
-- [a demo translation](samples/fr/), and
-- {% if site.output == "web" %}[how-to documentation](docs/){% else %}[online how-to documentation](https://electricbookworks.github.io/electric-book/docs/index.html){% endif %}. {% if output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
+<div class="feature-boxes">
+
+{% include feature-box
+   text="For an easy start, add content to [the blank book](book/0-3-contents.html)."
+   image="logo.svg"
+%}
+
+{% include feature-box
+   text="Learn from [a book of examples](samples/index.html), with a partial [translation](samples/fr/)."
+   image="cover.jpg"
+%}
+
+{% if site.output == "web" and output-docs == true %}
+
+{% include feature-box
+   text="[Documentation](docs/) explains how to use the template's features."
+   image="banner-image.jpg"
+%}
+
+{% endif %}
+
+</div>
 
 You'll find [the open-source repository on GitHub](https://github.com/electricbookworks/electric-book).
 
@@ -31,7 +49,7 @@ To make books this way, you need some web-development know-how. You'll edit cont
 
 If those concepts are not familiar to you, you'll need a web developer on your team to get you going, and to provide you with technical support when you get stuck.
 
-You can also hire [Electric Book Works](https://electricbookworks.com) to provide support or to handle book production for you.
+You can also hire [Electric Book Works](https://electricbookworks.com) to handle setup or book production for you.
 
 
 ## Features
