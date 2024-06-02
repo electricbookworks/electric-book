@@ -5,6 +5,7 @@ layout: compress
 {% if site.output == 'epub' or site.output == 'print-pdf' or site.output == 'screen-pdf' %}
 
 {% include head.html %}
+{% include opener-image.html %}
 {% include start-content.html %}
 {{ content }}
 {% include close-content.html %}
@@ -22,6 +23,7 @@ layout: compress
 {% endif %}
 
 {% include nav-button.html %}
+{% include opener-image.html %}
 {% include start-content.html %}
 {{ content }}
 {% include close-content.html %}

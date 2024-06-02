@@ -1,5 +1,7 @@
 ---
 title: "Plain text"
+opener-image: "book-trap.jpg"
+opener-image-alt-text: "An illustration of a book. Its front cover is held open by an upright stick, to which a string is attached. A heart-shaped hole has been cut through the pages of the book, and coloured blue."
 ---
 
 ## Plain text

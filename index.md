@@ -3,6 +3,8 @@
 # for your your own project's landing page.
 title: The Electric Book template
 style: home
+opener-image: banner-image.jpg
+opener-image-alt-text: "An illustration of an enormous book. It is open, and its pages are each filled with an image of a starry sky. Beside the book, a man stands and looks at the pages. The book is bigger than he is."
 ---
 
 {% include metadata %}

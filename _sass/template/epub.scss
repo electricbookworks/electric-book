@@ -1,8 +1,11 @@
 // What is this?
 // -------------
-// This is typography for the Electric Book template (see http://ebw.co/template).
-// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
-// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
+// This is typography for the Electric Book template
+// (see http://ebw.co/template).
+// It is built with Sass. (See http://sass-lang.com,
+// and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// It sets defaults that can be overridden in each book's
+// own stylesheets, where the variables here are duplicated.
 // 
 // How to use it
 // -------------
@@ -22,17 +25,20 @@ $output-format: "epub" !default;
 @import "colors";
 @import "theme/epub-variables";
 
-// Edition suffix: identifies this edition in certain classes (e.g. in _epub-layout-utilities.scss).
+// Edition suffix: identifies this edition in certain classes
+// (e.g. in _epub-layout-utilities.scss).
 $edition-suffix: null !default;
 
-// The path to the project root, for settings paths to fonts and colour profiles.
+// The path to the project root, for setting paths
+// to fonts and colour profiles.
 // Override this for translations, which need an extra leading ../
 $path-to-root-directory: "../.." !default;
 
 // We name font variables for two categories:
 // - 'text' fonts are used for body text and some page features;
 // - 'display' fonts are used for headings and similar short-string features.
-// For each category, we set a main font and a secondary font, allowing up to four fonts.
+// For each category, we set a main font and a secondary font,
+// allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
 $font-text-main: serif !default;
 $font-text-secondary: sans-serif !default;
@@ -41,15 +47,18 @@ $font-display-secondary: serif !default;
 $font-code: monospace !default;
 
 // Set font size and line-height in ems or px.
-// These values, especially $line-height-default, are used to compute vertical rhythm
-// for many features in this theme. So do not use a unitless value for line-height,
-// and don't use percentages, which will break layouts computed by multiplying this value.
-$font-size-default: 1em !default;
-$line-height-default: 1.5em !default;
+// These values, especially $line-height-default,
+// are used to compute vertical rhythm
+// for many features in this theme. So do not use a unitless value
+// for line-height, and don't use percentages,
+// which will break layouts computed by multiplying this value.
+$font-size-default: 1rem !default;
+$line-height-default: 1.5rem !default;
 $font-size-smaller: 0.8 !default; // How much smaller than font-size-default for features like sidenotes and footers?
 $font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
 
-// Do you want space between paragraphs, rather than a text-indent? true or false
+// Do you want space between paragraphs, rather than a text-indent?
+// true or false
 $spaced-paras: false !default;
 // If not spacing paras, how large is the first-line indent on paragraphs?
 $paragraph-indent: 1em !default;
@@ -88,18 +97,34 @@ $color-notification-medium-background: $template-yellow !default;
 $color-notification-high-background: $template-orange !default;
 
 // Set the default start-depth of pages.
-// This is the distance from the top of the page to the first element on the first page.
+// This is the distance from the top of the page
+// to the first element on the first page.
 $start-depth: $line-height-default * 2 !default;
+
+// Set the height of the opener image
+$opener-image-height: $line-height-default * 10;
 
 // Hyphenation
 // Variables here apply to p, ul, ol, dl.
 // Note: Most browsers and ereaders do not support hyphenation rules.
-$hyphenation: manual !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
-$hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
-$hyphenation-custom: add !default; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
-$hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
-$hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
-$hyphenate-lines: 1 !default; // Maximum number of consecutive lines ending with hyphens
+// Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation: manual !default;
+
+// Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
+$hyphenation-dictionary: "" !default;
+
+// Whether your dictionary adds to or replaces
+// the built-in Prince dictionaries. Use add or replace.
+$hyphenation-custom: add !default;
+
+// Minimum letters on new line after hyphen
+$hyphenate-after: 3 !default;
+
+// Minimum letters at end of line before hyphen
+$hyphenate-before: 3 !default;
+
+// Maximum number of consecutive lines ending with hyphens
+$hyphenate-lines: 1 !default;
 
 // Text dividers
 // Some ereaders can display a character as a text divider.

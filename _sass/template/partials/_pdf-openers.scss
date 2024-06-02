@@ -16,4 +16,16 @@ $pdf-openers: true !default;
         font-weight: inherit;
     }
 
+    .opener-image-wrapper {
+        margin-inside: -($margin-inside);
+        margin-outside: -($margin-outside);
+        margin-top: -($margin-top);
+        width: $page-width;
+
+        .opener-image {
+            height: $opener-image-height;
+            object-fit: cover;
+            width: 100%;
+        }
+    }
 }

@@ -6,6 +6,7 @@ $web-openers: true !default;
         text-indent: 0;
         margin-top: $line-height-default; // Overridden by later rule for paragraphs after headings, blockquotes, lists and definition lists
     }
+
     .chapter-number {
         display: block;
         font-size: $font-size-default * 2;
@@ -16,4 +17,12 @@ $web-openers: true !default;
         font-weight: inherit;
     }
 
+    .opener-image-wrapper {
+
+        .opener-image {
+            height: $opener-image-height;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
 }
