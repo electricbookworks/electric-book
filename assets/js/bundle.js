@@ -9,6 +9,7 @@ layout: null
 {% include_relative settings.js %}
 {% include_relative locales.js %}
 {% include_relative mark-parents.js %}
+{% include_relative color-panels.js %}
 
 {% if site.data.settings.redact == true %}
     {% include_relative redact.js %}
