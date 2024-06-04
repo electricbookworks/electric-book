@@ -39,18 +39,21 @@ The Electric Book template produces **web books, ebooks, and print books from a 
 
 You'll find [the open-source repository on GitHub](https://github.com/electricbookworks/electric-book).
 
-- toc
-{:toc}
+<div class="color-panel background-000 text-fff links-ccc" markdown="1">
 
+## Skills required
+{:.no_toc}
 
-## Skill level
-
-To make books this way, you need some web-development know-how. You'll edit content in markdown with Liquid template tags; edit data in YAML files; commit your changes with Git; enter commands at the command line; and build and serve a static website. Book content is in kramdown markdown, with Liquid tags, and in YAML. Design is done in Sass. Many features are written in Javascript.
+To make books this way, you need some web-development know-how. You'll edit content in markdown with Liquid template tags; edit data in YAML files; commit your changes with Git; enter commands at the command line; and build and serve a static website. Design is done in Sass. Many features are written in Javascript.
 
 If those concepts are not familiar to you, you'll need a web developer on your team to get you going, and to provide you with technical support when you get stuck.
 
 You can also hire [Electric Book Works](https://electricbookworks.com) to handle setup or book production for you.
 
+</div>
+
+- toc
+{:toc}
 
 ## Features
 
