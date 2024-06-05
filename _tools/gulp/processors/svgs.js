@@ -61,8 +61,12 @@ function svgProcess (outputFormat) {
       ]
     })))
     .pipe(gulpif(modifyImage, svgmin({
-      // The plugins list is the full list of plugins
+      // Note: `full: true` is a gulp-svgmin option
+      // (https://www.npmjs.com/package/gulp-svgmin#options)
+      // meaning the plugins list is the full list of plugins
       // to use. The default list is ignored.
+      // The `present-default` is the default set of plugins
+      // from SVGO: https://svgo.dev/docs/preset-default/
       full: true,
       plugins: [
         {
