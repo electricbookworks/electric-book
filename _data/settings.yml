@@ -325,8 +325,9 @@ app:
 # See the docs for more information.
 # Uncomment the following settings to activate remote media.
 # remote-media:
-#   development: ""
-#   live: ""
+  # development: ""
+  # live: ""
+  # testing: ""
 # local-media:
 #   development: ""
 

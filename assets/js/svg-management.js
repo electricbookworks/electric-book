@@ -1,4 +1,4 @@
-/* global SVGInject */
+/* global MutationObserver, settings, SVGInject */
 
 // This script helps get sensible SVGs into our pages.
 // It first injects all SVGs linked as img tags
@@ -167,5 +167,36 @@ function ebInjectSVGs () {
   })
 }
 
+// Wait for testing images to be loaded
+function ebWaitForTestingImages () {
+  'use strict'
+  console.log('Waiting for any test images to load ...')
+
+  const testingImagesObserver = new MutationObserver(function (mutations) {
+    let ready = false
+    mutations.forEach(function (mutation) {
+      if (mutation.type === 'attributes' && ready === false) {
+        if (document.body.getAttribute('data-testing-images')) {
+          ready = true
+          console.log('Testing images loaded. Starting SVG injection.')
+          ebInjectSVGs()
+          testingImagesObserver.disconnect()
+        }
+      }
+    })
+  })
+
+  testingImagesObserver.observe(document.body, {
+    attributes: true // listen for attribute changes
+  })
+}
+
 // Go
-ebInjectSVGs()
+if (settings.remoteMedia.testing &&
+    settings.remoteMedia.testing.length > 0) {
+  // Wait for testing images to load
+  // before injecting SVGs
+  ebWaitForTestingImages()
+} else {
+  ebInjectSVGs()
+}
