@@ -117,22 +117,24 @@ function ebSVGInjectTitleDesc (svg, imgData) {
   // if a shorter title exists in the form of a figure caption.
 
   if (imgData.desc) {
+    // If the img tag has an alt="" attribute,
+    // that will override any <desc> in the original SVG.
     if (svg.querySelector('desc')) {
       svg.querySelector('desc').remove()
     }
 
-    svg.desc = imgData.desc
     const descElement = document.createElementNS('http://www.w3.org/2000/svg', 'desc')
     descElement.textContent = imgData.desc
     svg.insertAdjacentElement('afterbegin', descElement)
   }
 
   if (imgData.title) {
+    // If the img tag has a title="" attribute,
+    // that will override any <title> in the original SVG.
     if (svg.querySelector('title')) {
       svg.querySelector('title').remove()
     }
 
-    svg.title = imgData.title
     const titleElement = document.createElementNS('http://www.w3.org/2000/svg', 'title')
     titleElement.textContent = imgData.title
     svg.insertAdjacentElement('afterbegin', titleElement)

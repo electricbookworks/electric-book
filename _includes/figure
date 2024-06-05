@@ -19,11 +19,32 @@ Then get the total number of images in the array.
 {% comment %} Do the same for alt text,
 since each image has its own. They should be
 separated with |s. {% endcomment %}
-{% assign alt-text-array-raw = include.alt-text | split: "|" %}
+
+{% comment %} First, allow 'alt' as an alias of 'alt-text',
+if used in the figure include's arguments. {% endcomment %}
+{% if include.alt %}
+    {% assign alt-text = include.alt %}
+{% endif %}
+{% if include.alt-text %}
+    {% assign alt-text = include.alt-text %}
+{% endif %}
+
+{% assign alt-text-array-raw = alt-text | split: "|" %}
 {% assign alt-text-array = "" | split: "" %}
 {% for alt-text in alt-text-array-raw %}
     {% capture alt-text-array-entry %}{{ alt-text | strip }}{% endcapture %}
     {% assign alt-text-array = alt-text-array | push: alt-text-array-entry %}
+{% endfor %}
+
+{% comment %} Do the same for title text,
+since each image has its own. They should be
+separated with |s. {% endcomment %}
+
+{% assign title-array-raw = include.title | split: "|" %}
+{% assign title-array = "" | split: "" %}
+{% for title-raw-entry in title-array-raw %}
+    {% capture title-array-entry %}{{ title-raw-entry | strip }}{% endcapture %}
+    {% assign title-array = title-array | push: title-array-entry %}
 {% endfor %}
 
 {% comment %} Allow tag to override default images location,
@@ -59,6 +80,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
 <div class="figure-images contains-{{ number-of-images }}">
 
     {% assign alt-text-counter = 0 %}
+    {% assign title-counter = 0 %}
 
     {% for image in figure-images %}
 
@@ -84,7 +106,8 @@ because https://github.com/jekyll/jekyll/issues/2248.
                             sizes="(min-width: 600px) 1300px, 100vw"
                         {% endunless %}
 
-                        alt="{% if include.title %}{{ include.title | markdownify | strip_html | strip }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html | strip }}{% else %}{{ include.caption | markdownify | strip_html | strip }}{% endif %}"
+                        title="{% if title-array.size > 0 %}{{ title-array[title-counter] | markdownify | strip_html | strip }}{% endif %}"
+                        alt="{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html | strip }}{% else %}{{ include.caption | markdownify | strip_html | strip }}{% endif %}"
                         {% if include.image-height != nil %} class="height-{{ include.image-height }}"{% endif %}
                     />
                 </noscript>
@@ -99,14 +122,16 @@ because https://github.com/jekyll/jekyll/issues/2248.
                         sizes="auto"
                     {% endunless %}
 
-                    alt="{% if include.title %}{{ include.title | markdownify | strip_html | strip }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html | strip }}{% else %}{{ include.caption | markdownify | strip_html | strip }}{% endif %}"
+                    title="{% if title-array.size > 0 %}{{ title-array[title-counter] | markdownify | strip_html | strip }}{% endif %}"
+                    alt="{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] | markdownify | strip_html | strip }}{% else %}{{ include.caption | markdownify | strip_html | strip }}{% endif %}"
                     class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}"
                 />
 
             {% else %}
 
                 <img src="{{ images }}/{{ image }}"
-                    alt="{% capture figure-image-alt-text %}{% if include.title %}{{ include.title }}: {% endif %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html | strip }}"
+                    title="{% if title-array.size > 0 %}{{ title-array[title-counter] | markdownify | strip_html | strip }}{% endif %}"
+                    alt="{% capture figure-image-alt-text %}{% if alt-text-array.size > 0 %}{{ alt-text-array[alt-text-counter] }}{% else %}{{ include.caption }}{% endif %}{% endcapture %}{{ figure-image-alt-text | replace: "&nbsp;", " " | replace: "&shy;", "" | markdownify | strip_html | strip }}"
                     class="{% if image contains '.svg' %}inject-svg{% endif %}{% if include.image-height != nil %} height-{{ include.image-height }}{% endif %}" />
 
             {% endif %}
@@ -114,6 +139,7 @@ because https://github.com/jekyll/jekyll/issues/2248.
         {% if include.link %}</a>{% endif %}
 
         {% assign alt-text-counter = alt-text-counter | plus: 1 %}
+        {% assign title-counter = title-counter | plus: 1 %}
 
     {% endfor %}
 </div>
@@ -129,12 +155,6 @@ because https://github.com/jekyll/jekyll/issues/2248.
 <div class="figure-md" markdown="1">
 {{ include.markdown | markdownify }}
 </div>
-{% endif %}
-
-{% if include.title and include.title != "" %}
-<p class="title" markdown="1">
-{{ include.title | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
-</p>
 {% endif %}
 
 {% if include.slide-caption and include.slide-caption != "" %}
