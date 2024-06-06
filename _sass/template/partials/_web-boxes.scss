@@ -122,7 +122,7 @@ $web-boxes: true !default;
 
         @media only screen and (min-width: $max-width-default) {
             width: 100vw;
-            margin-left: calc(-1 * ((100vw - #{$max-width-default}) * 0.5))
+            margin-left: calc(-1 * ((100vw - #{$max-width-default}) * 0.5 + 1rem))
         }
 
         .feature-box {
@@ -166,6 +166,7 @@ $web-boxes: true !default;
         // which is read and applied by JS.
         background-color: $color-accent;
 
+        clear: both;
         margin-bottom: $content-padding-vertical * 2;
         padding: $content-padding-vertical $content-padding-horizontal;
         width: 100vw;
