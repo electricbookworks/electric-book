@@ -1,7 +1,7 @@
 {% comment %} Metadata for a given work.
-Pass to this include the relevant work as work="",
-where work is the book or book/language folder
-in _data/works. {% endcomment %}
+Pass to this include the relevant work as work=workobject,
+where workobject is the data object for the book or book/language
+folder in _data/works. I.e. it is not a string. {% endcomment %}
 
 {% comment %} Get the work we're fetching metadata for,
 and set the default to the 'book' folder. {% endcomment %}
@@ -295,6 +295,11 @@ we fall back to the value in the work's default.yml.
 {% elsif work.default.products.web.toc and work.default.products.web.toc != "" %}
 
     {% assign web-toc = work.default.products.web.toc %}
+
+{% else %}
+
+    {% assign web-toc = work.default.products.web.nav %}
+
 {% endif %}
 
 {% comment %} Epub metadata {% endcomment %}
