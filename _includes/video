@@ -49,14 +49,10 @@ then let the user override it by setting an image parameter.
 Epubs and apps aren't online, so don't fetch an image automatically.
 On Vimeo, it's not simple to get a Vimeo thumbnail.
 So an image must be specified to get a placeholder image.{% endcomment %}
-{% assign video-image = nil %}
+{% assign video-image-url = nil %}
 
 {% if video-host == "youtube" and site.output == "web" %}
-    {% capture video-image %}https://i1.ytimg.com/vi/{{ include.id }}/hqdefault.jpg{% endcapture %}
-{% endif %}
-
-{% if include.image %}
-    {% capture video-image %}{{ images }}/{{ include.image }}{% endcapture %}
+    {% capture video-image-url %}https://i1.ytimg.com/vi/{{ include.id }}/hqdefault.jpg{% endcapture %}
 {% endif %}
 
 {% comment %}Get the language of the video, if subtitles are required.{% endcomment %}
@@ -66,10 +62,16 @@ So an image must be specified to get a placeholder image.{% endcomment %}
 {% endif %}
 
 <div class="video {{ video-host }}{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles == "true" %}data-video-subtitles="true"{% endif %}{% if include.start %} data-video-timestamp="{{ include.start }}"{% endif %}>
-    <div class="video-wrapper{% if video-image == nil or video-image == "" %} video-no-image{% endif %}">
+    <div class="video-wrapper{% if include.image == nil or include.image == "" %} video-no-image{% endif %}">
         <a class="video-link" href="{{ video-link }}{{ video-timestamp }}">
-            {% if video-image != nil and video=image != "" %}
-                <img src="{{ video-image }}">
+            {% if include.image and include.image != "" %}
+                {% if include.folder and include.folder != "" %}
+                    {% include image file=include.image folder=include.folder %}
+                {% else %}
+                    {% include image file=include.image %}
+                {% endif %}
+            {% elsif video-image-url and video-image-url != "" %}
+                <img src="{{ video-image-url }}">
             {% endif %}
         </a>
     </div>
@@ -95,7 +97,11 @@ So an image must be specified to get a placeholder image.{% endcomment %}
 
     {% if include.description %}
     <p class="video-description">
-        <a href="{{ video-link }}{{ video-timestamp }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
+        {% if site.output == "web" %}
+            {{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+        {% else %}
+            <a href="{{ video-link }}{{ video-timestamp }}">{{ include.description | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</a>
+        {% endif %}
     </p>
     {% endif %}
 
