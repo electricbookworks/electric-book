@@ -1,5 +1,7 @@
 ---
 title: "Questions and quizzes"
+image: "questions.jpg"
+description: "Examples of a multiple-choice question and a fill-in-the-blank question, to show how they appear on screens and paper."
 ---
 
 ## Questions and quizzes

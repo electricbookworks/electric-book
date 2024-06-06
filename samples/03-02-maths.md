@@ -1,5 +1,7 @@
 ---
 title: "Mathematics"
+image: "bauhaus-digital-paper.jpg"
+description: "Examples of maths, defined in TeX syntax, and then properly formatted on the page by MathJax."
 ---
 
 ## Mathematics

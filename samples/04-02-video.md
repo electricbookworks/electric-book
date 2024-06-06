@@ -1,5 +1,7 @@
 ---
 title: "Video"
+image: "book-and-kite.jpg"
+description: "This page shows how video from YouTube and Vimeo can be added to a book."
 ---
 
 ## Video

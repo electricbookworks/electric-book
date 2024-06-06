@@ -1,5 +1,7 @@
 ---
 title: "Plain images"
+image: "count-of-monte-christo-1.jpg"
+description: "A chapter from *The Count of Monte Christo* interspersed with simple images."
 ---
 
 {% include metadata %}

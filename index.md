@@ -17,7 +17,7 @@ The Electric Book template produces **web books, ebooks, and print books from a 
 <div class="feature-boxes">
 
 {% include feature-box
-   text="For an easy start, add content to [the blank book](book/0-3-contents.html)."
+   text="The template includes [a blank book](book/0-3-contents.html) to add your content to."
    image="logo.svg"
 %}
 
@@ -29,7 +29,7 @@ The Electric Book template produces **web books, ebooks, and print books from a 
 {% if site.output == "web" and output-docs == true %}
 
 {% include feature-box
-   text="[Documentation](docs/) explains how to use the template's features."
+   text="The template's [documentation](docs/) explains how its features work."
    image="banner-image.jpg"
 %}
 
@@ -52,8 +52,36 @@ You can also hire [Electric Book Works](https://electricbookworks.com) to handle
 
 </div>
 
-- toc
-{:toc}
+## Sample content
+
+To see how these examples look in other formats, [download PDF and epub versions of the sample book](https://www.dropbox.com/scl/fo/uskmdm77do6s16r4mbwy4/AIrPyibgt3AFLumX-FFzYjk?rlkey=vuyn7dysx5w1d9texgemsioix&st=3nouz3mx&dl=0).
+
+{% include visual-toc
+   book="samples"
+   files="
+   * 00-05-contents-page
+   * 01-01-plain-text-1
+   * 01-10-questions
+   * 02-01-plain-images
+   * 02-02-figures
+   * 03-02-maths
+   * 04-02-video
+   * 10-02-dynamic-index
+" %}
+
+
+<div class="color-panel text-fff links-ccc" markdown="1">
+
+## How to start now
+
+{% include video
+   id="XmZ2mn8Vyy0"
+   image="ebt-setup-video.png"
+   description="Arthur Attwell, from Electric Book Works, explains how to start a new book in minutes."
+   %}
+
+</div>
+
 
 ## Features
 
@@ -163,11 +191,7 @@ Let users click through [slideshows]({{ site.baseurl }}/samples/04-05-slides.htm
 
 ### WordPress compatible
 
-Do you already have a WordPress website? No problem. Electric Book websites are fully compatible with WordPress-driven servers. Just place our generated files in a subfolder on your WordPress server.
-
-### Members-only option
-
-Do you need to restrict book access to certain users on your WordPress site – like paying customers or authorised members? Use the [Electric Book WP plugin](https://github.com/electricbookworks/electric-book-wp/).
+Do you already have a WordPress website? Electric Book websites live happily side-by-side with WordPress. Just place the generated files in a subfolder on your WordPress server.
 
 ### Annotation
 
