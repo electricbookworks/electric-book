@@ -1,0 +1,43 @@
+<div class="visual-toc">
+
+    {% assign visual-toc-files = include.files | strip_newlines | remove: " " | split: "*" %}
+
+    <ul class="visual-toc-list">
+        {% for visual-toc-file in visual-toc-files %}
+            {% if visual-toc-file and visual-toc-file !="" %}
+
+                {% capture visual-toc-filename %}{{ visual-toc-file | strip_newlines | strip | remove: ".md" }}{% endcapture %}
+                {% capture visual-toc-path-to-file %}{{ include.book }}/{{ visual-toc-filename }}{% endcapture %}
+
+                {% assign visual-toc-site-page = site.pages | where_exp: "file", "file.path contains visual-toc-path-to-file" %}
+
+                {% for visual-toc-page-object in visual-toc-site-page %}
+
+                    <li>
+
+                        {% if visual-toc-page-object.image and visual-toc-page-object.image != "" %}
+                            <div class="visual-toc-chapter-image">
+                                <a href="{{ visual-toc-path-to-file }}.html">
+                                    {% include image file=visual-toc-page-object.image folder=include.book %}
+                                </a>
+                            </div>
+                        {% endif %}
+
+                        <div class="visual-toc-chapter-title">
+                            <a href="{{ visual-toc-path-to-file }}.html">
+                                {{ visual-toc-page-object.title | markdownify | remove: "<p>" | remove: "</p>" }}
+                            </a>
+                        </div>
+
+                        {% if visual-toc-page-object.description and visual-toc-page-object.description != "" %}
+                            <div class="visual-toc-chapter-description">
+                                {{ visual-toc-page-object.description | markdownify  | remove: "<p>" | remove: "</p>" }}
+                            </div>
+                        {% endif %}
+
+                    </li>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
