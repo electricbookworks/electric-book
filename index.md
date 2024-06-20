@@ -12,7 +12,7 @@ opener-image-alt-text: "An illustration of an enormous book. It is open, and its
 # Book-making with superpowers
 {:.no_toc}
 
-The Electric Book template produces **web books, ebooks, and print books from a single content source.** It is [packed with features for professional book production](#basic-features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. {% if  output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
+The Electric Book template produces **web books, ebooks, and print books from a single content source.** It is [packed with features for professional book production](#features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. {% if  output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
 
 <div class="feature-boxes">
 
