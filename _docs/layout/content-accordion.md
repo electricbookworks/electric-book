@@ -1,7 +1,7 @@
 ---
 title: Web and app content accordion
 categories: layout
-order: 4
+order: 6
 ---
 
 # Web and app content accordion

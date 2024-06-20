@@ -1,7 +1,7 @@
 ---
 title: Web and app pagination
 categories: layout
-order: 3
+order: 5
 ---
 
 # Web and app pagination

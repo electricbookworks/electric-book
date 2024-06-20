@@ -2,7 +2,7 @@
 title: Colour profiles
 categories:
   - layout
-order: 5
+order: 7
 ---
 
 # Colour profiles
