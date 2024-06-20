@@ -115,7 +115,7 @@ $web-boxes: true !default;
         display: flex;
         gap: 2rem 1rem;
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: center;
         margin: 4rem 0;
 
         font-family: $font-text-secondary;
