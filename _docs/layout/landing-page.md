@@ -63,7 +63,12 @@ It can be useful to set a section of your landing page off from the rest by putt
 
 While you could write theme-specific CSS to handle this, the template includes an efficient way to create this effect without writing any code.
 
-Wrap the content of your panel in a `div` with the class `color-panel`. You then set the colours of the panel, its text, and its links with additional classes. These additional classes include the hex values of those colours in their names. For example:
+Wrap the content of your panel in a `div` with the class `color-panel`. You then set the colours of the panel, its text, and its links with additional classes. These additional classes include the hex values of those colours in their names.
+
+Note the American spelling of `color` in `color-panel`. This is for consistency with the way `color` is spelled in CSS properties. So `colour-panel` won't work.
+{:.sidenote}
+
+For example:
 
 ```html
 <div class="color-panel background-000 text-fff links-ccc" markdown="1">
