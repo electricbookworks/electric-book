@@ -120,7 +120,7 @@ $break-height-large: 1200px !default;
 $start-depth: $line-height-default * 2 !default;
 
 // Set the height of the opener image
-$opener-image-height: 40vh;
+$opener-image-height: 40vh !default;
 
 // Hyphenation
 // Variables here apply to p, ul, ol, dl.

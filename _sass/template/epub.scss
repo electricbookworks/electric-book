@@ -102,7 +102,7 @@ $color-notification-high-background: $template-orange !default;
 $start-depth: $line-height-default * 2 !default;
 
 // Set the height of the opener image
-$opener-image-height: $line-height-default * 10;
+$opener-image-height: $line-height-default * 10 !default;
 
 // Hyphenation
 // Variables here apply to p, ul, ol, dl.
