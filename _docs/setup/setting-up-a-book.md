@@ -38,6 +38,20 @@ Sometimes you are working on a book but you do not yet want it to be included in
 
 Its HTML files will still be generated (unless you exclude them in a `_config` file), but it will not be listed in places that draw book data from `_data/works`.
 
+## Copying an existing book
+
+When you're creating a new book based on an existing one in the same project, the template can create the new folder and files for you. This saves you copy-pasting files and potentially missing something important.
+
+It will make a copy of the book folder, rename the folder, and do the same for its `_data/works/...` files.
+
+The syntax for the command is included in the guidance you get if you just enter `npm run electric-book` at the command line.
+
+For example, if you're making a copy of `a-new-hope` to create `the-empire-strikes-back`, you'd enter:
+
+```sh
+npm run eb -- new --book a-new-hope --name the-empire-strikes-back
+```
+
 ## Creating book content
 
 Each markdown file in `space-potatoes` is a part of a book, such as a table of contents or a chapter. Each file must start with:
