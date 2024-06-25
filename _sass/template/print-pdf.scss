@@ -182,6 +182,9 @@ $start-on-recto-or-verso: null !default;
 // Set it in multiples of $line-height-default to preserve your baseline grid.
 $start-depth: $line-height-default * 15 !default;
 
+// Set the height of the opener image
+$opener-image-height: $page-height * 0.4 !default;
+
 // Which page styles use this start-depth?
 $start-depth-page-styles: halftitle-page, half-title-page, title-page, dedication-page, epigraph-page, part-page !default;
 

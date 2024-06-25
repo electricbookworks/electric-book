@@ -261,11 +261,13 @@ $nav-bar-back-button-hide: false !default;
 
         .nav-title {
             color: $nav-bar-title-color;
-            font-size: $font-size-default * 1.5;
+            font-size: $font-size-default;
             font-weight: bold;
-            line-height: $line-height-default * 0.75;
-            margin: 1rem 0;
+            line-height: $line-height-default * 0.8;
             padding: 0 1rem;
+
+            // Space on right for close button
+            margin: 1rem 3rem 1rem 0;
 
             a {
                 color: $nav-bar-title-color;

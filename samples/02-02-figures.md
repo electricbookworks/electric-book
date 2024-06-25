@@ -1,5 +1,7 @@
 ---
 title: "Figures"
+image: "fradkin-2.jpg"
+description: "A research paper that includes figures with reference numbers, captions and sources."
 ---
 
 ## Figures

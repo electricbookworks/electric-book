@@ -1,0 +1,60 @@
+$web-visual-toc: true !default;
+@if $web-visual-toc {
+
+    .visual-toc {
+        font-family: $font-text-secondary;
+        margin: 3rem 0 4rem 0;
+
+        .visual-toc-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                clear: both;
+                margin-bottom: 2rem;
+
+                // Ensure element expands to the height`
+                // of its floated child (the image)
+                // https://stackoverflow.com/a/10969052/1781075
+                &::after {
+                    content: "";
+                    display: table;
+                    clear: both;
+                }
+
+                .visual-toc-chapter-image {
+
+                    border-radius: 8rem;
+                    border: 1px solid $grey-light;
+                    overflow: hidden;
+                    float: left;
+                    margin-right: 1rem;
+                    height: 8rem;
+                    width: 8rem;
+
+                    $visual-toc-sidebar-space: $max-width-default + 20rem;
+                    @media only screen and (min-width: $visual-toc-sidebar-space) {
+                        margin-left: -(8rem + 2rem);
+                    }
+
+                    a {
+                        text-decoration: none;
+                    }
+
+                    img {
+                        height: 8rem;
+                        width: 8rem;
+                        object-fit: cover;
+                    }
+                }
+
+                .visual-toc-chapter-title {
+                    font-weight: bold;
+                }
+
+                .visual-toc-chapter-description {}
+            }
+        }
+    }
+}

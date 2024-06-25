@@ -1,5 +1,9 @@
 ---
 title: "Plain text"
+opener-image: "book-trap.jpg"
+opener-image-alt-text: "An illustration of a book. Its front cover is held open by an upright stick, to which a string is attached. A heart-shaped hole has been cut through the pages of the book, and coloured blue."
+image: "book-trap.jpg"
+description: "As an example of plain text, the first section of 'A Scandal in Bohemia', a Sherlock Holmes story by Sir Arthur Conan Doyle."
 ---
 
 ## Plain text

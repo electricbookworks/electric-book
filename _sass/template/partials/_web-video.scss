@@ -14,9 +14,14 @@ $web-video: true !default;
         }
 
         .video-link {}
+
         .video-description {
             margin-top: $line-height-default;
             text-align: left;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
 
         .video-wrapper {

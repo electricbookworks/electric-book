@@ -1,0 +1,16 @@
+{% if page.opener-image and page.opener-image != "" %}
+
+<div class="opener-image-wrapper">
+    {% if is-book-directory %}
+
+        {% comment %} Seems book metadata is not available
+        at this point in Jekyll's process, so we have to get
+        the book folder from the page path directly. {% endcomment %}
+        {% assign book-for-opener-image = page.path | split: "/" | pop %}
+
+        {% include image class="opener-image" file=page.opener-image folder=book-for-opener-image alt=page.opener-image-alt-text %}
+    {% else %}
+        {% include image class="opener-image" file=page.opener-image folder="assets" alt=page.opener-image-alt-text %}
+    {% endif %}
+</div>
+{% endif %}

@@ -1,7 +1,7 @@
 ---
 title: Page numbers
 categories: layout
-order: 2
+order: 4
 ---
 
 # Page numbers

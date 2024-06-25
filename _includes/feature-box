@@ -1,0 +1,23 @@
+{% comment %} This include is intended for web landing pages.
+It is currently only styled for web output, and
+will not have any design in PDF or epub books. {% endcomment %}
+
+<div class="feature-box">
+
+    {% if include.image and include.image != "" %}
+        <div class="feature-box-image-wrapper">
+            {% if is-book-directory %}
+                {% include image file=include.image alt=include.image-alt-text %}
+            {% else %}
+                {% include image file=include.image folder="assets" alt=include.image-alt-text %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if include.text and include.text != "" %}
+        <div class="feature-box-text">
+            {{ include.text | markdownify }}
+        </div>
+    {% endif %}
+
+</div>

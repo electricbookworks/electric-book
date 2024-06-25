@@ -1,8 +1,11 @@
 // What is this?
 // -------------
-// This is typography for the Electric Book template (see http://ebw.co/template).
-// It is built with Sass. (See http://sass-lang.com, and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
-// It sets defaults that can be overridden in each book's own stylesheets, where the variables here are duplicated.
+// This is typography for the Electric Book template
+// (see http://ebw.co/template).
+// It is built with Sass. (See http://sass-lang.com,
+// and http://jekyllrb.com/docs/assets for how Jekyll implements Sass.)
+// It sets defaults that can be overridden in each book's
+// own stylesheets, where the variables here are duplicated.
 //
 // How to use it
 // -------------
@@ -22,20 +25,27 @@ $output-format: "web" !default;
 @import "template/colors";
 @import "theme/web-variables";
 
-// Edition suffix: identifies this edition in certain classes (e.g. in _epub-layout-utilities.scss).
+// Edition suffix: identifies this edition in certain classes
+// (e.g. in _epub-layout-utilities.scss).
 $edition-suffix: null !default;
 
-// The path to the project root, for settings paths to fonts and colour profiles.
-// Override this for translations, which need an extra leading ../
+// The path to the project root, for setting paths
+// to fonts and colour profiles.
+// Override this in translation styles, which need an extra leading ../
 $path-to-root-directory: "../.." !default;
 
 // Max width of main body area
-$max-width-default: 50rem !default;
+$max-width-default: 45rem !default;
+
+// The minimum empty space around the main content area
+$content-padding-horizontal: 1rem;
+$content-padding-vertical: 1rem;
 
 // We name font variables for two categories:
 // - 'text' fonts are used for body text and some page features;
 // - 'display' fonts are used for headings and similar short-string features.
-// For each category, we set a main font and a secondary font, allowing up to four fonts.
+// For each category, we set a main font and a secondary font,
+// allowing up to four fonts.
 // Finally, we set a fifth, monospace font for elements like computer code.
 $font-text-main: "Apple Garamond", "Baskerville", "Cambria", "Droid Serif", "Times","Source Serif Pro", serif !default;
 $font-text-secondary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !default;
@@ -43,17 +53,27 @@ $font-display-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxyge
 $font-display-secondary: "Apple Garamond", "Baskerville", "Cambria", "Droid Serif", "Times","Source Serif Pro", serif !default;
 $font-code: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace !default;
 
-// Set font size and line-height in ems or px.
-// These values, especially $line-height-default, are used to compute vertical rhythm
-// for many features in this theme. So do not use a unitless value for line-height,
-// and don't use percentages, which will break layouts computed by multiplying this value.
-$font-size-default: 1.2em !default;
-$line-height-default: 1.6em !default;
-$font-size-smaller: 0.7 !default; // How much smaller than font-size-default for features like sidenotes and footers?
-$font-size-bigger: 2 !default; // How many times bigger than font-size-default for features like headings and pullquotes?
+// Set font size and line-height in rems, ems or px.
+// These values, especially $line-height-default,
+// are used to compute vertical rhythm for many features.
+// So do not use a unitless value for line-height,
+// and don't use percentages, which will break layouts
+// computed by multiplying this value.
+$font-size-default: 1.3rem !default;
+$line-height-default: 2rem !default;
 
-// Do you want space between paragraphs, rather than a text-indent? true or false
+// How many times bigger than font-size-default
+// for features like headings and pullquotes?
+$font-size-bigger: 2 !default;
+
+// How much smaller than font-size-default
+// for features like sidenotes and footers?
+$font-size-smaller: 0.8 !default;
+
+// Do you want space between paragraphs, rather than a text-indent?
+// true or false
 $spaced-paras: true !default;
+
 // If not spacing paras, how large is the first-line indent on paragraphs?
 $paragraph-indent: 1em !default;
 
@@ -70,7 +90,7 @@ $rule-thickness: 1.5px !default;
 // Colours
 $color-text-main: $black !default;
 $color-text-secondary: $grey-dark !default;
-$color-background: $white-mid !default;
+$color-background: $white !default;
 $color-light: $grey-light !default;
 $color-mid: $grey-mid !default;
 $color-accent: $template-green !default;
@@ -95,18 +115,35 @@ $break-height-medium: 900px !default;
 $break-height-large: 1200px !default;
 
 // Set the default start-depth of pages.
-// This is the distance from the top of the page to the first element on the first page.
+// This is the distance from the top of the page
+// to the first element on the first page.
 $start-depth: $line-height-default * 2 !default;
+
+// Set the height of the opener image
+$opener-image-height: 40vh !default;
 
 // Hyphenation
 // Variables here apply to p, ul, ol, dl.
 // Note: Most browsers and ereaders do not support hyphenation rules.
-$hyphenation: manual !default; // Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
-$hyphenation-dictionary: "" !default; // Path to dictionary file, relative to `/book/styles`. E.g. "../../assets/hyph.dic".
-$hyphenation-custom: add !default; // add or replace. Whether your dictionary adds to or replaces the built-in Prince dictionaries
-$hyphenate-after: 3 !default; // Minimum letters on new line after hyphen
-$hyphenate-before: 3 !default; // Minimum letters at end of line before hyphen
-$hyphenate-lines: 1 !default; // Maximum number of consecutive lines ending with hyphens
+// Can be auto, none, or manual (only breaks on hyphens and soft hyphens)
+$hyphenation: manual !default;
+
+// Path to dictionary file, relative to `/book/styles`.
+// E.g. "../../assets/hyph.dic".
+$hyphenation-dictionary: "" !default;
+
+// Does your dictionary add to or replace built-in Prince dictionaries?
+// Use add or replace.
+$hyphenation-custom: add !default;
+
+// Minimum letters on new line after hyphen
+$hyphenate-after: 3 !default;
+
+// Minimum letters at end of line before hyphen
+$hyphenate-before: 3 !default;
+
+// Maximum number of consecutive lines ending with hyphens
+$hyphenate-lines: 1 !default;
 
 // Text dividers
 // For breaks created with *** in markdown.
@@ -141,16 +178,19 @@ $masthead-logo-width: 2.5rem !default;
 
 // Website sidebar/navigation
 $nav-position: right !default; // left, right (note $masthead-align)
-$nav-bar-text-size: 0.8em !default;
-$nav-bar-item-collapse: false !default; // Does the nav list fully expand, or collapse until mouseover?
+$nav-bar-text-size: 1rem !default;
+
+// Does the nav list fully expand, or collapse until mouseover?
+$nav-bar-item-collapse: false !default;
+
 $nav-bar-close: "\00D7" !default; // &times; ×
 $nav-bar-children-prompt: "+" !default;
 $nav-bar-children-prompt-hide: "\2212" !default; // \2212 is an actual minus sign
 $nav-bar-scrollbar: true !default;
 $nav-bar-width: 20rem !default;
-$nav-bar-fixed: true !default; // fixed is not fully supported on many mobile browsers
+$nav-bar-fixed: true !default; // fixed not supported on some mobile browsers
 $nav-bar-back-button-hide: true !default;
-$nav-bar-accent-color: $color-accent !default; // ideally a color that works behind dark or light text
+$nav-bar-accent-color: $color-accent !default; // should work behind dark or light text
 $nav-bar-title-color: $color-text-secondary !default;
 $nav-bar-label-color: $color-links !default;
 $nav-bar-label-background-color: $color-background !default;
@@ -175,7 +215,7 @@ $language-select-links-color: $color-links !default;
 $language-select-background-color: $color-background !default;
 
 // Annotator
-$annotator-sidebar-width: 16em !default;
+$annotator-sidebar-width: 16rem !default;
 $annotator-icon-line-color-active: $color-light !default;
 $annotator-icon-line-color-inactive: $color-mid !default;
 $annotator-icon-background-color-active: $color-accent !default;
@@ -191,7 +231,7 @@ $bookmark-icon-color-inactive: $color-background !default;
 $bookmark-icon-color-active: $color-accent !default;
 $bookmark-icon-outline-color-inactive: $color-accent !default;
 $bookmark-icon-outline-color-active: $color-accent !default;
-$bookmark-icon-text-size: 1em !default;
+$bookmark-icon-text-size: 1rem !default;
 $bookmark-last-location-prompt-color-background: $color-links !default;
 $bookmark-last-location-prompt-color-text: $color-background !default;
 $bookmark-last-location-prompt-color-border: $color-links !default;
@@ -251,6 +291,7 @@ $web-tables: true !default;
 $web-letters: true !default;
 $web-verse: true !default;
 $web-video: true !default;
+$web-visual-toc: true !default;
 $web-pagination: true !default;
 $web-questions: true !default;
 $web-select-questions: true !default;
@@ -274,7 +315,8 @@ $web-share: true !default;
 $web-printout: true !default;
 
 // Logic (if this then that)
-$web-reset-sequences: true !default; // This should stay last in the @import list
+// This should stay last in the @import list
+$web-reset-sequences: true !default;
 
 
 // ----------------------------------------------------
@@ -344,6 +386,7 @@ $web-reset-sequences: true !default; // This should stay last in the @import lis
 @import "template/partials/web-letters";
 @import "template/partials/web-verse";
 @import "template/partials/web-video";
+@import "template/partials/web-visual-toc";
 @import "template/partials/web-pagination";
 @import "template/partials/web-questions";
 @import "template/partials/web-select-questions";

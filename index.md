@@ -3,33 +3,84 @@
 # for your your own project's landing page.
 title: The Electric Book template
 style: home
+opener-image: banner-image.jpg
+opener-image-alt-text: "An illustration of an enormous book. It is open, and its pages are each filled with an image of a starry sky. Beside the book, a man stands and looks at the pages. The book is bigger than he is."
 ---
 
 {% include metadata %}
 
-# Book-making with super&shy;powers
+# Book-making with superpowers
 {:.no_toc}
 
-The Electric Book template produces **website, ebook, app and print books from a single content source.** It is [packed with features for professional book production](#basic-features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. The template includes:
+The Electric Book template produces **web books, ebooks, and print books from a single content source.** It is [packed with features for professional book production](#features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. {% if  output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
 
-- [a blank book](book/0-3-contents.html) to start working into,
-- [a book of sample features](samples/index.html) to learn from,
-- [a demo translation](samples/fr/), and
-- {% if site.output == "web" %}[how-to documentation](docs/){% else %}[online how-to documentation](https://electricbookworks.github.io/electric-book/docs/index.html){% endif %}. {% if output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
+<div class="feature-boxes">
+
+{% include feature-box
+   text="The template includes [a blank book](book/0-3-contents.html) to add your content to."
+   image="logo.svg"
+%}
+
+{% include feature-box
+   text="Learn from [a book of examples](samples/index.html), with a partial [translation](samples/fr/)."
+   image="cover.jpg"
+%}
+
+{% if site.output == "web" and output-docs == true %}
+
+{% include feature-box
+   text="The template's [documentation](docs/) explains how its features work."
+   image="banner-image.jpg"
+%}
+
+{% endif %}
+
+</div>
 
 You'll find [the open-source repository on GitHub](https://github.com/electricbookworks/electric-book).
 
-- toc
-{:toc}
+<div class="color-panel background-000 text-fff links-ccc" markdown="1">
 
+## Skills required
+{:.no_toc}
 
-## Skill level
-
-To make books this way, you need some web-development know-how. You'll edit content in markdown with Liquid template tags; edit data in YAML files; commit your changes with Git; enter commands at the command line; and build and serve a static website. Book content is in kramdown markdown, with Liquid tags, and in YAML. Design is done in Sass. Many features are written in Javascript.
+To make books this way, you need some web-development know-how. You'll edit content in markdown with Liquid template tags; edit data in YAML files; commit your changes with Git; enter commands at the command line; and build and serve a static website. Design is done in Sass. Many features are written in Javascript.
 
 If those concepts are not familiar to you, you'll need a web developer on your team to get you going, and to provide you with technical support when you get stuck.
 
-You can also hire [Electric Book Works](https://electricbookworks.com) to provide support or to handle book production for you.
+You can also hire [Electric Book Works](https://electricbookworks.com) to handle setup or book production for you.
+
+</div>
+
+## Sample content
+
+To see how these examples look in other formats, [download PDF and epub versions of the sample book](https://www.dropbox.com/scl/fo/uskmdm77do6s16r4mbwy4/AIrPyibgt3AFLumX-FFzYjk?rlkey=vuyn7dysx5w1d9texgemsioix&st=3nouz3mx&dl=0).
+
+{% include visual-toc
+   book="samples"
+   files="
+   * 00-05-contents-page
+   * 01-01-plain-text-1
+   * 01-10-questions
+   * 02-01-plain-images
+   * 02-02-figures
+   * 03-02-maths
+   * 04-02-video
+   * 10-02-dynamic-index
+" %}
+
+
+<div class="color-panel text-fff links-ccc" markdown="1">
+
+## How to start now
+
+{% include video
+   id="XmZ2mn8Vyy0"
+   image="ebt-setup-video.png"
+   description="Arthur Attwell, from Electric Book Works, explains how to start a new book in minutes."
+   %}
+
+</div>
 
 
 ## Features
@@ -140,11 +191,7 @@ Let users click through [slideshows]({{ site.baseurl }}/samples/04-05-slides.htm
 
 ### WordPress compatible
 
-Do you already have a WordPress website? No problem. Electric Book websites are fully compatible with WordPress-driven servers. Just place our generated files in a subfolder on your WordPress server.
-
-### Members-only option
-
-Do you need to restrict book access to certain users on your WordPress site – like paying customers or authorised members? Use the [Electric Book WP plugin](https://github.com/electricbookworks/electric-book-wp/).
+Do you already have a WordPress website? Electric Book websites live happily side-by-side with WordPress. Just place the generated files in a subfolder on your WordPress server.
 
 ### Annotation
 

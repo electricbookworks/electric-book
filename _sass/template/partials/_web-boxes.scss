@@ -110,4 +110,90 @@ $web-boxes: true !default;
             }
         }
     }
+
+    .feature-boxes {
+        display: flex;
+        gap: 2rem 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 4rem 0;
+
+        font-family: $font-text-secondary;
+
+        @media only screen and (min-width: $max-width-default) {
+            width: 100vw;
+            margin-left: calc(-1 * ((100vw - #{$max-width-default}) * 0.5 + 1rem))
+        }
+
+        .feature-box {
+            @include box($white, $color-light);
+
+            // border-style: dashed;
+            border-color: $color-accent;
+            margin: 0;
+            max-width: calc(#{$max-width-default} * 0.5 - 2rem);
+            padding: 0;
+
+            .feature-box-image-wrapper {
+                background-color: $white;
+                border: $rule-thickness solid $color-accent;
+                border-radius: 5rem;
+                height: 5rem;
+                width: 5rem;
+                margin: -1rem auto 0 auto;
+                padding: 0.75rem;
+                text-align: center;
+
+                img, svg {
+                    border-radius: 5rem;
+                    object-fit: cover;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .feature-box-text {
+                margin: 1rem;
+            }
+        }
+    }
+
+    .color-panel {
+
+        // By default, the accent color,
+        // and then overriden by the class name,
+        // in the format `background-<hexvalue>`,
+        // which is read and applied by JS.
+        background-color: $color-accent;
+
+        clear: both;
+        margin-bottom: $content-padding-vertical * 2;
+        padding: $content-padding-vertical $content-padding-horizontal;
+        width: 100vw;
+
+        // If screen is less than max-width-default,
+        // only extend the color as far as the padding on the content.
+        // Otherwise, extend it by that plus the sidebar space.
+        margin-left: -($content-padding-horizontal);
+        @media only screen and (min-width: $max-width-default) {
+            width: 100vw;
+            margin-left: calc(-1 * ((100vw - #{$max-width-default}) * 0.5) - #{$content-padding-horizontal});
+            padding-left: calc(((100vw - #{$max-width-default}) * 0.5) + #{$content-padding-horizontal});
+            padding-right: calc(((100vw - #{$max-width-default}) * 0.5) + #{$content-padding-horizontal});
+            padding-top: $content-padding-vertical * 2;
+            padding-bottom: $content-padding-vertical * 2;
+        }
+
+        // No space above first heading in panel
+        & > h2:first-of-type,
+        & > h3:first-of-type,
+        & > h4:first-of-type {
+            margin-top: 0;
+        }
+
+        // No margin below last child
+        & > :last-child {
+            margin-bottom: 0;
+        }
+    }
 }

@@ -387,8 +387,12 @@ be sure we're pointing to the webserver root.{% endcomment %}
     {% endif %}
 {% endif %}
 
-{% comment %}Create a short tag for the path to images.{% endcomment %}
-{% capture images %}{{ path-to-book-directory }}{{ site.image-set }}{% endcapture %}
+{% comment %}Create a short tag for the path to images,
+where the default is the root assets/images folder.{% endcomment %}
+{% capture images %}{{ path-to-root-directory }}assets/{{ site.image-set }}{% endcapture %}
+{% if is-book-directory %}
+    {% capture images %}{{ path-to-book-directory }}{{ site.image-set }}{% endcapture %}
+{% endif %}
 
 {% comment %}
 If site.build-language is defined, and matches a translation directory,

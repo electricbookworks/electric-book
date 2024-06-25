@@ -16,4 +16,12 @@ $epub-openers: true !default;
         font-weight: inherit;
     }
 
+    .opener-image-wrapper {
+
+        .opener-image {
+            height: $opener-image-height;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
 }
