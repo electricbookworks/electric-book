@@ -11,8 +11,8 @@ When you generate the web or app version of your project, the root `index.md` fi
 
 The template includes several features specifically for use on landing pages:
 
-1. [Sibling-feature boxes](#siblingfeature-boxes)
-2. [Full-width, coloured panels](#fullwidth-coloured-panels)
+1. [Sibling-feature boxes](#sibling-feature-boxes)
+2. [Full-width, coloured panels](#full-width-coloured-panels)
 3. [A high-level, visual table of contents](#a-visual-table-of-contents)
 
 ## Sibling-feature boxes

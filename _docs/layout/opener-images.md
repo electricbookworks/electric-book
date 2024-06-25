@@ -16,6 +16,6 @@ opener-image-alt-text: "An illustration of an enormous book. It is open, and its
 
 While the `opener-image-alt-text` is optional, it's highly recommended for accessibility and SEO.
 
-Images used on pages inside a book folder should be saved in the same place as other images for that book: in the book's `iamges/_source` folder and then [automatically converted for the various output formats](image-conversions.html).
+Images used on pages inside a book folder should be saved in the same place as other images for that book: in the book's `images/_source` folder and then [automatically converted for the various output formats](image-conversions.html).
 
-Images used on non-book pags like the landing, contact, about, and search pages should be saved to `assets/images/_source`, and then also [converted](image-conversions.html).
+Images used on non-book pages like the landing, contact, about, and search pages should be saved to `assets/images/_source`, and then also [converted](image-conversions.html).
