@@ -8,6 +8,7 @@ const gulp = require('gulp')
 const iconv = require('iconv-lite')
 const rename = require('gulp-rename')
 const fsPath = require('path')
+const fsExtra = require('fs-extra')
 
 // Local helpers
 const { book, language } = require('../helpers/args.js')
@@ -49,7 +50,12 @@ function epubXhtmlLinks (done) {
     ncxFile = '_site/' + book + '/' + language + '/toc.ncx'
   }
 
-  gulp.src([paths.epub.src, opfFile, ncxFile], { base: './' })
+  const pathsToProcess = [paths.epub.src, opfFile]
+  if (fsExtra.existsSync(fsPath.normalize(ncxFile))) {
+    pathsToProcess.push(ncxFile)
+  }
+
+  gulp.src(pathsToProcess, { base: './' })
     .pipe(cheerio({
       run: function ($) {
         let target, asciiTarget, newTarget
