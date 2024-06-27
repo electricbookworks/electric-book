@@ -328,7 +328,8 @@ async function checkAPIContent() {
 
       const apiContentFileExists = await fsExtra.pathExists(fsPath.normalize(apiContentPath))
 
-      if (!apiContentFileExists) {
+      // Don't check for docs files, those are not in the API
+      if (!apiContentFileExists && !searchStore[i].url.startsWith('docs/')) {
         missingFiles = true
         console.log(chalk.red('Warning') + ': API content is missing ' + searchStore[i].url)
       }
