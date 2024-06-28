@@ -226,7 +226,8 @@
         {% endif %}
 
         {% comment %}If a toc.ncx exists, add it{% endcomment %}
-        {% assign ncx-check = site.pages | where_exp: "file", "file.path contains '/toc.ncx'" %}
+        {% capture path-to-epub-ncx %}{{ book-directory }}/{% if is-translation %}{{ book-subdirectory }}/{% endif %}toc.ncx{% endcapture %}
+        {% assign ncx-check = site.pages | where_exp: "file", "file.path contains path-to-epub-ncx" %}
         {% if ncx-check.size > 0 %}
             <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
         {% endif %}

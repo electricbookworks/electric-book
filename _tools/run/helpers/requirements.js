@@ -16,7 +16,7 @@ async function checkYAML () {
       'gulp',
       ['yaml', '--silent']
     )
-    let outcome = await helpers.logProcess(gulpProcess, 'Checking YAML')
+    const outcome = await helpers.logProcess(gulpProcess, 'Checking YAML')
     if (outcome === true) {
       return true
     } else {
@@ -40,11 +40,11 @@ async function checkRequiredPaths () {
   // Get the names of the project images for checking
   try {
     const projectYAMLPath = fsPath.normalize(process.cwd() + '/_data/project.yml')
-    const projectYAML = await yaml.load(fsExtra.readFileSync(projectYAMLPath), 'utf8');
+    const projectYAML = await yaml.load(fsExtra.readFileSync(projectYAMLPath), 'utf8')
     projectLogo = projectYAML.logo
     projectImage = projectYAML.image
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
 
   const globalRequirements = [
@@ -131,7 +131,7 @@ async function checkRequiredPaths () {
     {
       path: 'assets/images/_source/' + projectLogo,
       type: 'optional',
-      description: "A logo for the project and website as a whole."
+      description: 'A logo for the project and website as a whole.'
     },
     {
       path: 'assets/fonts',
@@ -308,8 +308,7 @@ async function checkRequiredPaths () {
 // file is complex to parse, but the files listed are the same as
 // the `store` in search-engine.js, which uses _includes/files-listed.html,
 // which itself parses _data/works for its files lists.
-async function checkAPIContent() {
-
+async function checkAPIContent () {
   console.log('Checking content API...')
 
   const pathToSearchStore = fsPath.normalize(process.cwd() +
@@ -317,18 +316,17 @@ async function checkAPIContent() {
   const searchStoreExists = await fsExtra.pathExists(pathToSearchStore)
 
   if (searchStoreExists) {
-
     const searchStore = await require(pathToSearchStore).store
     let missingFiles = false
     let i
     for (i = 0; i < searchStore.length; i += 1) {
-
-      const apiContentPath = process.cwd() + '/_api/content/'
-          + searchStore[i].url.replace(/\.html$/, '') + '/index.json'
+      const apiContentPath = process.cwd() + '/_api/content/' +
+          searchStore[i].url.replace(/\.html$/, '') + '/index.json'
 
       const apiContentFileExists = await fsExtra.pathExists(fsPath.normalize(apiContentPath))
 
-      if (!apiContentFileExists) {
+      // Don't check for docs files, those are not in the API
+      if (!apiContentFileExists && !searchStore[i].url.startsWith('docs/')) {
         missingFiles = true
         console.log(chalk.red('Warning') + ': API content is missing ' + searchStore[i].url)
       }
@@ -340,8 +338,8 @@ async function checkAPIContent() {
       console.log(chalk.red('\nPlease update the project web index to refresh API content.\n'))
       return false
     } else {
-      console.log('Content API includes all built files. '
-          + 'You may still want to run the index update.\n')
+      console.log('Content API includes all built content files. ' +
+          'You may still want to run the index update to refresh it.\n')
       return true
     }
   } else {
