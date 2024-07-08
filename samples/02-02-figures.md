@@ -4,13 +4,14 @@ image: "fradkin-2.jpg"
 description: "A research paper that includes figures with reference numbers, captions and sources."
 ---
 
-## Figures
-
-Also see the [docs on figures](https://electricbookworks.github.io/electric-book/docs/editing/figures.html).
+## **2.2**{:.chapter-number} Figures
 
 Figures, as we refer to them, are images, or similar visual artifacts (including tables) accompanied by a caption.
 
-To ensure EPUB2 compatibility (which requires valid XHTML 1.1), we don't use the HTML `<figure>` tag, but rather use either:
+Also see the [docs on figures](https://electricbookworks.github.io/electric-book/docs/editing/figures.html).
+{:.sidenote}
+
+To ensure EPUB2 compatibility (which requires valid XHTML 1.1), and to give us more flexibility, we don't use the HTML `<figure>` tag, but rather use either:
 
 * for very simple figures, a paragraph with an `image-with-caption` class that starts with an inline image followed by text; or
 * a div with a `figure` class containing both an image and its caption, created with our `figure` include.

@@ -19,6 +19,9 @@ $web-openers: true !default;
 
     .opener-image-wrapper {
 
+        // Avoids white space after image
+        line-height: 0;
+
         .opener-image {
             height: $opener-image-height;
             width: 100%;
