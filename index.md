@@ -5,14 +5,13 @@ title: The Electric Book template
 style: home
 opener-image: banner-image.jpg
 opener-image-alt-text: "An illustration of an enormous book. It is open, and its pages are each filled with an image of a starry sky. Beside the book, a man stands and looks at the pages. The book is bigger than he is."
+opener-image-position: "0 60%"
 ---
 
-{% include metadata %}
-
 # Book-making with superpowers
-{:.no_toc}
 
-The Electric Book template produces **web books, ebooks, and print books from a single content source.** It is [packed with features for professional book production](#features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. {% if  output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
+The Electric Book template is a code framework for producing **web books, ebooks, and print books from a single content source.** It is [packed with features for professional book production](#features), and lets team members collaborate on projects remotely. You're looking at the default website it generates. {% if  output-docs == true %}[Read the docs]({{ site.baseurl }}/docs/){:.button}{% endif %}
+
 
 <div class="feature-boxes">
 
@@ -24,6 +23,7 @@ The Electric Book template produces **web books, ebooks, and print books from a 
 {% include feature-box
    text="Learn from [a book of examples](samples/index.html), with a partial [translation](samples/fr/)."
    image="cover.jpg"
+   image-position="0 35%"
 %}
 
 {% if site.output == "web" and output-docs == true %}
@@ -31,6 +31,7 @@ The Electric Book template produces **web books, ebooks, and print books from a 
 {% include feature-box
    text="The template's [documentation](docs/) explains how its features work."
    image="banner-image.jpg"
+   image-position="0 65%"
 %}
 
 {% endif %}
@@ -42,7 +43,6 @@ You'll find [the open-source repository on GitHub](https://github.com/electricbo
 <div class="color-panel background-000 text-fff links-ccc" markdown="1">
 
 ## Skills required
-{:.no_toc}
 
 To make books this way, you need some web-development know-how. You'll edit content in markdown with Liquid template tags; edit data in YAML files; commit your changes with Git; enter commands at the command line; and build and serve a static website. Design is done in Sass. Many features are written in Javascript.
 
