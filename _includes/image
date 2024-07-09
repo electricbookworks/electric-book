@@ -73,18 +73,22 @@ is not available in web output {% endcomment %}
 
         {% if site.output == "web" %}
             {% unless image-file-extension == "svg" %}
-            sizes="auto"
             srcset="{{ images-for-image-include }}/{{ image-without-file-extension }}-320.{{ image-file-extension }} 320w,
-            {{ images-for-image-include }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
-            {{ images-for-image-include }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
-            {{ images-for-image-include }}/{{ image-without-file-extension }}-2048.{{ image-file-extension }} 2048w"
+                    {{ images-for-image-include }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
+                    {{ images-for-image-include }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
+                    {{ images-for-image-include }}/{{ image-without-file-extension }}-2048.{{ image-file-extension }} 2048w"
+            sizes="(max-width: 320px) 320px,
+                   (min-width: 320px) and (max-width: 640px) 640px,
+                   (min-width: 640px) and (max-width: 1024px) 1024px,
+                   (min-width: 1280px) 1280px, 100vw"
             {% endunless %}
         {% endif %}
 
         class="{% if include.class %}{{ include.class }}{% endif %}{% if image-file-extension == 'svg' %} inject-svg{% endif %}"
         {% if include.id %} id="{{ include.id }}"{% endif %}
         {% if image-alt and image-alt !="" %} alt="{{ image-alt }}"{% endif %}
-        {% if image-title and image-title != "" %} title="{{ image-title }}"{% endif %} />
+        {% if image-title and image-title != "" %} title="{{ image-title }}"{% endif %}
+        {% if include.position and include.position != "" %}style="object-position: {{ include.position }}"{% endif %} />
 
 </noscript>
 {% endif %}
@@ -94,11 +98,14 @@ is not available in web output {% endcomment %}
     {% if site.output == "web" %}
         data-src="{{ images-for-image-include }}/{{ image }}"
         {% unless image-file-extension == "svg" %}
-            sizes="auto"
             data-srcset="{{ images-for-image-include }}/{{ image-without-file-extension }}-320.{{ image-file-extension }} 320w,
-            {{ images-for-image-include }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
-            {{ images-for-image-include }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
-            {{ images-for-image-include }}/{{ image-without-file-extension }}-2048.{{ image-file-extension }} 2048w"
+                         {{ images-for-image-include }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
+                         {{ images-for-image-include }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
+                         {{ images-for-image-include }}/{{ image-without-file-extension }}-2048.{{ image-file-extension }} 2048w"
+            sizes="(max-width: 320px) 320px,
+                   (min-width: 320px) and (max-width: 640px) 640px,
+                   (min-width: 640px) and (max-width: 1024px) 1024px,
+                   (min-width: 1280px) 1280px, 100vw"
         {% endunless %}
     {% else %}
         src="{{ images-for-image-include }}/{{ image }}"
@@ -107,6 +114,7 @@ is not available in web output {% endcomment %}
     class="{% if include.class %}{{ include.class }}{% endif %}{% if image-file-extension == 'svg' %} inject-svg{% endif %}"
     {% if include.id %} id="{{ include.id }}"{% endif %}
     {% if image-alt and image-alt !="" %} alt="{{ image-alt }}"{% endif %}
-    {% if image-title and image-title != "" %} title="{{ image-title }}"{% endif %} />
+    {% if image-title and image-title != "" %} title="{{ image-title }}"{% endif %}
+    {% if include.position and include.position != "" %}style="object-position: {{ include.position }}"{% endif %} />
 
 {% endcapture %}{{ image-tag | strip_newlines | strip }}
