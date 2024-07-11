@@ -103,7 +103,10 @@ because https://github.com/jekyll/jekyll/issues/2248.
                                     {{ images }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
                                     {{ images }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
                                     {{ images }}/{{ image-without-file-extension }}.{{ image-file-extension }} 1280w"
-                            sizes="(min-width: 600px) 1300px, 100vw"
+                            sizes="(max-width: 320px) 320px,
+                                   (min-width: 320px) and (max-width: 640px) 640px,
+                                   (min-width: 640px) and (max-width: 1024px) 1024px,
+                                   (min-width: 1280px) 1280px, 100vw"
                         {% endunless %}
 
                         title="{% if title-array.size > 0 %}{{ title-array[title-counter] | markdownify | strip_html | strip }}{% endif %}"
@@ -116,10 +119,13 @@ because https://github.com/jekyll/jekyll/issues/2248.
 
                     {% unless image-file-extension == 'svg' %}
                         data-srcset="{{ images }}/{{ image-without-file-extension }}-320.{{ image-file-extension }} 320w,
-                                    {{ images }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
-                                    {{ images }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
-                                    {{ images }}/{{ image-without-file-extension }}.{{ image-file-extension }} 1280w"
-                        sizes="auto"
+                                     {{ images }}/{{ image-without-file-extension }}-640.{{ image-file-extension }} 640w,
+                                     {{ images }}/{{ image-without-file-extension }}-1024.{{ image-file-extension }} 1024w,
+                                     {{ images }}/{{ image-without-file-extension }}.{{ image-file-extension }} 1280w"
+                        sizes="(max-width: 320px) 320px,
+                               (min-width: 320px) and (max-width: 640px) 640px,
+                               (min-width: 640px) and (max-width: 1024px) 1024px,
+                               (min-width: 1280px) 1280px, 100vw"
                     {% endunless %}
 
                     title="{% if title-array.size > 0 %}{{ title-array[title-counter] | markdownify | strip_html | strip }}{% endif %}"
