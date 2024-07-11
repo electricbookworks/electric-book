@@ -72,6 +72,13 @@ const options = {
     defaultDescription: 'false',
     type: 'boolean'
   },
+  cors: {
+    description: 'Enable CORS when serving with Jekyll',
+    alias: 's',
+    default: false,
+    defaultDescription: 'false',
+    type: 'boolean'
+  },
   epubcheck: {
     description: 'Local path to folder containing epubcheck.jar (UNIX only)',
     alias: 'e',
