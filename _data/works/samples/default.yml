@@ -227,10 +227,10 @@ products:
         children:
           - label: "Plain images"
             file: "02-01-plain-images"
-            id: "plain-images"
+            id: "21-plain-images"
           - label: "Figures"
             file: "02-02-figures"
-            id: "figures"
+            id: "22-figures"
       - label: "Part 3: Code and mathematics"
         children:
           - label: "Code"
@@ -422,10 +422,10 @@ products:
         children:
           - label: "Plain images"
             file: "02-01-plain-images"
-            id: "plain-images"
+            id: "21-plain-images"
           - label: "Figures"
             file: "02-02-figures"
-            id: "figures"
+            id: "22-figures"
       - label: "Part 3: Code and mathematics"
         children:
           - label: "Code"

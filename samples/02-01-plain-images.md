@@ -1,16 +1,21 @@
 ---
 title: "Plain images"
 image: "count-of-monte-christo-1.jpg"
+image-position: "top"
 description: "A chapter from *The Count of Monte Christo* interspersed with simple images."
+opener-image: "count-of-monte-christo-1.jpg"
+opener-image-alt-text: "An illustration of Edmond Dantés standing on a ship, from the original edition of The Count of Monte Christo. He is well dressed and carries a walking stick."
+opener-image-position: "top"
 ---
 
 {% include metadata %}
 
-## Plain images
+## **2.1**{:.chapter-number} Plain images
+
+For examples of plain images, here's the first chapter of [*The Count of Monte Christo* by Alexandre Dumas](https://www.gutenberg.org/files/1184/1184-h/1184-h.htm){:#count-2}. This and the next chapter also include a chapter number, to show how that is marked up and renders in the EBT.
 
 Also see the docs on [including images in content](https://electricbookworks.github.io/electric-book/docs/editing/images.html) and [adding them to your project](https://electricbookworks.github.io/electric-book/docs/images/adding-image-files.html).
-
-For examples of plain images, here's the first chapter of [*The Count of Monte Christo* by Alexandre Dumas](https://www.gutenberg.org/files/1184/1184-h/1184-h.htm){:#count-2}.
+{:.sidenote}
 
 First, here is a map of Naples, where the story is set.
 

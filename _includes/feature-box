@@ -7,9 +7,9 @@ will not have any design in PDF or epub books. {% endcomment %}
     {% if include.image and include.image != "" %}
         <div class="feature-box-image-wrapper">
             {% if is-book-directory %}
-                {% include image file=include.image alt=include.image-alt-text %}
+                {% include image file=include.image alt=include.image-alt-text position=include.image-position %}
             {% else %}
-                {% include image file=include.image folder="assets" alt=include.image-alt-text %}
+                {% include image file=include.image folder="assets" alt=include.image-alt-text position=include.image-position %}
             {% endif %}
         </div>
     {% endif %}

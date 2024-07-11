@@ -74,6 +74,7 @@ $web-masthead: true !default;
                     align-items: center;
                     display: inline-flex;
                     margin: 0 0.25em 0 0;
+                    min-height: $masthead-height - (0.5rem * 2);
 
                     // The divider between project and book title
                     // Should not show if there is only one work,

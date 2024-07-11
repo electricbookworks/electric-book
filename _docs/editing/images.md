@@ -25,10 +25,17 @@ Instead, to get responsive images, use this image tag:
 
 where `foobar.jpg` is the original filename of the image.
 
-If necessary, you can add `class`, `id` and/or `alt` attributes to the image, too:
+If necessary, you can add extra attributes to the image:
+
+- `class` applies a CSS class to the image
+- `id` applies an HTML ID to the element
+- `alt` adds alt text, which is important for accessibility and SEO
+- `position` defines where to focus on the image when it is cropped (follows [CSS object-position](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) syntax).
+
+For example:
 
 ``` liquid
-{% include image file="foobar.jpg" class="example" alt="An example image." id="anyuniqueid" %}
+{% include image file="foobar.jpg" class="example" alt="An example image." id="anyuniqueid" position="top" %}
 ```
 
 For accessibility, it's important to always include a description of the image as `alt` text, unless the image is purely decorative.

@@ -18,7 +18,7 @@
                         {% if visual-toc-page-object.image and visual-toc-page-object.image != "" %}
                             <div class="visual-toc-chapter-image">
                                 <a href="{{ visual-toc-path-to-file }}.html">
-                                    {% include image file=visual-toc-page-object.image folder=include.book %}
+                                    {% include image file=visual-toc-page-object.image folder=include.book position=visual-toc-page-object.image-position %}
                                 </a>
                             </div>
                         {% endif %}
