@@ -192,6 +192,11 @@ function configString (argv) {
     string += ',_configs/_config.docx.yml'
   }
 
+  // Set webrick headers if --cors
+  if (argv.cors) {
+    string += ',_configs/_config.webrick.cors.yml'
+  }
+
   return string
 }
 

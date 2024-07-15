@@ -40,7 +40,9 @@ Sometimes, you want to test a new image (e.g. an SVG you're editing iteratively)
 
 So you need to load the testing version temporarily, to see it in place, while you work on it.
 
-To do this, you can serve your testing image(s) and enter their location in `_data/settings.yml`. Here is a recommended method for doing this:
+To do this, you can serve your testing image(s) and enter their location in `_data/settings.yml`. Here is a recommended method for doing this.
+
+#### Preparing your testing image(s)
 
 1. Create a fresh copy of the Electric Book template for testing with. Unless your book is in its repo's `book` folder, rename the `book` folder in the testing template to match the name of your book.
 1. Let's say it's called `spacepotatoes`. Put *only* your testing image in `spacepotatoes/images/_source`.
@@ -48,26 +50,43 @@ To do this, you can serve your testing image(s) and enter their location in `_da
 
    Note: If your project uses special image settings in `_data/images.yml`, copy that file to `_data/images.yml` in your testing repo before processing your source images.
 
-Now you can serve your testing image(s) by running this command in the root folder of the testing template (then entering `y` if prompted):
+#### Serving your testing image(s)
 
-```sh
-npx http-server --cors
-```
+Now you can serve your testing image(s). You have two options.
 
-That will run a website version of your testing template, and its URL will appear in the terminal. Copy the URL.
+- Run this command in the root folder of the testing template (then entering `y` if prompted):
 
-Set that URL as the `testing` url in `settings.yml`:
+  ```sh
+  npx http-server --cors
+  ```
 
-``` yaml
-remote-media:
-  # live: ""
-  # development: ""
-  testing: "http://127.0.0.1:8080"
-```
+  That will run a website version of your testing template, and its URL will appear in the terminal. Copy the URL and paste it in as the `testing` url in `settings.yml`. E.g.:
+
+  ``` yaml
+  remote-media:
+    # live: ""
+    # development: ""
+    testing: "http://127.0.0.1:8080"
+  ```
+
+- Run the usual EBT output script with the `--cors` option:
+
+  ```
+  npm run eb -- output --cors
+  ```
+
+  That will run a full Jekyll build of your testing template, and its URL will appear in the terminal. Copy the URL and paste it *including the repo's base URL* (e.g. `/electric-book`) in as the `testing` url in `settings.yml`. E.g.:
+
+  ``` yaml
+  remote-media:
+    # live: ""
+    # development: ""
+    testing: "http://127.0.0.1:8080/electric-book"
+  ```
 
 Now, when you build your book as a website or PDF, you'll see the testing image.
 
-Some notes on constraints and troubleshooting:
+#### Tips and troubleshooting
 
 - Testing images work in web and PDF outputs only. For PDF testing images to work, the `remote-media > testing` location should be a full URL, not local file path. That is, it must start with `http`. This is because the script that loads testing images needs to check over HTTP whether a testing image exists.
 - Testing images do not work with epub or app outputs. Those outputs require images to exist locally (i.e. in the content repo) when building. Instead, you can temporarily replace the relevant images with their testing versions before you generate an epub or app.
