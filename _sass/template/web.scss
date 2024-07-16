@@ -183,6 +183,8 @@ $nav-bar-text-size: 1rem !default;
 // Does the nav list fully expand, or collapse until mouseover?
 $nav-bar-item-collapse: false !default;
 
+$nav-button-font: $font-display-secondary !default;
+$nav-bar-font: $font-display-secondary !default;
 $nav-bar-close: "\00D7" !default; // &times; ×
 $nav-bar-children-prompt: "+" !default;
 $nav-bar-children-prompt-hide: "\2212" !default; // \2212 is an actual minus sign

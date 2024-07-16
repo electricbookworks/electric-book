@@ -35,7 +35,7 @@ $nav-bar-back-button-hide: false !default;
     }
 
     [href="#nav"] {
-        font-family: $font-text-secondary;
+        font-family: $nav-button-font;
         font-size: inherit;
         color: $nav-bar-label-color;
         background-color: $nav-bar-label-background-color;
@@ -81,7 +81,7 @@ $nav-bar-back-button-hide: false !default;
     }
 
     #nav {
-        font-family: $font-text-secondary;
+        font-family: $nav-bar-font;
         font-size: $nav-bar-text-size;
         width: 100%;
         height: 100%;
