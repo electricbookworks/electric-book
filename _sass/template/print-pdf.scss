@@ -55,7 +55,11 @@ $bleed-print: 5mm !default;
 $trim: 10mm !default;
 $crop-marks: crop !default; // crop | crop cross | cross | none
 $crop-marks-offset: 8mm !default;
+
+// Page information in the footer or print PDFs
 $page-info-offset: 10mm !default;
+
+// Columns
 $columns-default: 1 !default;
 
 // Some printers like CMYK-registration marks on PDFs.
@@ -193,11 +197,11 @@ $start-on-recto-or-verso: null !default;
 // Set it in multiples of $line-height-default to preserve your baseline grid.
 $start-depth: $line-height-default * 15 !default;
 
-// Set the height of the opener image
-$opener-image-height: $page-height * 0.4 !default;
-
 // Which page styles use this start-depth?
 $start-depth-page-styles: halftitle-page, half-title-page, title-page, dedication-page, epigraph-page, part-page !default;
+
+// Set the height of the opener image
+$opener-image-height: $page-height * 0.4 !default;
 
 // Style of page numbers on frontmatter pages
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
@@ -420,7 +424,7 @@ $pdf-slides: true !default;
 $pdf-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $pdf-margin-box-content: true !default; // Sets content for headers and footers
 $pdf-margin-box-style: true !default; // Sets styling for headers and footers
-$pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
+$pdf-page-setup-ingram: false !default; // Removes crop marks and sets trim for Ingram POD
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
@@ -470,7 +474,7 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 @import "template/partials/pdf-hide-non-printing"; // Hides anything .non-printing
 @import "template/partials/pdf-hyphenation"; // Sets hyphenation dictionary
 @import "template/partials/pdf-baseline-grid"; // Shows a baseline grid
-@import "template/partials/pdf-page-setup-ingram"; // Removes crop marks and sets 3mm trim for Ingram POD
+@import "template/partials/pdf-page-setup-ingram"; // Removes crop marks and sets trim for Ingram POD
 
 // Book features
 @import "template/partials/pdf-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
