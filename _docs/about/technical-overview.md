@@ -26,7 +26,7 @@ The template is set up as a [Jekyll](https://jekyllrb.com/) project, with lots o
 See ['Structure'](#structure) below for detail on the template's structure, and [Jekyll's docs on structure](https://jekyllrb.com/docs/structure/). In short:
 
 - **Content:** Each book in your project has its own folder. You store your markdown content in a book's folder, and images in its `images/_source` folder.
-- **Design:** You define designs for your project in `_sass/theme`, and book-specific design features in a book's `styles` folder.
+- **Design:** You define designs for your project in `_sass/custom`, and book-specific design features in a book's `styles` folder.
 - **Metadata:** You store project settings in `_data/settings.yml`, project info in `_data/project.yml`, and book metadata in `_data/works`.
 
 
@@ -49,7 +49,7 @@ Here is an explanation of folders and files in the template.
 * `_includes`: HTML templates that Jekyll uses to build your books. You will rarely change anything here. You may need to add new templates here for custom book features.
 * `_layouts`: templates that Jekyll uses to structure pages. You shouldn't ever have to change these.
 * `_output`: the folder where our output scripts will save your PDFs and epubs.
-* `_sass`: a folder that stores the default styles for your books. You should only edit the files in `_sass/theme`.
+* `_sass`: a folder that stores the default styles for your books. You should only edit the files in `_sass/custom`.
 * `_site`: where Jekyll and our output scripts will generate the web and app versions of your books.
 * `_tools`: utilities required for output. For instance, colour profiles for PDFs and image conversions. You shouldn't have to change these. You might add your own colour profiles to `_tools/profiles` for specialised projects.
 * `assets`: a folder of Javascript, font files and images that your whole project might use.

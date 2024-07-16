@@ -160,7 +160,7 @@ $pdf-font-faces: true !default;
 
     // Example, used in Samples book, for defining
     // the alternative name for a font used in SVGs.
-    // This is usually done in a project's _sass/theme partials.
+    // This is usually done in a project's _sass/custom partials.
     @font-face {
         font-family: "SourceSansPro-Regular";
         src: url(#{$path-to-root-directory}/assets/fonts/SourceSansPro-Regular.ttf);

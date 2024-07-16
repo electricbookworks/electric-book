@@ -9,7 +9,7 @@
 // This file includes almost all of the variables
 // you might need to set for your project.
 // Then set your own values and create styles and
-// new Sass partials for your project in _sass/theme.
+// new Sass partials for your project in _sass/custom.
 
 // -------------
 // Set variables
@@ -18,10 +18,10 @@
 // Provide a variable for site output
 $output-format: "print-pdf" !default;
 
-// Theme variables
-@import "theme/colors";
+// Custom variables
+@import "custom/colors";
 @import "template/colors";
-@import "theme/pdf-variables";
+@import "custom/pdf-variables";
 
 // Edition suffix: identifies this edition in page-layout-utilities classes (in _pdf-layout-utilities.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
@@ -415,8 +415,8 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
-// Theme imports
-@import "theme/pdf-imports";
+// Custom imports
+@import "custom/pdf-imports";
 
 // Default font-face rules added by pdf-font-faces partial below.
 // Or add @font-face rules for fonts you specify here.
@@ -425,9 +425,9 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 // `src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Regular.ttf);`
 // For snippets, try https://github.com/arthurattwell/font-faces
 
-// ---------------------
-// Import theme partials
-// ---------------------
+// ------------------------
+// Import template partials
+// ------------------------
 
 // Reset PrinceXML CSS
 @import "template/partials/pdf-css-reset";
@@ -504,5 +504,5 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 // Resets p indents, margins after other elements. Must be last @import in list.
 @import "template/partials/pdf-reset-sequences";
 
-// Theme rules
-@import "theme/pdf-rules";
+// Custom rules
+@import "custom/pdf-rules";

@@ -20,10 +20,10 @@
 // Provide a variable for site output
 $output-format: "screen-pdf" !default;
 
-// Theme variables
-@import "theme/colors";
+// Custom variables
+@import "custom/colors";
 @import "template/colors";
-@import "theme/pdf-variables";
+@import "custom/pdf-variables";
 
 // Edition suffix: identifies this edition in page-layout-utilities classes (in _pdf-layout-utilities.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
@@ -55,7 +55,7 @@ $pdf-profile: "PDF/A-3b" !default;
 $color-profile: "sRGB_v4_ICC_preference_displayclass.icc" !default;
 
 // -------------
-// Master theme
+// Master styles
 // -------------
 
 // By default, we assume screen-PDFs look exactly like print-PDF versions,

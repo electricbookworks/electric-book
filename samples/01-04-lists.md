@@ -72,7 +72,7 @@ Let's ruin some more of that fine book to show nested lists:
 
 ### Chapter contents
 
-In kramdown, you can get a list of all the headings in a file by adding the tag `{:toc}` after a single list item. They automatically get an id of `markdown-toc`. How does this theme handle those in-chapter tables of contents?
+In kramdown, you can get a list of all the headings in a file by adding the tag `{:toc}` after a single list item. They automatically get an id of `markdown-toc`. How does this design handle those in-chapter tables of contents?
 
 -	hello
 {:toc}
@@ -81,7 +81,7 @@ You can exclude a heading from that in-chapter TOC by giving it a `no_toc` class
 
 ### Bibliographies
 
-In book-publishing convention, lists of references – known as bibliographies – usually have a particular layout. Most often, they have no marker (bullet or number) and a hanging indent, making it easy to scan their initial words, which are usually the surnames of the authors. We mark up bibliographies by giving a list the class `bibliography`. How does this theme handle a bibliography? Here are Maria Popova's [ten essential books on typography](https://www.brainpickings.org/2011/08/01/10-essential-books-on-typography/).
+In book-publishing convention, lists of references – known as bibliographies – usually have a particular layout. Most often, they have no marker (bullet or number) and a hanging indent, making it easy to scan their initial words, which are usually the surnames of the authors. We mark up bibliographies by giving a list the class `bibliography`. How does this design handle a bibliography? Here are Maria Popova's [ten essential books on typography](https://www.brainpickings.org/2011/08/01/10-essential-books-on-typography/).
 
 -	Ruder, Emil: *Typographie: A Manual of Design*
 -	Rjeily, Rana Abou: *Cultural Connectives*

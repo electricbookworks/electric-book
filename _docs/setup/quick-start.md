@@ -23,6 +23,6 @@ This quick setup assumes you already have [Jekyll](https://jekyllrb.com/), [Node
 
 2. Open `_data/works/book/default.yml` and replace the sample book information there with your project and book information.
 3. In the `book` folder, overwrite the template's markdown files with your own.
-4. To change the design, edit the `.scss` files for each output format: set project-wide styles in `_sass`, and book-specific styles in `book/styles`. We suggest making all modifications in `_sass/theme`.
+4. To change the design, edit the `.scss` files for each output format: set project-wide styles in `_sass`, and book-specific styles in `book/styles`. We suggest making all modifications in `_sass/custom`.
 
 There is much more detail in [the docs](../).

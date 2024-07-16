@@ -61,7 +61,7 @@ The images used in feature boxes should be in `assets/images/_source` and [conve
 
 It can be useful to set a section of your landing page off from the rest by putting it in a full-screen-width panel with a background colour.
 
-While you could write theme-specific CSS to handle this, the template includes an efficient way to create this effect without writing any code.
+While you could write project-specific CSS to handle this, the template includes an efficient way to create this effect without writing any code.
 
 Wrap the content of your panel in a `div` with the class `color-panel`. You then set the colours of the panel, its text, and its links with additional classes. These additional classes include the hex values of those colours in their names.
 

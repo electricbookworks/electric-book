@@ -20,10 +20,10 @@
 // Provide a variable for site output
 $output-format: "web" !default;
 
-// Theme variables
-@import "theme/colors";
+// Custom variables
+@import "custom/colors";
 @import "template/colors";
-@import "theme/web-variables";
+@import "custom/web-variables";
 
 // Edition suffix: identifies this edition in certain classes
 // (e.g. in _epub-layout-utilities.scss).
@@ -323,13 +323,13 @@ $web-reset-sequences: true !default;
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
-// Theme imports
-@import "theme/web-imports";
+// Custom imports
+@import "custom/web-imports";
 
 // Import fonts from book-specific CSS.
 
 // ---------------------
-// Theme modules
+// Template modules
 // ---------------------
 
 // Reset browser CSS as best we can
@@ -412,5 +412,5 @@ $web-reset-sequences: true !default;
 // Logic (if this then that)
 @import "template/partials/web-reset-sequences"; // This should stay last in the @import list
 
-// Theme rules
-@import "theme/web-rules";
+// Custom rules
+@import "custom/web-rules";

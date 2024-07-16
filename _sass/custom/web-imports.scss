@@ -2,12 +2,9 @@
 // like Google Fonts, this is the place to do that.
 // -----------------------------------------------
 
+// Import a pre-designed base.
+@import "base/web-imports";
 
 // Example font-face import. Leave or replace with your own.
 // Use the imported font by adding and editing the $font*
 // variables in web-variables.
-
-// Fonts should not be @imported in apps
-@if $output-format == "web" {
-    @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-}

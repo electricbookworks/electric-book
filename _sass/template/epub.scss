@@ -20,10 +20,10 @@
 // Provide a variable for site output
 $output-format: "epub" !default;
 
-// Theme variables
-@import "theme/colors";
+// Custom variables
+@import "custom/colors";
 @import "colors";
-@import "theme/epub-variables";
+@import "custom/epub-variables";
 
 // Edition suffix: identifies this edition in certain classes
 // (e.g. in _epub-layout-utilities.scss).
@@ -49,7 +49,7 @@ $font-code: monospace !default;
 // Set font size and line-height in ems or px.
 // These values, especially $line-height-default,
 // are used to compute vertical rhythm
-// for many features in this theme. So do not use a unitless value
+// for many features in this design. So do not use a unitless value
 // for line-height, and don't use percentages,
 // which will break layouts computed by multiplying this value.
 $font-size-default: 1rem !default;
@@ -214,11 +214,11 @@ $epub-reset-sequences: true !default;
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
-// Theme imports
-@import "theme/epub-imports";
+// Custom imports
+@import "custom/epub-imports";
 
 // ---------------------
-// Theme modules
+// Template modules
 // ---------------------
 
 // Reset ereader CSS as best we can
@@ -278,5 +278,5 @@ $epub-reset-sequences: true !default;
 // Logic (if this then that)
 @import "template/partials/epub-reset-sequences";
 
-// Theme rules
-@import "theme/epub-rules";
+// Custom rules
+@import "custom/epub-rules";

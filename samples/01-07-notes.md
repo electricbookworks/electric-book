@@ -4,7 +4,7 @@ title: "Notes"
 
 ## Notes
 
-In Electric Book themes, we aim to support four kinds of notes: endnotes, footnotes, sidenotes, and (what we call) footer notes.
+In Electric Book designs, we aim to support four kinds of notes: endnotes, footnotes, sidenotes, and (what we call) footer notes.
 
 - **Endnotes** appear at the end of a document (web page or book chapter). In technical markdown terms, these are called footnotes, because on the web they appear at the bottom of a web page. To create them in markdown, follow the [kramdown syntax for footnotes](https://kramdown.gettalong.org/syntax.html#footnotes):
 	-   put a `[^1]` where the footnote reference should appear (the `1` there can be any numbers or letters, and should be different for each footnote in a document);
