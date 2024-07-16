@@ -40,7 +40,18 @@ $margin-top: 60pt !default; // set in points to align with baseline grid
 $margin-bottom: 60pt !default;
 $margin-outside: 15mm !default;
 $margin-inside: 15mm !default;
-$bleed: 5mm !default;
+
+// Bleed, trim and crops
+// Note that 'bleed-area' is the space added around the page for colour
+// to extend into for print-trimming safety. The 'bleed-print' is used to specify
+// how far images and other colour elements should extend into that area.
+// Screen PDF does not require bleed-area, but to match visually both screen-PDF
+// and print-PDF should share the same 'bleed-print' value. Otherwise images will
+// appear to crop differently between the two outputs.
+// 'Trim' is the total area outside the page edges, including bleed.
+// The trim area accommodates registration marks.
+$bleed-area: 5mm !default;
+$bleed-print: 5mm !default;
 $trim: 10mm !default;
 $crop-marks: crop !default; // crop | crop cross | cross | none
 $crop-marks-offset: 8mm !default;

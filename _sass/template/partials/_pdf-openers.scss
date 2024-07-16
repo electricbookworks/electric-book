@@ -13,10 +13,10 @@ $pdf-openers: true !default;
     }
 
     .opener-image-wrapper {
-        margin-inside: -($margin-inside);
-        margin-outside: -($margin-outside);
-        margin-top: -($margin-top);
-        width: $page-width;
+        margin-inside: -($margin-inside + $bleed-print);
+        margin-outside: -($margin-outside + $bleed-print);
+        margin-top: -($margin-top + $bleed-print);
+        width: $page-width + ($bleed-print * 2);
 
         .opener-image {
             height: $opener-image-height;
