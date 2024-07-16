@@ -1,24 +1,30 @@
 // Boxes
 
-@mixin box($color: $color-light, $border-color: $color-light) {
-    background-color: $color;
+@mixin box($text-color: inherit, $background-color: $color-light, $border-color: $color-light, $text-color-reversed: white, $background-color-reversed: $color-accent) {
+
+    // Default box does not have a background color
+    background-color: inherit;
+
     border-radius: $box-border-radius;
     box-sizing: border-box;
-    color: inherit;
+    color: $text-color;
     font-weight: inherit;
     font-size: inherit;
     border: $rule-thickness solid $border-color;
     margin: $line-height-default 0;
     padding: ($line-height-default / 2);
+
     & p:last-of-type,
     & ol:last-of-type,
     & ul:last-of-type {
         margin-bottom: 0;
     }
+
     // No text-indent on paragraphs after boxes
     & + p {
         text-indent: 0;
     }
+
     // No margin above the first headings in a box
     h1:first-of-type, 
     h2:first-of-type, 
@@ -28,12 +34,14 @@
     h6:first-of-type {
         margin-top: 0;
     }
+
     li {
         // Paragraphs within list items in a box
         p:last-of-type {
             margin-bottom: 0;
         }
     }
+
     // Definition lists inside a box
     dl {
         &:first-of-type {
@@ -42,6 +50,19 @@
         &:last-of-type {
             margin-bottom: 0;
         }
+    }
+
+    // Different kinds of box
+
+    &.box-shaded {
+        border: $background-color;
+        background-color: $background-color;
+    }
+
+    &.box-reversed {
+        border: $background-color-reversed;
+        background-color: $background-color-reversed;
+        color: $text-color-reversed;
     }
 }
 
@@ -112,7 +133,7 @@ $web-boxes: true !default;
     }
 
     .feature-box {
-        @include box($white, $color-light);
+        @include box();
 
         // border-style: dashed;
         border-color: $color-accent;
@@ -129,6 +150,10 @@ $web-boxes: true !default;
             margin: -1rem auto 0 auto;
             padding: 0.75rem;
             text-align: center;
+
+            a {
+                text-decoration: none;
+            }
 
             img, svg {
                 border-radius: 5rem;
