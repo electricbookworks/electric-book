@@ -86,7 +86,7 @@ is not available in web output {% endcomment %}
 
         class="{% if include.class %}{{ include.class }}{% endif %}{% if image-file-extension == 'svg' %} inject-svg{% endif %}"
         {% if include.id %} id="{{ include.id }}"{% endif %}
-        {% if image-alt and image-alt !="" %} alt="{{ image-alt }}"{% endif %}
+        {% if image-alt and image-alt !="" %} alt="{{ image-alt }}"{% else %} role="presentation"{% endif %}
         {% if image-title and image-title != "" %} title="{{ image-title }}"{% endif %}
         {% if include.position and include.position != "" %}style="object-position: {{ include.position }}"{% endif %} />
 
@@ -113,7 +113,7 @@ is not available in web output {% endcomment %}
 
     class="{% if include.class %}{{ include.class }}{% endif %}{% if image-file-extension == 'svg' %} inject-svg{% endif %}"
     {% if include.id %} id="{{ include.id }}"{% endif %}
-    {% if image-alt and image-alt !="" %} alt="{{ image-alt }}"{% endif %}
+    {% if image-alt and image-alt !="" %} alt="{{ image-alt }}"{% else %} role="presentation"{% endif %}
     {% if image-title and image-title != "" %} title="{{ image-title }}"{% endif %}
     {% if include.position and include.position != "" %}style="object-position: {{ include.position }}"{% endif %} />
 
