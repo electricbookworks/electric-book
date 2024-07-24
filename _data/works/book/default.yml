@@ -96,6 +96,27 @@ products:
     # e.g. Paperback, Digital download, Digital online
     format: "Ebook" # e.g. Paperback, Digital download, Digital online
 
+    # Accessibility metadata to inform users
+    # about the accessibility features in this epub.
+    accessibility:
+
+      # A summary statement, see
+      # https://www.w3.org/TR/epub-a11y-tech-11/#accessibilitySummary
+      summary: "This publication conforms to WCAG 2.0 Level AA."
+
+      # Comma-separate textual, visual, auditory, tactile. See
+      # https://www.w3.org/TR/epub-a11y-tech-11/#accessMode
+      access-mode: textual, visual
+      access-mode-sufficient: textual
+
+      # Comma-separate possible values, see
+      # https://www.w3.org/TR/epub-a11y-tech-11/#accessibilityFeature
+      accessibility-features: tableOfContents
+
+      # Comma-separate possible values, see
+      # https://www.w3.org/TR/epub-a11y-tech-11/#accessibilityHazard
+      accessibility-hazard: unknown
+
   # Details about the screen-PDF version of this work
   screen-pdf:
 
