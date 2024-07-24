@@ -200,6 +200,7 @@ en:
     language-select: "Select language"
   video:
     options-button: "Other video options"
+    play-video: "Play video"
   copy:
     copy: "Copy"
     copied: "Copied"
@@ -322,6 +323,7 @@ fr:
     language-select: "Sélectionnez la langue"
   video:
     options-button: "Autres options vidéo"
+    play-video: "Lire la vidéo"
   copy:
     copy: "Copie"
     copied: "Copié"
@@ -724,6 +726,7 @@ es:
     language-select: "Seleccione idioma"
   video:
     options-button: "Otras opciones de vídeo"
+    play-video: "Reproduce el video"
   copy:
     copy: "Copiar"
     copied: "Copiado"
