@@ -334,6 +334,12 @@ we fall back to the value in the work's default.yml.
     {% capture epub-image %}{{ image }}{% endcapture %}
 {% endif %}
 
+{% if work[work-variant].products.epub.accessibility and work[work-variant].products.epub.accessibility != "" %}
+    {% assign epub-accessibility  = work[work-variant].products.epub.accessibility %}
+{% elsif work.default.products.epub.accessibility and work.default.products.epub.accessibility != "" %}
+    {% assign epub-accessibility = work.default.products.epub.accessibility %}
+{% endif %}
+
 {% if work[work-variant].products.epub.files and work[work-variant].products.epub.files != "" %}
     {% assign epub-file-list = work[work-variant].products.epub.files %}
 {% elsif work.default.products.epub.files and work.default.products.epub.files != "" %}

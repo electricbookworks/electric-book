@@ -80,11 +80,12 @@ function ebSVGInjectImageData (img) {
   // - otherwise use alt text as the title, and omit the desc,
   //   which would simply duplicate the title.
 
-  let title, desc
+  let title, desc, role
 
   // Get a description for the SVG <desc>
   if (img.alt) {
     desc = img.alt
+    role = 'img'
   }
 
   // Get text for the SVG <title>
@@ -96,11 +97,14 @@ function ebSVGInjectImageData (img) {
   } else if (img.alt) {
     title = img.alt
     desc = ''
+  } else {
+    role = 'presentation'
   }
 
   return {
     title,
-    desc
+    desc,
+    role
   }
 }
 
@@ -138,6 +142,22 @@ function ebSVGInjectTitleDesc (svg, imgData) {
     const titleElement = document.createElementNS('http://www.w3.org/2000/svg', 'title')
     titleElement.textContent = imgData.title
     svg.insertAdjacentElement('afterbegin', titleElement)
+  }
+
+  if (imgData.role) {
+    // If the img tag has a role="" attribute,
+    // apply that to the SVG element, too
+    if (!svg.getAttribute('role')) {
+      svg.setAttribute('role', imgData.role)
+
+      // We can't use aria-labelledby=title here, because
+      // we don't have a way to assign an ID to the title
+      // that will definitely be unique in the surrounding document.
+      // So we use aria-label, risking screen-reading duplication.
+      if (imgData.title) {
+        svg.setAttribute('aria-label', imgData.title)
+      }
+    }
   }
 }
 
