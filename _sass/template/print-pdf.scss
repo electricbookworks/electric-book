@@ -67,7 +67,7 @@ $registration-marks: true !default; // occupies left- and right-middle margin bo
 // Note: assume that each named page has different
 // margin-box treatment, and they are not compatible, i.e.
 // you can't use more than one page style for a document.
-$named-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page, cover-page, halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page, contents-page, frontmatter-page, part-page, endmatter-page !default;
+$named-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page, cover-page, halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page, contents-page, part-page !default;
 
 // Page styles, especially for margin boxes.
 $default-page-styles: default-page, chapter-page, frontmatter-page, contents-page, endmatter-page !default;
