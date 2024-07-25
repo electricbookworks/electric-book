@@ -59,9 +59,6 @@ $crop-marks-offset: 8mm !default;
 // Page information in the footer or print PDFs
 $page-info-offset: 10mm !default;
 
-// Columns
-$columns-default: 1 !default;
-
 // Some printers like CMYK-registration marks on PDFs.
 // If you set this to true, don't use 'cross' in $crop-marks.
 $registration-marks: true !default; // occupies left- and right-middle margin boxes
@@ -89,6 +86,12 @@ $top-empty-page-styles: halftitle-page, half-title-page, title-page, previous-pu
 $bottom-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
 $left-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
 $right-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
+
+// How many columns on pages with multiple columns?
+$column-count: 1 !default;
+
+// Which page styles should have these multiple columns?
+$multi-column-pages: default-page, chapter-page, frontmatter-page, endmatter-page !default;
 
 // Optional sidebar setup.
 // Sidebars only work when using Prince v15 or later,
