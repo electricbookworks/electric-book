@@ -105,6 +105,15 @@ $color-notification-low-background: $template-green-light !default;
 $color-notification-medium-background: $template-yellow-light !default;
 $color-notification-high-background: $template-orange-light !default;
 
+// Ability to switch the main colors on specific pages.
+// $color-switched-pages is a comma-separated list of page styles
+// to apply switched colours to, e.g. home, contact-page
+// applied as `style:` in a markdown file's top-of-page YAML.
+$color-background-switched: $color-background !default;
+$color-text-main-switched: $color-text-main !default;
+$color-links-switched: $color-links !default;
+$color-switched-pages: home !default;
+
 // Some features rearrange at certain screen sizes.
 // What are your screen-width break points?
 $break-width-small: 600px !default;
@@ -272,6 +281,7 @@ $web-copyright-page: true !default;
 $web-dedications: true !default;
 $web-epigraphs: true !default;
 $web-toc: true !default;
+$web-color-switches: true !default;
 
 // Book-feature classes
 $web-bibliographies: true !default;
@@ -367,6 +377,7 @@ $web-reset-sequences: true !default;
 @import "template/partials/web-dedications";
 @import "template/partials/web-epigraphs";
 @import "template/partials/web-toc";
+@import "template/partials/web-color-switches";
 
 // Book-feature classes
 @import "template/partials/web-bibliographies";
