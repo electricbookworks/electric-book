@@ -993,7 +993,7 @@ function ebBookmarksToggleModal (modal) {
 // Open the modal when the bookmarks button is clicked
 function ebBookmarksOpenOnClick () {
   'use strict'
-  const button = document.querySelector('.bookmarks > .bookmark-icon')
+  const button = document.querySelector('.bookmarks button .bookmark-icon')
   if (button !== null) {
     button.addEventListener('click', function () {
       ebBookmarksToggleModal()

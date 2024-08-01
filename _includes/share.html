@@ -18,12 +18,12 @@ and clean them for use in URLs. {% endcomment %}
 
     <div class="share">
 
-        <div class="share-button">
+        <button class="share-button" aria-label="{{ locale.share.share }}">
             {% include icons/share-icon.svg %}
-        </div>
+        </button>
 
         {% comment %} Hidden till JS shows it. {% endcomment %}
-        <div id="share-links" class="share-links visuallyhidden">
+        <div id="share-links" class="share-links visuallyhidden" aria-hidden="true">
 
             <span class="share-links-close">Close</span>
 

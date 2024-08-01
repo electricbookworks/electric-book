@@ -1,6 +1,8 @@
 <div class="bookmarks visuallyhidden" title="{{ locale.bookmarks.bookmarks }}">
 
-    {% include icons/bookmark-icon.svg %}
+    <button aria-label="{{ locale.bookmarks.bookmark }}">
+        {% include icons/bookmark-icon.svg %}
+    </button>
 
     {% comment %} JS will insert bookmarks here {% endcomment %}
     <div class="bookmarks-modal" id="bookmarks-modal">

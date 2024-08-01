@@ -1,5 +1,5 @@
 <svg version="1.1" class="share-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 19 19.1" xml:space="preserve">
+	 viewBox="0 0 19 19.1" xml:space="preserve" title="{{ locale.share.share }}" aria-label="{{ locale.share.share }}">
 	<path d="M3.3,6.7C1.7,6.7,0.5,8,0.5,9.5s1.2,2.8,2.8,2.8S6,11,6,9.5S4.8,6.7,3.3,6.7z M15.7,0.5c-1.5,0-2.8,1.2-2.8,2.8
 	s1.2,2.8,2.8,2.8c1.5,0,2.8-1.2,2.8-2.8S17.3,0.5,15.7,0.5z M15.7,13c-1.5,0-2.8,1.2-2.8,2.8s1.2,2.8,2.8,2.8c1.5,0,2.8-1.2,2.8-2.8
 	S17.3,13,15.7,13z"/>

@@ -33,7 +33,7 @@ $white-mid: null;
 @if $output-format != "print-pdf" {
 
     // Colours
-    $template-green: #009E7F !default;
+    $template-green: #59D6B4 !default;
     $template-blue: #5f738c !default;
     $template-yellow: #ffd54d !default;
     $template-orange: #ff7c4d !default;
@@ -54,7 +54,7 @@ $white-mid: null;
 } @else {
 
     // Colours
-    $template-green: cmyk(62%, 0%, 12%, 38%) !default;
+    $template-green: cmyk(58%, 0%, 16%, 16%) !default;
     $template-blue: cmyk(18%, 10%, 0%, 45%)  !default;
     $template-yellow: cmyk(0%, 16%, 70%, 0% ) !default;
     $template-orange: cmyk(0%, 51%, 70%, 0% ) !default;

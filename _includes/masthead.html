@@ -1,7 +1,7 @@
 <div class="masthead">
 
     <div class="masthead-logo">
-        <a href="{% if page.masthead-logo-link %}{{ page.masthead-logo-link }}{% else %}{{ path-to-root-directory }}{% endif %}">
+        <a href="{% if page.masthead-logo-link %}{{ page.masthead-logo-link }}{% else %}{{ path-to-root-directory }}{% endif %}" aria-label="{% if locale.project.name and locale.project.name != "" %}{{ locale.project.name }}{% else %}{{ project-name }}{% endif %}">
             {% include image file=project-logo folder="assets" %}
         </a>
     </div>

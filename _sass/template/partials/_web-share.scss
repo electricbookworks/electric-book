@@ -89,7 +89,13 @@ $share-icon-color: $color-accent !default;
     }
 
     .share-button {
+        background-color: transparent;
         cursor: pointer;
+        padding: 0;
+
+        &:hover {
+            background-color: transparent;
+        }
 
         svg.share-icon {
             width: 1rem;

@@ -73,7 +73,7 @@ To see how these examples look in other formats, [download PDF and epub versions
 " %}
 
 
-<div class="color-panel text-fff links-ccc" markdown="1">
+<div class="color-panel text-000 links-ccc" markdown="1">
 
 ## How to start now
 

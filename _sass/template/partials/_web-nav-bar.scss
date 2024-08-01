@@ -287,7 +287,7 @@ $nav-bar-back-button-hide: false !default;
         right: 0;
         background-color: transparent;
         border: none;
-        color: $nav-bar-child-text-hover-color;
+        color: initial;
         font-size: 1.25em;
         padding: 0.333em 0.5em; // centers expand buttons vertically
         margin: 0 0 0 -0.5rem;
@@ -304,7 +304,7 @@ $nav-bar-back-button-hide: false !default;
         }
 
         &:after {
-            color: $nav-bar-children-prompt-color;
+            color: $nav-bar-close-color;
         }
 
         &.show-children {
@@ -329,9 +329,11 @@ $nav-bar-back-button-hide: false !default;
 
     [data-toggle-nav] {
         background-color: transparent;
+        color: initial;
         right: 0;
 
         &:after {
+            color: $nav-bar-children-prompt-color;
             content: $nav-bar-children-prompt;
         }
 
