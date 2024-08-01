@@ -484,6 +484,27 @@ products:
     # The epub's cover image
     image: "cover.jpg"
 
+    # Accessibility metadata to inform users
+    # about the accessibility features in this epub.
+    accessibility:
+
+      # A summary statement, see
+      # https://www.w3.org/TR/epub-a11y-tech-11/#accessibilitySummary
+      summary: "This publication conforms to WCAG 2.0 Level AA."
+
+      # Comma-separate textual, visual, auditory, tactile. See
+      # https://www.w3.org/TR/epub-a11y-tech-11/#accessMode
+      access-mode: textual, visual
+      access-mode-sufficient: textual
+
+      # Comma-separate possible values, see
+      # https://www.w3.org/TR/epub-a11y-tech-11/#accessibilityFeature
+      accessibility-features: tableOfContents
+
+      # Comma-separate possible values, see
+      # https://www.w3.org/TR/epub-a11y-tech-11/#accessibilityHazard
+      accessibility-hazard: unknown
+
     # Files to include in this format.
     # In the epub files list, add a value to any file
     # to set any of the guide types listed in

@@ -62,8 +62,15 @@ So an image must be specified to get a placeholder image.{% endcomment %}
 {% endif %}
 
 <div class="video {{ video-host }}{% if include.class %} {{ include.class }}{% endif %}" id="{{ include.id }}" data-video-id="{{ include.id }}" data-video-language="{{ video-language }}" {% if include.subtitles == "true" %}data-video-subtitles="true"{% endif %}{% if include.start %} data-video-timestamp="{{ include.start }}"{% endif %}>
-    <div class="video-wrapper{% if include.image == nil or include.image == "" %} video-no-image{% endif %}">
-        <a class="video-link" href="{{ video-link }}{{ video-timestamp }}">
+    <div class="video-wrapper
+        {% if include.image == nil or include.image == "" %}
+            {% unless site.output == "web" and video-host == "youtube" %}
+                video-no-image
+            {% endunless %}
+        {% endif %}">
+
+        <a class="video-link" href="{{ video-link }}{{ video-timestamp }}"
+            title="{{ locale.video.play-video }}">
             {% if include.image and include.image != "" %}
                 {% if include.folder and include.folder != "" %}
                     {% include image file=include.image folder=include.folder %}

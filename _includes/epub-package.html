@@ -63,22 +63,41 @@
         <dc:type>{{ type | escape }}</dc:type>
     {% endif %}
 
-    {% comment %} Accessibility metadata.
-    Note that these values might not apply to your projects. {% endcomment %}
-        <meta property="schema:accessibilitySummary">
-            This publication conforms to WCAG 2.0 Level AA.
-        </meta>
-        <meta property="schema:accessMode">textual</meta>
-        <meta property="schema:accessMode">visual</meta>
-        <meta property="schema:accessModeSufficient">textual,visual</meta>
-        <meta property="schema:accessModeSufficient">textual</meta>
-        <meta property="schema:accessibilityFeature">structuralNavigation</meta>
-        <meta property="schema:accessibilityFeature">alternativeText</meta>
-        <meta property="schema:accessibilityFeature">longDescription</meta>
-        <meta property="schema:accessibilityHazard">noFlashingHazard</meta>
-        <meta property="schema:accessibilityHazard">noSoundHazard</meta>
-        <meta property="schema:accessibilityHazard">noMotionSimulationHazard</meta>
+    {% comment %} Accessibility metadata. {% endcomment %}
 
+    {% if epub-accessibility.summary and epub-accessibility.summary != "" %}
+        <meta property="schema:accessibilitySummary">
+            {{ epub-accessibility.summary }}
+        </meta>
+    {% endif %}
+
+    {% if epub-accessibility.access-mode and epub-accessibility.access-mode != "" %}
+        {% assign accessibility-access-modes = epub-accessibility.access-mode | remove: " " | split: "," %}
+        {% for value in accessibility-access-modes %}
+            <meta property="schema:accessMode">{{ value }}</meta>
+        {% endfor %}
+    {% endif %}
+
+    {% if epub-accessibility.access-mode-sufficient and epub-accessibility.access-mode-sufficient != "" %}
+        {% assign accessibility-sufficient-access-modes = epub-accessibility.access-mode-sufficient | remove: " " | split: "," %}
+        {% for value in accessibility-sufficient-access-modes %}
+        <meta property="schema:accessModeSufficient">{{ value }}</meta>
+        {% endfor %}
+    {% endif %}
+
+    {% if epub-accessibility.accessibility-features and epub-accessibility.accessibility-features != "" %}
+        {% assign accessibility-features = epub-accessibility.accessibility-features | remove: " " | split: "," %}
+        {% for value in accessibility-features %}
+            <meta property="schema:accessibilityFeature">{{ value }}</meta>
+        {% endfor %}
+    {% endif %}
+
+    {% if epub-accessibility.accessibility-hazards and epub-accessibility.accessibility-hazards != "" %}
+        {% assign accessibility-hazards = epub-accessibility.accessibility-hazards | remove: " " | split: "," %}
+        {% for value in accessibility-hazards %}
+            <meta property="schema:accessibilityHazard">{{ value }}</meta>
+        {% endfor %}
+    {% endif %}
     </metadata>
 
     <manifest>
