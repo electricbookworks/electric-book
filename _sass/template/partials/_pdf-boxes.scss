@@ -1,8 +1,13 @@
 // Boxes
 
-@mixin box($text-color: inherit, $background-color: $color-light, $border-color: $color-light, $text-color-reversed: white, $background-color-reversed: $color-accent) {
-    clear: both; // Don't let hanging sidenotes overlap over boxes
-    background-color: $background-color;
+@mixin box($text-color: inherit, $background-color: $color-light, $border-color: $color-mid, $text-color-reversed: white, $background-color-reversed: $color-accent) {
+
+    // Default box does not have a background color
+    background-color: inherit;
+
+    // Don't let hanging sidenotes overlap over boxes
+    clear: both;
+
     border-radius: $box-border-radius;
     box-decoration-break: slice; // no bottom border when box crosses page
     box-sizing: border-box;
@@ -15,6 +20,11 @@
 
     // No text-indent on paragraphs after boxes
     & + p {
+        text-indent: 0;
+    }
+
+    // No indent on first paragraphs in boxes
+    & p:first-of-type {
         text-indent: 0;
     }
 
@@ -80,11 +90,13 @@ $pdf-boxes: true !default;
         padding-bottom: $line-height-default - $rule-thickness;
         text-indent: 0;
     }
+
     // A list as a box
     ol.box,
     ul.box {
         padding: ($line-height-default - $rule-thickness) line-height-default;
     }
+
     // A regular list item as a box
     li.box {
         padding: ($line-height-default - $rule-thickness) line-height-default;

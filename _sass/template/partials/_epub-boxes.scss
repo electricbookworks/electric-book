@@ -1,7 +1,10 @@
 // Boxes
 
-@mixin box($text-color: inherit, $background-color: $color-light, $border-color: $color-light, $text-color-reversed: white, $background-color-reversed: $color-accent) {
-    background-color: $background-color;
+@mixin box($text-color: inherit, $background-color: $color-light, $border-color: $color-mid, $text-color-reversed: white, $background-color-reversed: $color-accent) {
+
+    // Default box does not have a background color
+    background-color: inherit;
+
     border-radius: $box-border-radius;
     box-sizing: border-box;
     color: $text-color;
@@ -19,6 +22,11 @@
 
     // No text-indent on paragraphs after boxes
     & + p {
+        text-indent: 0;
+    }
+
+    // No indent on first paragraphs in boxes
+    & p:first-of-type {
         text-indent: 0;
     }
 
@@ -74,11 +82,13 @@ $epub-boxes: true !default;
     p.box {
         text-indent: 0;
     }
+
     // A list as a box
     ol.box,
     ul.box {
         padding: ($line-height-default / 2) ($line-height-default / 2) ($line-height-default / 2) ($line-height-default);
     }
+
     // A regular list item as a box
     li.box {}
 

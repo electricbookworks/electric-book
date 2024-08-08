@@ -288,7 +288,7 @@ $nav-bar-back-button-hide: false !default;
         background-color: transparent;
         border: none;
         color: initial;
-        font-size: 1.25em;
+        font-size: 1em;
         padding: 0.333em 0.5em; // centers expand buttons vertically
         margin: 0 0 0 -0.5rem;
         height: 1em;
@@ -330,6 +330,9 @@ $nav-bar-back-button-hide: false !default;
     [data-toggle-nav] {
         background-color: transparent;
         color: initial;
+        font-size: 1em;
+        height: 100%;
+        padding: 0 0.5em;
         right: 0;
 
         &:after {
