@@ -4,7 +4,6 @@ _site/
 .sass-cache/
 .jekyll-metadata
 .jekyll-cache
-Gemfile.lock
 node_modules
 _tests/log*
 _data/secrets*
