@@ -82,7 +82,8 @@ $convert-images-to-color-profile: false !default;
                 p + .#{$class} + p {
                     text-indent: $paragraph-indent;
 
-                    &.first {
+                    &.first,
+                    &.box {
                         text-indent: 0;
                     }
                 }
@@ -91,7 +92,8 @@ $convert-images-to-color-profile: false !default;
                     p + .#{$class} + .#{$second-sibling-class} + p {
                         text-indent: $paragraph-indent;
 
-                        &.first {
+                        &.first,
+                        &.box {
                             text-indent: 0;
                         }
                     }
@@ -100,7 +102,8 @@ $convert-images-to-color-profile: false !default;
                         p + .#{$class} + .#{$second-sibling-class} + .#{$third-sibling-class} + p {
                             text-indent: $paragraph-indent;
 
-                            &.first {
+                            &.first,
+                            &.box {
                                 text-indent: 0;
                             }
                         }
