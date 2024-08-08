@@ -20,10 +20,10 @@
 // Provide a variable for site output
 $output-format: "screen-pdf" !default;
 
-// Theme variables
-@import "theme/colors";
+// Custom variables
+@import "custom/colors";
 @import "template/colors";
-@import "theme/pdf-variables";
+@import "custom/pdf-variables";
 
 // Edition suffix: identifies this edition in page-layout-utilities classes (in _pdf-layout-utilities.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
@@ -36,7 +36,11 @@ $edition-suffix: null !default;
 $path-to-root-directory: "../.." !default;
 
 // First, we set several variables related to overall page setup.
-$bleed: 0 !default;
+// Screen PDF does not require bleed-area, but to match visually both screen-PDF
+// and print-PDF should share the same 'bleed-print' value. Otherwise images will
+// appear to crop differently between the two outputs.
+$bleed-area: 0 !default;
+$bleed-print: 5mm !default;
 $trim: 0 !default;
 $crop-marks: none !default; // crop | crop cross | cross | none
 
@@ -55,7 +59,7 @@ $pdf-profile: "PDF/A-3b" !default;
 $color-profile: "sRGB_v4_ICC_preference_displayclass.icc" !default;
 
 // -------------
-// Master theme
+// Master styles
 // -------------
 
 // By default, we assume screen-PDFs look exactly like print-PDF versions,

@@ -10,18 +10,30 @@ You should be able to throw a box around any block-level element (paragraphs, li
 
 About seven o'clock one hot summer evening a strange family moved into the little village of Middlesex. Nobody knew where they came from, or who they were. But the neighbors soon made up their minds what they thought of the strangers, for the father was very drunk. He could hardly walk up the rickety front steps of the old tumble-down house, and his thirteen-year-old son had to help him. Toward eight o'clock a pretty, capable-looking girl of twelve came out of the house and bought a loaf of bread at the baker's. And that was all the villagers learned about the newcomers that night.
 
+The default `.box` has a border and the same background colour as the page.
+{:.sidenote}
+
 "There are four children," said the bakeshop woman to her husband the next day, "and their mother is dead. They must have some money, for the girl paid for the bread with a dollar bill."
 {:.box}
 
 "Make them pay for everything they get," growled the baker, who was a hard man. "The father is nearly dead with drink now, and soon they will be only beggars."
 
+The shaded `.box.box-shaded` has a light-coloured border and background.
+{:.sidenote}
+
 This happened sooner than he thought. The next day the oldest boy and girl came to ask the bakeshop woman to come over. Their father was dead.
-{:.box}
+{:.box.box-shaded}
+
+The colour-reversed `.box.box-reversed` has an accent-coloured border and background with light text.
+{:.sidenote}
 
 She went over willingly enough, for someone had to go. But it was clear that she did not expect to be bothered with four strange children, with the bakery on her hands and two children of her own.
-{:.box}
+{:.box.box-reversed}
 
 "Haven't you any other folks?" she asked the children.
+
+Boxes can also be sidenotes, with the appropriate classes, such as this one, which has `.sidenote.box.box-reversed`.
+{:.sidenote.box.box-reversed}
 
 "We have a grandfather in Greenfield," spoke up the youngest child before his sister could clap her hand over his mouth.
 

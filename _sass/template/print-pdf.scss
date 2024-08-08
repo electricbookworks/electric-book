@@ -9,7 +9,7 @@
 // This file includes almost all of the variables
 // you might need to set for your project.
 // Then set your own values and create styles and
-// new Sass partials for your project in _sass/theme.
+// new Sass partials for your project in _sass/custom.
 
 // -------------
 // Set variables
@@ -18,10 +18,10 @@
 // Provide a variable for site output
 $output-format: "print-pdf" !default;
 
-// Theme variables
-@import "theme/colors";
+// Custom variables
+@import "custom/colors";
 @import "template/colors";
-@import "theme/pdf-variables";
+@import "custom/pdf-variables";
 
 // Edition suffix: identifies this edition in page-layout-utilities classes (in _pdf-layout-utilities.scss).
 // For instance, a .tighten class in HTML might apply to your bookshop edition, but not the schools edition.
@@ -40,12 +40,24 @@ $margin-top: 60pt !default; // set in points to align with baseline grid
 $margin-bottom: 60pt !default;
 $margin-outside: 15mm !default;
 $margin-inside: 15mm !default;
-$bleed: 5mm !default;
+
+// Bleed, trim and crops
+// Note that 'bleed-area' is the space added around the page for colour
+// to extend into for print-trimming safety. The 'bleed-print' is used to specify
+// how far images and other colour elements should extend into that area.
+// Screen PDF does not require bleed-area, but to match visually both screen-PDF
+// and print-PDF should share the same 'bleed-print' value. Otherwise images will
+// appear to crop differently between the two outputs.
+// 'Trim' is the total area outside the page edges, including bleed.
+// The trim area accommodates registration marks.
+$bleed-area: 5mm !default;
+$bleed-print: 5mm !default;
 $trim: 10mm !default;
 $crop-marks: crop !default; // crop | crop cross | cross | none
 $crop-marks-offset: 8mm !default;
+
+// Page information in the footer or print PDFs
 $page-info-offset: 10mm !default;
-$columns-default: 1 !default;
 
 // Some printers like CMYK-registration marks on PDFs.
 // If you set this to true, don't use 'cross' in $crop-marks.
@@ -55,7 +67,7 @@ $registration-marks: true !default; // occupies left- and right-middle margin bo
 // Note: assume that each named page has different
 // margin-box treatment, and they are not compatible, i.e.
 // you can't use more than one page style for a document.
-$named-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page, cover-page, halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page, contents-page, frontmatter-page, part-page, endmatter-page !default;
+$named-page-styles: default-page, chapter-page, frontmatter-page, endmatter-page, cover-page, halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page, contents-page, part-page !default;
 
 // Page styles, especially for margin boxes.
 $default-page-styles: default-page, chapter-page, frontmatter-page, contents-page, endmatter-page !default;
@@ -74,6 +86,12 @@ $top-empty-page-styles: halftitle-page, half-title-page, title-page, previous-pu
 $bottom-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
 $left-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
 $right-empty-page-styles: halftitle-page, half-title-page, title-page, previous-publications-page, copyright-page, dedication-page, epigraph-page, frontispiece-page !default;
+
+// How many columns on pages with multiple columns?
+$column-count: 1 !default;
+
+// Which page styles should have these multiple columns?
+$multi-column-pages: default-page, chapter-page, frontmatter-page, endmatter-page !default;
 
 // Optional sidebar setup.
 // Sidebars only work when using Prince v15 or later,
@@ -150,8 +168,8 @@ $spaced-paras: false !default;
 $paragraph-indent: $font-size-default !default;
 
 // Rounded corners
-$button-border-radius: 0.1rem !default; // Roundness of button corners
-$box-border-radius: 0.1rem !default; // Roundness of box corners
+$button-border-radius: 0pt !default; // Roundness of button corners
+$box-border-radius: 0pt !default; // Roundness of box corners
 
 // Rules, lines
 $rule-thickness: 0.5pt !default;
@@ -182,11 +200,11 @@ $start-on-recto-or-verso: null !default;
 // Set it in multiples of $line-height-default to preserve your baseline grid.
 $start-depth: $line-height-default * 15 !default;
 
-// Set the height of the opener image
-$opener-image-height: $page-height * 0.4 !default;
-
 // Which page styles use this start-depth?
 $start-depth-page-styles: halftitle-page, half-title-page, title-page, dedication-page, epigraph-page, part-page !default;
+
+// Set the height of the opener image
+$opener-image-height: $page-height * 0.4 !default;
 
 // Style of page numbers on frontmatter pages
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
@@ -409,14 +427,14 @@ $pdf-slides: true !default;
 $pdf-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $pdf-margin-box-content: true !default; // Sets content for headers and footers
 $pdf-margin-box-style: true !default; // Sets styling for headers and footers
-$pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim for Lightning Source
+$pdf-page-setup-ingram: false !default; // Removes crop marks and sets trim for Ingram POD
 
 // ----------------------------------------------------
 // Import font files (@font-face) for fonts you specify
 // ----------------------------------------------------
 
-// Theme imports
-@import "theme/pdf-imports";
+// Custom imports
+@import "custom/pdf-imports";
 
 // Default font-face rules added by pdf-font-faces partial below.
 // Or add @font-face rules for fonts you specify here.
@@ -425,9 +443,9 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 // `src: url(#{$path-to-root-directory}/assets/fonts/CrimsonPro-Regular.ttf);`
 // For snippets, try https://github.com/arthurattwell/font-faces
 
-// ---------------------
-// Import theme partials
-// ---------------------
+// ------------------------
+// Import template partials
+// ------------------------
 
 // Reset PrinceXML CSS
 @import "template/partials/pdf-css-reset";
@@ -459,7 +477,7 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 @import "template/partials/pdf-hide-non-printing"; // Hides anything .non-printing
 @import "template/partials/pdf-hyphenation"; // Sets hyphenation dictionary
 @import "template/partials/pdf-baseline-grid"; // Shows a baseline grid
-@import "template/partials/pdf-page-setup-ingram"; // Removes crop marks and sets 3mm trim for Ingram POD
+@import "template/partials/pdf-page-setup-ingram"; // Removes crop marks and sets trim for Ingram POD
 
 // Book features
 @import "template/partials/pdf-start-on-recto-or-verso"; // Starts chapters on a left- or right-hand-page
@@ -504,5 +522,5 @@ $pdf-page-setup-ingram: false !default; // Removes crop marks and sets 3mm trim 
 // Resets p indents, margins after other elements. Must be last @import in list.
 @import "template/partials/pdf-reset-sequences";
 
-// Theme rules
-@import "theme/pdf-rules";
+// Custom rules
+@import "custom/pdf-rules";

@@ -1,3 +1,5 @@
+{% include metadata %}
+
 <div class="visual-toc">
 
     {% assign visual-toc-files = include.files | strip_newlines | remove: " " | split: "*" %}
@@ -17,7 +19,7 @@
 
                         {% if visual-toc-page-object.image and visual-toc-page-object.image != "" %}
                             <div class="visual-toc-chapter-image">
-                                <a href="{{ visual-toc-path-to-file }}.html">
+                                <a href="{{ visual-toc-path-to-file }}.html" aria-label="{{ locale.visual-toc.link-to-page-assistive-text }}">
                                     {% include image file=visual-toc-page-object.image folder=include.book position=visual-toc-page-object.image-position %}
                                 </a>
                             </div>

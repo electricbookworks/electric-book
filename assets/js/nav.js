@@ -1,4 +1,4 @@
-/* global ebToggleClickout */
+/* global ebToggleClickout, locales, pageLanguage */
 
 function ebNav () {
   'use strict'
@@ -19,16 +19,16 @@ function ebNav () {
       menu.classList.add('visuallyhidden')
 
       // add a close button
-      let closeButton = '<button data-toggle data-nav-close>'
-      closeButton += '<span class="visuallyhidden">Close menu</span>'
+      let closeButton = '<button data-toggle data-nav-close aria-label="' + locales[pageLanguage].input.close + '">'
+      closeButton += '<span class="visuallyhidden">' + locales[pageLanguage].input.close + '</span>'
       closeButton += '</button>'
       menu.insertAdjacentHTML('afterBegin', closeButton)
 
       // hide the children and add the button for toggling
       const subMenus = document
         .querySelectorAll('#nav .has-children, #nav .has-children')
-      let showChildrenButton = '<button data-toggle data-toggle-nav>'
-      showChildrenButton += '<span class="visuallyhidden">Toggle</span>'
+      let showChildrenButton = '<button data-toggle data-toggle-nav aria-label="' + locales[pageLanguage].controls['show-hide'] + '">'
+      showChildrenButton += '<span class="visuallyhidden">' + locales[pageLanguage].controls['show-hide'] + '</span>'
       showChildrenButton += '</button>'
       let i
       for (i = 0; i < subMenus.length; i += 1) {

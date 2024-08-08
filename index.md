@@ -18,12 +18,14 @@ The Electric Book template is a code framework for producing **web books, ebooks
 {% include feature-box
    text="The template includes [a blank book](book/0-3-contents.html) to add your content to."
    image="logo.svg"
+   link="book/0-3-contents.html"
 %}
 
 {% include feature-box
    text="Learn from [a book of examples](samples/index.html), with a partial [translation](samples/fr/)."
    image="cover.jpg"
    image-position="0 35%"
+   link="samples/index.html"
 %}
 
 {% if site.output == "web" and output-docs == true %}
@@ -32,6 +34,7 @@ The Electric Book template is a code framework for producing **web books, ebooks
    text="The template's [documentation](docs/) explains how its features work."
    image="banner-image.jpg"
    image-position="0 65%"
+   link="docs/"
 %}
 
 {% endif %}
@@ -70,7 +73,7 @@ To see how these examples look in other formats, [download PDF and epub versions
 " %}
 
 
-<div class="color-panel text-fff links-ccc" markdown="1">
+<div class="color-panel text-000 links-ccc" markdown="1">
 
 ## How to start now
 

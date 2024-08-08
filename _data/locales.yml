@@ -198,6 +198,7 @@ en:
     close-all: "Close all"
   controls:
     language-select: "Select language"
+    show-hide: "Show/Hide"
   video:
     options-button: "Other video options"
     play-video: "Play video"
@@ -230,7 +231,11 @@ en:
     # tumblr: "Tumblr"
     # wordpress: "WordPress"
   expandable-box:
-    read-more: 'Expand'
+    read-more: "Expand"
+  feature-box:
+    link-to-feature-assistive-text: "A link for the relevant feature"
+  visual-toc:
+    link-to-page-assistive-text: "Link to page"
 # eo:
 #   iso-name: "Esperanto"
 #   local-name: ""
@@ -321,6 +326,7 @@ fr:
     close-all: "Ferme tout"
   controls:
     language-select: "Sélectionnez la langue"
+    show-hide: "Afficher/Masquer"
   video:
     options-button: "Autres options vidéo"
     play-video: "Lire la vidéo"
@@ -352,6 +358,12 @@ fr:
     # stumbleupon: "Stumbleupon"
     # tumblr: "Tumblr"
     # wordpress: "WordPress"
+  expandable-box:
+    read-more: "Ouvrir"
+  feature-box:
+    link-to-feature-assistive-text: "Un lien vers la fonctionnalité concernée"
+  visual-toc:
+    link-to-page-assistive-text: "Lien vers la page"
 # ff:
 #   iso-name: "Fula, Fulah, Pulaar, Pular"
 #   local-name: ""
@@ -724,6 +736,7 @@ es:
     close-all: "Cerrar todo"
   controls:
     language-select: "Seleccione idioma"
+    show-hide: "Mostrar/Ocultar"
   video:
     options-button: "Otras opciones de vídeo"
     play-video: "Reproduce el video"
@@ -755,6 +768,12 @@ es:
     # stumbleupon: "Stumbleupon"
     # tumblr: "Tumblr"
     # wordpress: "WordPress"
+  expandable-box:
+    read-more: "Expandir"
+  feature-box:
+    link-to-feature-assistive-text: "Un enlace para la función relevante"
+  visual-toc:
+    link-to-page-assistive-text: "Enlace a la página"
 # su:
 #   iso-name: "Sundanese"
 #   local-name: ""

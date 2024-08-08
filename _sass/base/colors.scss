@@ -1,0 +1,16 @@
+// Design-base colours
+
+// See _sass/template/colors.scss
+// for more code comments on the
+// recommended structure of this file.
+
+$example-blue: null;
+
+@if $output-format != "print-pdf" {
+
+    $example-blue: #009ACD !default;
+
+} @else {
+
+    $example-blue: cmyk(80%, 20%, 0%, 20%) !default;
+}

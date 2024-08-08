@@ -6,6 +6,9 @@ description: "A research paper that includes figures with reference numbers, cap
 
 ## **2.2**{:.chapter-number} Figures
 
+*Chris Fradkin*
+{:.contributors}
+
 Figures, as we refer to them, are images, or similar visual artifacts (including tables) accompanied by a caption.
 
 Also see the [docs on figures](https://electricbookworks.github.io/electric-book/docs/editing/figures.html).

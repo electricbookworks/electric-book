@@ -1,0 +1,32 @@
+$web-color-switches: true !default;
+@if $web-color-switches {
+
+    // Styles for switching colours on specified pages
+
+    @each $page in $color-switched-pages {
+        .wrapper.#{$page} {
+            background-color: $color-background-switched;
+            color: $color-text-main-switched;
+
+            .content {
+
+                h1, h2, h3, h4, h5, h6 {
+                    color: $color-headings-switched;
+                }
+
+                a {
+                    color: $color-links-switched;
+                }
+
+                // Do not switch color of headings
+                // in color-panel divs
+                .color-panel {
+
+                    h1, h2, h3, h4, h5, h6 {
+                        color: inherit;
+                    }
+                }
+            }
+        }
+    }
+}

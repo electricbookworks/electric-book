@@ -2,15 +2,19 @@
 It is currently only styled for web output, and
 will not have any design in PDF or epub books. {% endcomment %}
 
+{% include metadata %}
+
 <div class="feature-box">
 
     {% if include.image and include.image != "" %}
         <div class="feature-box-image-wrapper">
-            {% if is-book-directory %}
-                {% include image file=include.image alt=include.image-alt-text position=include.image-position %}
-            {% else %}
-                {% include image file=include.image folder="assets" alt=include.image-alt-text position=include.image-position %}
-            {% endif %}
+            {% if include.link %}<a href="{{ include.link }}" aria-label="{{ locale.feature-box.link-to-feature-assistive-text }}">{% endif %}
+                {% if is-book-directory %}
+                    {% include image file=include.image alt=include.image-alt-text position=include.image-position %}
+                {% else %}
+                    {% include image file=include.image folder="assets" alt=include.image-alt-text position=include.image-position %}
+                {% endif %}
+            {% if include.link %}</a>{% endif %}
         </div>
     {% endif %}
 

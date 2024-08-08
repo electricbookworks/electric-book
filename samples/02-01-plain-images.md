@@ -5,7 +5,7 @@ image-position: "top"
 description: "A chapter from *The Count of Monte Christo* interspersed with simple images."
 opener-image: "count-of-monte-christo-1.jpg"
 opener-image-alt-text: "An illustration of Edmond Dantés standing on a ship, from the original edition of The Count of Monte Christo. He is well dressed and carries a walking stick."
-opener-image-position: "top"
+opener-image-position: "0 5%"
 ---
 
 {% include metadata %}

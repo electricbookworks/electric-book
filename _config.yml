@@ -228,7 +228,7 @@ sass:
 
 # Default page variables
 # ----------------------
-# For technical details, see http://jekyllrb.com/docs/configuration/#front-matter-defaults.
+# For technical details, see http://jekyllrb.com/docs/configuration/front-matter-defaults/
 defaults:
   -
     # Set default page style for all files in project

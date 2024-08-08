@@ -17,6 +17,12 @@ function ebShareButtons () {
         shareModal.classList.toggle('visuallyhidden')
         const buttonIcon = document.querySelector('.share-button svg')
         buttonIcon.classList.toggle('active')
+
+        if (shareModal.classList.contains('visuallyhidden')) {
+          shareModal.setAttribute('aria-hidden', 'true')
+        } else {
+          shareModal.setAttribute('aria-hidden', 'false')
+        }
       })
     })
   }

@@ -34,4 +34,4 @@ For complex tables – anything with merged cells, for instance – you must cre
 
 ## Table captions
 
-In markdown, add `{:.table-caption}` in the line immediately after a table caption paragraph. This applies the class `table-caption` to the paragraph, which the theme can style. For instance, the template's default styles avoid a page break after the caption, before the table. (According to publishing best-practice, table captions must always appear above tables, not after them.)
+In markdown, add `{:.table-caption}` in the line immediately after a table caption paragraph. This applies the class `table-caption` to the paragraph, which CSS can style. For instance, the template's default styles avoid a page break after the caption, before the table. (According to publishing best-practice, table captions must always appear above tables, not after them.)

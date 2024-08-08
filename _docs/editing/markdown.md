@@ -272,7 +272,7 @@ This paragraph should be in a box.
 
 For the resulting HTML to actually appear in a box, when we turn your markdown into a finished book, we'll have to combine it with a CSS stylesheet that includes formatting instructions for the `box` class. If you're just editing in markdown, you don't have to think about the stylesheets. Our default stylesheets include designs for `box` as well as several other classes. (Which we'll list in a moment.)
 
-But if your book needs classes that aren't already supported in the template, you'll need to ask a CSS-savvy designer to write you some CSS rules for your new class, to add to the bottom of your theme's master `.scss` files as custom CSS.
+But if your book needs classes that aren't already supported in the template, you'll need to ask a CSS-savvy designer to write you some CSS rules for your new class, to add to the bottom of your design's master `.scss` files as custom CSS.
 
 > ### Inventing classes
 >

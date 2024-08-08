@@ -5,12 +5,39 @@ $web-visual-toc: true !default;
         font-family: $font-text-secondary;
         margin: 3rem 0 4rem 0;
 
+        @media only screen and (min-width: $max-width-default) {
+            width: 100vw;
+            margin-left: calc(-1 * ((100vw - #{$max-width-default}) * 0.5 + 1rem))
+        }
+
         .visual-toc-list {
+
+            @media only screen and (min-width: $max-width-default) {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: ($content-padding-vertical * 3) ($content-padding-horizontal * 3);
+                justify-content: space-between;
+                margin-left: $content-padding-horizontal * 2;
+                margin-right: $content-padding-horizontal * 2;
+            }
+
+            @media only screen and (min-width: ($max-width-default * 2)) {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
             list-style-type: none;
             margin: 0;
             padding: 0;
 
             li {
+
+                @media only screen and (min-width: $max-width-default) {
+                    display: grid;
+                    grid-template-columns: 8rem 1rem 1fr;
+                    grid-template-rows: max-content 1fr;
+                    margin-bottom: 0;
+                }
+
                 clear: both;
                 margin-bottom: 2rem;
 
@@ -25,18 +52,18 @@ $web-visual-toc: true !default;
 
                 .visual-toc-chapter-image {
 
-                    border-radius: 8rem;
+                    @media only screen and (min-width: $max-width-default) {
+                        grid-row-start: 1;
+                        grid-row-end: 3;
+                    }
+
                     border: 1px solid $grey-light;
                     overflow: hidden;
                     float: left;
+                    margin-left: 0;
                     margin-right: 1rem;
                     height: 8rem;
                     width: 8rem;
-
-                    $visual-toc-sidebar-space: $max-width-default + 20rem;
-                    @media only screen and (min-width: $visual-toc-sidebar-space) {
-                        margin-left: -(8rem + 2rem);
-                    }
 
                     a {
                         text-decoration: none;
@@ -51,9 +78,18 @@ $web-visual-toc: true !default;
 
                 .visual-toc-chapter-title {
                     font-weight: bold;
+
+                    @media only screen and (min-width: $max-width-default) {
+                        grid-column-start: 3;
+                    }
                 }
 
-                .visual-toc-chapter-description {}
+                .visual-toc-chapter-description {
+
+                    @media only screen and (min-width: $max-width-default) {
+                        grid-column-start: 3;
+                    }
+                }
             }
         }
     }

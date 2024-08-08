@@ -5,13 +5,13 @@ categories:
 order: 1
 ---
 
-# Design books
+# Designing books
 {:.no_toc}
 
 * Page contents
 {:toc}
 
-The design of your books is created in CSS stylesheets. These are written in Sass or CSS syntax. Each output format has a dedicated stylesheet:
+The design of your books is created in CSS stylesheets. These are written in Sass or CSS syntax. Each book's `styles` folder has a dedicated stylesheet for each output format:
 
 - `print-pdf.scss`
 - `screen-pdf.scss`
@@ -21,37 +21,27 @@ The design of your books is created in CSS stylesheets. These are written in Sas
 
 By default, the screen PDF inherits its styles from the print PDF design, except for trim and crop marks (none on screen PDF) and the colour profile (RBG in screen PDF, CMYK in print PDF). Also by default, the app inherits the web styles.
 
-Some aspects of design are easy for non-technical users to change. Some advanced design features need to be coded by an experienced CSS developer.
+Some aspects of design are easy for non-technical users to change. Some advanced design features need to be coded by an experienced CSS developer. Get started, and see how you go.
 
-Each project comes with a library of predefined styles in the `_sass/template` folder. Generally, you should not change these styles. Rather, extend and override them with your own theme, which you define in the files in `_sass/theme`.
+## Book, template, base, and custom styles
 
-That's where you set or change styles that affect all the books in your project.
+The Electric Book template has a flexible but complex system for styling at different levels.
 
-Then, each book's styles can build on or override those project-wide styles in the `.scss` files in its own `styles` folder (e.g. `book/styles/web.scss`).
+- Each book can have its own styles in its own `styles` folder. In practice, book-level styles are rarely used. By default, each book just imports the `template` styles in the project's `_sass` folder.
+- The `template` styles provide basic conventions that are almost universal in book design, like a table of contents and running headers. These basics are unopinionated, 'vanilla' styles with little personality. You should generally avoid modifying the files in `template` in case you want to update your project from the latest Electric Book template styles later.
+- After laying the foundations, the `template` styles then include the styles in the `custom` folder. This is where you can create your own designs that override and extend the `template` styles. (More on this below.)
+- Finally, the `custom` styles import an optional `base` design in the `base` folder. Base designs are just a quick way to copy an existing design that might have lots of personality. By default, the `base` folder in `_sass` is empty of styles. You'd get a `base` design ready-made from someone else, like [Electric Book Works](https://electricbookworks.com), and paste it here. Then your `custom` styles extend the base, rather than starting from the plain vanilla `template` styles. See the `README` file in `_sass/base` for guidance.
 
-> **Electric Book Manager users**
->
-> By default, you cannot edit the project's predefined styles in the Electric Book Manager.
->
-> Files that users cannot see in the EBM, such as advanced technical files, are included in the `ignore` list in `/_prose.yml`.
-{:.box}
+## Editing `custom` styles
 
-## Edit project-wide styles
+Usually, you'll define styles for all the books in your project by editing only the files in `_sass/custom`. Any colours, variables, `@import`s or CSS/Sass rules there will override the `template` styles.
 
-Usually, you'll define styles for all the books in your project by editing only the files in `_sass/theme`. Any colours, variables, `@import`s or CSS/Sass rules there will override the template styles.
+- All style variables (such as `$page-width`) should be set in `_sass/custom/*-variables.scss`, where `*` is the format you're working on. It's best practice to include the `!default` flag on your variable values here, so that you can still override them per-book if necessary.
+- Similarly, all `@import`s, such as Google Fonts, should be included in `_sass/custom/*-imports.scss`.
+- Similarly, all new CSS/Sass rules should be added to `_sass/custom/*-rules.scss`. It's best practice to keep your rules organised in `_sass/custom/partials` and `@import` them.
 
-- All style variables (such as `$page-width`) should be set in `_sass/theme/*-variables.scss`, where `*` is the format you're working on. It's best practice to include the `!default` flag on your variable values here, so that you can still override them per-book if necessary.
-- Similarly, all `@import`s, such as Google Fonts, should be included in `_sass/theme/*-imports.scss`.
-- Similarly, all new CSS/Sass rules should be added to `_sass/theme/*-rules.scss`. It's best practice to keep your rules organised by creating new partials (new `.scss` files) in `_sass/theme/partials` and `@include`ing them here.
+The variables, imports, rules and partials for a `base` design are organised in the same way.
 
-This file structure also makes it possible to add a pre-built theme easily by copying the theme files to `_sass/theme`.
+## Non-book styles in `assets`
 
-## Edit a book's styles
-
-This is for when you want one book in your project to have different styles to the other books.
-
-1. Go into the book's folder, then into `styles`, and open the `.scss` file for the output format that you want to edit. For example, to change the print-PDF styles for the book in the `book` directory, edit `book/styles/print-pdf.scss`.
-2. Many of a book's design features are set as variables, which start with `$` signs. E.g. `$page-width`. Set your desired values by defining variables. For instance, you can change the values for page size, colours, running heads, and so on. All available variables are defined, with defaults, in `_sass/template/print-pdf.scss` (and similarly for other output formats).
-3. If you know how to write CSS or Sass, add your own custom styles at the bottom of the book's relevant `.scss` file.
-
-Output the relevant format to see how your changes look. If the output fails, you may have used invalid CSS or Sass syntax. For more on editing Sass, see [sass-lang.com/guide](https://sass-lang.com/guide).
+Web and app outputs of your project include pages that are not inside a book, like the landing `index` page, `contact` and `about`. In the same way that each book has a `styles` folder, these pages get their styles from `assets/styles`, which also then include the `template`, `custom` and `base` styles.

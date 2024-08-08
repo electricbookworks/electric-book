@@ -12,7 +12,7 @@ order: 4
 
 In print output, the YAML header's `style` setting affects how the pages are numbered:
 
-* all book parts set to `style: frontmatter-page` have roman-numeral page numbers by default (this can be changed in a theme's CSS variables);
+* all book parts set to `style: frontmatter-page` have roman-numeral page numbers by default (this can be changed in a custom design's CSS variables);
 * all book parts set to `style: default-page` (or, since that's the default fallback, all those without a `style` setting) have decimal page numbers;
 * all book parts set to `style: endmatter-page` (or, since that's the default fallback, all those without a `style` setting) have decimal page numbers;
 * other book parts (e.g. `style: copyright-page`) have no page numbers (nor any other headers and footers).

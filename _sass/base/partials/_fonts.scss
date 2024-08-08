@@ -1,0 +1,11 @@
+// For production, do not use @import to fetch
+// fonts over the web, e.g. from Google Fonts.
+// You can't work offline, and might get unexpected
+// reflow if the source (e.g. Google) updates the font.
+// Also, fonts on the web may fail EPUBCheck validation,
+// if you specifying fonts in EPUB.
+// Rather:
+// 1. Download the font files to assets/fonts.
+// 2. Add @font-face rules here to load those.
+// 3. Remove any @import statements below.
+
