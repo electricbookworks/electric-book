@@ -8,7 +8,7 @@ $web-wrappers: true !default;
 
     .content {
         clear: none;
-        padding: 0 $content-padding-horizontal;
+        padding: 0 $content-padding-right 0 $content-padding-left;
         margin: 0 auto ($line-height-default) auto;
         max-width: $max-width-default;
     }

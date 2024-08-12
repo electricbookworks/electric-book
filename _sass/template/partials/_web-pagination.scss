@@ -42,7 +42,7 @@ $web-pagination: true !default;
 
             @media only screen and (min-width: $break-width-large) {
                 position: fixed;
-                bottom: $content-padding-horizontal;
+                bottom: $content-padding-bottom;
                 width: 70%;
             }
 
@@ -56,7 +56,7 @@ $web-pagination: true !default;
 
         .pagination-previous {
             float: left; // when not position: fixed
-            left: $content-padding-horizontal;
+            left: $content-padding-left;
             max-width: 20rem;
             padding-right: 0.5rem;
 
@@ -65,7 +65,7 @@ $web-pagination: true !default;
 
         .pagination-next {
             float: right; // when not position: fixed
-            right: $content-padding-horizontal;
+            right: $content-padding-right;
             max-width: 20rem;
             padding-left: 0.5rem;
             text-align: right;

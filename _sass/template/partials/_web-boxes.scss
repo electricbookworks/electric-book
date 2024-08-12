@@ -198,21 +198,21 @@ $web-boxes: true !default;
         background-color: $color-accent;
 
         clear: both;
-        margin-bottom: $content-padding-vertical * 2;
-        padding: $content-padding-vertical $content-padding-horizontal;
+        margin-bottom: $content-padding-bottom * 2;
+        padding: $content-padding-top $content-padding-right $content-padding-bottom $content-padding-left;
         width: 100vw;
 
         // If screen is less than max-width-default,
         // only extend the color as far as the padding on the content.
         // Otherwise, extend it by that plus the sidebar space.
-        margin-left: -($content-padding-horizontal);
+        margin-left: -($content-padding-left);
         @media only screen and (min-width: $max-width-default) {
             width: 100vw;
-            margin-left: calc(-1 * ((100vw - #{$max-width-default}) * 0.5) - #{$content-padding-horizontal});
-            padding-left: calc(((100vw - #{$max-width-default}) * 0.5) + #{$content-padding-horizontal});
-            padding-right: calc(((100vw - #{$max-width-default}) * 0.5) + #{$content-padding-horizontal});
-            padding-top: $content-padding-vertical * 2;
-            padding-bottom: $content-padding-vertical * 2;
+            margin-left: calc(-1 * ((100vw - #{$max-width-default}) * 0.5) - #{$content-padding-left});
+            padding-left: calc(((100vw - #{$max-width-default}) * 0.5) + #{$content-padding-left});
+            padding-right: calc(((100vw - #{$max-width-default}) * 0.5) + #{$content-padding-right});
+            padding-top: $content-padding-top * 2;
+            padding-bottom: $content-padding-bottom * 2;
         }
 
         // No space above first heading in panel
