@@ -19,7 +19,7 @@ $web-footer: true !default;
 		clear: both;
 		max-width: $max-width-default;
 		margin: auto;
-		padding: $line-height-default 1em; // 1em to align with padding on #content
+		padding: $content-padding-top $content-padding-right $content-padding-bottom $content-padding-left;
 	}
 	#footer p,
 	#footer ol,

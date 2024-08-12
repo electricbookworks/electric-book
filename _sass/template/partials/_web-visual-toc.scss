@@ -15,10 +15,10 @@ $web-visual-toc: true !default;
             @media only screen and (min-width: $max-width-default) {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: ($content-padding-vertical * 3) ($content-padding-horizontal * 3);
+                gap: ($content-padding-top * 3) ($content-padding-left * 3);
                 justify-content: space-between;
-                margin-left: $content-padding-horizontal * 2;
-                margin-right: $content-padding-horizontal * 2;
+                margin-left: $content-padding-left * 2;
+                margin-right: $content-padding-right * 2;
             }
 
             @media only screen and (min-width: ($max-width-default * 2)) {

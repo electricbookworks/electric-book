@@ -38,8 +38,10 @@ $path-to-root-directory: "../.." !default;
 $max-width-default: 45rem !default;
 
 // The minimum empty space around the main content area
-$content-padding-horizontal: 1rem;
-$content-padding-vertical: 1rem;
+$content-padding-top: 1rem;
+$content-padding-bottom: 1rem;
+$content-padding-left: 1rem;
+$content-padding-right: 1rem;
 
 // We name font variables for two categories:
 // - 'text' fonts are used for body text and some page features;

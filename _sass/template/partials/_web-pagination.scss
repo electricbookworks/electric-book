@@ -42,20 +42,21 @@ $web-pagination: true !default;
 
             @media only screen and (min-width: $break-width-large) {
                 position: fixed;
-                bottom: 2rem;
+                bottom: $content-padding-bottom;
                 width: 70%;
             }
 
             .pagination-marker {
                 background-color: $color-background;
-                padding: 0.5rem;
                 border-radius: $button-border-radius;
+                display: inline-block;
+                padding: 0.5rem;
             }
         }
 
         .pagination-previous {
             float: left; // when not position: fixed
-            left: 2rem;
+            left: $content-padding-left;
             max-width: 20rem;
             padding-right: 0.5rem;
 
@@ -64,7 +65,7 @@ $web-pagination: true !default;
 
         .pagination-next {
             float: right; // when not position: fixed
-            right: 2rem;
+            right: $content-padding-right;
             max-width: 20rem;
             padding-left: 0.5rem;
             text-align: right;
