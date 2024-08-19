@@ -6,39 +6,41 @@ $pdf-video: true !default;
 
     .video {
         font-family: $font-text-secondary;
-        margin: 1em 0;
-        position: relative; // positions child element play button correctly
+        margin: $line-height-default 0;
+        position: relative;
+
         img {
             width: 100%;
         }
-        .video-link {}
+
         .video-description {
             font-size: $font-size-default * 0.8;
             margin: ($line-height-default / 2) 0;
             text-align: left;
         }
+
         .video-wrapper {
-            position: relative;
-            // Add play button before iframe loads
-            &:before {
-                content: "\25b6";
-                position: absolute;
-                font-size: $font-size-default * 3;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                -webkit-transform: translate(-50%, -50%);
-                color: white;
-            }
+
             // Create placeholder with 16:9 aspect ratio
             // when there is no image to display
             &.video-no-image {
                 width: 100%;
-                padding-bottom: 56.25%;
-                background-color: $color-mid;
+                background-color: $color-accent;
                 border-radius: $box-border-radius;
+
+                .video-link {
+                    display: block;
+
+                    // We use this technique to create a 16/9
+                    // aspect ratio because the aspect-ratio property
+                    // is not supported in Prince yet.
+                    // https://www.princexml.com/forum/topic/4935/aspect-ratio-property
+                    height: 0;
+                    padding-top: 56.25%;
+                }
             }
         }
+
         // Don't indent a paragraph after a video.
         & + p {
             text-indent: 0;
