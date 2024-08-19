@@ -119,7 +119,9 @@ have different behaviour for web or app. {% endcomment %}
 
     {% endunless %}
 
-{% comment %} Scripts for epub output. {% endcomment %}
+{% comment %} Scripts for epub output.
+Do not expect support in many readers. {% endcomment %}
 {% if site.output == "epub" %}
+    {% include_relative mcqs.js %}
     {% include_relative show-hide.js %}
 {% endif %}

@@ -1,8 +1,8 @@
-/* global locales, pageLanguage, XMLHttpRequest */
+/* global locales, pageLanguage, settings, XMLHttpRequest */
 
 // -----------------------------
 // Options
-// 1. If you're pining scores to a Wordpress database,
+// 1. If you're pinging scores to a Wordpress database,
 //    enter the name of the cookie it leaves here.
 const wordpressCookieName = 'mywpcookie'
 // -----------------------------
@@ -476,8 +476,11 @@ function ebMCQsButtonClicks () {
       }
 
       // now send it all to WordPress
-      const quizNumber = mcqsToCheckName.replace('question-', '')
-      ebMCQsSendtoWordPress(quizNumber, score)
+      // if this is a website or an app
+      if (settings.site.output === 'web' || settings.site.output === 'app') {
+        const quizNumber = mcqsToCheckName.replace('question-', '')
+        ebMCQsSendtoWordPress(quizNumber, score)
+      }
     })
   })
 }
@@ -490,7 +493,10 @@ function ebMCQs () {
   }
 
   // add the WordPress account button
-  ebMCQsAddWordPressAccountButton()
+  // if this is a website
+  if (settings.site.output === 'web') {
+    ebMCQsAddWordPressAccountButton()
+  }
 
   // mark the document, to use the class in CSS
   document.documentElement.classList.add('js-mcq')

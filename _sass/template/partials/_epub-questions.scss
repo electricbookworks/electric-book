@@ -199,6 +199,7 @@ $epub-questions: true !default;
                 // position: absolute; // not valid in epub
                 top: $line-height-default / 2;
                 left: $paragraph-indent;
+                position: absolute;
             }
             li {
                 display: none;
