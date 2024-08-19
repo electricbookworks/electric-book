@@ -4,15 +4,22 @@ $web-copyright-page: true !default;
     // Copyright page
 
     .copyright-page {
+
         p {
            text-indent: 0;
            margin: 0 0 ($line-height-default / 2) 0;
+
+           &.identifier {
+            margin: 0;
+           }
         }
+
         .identifiers {
+            list-style-type: none;
+
             .identifier-scheme {}
             .identifier-format {}
             .identifier-id {}
         }
     }
-
 }
