@@ -5,44 +5,39 @@
     {% capture scheme %}{{ include.scheme }}{% endcapture %}
 {% endif %}
 
-<p class="identifiers">
+<ul class="identifiers">
 
     {% comment %} We don't have line breaks between spans below
     so that we can control spacing with CSS. {% endcomment %}
 
     {% if print-pdf-identifier and print-pdf-identifier != "" %}
-        <span class="identifier print-pdf-identifier">
+        <li class="identifier print-pdf-identifier">
             <span class="identifier-scheme">{{ scheme }}</span>{% if print-pdf-format and print-pdf-format != "" %} (<span class="identifier-format">{{ print-pdf-format }}</span>){% endif %}: <span class="identifier-id">{{ print-pdf-identifier }}</span>
-        </span>
-        <br />
+        </li>
     {% elsif identifier and identifier != "" %}
-        <span class="identifier">
+        <li class="identifier">
             <span class="identifier-scheme">{{ scheme }}</span>: <span class="identifier-id">{{ identifier }}</span>
-        </span>
-        <br />
+        </li>
     {% else %}
     {% endif %}
 
     {% if screen-pdf-identifier and screen-pdf-identifier != "" %}
-        <span class="identifier screen-pdf-identifier">
+        <li class="identifier screen-pdf-identifier">
             <span class="identifier-scheme">{{ scheme }}</span>{% if screen-pdf-format and screen-pdf-format != "" %} (<span class="identifier-format">{{ screen-pdf-format }}</span>){% endif %}: <span class="identifier-id">{{ screen-pdf-identifier }}</span>
-        </span>
-        <br />
+        </li>
     {% endif %}
     
     {% if epub-identifier and epub-identifier != "" %}
-        <span class="identifier epub-identifier">
+        <li class="identifier epub-identifier">
             <span class="identifier-scheme">{{ scheme }}</span>{% if epub-format and epub-format != "" %} (<span class="identifier-format">{{ epub-format }}</span>){% endif %}: <span class="identifier-id">{{ epub-identifier }}</span>
-        </span>
-        <br />
+        </li>
     {% endif %}
     
     {% if web-identifier and web-identifier != "" %}
-        <span class="identifier web-identifier">
+        <li class="identifier web-identifier">
             <span class="identifier-scheme">{{ scheme }}</span>{% if web-format and web-format != "" %} (<span class="identifier-format">{{ web-format }}</span>){% endif %}: <span class="identifier-id">{{ web-identifier }}</span>
-        </span>
-        <br />
+        </li>
     {% endif %}
 
-</p>
+</ul>
 {% endcapture %}{{ identifiers-html | strip_newlines | strip }}
