@@ -6,54 +6,47 @@ $epub-video: true !default;
 
     .video {
         font-family: $font-text-secondary;
-        margin: 0 0 1em 0;
-        position: relative; // positions child element play button correctly
+        margin: $line-height-default 0;
+        position: relative;
+
         img {
             width: 100%;
         }
-        .video-link {}
+
+        .video-link {
+            display: block;
+            height: 100%;
+        }
+
         .video-description {
             margin-top: $line-height-default;
             text-align: left;
         }
+
         .video-wrapper {
             position: relative;
+
             a {
                 // Show URL on e-ink devices
                 @include show-url();
             }
-            // Add play button before iframe loads
-            &:before {
-                content: "\25b6";
-                position: relative;
-                // position: absolute; // not supported in epub yet
-                font-size: $font-size-default * 3;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                -webkit-transform: translate(-50%, -50%);
-                color: white;
-                opacity: 0.5;
-            }
+
             // Create placeholder with 16:9 aspect ratio
             // when there is no image to display
             &.video-no-image {
-                width: 100%;
-                padding-bottom: 56.25%;
-                background-color: $color-mid;
+                aspect-ratio: 16/9;
+                background-color: $color-accent;
                 border-radius: $box-border-radius;
+                width: 100%;
             }
+
             // JS will add an iframe here; when it does:
             &.contains-iframe {
-            float: none;
-            clear: both;
-            width: 100%;
-            // Give the iframe an intrinsic ratio on all screens
-            // Credit to https://alistapart.com/article/creating-intrinsic-ratios-for-video
-            position: relative;
-            padding-bottom: 56.25%;
-            padding-top: 25px;
-            height: 0;
+                aspect-ratio: 16/9;
+                float: none;
+                clear: both;
+                width: 100%;
+
                 iframe {
                     // position: absolute; // not supported in epub yet
                     top: 0;
@@ -63,6 +56,7 @@ $epub-video: true !default;
                 }
             }
         }
+
         // Don't indent a paragraph after a video.
         & + p {
             text-indent: 0;

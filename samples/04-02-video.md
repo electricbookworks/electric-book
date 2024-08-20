@@ -10,8 +10,8 @@ The Electric Book template includes a tag for easily inserting videos from YouTu
 
 In this example, we have a YouTube video, without a description, set to start 14 seconds in. There's an option to watch it elsewhere, too, which won't show on PDF by default.
 
-{% include video id="OJWJE0x7T4Q" start="14" options="
-[Watch on Bilibili](https://www.bilibili.com/video/BV1zE411X76t/)" %}
+{% include video id="oXkSfqmzG1o" start="14" options="
+[Watch on Bilibili](https://www.bilibili.com/video/BV1tG4y1L7u2/)" %}
 
 And a Vimeo one, set to start 5 seconds in.
 
