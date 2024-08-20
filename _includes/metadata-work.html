@@ -365,7 +365,9 @@ we fall back to the value in the work's default.yml.
 {% elsif work.default.products.epub.contents-page and work.default.products.epub.contents-page != "" %}
     {% capture epub-contents-page %}{{ work.default.products.epub.contents-page }}{% endcapture %}
 {% else %}
-    {% capture epub-contents-page %}{{ default-start-page }}{% endcapture %}
+    {% comment %} The epub-contents-page is important for epub validity as the `nav`
+    in package.opf. So if it is not set here, it must not fall back to anything that
+    might not include a valid nav element. {% endcomment %}
 {% endif %}
 
 {% if work[work-variant].products.epub.language and work[work-variant].products.epub.language != "" %}
