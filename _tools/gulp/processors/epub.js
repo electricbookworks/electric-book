@@ -27,6 +27,7 @@ function runEpubTransformations (done) {
         })
       },
       parserOptions: {
+        // XML mode necessary for epub output
         xmlMode: true
       }
     }))
@@ -92,6 +93,7 @@ function epubXhtmlLinks (done) {
         })
       },
       parserOptions: {
+        // XML mode necessary for epub output
         xmlMode: true
       }
     }))
