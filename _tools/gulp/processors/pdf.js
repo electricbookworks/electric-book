@@ -32,7 +32,9 @@ function runPDFTransformations (done) {
         })
       },
       parserOptions: {
-        xmlMode: true
+        // XML mode causes problems with duplicating line breaks;
+        // avoid except where necessary for epub output.
+        xmlMode: false
       }
     }))
     .pipe(debug({ title: 'Performing HTML transformations ...' }))
