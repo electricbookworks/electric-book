@@ -135,8 +135,10 @@ $text-divider-text: "" !default; // Empty leaves space. \2022 is a bullet
 $text-divider-image: "" !default;
 $text-divider-image-width: $line-height-default !default;
 
-// Other features
+// Title page
 $title-page-logo-width: 5rem !default;
+$title-page-logo-font: $font-text-main !default;
+$title-page-logo-font-size: 0.8rem !default;
 
 // Elements that float. When these are surrounded by paragraphs,
 // the following paragraph should be indented when we are not

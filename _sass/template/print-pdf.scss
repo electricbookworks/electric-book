@@ -215,8 +215,10 @@ $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see
 // using $spaced-paras.
 $floated-element-classes: sidenote, qr-code !default;
 
-// Other PDF features
+// Title page
 $title-page-logo-width: $paragraph-indent * 3 !default;
+$title-page-logo-font: $font-text-main !default;
+$title-page-logo-font-size: $font-size-default - 1 !default;
 
 // Elements that float. When these are surrounded by paragraphs,
 // the following paragraph should be indented when we are not
