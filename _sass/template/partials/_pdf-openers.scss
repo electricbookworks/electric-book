@@ -24,4 +24,21 @@ $pdf-openers: true !default;
             width: 100%;
         }
     }
+
+    // If the opener-image-wrapper is on a page
+    // that has a start-depth, account for that extra depth.
+    // Prince collapses the margin-tops on the .wrapper
+    // and the .opener-image-wrapper, so we just replace
+    // $margin-top with $start-depth below, if the
+    // $start-depth is greater than the $margin-top.
+
+    @if $start-depth > $margin-top {
+        @each $page-style in $start-depth-page-styles {
+            .#{$page-style} {
+                .opener-image-wrapper {
+                    margin-top: -($start-depth + $bleed-print);
+                }
+            }
+        }
+    }
 }
