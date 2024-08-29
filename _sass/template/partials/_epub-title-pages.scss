@@ -52,9 +52,16 @@ $epub-title-pages: true !default;
 			font-size: $title-page-logo-font-size;
 			margin: ($line-height-default * 3) auto 0 auto;
 
-			img {
+			img, svg {
 				width: $title-page-logo-width;
 			}
+		}
+
+		// If the class is applied to the image directly,
+		// rather than its container
+		img.title-page-logo,
+		svg.titlepage-logo {
+			width: $title-page-logo-width;
 		}
 	}
 }
