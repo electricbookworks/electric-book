@@ -29,7 +29,7 @@
     "cordova-windows": "^7.0.1",
     "cross-spawn": "^7.0.3",
     "del": "^6.1.1",
-    "epubchecker": "^4.2.2",
+    "epubchecker": "^5.1.0",
     "file-exists": "^5.0.1",
     "fs-extra": "^10.1.0",
     "gulp": "^4.0.2",
