@@ -61,9 +61,17 @@ $pdf-title-pages: true !default;
 			//	Now we'll center the block on the page
 			transform: translateX(-50%);
 		    margin-left: 50%;
-			img {
+
+			img, svg {
 				width: $title-page-logo-width;
 			}
+		}
+
+		// If the class is applied to the image directly,
+		// rather than its container
+		img.title-page-logo,
+		svg.titlepage-logo {
+			width: $title-page-logo-width;
 		}
 	}
 
