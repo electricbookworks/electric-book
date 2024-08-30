@@ -3,12 +3,17 @@
 # in your browser (i.e. an online development environment).
 # See https://www.gitpod.io/docs/config-docker
 
-FROM gitpod/workspace-ruby-2
+# You can find new timestamped tags at:
+# https://hub.docker.com/r/gitpod/workspace-full/tags
+FROM gitpod/workspace-full:2024-08-08-14-54-59
 
-# Need to be root to apt install
+# Need to be root to apt install, even though
+# GitPod docs say they discourage this.
+# We'll switch to the gitpod user below.
 USER root
 
 # Main dependency installation
+# (Some of these might already exist in workspace-full.)
 RUN sudo apt-get update && apt-get install -y \
   software-properties-common \
   make \
@@ -24,6 +29,7 @@ RUN sudo apt-get update && apt-get install -y \
   graphicsmagick
 
 # Dependencies specifically for Puppeteer on unix
+# (Some of these might already exist in workspace-full.)
 RUN sudo apt-get install -y \
   libasound2 \
   libatk1.0-0 \
@@ -38,6 +44,10 @@ RUN sudo apt-get install -y \
   libxdamage1 \
   libxfixes3 \
   libxrandr2
+
+# Dependencies for Prince 11.4
+RUN wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+RUN sudo dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
 
 # # Clear apt cache to make image smaller
 RUN sudo apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
@@ -61,7 +71,9 @@ RUN sudo apt-get update
 # Install Node.js from the new repository
 RUN sudo apt-get install -y nodejs
 
-# Install PrinceXML for printing to PDF
+# Install PrinceXML for printing to PDF.
+# This is a default version for older Electric Book template
+# projects. Newer projects will use Prince in a Node module.
 RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb && \
   dpkg -i prince_11.4-1_ubuntu18.04_amd64.deb
 
@@ -80,20 +92,3 @@ USER gitpod
 
 # Let gitpod own the NPM cache dir
 RUN sudo chown -R 33333:33333 "$HOME/.npm"
-
-# Set paths for Ruby gems
-RUN echo '# Define Ruby Gems path' >> ~/.bashrc
-RUN echo 'export GEM_HOME="$HOME/.rvm/gems/ruby-2.7.6"' >> ~/.bashrc
-RUN echo 'export PATH="$HOME/.rvm/gems/ruby-2.7.6:$PATH"' >> ~/.bashrc
-RUN bash -lc "source ~/.bashrc"
-
-# Install gems.
-# Note we do this here, not in a gitpod `init` task
-# because changes to files outside /workspace,
-# like gem installs, are lost in prebuilds, which
-# only save the /workspace. We could also try installing
-# these dependencies in a `before` task, but that would
-# run twice, potentially making builds slower.
-# (https://www.gitpod.io/docs/configure/projects/prebuilds#workspace-directory-only)
-COPY Gemfile .
-RUN bash -lc "bundle install"
