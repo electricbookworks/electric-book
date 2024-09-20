@@ -17,6 +17,7 @@ const JSZip = require('jszip') // epub-friendly zip utility
 const buildReferenceIndex = require('./reindex/build-reference-index.js')
 const buildSearchIndex = require('./reindex/build-search-index.js')
 const options = require('./options.js').options
+const text = require('./text')
 
 // Output spawned-process data to console
 function logProcess (process, processName) {
@@ -1551,8 +1552,8 @@ async function convertHTMLtoWord (argv) {
       const outputFilePath = fsPath.normalize(outputLocation + '/' +
                     fileBasename + '.docx')
 
-      // Passing an array is safer than a string because
-      // is handles potential spaces in the source filename.
+      // Passing Pandoc an array is safer than a string because
+      // it handles potential spaces in the source filename.
       // We must provide --resource-path or pandoc will look
       // for images in the working directory.
       const args = ['--resource-path=' + fsPath.dirname(filePath),
@@ -1632,7 +1633,7 @@ async function refreshIndexes (argv) {
 }
 
 // Copy a book to create a new one
-function newBook (argv) {
+async function newBook (argv) {
   'use strict'
 
   let sourceName = 'book'
@@ -1662,6 +1663,10 @@ function newBook (argv) {
     fs.copySync(dataSource, dataDestination)
   } catch (error) {
     console.log(error)
+  }
+
+  if (argv.source) {
+    await text.importText(argv)
   }
 }
 

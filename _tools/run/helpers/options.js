@@ -138,6 +138,20 @@ const options = {
     default: true,
     defaultDescription: 'true',
     type: 'boolean'
+  },
+  source: {
+    description: 'Source file for processing',
+    alias: 'z',
+    type: 'string',
+    nargs: 1,
+    normalize: true
+  },
+  split: {
+    description: 'Splits a markdown file at specified string',
+    alias: 't',
+    default: '',
+    defaultDescription: '#',
+    type: 'string'
   }
 }
 
