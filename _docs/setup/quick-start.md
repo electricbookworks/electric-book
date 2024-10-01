@@ -46,7 +46,7 @@ By default, the file will be split at each first-level heading marked with `#` i
 
 The splitting process will add top-of-page YAML to each file it creates. If you've used `#`s as your marker, it will also add the `title:` to the top-of-page-YAML, using that heading's text.
 
-You can use a different split marker. The marker can be any character or string of characters, as long as it is the first thing on the line. E.g. `--split '--split--'`. The remaining characters on the line will be used for the filename.
+You can use a different split marker. The marker can be any character or string of characters, as long as it is the first thing on its line. E.g. `--split '--split--'`. The remaining characters on the line will be used for the filename.
 
 ## Edit and design the book
 

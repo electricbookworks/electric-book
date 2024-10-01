@@ -149,7 +149,7 @@ const options = {
   split: {
     description: 'Splits a markdown file at specified string',
     alias: 't',
-    default: '',
+    default: '#',
     defaultDescription: '#',
     type: 'string'
   }

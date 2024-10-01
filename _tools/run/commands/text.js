@@ -3,7 +3,7 @@
 
 // Modules
 
-const textProcesses = require('../helpers/text/index.js')
+const { convertToMarkdown, splitMarkdownFile, explicitOption } = require('../helpers/helpers.js')
 
 // Exports
 
@@ -19,12 +19,11 @@ exports.handler = function (argv) {
     if (filetype === 'docx') {
       // If the source is a Word file, run importText
       // which will also split if the --split arg is passed.
-      // TODO: check that we don't pass --split by default!
-      textProcesses.importText(argv)
-    } else if (filetype === 'md' && argv.split && argv.split !== '') {
+      convertToMarkdown(argv)
+    } else if (filetype === 'md' && explicitOption('split')) {
       // If the source is a markdown file, don't run importText.
       // but do run splitMarkdownFile if --split is given.
-      textProcesses.splitMarkdownFile(argv)
+      splitMarkdownFile(argv)
     } else {
       console.error('Source file ' + argv.source + ' is not a .docx or .md file.')
     }

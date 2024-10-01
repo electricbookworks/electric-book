@@ -17,7 +17,7 @@ const JSZip = require('jszip') // epub-friendly zip utility
 const buildReferenceIndex = require('./reindex/build-reference-index.js')
 const buildSearchIndex = require('./reindex/build-search-index.js')
 const options = require('./options.js').options
-const text = require('./text')
+const slugify = require('../../gulp/helpers/utilities.js').ebSlugify
 
 // Output spawned-process data to console
 function logProcess (process, processName) {
@@ -82,10 +82,10 @@ function explicitOption (option) {
   let optionWasExplicit = false
 
   // Get all the aliases for this option
-  const aliases = options[option].alias
-
-  // Add the default option to that array
-  aliases.push(option)
+  const aliases = [option]
+  if (options[option] && options[option].alias) {
+    aliases.push(options[option].alias)
+  }
 
   // Check if any of those aliases were in the args
   aliases.forEach(function (alias) {
@@ -1082,10 +1082,10 @@ async function runPrince (argv) {
       // fail-missing-glyphs
       .option('tagged-pdf')
 
-      // These options add too much logging
-      // to be useful, but are available if needed.
-      // .option('verbose')
-      // .option('debug')
+    // These options add too much logging
+    // to be useful, but are available if needed.
+    // .option('verbose')
+    // .option('debug')
 
       // We use set forced to true for these
       // (the third parameter passed for an option)
@@ -1095,11 +1095,11 @@ async function runPrince (argv) {
       .option('max-passes', 3, true)
       .option('fail-dropped-content', true, true)
 
-      // The following options are very strict,
-      // and can cause an unnecessary number of failures
-      // especially when working on maths books.
-      // .option('fail-missing-glyphs', true, true)
-      // .option('no-system-fonts', true, true)
+    // The following options are very strict,
+    // and can cause an unnecessary number of failures
+    // especially when working on maths books.
+    // .option('fail-missing-glyphs', true, true)
+    // .option('no-system-fonts', true, true)
 
       .timeout(100 * 100000) // large timeout required for large books
       .maxbuffer(10 * 1024) // show progress more often
@@ -1666,7 +1666,189 @@ async function newBook (argv) {
   }
 
   if (argv.source) {
-    await text.importText(argv)
+    await convertToMarkdown(argv)
+  }
+}
+
+// Convert with Pandoc
+async function convertToMarkdown (argv) {
+  'use strict'
+  console.log('Converting ' + argv.source + ' …')
+
+  try {
+    // Get information about the source file
+    const sourceFile = fsPath.normalize(process.cwd() + '/_source/' + argv.source)
+    const sourceIsValid = fs.existsSync(fsPath.normalize(sourceFile)) &&
+      fsPath.extname(sourceFile) === '.docx'
+
+    if (sourceIsValid === false) {
+      console.log('Looking for ' + sourceFile) // debugging
+      console.error('Sorry, can\'t find ' + argv.source + ' in the \'_source\' folder,' +
+        ' or it isn\'t a .docx file.')
+      return false
+    }
+
+    // Check that the destination directory exists
+    let destinationDirectory = fsPath.normalize(process.cwd() + '/' + argv.book)
+    if (argv.name && explicitOption('name')) {
+      const folderName = slugify(argv.name)
+      destinationDirectory = fsPath.normalize(process.cwd() + '/' + folderName)
+    }
+
+    if (!fs.existsSync(fsPath.normalize(destinationDirectory))) {
+      fs.mkdirSync(destinationDirectory, { recursive: true })
+    }
+
+    // If the source and destination are valid,
+    // we can finalise filenames and run Pandoc.
+    if (sourceIsValid) {
+      // First, check or create a directory for images,
+      // where Pandoc can put media from the .docx doc.
+      const imageDestinationDirectory = destinationDirectory + '/images/_source'
+
+      if (!fs.existsSync(fsPath.normalize(imageDestinationDirectory))) {
+        fs.mkdirSync(imageDestinationDirectory, { recursive: true })
+      }
+
+      // Finalise destination file names
+      const sourceFileBasename = fsPath.basename(sourceFile, '.docx')
+      const outputFilename = slugify(sourceFileBasename) + '.md'
+      const outputFile = fsPath.normalize(destinationDirectory + '/' + outputFilename)
+
+      // Run Pandoc.
+      // Passing Pandoc an array is safer than a string because
+      // it handles potential spaces in the source filename.
+      // We must provide --resource-path or pandoc will look
+      // for images in the working directory.
+      const pandocArgs = [
+        '--resource-path', process.cwd() + '/_source',
+        '-f', 'docx',
+        '-t', 'markdown_mmd',
+        '--output', outputFile,
+        '--markdown-headings', 'atx',
+        '--wrap', 'none',
+        '--toc',
+        '--extract-media', imageDestinationDirectory
+      ]
+
+      function pandocCallback (error) {
+        if (error) {
+          console.error(error)
+        } else {
+          console.log('Conversion complete, see ' + outputFile)
+
+          // Were we also asked to --split the file?
+          if (explicitOption('split')) {
+            splitMarkdownFile(argv)
+
+            // If the file has been split, remove the original
+            fs.unlink(outputFile, (err) => {
+              if (err) throw err
+            })
+          }
+        }
+      }
+
+      pandoc(sourceFile, pandocArgs, pandocCallback)
+    }
+  } catch (error) {
+    console.error('Unable to convert ' + argv.source)
+  }
+}
+
+// Split a markdown file into separate files
+async function splitMarkdownFile (argv) {
+  'use strict'
+
+  // Check that we have a valid marker to split on
+  let splitMarker = '#'
+  let splitRegex = /\n#/
+  if (explicitOption('split') && argv.split !== '#') {
+    splitMarker = argv.split
+    splitRegex = new RegExp('\n' + splitMarker)
+  }
+
+  // Check that we have a valid book to work in
+  let bookDirectoryName
+  if (pathExists(fsPath.normalize(process.cwd() + '/' + argv.book))) {
+    bookDirectoryName = argv.book
+  } else {
+    console.error('Can\'t find directory named ' + argv.book + ' while splitting markdown file.')
+  }
+
+  // The source argument might refer to a docx file, before
+  // conversion to markdown. So we need to change the extension,
+  // and assume we're splitting the converted markdown equivalent.
+  let fileToSplit = fsPath.normalize(process.cwd() + '/' + bookDirectoryName + '/' + argv.source)
+  fileToSplit = fsPath.format({ ...fsPath.parse(fileToSplit), base: '', ext: '.md' })
+
+  // Update the user
+  console.log('Splitting ' + fileToSplit + ' …')
+
+  // Split the file if it exists
+  if (pathExists(fileToSplit)) {
+    const fileObject = fs.readFileSync(fileToSplit)
+    const filePartsArray = fileObject.toString('utf8').split(splitRegex)
+    const numberOfFileParts = filePartsArray.length
+
+    // Write each filepart to a new file
+    let counter = 0
+    filePartsArray.forEach(function (filePart) {
+      // Count the files we're creating
+      counter += 1
+      // Create a filename from the first line
+      const firstLine = filePart.slice(0, filePart.indexOf('\n')).trim()
+
+      // If this is the first filePart, only create a file
+      // if it has content, since .split() will create
+      // one file before the first split marker.
+      const firstFileHasContent = filePartsArray[0].length > 0
+      if (firstFileHasContent || counter > 1) {
+        const firstLineSlug = slugify(firstLine)
+
+        // Define top-of-page-YAML, with title as the first line.
+        // The split marker was removed during split(),
+        // so we write it back at the start of the first line.
+        const yamlFrontmatter = '---\n' +
+          'title: "' + firstLine + '"\n' +
+          '---\n\n' + splitMarker
+
+        // Insert the top-of-page YAML
+        filePart = yamlFrontmatter + filePart
+
+        // Get a number for the filename.
+        // We pad the file numbering to allow for
+        // the potential addition of, say, 20% future files.
+        // We assume no book will have more than 9999 files.
+        let newFileNumber
+        if (numberOfFileParts < 80) {
+          newFileNumber = counter.toString().padStart(2, '0')
+        } else if (numberOfFileParts < 800) {
+          newFileNumber = counter.toString().padStart(3, '0')
+        } else {
+          newFileNumber = counter.toString().padStart(4, '0')
+        }
+
+        // If the file hasno first line for a slug,
+        // do not use a separator for the filename
+        let fileNameSeparator = ''
+        if (firstLine && firstLineSlug) {
+          fileNameSeparator = '-'
+        }
+
+        // Write the file
+        const newFileName = newFileNumber + fileNameSeparator + firstLineSlug + '.md'
+        const pathToNewFile = fsPath.normalize(process.cwd() + '/' + bookDirectoryName + '/' + newFileName)
+        fsPromises.writeFile(pathToNewFile, filePart)
+      }
+
+      // Are we done?
+      if (counter === numberOfFileParts) {
+        console.log('Done splitting ' + argv.source + '.')
+      }
+    })
+  } else {
+    console.error('Can\'t find ' + fileToSplit + ' in ' + bookDirectoryName + ' for splitting.')
   }
 }
 
@@ -1677,6 +1859,7 @@ module.exports = {
   bookAssetPaths,
   bookIsValid,
   cleanHTMLFiles,
+  convertToMarkdown,
   convertXHTMLFiles,
   convertXHTMLLinks,
   cordova,
@@ -1684,6 +1867,7 @@ module.exports = {
   epubZip,
   epubZipRename,
   exportWord,
+  explicitOption,
   htmlFilePaths,
   installGems,
   installNodeModules,
@@ -1700,6 +1884,7 @@ module.exports = {
   renderIndexLinks,
   renderMathjax,
   runPrince,
+  splitMarkdownFile,
   variantSettings,
   works
 }
