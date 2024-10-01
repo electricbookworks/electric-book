@@ -36,7 +36,7 @@ Here is a step-by-step guide with examples.
    - If you're adding to an existing book, run `npm run eb -- text --book existingbookname --source myworddoc.docx`
 
    In those examples, replace `myworddoc` with your .docx file's name, and `existingbookname` with the name of your existing book folder.
-3. If you want to split a markdown file into separate files, run `npm run eb -- text --book existingbookname --source markdownfile.md --split`.
+3. If you want to split a markdown file into separate files, and that file is already in its book folder, run `npm run eb -- text --book existingbookname --source markdownfile.md --split`.
 
    Alternatively, you can add the `--split` argument to the `npm run eb -- new --source myworddoc.docx` command to split when importing it.
 
