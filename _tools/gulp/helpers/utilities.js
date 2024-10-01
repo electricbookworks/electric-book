@@ -11,6 +11,8 @@ const pathToProjectRoot = '../../../'
 
 let ebSlugify
 try {
+  // We use the same slugifying function throughout the repo,
+  // so that slugs always match no matter where we create them.
   ebSlugify = require(pathToProjectRoot + 'assets/js/utilities.js').ebSlugify
 } catch (utilitiesError) {
   console.log(utilitiesError)
