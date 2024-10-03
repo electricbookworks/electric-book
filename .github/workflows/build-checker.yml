@@ -12,13 +12,13 @@ jobs:
               with:
                 fetch-depth: 2
 
-            - name: Set up Ruby 2.7
+            - name: Set up Ruby 3.3
               uses: ruby/setup-ruby@v1
               with:
-                ruby-version: 2.7
+                ruby-version: 3.3
 
-            - name: Install Bundler
-              run: gem install bundler -v 2.4.22
+            - name: Install Bundler 2.5.16
+              run: gem install bundler -v 2.5.16
 
             - name: Bundle install
               run: bundle install

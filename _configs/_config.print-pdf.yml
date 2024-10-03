@@ -68,7 +68,8 @@ exclude:
   - /search.md
   - /sitemap.xml
   - /test.sh
-  - /assets/styles
+  - /assets/styles/app*
+  - /assets/styles/web*
   - /assets/js/accordion.js
   - /assets/js/annotation.js
   - /assets/js/elasticlunr-setup.js
