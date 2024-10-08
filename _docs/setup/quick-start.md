@@ -6,52 +6,45 @@ order: 0
 
 # Quick start
 
-This quick setup assumes you already have [Jekyll](https://jekyllrb.com/), [Node](https://nodejs.org/) and [Prince](https://www.princexml.com/) (for PDF output) installed. If not, see [setup guidance here](setting-up-your-computer).
+It's possible to create a new project online and start editing it within minutes.
 
 ## Create a new project
 
-1. Download `electric-book.zip` from the [latest release](https://github.com/electricbookworks/electric-book/releases/latest) and extract it.
-2. In the extracted `electric-book` folder, run `npm run electric-book` to see available commands and options.
-3. Run `npm run electric-book -- install` first. You should only need to do this once.
-4. Run `npm run electric-book -- output` script to serve a website of your project.
+1. Go to [github.com/electricbookworks/electric-book](https://github.com/electricbookworks/electric-book/) and click 'Use this template'. Follow the prompts to create a new repository for your project.
 
-   The template includes two books:
-   - `book`: a bare-bones book to start working in; and
-   - `samples`: a long book containing loads of examples.
+2. Your new project on GitHub will have a URL that looks like `https://github.com/your-name/your-project-name/`.
 
-## Add a new book from a Word file
+   Click in the address bar, and at the start of that line, insert `gitpod.io/#`, and hit Enter.
 
-When you're adding new text from a Word file, the commands and options you need to know about are these:
+   Follow the prompts to launch your editing interface in Gitpod.
 
-- The `new` command creates a new book.
-- The `text` command processes a source file or existing book text.
-- The `--source` option says which file to use, and it might be a .docx or a .md file.
-- The `--split` option says whether to split the source file into smaller markdown files, and what character or characters in the source file to split at.
+3. After a few minutes, when the Gitpod Terminal is ready, enter this command to serve a website of your project:
 
-Here is a step-by-step guide with examples.
+   ```sh
+   npm run electric-book -- output
+   ```
 
-1. Put your Word doc in the `_source` folder.
-2. The `--source` option specifies your Word doc. So to import it:
-   - If you're creating a new book, run `npm run eb -- new --source myworddoc.docx`.
-   - If you're adding to an existing book, run `npm run eb -- text --book existingbookname --source myworddoc.docx`
+   When prompted, open the generated site in your browser and add `/electric-book/` to the address in the address bar. E.g.:
 
-   In those examples, replace `myworddoc` with your .docx file's name, and `existingbookname` with the name of your existing book folder.
-3. If you want to split a markdown file into separate files, and that file is already in its book folder, run `npm run eb -- text --book existingbookname --source markdownfile.md --split`.
+   ```
+   https://4000-electricboo-electricboo-u3np6cdtayw.ws-eu116.gitpod.io/electric-book/
+   ```
 
-   Alternatively, you can add the `--split` argument to the `npm run eb -- new --source myworddoc.docx` command to split when importing it.
+You're up and running! From here, you can make the project your own.
 
-### The split marker
+Note that the template includes two books:
 
-By default, the file will be split at each first-level heading marked with `#` in the document. You can specify a different string to split on, like `##`, by specifying it in quotes after `--split`, e.g. `--split '##'`.
+- `book`: a bare-bones book to start working in; and
+- `samples`: a long book containing loads of examples.
 
-The splitting process will add top-of-page YAML to each file it creates. If you've used `#`s as your marker, it will also add the `title:` to the top-of-page-YAML, using that heading's text.
-
-You can use a different split marker. The marker can be any character or string of characters, as long as it is the first thing on its line. E.g. `--split '--split--'`. The remaining characters on the line will be used for the filename.
+To find out how to add your own text from a Word file, see ['Setting up a book' > 'Importing a text file'](setting-up-a-book.html#importing-a-text-file).
 
 ## Edit and design the book
 
-2. Open `_data/works/[book]/default.yml` (where `[book]` is the name of your new book folder) and replace the sample information there with your project and book information.
-3. In the book's folder, edit and add markdown files.
-4. To change the design, edit the `.scss` files for each output format: set project-wide styles in `_sass`, and book-specific styles in `book/styles`. We suggest making all modifications in `_sass/custom`.
+1. Open `_data/works/[book]/default.yml` (where `[book]` is the name of your new book folder) and replace the sample information there with your project and book information.
 
-There is much more detail in [the docs](../).
+2. In the book's folder, edit and add markdown files. If you create new ones, add their names to the `files` and `nav` lists in `_data/works/[book]/default.yml`.
+
+3. To change the design, edit the `.scss` files for each output format. You create project-wide styles in `_sass`, and book-specific styles in `book/styles`. We suggest making all modifications in `_sass/custom`.
+
+   See [the 'Design' section](../layout/design.html) for more detail.
