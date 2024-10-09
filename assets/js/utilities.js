@@ -10,7 +10,7 @@ function ebSlugify (string, indexTerm) {
   const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnooooooooprrsssssttuuuuuuuuuwxyyzzz-----'
   const p = new RegExp(a.split('').join('|'), 'g')
 
-  if (indexTerm) {
+  if (string && indexTerm) {
     // For dynamic index terms, we want to take a different approach
     // to ensure unique ids
     return string.toString().toLowerCase()
@@ -26,17 +26,21 @@ function ebSlugify (string, indexTerm) {
       .replace(/[^\w-]+/g, '') // Remove all non-word characters
   }
 
-  return string.toString().toLowerCase()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(p, function (c) {
-      return b.charAt(a.indexOf(c))
-    }) // Replace special characters
-    .replace(/\//g, '-') // Replace any / with - (in non-index strings)
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w-]+/g, '') // Remove all non-word characters
-    .replace(/--+/g, '-') // Replace multiple - with single -
-    .replace(/^-+/, '') // Trim - from start of text
-    .replace(/-+$/, '') // Trim - from end of text
+  if (string) {
+    return string.toString().toLowerCase()
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace(p, function (c) {
+        return b.charAt(a.indexOf(c))
+      }) // Replace special characters
+      .replace(/\//g, '-') // Replace any / with - (in non-index strings)
+      .replace(/&/g, '-and-') // Replace & with 'and'
+      .replace(/[^\w-]+/g, '') // Remove all non-word characters
+      .replace(/--+/g, '-') // Replace multiple - with single -
+      .replace(/^-+/, '') // Trim - from start of text
+      .replace(/-+$/, '') // Trim - from end of text
+  } else {
+    console.error('No string passed for slugification.')
+  }
 }
 
 // Or get the language from a URL parameter

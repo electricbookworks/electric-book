@@ -52,7 +52,87 @@ For example, if you're making a copy of `a-new-hope` to create `the-empire-strik
 npm run eb -- new --book a-new-hope --name the-empire-strikes-back
 ```
 
-## Creating book content
+## Importing a text file
+
+You can import a .docx file as you create a new book, or to add content to an existing book.
+
+When you're adding new text from a Word file, the commands and options you need to know about are these:
+
+- The `new` command creates a new book.
+- The `text` command processes text, either importing a source `.docx` file or transforming existing markdown in a book directory.
+- The `--source` option says which file to use. That might be a `.docx` or a `.md` file.
+
+Here is a step-by-step guide.
+
+1. Put your `.docx` file (that is, a Word doc) in the `_source` folder. (The one in the root of the project. Don't confuse this with the `_source` folders in `images` folders.)
+2. The command you run to import the file depends whether you are creating a new book or adding to an existing one.
+   - If you're creating a **new book**, run
+
+     ```
+	 npm run eb -- new --source myworddoc.docx
+	 ```
+
+	 That will create a new book folder, a new folder in `_data/works`, and convert your `.docx` file to a markdown file in the new book folder.
+
+   - If you're adding to an **existing book**, run
+
+   ```
+   npm run eb -- text --book existingbookname --source myworddoc.docx
+   ```
+
+   In those examples, replace `myworddoc` with your .docx file's name, and `existingbookname` with the name of your existing book folder.
+
+You now have a single markdown file. You may want to split that file into separate markdown files, each of which would become a separate web page in the web book output.
+
+## Splitting a file
+
+If you want to split your file at the same time that you import it (as described above), you add `--split` to the command. For example, adding to the example above, this command will create a new book, convert your `.docx` file to markdown, *and also* split it into separate files:
+
+```
+npm run eb -- new --source myworddoc.docx --split
+```
+
+Optionally, you can specify, in quote marks after `--split`, the characters you want to split at. For example:
+
+```
+npm run eb -- new --source myworddoc.docx --split "##"
+```
+
+See below for more detail on split markers.
+
+If you want to split an existing markdown file into separate files, if that file is already in its book folder, run:
+
+```
+npm run eb -- text --book existingbookname --source markdownfile.md --split
+```
+
+### The split marker
+
+The split marker is the character, or characters, in the markdown file that mark where the file should be split.
+
+By default, the file will be split at each heading marked with `#` in the document (that is, the first-level heading, `h1`). You can specify a different string to split on, like `##`, by specifying it in quotes after `--split`, e.g. `--split '##'`.
+
+Important: the split marker you specify must appear in the *markdown* file. So if you are converting from `.docx`, you need to know how your split marker will appear once it has been converted to markdown.
+
+In `.docx`, headings that are styled as 'Heading 1' in Word will be converted to markdown as lines that begin with `#`, which is our default split marker. So, by default, imported `.docx` files will be split on those first-level headings, if they are correctly styled as such in Word. Second-level 'Heading 2' headings in Word become lines starting with `##` in markdown. If you use a unique string of characters, like `split()me` for example, in Word, those would probably come out exactly like that in markdown.
+
+So you can use any characters as a split marker, as long as they are the first thing on their line in markdown.
+
+Importantly, *the remaining characters on the line will be used for the filename*, prefixed by a number. In practice, this means that by default a file that begins with the first-level heading 'The Boy Who Lived', for example, will be saved as `01-the-boy-who-lived.md`.
+
+The splitting process will add top-of-page YAML to each file it creates. If you've used `#`s as your marker, it will also add the `title:` to the top-of-page-YAML, also using that heading's text. E.g.:
+
+```md
+---
+title: "The Boy Who Lived"
+---
+
+# The Boy Who Lived
+```
+
+After splitting a file, you will need to add the separate files to the book's `files`, `toc`, and/or `nav` lists in its `.yml` file in `_data/works`. To make this easier for you, the splitting process above will generate these lists for you to copy and paste. After you run a `--split` process, these generated lists will appear as files in the `_output` folder.
+
+## Creating and editing book content
 
 Each markdown file in `space-potatoes` is a part of a book, such as a table of contents or a chapter. Each file must start with:
 
@@ -120,9 +200,9 @@ You can also invent your own page styles, and use them in your custom CSS instea
 
 ### Set 'page number one'
 
-Many books have two 'page ones': 
+Many books have two 'page ones':
 
-1.	the half-title or title page and, 
+1.	the half-title or title page and,
 2.	if the prelims have roman-numeral page numbers, the first chapter.
 
 You should specify those pages so that Prince knows where to start numbering when creating PDFs.
