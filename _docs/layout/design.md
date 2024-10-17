@@ -30,7 +30,10 @@ The Electric Book template has a flexible but complex system for styling at diff
 - Each book can have its own styles in its own `styles` folder. In practice, book-level styles are rarely used. By default, each book just imports the `template` styles in the project's `_sass` folder.
 - The `template` styles provide basic conventions that are almost universal in book design, like a table of contents and running headers. These basics are unopinionated, 'vanilla' styles with little personality. You should generally avoid modifying the files in `template` in case you want to update your project from the latest Electric Book template styles later.
 - After laying the foundations, the `template` styles then include the styles in the `custom` folder. This is where you can create your own designs that override and extend the `template` styles. (More on this below.)
-- Finally, the `custom` styles import an optional `base` design in the `base` folder. Base designs are a quick way to copy an existing design that might have lots of personality. By default, the `base` folder in `_sass` is empty of styles. You can get [free base designs from Electric Book Works](https://github.com/electricbookworks/electric-book-base-designs). Your `custom` styles extend any base design, rather than starting from the plain vanilla `template` styles. See the `README` file in `_sass/base` for guidance.
+- Finally, the `custom` styles import an optional `base` design in the `base` folder. Base designs are a quick way to copy an existing design that might have lots of personality. By default, the `base` folder in `_sass` is empty of styles. Your `custom` styles extend any base design, rather than starting from the plain vanilla `template` styles. See the `README` file in `_sass/base` for guidance.
+
+Electric Book Works creates base designs for its clients. If you are interested in licensing or commissioning a base design, [contact our team](https://electricbookworks.com/contact/).
+{:.box}
 
 ## Editing `custom` styles
 
