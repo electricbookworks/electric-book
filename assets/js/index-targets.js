@@ -57,7 +57,7 @@ function ebIndexProcessComments (comments) {
 
   // If there are no comments, note that in the
   // `data-index-targets` attribute.
-  if (comments.length < 1) {
+  if (comments.length < 1 || !comments) {
     document.body.setAttribute('data-index-targets', 'none')
   }
 
