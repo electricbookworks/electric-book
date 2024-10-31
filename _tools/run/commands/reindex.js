@@ -6,6 +6,7 @@
 
 // Modules
 
+const chalk = require('chalk')
 const helpers = require('../helpers/helpers')
 
 // Exports
@@ -15,7 +16,8 @@ exports.desc = 'Refresh search and book indexes'
 exports.handler = function (argv) {
   'use strict'
 
-  console.log('Refreshing index for ' + argv.format + '\n' +
-    'Remember to refresh indexes separately for each output format.')
+  console.log('Refreshing index for ' + argv.format + '.\n' +
+    chalk.underline('Remember to refresh indexes separately for each output format.') +
+    chalk.reset('\n'))
   helpers.refreshIndexes(argv)
 }
