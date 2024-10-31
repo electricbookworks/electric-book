@@ -3,8 +3,7 @@ layout: trim
 ---
 
 {% comment %} This page bundles the components that
-allow elasticlunr to search the index.
-Only search-store is also used for PDF and epub. {% endcomment %}
+allow elasticlunr to search the index. {% endcomment %}
 
 {% if site.output == "web" or site.output == "app" %}
 
@@ -15,7 +14,3 @@ Only search-store is also used for PDF and epub. {% endcomment %}
     {% include_relative elasticlunr-setup.js %}
 
 {% endif %}
-
-{% comment %} The store of search results that we will return after
-elasticlunr has searched the index and returned a page id {% endcomment %}
-{% include_relative search-store.js %}

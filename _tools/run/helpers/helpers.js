@@ -648,6 +648,21 @@ function projectSettings () {
   return settings
 }
 
+// Get the translation languages for a work,
+// assuming those are the subfolder names
+// of its book folder in _data/works.
+function translations (workAsString) {
+  const workDataDirectory = fsPath.normalize(process.cwd() +
+    '/_data/works/' + workAsString)
+  const workDirectoryPaths = fs.readdirSync(workDataDirectory, { withFileTypes: true })
+
+  const workSubdirectories = workDirectoryPaths
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+
+  return workSubdirectories
+}
+
 // Get variant settings
 function variantSettings (argv) {
   // Create an object for default settings
@@ -680,8 +695,10 @@ function variantSettings (argv) {
   return settings
 }
 
-// Get the filelist for a format
-function fileList (argv) {
+// Get the filelist for a format,
+// with option to get file-list for a specific book.
+// The book argument here takes a string.
+function fileList (argv, book, language) {
   'use strict'
 
   let format
@@ -694,9 +711,13 @@ function fileList (argv) {
   // Check for variant-edition output
   const variant = variantSettings(argv).active
 
-  let book = 'book' // default
-  if (argv.book) {
+  // If a specific book is required, use that,
+  // otherwise use the book defined in argv,
+  // and fall back to the default 'book' book.
+  if ((!book) && argv.book) {
     book = argv.book
+  } else if (!book) {
+    book = 'book' // default
   }
 
   // Build path to YAML data for this book
@@ -710,15 +731,23 @@ function fileList (argv) {
   // Get the files list
   const metadata = yaml.load(fs.readFileSync(pathToDefaultYAML, 'utf8'))
 
-  let files
-  if (metadata.products[format] && metadata.products[format].files) {
+  // Check if this book is published.
+  // If not (`published: false`), don't include its files.
+  let defaultPublished = true
+  if (metadata !== undefined && metadata.published === false) {
+    defaultPublished = metadata.published
+    console.log(book + ' is set to `published: ' + metadata.published + '` in _data/works.')
+  }
+
+  let files = {}
+  if (defaultPublished && metadata.products[format] && metadata.products[format].files) {
     files = metadata.products[format].files
   } else {
     files = metadata.products['print-pdf'].files
   }
 
   // If there was no files list, oops!
-  if (!files) {
+  if (defaultPublished && (!files)) {
     console.log('No files list in book data. Using raw files in ' + book + '.')
 
     // Let's just use all the markdown files for this book
@@ -789,12 +818,18 @@ function fileList (argv) {
     }
   }
 
+  // Are we using argv.language or a specified language?
+  // A specified language overrides an argv.language.
+  if (argv.language && (!language)) {
+    language = argv.language
+  }
+
   // Build path to translation's default YAML,
   // if a language has been specified.
   let pathToTranslationYAMLFolder,
     pathToDefaultTranslationYAML
-  if (argv.language) {
-    pathToTranslationYAMLFolder = pathToYAMLFolder + argv.language + '/'
+  if (language) {
+    pathToTranslationYAMLFolder = pathToYAMLFolder + language + '/'
     pathToDefaultTranslationYAML = pathToTranslationYAMLFolder + 'default.yml'
 
     // If the translation has this format among its products,
@@ -802,10 +837,22 @@ function fileList (argv) {
     if (pathToDefaultTranslationYAML &&
                 pathExists(pathToDefaultTranslationYAML)) {
       const translationMetadata = yaml.load(fs.readFileSync(pathToDefaultTranslationYAML, 'utf8'))
-      if (translationMetadata &&
-                    translationMetadata.products &&
-                    translationMetadata.products[format] &&
-                    translationMetadata.products[format].files) {
+
+      let translationPublished = true
+      if (translationMetadata !== undefined && translationMetadata.published === false) {
+        translationPublished = translationMetadata.published
+        console.log(book + ' is set to `published: ' +
+          translationMetadata.published +
+          '` in the _data/works ' +
+          language +
+          ' translation.')
+      }
+
+      if (translationPublished &&
+          translationMetadata &&
+          translationMetadata.products &&
+          translationMetadata.products[format] &&
+          translationMetadata.products[format].files) {
         files = translationMetadata.products[format].files
       }
     }
@@ -816,7 +863,7 @@ function fileList (argv) {
   let pathToVariantYAML = false
 
   // If there's a variant and this is a translation ...
-  if (argv.language && variant) {
+  if (language && variant) {
     pathToVariantYAML = pathToTranslationYAMLFolder + variant + '.yml'
 
     // ... otherwise just get the parent language variant path
@@ -827,18 +874,162 @@ function fileList (argv) {
   // If we have a path, and there's a files list there,
   // use that as the files list.
   if (pathToVariantYAML &&
-            pathExists(pathToVariantYAML)) {
+      pathExists(pathToVariantYAML)) {
     const variantMetadata = yaml.load(fs.readFileSync(pathToVariantYAML, 'utf8'))
-    if (variantMetadata &&
-                variantMetadata.products &&
-                variantMetadata.products[format] &&
-                variantMetadata.products[format].files) {
+
+    let variantPublished = true
+    if (variantPublished !== undefined && variantPublished.published === false) {
+      variantPublished = variantPublished.published
+      console.log(book + ' is set to `published: ' +
+        variantPublished.published +
+        '` in the _data/works ' +
+        variant +
+        ' variant.')
+    }
+
+    if (variantPublished &&
+        variantMetadata &&
+        variantMetadata.products &&
+        variantMetadata.products[format] &&
+        variantMetadata.products[format].files) {
       files = variantMetadata.products[format].files
     }
   }
   // Note that files may be objects, not strings,
   // e.g. { "01": "Chapter 1"}
-  return files
+  if (files) {
+    return files
+  } else {
+    console.log('No files listed for ' + book + ' in _data/works.')
+  }
+}
+
+// Get a list of file paths in _docs
+async function filesInDocs () {
+  const docsFiles = await fs.readdir(fsPath.normalize(process.cwd() + '/_docs'), { recursive: true })
+
+  return new Promise(function (resolve) {
+    const files = []
+    docsFiles.forEach(function (file) {
+      if (file.match(/\.md$/g)) {
+        let fileBasename = 'docs/' + file.replace(/\.md$/g, '')
+
+        // Replace backslashes with forward slashes for Windows
+        fileBasename = fileBasename.replace(/\\/g, '/')
+        files.push(fileBasename)
+      }
+    })
+    resolve(files)
+  })
+}
+
+// Get a list of file paths in the project nav
+function filesInProjectNav () {
+  return new Promise(function (resolve) {
+    const files = []
+    const projectNav = yaml.load(fs.readFileSync(process.cwd() + '/_data/nav.yml', 'utf8'))
+    Object.entries(projectNav).forEach(function (entry) {
+      entry[1].forEach(function (item) {
+        const file = item.file
+        files.push(file)
+      })
+    })
+    resolve(files)
+  })
+}
+
+// An object containing info on all content files
+// listed for published works in _data/works,
+// listed in _data/nav.yml, and in _docs.
+async function allFilesListed (argv) {
+  'use strict'
+
+  const data = []
+  const allWorks = await works()
+  const navFiles = await filesInProjectNav()
+  const docs = await filesInDocs()
+
+  return new Promise(function (resolve) {
+    // Get files in each work
+    allWorks.forEach(function (work) {
+      const filesInWork = fileList(argv, work)
+
+      if (filesInWork) {
+        filesInWork.forEach(function (file) {
+          let filename = file
+
+          // Some files are listed as an object,
+          // with a keyword as a value, e.g.
+          // { "01": "Chapter 1"}
+          // and we only want the key here.
+          if (typeof file === 'object') {
+            filename = Object.keys(file)[0]
+          }
+
+          const filePath = work + '/' + filename + '.html'
+
+          const fileData = {
+            path: filePath
+          }
+
+          data.push(fileData)
+        })
+      }
+
+      // Now get the file for its translations
+      const translationLanguages = translations(work)
+
+      if (translationLanguages) {
+        translationLanguages.forEach(function (language) {
+          const filesInTranslation = fileList(argv, work, language)
+
+          if (filesInTranslation) {
+            filesInTranslation.forEach(function (file) {
+              let filename = file
+
+              // Some files are listed as an object,
+              // with a keyword as a value, e.g.
+              // { "01": "Chapter 1"}
+              // and we only want the key here.
+              if (typeof file === 'object') {
+                filename = Object.keys(file)[0]
+              }
+
+              const filePath = work + '/' + language + '/' + filename + '.html'
+
+              const fileData = {
+                path: filePath
+              }
+
+              data.push(fileData)
+            })
+          }
+        })
+      }
+    })
+
+    // Get files listed in the project nav
+    navFiles.forEach(function (file) {
+      const filePath = file + '.html'
+      const fileData = {
+        path: filePath
+      }
+      data.push(fileData)
+    })
+
+    // Add docs, if they are enabled in _config.
+    if (configsObject(argv).collections.docs.output === true) {
+      docs.forEach(function (file) {
+        const filePath = file + '.html'
+        const fileData = {
+          path: filePath
+        }
+        data.push(fileData)
+      })
+    }
+
+    resolve(data)
+  })
 }
 
 // Get array of HTML-file paths for this output
@@ -1426,18 +1617,22 @@ function bookAssetPaths (argv, assetType, folder) {
 function works () {
   'use strict'
 
-  // Get the works data directory
-  const worksDirectory = fsPath.normalize(process.cwd() +
-            '/_data/works')
+  return new Promise(function (resolve) {
+    // Get the works data directory
+    const worksDirectory = fsPath.normalize(process.cwd() +
+              '/_data/works')
 
-  // Get the folder names in the works directory
-  const arrayOfWorks = fs.readdirSync(worksDirectory, { withFileTypes: true })
+    // Get the folder names in the works directory
+    const arrayOfWorks = fs.readdirSync(worksDirectory, { withFileTypes: true })
 
-  // These only work with arrow functions?
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name)
+    // These only work with arrow functions?
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name)
 
-  return arrayOfWorks
+    if (arrayOfWorks) {
+      resolve(arrayOfWorks)
+    }
+  })
 }
 
 // Check that the --book value is valid
@@ -1619,13 +1814,15 @@ async function refreshIndexes (argv) {
       await renderIndexComments(argv)
     }
 
+    const filesForIndexing = await allFilesListed(argv)
+
     if (projectSettings()['dynamic-indexing'] !== false) {
-      buildReferenceIndex(argv.format)
+      buildReferenceIndex(argv.format, filesForIndexing)
     }
 
     if (argv.format === 'web' ||
       argv.format === 'app') {
-      buildSearchIndex(argv.format)
+      buildSearchIndex(argv.format, filesForIndexing)
     }
   } catch (error) {
     console.log(error)
@@ -1843,7 +2040,6 @@ async function splitMarkdownFile (argv) {
 
     // Write each filepart to a new file
     filePartsArray.forEach(function (filePart) {
-
       // Create a filename from the first line
       // and a slug of that for use later
       const firstLine = filePart.slice(0, filePart.indexOf('\n')).trim()
@@ -1932,8 +2128,8 @@ async function splitMarkdownFile (argv) {
 }
 
 module.exports = {
-  epubHTMLTransformations,
   addToEpub,
+  allFilesListed,
   assembleApp,
   bookAssetPaths,
   bookIsValid,
@@ -1942,6 +2138,7 @@ module.exports = {
   convertXHTMLFiles,
   convertXHTMLLinks,
   cordova,
+  epubHTMLTransformations,
   epubValidate,
   epubZip,
   epubZipRename,

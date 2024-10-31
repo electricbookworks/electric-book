@@ -6,8 +6,8 @@ const gulp = require('gulp')
 
 // Local helpers
 const {
-  allTextPaths, paths, store, printpdfIndexTargets,
-  screenpdfIndexTargets, epubIndexTargets, appIndexTargets
+  paths, printpdfIndexTargets, screenpdfIndexTargets,
+  epubIndexTargets, appIndexTargets
 } = require('../helpers/paths.js')
 const { ebSlugify } = require('../helpers/utilities.js')
 const { format } = require('../helpers/args.js')
@@ -19,7 +19,7 @@ const { format } = require('../helpers/args.js')
 // update it, you may need to update index-targets.js as well.
 function renderIndexCommentsAsTargets (done) {
   'use strict'
-  gulp.src(allTextPaths(store), { base: './' })
+  gulp.src(paths.text.src, { base: './' })
     .pipe(cheerio({
       run: function ($) {
         // Create an empty array to store entries.
