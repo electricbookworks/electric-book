@@ -27,9 +27,12 @@ function ebLazyLoadImages () {
 
   // If IntersectionObserver is supported,
   // and lazyloading is on in settings.yml (loaded in settings.js),
+  // and the page is loaded over http so that SVG injection is possible
+  // (note that refreshing indexes scrapes page over the file: protocol,
+  // so we do not want lazyloading there),
   // create a new one that will use it on all the lazyImages.
   if (Object.prototype.hasOwnProperty.call(window, 'IntersectionObserver') &&
-      settings.web.images.lazyload) {
+      settings.web.images.lazyload && window.location.protocol.includes('http')) {
     const lazyImageObserver = new IntersectionObserver(function
     (entries, lazyImageObserver) {
       entries.forEach(function (entry) {

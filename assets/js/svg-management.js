@@ -214,11 +214,16 @@ function ebWaitForTestingImages () {
 }
 
 // Go
-if (settings.remoteMedia.testing &&
-    settings.remoteMedia.testing.length > 0) {
-  // Wait for testing images to load
-  // before injecting SVGs
-  ebWaitForTestingImages()
-} else {
-  ebInjectSVGs()
+// Do not try to inject SVGs if the page
+// is not running on http, because CORS will
+// not allow SVG injection except on http.
+if ((window.location.protocol).includes('http')) {
+  if (settings.remoteMedia.testing &&
+      settings.remoteMedia.testing.length > 0) {
+    // Wait for testing images to load
+    // before injecting SVGs
+    ebWaitForTestingImages()
+  } else {
+    ebInjectSVGs()
+  }
 }
