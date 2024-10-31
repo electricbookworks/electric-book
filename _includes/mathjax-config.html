@@ -22,8 +22,7 @@ If your MathJax choices here are stable, you can comment out this script.
 {% if site.output == "app" or site.output == "web" %}
     <script>
         function delete_cookie(name) {
-            document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
-            console.log('Expired and removed MathJax menu cookie.');
+            document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;'
         }
         delete_cookie('mjx.menu')
     </script>
