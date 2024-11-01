@@ -97,7 +97,7 @@ function renderIndexCommentsAsTargets (done) {
 
               // Slugify the target text to use in an ID
               // and to check for duplicate instances later.
-              const entrySlug = ebSlugify(line)
+              const entrySlug = ebSlugify(line, true)
 
               // Add the slug to the array of entries,
               // where will we count occurrences of this entry.
@@ -250,7 +250,7 @@ function renderIndexListReferences (done) {
 
           // Reconstruct the reference's text value from the tree
           // and save its slug.
-          const listItemSlug = ebSlugify(listItemTree.join(' \\ '))
+          const listItemSlug = ebSlugify(listItemTree.join(' \\ '), true)
 
           // Get the book title and translation language (if any)
           // for the HTML page we're processing.
