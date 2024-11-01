@@ -4,7 +4,7 @@
 
 // Options
 // -------
-const ebElementsToGetIDs = 'p, li, dt, dd'
+const ebElementsToGetIDs = 'p, li, dt, dd, code'
 
 // Assign IDs and fingerprints to the ebElementsToGetIDs, e.g. for bookmarking.
 // IDs contain the number of the element in the doc, with an eb- prefix.
