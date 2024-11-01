@@ -16,17 +16,17 @@ const {
   epubValidate,
   epubZip,
   epubZipRename,
-  htmlFilePaths,
   jekyll,
   mathjaxEnabled,
   openOutputFile,
-  pathExists,
   pdfHTMLTransformations,
   renderIndexComments,
   renderIndexLinks,
   renderMathjax,
   runPrince
 } = require('../helpers.js')
+const htmlFilePaths = require('../paths/htmlFilePaths.js')
+const pathExists = require('../paths/pathExists.js')
 const merge = require('../merge')
 
 // Web output
