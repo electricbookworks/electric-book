@@ -15,12 +15,13 @@ async function buildReferenceIndex (outputFormat, filesData) {
   const browser = await puppeteer.launch({ headless: true })
 
   let i
-  let count = 0
   for (i = 0; i < filesData.length; i += 1) {
     const path = fsPath.normalize(process.cwd() + '/_site/' + filesData[i].path)
 
-    // Get the filename from the path.
-    const filename = path.split('/').pop()
+    // Get the filename.
+    // Note we don't use the full normalized path, because
+    // on Windows that would need to split on \ not /.
+    const filename = filesData[i].path.split('/').pop()
 
     // Check that the page exists before we
     // try to open it
@@ -143,7 +144,7 @@ async function buildReferenceIndex (outputFormat, filesData) {
       // }
 
       // Parse the serialized entries and add
-      // the filename and path for this file.
+      // the filename for this file.
       indexEntries = JSON.parse(indexEntries)
       indexEntries.forEach(function (entry) {
         entry.filename = filename
@@ -154,9 +155,6 @@ async function buildReferenceIndex (outputFormat, filesData) {
       if (indexEntries.length > 0) {
         targetsIndex.push(indexEntries)
       }
-
-      // Increment counter.
-      count += 1
     }
 
     // Close the page when we're done.
@@ -164,7 +162,7 @@ async function buildReferenceIndex (outputFormat, filesData) {
   }
 
   // If we've got all the pages, close the Puppeteer browser.
-  if (count === filesData.length) {
+  if (i === filesData.length) {
     browser.close()
   }
 
