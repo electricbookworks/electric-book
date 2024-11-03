@@ -5,10 +5,14 @@ const projectSettings = require('./projectSettings.js')
 
 // Get variant settings
 function variantSettings (argv) {
+  let format = 'web' // fallback
+  if (argv && argv.format) {
+    format = argv.format
+  }
   // Create an object for default settings
   const settings = {
     active: false,
-    stylesheet: argv.format + '.css'
+    stylesheet: format + '.css'
   }
 
   // Check the project settings for an active variant.

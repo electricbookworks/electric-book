@@ -78,7 +78,8 @@ async function epub (argv) {
     if (argv.language) {
       htmlDestination = argv.book + '/' + argv.language
     }
-    await addToEpub(htmlFilePaths(argv, '.xhtml'), htmlDestination)
+    const epubFiles = await htmlFilePaths(argv, '.xhtml')
+    await addToEpub(epubFiles, htmlDestination)
 
     let imagesDestination = argv.book + '/images/epub'
     if (argv.language) {

@@ -152,19 +152,19 @@ function configString (argv) {
   let string = '_config.yml'
 
   // Add format config, if any
-  if (argv.format) {
+  if (argv && argv.format) {
     string += ',_configs/_config.' + argv.format + '.yml'
   }
 
   // Add any configs passed as argv's
-  if (argv.configs) {
+  if (argv && argv.configs) {
     console.log('Adding ' + argv.configs + ' to configs...')
     // Strip quotes that might have been added around arguments by user
     string += ',_configs/' + argv.configs.replace(/'/g, '').replace(/"/g, '')
   }
 
   // Add OS-specific app configs, if we're building an app and those configs exist
-  if (argv.format === 'app') {
+  if (argv && argv.format === 'app') {
     if (argv['app-os'] &&
         pathExists(process.cwd() + '/_configs/_config.app.' + argv['app-os'] + '.yml')) {
       string += ',_configs/_config.app.' + argv['app-os'] + '.yml'
@@ -172,23 +172,23 @@ function configString (argv) {
   }
 
   // Add MathJax config if --mathjax=true
-  if (argv.mathjax) {
+  if (argv && argv.mathjax) {
     string += ',_configs/_config.mathjax-enabled.yml'
   }
 
   // Turn Mathjax off if we're exporting to Word.
   // We want raw editable TeX in Word docs.
-  if (argv._[0] === 'export' && argv['export-format'] === 'word') {
+  if (argv && argv._[0] === 'export' && argv['export-format'] === 'word') {
     string += ',_configs/_config.math-disabled.yml'
   }
 
   // Add docx config if we're exporting to Word.
-  if (argv._[0] === 'export' && argv['export-format'] === 'word') {
+  if (argv && argv._[0] === 'export' && argv['export-format'] === 'word') {
     string += ',_configs/_config.docx.yml'
   }
 
   // Set webrick headers if --cors
-  if (argv.cors) {
+  if (argv && argv.cors) {
     string += ',_configs/_config.webrick.cors.yml'
   }
 
@@ -329,9 +329,10 @@ async function extraExcludesConfig (argv) {
   // (as opposed to omitting --book and using defaults),
   // exclude any other works in this project
   // by adding them to a Jekyll `exclude` config.
-  if (argv.book && explicitOption('book')) {
+  if (argv && argv.book && explicitOption('book')) {
     // Get all the works but leave out the argv.book we want
-    const worksToExclude = works().filter(function (work) {
+    const allWorks = await works()
+    const worksToExclude = allWorks.filter(function (work) {
       return work !== argv.book
     })
 
@@ -722,13 +723,20 @@ function filesInProjectNav () {
 // An object containing info on all content files
 // listed for published works in _data/works,
 // listed in _data/nav.yml, and in _docs.
-async function allFilesListed (argv) {
+// Options can be:
+// - docs: include | exclude (default is include)
+async function allFilesListed (argv, options) {
   'use strict'
 
   const data = []
   const allWorks = await works()
   const navFiles = await filesInProjectNav()
   const docs = await filesInDocs()
+
+  let format = 'web' // fallback
+  if (argv && argv.format) {
+    format = argv.format
+  }
 
   return new Promise(function (resolve) {
     // Get files in each work
@@ -765,15 +773,15 @@ async function allFilesListed (argv) {
           const filesInTranslation = fileList(argv, work, language)
 
           if (filesInTranslation) {
-            filesInTranslation.forEach(function (file) {
-              let filename = file
+            filesInTranslation.forEach(function (translationFile) {
+              let filename = translationFile
 
               // Some files are listed as an object,
               // with a keyword as a value, e.g.
               // { "01": "Chapter 1"}
               // and we only want the key here.
               if (typeof file === 'object') {
-                filename = Object.keys(file)[0]
+                filename = Object.keys(translationFile)[0]
               }
 
               const filePath = work + '/' + language + '/' + filename + '.html'
@@ -791,7 +799,7 @@ async function allFilesListed (argv) {
 
     // Get files listed in the project nav,
     // if this is a web or app build.
-    const includeNavFiles = argv.format === 'web' || argv.format === 'app'
+    const includeNavFiles = format === 'web' || format === 'app'
     if (includeNavFiles) {
       navFiles.forEach(function (file) {
         const filePath = file + '.html'
@@ -804,7 +812,8 @@ async function allFilesListed (argv) {
 
     // Add docs, if they are enabled in _config,
     // and if this is a web or app build.
-    const includeDocs = argv.format === 'web' || argv.format === 'app'
+    const includeDocs = (format === 'web' || format === 'app') &&
+      (options && options.docs !== 'exclude')
     if (includeDocs && configsObject(argv).collections.docs.output === true) {
       docs.forEach(function (file) {
         const filePath = file + '.html'
@@ -1365,7 +1374,7 @@ function bookAssetPaths (argv, assetType, folder) {
 }
 
 // Check that the --book value is valid
-function bookIsValid (argv) {
+async function bookIsValid (argv) {
   'use strict'
 
   let validity = true
@@ -1375,7 +1384,7 @@ function bookIsValid (argv) {
   // it's not a valid choice
   if (argv.book && explicitOption('book')) {
     // Allow any work, plus the `assets` folder
-    const validWorks = works()
+    const validWorks = await works()
     validWorks.push('assets')
 
     if (!validWorks.includes(argv.book)) {
@@ -1435,7 +1444,6 @@ async function processImages (argv) {
       ['--book', argv.book, '--language', argv.language]
     )
     await logProcess(gulpProcess, 'Processing images')
-    return
   } catch (error) {
     console.log(error)
   }
@@ -1448,7 +1456,7 @@ async function convertHTMLtoWord (argv) {
   console.log('Converting HTML to Word...')
 
   // Get file list for this format
-  const filePaths = htmlFilePaths(argv)
+  const filePaths = await htmlFilePaths(argv)
 
   // Initialise a counter
   let totalConverted = 0
@@ -1468,7 +1476,7 @@ async function convertHTMLtoWord (argv) {
     await fs.mkdir(outputLocation, { recursive: true })
   }
 
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve) {
     // Loop through files and convert with Pandoc
     filePaths.forEach(function (filePath) {
       // Build path to output file
@@ -1539,7 +1547,7 @@ async function refreshIndexes (argv) {
     if (argv.format === 'print-pdf' ||
       argv.format === 'screen-pdf' ||
       argv.format === 'epub') {
-      await renderMathjax(argv, { allFiles: true }); // this is hanging the process
+      await renderMathjax(argv, { allFiles: true })
       await renderIndexComments(argv, { allFiles: true })
     }
 

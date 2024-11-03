@@ -45,6 +45,8 @@ function buildPaths (filenames, extension, work, language) {
 }
 
 // Get array of HTML-file paths for this output
+// Options can be:
+// allFiles: true | false (default is false)
 async function htmlFilePaths (argv, extension, options) {
   'use strict'
 

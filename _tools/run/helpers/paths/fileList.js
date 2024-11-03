@@ -6,6 +6,7 @@ const fsPath = require('path')
 const yaml = require('js-yaml') // reads YAML files into JS objects
 const pathExists = require('./pathExists.js')
 const variantSettings = require('../settings/variantSettings.js')
+const projectSettings = require('../settings/projectSettings.js')
 
 // Get the filelist for a format,
 // with option to get file-list for a specific book.
@@ -13,11 +14,17 @@ const variantSettings = require('../settings/variantSettings.js')
 function fileList (argv, book, language) {
   'use strict'
 
-  let format
-  if (argv.format) {
+  let format = 'web' // fallback
+  if (argv && argv.format) {
     format = argv.format
-  } else {
-    format = 'print-pdf' // fallback
+  }
+
+  // Use the specified language, if any,
+  // otherwise the argv.language, if any.
+  if (!language) {
+    if (argv && argv.language) {
+      language = argv.language
+    }
   }
 
   // Check for variant-edition output
@@ -52,92 +59,89 @@ function fileList (argv, book, language) {
   }
 
   let files = []
-  if (defaultPublished && metadata.products[format] && metadata.products[format].files) {
-    files = metadata.products[format].files
-  } else {
-    files = metadata.products['print-pdf'].files
-  }
 
-  // If there was no files list, oops!
-  // We'll use the actual files in the book folder,
-  // assuming this book is not set to `published: false`.
-  if (defaultPublished && (!files)) {
-    console.log('No files list in book data. Using raw files in ' + book + '.')
+  // If no language is specified, we can load
+  // the files list for the default work.
+  if (!language) {
+    if (defaultPublished && metadata.products[format] && metadata.products[format].files) {
+      files = metadata.products[format].files
+    } else {
+      files = metadata.products['print-pdf'].files
+    }
 
-    // Let's just use all the markdown files for this book
-    const bookDirectory = fsPath.normalize(process.cwd() + '/' + book + '/')
-    files = []
+    // If there was no files list, oops!
+    // We'll use the actual files in the book folder,
+    // assuming this book is not set to `published: false`.
+    if (defaultPublished && (!files)) {
+      console.log('No files list in book data. Using raw files in ' + book + '.')
 
-    // Read the contents of the book directory.
-    // For each file in there, if it ends with .md,
-    // add its name, without the .md, to the files array.
-    if (fs.lstatSync(bookDirectory).isDirectory()) {
-      fs.readdirSync(bookDirectory)
-        .forEach(function (file) {
-          if (file.match(/\.md$/g)) {
-            const fileBasename = file.replace(/\.md$/g, '')
-            files.push(fileBasename)
-          }
-        })
+      // Let's just use all the markdown files for this book
+      const bookDirectory = fsPath.normalize(process.cwd() + '/' + book + '/')
+      files = []
 
-      // If there is an index.md, move it to the front
-      // (https://stackoverflow.com/a/48456512/1781075),
-      // unless there is a cover file, in which case omit index.md.
-
-      // Determine if there is a cover file.
-      // This depends on the only word in the filename being 'cover',
-      // e.g. 0-0-cover.html, cover.html. But not 'my-cover.html',
-      // 'cover-page.html' or 'cover-versions-of-songs.html'.
-      let coverFile = false
-      files.forEach(function (filename) {
-        // Remove all non-alphabetical-characters
-        const filenameWordsOnly = filename.replace(/[^a-zA-Z]/g, '')
-
-        // Is what remains the word 'cover'?
-        if (filenameWordsOnly === 'cover') {
-          coverFile = filename
-          const indexOfCoverFile = files.findIndex(function (filename) {
-            return filename === coverFile
+      // Read the contents of the book directory.
+      // For each file in there, if it ends with .md,
+      // add its name, without the .md, to the files array.
+      if (fs.lstatSync(bookDirectory).isDirectory()) {
+        fs.readdirSync(bookDirectory)
+          .forEach(function (file) {
+            if (file.match(/\.md$/g)) {
+              const fileBasename = file.replace(/\.md$/g, '')
+              files.push(fileBasename)
+            }
           })
 
-          // Move it to the front of the array:
-          // remove it first...
-          files.splice(indexOfCoverFile, 1)
+        // If there is an index.md, move it to the front
+        // (https://stackoverflow.com/a/48456512/1781075),
+        // unless there is a cover file, in which case omit index.md.
 
-          // ... then insert it unless this is a print PDF
-          if (argv.format !== 'print-pdf') {
-            files.unshift(coverFile)
+        // Determine if there is a cover file.
+        // This depends on the only word in the filename being 'cover',
+        // e.g. 0-0-cover.html, cover.html. But not 'my-cover.html',
+        // 'cover-page.html' or 'cover-versions-of-songs.html'.
+        let coverFile = false
+        files.forEach(function (filename) {
+          // Remove all non-alphabetical-characters
+          const filenameWordsOnly = filename.replace(/[^a-zA-Z]/g, '')
+
+          // Is what remains the word 'cover'?
+          if (filenameWordsOnly === 'cover') {
+            coverFile = filename
+            const indexOfCoverFile = files.findIndex(function (filename) {
+              return filename === coverFile
+            })
+
+            // Move it to the front of the array:
+            // remove it first...
+            files.splice(indexOfCoverFile, 1)
+
+            // ... then insert it unless this is a print PDF
+            if (format !== 'print-pdf') {
+              files.unshift(coverFile)
+            }
           }
-        }
-      })
-
-      if (files.includes('index')) {
-        const indexOfIndexFile = files.findIndex(function (filename) {
-          return filename === 'index'
         })
 
-        // Remove 'index' from array
-        files.splice(indexOfIndexFile, 1)
+        if (files.includes('index')) {
+          const indexOfIndexFile = files.findIndex(function (filename) {
+            return filename === 'index'
+          })
 
-        // If no cover file, insert 'index' at start of array
-        // unless this is a print PDF
-        if (coverFile === false && argv.format !== 'print-pdf') {
-          files.unshift('index')
+          // Remove 'index' from array
+          files.splice(indexOfIndexFile, 1)
+
+          // If no cover file, insert 'index' at start of array
+          // unless this is a print PDF
+          if (coverFile === false && format !== 'print-pdf') {
+            files.unshift('index')
+          }
         }
+      } else {
+        // Otherwise, return an empty array
+        console.log('Sorry, couldn\'t find files or a files list in book data.')
+        return []
       }
-    } else {
-      // Otherwise, return an empty array
-      console.log('Sorry, couldn\'t find files or a files list in book data.')
-      return []
     }
-  }
-
-  // Are we using argv.language or a specified language?
-  // A specified language overrides an argv.language.
-  // If so, later we will replace the `files` variable
-  // with the files for that translation.
-  if (argv.language && (!language)) {
-    language = argv.language
   }
 
   // Build path to translation's default YAML,
