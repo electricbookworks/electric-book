@@ -40,7 +40,7 @@ function fileList (argv, book, language) {
   // Build path to default-edition YAML
   const pathToDefaultYAML = fsPath.normalize(pathToYAMLFolder + 'default.yml')
 
-  // Get the files list
+  // Get the book's metadata
   const metadata = yaml.load(fs.readFileSync(pathToDefaultYAML, 'utf8'))
 
   // Check if this book is published.
@@ -51,7 +51,7 @@ function fileList (argv, book, language) {
     console.log(book + ' is set to `published: ' + metadata.published + '` in _data/works.')
   }
 
-  let files = {}
+  let files = []
   if (defaultPublished && metadata.products[format] && metadata.products[format].files) {
     files = metadata.products[format].files
   } else {
@@ -59,6 +59,8 @@ function fileList (argv, book, language) {
   }
 
   // If there was no files list, oops!
+  // We'll use the actual files in the book folder,
+  // assuming this book is not set to `published: false`.
   if (defaultPublished && (!files)) {
     console.log('No files list in book data. Using raw files in ' + book + '.')
 
@@ -132,6 +134,8 @@ function fileList (argv, book, language) {
 
   // Are we using argv.language or a specified language?
   // A specified language overrides an argv.language.
+  // If so, later we will replace the `files` variable
+  // with the files for that translation.
   if (argv.language && (!language)) {
     language = argv.language
   }

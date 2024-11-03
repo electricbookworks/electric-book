@@ -15,6 +15,7 @@ async function buildReferenceIndex (outputFormat, filesData) {
   const browser = await puppeteer.launch({ headless: true })
 
   let i
+  let count = 0
   for (i = 0; i < filesData.length; i += 1) {
     const path = fsPath.normalize(process.cwd() + '/_site/' + filesData[i].path)
 
@@ -157,13 +158,16 @@ async function buildReferenceIndex (outputFormat, filesData) {
       }
     }
 
+    // Increment counter
+    count += 1
+
     // Close the page when we're done.
     await page.close()
-  }
 
-  // If we've got all the pages, close the Puppeteer browser.
-  if (i === filesData.length) {
-    browser.close()
+    // If we've got all the pages, close the Puppeteer browser.
+    if (count === filesData.length) {
+      browser.close()
+    }
   }
 
   // Create empty index file to write to, if it doesn't exist
@@ -177,7 +181,7 @@ async function buildReferenceIndex (outputFormat, filesData) {
   // Write the book index 'database' file.
   // We add module.exports so that we can use indexTargets
   // in Node processes (i.e. gulp with cheerio).
-  fs.writeFile('assets/js/book-index-' + outputFormat + '.js',
+  fs.writeFile(indexFilePath,
     'var ebIndexTargets = ' + JSON.stringify(targetsIndex) + ';' +
         'if (typeof window === "undefined")' +
         '{module.exports.' +

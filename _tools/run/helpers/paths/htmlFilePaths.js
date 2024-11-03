@@ -3,43 +3,36 @@
 // Import Node modules
 const fsPath = require('path')
 const fileList = require('./fileList.js')
+const works = require('./works')
+const translations = require('./translations')
 
-// Get array of HTML-file paths for this output
-function htmlFilePaths (argv, extension) {
-  'use strict'
-
-  const fileNames = fileList(argv)
-
+// Build out file paths from filename and work
+function buildPaths (filenames, extension, work, language) {
   if (!extension) {
     extension = '.html'
   }
 
   // Provide fallback book
-  let book
-  if (argv.book) {
-    book = argv.book
-  } else {
-    book = 'book'
+  if (!work) {
+    work = 'book'
   }
 
   let pathToFiles
-  if (argv.language) {
+  if (language) {
     pathToFiles = process.cwd() + '/' +
                 '_site/' +
-                book + '/' +
-                argv.language
+                work + '/' +
+                language
   } else {
     pathToFiles = process.cwd() + '/' +
                 '_site/' +
-                book
+                work
   }
   pathToFiles = fsPath.normalize(pathToFiles)
 
-  console.log('Using files in ' + pathToFiles)
-
   // Extract filenames from file objects,
   // and prepend path to each filename.
-  const paths = fileNames.map(function (filename) {
+  const paths = filenames.map(function (filename) {
     if (typeof filename === 'object') {
       return fsPath.normalize(pathToFiles + '/' +
                     Object.keys(filename)[0] + extension)
@@ -48,7 +41,40 @@ function htmlFilePaths (argv, extension) {
                     filename + extension)
     }
   })
+  return paths
+}
 
+// Get array of HTML-file paths for this output
+async function htmlFilePaths (argv, extension, options) {
+  'use strict'
+
+  let filenames = []
+  let paths = []
+
+  if (options && options.allFiles === true) {
+    const allWorks = await works()
+    allWorks.forEach(function (work) {
+      // Add the filenames for this work
+      filenames = fileList(argv, work)
+
+      // Add its paths to the paths array
+      paths = paths.concat(buildPaths(filenames, extension, work))
+
+      // Get the translations for this work
+      const languages = translations(work)
+
+      languages.forEach(function (language) {
+        const translatedFilenames = fileList(argv, work, language)
+        const translatedPaths = buildPaths(translatedFilenames, extension, work, language)
+
+        // Add those translation paths to the paths array
+        paths = paths.concat(translatedPaths)
+      })
+    })
+  } else {
+    filenames = fileList(argv)
+    paths = buildPaths(filenames, extension, argv.book, argv.language)
+  }
   return paths
 }
 

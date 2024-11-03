@@ -18,11 +18,12 @@ const buildReferenceIndex = require('./reindex/build-reference-index.js')
 const buildSearchIndex = require('./reindex/build-search-index.js')
 const options = require('./options.js').options
 const slugify = require('../../gulp/helpers/utilities.js').ebSlugify
-const merge = require('./merge')
 const htmlFilePaths = require('./paths/htmlFilePaths.js')
 const fileList = require('./paths/fileList.js')
 const pathExists = require('./paths/pathExists.js')
 const variantSettings = require('./settings/variantSettings.js')
+const works = require('./paths/works.js')
+const translations = require('./paths/translations.js')
 
 // Output spawned-process data to console
 function logProcess (process, processName) {
@@ -80,6 +81,8 @@ function outputFilename (argv) {
 
 // Check if a user passed an explicit option in argv
 // (i.e. yargs is not just using the default in options.js)
+// The 'option' argument takes a string of the option
+// name, e.g. 'book' or 'language' or 'format'.
 function explicitOption (option) {
   'use strict'
 
@@ -414,7 +417,7 @@ function mathjaxEnabled (argv) {
 }
 
 // Processes mathjax in output HTML
-async function renderMathjax (argv) {
+async function renderMathjax (argv, options) {
   'use strict'
 
   try {
@@ -423,10 +426,28 @@ async function renderMathjax (argv) {
 
       // Get the HTML file(s) to render. If we are merging
       // input files, we only pass the merged file,
-      // Unless `--merged false` was passed at the command line.
-      let inputFiles = [fsPath.dirname(htmlFilePaths(argv)[0]) + '/merged.html']
-      if (argv.merged === false || ['web', 'epub', 'app'].includes(argv.format)) {
-        inputFiles = htmlFilePaths(argv)
+      // Unless `--merged false` was passed at the command line,
+      // or there is no merged file for some reason.
+
+      // Check if a merged.html exists
+      let mergedFilePath = fsPath.normalize(process.cwd() +
+        '/_site/' + argv.book + '/merged.html')
+
+      if (argv.language) {
+        mergedFilePath = fsPath.normalize(process.cwd() +
+        '/_site/' + argv.book + '/' + argv.language + '/merged.html')
+      }
+
+      const mergedFileExists = pathExists(mergedFilePath)
+
+      let inputFiles
+      if (options && options.allFiles === true) {
+        inputFiles = await htmlFilePaths(argv, null, { allFiles: true })
+      } else if (mergedFileExists && argv.merged !== false) {
+        inputFiles = [mergedFilePath]
+      } else if (['web', 'epub', 'app'].includes(argv.format) ||
+                 argv.merged === false) {
+        inputFiles = await htmlFilePaths(argv)
       }
 
       // Get the MathJax script
@@ -435,13 +456,16 @@ async function renderMathjax (argv) {
 
       // Process MathJax
       let mathJaxProcess
-      inputFiles.forEach(function (path) {
-        mathJaxProcess = spawn(
-          'node',
-          ['-r', 'esm', mathJaxScript, path, path, argv.format]
-        )
+      inputFiles.forEach(async function (path) {
+        if (pathExists(path)) {
+          console.log('Rendering maths in ' + path)
+          mathJaxProcess = spawn(
+            'node',
+            ['-r', 'esm', mathJaxScript, path, path, argv.format]
+          )
+          await logProcess(mathJaxProcess, 'Rendering MathJax')
+        }
       })
-      await logProcess(mathJaxProcess, 'Rendering MathJax')
       return true
     } else {
       return true
@@ -451,34 +475,56 @@ async function renderMathjax (argv) {
   }
 }
 
-// Processes index comments as targets in output HTML
-async function renderIndexComments (argv) {
+// Process index comments as targets in output HTML
+async function processComments (work, language) {
+  try {
+    let indexCommentsProcess
+    if (language) {
+      indexCommentsProcess = spawn(
+        'gulp',
+        ['renderIndexCommentsAsTargets',
+          '--book', work,
+          '--language', language]
+      )
+    } else {
+      indexCommentsProcess = spawn(
+        'gulp',
+        ['renderIndexCommentsAsTargets', '--book', work]
+      )
+    }
+    await logProcess(indexCommentsProcess, 'Index comments')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Manage the rendering of index comments for one or all works
+async function renderIndexComments (argv, options) {
   'use strict'
 
-  if (projectSettings()['dynamic-indexing'] !== false) {
-    console.log('Processing indexing comments ...')
+  const allWorks = await works()
 
-    try {
-      let indexCommentsProcess
-      if (argv.language) {
-        indexCommentsProcess = spawn(
-          'gulp',
-          ['renderIndexCommentsAsTargets',
-            '--book', argv.book,
-            '--language', argv.language]
-        )
+  return new Promise(function (resolve) {
+    if (projectSettings()['dynamic-indexing'] !== false) {
+      console.log('Processing indexing comments ...')
+
+      if (options && options.allFiles === true) {
+        allWorks.forEach(function (work) {
+          processComments(work)
+
+          const languages = translations(work)
+
+          languages.forEach(function (language) {
+            processComments(work, language)
+          })
+        })
       } else {
-        indexCommentsProcess = spawn(
-          'gulp',
-          ['renderIndexCommentsAsTargets', '--book', argv.book]
-        )
+        processComments(argv.book, argv.language)
       }
-      await logProcess(indexCommentsProcess, 'Index comments')
-      return true
-    } catch (error) {
-      console.log(error)
     }
-  }
+    resolve()
+  })
 }
 
 // Processes index-list items as linked references in output HTML
@@ -637,21 +683,6 @@ function projectSettings () {
     console.log(error)
   }
   return settings
-}
-
-// Get the translation languages for a work,
-// assuming those are the subfolder names
-// of its book folder in _data/works.
-function translations (workAsString) {
-  const workDataDirectory = fsPath.normalize(process.cwd() +
-    '/_data/works/' + workAsString)
-  const workDirectoryPaths = fs.readdirSync(workDataDirectory, { withFileTypes: true })
-
-  const workSubdirectories = workDirectoryPaths
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name)
-
-  return workSubdirectories
 }
 
 // Get a list of file paths in _docs
@@ -939,7 +970,13 @@ async function runPrince (argv) {
     // Get the HTML file to render. If we are merging
     // input files, we only pass the merged file to Prince.
     // Unless `--merged false` was passed at the command line.
-    let inputFiles = [fsPath.dirname(htmlFilePaths(argv)[0]) + '/merged.html']
+    let inputFiles = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/merged.html')
+    if (argv.language) {
+      inputFiles = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/' + argv.language + '/merged.html')
+    }
+
     if (argv.merged === false) {
       inputFiles = htmlFilePaths(argv)
     }
@@ -962,8 +999,14 @@ async function runPrince (argv) {
     // Apply the stylesheet with that name
     // that we find in the styles folder beside
     // the first HTML document we're rendering.
-    const stylesheet = fsPath.dirname(htmlFilePaths(argv)[0]) +
-      '/styles/' + styleSheetFilename
+    let stylesheet = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book +
+      '/styles/' + styleSheetFilename)
+    if (argv.language) {
+      stylesheet = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/' + argv.language + '/' +
+      '/styles/' + styleSheetFilename)
+    }
 
     // Currently, node-prince does not seem to
     // log its progress to stdout. Possible WIP:
@@ -1321,28 +1364,6 @@ function bookAssetPaths (argv, assetType, folder) {
   return paths
 }
 
-// Get a list of works (aka books) in this project
-function works () {
-  'use strict'
-
-  return new Promise(function (resolve) {
-    // Get the works data directory
-    const worksDirectory = fsPath.normalize(process.cwd() +
-              '/_data/works')
-
-    // Get the folder names in the works directory
-    const arrayOfWorks = fs.readdirSync(worksDirectory, { withFileTypes: true })
-
-    // These only work with arrow functions?
-      .filter((dirent) => dirent.isDirectory())
-      .map((dirent) => dirent.name)
-
-    if (arrayOfWorks) {
-      resolve(arrayOfWorks)
-    }
-  })
-}
-
 // Check that the --book value is valid
 function bookIsValid (argv) {
   'use strict'
@@ -1515,19 +1536,11 @@ async function refreshIndexes (argv) {
     await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
 
-    // Create a merged.html too,
-    // since some functions like mathjax
-    // will look for it.
-    if (argv.format === 'print-pdf' ||
-        argv.format === 'screen-pdf') {
-      await merge(argv)
-    }
-
     if (argv.format === 'print-pdf' ||
       argv.format === 'screen-pdf' ||
       argv.format === 'epub') {
-      await renderMathjax(argv)
-      await renderIndexComments(argv)
+      await renderMathjax(argv, { allFiles: true }); // this is hanging the process
+      await renderIndexComments(argv, { allFiles: true })
     }
 
     const filesForIndexing = await allFilesListed(argv)
@@ -1874,6 +1887,5 @@ module.exports = {
   renderIndexLinks,
   renderMathjax,
   runPrince,
-  splitMarkdownFile,
-  works
+  splitMarkdownFile
 }
