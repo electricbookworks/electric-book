@@ -504,28 +504,30 @@ async function processComments (work, language) {
 async function renderIndexComments (argv, options) {
   'use strict'
 
-  const allWorks = await works()
+  try {
+    const allWorks = await works()
 
-  return new Promise(function (resolve) {
     if (projectSettings()['dynamic-indexing'] !== false) {
       console.log('Processing indexing comments ...')
 
       if (options && options.allFiles === true) {
-        allWorks.forEach(function (work) {
-          processComments(work)
+        allWorks.forEach(async function (work) {
+          await processComments(work)
 
           const languages = translations(work)
 
-          languages.forEach(function (language) {
-            processComments(work, language)
+          languages.forEach(async function (language) {
+            await processComments(work, language)
           })
         })
       } else {
         processComments(argv.book, argv.language)
       }
     }
-    resolve()
-  })
+    return true
+  } catch (error) {
+    return error
+  }
 }
 
 // Processes index-list items as linked references in output HTML
