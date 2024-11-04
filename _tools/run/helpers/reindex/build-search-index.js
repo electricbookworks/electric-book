@@ -74,6 +74,7 @@ async function buildSearchIndex (outputFormat, filesData) {
       console.log('Indexing ' + fsPath.normalize(path) + ' for search index.')
     } else {
       console.log(fsPath.normalize(path) + ' is listed for indexing, but can\'t be found.')
+      count += 1
       continue
     }
 

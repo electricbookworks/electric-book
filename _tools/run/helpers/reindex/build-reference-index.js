@@ -37,6 +37,7 @@ async function buildReferenceIndex (outputFormat, filesData) {
       console.log('Indexing ' + fsPath.normalize(path) + ' for reference index.')
     } else {
       console.log(fsPath.normalize(path) + ' is listed for the reference index, but can\'t be found.')
+      count += 1
       continue
     }
 

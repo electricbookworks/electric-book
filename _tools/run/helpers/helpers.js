@@ -724,7 +724,8 @@ function filesInProjectNav () {
 // listed for published works in _data/works,
 // listed in _data/nav.yml, and in _docs.
 // Options can be:
-// - docs: include | exclude (default is include)
+// - docs: include | exclude (Includes docs or not. Default is include)
+// - check: true | false (Check if files exist. Default is false.)
 async function allFilesListed (argv, options) {
   'use strict'
 
@@ -761,7 +762,13 @@ async function allFilesListed (argv, options) {
             path: filePath
           }
 
-          data.push(fileData)
+          if (options && options.check) {
+            if (pathExists(fsPath.normalize(process.cwd() + '/_site/' + filePath))) {
+              data.push(fileData)
+            }
+          } else {
+            data.push(fileData)
+          }
         })
       }
 
@@ -780,7 +787,7 @@ async function allFilesListed (argv, options) {
               // with a keyword as a value, e.g.
               // { "01": "Chapter 1"}
               // and we only want the key here.
-              if (typeof file === 'object') {
+              if (typeof translationFile === 'object') {
                 filename = Object.keys(translationFile)[0]
               }
 
@@ -790,7 +797,13 @@ async function allFilesListed (argv, options) {
                 path: filePath
               }
 
-              data.push(fileData)
+              if (options && options.check) {
+                if (pathExists(fsPath.normalize(process.cwd() + '/_site/' + filePath))) {
+                  data.push(fileData)
+                }
+              } else {
+                data.push(fileData)
+              }
             })
           }
         })
@@ -806,7 +819,13 @@ async function allFilesListed (argv, options) {
         const fileData = {
           path: filePath
         }
-        data.push(fileData)
+        if (options && options.check) {
+          if (pathExists(fsPath.normalize(process.cwd() + '/_site/' + filePath))) {
+            data.push(fileData)
+          }
+        } else {
+          data.push(fileData)
+        }
       })
     }
 
@@ -820,7 +839,13 @@ async function allFilesListed (argv, options) {
         const fileData = {
           path: filePath
         }
-        data.push(fileData)
+        if (options && options.check) {
+          if (pathExists(fsPath.normalize(process.cwd() + '/_site/' + filePath))) {
+            data.push(fileData)
+          }
+        } else {
+          data.push(fileData)
+        }
       })
     }
 
@@ -1551,7 +1576,7 @@ async function refreshIndexes (argv) {
       await renderIndexComments(argv, { allFiles: true })
     }
 
-    const filesForIndexing = await allFilesListed(argv)
+    const filesForIndexing = await allFilesListed(argv, { check: true })
 
     if (projectSettings()['dynamic-indexing'] !== false) {
       buildReferenceIndex(argv.format, filesForIndexing)
