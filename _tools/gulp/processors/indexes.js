@@ -6,11 +6,12 @@ const gulp = require('gulp')
 
 // Local helpers
 const {
-  paths, printpdfIndexTargets, screenpdfIndexTargets,
+  printpdfIndexTargets, screenpdfIndexTargets,
   epubIndexTargets, appIndexTargets
 } = require('../helpers/paths.js')
 const { ebSlugify } = require('../helpers/utilities.js')
 const { format } = require('../helpers/args.js')
+const htmlFilePaths = require('../../run/helpers/paths/htmlFilePaths.js')
 
 // Turn HTML comments for book indexes into anchor tags.
 // This is a pre-processing alternative to assets/js/index-targets.js,
@@ -19,7 +20,8 @@ const { format } = require('../helpers/args.js')
 // update it, you may need to update index-targets.js as well.
 function renderIndexCommentsAsTargets (done) {
   'use strict'
-  gulp.src(paths.text.src, { base: './' })
+  const paths = htmlFilePaths({ format: [format] }, null, { allFiles: true })
+  gulp.src(paths, { base: './' })
     .pipe(cheerio({
       run: function ($) {
         // Create an empty array to store entries.
@@ -178,7 +180,8 @@ function renderIndexCommentsAsTargets (done) {
 // update it, you may need to update index-lists.js as well.
 function renderIndexListReferences (done) {
   'use strict'
-  gulp.src(paths.text.src, { base: './' })
+  const paths = htmlFilePaths({ format: [format] }, null, { allFiles: true })
+  gulp.src(paths, { base: './' })
     .pipe(cheerio({
       run: function ($) {
         // Add a link to an entry in a reference index
