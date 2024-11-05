@@ -50,33 +50,40 @@ function buildPaths (filenames, extension, work, language) {
 async function htmlFilePaths (argv, extension, options) {
   'use strict'
 
-  let filenames = []
   let paths = []
 
   if (options && options.allFiles === true) {
     const allWorks = await works()
-    allWorks.forEach(function (work) {
-      // Add the filenames for this work
-      filenames = fileList(argv, work)
+    await allWorks.forEach(async function (work) {
+      // Add the files for this work
+      const files = fileList(argv, work)
+      const filePaths = buildPaths(files, extension, work)
 
       // Add its paths to the paths array
-      paths = paths.concat(buildPaths(filenames, extension, work))
+      filePaths.forEach(function (path) {
+        paths.push(path)
+      })
 
       // Get the translations for this work
-      const languages = translations(work)
+      const languages = await translations(work)
 
-      languages.forEach(function (language) {
-        const translatedFilenames = fileList(argv, work, language)
-        const translatedPaths = buildPaths(translatedFilenames, extension, work, language)
+      if (languages.length > 0) {
+        languages.forEach(function (language) {
+          const languageFiles = fileList(argv, work, language)
+          const languagePaths = buildPaths(languageFiles, extension, work, language)
 
-        // Add those translation paths to the paths array
-        paths = paths.concat(translatedPaths)
-      })
+          // Add its paths to the paths array
+          languagePaths.forEach(function (languagePath) {
+            paths.push(languagePath)
+          })
+        })
+      }
     })
   } else {
-    filenames = fileList(argv)
-    paths = buildPaths(filenames, extension, argv.book, argv.language)
+    const files = fileList(argv)
+    paths = buildPaths(files, extension, argv.book, argv.language)
   }
+
   return paths
 }
 

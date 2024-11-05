@@ -18,10 +18,10 @@ const htmlFilePaths = require('../../run/helpers/paths/htmlFilePaths.js')
 // which dynamically adds index targets in web clients.
 // It duplicates much of what index-targets.js does. So, if you
 // update it, you may need to update index-targets.js as well.
-function renderIndexCommentsAsTargets (done) {
+async function renderIndexCommentsAsTargets (done) {
   'use strict'
-  const paths = htmlFilePaths({ format: [format] }, null, { allFiles: true })
-  gulp.src(paths, { base: './' })
+  const paths = await htmlFilePaths(null, null, { allFiles: true })
+  gulp.src(paths, { base: './', allowEmpty: true })
     .pipe(cheerio({
       run: function ($) {
         // Create an empty array to store entries.
@@ -178,10 +178,10 @@ function renderIndexCommentsAsTargets (done) {
 // This pre-processing alternative is necessary for offline formats.
 // It duplicates much of what index-lists.js does. So, if you
 // update it, you may need to update index-lists.js as well.
-function renderIndexListReferences (done) {
+async function renderIndexListReferences (done) {
   'use strict'
-  const paths = htmlFilePaths({ format: [format] }, null, { allFiles: true })
-  gulp.src(paths, { base: './' })
+  const paths = await htmlFilePaths(null, null, { allFiles: true })
+  gulp.src(paths, { base: './', allowEmpty: true })
     .pipe(cheerio({
       run: function ($) {
         // Add a link to an entry in a reference index

@@ -514,14 +514,14 @@ async function renderIndexComments (argv, options) {
         allWorks.forEach(async function (work) {
           await processComments(work)
 
-          const languages = translations(work)
+          const languages = await translations(work)
 
           languages.forEach(async function (language) {
             await processComments(work, language)
           })
         })
       } else {
-        processComments(argv.book, argv.language)
+        await processComments(argv.book, argv.language)
       }
     }
     return true
@@ -743,7 +743,7 @@ async function allFilesListed (argv, options) {
 
   return new Promise(function (resolve) {
     // Get files in each work
-    allWorks.forEach(function (work) {
+    allWorks.forEach(async function (work) {
       const filesInWork = fileList(argv, work)
 
       if (filesInWork) {
@@ -775,7 +775,7 @@ async function allFilesListed (argv, options) {
       }
 
       // Now get the file for its translations
-      const translationLanguages = translations(work)
+      const translationLanguages = await translations(work)
 
       if (translationLanguages) {
         translationLanguages.forEach(function (language) {
