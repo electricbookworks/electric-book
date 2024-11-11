@@ -12,6 +12,15 @@ $pdf-cover: true !default;
 
         // Add extra verso to retain correct folios
         page-break-after: left;
+
+        // The above property may not work to ensure
+        // a blank page after the cover-page.
+        // So we also target the next wrapper.
+        // This only works when using the default
+        // merged-HTML PDF output.
+        & + .wrapper {
+            break-before: right;
+        }
     }
     p.cover {
         margin: 0;
