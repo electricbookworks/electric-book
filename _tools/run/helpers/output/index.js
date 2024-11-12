@@ -16,17 +16,17 @@ const {
   epubValidate,
   epubZip,
   epubZipRename,
-  htmlFilePaths,
   jekyll,
   mathjaxEnabled,
   openOutputFile,
-  pathExists,
   pdfHTMLTransformations,
   renderIndexComments,
   renderIndexLinks,
   renderMathjax,
   runPrince
 } = require('../helpers.js')
+const htmlFilePaths = require('../paths/htmlFilePaths.js')
+const pathExists = require('../paths/pathExists.js')
 const merge = require('../merge')
 
 // Web output
@@ -78,7 +78,8 @@ async function epub (argv) {
     if (argv.language) {
       htmlDestination = argv.book + '/' + argv.language
     }
-    await addToEpub(htmlFilePaths(argv, '.xhtml'), htmlDestination)
+    const epubFiles = await htmlFilePaths(argv, '.xhtml')
+    await addToEpub(epubFiles, htmlDestination)
 
     let imagesDestination = argv.book + '/images/epub'
     if (argv.language) {

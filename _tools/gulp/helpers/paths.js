@@ -63,20 +63,6 @@ try {
   console.log('This is fine if you are only processing images.')
 }
 
-// Get the file list from search-store.js,
-// which is included in search-engine.js.
-// The store includes a list of all pages
-// that Jekyll parsed when last building.
-let store
-try {
-  store = require(pathToProjectRoot + '_site/assets/js/search-engine.js')
-    .store
-} catch (storeError) {
-  console.log(storeError)
-  console.log('Could not find _site/assets/js/search-engine.js.')
-  console.log('This is okay if you are only processing images.')
-}
-
 // Load image settings if they exist
 let imageSettings = []
 if (fs.existsSync('_data/images.yml')) {
@@ -87,16 +73,6 @@ if (fs.existsSync('_data/images.yml')) {
   if (!imageSettings) {
     imageSettings = []
   }
-}
-
-// Create array of all text files in all books
-const allTextPaths = function (store) {
-  'use strict'
-  const paths = []
-  store.forEach(function (entry) {
-    paths.push('_site/' + entry.url)
-  })
-  return paths
 }
 
 // Set up paths.
@@ -142,7 +118,5 @@ exports.printpdfIndexTargets = printpdfIndexTargets
 exports.screenpdfIndexTargets = screenpdfIndexTargets
 exports.epubIndexTargets = epubIndexTargets
 exports.appIndexTargets = appIndexTargets
-exports.store = store
 exports.imageSettings = imageSettings
-exports.allTextPaths = allTextPaths
 exports.paths = paths

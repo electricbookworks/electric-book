@@ -171,7 +171,7 @@ exclude:
 # E.g. generate CSS once, then exclude it above but keep it here
 # to make your build (i.e. output regeneration) faster.
 # The file path is relative to the _site directory.
-keep_files:
+# keep_files:
   # - book
   # - samples
   # - assets

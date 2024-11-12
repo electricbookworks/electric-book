@@ -1,9 +1,11 @@
-const helpers = require('./helpers.js')
 const fsExtra = require('fs-extra')
 const fsPath = require('path')
 const chalk = require('chalk')
 const spawn = require('cross-spawn')
 const yaml = require('js-yaml')
+const { logProcess, allFilesListed } = require('./helpers.js')
+const pathExists = require('./paths/pathExists.js')
+const works = require('./paths/works.js')
 
 // Check that YAML is valid
 async function checkYAML () {
@@ -16,7 +18,7 @@ async function checkYAML () {
       'gulp',
       ['yaml', '--silent']
     )
-    const outcome = await helpers.logProcess(gulpProcess, 'Checking YAML')
+    const outcome = await logProcess(gulpProcess, 'Checking YAML')
     if (outcome === true) {
       return true
     } else {
@@ -216,7 +218,7 @@ async function checkRequiredPaths () {
   globalRequirements.forEach(function (item) {
     const path = fsPath.normalize(process.cwd() + '/' + item.path)
 
-    if (!helpers.pathExists(path)) {
+    if (!pathExists(path)) {
       console.log(chalk.red('Warning: ') + 'file not found:')
       if (item.type === 'required') {
         console.log(path + ' ' + chalk.red(item.type))
@@ -229,8 +231,8 @@ async function checkRequiredPaths () {
   })
 
   // Check book-specific requirements
-  const works = helpers.works()
-  works.forEach(function (work) {
+  const allWorks = await works()
+  allWorks.forEach(function (work) {
     // console.log('Checking files for ' + chalk.blue(work) + ' ... \n')
 
     const bookRequirements = [
@@ -274,7 +276,7 @@ async function checkRequiredPaths () {
     bookRequirements.forEach(function (item) {
       const path = fsPath.normalize(process.cwd() + '/' + item.path)
 
-      if (!helpers.pathExists(path)) {
+      if (!pathExists(path)) {
         console.log(chalk.red('Warning: ') + 'file not found:')
         if (item.type === 'required') {
           console.log(path + ' ' + chalk.red(item.type))
@@ -300,35 +302,25 @@ async function checkRequiredPaths () {
 
 // Checks whether the API content files are up to date
 // by checking that one exists for every file listed
-// in the search store. If not, this outputs a warning.
-// Note that we are really testing whether the files listed
-// in the built _site/api/metadata/index.json are all
-// included in _api/content. The _site/api/metadata/index.json
-// file includes a JSON representation of _data/works. That
-// file is complex to parse, but the files listed are the same as
-// the `store` in search-engine.js, which uses _includes/files-listed.html,
-// which itself parses _data/works for its files lists.
+// for web output. If not, this outputs a warning.
 async function checkAPIContent () {
   console.log('Checking content API...')
 
-  const pathToSearchStore = fsPath.normalize(process.cwd() +
-          '/_site/assets/js/search-engine.js')
-  const searchStoreExists = await fsExtra.pathExists(pathToSearchStore)
+  const files = await allFilesListed()
 
-  if (searchStoreExists) {
-    const searchStore = await require(pathToSearchStore).store
+  if (files) {
     let missingFiles = false
     let i
-    for (i = 0; i < searchStore.length; i += 1) {
+    for (i = 0; i < files.length; i += 1) {
       const apiContentPath = process.cwd() + '/_api/content/' +
-          searchStore[i].url.replace(/\.html$/, '') + '/index.json'
+        files[i].path.replace(/\.html$/, '') + '/index.json'
 
       const apiContentFileExists = await fsExtra.pathExists(fsPath.normalize(apiContentPath))
 
       // Don't check for docs files, those are not in the API
-      if (!apiContentFileExists && !searchStore[i].url.startsWith('docs/')) {
+      if (!apiContentFileExists && !files[i].path.startsWith('docs/')) {
         missingFiles = true
-        console.log(chalk.red('Warning') + ': API content is missing ' + searchStore[i].url)
+        console.log(chalk.red('Warning') + ': API content is missing ' + files[i].path)
       }
     }
 

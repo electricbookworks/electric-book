@@ -96,6 +96,12 @@ products:
     # e.g. Paperback, Digital download, Digital online
     format: "Ebook" # e.g. Paperback, Digital download, Digital online
 
+    # Your contents-page file, if you have one.
+    # An epub must have a contents page for navigation.
+    # Specify it here or with a 'toc' value
+    # at the relevant file in the files list below.
+    contents-page: "0-3-contents"
+
     # Accessibility metadata to inform users
     # about the accessibility features in this epub.
     accessibility:

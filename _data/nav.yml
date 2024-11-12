@@ -3,6 +3,7 @@
 # a folder in the root directory named with that language code.
 # Include a node for the parent language, e.g. `en`.
 # See _docs/setup/tocs for more detail.
+# Files must be listed here to be included in the search index.
 
 en:
   - label: "About us"

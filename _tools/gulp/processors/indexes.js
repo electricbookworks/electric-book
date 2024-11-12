@@ -6,20 +6,22 @@ const gulp = require('gulp')
 
 // Local helpers
 const {
-  allTextPaths, paths, store, printpdfIndexTargets,
-  screenpdfIndexTargets, epubIndexTargets, appIndexTargets
+  printpdfIndexTargets, screenpdfIndexTargets,
+  epubIndexTargets, appIndexTargets
 } = require('../helpers/paths.js')
 const { ebSlugify } = require('../helpers/utilities.js')
 const { format } = require('../helpers/args.js')
+const htmlFilePaths = require('../../run/helpers/paths/htmlFilePaths.js')
 
 // Turn HTML comments for book indexes into anchor tags.
 // This is a pre-processing alternative to assets/js/index-targets.js,
 // which dynamically adds index targets in web clients.
 // It duplicates much of what index-targets.js does. So, if you
 // update it, you may need to update index-targets.js as well.
-function renderIndexCommentsAsTargets (done) {
+async function renderIndexCommentsAsTargets (done) {
   'use strict'
-  gulp.src(allTextPaths(store), { base: './' })
+  const paths = await htmlFilePaths(null, null, { allFiles: true })
+  gulp.src(paths, { base: './', allowEmpty: true })
     .pipe(cheerio({
       run: function ($) {
         // Create an empty array to store entries.
@@ -97,7 +99,7 @@ function renderIndexCommentsAsTargets (done) {
 
               // Slugify the target text to use in an ID
               // and to check for duplicate instances later.
-              const entrySlug = ebSlugify(line)
+              const entrySlug = ebSlugify(line, true)
 
               // Add the slug to the array of entries,
               // where will we count occurrences of this entry.
@@ -176,9 +178,10 @@ function renderIndexCommentsAsTargets (done) {
 // This pre-processing alternative is necessary for offline formats.
 // It duplicates much of what index-lists.js does. So, if you
 // update it, you may need to update index-lists.js as well.
-function renderIndexListReferences (done) {
+async function renderIndexListReferences (done) {
   'use strict'
-  gulp.src(paths.text.src, { base: './' })
+  const paths = await htmlFilePaths(null, null, { allFiles: true })
+  gulp.src(paths, { base: './', allowEmpty: true })
     .pipe(cheerio({
       run: function ($) {
         // Add a link to an entry in a reference index
@@ -250,7 +253,7 @@ function renderIndexListReferences (done) {
 
           // Reconstruct the reference's text value from the tree
           // and save its slug.
-          const listItemSlug = ebSlugify(listItemTree.join(' \\ '))
+          const listItemSlug = ebSlugify(listItemTree.join(' \\ '), true)
 
           // Get the book title and translation language (if any)
           // for the HTML page we're processing.

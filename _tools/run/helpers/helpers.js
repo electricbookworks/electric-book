@@ -18,6 +18,12 @@ const buildReferenceIndex = require('./reindex/build-reference-index.js')
 const buildSearchIndex = require('./reindex/build-search-index.js')
 const options = require('./options.js').options
 const slugify = require('../../gulp/helpers/utilities.js').ebSlugify
+const htmlFilePaths = require('./paths/htmlFilePaths.js')
+const fileList = require('./paths/fileList.js')
+const pathExists = require('./paths/pathExists.js')
+const variantSettings = require('./settings/variantSettings.js')
+const works = require('./paths/works.js')
+const translations = require('./paths/translations.js')
 
 // Output spawned-process data to console
 function logProcess (process, processName) {
@@ -75,6 +81,8 @@ function outputFilename (argv) {
 
 // Check if a user passed an explicit option in argv
 // (i.e. yargs is not just using the default in options.js)
+// The 'option' argument takes a string of the option
+// name, e.g. 'book' or 'language' or 'format'.
 function explicitOption (option) {
   'use strict'
 
@@ -114,20 +122,6 @@ function explicitOption (option) {
   return optionWasExplicit
 }
 
-// Checks if a file or folder exists
-function pathExists (path) {
-  'use strict'
-
-  try {
-    if (fs.existsSync(fsPath.normalize(path))) {
-      return true
-    }
-  } catch (err) {
-    console.error(err)
-    return false
-  }
-}
-
 // Opens the output file. Accepts argv or a filepath.
 function openOutputFile (argvOrFilePath) {
   'use strict'
@@ -158,19 +152,19 @@ function configString (argv) {
   let string = '_config.yml'
 
   // Add format config, if any
-  if (argv.format) {
+  if (argv && argv.format) {
     string += ',_configs/_config.' + argv.format + '.yml'
   }
 
   // Add any configs passed as argv's
-  if (argv.configs) {
+  if (argv && argv.configs) {
     console.log('Adding ' + argv.configs + ' to configs...')
     // Strip quotes that might have been added around arguments by user
     string += ',_configs/' + argv.configs.replace(/'/g, '').replace(/"/g, '')
   }
 
   // Add OS-specific app configs, if we're building an app and those configs exist
-  if (argv.format === 'app') {
+  if (argv && argv.format === 'app') {
     if (argv['app-os'] &&
         pathExists(process.cwd() + '/_configs/_config.app.' + argv['app-os'] + '.yml')) {
       string += ',_configs/_config.app.' + argv['app-os'] + '.yml'
@@ -178,23 +172,23 @@ function configString (argv) {
   }
 
   // Add MathJax config if --mathjax=true
-  if (argv.mathjax) {
+  if (argv && argv.mathjax) {
     string += ',_configs/_config.mathjax-enabled.yml'
   }
 
   // Turn Mathjax off if we're exporting to Word.
   // We want raw editable TeX in Word docs.
-  if (argv._[0] === 'export' && argv['export-format'] === 'word') {
+  if (argv && argv._[0] === 'export' && argv['export-format'] === 'word') {
     string += ',_configs/_config.math-disabled.yml'
   }
 
   // Add docx config if we're exporting to Word.
-  if (argv._[0] === 'export' && argv['export-format'] === 'word') {
+  if (argv && argv._[0] === 'export' && argv['export-format'] === 'word') {
     string += ',_configs/_config.docx.yml'
   }
 
   // Set webrick headers if --cors
-  if (argv.cors) {
+  if (argv && argv.cors) {
     string += ',_configs/_config.webrick.cors.yml'
   }
 
@@ -335,9 +329,10 @@ async function extraExcludesConfig (argv) {
   // (as opposed to omitting --book and using defaults),
   // exclude any other works in this project
   // by adding them to a Jekyll `exclude` config.
-  if (argv.book && explicitOption('book')) {
+  if (argv && argv.book && explicitOption('book')) {
     // Get all the works but leave out the argv.book we want
-    const worksToExclude = works().filter(function (work) {
+    const allWorks = await works()
+    const worksToExclude = allWorks.filter(function (work) {
       return work !== argv.book
     })
 
@@ -423,7 +418,7 @@ function mathjaxEnabled (argv) {
 }
 
 // Processes mathjax in output HTML
-async function renderMathjax (argv) {
+async function renderMathjax (argv, options) {
   'use strict'
 
   try {
@@ -432,10 +427,28 @@ async function renderMathjax (argv) {
 
       // Get the HTML file(s) to render. If we are merging
       // input files, we only pass the merged file,
-      // Unless `--merged false` was passed at the command line.
-      let inputFiles = [fsPath.dirname(htmlFilePaths(argv)[0]) + '/merged.html']
-      if (argv.merged === false || ['web', 'epub', 'app'].includes(argv.format)) {
-        inputFiles = htmlFilePaths(argv)
+      // Unless `--merged false` was passed at the command line,
+      // or there is no merged file for some reason.
+
+      // Check if a merged.html exists
+      let mergedFilePath = fsPath.normalize(process.cwd() +
+        '/_site/' + argv.book + '/merged.html')
+
+      if (argv.language) {
+        mergedFilePath = fsPath.normalize(process.cwd() +
+        '/_site/' + argv.book + '/' + argv.language + '/merged.html')
+      }
+
+      const mergedFileExists = pathExists(mergedFilePath)
+
+      let inputFiles
+      if (options && options.allFiles === true) {
+        inputFiles = await htmlFilePaths(argv, null, { allFiles: true })
+      } else if (mergedFileExists && argv.merged !== false) {
+        inputFiles = [mergedFilePath]
+      } else if (['web', 'epub', 'app'].includes(argv.format) ||
+                 argv.merged === false) {
+        inputFiles = await htmlFilePaths(argv)
       }
 
       // Get the MathJax script
@@ -444,13 +457,16 @@ async function renderMathjax (argv) {
 
       // Process MathJax
       let mathJaxProcess
-      inputFiles.forEach(function (path) {
-        mathJaxProcess = spawn(
-          'node',
-          ['-r', 'esm', mathJaxScript, path, path, argv.format]
-        )
+      inputFiles.forEach(async function (path) {
+        if (pathExists(path)) {
+          console.log('Rendering maths in ' + path)
+          mathJaxProcess = spawn(
+            'node',
+            ['-r', 'esm', mathJaxScript, path, path, argv.format]
+          )
+          await logProcess(mathJaxProcess, 'Rendering MathJax')
+        }
       })
-      await logProcess(mathJaxProcess, 'Rendering MathJax')
       return true
     } else {
       return true
@@ -460,33 +476,57 @@ async function renderMathjax (argv) {
   }
 }
 
-// Processes index comments as targets in output HTML
-async function renderIndexComments (argv) {
+// Process index comments as targets in output HTML
+async function processComments (work, language) {
+  try {
+    let indexCommentsProcess
+    if (language) {
+      indexCommentsProcess = spawn(
+        'gulp',
+        ['renderIndexCommentsAsTargets',
+          '--book', work,
+          '--language', language]
+      )
+    } else {
+      indexCommentsProcess = spawn(
+        'gulp',
+        ['renderIndexCommentsAsTargets', '--book', work]
+      )
+    }
+    await logProcess(indexCommentsProcess, 'Index comments')
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Manage the rendering of index comments for one or all works
+async function renderIndexComments (argv, options) {
   'use strict'
 
-  if (projectSettings()['dynamic-indexing'] !== false) {
-    console.log('Processing indexing comments ...')
+  try {
+    const allWorks = await works()
 
-    try {
-      let indexCommentsProcess
-      if (argv.language) {
-        indexCommentsProcess = spawn(
-          'gulp',
-          ['renderIndexCommentsAsTargets',
-            '--book', argv.book,
-            '--language', argv.language]
-        )
+    if (projectSettings()['dynamic-indexing'] !== false) {
+      console.log('Processing indexing comments ...')
+
+      if (options && options.allFiles === true) {
+        allWorks.forEach(async function (work) {
+          await processComments(work)
+
+          const languages = await translations(work)
+
+          languages.forEach(async function (language) {
+            await processComments(work, language)
+          })
+        })
       } else {
-        indexCommentsProcess = spawn(
-          'gulp',
-          ['renderIndexCommentsAsTargets', '--book', argv.book]
-        )
+        await processComments(argv.book, argv.language)
       }
-      await logProcess(indexCommentsProcess, 'Index comments')
-      return true
-    } catch (error) {
-      console.log(error)
     }
+    return true
+  } catch (error) {
+    return error
   }
 }
 
@@ -648,245 +688,171 @@ function projectSettings () {
   return settings
 }
 
-// Get variant settings
-function variantSettings (argv) {
-  // Create an object for default settings
-  const settings = {
-    active: false,
-    stylesheet: argv.format + '.css'
-  }
+// Get a list of file paths in _docs
+async function filesInDocs () {
+  const docsFiles = await fs.readdir(fsPath.normalize(process.cwd() + '/_docs'), { recursive: true })
 
-  // Check the project settings for an active variant.
-  if (projectSettings() &&
-      projectSettings()['active-variant'] &&
-      projectSettings()['active-variant'] !== '') {
-    settings.active = projectSettings()['active-variant']
-  }
+  return new Promise(function (resolve) {
+    const files = []
+    docsFiles.forEach(function (file) {
+      if (file.match(/\.md$/g)) {
+        let fileBasename = 'docs/' + file.replace(/\.md$/g, '')
 
-  // Check for the variant-specific stylesheet we should use.
-  if (settings.active && projectSettings().variants) {
-    // Loop through the variants in project settings
-    // to find the active variant. Then return
-    // the format-specific stylesheet name there.
-    projectSettings().variants.forEach(function (variantEntry) {
-      if (variantEntry.variant === projectSettings()['active-variant'] &&
-          variantEntry[argv.format + '-stylesheet'] &&
-          variantEntry[argv.format + '-stylesheet'] !== '') {
-        settings.stylesheet = variantEntry[argv.format + '-stylesheet']
+        // Replace backslashes with forward slashes for Windows
+        fileBasename = fileBasename.replace(/\\/g, '/')
+        files.push(fileBasename)
       }
     })
-  }
-
-  return settings
+    resolve(files)
+  })
 }
 
-// Get the filelist for a format
-function fileList (argv) {
+// Get a list of file paths in the project nav
+function filesInProjectNav () {
+  return new Promise(function (resolve) {
+    const files = []
+    const projectNav = yaml.load(fs.readFileSync(process.cwd() + '/_data/nav.yml', 'utf8'))
+    Object.entries(projectNav).forEach(function (entry) {
+      entry[1].forEach(function (item) {
+        const file = item.file
+        files.push(file)
+      })
+    })
+    resolve(files)
+  })
+}
+
+// An object containing info on all content files
+// listed for published works in _data/works,
+// listed in _data/nav.yml, and in _docs.
+// Options can be:
+// - docs: include | exclude (Includes docs or not. Default is include)
+// - check: true | false (Check if files exist. Default is false.)
+async function allFilesListed (argv, options) {
   'use strict'
 
-  let format
-  if (argv.format) {
+  const data = []
+  const allWorks = await works()
+  const navFiles = await filesInProjectNav()
+  const docs = await filesInDocs()
+
+  let format = 'web' // fallback
+  if (argv && argv.format) {
     format = argv.format
-  } else {
-    format = 'print-pdf' // fallback
   }
 
-  // Check for variant-edition output
-  const variant = variantSettings(argv).active
+  return new Promise(function (resolve) {
+    // Get files in each work
+    allWorks.forEach(async function (work) {
+      const filesInWork = fileList(argv, work)
 
-  let book = 'book' // default
-  if (argv.book) {
-    book = argv.book
-  }
+      if (filesInWork) {
+        filesInWork.forEach(function (file) {
+          let filename = file
 
-  // Build path to YAML data for this book
-  const pathToYAMLFolder = process.cwd() +
-            '/_data/works/' +
-            book + '/'
+          // Some files are listed as an object,
+          // with a keyword as a value, e.g.
+          // { "01": "Chapter 1"}
+          // and we only want the key here.
+          if (typeof file === 'object') {
+            filename = Object.keys(file)[0]
+          }
 
-  // Build path to default-edition YAML
-  const pathToDefaultYAML = fsPath.normalize(pathToYAMLFolder + 'default.yml')
+          const filePath = work + '/' + filename + '.html'
 
-  // Get the files list
-  const metadata = yaml.load(fs.readFileSync(pathToDefaultYAML, 'utf8'))
+          const fileData = {
+            path: filePath
+          }
 
-  let files
-  if (metadata.products[format] && metadata.products[format].files) {
-    files = metadata.products[format].files
-  } else {
-    files = metadata.products['print-pdf'].files
-  }
-
-  // If there was no files list, oops!
-  if (!files) {
-    console.log('No files list in book data. Using raw files in ' + book + '.')
-
-    // Let's just use all the markdown files for this book
-    const bookDirectory = fsPath.normalize(process.cwd() + '/' + book + '/')
-    files = []
-
-    // Read the contents of the book directory.
-    // For each file in there, if it ends with .md,
-    // add its name, without the .md, to the files array.
-    if (fs.lstatSync(bookDirectory).isDirectory()) {
-      fs.readdirSync(bookDirectory)
-        .forEach(function (file) {
-          if (file.match(/\.md$/g)) {
-            const fileBasename = file.replace(/\.md$/g, '')
-            files.push(fileBasename)
+          if (options && options.check) {
+            if (pathExists(fsPath.normalize(process.cwd() + '/_site/' + filePath))) {
+              data.push(fileData)
+            }
+          } else {
+            data.push(fileData)
           }
         })
+      }
 
-      // If there is an index.md, move it to the front
-      // (https://stackoverflow.com/a/48456512/1781075),
-      // unless there is a cover file, in which case omit index.md.
+      // Now get the file for its translations
+      const translationLanguages = await translations(work)
 
-      // Determine if there is a cover file.
-      // This depends on the only word in the filename being 'cover',
-      // e.g. 0-0-cover.html, cover.html. But not 'my-cover.html',
-      // 'cover-page.html' or 'cover-versions-of-songs.html'.
-      let coverFile = false
-      files.forEach(function (filename) {
-        // Remove all non-alphabetical-characters
-        const filenameWordsOnly = filename.replace(/[^a-zA-Z]/g, '')
+      if (translationLanguages) {
+        translationLanguages.forEach(function (language) {
+          const filesInTranslation = fileList(argv, work, language)
 
-        // Is what remains the word 'cover'?
-        if (filenameWordsOnly === 'cover') {
-          coverFile = filename
-          const indexOfCoverFile = files.findIndex(function (filename) {
-            return filename === coverFile
-          })
+          if (filesInTranslation) {
+            filesInTranslation.forEach(function (translationFile) {
+              let filename = translationFile
 
-          // Move it to the front of the array:
-          // remove it first...
-          files.splice(indexOfCoverFile, 1)
+              // Some files are listed as an object,
+              // with a keyword as a value, e.g.
+              // { "01": "Chapter 1"}
+              // and we only want the key here.
+              if (typeof translationFile === 'object') {
+                filename = Object.keys(translationFile)[0]
+              }
 
-          // ... then insert it unless this is a print PDF
-          if (argv.format !== 'print-pdf') {
-            files.unshift(coverFile)
+              const filePath = work + '/' + language + '/' + filename + '.html'
+
+              const fileData = {
+                path: filePath
+              }
+
+              if (options && options.check) {
+                if (pathExists(fsPath.normalize(process.cwd() + '/_site/' + filePath))) {
+                  data.push(fileData)
+                }
+              } else {
+                data.push(fileData)
+              }
+            })
           }
+        })
+      }
+    })
+
+    // Get files listed in the project nav,
+    // if this is a web or app build.
+    const includeNavFiles = format === 'web' || format === 'app'
+    if (includeNavFiles) {
+      navFiles.forEach(function (file) {
+        const filePath = file + '.html'
+        const fileData = {
+          path: filePath
+        }
+        if (options && options.check) {
+          if (pathExists(fsPath.normalize(process.cwd() + '/_site/' + filePath))) {
+            data.push(fileData)
+          }
+        } else {
+          data.push(fileData)
         }
       })
+    }
 
-      if (files.includes('index')) {
-        const indexOfIndexFile = files.findIndex(function (filename) {
-          return filename === 'index'
-        })
-
-        // Remove 'index' from array
-        files.splice(indexOfIndexFile, 1)
-
-        // If no cover file, insert 'index' at start of array
-        // unless this is a print PDF
-        if (coverFile === false && argv.format !== 'print-pdf') {
-          files.unshift('index')
+    // Add docs, if they are enabled in _config,
+    // and if this is a web or app build.
+    const includeDocs = (format === 'web' || format === 'app') &&
+      (options && options.docs !== 'exclude')
+    if (includeDocs && configsObject(argv).collections.docs.output === true) {
+      docs.forEach(function (file) {
+        const filePath = file + '.html'
+        const fileData = {
+          path: filePath
         }
-      }
-    } else {
-      // Otherwise, return an empty array
-      console.log('Sorry, couldn\'t find files or a files list in book data.')
-      return []
+        if (options && options.check) {
+          if (pathExists(fsPath.normalize(process.cwd() + '/_site/' + filePath))) {
+            data.push(fileData)
+          }
+        } else {
+          data.push(fileData)
+        }
+      })
     }
-  }
 
-  // Build path to translation's default YAML,
-  // if a language has been specified.
-  let pathToTranslationYAMLFolder,
-    pathToDefaultTranslationYAML
-  if (argv.language) {
-    pathToTranslationYAMLFolder = pathToYAMLFolder + argv.language + '/'
-    pathToDefaultTranslationYAML = pathToTranslationYAMLFolder + 'default.yml'
-
-    // If the translation has this format among its products,
-    // and that format has a files list, use that list.
-    if (pathToDefaultTranslationYAML &&
-                pathExists(pathToDefaultTranslationYAML)) {
-      const translationMetadata = yaml.load(fs.readFileSync(pathToDefaultTranslationYAML, 'utf8'))
-      if (translationMetadata &&
-                    translationMetadata.products &&
-                    translationMetadata.products[format] &&
-                    translationMetadata.products[format].files) {
-        files = translationMetadata.products[format].files
-      }
-    }
-  }
-
-  // Build path to variant-edition YAML,
-  // if there is an active variant in settings.
-  let pathToVariantYAML = false
-
-  // If there's a variant and this is a translation ...
-  if (argv.language && variant) {
-    pathToVariantYAML = pathToTranslationYAMLFolder + variant + '.yml'
-
-    // ... otherwise just get the parent language variant path
-  } else if (variant) {
-    pathToVariantYAML = pathToYAMLFolder + variant + '.yml'
-  }
-
-  // If we have a path, and there's a files list there,
-  // use that as the files list.
-  if (pathToVariantYAML &&
-            pathExists(pathToVariantYAML)) {
-    const variantMetadata = yaml.load(fs.readFileSync(pathToVariantYAML, 'utf8'))
-    if (variantMetadata &&
-                variantMetadata.products &&
-                variantMetadata.products[format] &&
-                variantMetadata.products[format].files) {
-      files = variantMetadata.products[format].files
-    }
-  }
-  // Note that files may be objects, not strings,
-  // e.g. { "01": "Chapter 1"}
-  return files
-}
-
-// Get array of HTML-file paths for this output
-function htmlFilePaths (argv, extension) {
-  'use strict'
-
-  const fileNames = fileList(argv)
-
-  if (!extension) {
-    extension = '.html'
-  }
-
-  // Provide fallback book
-  let book
-  if (argv.book) {
-    book = argv.book
-  } else {
-    book = 'book'
-  }
-
-  let pathToFiles
-  if (argv.language) {
-    pathToFiles = process.cwd() + '/' +
-                '_site/' +
-                book + '/' +
-                argv.language
-  } else {
-    pathToFiles = process.cwd() + '/' +
-                '_site/' +
-                book
-  }
-  pathToFiles = fsPath.normalize(pathToFiles)
-
-  console.log('Using files in ' + pathToFiles)
-
-  // Extract filenames from file objects,
-  // and prepend path to each filename.
-  const paths = fileNames.map(function (filename) {
-    if (typeof filename === 'object') {
-      return fsPath.normalize(pathToFiles + '/' +
-                    Object.keys(filename)[0] + extension)
-    } else {
-      return fsPath.normalize(pathToFiles + '/' +
-                    filename + extension)
-    }
+    resolve(data)
   })
-
-  return paths
 }
 
 // Cleans out old .html files after .xhtml conversions
@@ -1040,7 +1006,13 @@ async function runPrince (argv) {
     // Get the HTML file to render. If we are merging
     // input files, we only pass the merged file to Prince.
     // Unless `--merged false` was passed at the command line.
-    let inputFiles = [fsPath.dirname(htmlFilePaths(argv)[0]) + '/merged.html']
+    let inputFiles = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/merged.html')
+    if (argv.language) {
+      inputFiles = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/' + argv.language + '/merged.html')
+    }
+
     if (argv.merged === false) {
       inputFiles = htmlFilePaths(argv)
     }
@@ -1063,8 +1035,14 @@ async function runPrince (argv) {
     // Apply the stylesheet with that name
     // that we find in the styles folder beside
     // the first HTML document we're rendering.
-    const stylesheet = fsPath.dirname(htmlFilePaths(argv)[0]) +
-      '/styles/' + styleSheetFilename
+    let stylesheet = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book +
+      '/styles/' + styleSheetFilename)
+    if (argv.language) {
+      stylesheet = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/' + argv.language + '/' +
+      '/styles/' + styleSheetFilename)
+    }
 
     // Currently, node-prince does not seem to
     // log its progress to stdout. Possible WIP:
@@ -1422,26 +1400,8 @@ function bookAssetPaths (argv, assetType, folder) {
   return paths
 }
 
-// Get a list of works (aka books) in this project
-function works () {
-  'use strict'
-
-  // Get the works data directory
-  const worksDirectory = fsPath.normalize(process.cwd() +
-            '/_data/works')
-
-  // Get the folder names in the works directory
-  const arrayOfWorks = fs.readdirSync(worksDirectory, { withFileTypes: true })
-
-  // These only work with arrow functions?
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name)
-
-  return arrayOfWorks
-}
-
 // Check that the --book value is valid
-function bookIsValid (argv) {
+async function bookIsValid (argv) {
   'use strict'
 
   let validity = true
@@ -1451,7 +1411,7 @@ function bookIsValid (argv) {
   // it's not a valid choice
   if (argv.book && explicitOption('book')) {
     // Allow any work, plus the `assets` folder
-    const validWorks = works()
+    const validWorks = await works()
     validWorks.push('assets')
 
     if (!validWorks.includes(argv.book)) {
@@ -1511,7 +1471,6 @@ async function processImages (argv) {
       ['--book', argv.book, '--language', argv.language]
     )
     await logProcess(gulpProcess, 'Processing images')
-    return
   } catch (error) {
     console.log(error)
   }
@@ -1524,7 +1483,7 @@ async function convertHTMLtoWord (argv) {
   console.log('Converting HTML to Word...')
 
   // Get file list for this format
-  const filePaths = htmlFilePaths(argv)
+  const filePaths = await htmlFilePaths(argv)
 
   // Initialise a counter
   let totalConverted = 0
@@ -1544,7 +1503,7 @@ async function convertHTMLtoWord (argv) {
     await fs.mkdir(outputLocation, { recursive: true })
   }
 
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve) {
     // Loop through files and convert with Pandoc
     filePaths.forEach(function (filePath) {
       // Build path to output file
@@ -1615,17 +1574,19 @@ async function refreshIndexes (argv) {
     if (argv.format === 'print-pdf' ||
       argv.format === 'screen-pdf' ||
       argv.format === 'epub') {
-      await renderMathjax(argv)
-      await renderIndexComments(argv)
+      await renderMathjax(argv, { allFiles: true })
+      await renderIndexComments(argv, { allFiles: true })
     }
 
+    const filesForIndexing = await allFilesListed(argv, { check: true })
+
     if (projectSettings()['dynamic-indexing'] !== false) {
-      buildReferenceIndex(argv.format)
+      buildReferenceIndex(argv.format, filesForIndexing)
     }
 
     if (argv.format === 'web' ||
       argv.format === 'app') {
-      buildSearchIndex(argv.format)
+      buildSearchIndex(argv.format, filesForIndexing)
     }
   } catch (error) {
     console.log(error)
@@ -1843,7 +1804,6 @@ async function splitMarkdownFile (argv) {
 
     // Write each filepart to a new file
     filePartsArray.forEach(function (filePart) {
-
       // Create a filename from the first line
       // and a slug of that for use later
       const firstLine = filePart.slice(0, filePart.indexOf('\n')).trim()
@@ -1932,8 +1892,8 @@ async function splitMarkdownFile (argv) {
 }
 
 module.exports = {
-  epubHTMLTransformations,
   addToEpub,
+  allFilesListed,
   assembleApp,
   bookAssetPaths,
   bookIsValid,
@@ -1942,12 +1902,12 @@ module.exports = {
   convertXHTMLFiles,
   convertXHTMLLinks,
   cordova,
+  epubHTMLTransformations,
   epubValidate,
   epubZip,
   epubZipRename,
   exportWord,
   explicitOption,
-  htmlFilePaths,
   installGems,
   installNodeModules,
   jekyll,
@@ -1955,7 +1915,6 @@ module.exports = {
   mathjaxEnabled,
   newBook,
   openOutputFile,
-  pathExists,
   pdfHTMLTransformations,
   processImages,
   refreshIndexes,
@@ -1963,7 +1922,5 @@ module.exports = {
   renderIndexLinks,
   renderMathjax,
   runPrince,
-  splitMarkdownFile,
-  variantSettings,
-  works
+  splitMarkdownFile
 }

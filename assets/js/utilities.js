@@ -39,7 +39,9 @@ function ebSlugify (string, indexTerm) {
       .replace(/^-+/, '') // Trim - from start of text
       .replace(/-+$/, '') // Trim - from end of text
   } else {
-    console.error('No string passed for slugification.')
+    // We must return a string, even empty, otherwise
+    // an undefined slug will cause errors elsewhere.
+    return ''
   }
 }
 

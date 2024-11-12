@@ -21,6 +21,8 @@
 // This script is not used for PDF and epub outputs.
 // PrinceXML does not 'see' HTML comments at all.
 // So for PrinceXML output, we prerender the HTML with gulp/cheerio.
+// The script is included in PDF outputs so that
+// Puppeteer can use it for indexing PDF outputs.
 // In epub readers, the links don't work from the index
 // because the targets would only exist when the target
 // page is rendered. Browsers handle this fine, but not ereaders.
@@ -57,7 +59,7 @@ function ebIndexProcessComments (comments) {
 
   // If there are no comments, note that in the
   // `data-index-targets` attribute.
-  if (comments.length < 1) {
+  if (comments.length < 1 || !comments) {
     document.body.setAttribute('data-index-targets', 'none')
   }
 
@@ -358,9 +360,10 @@ function ebIndexGetComments () {
 function ebIndexInit () {
   'use strict'
 
-  // Don't run this if the targets are already loaded
-  // (e.g. by pre-processing)
-  if (document.querySelector('[data-index-targets]')) {
+  // Don't run this in Prince or if the targets
+  // are already loaded (e.g. by pre-processing)
+  if (document.querySelector('[data-index-targets]') ||
+      typeof Prince === 'object') {
     return
   }
 

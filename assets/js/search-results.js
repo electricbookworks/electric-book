@@ -36,7 +36,7 @@ function displaySearchResults (results, store) {
       item = store[results[i].ref]
       appendString += '<li>'
       appendString += '<h3><a href="' +
-                    item.url +
+                    item.path +
                     '?query=' +
                     searchTerm +
 
@@ -49,7 +49,7 @@ function displaySearchResults (results, store) {
                     '">' +
                     item.title +
                     ' </a></h3>'
-      appendString += '<p>' + item.excerpt + '</p>'
+      appendString += '<p>' + item.description + '</p>'
       appendString += '</li>'
     }
 
