@@ -16,9 +16,9 @@ function works () {
     // Get the folder names in the works directory
     const arrayOfWorks = fs.readdirSync(worksDirectory, { withFileTypes: true })
 
-    // These only work with arrow functions?
-      .filter((dirent) => dirent.isDirectory())
-      .map((dirent) => dirent.name)
+    // Filter only the directories into an array of their names
+      .filter(function (dirent) { return dirent.isDirectory() })
+      .map(function (dirent) { return dirent.name })
 
     if (arrayOfWorks) {
       resolve(arrayOfWorks)
