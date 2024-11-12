@@ -3,8 +3,8 @@
 // Import Node modules
 const fsPath = require('path')
 const fileList = require('./fileList.js')
-const works = require('./works')
-const translations = require('./translations')
+const works = require('./works.js')
+const translations = require('./translations.js')
 
 // Build out file paths from filename and work
 function buildPaths (filenames, extension, work, language) {
