@@ -229,8 +229,8 @@ function ebIndexGetComments () {
 
   const comments = []
 
-  let indexedElement, commentValue, previousElementSibling,
-    nextElementSibling, nextSibling, targetType, targetText
+  let indexedElement, commentValue, nextElementSibling, nextSibling, targetType,
+    targetText
 
   // Regex for testing if a comment is an indexing comment
   const isAnIndexComment = /^\s*index:/
@@ -267,7 +267,6 @@ function ebIndexGetComments () {
     while (treeWalker.nextNode()) {
       if (isAnIndexComment.test(treeWalker.currentNode.nodeValue)) {
         nextSibling = treeWalker.currentNode.nextSibling
-        previousElementSibling = treeWalker.currentNode.previousElementSibling
         nextElementSibling = treeWalker.currentNode.nextElementSibling
 
         // If the previous or next sibling elements of the comment
@@ -279,10 +278,8 @@ function ebIndexGetComments () {
         // then we know that the index target must be inline, i.e.
         // inside a text element like a paragraph.
 
-        if (previousElementSibling !== null &&
-                        nextElementSibling !== null &&
-                        ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName) &&
-                        ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
+        if (nextElementSibling !== null &&
+          ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
           indexedElement = treeWalker.currentNode.nextElementSibling
           targetType = 'element'
           targetText = ''
@@ -319,13 +316,10 @@ function ebIndexGetComments () {
         if (thisNode.nodeType === Node.COMMENT_NODE &&
                         isAnIndexComment.test(thisNode.nodeValue)) {
           nextSibling = thisNode.nextSibling
-          previousElementSibling = thisNode.previousElementSibling
           nextElementSibling = thisNode.nextElementSibling
 
-          if (previousElementSibling !== null &&
-                            nextElementSibling !== null &&
-                            ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName) &&
-                            ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
+          if (nextElementSibling !== null &&
+            ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
             indexedElement = thisNode.nextElementSibling
             targetType = 'element'
             targetText = ''
