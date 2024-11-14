@@ -14,11 +14,13 @@ $pdf-copyright-page: true !default;
         h1, h2, h3, h4, h5, h6 {
             font-family: inherit;
             font-size: inherit;
+            hyphens: none;
             margin: ($line-height-default * 0.5) 0 ($line-height-default * 0.5) 0;
             text-align: inherit;
         }
 
         p, ol, ul {
+            hyphens: none;
             margin: 0 0 ($line-height-default * $font-size-smaller) 0;
             text-align: inherit;
             text-indent: 0;
