@@ -89,7 +89,7 @@ function ebPrepareForLazyLoading () {
   const lazyImagesObserver = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
       if (mutation.type === 'attributes') {
-        if (document.body.getAttribute('data-index-targets') &&
+        if ((settings.dynamicIndexing === false || document.body.getAttribute('data-index-targets')) &&
                         document.body.getAttribute('data-ids-assigned')) {
           ebLazyLoadImages()
         }
