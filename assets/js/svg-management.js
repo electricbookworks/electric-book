@@ -189,28 +189,38 @@ function ebInjectSVGs () {
   })
 }
 
+// Check if the document is ready for testing images
+function ebReadyForTestingImages () {
+  const readyForTestingImages = document.body.getAttribute('data-testing-images')
+  if (readyForTestingImages) {
+    return true
+  } else {
+    return false
+  }
+}
+
 // Wait for testing images to be loaded
 function ebWaitForTestingImages () {
   'use strict'
   console.log('Waiting for any test images to load ...')
 
-  const testingImagesObserver = new MutationObserver(function (mutations) {
-    let ready = false
-    mutations.forEach(function (mutation) {
-      if (mutation.type === 'attributes' && ready === false) {
-        if (document.body.getAttribute('data-testing-images')) {
-          ready = true
+  if (ebReadyForTestingImages()) {
+    ebInjectSVGs()
+  } else {
+    const testingImagesObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'attributes' && ebReadyForTestingImages()) {
           console.log('Testing images loaded. Starting SVG injection.')
           ebInjectSVGs()
           testingImagesObserver.disconnect()
         }
-      }
+      })
     })
-  })
 
-  testingImagesObserver.observe(document.body, {
-    attributes: true // listen for attribute changes
-  })
+    testingImagesObserver.observe(document.body, {
+      attributes: true // listen for attribute changes
+    })
+  }
 }
 
 // Go
