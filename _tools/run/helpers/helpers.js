@@ -92,7 +92,14 @@ function explicitOption (option) {
   // Get all the aliases for this option
   let aliases = [option]
   if (options[option] && options[option].alias) {
-    aliases = aliases.concat(options[option].alias)
+    // If the option is a string, add it to the aliases,
+    // otherwise it's an array of options to merge
+    // with the aliases array (e.g. aliases for '--book').
+    if (typeof options[option].alias === 'string') {
+      aliases.push(options[option].alias)
+    } else {
+      aliases = aliases.concat(options[option].alias)
+    }
   }
 
   // Check if any of those aliases were in the args
