@@ -90,9 +90,9 @@ function explicitOption (option) {
   let optionWasExplicit = false
 
   // Get all the aliases for this option
-  const aliases = [option]
+  let aliases = [option]
   if (options[option] && options[option].alias) {
-    aliases.push(options[option].alias)
+    aliases = aliases.concat(options[option].alias)
   }
 
   // Check if any of those aliases were in the args
@@ -343,7 +343,7 @@ async function extraExcludesConfig (argv) {
     const newExcludes = excludes.concat(worksToExclude)
 
     // That's only the list of values. To create a valid
-    // key:value property, we need the `excludes:` key.
+    // key:value property, we need the `exclude:` key.
     const excludesProperty = {
       exclude: newExcludes
     }
