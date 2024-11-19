@@ -78,8 +78,8 @@ RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb 
   dpkg -i prince_11.4-1_ubuntu18.04_amd64.deb
 
 # Install pandoc for document conversion
-RUN wget https://github.com/jgm/pandoc/releases/download/2.5/pandoc-2.5-1-amd64.deb && \
-  dpkg -i pandoc-2.5-1-amd64.deb
+RUN wget https://github.com/jgm/pandoc/releases/download/3.5/pandoc-3.5-1-amd64.deb && \
+  dpkg -i pandoc-3.5-1-amd64.deb
 
 # Update npm
 RUN npm install -g npm@latest
