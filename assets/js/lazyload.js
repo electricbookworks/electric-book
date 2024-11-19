@@ -80,10 +80,10 @@ function ebLazyLoadImages () {
 }
 
 // Check if the document is ready for lazyloading
-function ebReadyForLazyloading () {
-  const readyForLazyloading = document.body.getAttribute('data-index-targets') &&
+function ebReadyForLazyLoading () {
+  const readyForLazyLoading = document.body.getAttribute('data-index-targets') &&
                             document.body.getAttribute('data-ids-assigned')
-  if (readyForLazyloading) {
+  if (readyForLazyLoading) {
     return true
   } else {
     return false
@@ -97,12 +97,12 @@ function ebReadyForLazyloading () {
 function ebPrepareForLazyLoading () {
   'use strict'
 
-  if (ebReadyForLazyloading()) {
+  if (ebReadyForLazyLoading()) {
     ebLazyLoadImages()
   } else {
     const lazyImagesObserver = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
-        if (mutation.type === 'attributes' && ebReadyForLazyloading()) {
+        if (mutation.type === 'attributes' && ebReadyForLazyLoading()) {
           ebLazyLoadImages()
           lazyImagesObserver.disconnect()
         }
