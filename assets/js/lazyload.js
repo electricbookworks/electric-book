@@ -79,6 +79,17 @@ function ebLazyLoadImages () {
   }
 }
 
+// Check if the document is ready for lazyloading
+function ebReadyForLazyLoading () {
+  const readyForLazyLoading = document.body.getAttribute('data-index-targets') &&
+                            document.body.getAttribute('data-ids-assigned')
+  if (readyForLazyLoading) {
+    return true
+  } else {
+    return false
+  }
+}
+
 // Wait for data-index-targets to be loaded
 // and IDs to be assigned before lazyloading.
 // Otherwise intersectionObserver can miss images,
@@ -86,20 +97,22 @@ function ebLazyLoadImages () {
 function ebPrepareForLazyLoading () {
   'use strict'
 
-  const lazyImagesObserver = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      if (mutation.type === 'attributes') {
-        if ((settings.dynamicIndexing === false || document.body.getAttribute('data-index-targets')) &&
-                        document.body.getAttribute('data-ids-assigned')) {
+  if (ebReadyForLazyLoading()) {
+    ebLazyLoadImages()
+  } else {
+    const lazyImagesObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'attributes' && ebReadyForLazyLoading()) {
           ebLazyLoadImages()
+          lazyImagesObserver.disconnect()
         }
-      }
+      })
     })
-  })
 
-  lazyImagesObserver.observe(document.body, {
-    attributes: true // listen for attribute changes
-  })
+    lazyImagesObserver.observe(document.body, {
+      attributes: true // listen for attribute changes
+    })
+  }
 }
 
 ebPrepareForLazyLoading()
