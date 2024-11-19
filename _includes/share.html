@@ -29,6 +29,19 @@ and clean them for use in URLs. {% endcomment %}
 
             <ul>
 
+                {% if locale.share.bluesky and locale.share.bluesky != "" %}
+                    <li class="share-link">
+                        <a class="share-link-content" href="https://bsky.app/intent/compose?text={{ share-title }}+{{ share-url }}" target="_blank">
+                            <span class="share-link-icon">
+                                {% include icons/bluesky.svg %}
+                            </span>
+                            <span class="share-link-label">
+                                {{ locale.share.bluesky }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+
                 {% if locale.share.twitter and locale.share.twitter != "" %}
                     <li class="share-link">
                         <a class="share-link-content" href="https://twitter.com/intent/tweet?url={{ share-url }}&text={{ share-title }}" target="_blank">
