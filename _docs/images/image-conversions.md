@@ -103,7 +103,9 @@ book:
       colorspace: "gray"
 ```
 
-Note that this *does not change SVGs*. SVGs are processed differently from bitmap-based images like JPGs. If you want to make SVGs grayscale, you may need to use an [SVG filter](https://www.w3.org/TR/filter-effects-1/#grayscaleEquivalent) ([here's an example](https://stackoverflow.com/a/23255391/1781075)) or use print-PDF-specific CSS.
+If you have set an image to be grayscale, but your PDF has a CMYK or RGB output intent (as the template's defaults do), Prince will still convert the image to RGB or CMYK, which you probably don't want. To prevent Prince from converting an image's colour profile to match the output intent, add the class `prince-pdf-color-conversion-none` to the image.
+
+Note that the above color settings *do not change SVGs*. SVGs are processed differently from bitmap-based images like JPGs. If you want to make SVGs grayscale, you may need to use an [SVG filter](https://www.w3.org/TR/filter-effects-1/#grayscaleEquivalent) ([here's an example](https://stackoverflow.com/a/23255391/1781075)) or use print-PDF-specific CSS.
 {:.box}
 
 

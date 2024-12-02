@@ -25,6 +25,11 @@ $pdf-pdf-view: true !default;
         }
     }
 
+    // Allow overriding color conversion on specific elements
+    .prince-pdf-color-conversion-none {
+        -prince-pdf-color-conversion: none;
+    }
+
     // Make the PDF page labels (numbers in PDF navigation)
     // match the numbers of the book pages.
     // First, set the default for all pages.
