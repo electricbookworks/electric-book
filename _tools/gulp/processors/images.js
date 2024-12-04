@@ -44,7 +44,7 @@ function imagesPrintPDF (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
@@ -111,7 +111,7 @@ function imagesScreenPDF (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
@@ -178,7 +178,7 @@ function imagesEpub (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks except `return gmfile` settings
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
@@ -251,7 +251,7 @@ function imagesApp (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks except `return gmfile` settings
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
@@ -324,7 +324,7 @@ function imagesWeb (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks except `return gmfile` settings
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
@@ -396,7 +396,7 @@ function imagesSmall (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks except `return gmfile` settings
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
@@ -469,7 +469,7 @@ function imagesMedium (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks except `return gmfile` settings
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
@@ -542,7 +542,7 @@ function imagesLarge (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks except `return gmfile` settings
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
@@ -615,7 +615,7 @@ function imagesXLarge (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks except `return gmfile` settings
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
@@ -688,7 +688,7 @@ function imagesMax (done) {
 
     // --------------------------------------------------------------
     // Same for all bitmap image tasks except `return gmfile` settings
-      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of ' }))
+      .pipe(debug({ title: 'Creating ' + outputFormat + ' version of' }))
       .pipe(gm(function (gmfile) {
         // Get file details
         const filename = getFilenameFromPath(gmfile.source)
