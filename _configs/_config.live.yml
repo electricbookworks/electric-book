@@ -8,10 +8,11 @@ build: live
 canonical-url: "https://example.com"
 baseurl: "/example"
 
-# Turn off docs.
-# Setting output: false actually doesn't work,
+# Turn off collections not needed for live.
+# Setting output: false actually doesn't work:
 # see https://github.com/jekyll/jekyll/issues/7504
-# so we also exclude the _docs below.
+# `output: false` doesn't work for multiple
+# collections, but does for a single collection.
 collections:
   docs:
     output: false

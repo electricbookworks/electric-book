@@ -2,11 +2,11 @@
 output: "screen-pdf"
 # Set site.image-set == "images/screen-pdf"
 image-set: "images/screen-pdf"
-# Turn off documentation
+# Turn off collections not needed for print.
+# `output: false` doesn't work for multiple
+# collections, but does for a single collection.
 collections:
   docs:
-    output: false
-  api:
     output: false
 exclude:
   # The usual excludes from _config.yml
