@@ -2,12 +2,8 @@
 output: "epub"
 # Set site.image-set == "images/epub"
 image-set: "images/epub"
-# Turn off documentation and activate epub collection
+# Enable and only use the epub collection
 collections:
-  docs:
-    output: false
-  api:
-    output: false
   epub:
     output: true
 exclude:

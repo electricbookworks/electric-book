@@ -62,9 +62,15 @@ mathjax-enabled: true
 # ------------------
 # docs:      Documentation is built into the Electric Book template.
 #            These docs build along with your books, so they are available
-#            as you work. To turn off the docs, change output to false.
+#            as you work. To turn off the docs, comment out its lines below.
+# api:       The template generates data about your web output by default.
+#            To turn off the api, comment out its lines below.
 # app, epub: The app and epub collections are off by default, and
 #            turned on by those formats' _config files.
+# Note:      If no collection is set to `output: true`, also comment out
+#            the `collections:` line to ensure this file is valid YAML.
+#            Setting a collection to `output: false` does not have any effect
+#            when listing multiple collections.
 collections:
   docs:
     output: true
