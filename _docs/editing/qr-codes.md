@@ -17,9 +17,11 @@ To add a QR code, use the `include qr-code` tag. It takes these arguments:
 
 This is an example:
 
+{% raw %}
 ```
 {% include qr-code
   content="https://electricbookworks.com"
   caption="Scan this code to visit the Electric Book Works website."
 %}
 ```
+{% endraw %}
