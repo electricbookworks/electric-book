@@ -119,12 +119,14 @@ On the web, sometimes portrait-orientation images are too tall to fit in one scr
 
 In the template, the default max height of a figure image is 80% of the viewport height (the 80% leaves space for at least some of the caption). To override this default, and allow a figure's images to be taller than 80% of the viewport height in web outputs, add a `web-max-height-none` class to the figure. E.g.
 
+{% raw %}
 ```
 {% include figure
     image="figure-01.jpg"
     class="web-max-height-none"
 %}
 ```
+{% endraw %}
 
 Note that this is only implemented for web and app outputs.
 
