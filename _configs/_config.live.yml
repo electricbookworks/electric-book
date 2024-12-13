@@ -69,8 +69,10 @@ exclude:
   - /assets/js/page-reference.js
   - /assets/js/bookmarks.js
 
-  # Collections that must not render
+  # Collections that must not be processed
+  - _app
   - _docs
+  - _epub
 
   # Colour profiles for conversions
   - /assets/profiles
