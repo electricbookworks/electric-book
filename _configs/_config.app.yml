@@ -4,15 +4,9 @@ output: "app"
 # Set site.image-set == "images/app"
 image-set: "images/app"
 
-# Turn off documentation
-# Setting output: false actually doesn't work,
-# see https://github.com/jekyll/jekyll/issues/7504
-# so we also exclude the _docs below.
+# Only the `app` collection should render.
+# See _config.yml for notes on collections.
 collections:
-  docs:
-    output: false
-  api:
-    output: false
   app:
     output: true
 
@@ -69,11 +63,13 @@ exclude:
   - /assets/js/page-reference.js
   - /assets/js/bookmarks.js
 
-  # Collections that must not render
+  # Collections that must not be processed
+  # for this output format
   - _docs
+  - _api
+  - _epub
 
   # Things we don't need for an app
-  - _api
   - deploy.sh
   - fr
   - netlify.toml

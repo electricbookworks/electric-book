@@ -1,15 +1,15 @@
 # Set site.output == "epub"
 output: "epub"
+
 # Set site.image-set == "images/epub"
 image-set: "images/epub"
-# Turn off documentation and activate epub collection
+
+# Only the `epub` collection should render.
+# See _config.yml for notes on collections.
 collections:
-  docs:
-    output: false
-  api:
-    output: false
   epub:
     output: true
+
 exclude:
   # The usual excludes from _config.yml
   - run.js
@@ -58,8 +58,13 @@ exclude:
   - /assets/js/page-reference.js
   - /assets/js/bookmarks.js
 
-  # Exclude files we don't need for epub
+  # Collections that must not be processed
+  # for this output format
   - _api
+  - _app
+  - _docs
+
+  # Exclude files we don't need for epub
   - deploy.sh
   - fr
   - netlify.toml

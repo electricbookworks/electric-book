@@ -1,13 +1,19 @@
 # Set site.output == "screen-pdf"
 output: "screen-pdf"
+
 # Set site.image-set == "images/screen-pdf"
 image-set: "images/screen-pdf"
-# Turn off documentation
+
+# No collections should be processed for this output.
+# See _config.yml for notes on collections.
+# To turn off all collections, we must include
+# a `collections:` node to override the default
+# in _config.yml, even if it lists a collection
+# that we exclude in the `exclude` list below.
 collections:
   docs:
     output: false
-  api:
-    output: false
+
 exclude:
   # The usual excludes from _config.yml
   - run.js
@@ -57,8 +63,14 @@ exclude:
   - /assets/js/page-reference.js
   - /assets/js/bookmarks.js
 
-  # Exclude files we don't need for screen-pdf
+  # Collections that must not be processed
+  # for this output format
   - _api
+  - _app
+  - _docs
+  - _epub
+
+  # Exclude files we don't need for screen-pdf
   - /about.md
   - /contact.md
   - /deploy.sh

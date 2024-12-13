@@ -8,13 +8,17 @@ build: live
 canonical-url: "https://example.com"
 baseurl: "/example"
 
-# Turn off docs.
-# Setting output: false actually doesn't work,
-# see https://github.com/jekyll/jekyll/issues/7504
-# so we also exclude the _docs below.
+# Only the `api` collection should render by default.
+# See _config.yml for notes on collections.
+# To turn off all collections, including _api,
+# you must include a `collections:` node that will
+# override the default in _config.yml. You can use:
+# collections:
+#   docs:
+#     output: false
 collections:
-  docs:
-    output: false
+  api:
+    output: true
 
 # Exclude list
 exclude:
@@ -65,8 +69,10 @@ exclude:
   - /assets/js/page-reference.js
   - /assets/js/bookmarks.js
 
-  # Collections that must not render
+  # Collections that must not be processed
+  - _app
   - _docs
+  - _epub
 
   # Colour profiles for conversions
   - /assets/profiles
