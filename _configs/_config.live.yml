@@ -8,14 +8,17 @@ build: live
 canonical-url: "https://example.com"
 baseurl: "/example"
 
-# Turn off collections not needed for live.
-# Setting output: false actually doesn't work:
-# see https://github.com/jekyll/jekyll/issues/7504
-# `output: false` doesn't work for multiple
-# collections, but does for a single collection.
+# Only the `api` collection should render by default.
+# See _config.yml for notes on collections.
+# To turn off all collections, including _api,
+# you must include a `collections:` node that will
+# override the default in _config.yml. You can use:
+# collections:
+#   docs:
+#     output: false
 collections:
-  docs:
-    output: false
+  api:
+    output: true
 
 # Exclude list
 exclude:

@@ -60,17 +60,30 @@ mathjax-enabled: true
 
 # Jekyll collections
 # ------------------
-# docs:      Documentation is built into the Electric Book template.
-#            These docs build along with your books, so they are available
-#            as you work. To turn off the docs, comment out its lines below.
-# api:       The template generates data about your web output by default.
-#            To turn off the api, comment out its lines below.
-# app, epub: The app and epub collections are off by default, and
-#            turned on by those formats' _config files.
-# Note:      If no collection is set to `output: true`, also comment out
-#            the `collections:` line to ensure this file is valid YAML.
-#            Setting a collection to `output: false` does not have any effect
-#            when listing multiple collections.
+# We use collections for the docs, the api, and epub and app outputs.
+# For faster builds, we don't want unnecessary collections to be processed.
+# This means adding them to the `exclude` list below,
+# and using a `collections` node below with only the collections you need
+# set to `output: true`.
+# - Note:      - If no collection is set to `output: true`, also comment out
+#                the `collections:` line to ensure this file is valid YAML.
+#              - Setting a collection to `output: false` does not have any effect
+#                when listing multiple collections.
+#              - On output, other config files may load, e.g. _config.epub.yml.
+#                Any `collections:` node in a subsequent config file will entirely
+#                override any `collections:` nodes in earlier config files.
+#              - To override the default `collections` below, subsequent configs
+#                must include a `collections:` node, even if it contains
+#                a single collection set to `output: false`.
+#              - There are known issues with Jekyll behaviour here,
+#                e.g. https://github.com/jekyll/jekyll/issues/7504.
+# - docs:      Documentation is built into the Electric Book template.
+#              These docs build along with your books, so they are available
+#              as you work. To turn off the docs, comment out its lines below.
+# - api:       The template generates data about your web output by default.
+#              To turn off the api, comment out its lines below.
+# - app, epub: The app and epub collections are off by default, and
+#              turned on by those formats' _config files.
 collections:
   docs:
     output: true
