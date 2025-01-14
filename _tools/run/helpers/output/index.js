@@ -20,6 +20,7 @@ const {
   mathjaxEnabled,
   openOutputFile,
   pdfHTMLTransformations,
+  processContent,
   renderIndexComments,
   renderIndexLinks,
   renderMathjax,
@@ -48,6 +49,7 @@ async function pdf (argv) {
   try {
     await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
+    await processContent(argv)
     await renderIndexComments(argv)
     await renderIndexLinks(argv)
     await merge(argv)
@@ -67,6 +69,7 @@ async function epub (argv) {
   try {
     await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
+    await processContent(argv)
     await epubHTMLTransformations(argv)
     await renderIndexComments(argv)
     await renderIndexLinks(argv)
