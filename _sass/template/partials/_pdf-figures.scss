@@ -132,6 +132,7 @@ $pdf-figures: true !default;
             clear: both;
             float: none;
             margin-top: $line-height-default;
+            margin-bottom: $line-height-default;
         }
 
         // Thumbnail figures
