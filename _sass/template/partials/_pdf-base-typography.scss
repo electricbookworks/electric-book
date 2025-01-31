@@ -268,9 +268,16 @@ $convert-images-to-color-profile: false !default;
         max-width: 100%;
         // Control colorspace conversion. See:
         // https://www.princexml.com/forum/topic/3831/dont-convert-images
-        prince-image-magic: ignore-icc-profile;
-        @if $convert-images-to-color-profile {
-            prince-image-magic: none;
+        -prince-image-magic: none;
+
+        @if $ignore-embedded-image-color-profiles {
+            // Ignores the image's own ICC profile in favour
+            // of the profile for the PDF as a whole.
+            -prince-image-magic: ignore-icc-profile;
+        }
+
+        @if $convert-images-to-color-profile == false {
+            -prince-pdf-color-conversion: none;
         }
     }
 
