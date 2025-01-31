@@ -138,7 +138,7 @@ $color-profile: "PSOcoated_v3.icc" !default;
 $black-ink: true !default; // true or rich (true for pure black or rich for rich black)
 
 // Should Prince ignore the color profiles embedded in images?
-// It true, it will apply the color profile above to them.
+// If true, it will apply the color profile above to them.
 // See https://www.princexml.com/doc/graphics/
 $ignore-embedded-image-color-profiles: false !default;
 
