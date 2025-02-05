@@ -22,6 +22,8 @@ That is data from [an actual scientific study](https://www.researchgate.net/publ
 
 Here's a bigger table containing some lists. This table shows the skeletal muscles in your forehead and eyelid.
 
+{% include figure
+html='
 <table>
     <tr>
         <th>Muscle</th>
@@ -34,8 +36,12 @@ Here's a bigger table containing some lists. This table shows the skeletal muscl
         <td>occipitofrontalis</td>
         <td>
             <ul>
-                <li>2 occipital bellies</li>
-                <li>2 frontal bellies</li>
+                <!-- The &nbsp; here are to test that we are
+                correctly processing named entities inside tables,
+                which can be a problem if our process is not
+                managing entities appropriately. -->
+                <li>2&nbsp;occipital bellies</li>
+                <li>2&nbsp;frontal bellies</li>
             </ul>
         </td>
         <td>galea aponeurotica</td>
@@ -51,7 +57,11 @@ Here's a bigger table containing some lists. This table shows the skeletal muscl
             </ul>
         </td>
         <td>galea aponeurotica</td>
-        <td>posterior auricular nerve (facial nerve)</td>
+        <!-- The &nbsp; here are to test that we are
+        correctly processing named entities inside tables,
+        which can be a problem if our process is not
+        managing entities appropriately. -->
+        <td>posterior auricular nerve (facial&nbsp;nerve)</td>
         <td></td>
     </tr>
     <tr>
@@ -94,3 +104,5 @@ Here's a bigger table containing some lists. This table shows the skeletal muscl
         <td>Depresses the eyebrow</td>
     </tr>
 </table>
+'
+%}
