@@ -26,6 +26,11 @@ $pdf-tables: true !default;
 			margin: 0;
 			padding: 0;
 			text-align: left;
+
+			// Indent nested lists in tables
+			ul, ol {
+				margin-left: $paragraph-indent;
+			}
 		}
 	}
 	.table-row-stub {

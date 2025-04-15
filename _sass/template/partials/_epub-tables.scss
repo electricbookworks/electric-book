@@ -15,11 +15,16 @@ $epub-tables: true !default;
 	}
 	th, td {
 		border: $rule-thickness solid $color-mid;
-		padding: $line-height-default / 2;
+		padding: $line-height-default * 0.5;
 		text-align: left; // avoid gaps in narrow columns of text in ADE
 		p, ol, ul {
+			list-style-position: outside;
 			margin: 0;
 			padding: 0;
+
+			ol, ul {
+				margin-left: 1em;
+			}
 		}
 		ol, ul {
 			list-style-position: inside;

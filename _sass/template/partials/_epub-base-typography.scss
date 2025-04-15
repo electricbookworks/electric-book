@@ -108,7 +108,7 @@ $epub-base-typography: true !default;
 
     ol, ul {
         list-style-position: outside;
-        margin: 0 0 $line-height-default $paragraph-indent;
+        margin: 0 0 $line-height-default 1em;
     }
     ol {
         list-style-type: decimal;

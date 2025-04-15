@@ -14,9 +14,9 @@
     margin: $line-height-default 0;
     padding: ($line-height-default / 2);
 
-    & p:last-of-type,
-    & ol:last-of-type,
-    & ul:last-of-type {
+    & p:last-child,
+    & ol:last-child,
+    & ul:last-child {
         margin-bottom: 0;
     }
 

@@ -115,7 +115,7 @@ $web-base-typography: true !default;
         // markers from disappearing off the browser window.
         // Lists inherit zero padding from the body element.
         // See https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Consistent_list_indentation
-        margin: 0 0 $line-height-default ($paragraph-indent * 2);
+        margin: 0 0 $line-height-default 1em;
     }
     ol {
         list-style-type: decimal;
