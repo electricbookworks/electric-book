@@ -1,7 +1,7 @@
 # Image settings
 # --------------
 # This file sets non-default settings for specific images.
-# Add your book directory, then each image at a "-".
+# Add your book directory (or '_all' for all books), then each image at a "-".
 # For each image, you can set a colorspace (e.g. "gray", "cmyk")
 # or set it to not be modified by automated image processessing.
 # Possible formats: print-pdf, screen-pdf, web, epub, app
