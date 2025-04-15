@@ -29,7 +29,9 @@ $web-visual-toc: true !default;
             margin: 0;
             padding: 0;
 
-            li {
+            & > li {
+
+                margin-bottom: 2rem;
 
                 @media only screen and (min-width: $max-width-default) {
                     display: grid;
@@ -37,9 +39,6 @@ $web-visual-toc: true !default;
                     grid-template-rows: max-content 1fr;
                     margin-bottom: 0;
                 }
-
-                clear: both;
-                margin-bottom: 2rem;
 
                 // Ensure element expands to the height`
                 // of its floated child (the image)
@@ -74,13 +73,25 @@ $web-visual-toc: true !default;
                         width: 8rem;
                         object-fit: cover;
                     }
+
+                    .visual-toc-thumbnail-initial {
+                        width: 100%;
+                        height: 100%;
+                        text-align: center;
+                        font-size: 4rem;
+                        padding: 2.5rem 0;
+                        background-color: $color-accent;
+                        color: $white;
+                    }
                 }
 
                 .visual-toc-chapter-title {
                     font-weight: bold;
+                    margin-top: 0.5rem;
 
                     @media only screen and (min-width: $max-width-default) {
                         grid-column-start: 3;
+                        margin-top: 0;
                     }
                 }
 
@@ -89,6 +100,17 @@ $web-visual-toc: true !default;
                     @media only screen and (min-width: $max-width-default) {
                         grid-column-start: 3;
                     }
+                }
+            }
+
+            // If using numbers as chapter icons,
+            // don't display numbers created by
+            // markdown ordered lists.
+            &.visual-toc-list-numbered {
+
+                ol {
+                    list-style-type: none;
+                    margin: 0;
                 }
             }
         }

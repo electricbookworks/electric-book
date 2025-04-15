@@ -55,6 +55,12 @@ To gather multiple feature boxes as siblings, wrap one or more of these tags in 
 ```
 {% endraw %}
 
+Since your images are likely to be cropped automatically, you can also adjust where to focus on your image once cropped, by adding an `image-position` argument. This uses the same syntax as the [CSS `object-position` property](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position). For example, this will focus on the upper area of the image:
+
+```
+image-position="50% 20%"
+```
+
 The images used in feature boxes should be in `assets/images/_source` and [converted for the template's output formats](image-conversions.html).
 
 ## Full-width coloured panels
@@ -122,3 +128,29 @@ image: "fradkin-2.jpg"
 description: "A research paper that includes figures with reference numbers, captions and sources."
 ---
 ```
+
+If your page titles start with numbers, e.g:
+
+```
+title: "1. Setting Up"
+```
+
+you can choose to use those numbers as your chapter icons instead of images. To do this, add the argument `thumbnails="numbers"` to your include tag:
+
+{% raw %}
+{% include visual-toc
+   book="samples"
+   files="
+   * 00-05-contents-page
+   * 01-01-plain-text-1
+   * 01-10-questions
+   * 02-01-plain-images
+   * 02-02-figures
+   * 03-02-maths
+   * 04-02-video
+   * 10-02-dynamic-index
+"
+  thumbnails="numbers"
+%}
+```
+{% endraw %}
