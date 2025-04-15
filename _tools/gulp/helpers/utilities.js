@@ -30,8 +30,18 @@ function modifyImageCheck (filename, format) {
     format = 'all'
   }
 
-  if (imageSettings[book]) {
-    imageSettings[book].forEach(function (image) {
+  if (imageSettings && (imageSettings._all || imageSettings[book])) {
+    let settings
+
+    // If there are settings for all books, use those.
+    // Otherwise, use the settings for this book.
+    if (imageSettings._all) {
+      settings = imageSettings._all
+    } else {
+      settings = imageSettings[book]
+    }
+
+    settings.forEach(function (image) {
       if (image.file === filename) {
         // User feedback for images not being modified
         const noModifyFeedback = filename + ' not modified for ' + format + ' format(s), as specified in images.yml'
@@ -51,10 +61,10 @@ function modifyImageCheck (filename, format) {
 
         // If an image has a 'modify' setting for this or all formats...
         if (image.modify || (image[format] && image[format].modify) ||
-                        (image.all && image.all.modify)) {
+                        (image._all && image._all.modify)) {
           // ... and it's set to no, do not modify.
           if (image.modify === 'no' || (image[format] && image[format].modify === 'no') ||
-                            (image.all && image.all.modify === 'no')) {
+                            (image._all && image._all.modify === 'no')) {
             console.log(noModifyFeedback)
             modifyImage = false
           }
@@ -100,9 +110,19 @@ function lookupColorSettings (gmfile,
   const filename = getFilenameFromPath(gmfile.source)
 
   // Look up image settings
-  if (imageSettings[book]) {
-    imageSettings[book].forEach(function (image) {
-      if (image.file === filename || image.file === 'all') {
+  if (imageSettings && (imageSettings._all || imageSettings[book])) {
+    let settings
+
+    // If there are settings for all books, use those.
+    // Otherwise, use the settings for this book.
+    if (imageSettings._all) {
+      settings = imageSettings._all
+    } else {
+      settings = imageSettings[book]
+    }
+
+    settings.forEach(function (image) {
+      if (image.file === filename || image.file === '_all') {
         if (image[outputFormat] && image[outputFormat].colorspace === 'gray') {
           colorProfile = colorProfileGrayscale
           colorSpace = colorSpaceGrayscale
