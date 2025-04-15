@@ -47,19 +47,22 @@
         margin-top: 0;
     }
 
-    li {
-        // Paragraphs within list items in a box
-        p:last-of-type {
+    // Some margin below main headings in boxes
+    h2, h3 {
+        margin-bottom: $line-height-default;
+    }
+
+    // No extra space at bottom of box
+    // from elements that usually have margin-bottom
+    p, ol, ul, dl {
+        &:last-child {
             margin-bottom: 0;
         }
     }
 
-    // Definition lists inside a box
-    dl {
-        &:first-of-type {
-            margin-top: 0;
-        }
-        &:last-of-type {
+    li {
+        // Paragraphs within list items in a box
+        p:last-of-type {
             margin-bottom: 0;
         }
     }
