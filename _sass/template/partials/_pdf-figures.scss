@@ -203,8 +203,8 @@ $pdf-figures: true !default;
     // 1. In the markdown/HTML, add class="rotate" to the figure(s) you want to rotate.
     // 2. On building, rotate.js wraps each rotating figure in two wrapper divs,
     //    figure-rotator and, wrapping that, figure-rotator-wrapper.
-    // 4. Then we do some maths to work out the proportions of our content area.
-    // 5. Then see the notes in the Sass below.
+    // 3. Then we do some maths to work out the proportions of our content area.
+    // 4. Then see the notes in the Sass below.
 
     // Get the proportions we need
     $rotator-content-width: $page-width - $margin-inside - $margin-outside;
@@ -238,10 +238,10 @@ $pdf-figures: true !default;
             // 1. We choose to rotate from the top-left corner.
             transform-origin: top left;
             // 2. Rotate the div anti-clockwise 90%.
-            // 4. Shift the div down by the content area's height,
-            //    rememebering that, rotated, 'down' is x not y.
+            // 3. Shift the div down by the content area's height,
+            //    remembering that, rotated, 'down' is x not y.
             // Now it's exactly in position.
-            transform: rotate(-90deg) translatex(-($rotator-content-height));
+            transform: rotate(-90deg) translateX(-($rotator-content-height));
             // Finally we set it to display: table, for the vertical centering to come below.
             display: table;
 
