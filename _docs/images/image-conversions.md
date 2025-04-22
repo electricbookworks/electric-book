@@ -94,16 +94,27 @@ samples:
       colorspace: "gray"
 ```
 
-To change a setting for all images in a format, you can use 'all' instead of the image filename:
+To change a setting for all images in a format, you can use '_all' instead of the image filename:
 
 ```yaml
 book:
-  - file: "all"
+  - file: "_all"
     print-pdf:
       colorspace: "gray"
 ```
 
-If you have set an image to be grayscale, but your PDF has a CMYK or RGB output intent (as the template's defaults do), Prince will still convert the image to RGB or CMYK, which you probably don't want. To prevent Prince from converting an image's colour profile to match the output intent, add the class `prince-pdf-color-conversion-none` to the image.
+To change a setting for all images in all books, you can use '_all' instead of the book directory name:
+
+```yaml
+_all:
+  - file: "_all"
+    print-pdf:
+      colorspace: "gray"
+```
+
+The underscores avoid potential clashes should you name an actual book folder or image 'all'.
+
+If you have set an image to be grayscale, but your PDF has a CMYK or RGB output intent (as the template's defaults do), Prince will still convert the image to RGB or CMYK, which you probably don't want. To prevent Prince from converting an image's colour profile to match the output intent, add the class `prince-pdf-color-conversion-none` to the image in markdown.
 
 Note that the above color settings *do not change SVGs*. SVGs are processed differently from bitmap-based images like JPGs. If you want to make SVGs grayscale, you may need to use an [SVG filter](https://www.w3.org/TR/filter-effects-1/#grayscaleEquivalent) ([here's an example](https://stackoverflow.com/a/23255391/1781075)) or use print-PDF-specific CSS.
 {:.box}
@@ -122,12 +133,12 @@ samples:
 
 Now the output in print-PDF will be the same as the image in the `_source` folder, with none of the default print-PDF modifications.
 
-You can also use `all` to set an option for all formats.
+You can also use `_all` to set an option for all formats.
 
 ```yaml
 samples:
   - file: "fradkin-1.jpg"
-    all:
+    _all:
       modify: no
 ```
 
