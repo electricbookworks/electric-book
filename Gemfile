@@ -17,6 +17,11 @@ source 'https://rubygems.org'
 # and uncomment the Jekyll version above.
 gem 'github-pages', group: :jekyll_plugins
 
+# Uncomment to add webrick, which is not included in Ruby from v3.
+# This is only necessary if you are not using the github-pages gem above,
+# which includes webrick. Jekyll needs Webrick to serve pages.
+# gem 'webrick'
+
 # This is highly recommended if your team uses Windows.
 # If you don't, then comment it out to avoid Gemfile.lock inconsistencies.
 gem 'wdm', '>= 0.1.1' if Gem.win_platform?
