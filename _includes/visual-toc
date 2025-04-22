@@ -4,7 +4,8 @@
 
     {% assign visual-toc-files = include.files | strip_newlines | remove: " " | split: "*" %}
 
-    <ul class="visual-toc-list">
+    <ul class="visual-toc-list
+        {% if include.thumbnails == "numbers" %}visual-toc-list-numbered{% endif %}">
         {% for visual-toc-file in visual-toc-files %}
             {% if visual-toc-file and visual-toc-file !="" %}
 
@@ -20,14 +21,29 @@
                         {% if visual-toc-page-object.image and visual-toc-page-object.image != "" %}
                             <div class="visual-toc-chapter-image">
                                 <a href="{{ visual-toc-path-to-file }}.html" aria-label="{{ locale.visual-toc.link-to-page-assistive-text }}">
-                                    {% include image file=visual-toc-page-object.image folder=include.book position=visual-toc-page-object.image-position %}
+                                    {% if include.thumbnails == "numbers" %}
+                                        {% capture thumbnail-initial %}{{visual-toc-page-object.title | split: "." | first }}{% endcapture %}
+                                        <div class="visual-toc-thumbnail-initial">{{ thumbnail-initial }}</div>
+                                    {% else %}
+                                        {% include image file=visual-toc-page-object.image folder=include.book position=visual-toc-page-object.image-position %}
+                                    {% endif %}
                                 </a>
                             </div>
                         {% endif %}
 
                         <div class="visual-toc-chapter-title">
                             <a href="{{ visual-toc-path-to-file }}.html">
-                                {{ visual-toc-page-object.title | markdownify | remove: "<p>" | remove: "</p>" }}
+
+                                {% comment %} If the titles start with numbers, e.g. '1. The Dog Bus',
+                                we can use those numbers as the thumbnails instead of images
+                                by specifying 'thumbnails="numbers"' in the include tag.
+                                Otherwise, escape the . so that the title isn't a markdown ol > li {% endcomment %}
+
+                                {% if include.thumbnails == "numbers" %}
+                                    {{ visual-toc-page-object.title | markdownify | remove: "<p>" | remove: "</p>" }}
+                                {% else %}
+                                    {{ visual-toc-page-object.title | replace: ".", "\." | markdownify | remove: "<p>" | remove: "</p>" }}
+                                {% endif %}
                             </a>
                         </div>
 
