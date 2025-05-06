@@ -719,12 +719,16 @@ function filesInProjectNav () {
   return new Promise(function (resolve) {
     const files = []
     const projectNav = yaml.load(fs.readFileSync(process.cwd() + '/_data/nav.yml', 'utf8'))
-    Object.entries(projectNav).forEach(function (entry) {
-      entry[1].forEach(function (item) {
-        const file = item.file
-        files.push(file)
+    if (Object.entries(projectNav)) {
+      Object.entries(projectNav).forEach(function (entry) {
+        if (entry[1]) {
+          entry[1].forEach(function (item) {
+            const file = item.file
+            files.push(file)
+          })
+        }
       })
-    })
+    }
     resolve(files)
   })
 }
@@ -842,7 +846,7 @@ async function allFilesListed (argv, options) {
     // and if this is a web or app build.
     const includeDocs = (format === 'web' || format === 'app') &&
       (options && options.docs !== 'exclude')
-    if (includeDocs && configsObject(argv).collections.docs.output === true) {
+    if (includeDocs && configsObject(argv)?.collections?.docs?.output === true) {
       docs.forEach(function (file) {
         const filePath = file + '.html'
         const fileData = {
