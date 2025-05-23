@@ -48,6 +48,13 @@ separate HTML files are merged into one body element.
         data-index-targets="none"
     {% endif %}
 
+    {% comment %} Some scripts wait for `data-mathjax-rendered` to be ready.
+    If we are not using a mathjax, it will never be rendered,
+    so we confirm that here. {% endcomment %}
+    {% if site.mathjax-enabled == false %}
+        data-mathjax-rendered="true"
+    {% endif %}
+
     >
 
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
@@ -97,7 +104,15 @@ separate HTML files are merged into one body element.
 <body
     {% if site.data.settings.dynamic-indexing == false %}
         data-index-targets="none"
+    {% endif %}
+
+    {% comment %} Some scripts wait for `data-mathjax-rendered` to be ready.
+    If we are not using a mathjax, it will never be rendered,
+    so we confirm that here. {% endcomment %}
+    {% if site.mathjax-enabled == false %}
+        data-mathjax-rendered="true"
     {% endif %}>
+
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
         {% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}
         {% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}
@@ -159,7 +174,15 @@ separate HTML files are merged into one body element.
 <body
     {% if site.data.settings.dynamic-indexing == false %}
         data-index-targets="none"
+    {% endif %}
+
+    {% comment %} Some scripts wait for `data-mathjax-rendered` to be ready.
+    If we are not using a mathjax, it will never be rendered,
+    so we confirm that here. {% endcomment %}
+    {% if site.mathjax-enabled == false %}
+        data-mathjax-rendered="true"
     {% endif %}>
+
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
         data-title="{% if book-title %}{{ book-title }}{% else %}{{ page.title }}{% endif %}"
         data-book-directory="{{ book-directory }}"
@@ -229,7 +252,15 @@ separate HTML files are merged into one body element.
     <body
         {% if site.data.settings.dynamic-indexing == false %}
             data-index-targets="none"
+        {% endif %}
+
+        {% comment %} Some scripts wait for `data-mathjax-rendered` to be ready.
+        If we are not using a mathjax, it will never be rendered,
+        so we confirm that here. {% endcomment %}
+        {% if site.mathjax-enabled == false %}
+            data-mathjax-rendered="true"
         {% endif %}>
+
         <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
         {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
         {% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
@@ -315,7 +346,15 @@ separate HTML files are merged into one body element.
 <body
     {% if site.data.settings.dynamic-indexing == false %}
         data-index-targets="none"
+    {% endif %}
+
+    {% comment %} Some scripts wait for `data-mathjax-rendered` to be ready.
+    If we are not using a mathjax, it will never be rendered,
+    so we confirm that here. {% endcomment %}
+    {% if site.mathjax-enabled == false %}
+        data-mathjax-rendered="true"
     {% endif %}>
+
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
         {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
         {% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
