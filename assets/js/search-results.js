@@ -1,5 +1,29 @@
-/* global window, locales, pageLanguage, elasticlunr
+/* global window, locales, metadata, pageLanguage, elasticlunr
     index, searchTerm, store, fillSearchBox */
+
+// Get current variant
+const searchResultsVariant = document.querySelector('.wrapper').getAttribute('data-variant')
+
+// Get an array of works
+let searchResultsWorks
+if (metadata?.works) {
+  searchResultsWorks = Object.keys(metadata.works)
+}
+
+// Add at top of file, assuming metadata is globally available
+const searchResultsAvailableFiles = []
+
+if (searchResultsWorks) {
+  searchResultsWorks.forEach(function (work) {
+    if (metadata?.works[work]?.[searchResultsVariant]?.products?.web?.files?.length > 0) {
+      const files = metadata.works[work][searchResultsVariant].products.web.files
+      files.forEach(function (file) {
+        const pathFragment = work + '/' + file
+        searchResultsAvailableFiles.push(pathFragment)
+      })
+    }
+  })
+}
 
 // Display the search results
 function displaySearchResults (results, store) {
@@ -34,7 +58,26 @@ function displaySearchResults (results, store) {
       }
 
       item = store[results[i].ref]
-      appendString += '<li>'
+
+      // Extract filename from path
+      const itemPath = item.path
+
+      let isDocsPage = false
+      // Check if it's a docs page
+      if (itemPath.startsWith('docs/')) {
+        isDocsPage = true
+      }
+
+      // Check if file is available by matching path fragments
+      let isAvailable = true
+      if (isDocsPage) {
+        isAvailable = true
+      } else if (searchResultsAvailableFiles && searchResultsAvailableFiles.length > 0) {
+        isAvailable = searchResultsAvailableFiles.some(fragment => itemPath.includes(fragment))
+      }
+
+      appendString += '<li class="search-result' +
+                     (isAvailable ? ' search-result-available' : ' search-result-unavailable') + '">'
       appendString += '<h3><a href="' +
                     item.path +
                     '?query=' +

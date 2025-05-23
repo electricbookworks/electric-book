@@ -64,8 +64,17 @@ as the include calls itself for each list of children.
         check which variants, if any, this particular TOC item has specified.
         Include the item in the TOC only if it is specified in the TOC item's
         variants list.{% endcomment %}
-        {% if variant and variant-toc == false %}
-            {% assign toc-variants = item.variants | remove: " " | split: "," %}
+        {% if variant and item.variants and item.variants != "" and variant-toc == false %}
+
+            {% comment %} If item.variants is an array,
+            it has a `first` property... {% endcomment %}
+            {% if item.variants.first %}
+                {% assign toc-variants = item.variants %}
+            {% comment %} ...otherwise it's a string. {% endcomment %}
+            {% else item.variants and item.variants != "" %}
+                {% assign toc-variants = item.variants | remove: " " | split: "," %}
+            {% endif %}
+
             {% for toc-variant in toc-variants %}
                 {% if toc-variant == variant %}
                     {% assign include-in-toc = true %}

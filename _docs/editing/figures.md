@@ -30,6 +30,7 @@ In the tag for each figure, we can define the following information:
 * html (e.g. for complex tables with merged cells)
 * markdown (e.g. for simple tables)
 * a reference (e.g. 'Figure 1.2', which will appear in front of the caption)
+* an optional ID (if not provided, will be generated from the reference or the content)
 * a link (clicking the image opens this link; without it, by default clicking the image opens the image file)
 * a caption (appears below the image)
 * a slide-caption (appears below the image in slidelines)
@@ -61,6 +62,7 @@ Here is a full example:
    source="Electric Book Works, 2017"
    image-height="10"
    class="featured"
+   id="something-unique"
 %}
 ```
 {% endraw %}
