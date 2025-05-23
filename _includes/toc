@@ -137,15 +137,39 @@ at the top of the toc, put this in a nav element.{% endcomment %}
 
     {% comment %} Include the item in the TOC only if it is
     specified in the TOC item's variants list. {% endcomment %}
-    {% assign toc-variants = item.variants | remove: " " | split: "," %}
-    {% for toc-variant in toc-variants %}
-        {% if toc-variant == variant or toc-variant == "default" %}
-            {% assign include-in-toc = true %}
-            {% break %}
+
+    {% comment %} First, assume we are including this in the nav. {% endcomment %}
+    {% assign include-in-nav = true %}
+
+    {% comment %} Then, if the item has a variants list, check it. {% endcomment %}
+    {% if item.variants and item.variants != "" %}
+
+        {% comment %} If item.variants is an array,
+        it has a `first` property... {% endcomment %}
+        {% if item.variants.first %}
+            {% assign toc-variants = item.variants %}
+        {% comment %} ...otherwise it's a string. {% endcomment %}
         {% else %}
-            {% assign include-in-toc = false %}
+            {% assign toc-variants = item.variants | remove: " " | split: "," %}
         {% endif %}
-    {% endfor %}
+
+        {% for toc-variant in toc-variants %}
+            {% if toc-variant == variant %}
+                {% assign include-in-toc = true %}
+                {% break %}
+
+            {% comment %} If this a default build, and the item is explicitly
+            included in default builds, include it in the TOC. {% endcomment %}
+            {% elsif toc-variant == "default" and variant == "default" %}
+                {% assign include-in-toc = true %}
+                {% break %}
+
+            {% comment %} Otherwise don't include the TOC item. {% endcomment %}
+            {% else %}
+                {% assign include-in-toc = false %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 
     {% if include-in-toc == true %}
 

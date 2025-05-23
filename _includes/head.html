@@ -59,7 +59,8 @@ separate HTML files are merged into one body element.
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
         data-creator="{% if creator %}{{ creator }}{% else %}{{ project.project-organisation }}{% endif %}"
         data-book-directory="{{ book-directory }}"
-        {% if is-translation %} data-translation="{{ language }}"{% endif %}>
+        {% if is-translation %} data-translation="{{ language }}"{% endif %}
+        data-variant="{{ variant }}">
 
 
 {% elsif site.output == "screen-pdf" %}
@@ -107,7 +108,8 @@ separate HTML files are merged into one body element.
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
         data-creator="{% if creator %}{{ creator }}{% else %}{{ project.project-organisation }}{% endif %}"
         data-book-directory="{{ book-directory }}"
-        {% if is-translation %} data-translation="{{ language }}"{% endif %}>
+        {% if is-translation %} data-translation="{{ language }}"{% endif %}
+        data-variant="{{ variant }}">
 
 
 {% elsif site.output == "epub" %}
@@ -163,7 +165,8 @@ separate HTML files are merged into one body element.
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
         data-title="{% if book-title %}{{ book-title }}{% else %}{{ page.title }}{% endif %}"
         data-book-directory="{{ book-directory }}"
-        {% if is-translation %} data-translation="{{ language }}"{% endif %}>
+        {% if is-translation %} data-translation="{{ language }}"{% endif %}
+        data-variant="{{ variant }}">
 
 
 {% elsif site.output == "app" %}
@@ -235,7 +238,8 @@ separate HTML files are merged into one body element.
         {% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
         data-book-directory="{{ book-directory }}"
-        {% if is-translation %} data-translation="{{ language }}"{% endif %}>
+        {% if is-translation %} data-translation="{{ language }}"{% endif %}
+        data-variant="{{ variant }}">
 
 
 {% else %}
@@ -321,6 +325,7 @@ separate HTML files are merged into one body element.
         {% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
         data-book-directory="{{ book-directory }}"
-        {% if is-translation %} data-translation="{{ language }}"{% endif %}>
+        {% if is-translation %} data-translation="{{ language }}"{% endif %}
+        data-variant="{{ variant }}">
 
 {% endif %}

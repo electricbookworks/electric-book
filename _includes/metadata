@@ -238,18 +238,63 @@ defined in `_data/works` for the given translation.
 
 {% endif %}
 
-{% comment %}If a variant is enabled in settings,
-override any metadata set for that variant.{% endcomment %}
+{% comment %} Variant metadata. {% endcomment %}
 
-{% comment %}First, though, set variant-toc to false as default{% endcomment %}
+{% comment %} First, set variant-toc to false as default. {% endcomment %}
 {% assign variant-toc = false %}
 
-{% comment %} By default, set the active-variant to 'default' {% endcomment %}
-{% capture variant %}default{% endcapture %}
-
-{% if site.data.settings.active-variant and site.data.settings.active-variant != "" %}
-
+{% comment %} Then check for an active variant in config, then settings.
+An active variant in a _config will override one in _data/settings.yml. {% endcomment %}
+{% if site.active-variant and site.active-variant != "" %}
+    {% capture variant %}{{ site.active-variant }}{% endcapture %}
+{% elsif site.data.settings.active-variant and site.data.settings.active-variant != "" %}
     {% capture variant %}{{ site.data.settings.active-variant }}{% endcapture %}
+{% else %}
+    {% comment %} Otherwise, set the active-variant to 'default' {% endcomment %}
+    {% capture variant %}default{% endcapture %}
+{% endif %}
+
+{% comment %} Check if the page is included in the current variant
+by checking if it's included in page.variants,
+which must be an array in its top-of-page YAML:
+
+variants:
+  - default
+  - rebellion
+  - empire
+  - mandalorian
+
+Assign included-in-variants=false if not.
+We use page.variants rather than the variant's _data/works files list
+because that's faster, and because we need page.variants
+anyway for the visual-toc include, which needs page.variants
+in order to exclude unavailable pages. {% endcomment %}
+
+{% comment %} Check if the page has no page.variants set. {% endcomment %}
+{% assign no-page-variants = true %}
+{% if page.variants and page.variants != "" %}
+    {% assign no-page-variants = false %}
+{% endif %}
+
+{% comment %} Get an array of the page.variants,
+whether it's already an array or is a string. {% endcomment %}
+{% if page.variants.first %}
+    {% assign page-variants = page.variants %}
+{% else %}
+    {% assign page-variants = page.variants | remove: " " | split: "," %}
+{% endif %}
+
+{% comment %} Check if the current variant is included
+in the page-variants array. Assume false, then true if
+it is included, or if no variants are set. {% endcomment %}
+{% assign included-in-variants = false %}
+{% if page-variants contains variant or no-page-variants %}
+    {% assign included-in-variants = true %}
+{% endif %}
+
+{% comment %} If we are building a variant, use variant metadata.
+We are actually always building at least the default variant. {% endcomment %}
+{% if variant and variant != "" %}
 
     {% if is-book-directory %}
         {% if book-subdirectory and book-subdirectory != "" and is-translation == true %}
@@ -260,7 +305,7 @@ override any metadata set for that variant.{% endcomment %}
         {% endif %}
     {% endif %}
 
-    {% comment %}Get variant settings from settings{% endcomment %}
+    {% comment %} Get variant settings from settings. {% endcomment %}
     {% assign variant-settings = site.data.settings.variants | where: "variant", variant %}
     {% for setting in variant-settings %}
         {% capture print-pdf-stylesheet %}{{ setting.print-pdf-stylesheet }}{% endcapture %}
