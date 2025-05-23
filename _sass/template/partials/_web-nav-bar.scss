@@ -330,9 +330,10 @@ $nav-bar-back-button-hide: false !default;
     [data-toggle-nav] {
         background-color: transparent;
         color: initial;
+        display: inline-flex;
         font-size: 1em;
         height: 100%;
-        padding: 0 0.5em;
+        padding: 0.5em;
         right: 0;
 
         &:after {
