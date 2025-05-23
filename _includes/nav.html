@@ -132,7 +132,7 @@
                     {% if this-work[variant].products[site.output].nav and this-work[variant].products[site.output].nav != "" %}
                         {% assign home-nav-work-tree = this-work[variant].products[site.output].nav %}
                     {% elsif this-work.default.products[site.output].nav and this-work.default.products[site.output].nav != "" %}
-                        {% assign home-nav-work-tree = work.default.products[site.output].nav %}
+                        {% assign home-nav-work-tree = this-work.default.products[site.output].nav %}
                     {% elsif this-work[variant].products.web.nav and this-work[variant].products.web.nav != "" %}
                         {% assign home-nav-work-tree = this-work[variant].products.web.nav %}
                     {% else %}
