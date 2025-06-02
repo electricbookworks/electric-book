@@ -1,6 +1,9 @@
 /* global locales, pageLanguage, Mark, settings, ebTruncatedString,
 MutationObserver */
 
+// Track marking status
+let ebSearchTermsMarked = false
+
 // get query search term from GET query string
 function getQueryVariable (variable) {
   'use strict'
@@ -191,6 +194,11 @@ function ebSearchTermsOnPage () {
 function ebMarkSearchTermsOnPage () {
   'use strict'
 
+  // Exit if this has already been done
+  if (ebSearchTermsMarked) {
+    return
+  }
+
   // Ask mark.js to mark all the search terms.
   // We mark both the searchTerm and the search-query stem
   const markInstance = new Mark(document.querySelector('.content'))
@@ -209,6 +217,9 @@ function ebMarkSearchTermsOnPage () {
 
     // Mark their instances on the page
     markInstance.unmark().mark(arrayToMark)
+
+    // Update status
+    ebSearchTermsMarked = true
 
     // Show the search-results nav
     ebSearchTermsOnPage()

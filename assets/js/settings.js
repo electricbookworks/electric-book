@@ -1,4 +1,4 @@
-// Load settings.yml into a settings array.
+// Load settings.yml into a settings object.
 
 // Fetch specific values from settings.yml and
 // convert them into a Javascript object called settings.
