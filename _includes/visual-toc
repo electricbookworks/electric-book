@@ -16,44 +16,68 @@
 
                 {% for visual-toc-page-object in visual-toc-site-page %}
 
+                    {% comment %} First, assume we're including this page
+                    in the visual TOC. {% endcomment %}
+                    {% assign include-in-visual-toc = true %}
+
+                    {% comment %} Check if this page is included in current variant,
+                    as listed in the page's top-pf-page YAML `variants` list.
+                    The relevant page's variants list might be a string or an array.
+                    Get an array either way. {% endcomment %}
+                    {% if visual-toc-page-object.variants and visual-toc-page-object.variants != "" %}
+                        {% if visual-toc-page-object.variants.first %}
+                            {% assign visual-toc-page-object-variants = visual-toc-page-object.variants %}
+                        {% elsif visual-toc-page-object.variants and visual-toc-page-object.variants != "" %}
+                            {% assign visual-toc-page-object-variants = visual-toc-page-object.variants | remove: " " | split: "," %}
+                        {% endif %}
+
+                        {% unless visual-toc-page-object-variants contains variant %}
+                            {% assign include-in-visual-toc = false %}
+                        {% endunless %}
+                    {% endif %}
+
+                    {% if include-in-visual-toc == true %}
+
                     <li>
 
-                        {% if visual-toc-page-object.image and visual-toc-page-object.image != "" %}
-                            <div class="visual-toc-chapter-image">
-                                <a href="{{ visual-toc-path-to-file }}.html" aria-label="{{ locale.visual-toc.link-to-page-assistive-text }}">
+                            {% if visual-toc-page-object.image and visual-toc-page-object.image != "" %}
+                                <div class="visual-toc-chapter-image">
+                                    <a href="{{ visual-toc-path-to-file }}.html" aria-label="{{ locale.visual-toc.link-to-page-assistive-text }}">
+                                        {% if include.thumbnails == "numbers" %}
+                                            {% capture thumbnail-initial %}{{visual-toc-page-object.title | split: "." | first }}{% endcapture %}
+                                            <div class="visual-toc-thumbnail-initial">{{ thumbnail-initial }}</div>
+                                        {% else %}
+                                            {% include image file=visual-toc-page-object.image folder=include.book position=visual-toc-page-object.image-position %}
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                            <div class="visual-toc-chapter-title">
+                                <a href="{{ visual-toc-path-to-file }}.html">
+
+                                    {% comment %} If the titles start with numbers, e.g. '1. The Dog Bus',
+                                    we can use those numbers as the thumbnails instead of images
+                                    by specifying 'thumbnails="numbers"' in the include tag.
+                                    Otherwise, escape the . so that the title isn't a markdown ol > li {% endcomment %}
+
                                     {% if include.thumbnails == "numbers" %}
-                                        {% capture thumbnail-initial %}{{visual-toc-page-object.title | split: "." | first }}{% endcapture %}
-                                        <div class="visual-toc-thumbnail-initial">{{ thumbnail-initial }}</div>
+                                        {{ visual-toc-page-object.title | markdownify | remove: "<p>" | remove: "</p>" }}
                                     {% else %}
-                                        {% include image file=visual-toc-page-object.image folder=include.book position=visual-toc-page-object.image-position %}
+                                        {{ visual-toc-page-object.title | replace: ".", "\." | markdownify | remove: "<p>" | remove: "</p>" }}
                                     {% endif %}
                                 </a>
                             </div>
-                        {% endif %}
 
-                        <div class="visual-toc-chapter-title">
-                            <a href="{{ visual-toc-path-to-file }}.html">
+                            {% if visual-toc-page-object.description and visual-toc-page-object.description != "" %}
+                                <div class="visual-toc-chapter-description">
+                                    {{ visual-toc-page-object.description | markdownify  | remove: "<p>" | remove: "</p>" }}
+                                </div>
+                            {% endif %}
 
-                                {% comment %} If the titles start with numbers, e.g. '1. The Dog Bus',
-                                we can use those numbers as the thumbnails instead of images
-                                by specifying 'thumbnails="numbers"' in the include tag.
-                                Otherwise, escape the . so that the title isn't a markdown ol > li {% endcomment %}
+                        </li>
 
-                                {% if include.thumbnails == "numbers" %}
-                                    {{ visual-toc-page-object.title | markdownify | remove: "<p>" | remove: "</p>" }}
-                                {% else %}
-                                    {{ visual-toc-page-object.title | replace: ".", "\." | markdownify | remove: "<p>" | remove: "</p>" }}
-                                {% endif %}
-                            </a>
-                        </div>
-
-                        {% if visual-toc-page-object.description and visual-toc-page-object.description != "" %}
-                            <div class="visual-toc-chapter-description">
-                                {{ visual-toc-page-object.description | markdownify  | remove: "<p>" | remove: "</p>" }}
-                            </div>
-                        {% endif %}
-
-                    </li>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         {% endfor %}

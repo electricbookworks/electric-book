@@ -66,13 +66,45 @@ This allows for figures with IDs but without visible references. {% endcomment %
     {% endif %}
 {% endfor %}
 
+{% comment %} If the reference is empty, set it to the first image name. {% endcomment %}
+{% if figure-reference == "" %}
+    {% capture figure-reference %}{{ figure-images[0] | slugify }}{% endcapture %}
+{% endif %}
+
+{% comment %} If the reference is the same as the image name, hide it. {% endcomment %}
+{% if figure-reference == figure-images[0] %}
+    {% assign figure-reference-hidden = true %}
+{% endif %}
+
+{% comment %} If there are no images (e.g. a table),
+and no include.reference, the figure reference will be empty.
+In that case, slugify the first hundred characters
+of the include.html or include.markdown for the reference,
+to be used in the ID, and hide it. {% endcomment %}
+{% if figure-images.size == 0 and figure-reference == "" %}
+    {% assign figure-reference-hidden = true %}
+{% endif %}
+
+{% comment %} Define the figure's ID. {% endcomment %}
+{% if include.id and include.id != "" %}
+    {% capture figure-id %}{{ include.id }}{% endcapture %}
+{% elsif figure-reference and figure-reference != "" %}
+    {% capture figure-id %}{{ figure-reference | slugify }}{% endcapture %}
+{% else %}
+    {% if include.html and include.html != "" %}
+        {% capture figure-id %}{{ include.html | markdownify | strip_html | strip | truncate: 100, "" | slugify }}{% endcapture %}
+    {% elsif include.markdown and include.markdown != "" %}
+        {% capture figure-id %}{{ include.markdown | markdownify | strip_html | strip | truncate: 100, "" | slugify }}{% endcapture %}
+    {% endif %}
+{% endif %}
+
 {% comment %}
 Then create our figure, using multiple images if necessary.
 We have to do funky remove: '<p>' | remove: '</p>' | strip_newlines
 because https://github.com/jekyll/jekyll/issues/2248.
 {% endcomment %}
 
-<div class="figure{% if include.class %} {{ include.class }}{% endif %}"{% if figure-reference %} id="{{ figure-reference | slugify }}"{% endif %} role="figure" {% if include.caption %}aria-labelledby="{{ figure-reference | slugify }}-caption"{% endif %}>
+<div class="figure{% if include.class %} {{ include.class }}{% endif %}"{% if figure-reference %} id="{{ figure-id }}"{% endif %} role="figure" {% if include.caption %}aria-labelledby="{{ figure-id }}-caption"{% endif %}>
 
 <div class="figure-body">
 
@@ -169,10 +201,10 @@ because https://github.com/jekyll/jekyll/issues/2248.
 </p>
 {% endif %}
 
-{% if include.slide-caption == nil %}
+{% if include.slide-caption == nil or site.output == "print-pdf" or site.output == "screen-pdf" or site.output == "epub" %}
 
     {% if figure-reference-hidden == false or include.caption and include.caption != "" %}
-    <p class="caption" markdown="1" id="{{ figure-reference | slugify }}-caption">
+    <p class="caption" markdown="1" id="{{ figure-id }}-caption">
     {% if figure-reference and figure-reference-hidden == false %}<span class="figure-reference">{{ figure-reference }} </span>{% endif %}{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
     </p>
 

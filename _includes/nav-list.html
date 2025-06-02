@@ -8,8 +8,8 @@ It also includes any items in _data/nav.yml, below the book entries.
 
   {% comment %}
   How this works:
-  1. Since the metadata include has already run, the current file name is available
-      as "current-file", so we can work out when it's the active nav item.
+  1. Since the metadata include has already run in this context, the current file name
+      is available as "current-file", so we can work out when it's the active nav item.
   2. The "nav-tree" variable has been defined in the include tag that included this file,
       usually starting with the nav list in `_data/works` stored by metadata as "web-nav-tree".
   3. To include children items in that tree, this file includes itself recursively,
@@ -35,6 +35,46 @@ It also includes any items in _data/nav.yml, below the book entries.
     <ol>
 
       {% for item in include.nav-tree | sort: "order" %}
+
+        {% comment %} Check if this file should be included
+        in the active variant. Include the item in the nav only if
+        the active variant is included in its variants list. {% endcomment %}
+
+        {% comment %} First, assume we are including this in the nav. {% endcomment %}
+        {% assign include-in-nav = true %}
+
+        {% comment %} Then, if the item has a variants list, check it. {% endcomment %}
+        {% if item.variants and item.variants != "" %}
+
+          {% comment %} If item.variants is an array,
+          it has a `first` property... {% endcomment %}
+          {% if item.variants.first %}
+              {% assign nav-variants = item.variants %}
+          {% comment %} ...otherwise it's a string. {% endcomment %}
+          {% else %}
+              {% assign nav-variants = item.variants | remove: " " | split: "," %}
+          {% endif %}
+
+          {% for nav-variant in nav-variants %}
+              {% if nav-variant == variant %}
+                  {% assign include-in-nav = true %}
+                  {% break %}
+
+              {% comment %} If this a default build, and the item is explicitly
+              included in default builds, include it in the nav. {% endcomment %}
+              {% elsif nav-variant == "default" and variant == "default" %}
+                  {% assign include-in-nav = true %}
+                  {% break %}
+
+              {% comment %} Otherwise don't include the TOC item. {% endcomment %}
+              {% else %}
+                  {% assign include-in-nav = false %}
+              {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        {% if include-in-nav %}
+
           <li class="{% unless site-pages-page-list contains item.file %}no-file{% endunless %}
           {% if item.children == nil %} no-children{% else %} has-children{% endif %}{% if item.class != nil %} {{ item.class }}{% endif %}">
               <a {% if item.file != nil %}href="{{ path-to-root-directory }}{{ include.directory }}{% if is-translation %}/{{ language }}{% endif %}/{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %} >
@@ -44,6 +84,9 @@ It also includes any items in _data/nav.yml, below the book entries.
                 {% include nav-list.html nav-tree=item.children directory=include.directory %}
               {% endif %}
           </li>
+
+        {% endif %}
+
       {% endfor %}
 
     </ol>
@@ -62,19 +105,62 @@ It also includes any items in _data/nav.yml, below the book entries.
 
     <ol>
       {% for item in include.nav-tree | sort: "order" %}
-        <li class="{% if item.file == current-file %}active{% endif %}
-        {% unless nav-tree-page-list contains item.file %}no-file{% endunless %}
-        {% if item.link == 'none' %}no-link{% endif %}
-        {% if item.children == nil %}no-children{% else %}has-children{% endif %}
-        {% if item.class != nil %}{{ item.class }}{% endif %}">
-            <a {% if item.file != nil and item.link != "none" %}href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %}
-              class="{% if item.file == current-file %}active{% endif %}">
-                {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
-            </a>
-            {% if item.children != nil %}
-              {% include nav-list.html nav-tree=item.children %}
-            {% endif %}
-        </li>
+
+        {% comment %} Check if this file should be included
+        in the active variant. Include the item in the nav only if
+        the active variant is included in its variants list. {% endcomment %}
+
+        {% comment %} First, assume we are including this in the nav. {% endcomment %}
+        {% assign include-in-nav = true %}
+
+        {% comment %} Then, if the item has a variants list, check it. {% endcomment %}
+        {% if item.variants and item.variants != "" %}
+
+          {% comment %} If item.variants is an array,
+          it has a `first` property... {% endcomment %}
+          {% if item.variants.first %}
+            {% assign nav-variants = item.variants %}
+          {% comment %} ...otherwise it's a string. {% endcomment %}
+          {% else %}
+              {% assign nav-variants = item.variants | remove: " " | split: "," %}
+          {% endif %}
+
+          {% for nav-variant in nav-variants %}
+              {% if nav-variant == variant %}
+                  {% assign include-in-nav = true %}
+                  {% break %}
+
+              {% comment %} If this a default build, and the item is explicitly
+              included in default builds, include it in the nav. {% endcomment %}
+              {% elsif nav-variant == "default" and variant == "default" %}
+                  {% assign include-in-nav = true %}
+                  {% break %}
+
+              {% comment %} Otherwise don't include the TOC item. {% endcomment %}
+              {% else %}
+                  {% assign include-in-nav = false %}
+              {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        {% if include-in-nav %}
+
+          <li class="{% if item.file == current-file %}active{% endif %}
+          {% unless nav-tree-page-list contains item.file %}no-file{% endunless %}
+          {% if item.link == 'none' %}no-link{% endif %}
+          {% if item.children == nil %}no-children{% else %}has-children{% endif %}
+          {% if item.class != nil %}{{ item.class }}{% endif %}">
+              <a {% if item.file != nil and item.link != "none" %}href="{{ item.file }}.html{% if item.id != nil %}#{{ item.id }}{% endif %}"{% endif %}
+                class="{% if item.file == current-file %}active{% endif %}">
+                  {{ item.label | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+              </a>
+              {% if item.children != nil %}
+                {% include nav-list.html nav-tree=item.children %}
+              {% endif %}
+          </li>
+
+        {% endif %}
+
       {% endfor %}
     </ol>
 

@@ -37,7 +37,9 @@ Otherwise, we must make sure there isn't one. {% endcomment %}
 
 {% comment %} Get the active variant,
 and fall back to 'default'. {% endcomment %}
-{% if site.data.settings.active-variant and site.data.settings.active-variant != "" %}
+{% if site.active-variant and site.active-variant != "" %}
+    {% assign current-variant = site.active-variant %}
+{% elsif site.data.settings.active-variant and site.data.settings.active-variant != "" %}
     {% assign current-variant = site.data.settings.active-variant %}
 {% else %}
     {% assign current-variant = 'default' %}

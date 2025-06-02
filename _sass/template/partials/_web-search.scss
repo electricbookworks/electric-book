@@ -28,6 +28,10 @@ $web-search: true !default;
       }
     }
 
+    .search-result-unavailable {
+        display: none;
+    }
+
     // Marked search results (with mark.js)
     mark {
         background-color: $color-highlight;
