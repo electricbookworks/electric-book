@@ -68,6 +68,7 @@ exclude:
   - deploy.sh
   - fr
   - netlify.toml
+  - robots.txt
   - sitemap.xml
   - test.sh
   - /assets/fonts
