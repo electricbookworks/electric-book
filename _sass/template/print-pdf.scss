@@ -219,11 +219,6 @@ $opener-image-height: $page-height * 0.4 !default;
 // Remember to tag links to front matter pages in your TOC with {:.frontmatter-reference}
 $frontmatter-reference-style: lower-roman !default; // lower-roman, decimal, see http://www.princexml.com/doc/gen-content/#idp54010640
 
-// Elements that float. When these are surrounded by paragraphs,
-// the following paragraph should be indented when we are not
-// using $spaced-paras.
-$floated-element-classes: sidenote, qr-code !default;
-
 // Title page
 $title-page-logo-width: $paragraph-indent * 3 !default;
 $title-page-logo-font: $font-text-main !default;
@@ -232,7 +227,7 @@ $title-page-logo-font-size: $font-size-default - 1 !default;
 // Elements that float. When these are surrounded by paragraphs,
 // the following paragraph should be indented when we are not
 // using $spaced-paras.
-$floated-element-classes: sidenote !default;
+$floated-element-classes: sidenote, qr-code !default;
 
 // Set the content of headers and footers.
 //
