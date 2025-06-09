@@ -98,12 +98,26 @@ $convert-images-to-color-profile: false !default;
                         }
                     }
 
+                    // Don't indent paras visually after headings,
+                    // separated in the DOM by floated elements.
+                    h1, h2, h3, h4, h5, h6 {
+                        & + .#{$class} + .#{$second-sibling-class} + p {
+                            text-indent: 0;
+                        }
+                    }
+
                     @each $third-sibling-class in $floated-element-classes {
                         p + .#{$class} + .#{$second-sibling-class} + .#{$third-sibling-class} + p {
                             text-indent: $paragraph-indent;
 
                             &.first,
                             &.box {
+                                text-indent: 0;
+                            }
+                        }
+
+                        h1, h2, h3, h4, h5, h6 {
+                            & + .#{$class} + .#{$second-sibling-class} + .#{$third-sibling-class} + p {
                                 text-indent: 0;
                             }
                         }
