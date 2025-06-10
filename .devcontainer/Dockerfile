@@ -1,35 +1,91 @@
-FROM mcr.microsoft.com/devcontainers/ruby:3.3.5-bullseye
+FROM mcr.microsoft.com/devcontainers/base:dev-ubuntu-22.04
 
-# Add Node.js source
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+# Main dependency installation
+# (Some of these might already exist in workspace-full.)
+RUN sudo apt-get update && apt-get install -y \
+  software-properties-common \
+  make \
+  gcc \
+  build-essential \
+  git \
+  wget \
+  libgif7 \
+  libpixman-1-0 \
+  libffi-dev \
+  libreadline-dev \
+  zlib1g-dev \
+  graphicsmagick
 
-# Install dependencies
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends \
-    nodejs \
-    graphicsmagick \
-    pandoc \
-    libasound2 \
-    libatk1.0-0 \
-    libatk-bridge2.0-0 \
-    libcairo2 \
-    libdrm2 \
-    libgbm1 \
-    libnss3 \
-    libpango-1.0-0 \
-    libxkbcommon-x11-0 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxfixes3 \
-    libxrandr2
+# Dependencies specifically for Puppeteer on unix
+# (Some of these might already exist in workspace-full.)
+RUN sudo apt-get install -y \
+  libasound2 \
+  libatk1.0-0 \
+  libatk-bridge2.0-0 \
+  libcairo2 \
+  libdrm2 \
+  libgbm1 \
+  libnss3 \
+  libpango-1.0-0 \
+  libxkbcommon-x11-0 \
+  libxcomposite1 \
+  libxdamage1 \
+  libxfixes3 \
+  libxrandr2
 
-# Install PrinceXML
-RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb \
-    && dpkg -i prince_11.4-1_ubuntu18.04_amd64.deb \
-    && rm prince_11.4-1_ubuntu18.04_amd64.deb
+# Dependencies for Prince 11.4
+RUN wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+RUN sudo dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
 
-# Install global npm packages
-RUN npm install -g gulp-cli
+# Add node source for new nodejs, instead of old Ubuntu-installed node.
+# https://github.com/nodesource/distributions/wiki/How-to-migrate-to-the-new-repository
 
-# Clean up
-RUN apt-get clean -y && rm -rf /var/lib/apt/lists/*
+# Update local package index
+RUN sudo apt-get update
+# Install necessary packages for downloading and verifying new repository information
+RUN sudo apt-get install -y ca-certificates curl gnupg
+# Create a directory for the new repository's keyring, if it doesn't exist
+RUN sudo mkdir -p /etc/apt/keyrings
+# Download the new repository's GPG key and save it in the keyring directory
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+# Add the new repository's source list with its GPG key for package verification
+# Note: `node_20` means Node version 20. Update in future as needed.
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+# Update local package index to recognize the new repository
+RUN sudo apt-get update
+# Install Node.js from the new repository
+RUN sudo apt-get install -y nodejs
+
+# Install PrinceXML for printing to PDF.
+# This is a default version for older Electric Book template
+# projects. Newer projects will use Prince in a Node module.
+RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb && \
+  dpkg -i prince_11.4-1_ubuntu18.04_amd64.deb
+
+# Install pandoc for document conversion
+RUN wget https://github.com/jgm/pandoc/releases/download/3.5/pandoc-3.5-1-amd64.deb && \
+  dpkg -i pandoc-3.5-1-amd64.deb
+
+# Install Gulp cli app
+RUN npm install --global gulp-cli
+
+# # Clear apt cache to make image smaller
+RUN sudo apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+
+# Install RVM and Ruby
+RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import - \
+    && curl -sSL https://rvm.io/pkuczynski.asc | gpg --import - \
+    && curl -sSL https://get.rvm.io | bash -s stable \
+    && echo 'source /etc/profile.d/rvm.sh' >> /etc/bash.bashrc \
+    && bash -lc ' \
+        rvm install 3.3.5 \
+        && rvm use 3.3.5 --default \
+        && gem install bundler'
+
+# Fix permissions for RVM and Gems
+RUN mkdir -p /usr/local/rvm/gems \
+    && chown -R vscode:vscode /usr/local/rvm \
+    && chmod -R g+w /usr/local/rvm
+
+ENV PATH /usr/local/rvm/bin:/usr/local/rvm/rubies/ruby-3.3.5/bin:$PATH
+USER vscode
