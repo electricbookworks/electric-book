@@ -14,7 +14,8 @@ RUN sudo apt-get update && apt-get install -y \
   libffi-dev \
   libreadline-dev \
   zlib1g-dev \
-  graphicsmagick
+  graphicsmagick \
+  default-jre
 
 # Dependencies specifically for Puppeteer on unix
 # (Some of these might already exist in workspace-full.)
@@ -88,4 +89,12 @@ RUN mkdir -p /usr/local/rvm/gems \
     && chmod -R g+w /usr/local/rvm
 
 ENV PATH /usr/local/rvm/bin:/usr/local/rvm/rubies/ruby-3.3.5/bin:$PATH
-USER vscode
+
+# Install fonts for PrinceXML
+# Accept the EULA
+RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
+# Install packages
+RUN apt-get update && apt-get install -y --no-install-recommends fontconfig ttf-mscorefonts-installer
+# Refresh the font cache
+RUN fc-cache -f -v
+
