@@ -15,8 +15,7 @@ If you're comfortable using the Electric Book template on your own, enjoy! If yo
 ## Create a new project
 
 1. Go to [github.com/electricbookworks/electric-book](https://github.com/electricbookworks/electric-book/) and click 'Use this template'. Follow the prompts to create a new repository for your project.
-
-2. Your new project on GitHub will have a URL that looks like `https://github.com/your-name/your-project-name/`. Look for the green 'Code' button on the right side of the page, and click the dropdown arrow on that button. In the 'Codespaces' tab, click 'Create codespace on main'. This will create a new Codespace for your project. A Codespace is a virtual machine that runs in the cloud, with a terminal and an editor interface.
+2. Your new project on GitHub will have a URL that looks like `https://github.com/your-name/your-project-name/`. Look for the 'Code' button: click the dropdown arrow on that button. In the 'Codespaces' tab, click 'Create codespace …'. This will create a new Codespace for your project. A Codespace is a virtual machine that runs in the cloud, with a terminal and an editor interface.
 3. Wait a few minutes for the Codespace to be created. When it's ready, you will see a terminal window open in the Codespace, and the editor interface with a file list on the left.
 
 ## Generate a website
