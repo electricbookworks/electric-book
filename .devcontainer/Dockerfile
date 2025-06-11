@@ -41,21 +41,19 @@ RUN sudo dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
 # Add node source for new nodejs, instead of old Ubuntu-installed node.
 # https://github.com/nodesource/distributions/wiki/How-to-migrate-to-the-new-repository
 
-# Update local package index
-RUN sudo apt-get update
-# Install necessary packages for downloading and verifying new repository information
-RUN sudo apt-get install -y ca-certificates curl gnupg
-# Create a directory for the new repository's keyring, if it doesn't exist
-RUN sudo mkdir -p /etc/apt/keyrings
-# Download the new repository's GPG key and save it in the keyring directory
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-# Add the new repository's source list with its GPG key for package verification
-# Note: `node_20` means Node version 20. Update in future as needed.
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-# Update local package index to recognize the new repository
-RUN sudo apt-get update
-# Install Node.js from the new repository
-RUN sudo apt-get install -y nodejs
+# 1. Install necessary packages for downloading and verifying new repository information
+# 2. Create a directory for the new repository's keyring, if it doesn't exist
+# 3. Download the new repository's GPG key and save it in the keyring directory
+# 4. Add the new repository's source list with its GPG key for package verification
+#    Note: `node_20` means Node version 20. Update in future as needed.
+# 5. Update local package index to recognize the new repository
+# 6. Install Node.js from the new repository
+RUN sudo apt-get install -y ca-certificates curl gnupg \
+    && sudo mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
+    && sudo apt-get update \
+    && sudo apt-get install -y nodejs
 
 # Install PrinceXML for printing to PDF.
 # This is a default version for older Electric Book template
