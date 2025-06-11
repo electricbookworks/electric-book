@@ -16,29 +16,24 @@ If you're comfortable using the Electric Book template on your own, enjoy! If yo
 
 1. Go to [github.com/electricbookworks/electric-book](https://github.com/electricbookworks/electric-book/) and click 'Use this template'. Follow the prompts to create a new repository for your project.
 
-2. Your new project on GitHub will have a URL that looks like `https://github.com/your-name/your-project-name/`.
-
-   On that page, click in the address bar and, at the start of the address, insert `gitpod.io/#`. So the edited URL will look like this:
-
-   ```
-   gitpod.io/#https://github.com/your-name/your-project-name/
-   ```
-
-   Hit Enter. This will send your project repository to Gitpod. Follow the prompts, which will create a virtual machine online, and open an editing interface for you on Gitpod.
+2. Your new project on GitHub will have a URL that looks like `https://github.com/your-name/your-project-name/`. Look for the green 'Code' button on the right side of the page, and click the dropdown arrow on that button. In the 'Codespaces' tab, click 'Create codespace on main'. This will create a new Codespace for your project. A Codespace is a virtual machine that runs in the cloud, with a terminal and an editor interface.
+3. Wait a few minutes for the Codespace to be created. When it's ready, you will see a terminal window open in the Codespace, and the editor interface with a file list on the left.
 
 ## Generate a website
 
-1. After a few minutes, when the Gitpod Terminal is ready, enter this command to serve a website of your project:
+1. When the terminal is ready, enter this command to serve a website of your project:
 
    ```sh
    npm run electric-book -- output
    ```
 
-2. When prompted, choose the 'Open in browser' option, which will open a new tab. Add `/electric-book/` to the address in the address bar. E.g.:
+2. When prompted, choose the 'Open in browser' option, which will open a new tab. Add `/electric-book/` to the address in the address bar. That is your project's base URL. E.g.:
 
    ```
-   https://4000-electricboo-electricboo-u3np6cdtayw.ws-eu116.gitpod.io/electric-book/
+   https://upgraded-zebra-7vr67g945r2xqq4-4000.app.github.dev/electric-book/
    ```
+
+   (Your can change your base URL in future by editing it in your `_config` files.)
 
 3. You should see the home page of your website. For now, it will be identical to the [template's home page](https://electricbookworks.github.io/electric-book/). From here, you can make the project your own by adding content and changing the design ([more detail below](#edit-and-design-the-book)).
 
@@ -49,7 +44,7 @@ If you're comfortable using the Electric Book template on your own, enjoy! If yo
 
    To add your own text from a Word file, see ['Setting up a book' > 'Importing a text file'](setting-up-a-book.html#importing-a-text-file).
 
-4. To stop your website, in order to run other processes, in the Gitpod terminal press `Ctrl + C`.
+4. To stop your website, in order to run other processes, in the terminal press `Ctrl + C`.
 
 ## Generate PDFs
 
