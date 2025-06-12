@@ -41,8 +41,10 @@ async function renderIndexCommentsAsTargets (done) {
             // or inline (e.g. inside a paragraph)?
             const startsWithLinebreak = /^\n/
             let position
-            if (startsWithLinebreak.test(comment.prev.data) &&
-                                startsWithLinebreak.test(comment.next.data)) {
+            if (comment.prev &&
+                comment.next &&
+                startsWithLinebreak.test(comment.prev.data) &&
+                startsWithLinebreak.test(comment.next.data)) {
               position = 'block'
             } else {
               position = 'inline'
