@@ -147,7 +147,33 @@ Don't confuse the syntax of this list with that used for your tags. You do not i
 
 Before the page numbers and links will work in your book, you need to generate the index's 'database' file.
 
-Use the output script and choose the 'refresh indexes' option for each output format you're publishing. The script will generate an 'index database' as a Javascript file. This is necessary for the system to populate your index list with links when you output your book. For instance, for print-PDF, this will create a file called `book-index-print-pdf.js`. In version control (e.g. Git), you should commit this generated file in the same way you do any book content.
+Use the output script and choose the 'refresh indexes' option for each output format you're publishing. E.g. this task creates the default `web`-format index database:
+
+```sh
+npm run eb -- index
+```
+
+Then create the database for print-PDF output:
+
+```sh
+npm run eb -- index -f print-pdf
+```
+
+then for screen-PDF output:
+
+```sh
+npm run eb -- index -f screen-pdf
+```
+
+then for EPUB output:
+
+```sh
+npm run eb -- index -f epub
+```
+
+This may seem repetitive, but each of these output formats generates slightly different HTML, or even content, and this means each one must build fully to create its format-specific database.
+
+The script will generate an 'index database' as a Javascript file for each format you run it for. This is necessary for the system to populate your index list with links when you output your book. For instance, for print-PDF, this will create a file called `book-index-print-pdf.js`. In version control (e.g. Git), you should commit this generated file in the same way you do any book content.
 
 And you should re-run the 'refresh indexes' option each time your indexing tags have changed.
 
