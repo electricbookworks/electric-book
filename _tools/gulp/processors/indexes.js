@@ -79,22 +79,22 @@ async function renderIndexCommentsAsTargets (done) {
 
               // Trim whitespace from each entry
               // https://stackoverflow.com/a/41183617/1781075
-              // and remove any leading or trailing hyphens.
+              // and remove any leading or trailing tildes.
               const entriesByLevel = rawEntriesByLevel.map(function (str) {
-                return str.trim().replace(/^-+|-+$/, '')
+                return str.trim().replace(/^~+|~+$/, '')
               })
 
-              // Check for starting or ending hyphens.
+              // Check for starting or ending tildes.
               // If one exists, flag the target as `from` or `to`,
-              // starting or ending a reference range. Then strip the hyphen.
+              // starting or ending a reference range. Then strip the tildes.
               // Note, JS's `startsWith` and `endsWith` are not supported
               // in PrinceXML, so we didn't use those in case using this in Prince.
               let rangeClass = 'index-target-specific'
 
-              if (line.substring(0, 1) === '-') {
+              if (line.substring(0, 1) === '~') {
                 rangeClass = 'index-target-to'
                 line = line.substring(1)
-              } else if (line.substring(line.length - 1) === '-') {
+              } else if (line.substring(line.length - 1) === '~') {
                 rangeClass = 'index-target-from'
                 line = line.substring(0, line.length - 1)
               }
