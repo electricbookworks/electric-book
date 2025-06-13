@@ -137,11 +137,43 @@ Don't confuse the syntax of this list with that used for your tags. You do not i
 
 ``` md
 - Camus, Albert
+- de Beauvoir, Simone
 - existentialists
   - Camus, Albert
+  - de Beauvoir, Simone
 {:.reference-index}
 ```
 
+#### Cross references
+
+Indexes use two main kinds of cross references: 'see' and 'see also'.
+
+'See' references send the reader elsewhere for the relevant page references. 'See also' references tell the reader that, in addition to the page references here, there are potentially other useful page references under a different entry. For example:
+
+``` md
+- Eliot, George. *See* Evans, Mary Ann
+- essentialists
+  - *See also* essentialism
+- existentialists
+  - Camus, Albert
+  - de Beauvoir, Simone
+  - *See also* existentialism
+```
+
+Importantly, note that:
+
+- Since there is no page reference for a 'See' reference, the reference is on the same line as the entry.
+- The 'See also' reference is on its own line, since each entry may have its own page reference(s).
+
+Do **not** do this:
+
+```md
+- existentialists. *See also* existentialism
+  - Camus, Albert
+  - de Beauvoir, Simone
+```
+
+because not only does it break page references at `existentialists`, it will also break all subentries' page references. This is because, for the dynamic page references to work, the entire index entry must match its tag in the body text exactly. The first line above, `existentialists. *See also* existentialism` does not match the tag `<!-- index: existentialists -->`.
 
 ### Generating the index database
 
