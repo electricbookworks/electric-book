@@ -1,0 +1,16 @@
+{
+  "name": "Electric Book",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "yandeu.five-server"
+      ]
+    }
+  },
+  "postCreateCommand": "bundle install && npm install",
+  "forwardPorts": [4000],
+  "remoteUser": "vscode"
+}
