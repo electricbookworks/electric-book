@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libpixman-1-0 \
     libffi-dev \
     libreadline-dev \
+    librsvg2-bin \
     zlib1g-dev \
     graphicsmagick \
     default-jre
@@ -62,8 +63,8 @@ RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb 
     && dpkg -i prince_11.4-1_ubuntu18.04_amd64.deb
 
 # Install pandoc for document conversion
-RUN wget https://github.com/jgm/pandoc/releases/download/3.5/pandoc-3.5-1-amd64.deb \
-    && dpkg -i pandoc-3.5-1-amd64.deb
+RUN wget https://github.com/jgm/pandoc/releases/download/3.7.0.2/pandoc-3.7.0.2-1-amd64.deb \
+    && dpkg -i pandoc-3.7.0.2-1-amd64.deb
 
 # Install Gulp cli app
 RUN npm install --global gulp-cli
