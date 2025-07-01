@@ -11,7 +11,8 @@ $pdf-cover: true !default;
         padding: 0;
 
         // Add extra verso to retain correct folios
-        page-break-after: left;
+        page-break-after: left; // deprecated property, here for legacy Prince
+        break-after: left;
 
         // The above property may not work to ensure
         // a blank page after the cover-page.
