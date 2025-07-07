@@ -200,7 +200,7 @@ $text-divider-image: "" !default;
 $text-divider-image-height: $line-height-default !default;
 
 // Which page styles start on a right-hand page (recto) or on any page?
-$start-on-recto: default-page, chapter-page, frontmatter-page, endmatter-page, part-page, dedication-page, epigraph-page !default;
+$start-on-recto: default-page, title-page, half-title-page, chapter-page, frontmatter-page, endmatter-page, part-page, dedication-page, epigraph-page !default;
 $start-on-verso: null !default;
 $start-on-recto-or-verso: null !default;
 
