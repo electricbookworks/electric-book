@@ -12,7 +12,13 @@ async function buildReferenceIndex (outputFormat, filesData) {
   const targetsIndex = []
 
   // Launch the browser.
-  const browser = await puppeteer.launch({ headless: true })
+  // Run with no sandbox which is necessary for
+  // containerized environments like Docker,
+  // and only safe in development environments.
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  })
 
   let i
   let count = 0
