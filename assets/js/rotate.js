@@ -20,6 +20,15 @@ function rotate (figure) {
   // Assign classes to the rotator and rotatorWrapper
   rotator.setAttribute('class', 'figure-rotator')
   rotatorWrapper.setAttribute('class', 'figure-rotator-wrapper')
+
+  // Copy pdf-wide classes to the wrapper.
+  // This old-school approach is compatible with Prince's limited JS environment.
+  const figureClasses = figure.getAttribute('class').split(' ')
+  figureClasses.forEach(function (className) {
+    if (className.indexOf('pdf-wide') === 0) {
+      rotatorWrapper.classList.add(className)
+    }
+  })
 }
 
 function rotateGetFigures () {

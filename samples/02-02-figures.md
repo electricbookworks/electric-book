@@ -75,6 +75,44 @@ A program that employs the pre-cloak stage of superheroes has been active in Rwa
 
 So where to go? I pondered on the future of the project; an effort conceived in several stages. The Rwandans were standing in the background. Therapists were asking what to do…. The cart was put in motion; it was rolling down the hill; but still, the next step was elusive. Then, bang! the answer hit me: A compilation! A directory for the therapists; in particular, those who work with high-risk children. I envisioned a sleek database; a gold-foil embossed book. I celebrated, having settled on direction. My compass was following the course.
 
+
+{% include figure
+reference="Figure 4"
+caption="A wide table in a figure. In PDF, this is rotated to fit on the page, and also spans the sidebar."
+markdown="
+| Historical Figure                     | Favourite Fruit | Ice-Cream Flavour              | Favourite Game     | Favourite Animal | Favourite Stage Play             | Favourite Piece of Music        |
+| ------------------------------------- | --------------- | ------------------------------ | ------------------ | ---------------- | -------------------------------- | ------------------------------- |
+| **Cleopatra** *(69–30 BCE)*           | Figs            | Rosewater sorbet               | Senet              | Cat              | *The Book of the Dead* (recited) | Traditional Egyptian harp tunes |
+| **Leonardo da Vinci** *(1452–1519)*   | Pears           | Honey-almond gelato            | Chess              | Horse            | *La Mandragola* (Machiavelli)    | Gregorian chant                 |
+| **William Shakespeare** *(1564–1616)* | Apple           | Mead-flavoured custard         | Backgammon         | Falcon           | *Doctor Faustus* (Marlowe)       | *Greensleeves* (folk melody)    |
+| **Marie Antoinette** *(1755–1793)*    | Cherries        | Pistachio                      | Jeu de paume       | Pomeranian dog   | *Le Mariage de Figaro*           | *Queen of the Night* (Mozart)   |
+| **Napoleon Bonaparte** *(1769–1821)*  | Grapes          | Vanilla bean                   | Échecs (Chess)     | Eagle            | *Andromaque* (Racine)            | *La Marseillaise*               |
+| **Harriet Tubman** *(c. 1822–1913)*   | Peaches         | Molasses ice cream             | Checkers           | Owl              | *Uncle Tom’s Cabin* (read aloud) | Spirituals (*Go Down Moses*)    |
+| **Albert Einstein** *(1879–1955)*     | Plums           | Chocolate                      | Violin duets       | Dog              | *Faust* (Goethe, adapted)        | *Beethoven’s Violin Concerto*   |
+| **Genghis Khan** *(c. 1162–1227)*     | Wild berries    | Fermented mare’s milk (frozen) | Archery contests   | Horse            | Mongolian oral epics             | Tuvan throat singing            |
+| **Jane Austen** *(1775–1817)*         | Gooseberries    | Clotted cream ice              | Card games (Whist) | Dog (lapdog)     | *She Stoops to Conquer*          | *Rule, Britannia!*              |
+| **Mansa Musa** *(c. 1280–c. 1337)*    | Dates           | Date-honey sorbet              | Mancala            | Camel            | Griot storytelling sessions      | West African kora music         |
+"
+class="rotate pdf-wide"
+%}
+
+{% include figure
+reference="Figure 5"
+caption="Another wide table in a figure. In PDF, this is rotated to fit on the page."
+markdown="
+| Historical Figure       | Favourite Social Media   | Streaming Binge            | Go-To Coffee Order  | Weekend Hobby        | Preferred App           | Dream Travel Destination     |
+| ----------------------- | ------------------------ | -------------------------- | ------------------- | -------------------- | ----------------------- | ---------------------------- |
+| **Cleopatra**           | Instagram                | *The Crown*                | Iced hibiscus tea   | Spa days + falconry  | TikTok (beauty tips)    | Maldives (luxury + water)    |
+| **Leonardo da Vinci**   | YouTube (science side)   | *Black Mirror*             | Espresso doppio     | Drone building       | Procreate (sketching)   | Tokyo (tech meets art)       |
+| **William Shakespeare** | Twitter (clever threads) | *Succession*               | Flat white          | Improv theatre       | Goodreads               | Edinburgh (Fringe Fest)      |
+| **Marie Antoinette**    | Pinterest                | *Bridgerton*               | Lavender latte      | Cake decorating      | Instagram Reels         | Dubai (opulent shopping)     |
+| **Napoleon Bonaparte**  | LinkedIn                 | *House of Cards*           | Strong black coffee | Strategy board games | Notion (planning wars)  | Mongolia (Genghis Khan tour) |
+| **Harriet Tubman**      | Facebook (community)     | *The Underground Railroad* | Herbal tea          | Trail hiking         | Signal (encrypted chat) | South Africa (Robben Island) |
+| **Albert Einstein**     | Reddit (r/askscience)    | *Genius* (about him!)      | Chai latte          | Playing violin       | Duolingo                | Iceland (auroras + physics)  |
+"
+class="rotate"
+%}
+
 But in the morning, I felt weary after tallying the workload: a directory of comic superheroes’ pre-empowered woes. Rebuking my resistance, I began. I sent word out to my students: from the past, the present, future: Would you like to gain some credit for your CV? When I mentioned comic superheroes, their eyes lit up like candles; one offered to enroll his aging mother. So, the routine was established: they would toil through DVDs, noting hardships and abuses that the superheroes suffered, in the pre-cloak stage, before empowerment. One student went to _Batman_ (1989[^5]); another to the _Hulk_ (2003[^6]); a third said he would work with _Spider-Man_ (2002[^7]).
 
 [^5]: Batman (1989). Burton, Tim  USA: Warner Bros. [film].
