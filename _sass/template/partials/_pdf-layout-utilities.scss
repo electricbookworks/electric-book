@@ -7,7 +7,7 @@ $pdf-layout-utilities: true !default;
 
   @include floats();
 
-  // If a paragraph would normally be flush left after an element, 
+  // If a paragraph would normally be flush left after an element,
   // but that element is floated away, it should get its indent back,
   // unless we're not spacing paragraphs.
   @if $spaced-paras == false {
@@ -43,7 +43,7 @@ $pdf-layout-utilities: true !default;
   // Especially useful for controlling the height of images to retain a baseline grid.
   // $line-height-default should be set in a non-relative unit, like points,
   // otherwise you'll get exponential differences in height.
-  @for $i from 1 through 100 {
+  @for $i from 0 through 100 {
     $height: $i * $line-height-default;
     .height-#{$i}#{$edition-suffix} {
       height: $height;
@@ -51,12 +51,28 @@ $pdf-layout-utilities: true !default;
   }
   // Sets the height of images inside any element
   // e.g. the images in a figure
-  @for $i from 1 through 100 {
+  @for $i from 0 through 100 {
     $height: $i * $line-height-default;
     .image-height-#{$i}#{$edition-suffix} img,
     img.image-height-#{$i}#{$edition-suffix} {
       height: $height;
     }
+  }
+
+  // Allow defining margin-top
+  @for $i from 0 through 100 {
+      $margin-top: $i * $line-height-default;
+      .margin-top-#{$i}#{$edition-suffix} {
+          margin-top: $margin-top;
+      }
+  }
+
+  // Allow defining margin-bottom
+  @for $i from 0 through 100 {
+      $margin-bottom: $i * $line-height-default;
+      .margin-bottom-#{$i}#{$edition-suffix} {
+          margin-bottom: $margin-bottom;
+      }
   }
 
   // Prevent spans from breaking over a line
@@ -65,5 +81,4 @@ $pdf-layout-utilities: true !default;
       white-space: nowrap;
     }
   }
-
 }

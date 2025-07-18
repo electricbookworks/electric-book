@@ -217,12 +217,12 @@ $pdf-figures: true !default;
         float: top;
         height: $rotator-content-height;
         width: $rotator-content-width;
-        break-before: verso;
+        break-before: page;
         break-after: page;
 
         // When extending into the sidebar, add its width
         &.pdf-wide {
-            float: sidenote;
+            float: wide;
             width: $rotator-content-width + $rotator-content-sidebar-width;
 
             .figure-rotator {
