@@ -507,12 +507,12 @@ remote-media for web and local-media for PDF.{% endcomment %}
         {% capture images %}{{ external-media }}/{{ book-directory }}/{{ book-subdirectory }}/{{ site.image-set }}{% endcapture %}
     {% endif %}
     {% comment %}If we are not in a book directory, use the images
-    from the first book in the project.{% endcomment %}
+    from the assets folder.{% endcomment %}
     {% if is-root-directory == true %}
-        {% capture images %}{{ external-media }}/{{ site.data.works[0] }}/{{ site.image-set }}{% endcapture %}
+        {% capture images %}{{ external-media }}/assets/{{ site.image-set }}{% endcapture %}
     {% endif %}
     {% if is-translation-homepage %}
-        {% capture images %}{{ external-media }}/{{ site.data.works[0] }}/{{ site.image-set }}{% endcapture %}
+        {% capture images %}{{ external-media }}/assets/{{ language }}/{{ site.image-set }}{% endcapture %}
     {% endif %}
 {% endif %}
 
