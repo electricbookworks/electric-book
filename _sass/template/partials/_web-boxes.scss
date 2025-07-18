@@ -88,8 +88,6 @@ $web-boxes: true !default;
     ul.box {
         padding: ($line-height-default / 2) ($line-height-default / 2) ($line-height-default / 2) ($line-height-default);
     }
-    // A regular list item as a box
-    li.box {}
 
     // Expandable boxes
     .expandable-box {
@@ -100,10 +98,6 @@ $web-boxes: true !default;
         h5:first-child,
         h6:first-child {
             font-style: normal;
-            
-            strong {
-
-            }
         }
     
         .toggle {
@@ -200,15 +194,18 @@ $web-boxes: true !default;
         clear: both;
         margin-bottom: $content-padding-bottom * 2;
         padding: ($content-padding-top * 2) $content-padding-right ($content-padding-bottom * 2) $content-padding-left;
-        width: 100vw;
-
+        
         // If screen is less than max-width-default,
         // only extend the color as far as the padding on the content.
         // Otherwise, extend it by that plus the sidebar space.
         margin-left: -($content-padding-left);
+        margin-right: -($content-padding-right);
+        width: calc(100vw - ((#{$content-padding-left} + #{$content-padding-right}) * 0.5));
+
         @media only screen and (min-width: $max-width-default) {
             width: 100vw;
             margin-left: calc(-1 * ((100vw - #{$max-width-default}) * 0.5) - #{$content-padding-left});
+            margin-right: calc(-1 * ((100vw - #{$max-width-default}) * 0.5) - #{$content-padding-right});
             padding-left: calc(((100vw - #{$max-width-default}) * 0.5) + #{$content-padding-left});
             padding-right: calc(((100vw - #{$max-width-default}) * 0.5) + #{$content-padding-right});
             padding-top: $content-padding-top * 4;
