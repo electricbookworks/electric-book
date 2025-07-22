@@ -121,7 +121,7 @@ products:
 
       # Comma-separate possible values, see
       # https://www.w3.org/TR/epub-a11y-tech-11/#accessibilityHazard
-      accessibility-hazard: unknown
+      accessibility-hazards: unknown
 
   # Details about the screen-PDF version of this work
   screen-pdf:
