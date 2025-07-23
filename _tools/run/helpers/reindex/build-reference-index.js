@@ -79,7 +79,9 @@ async function buildReferenceIndex (outputFormat, filesData) {
 
     // Then if it does, wait for index targets to load
     if (pageRunsIndexTargets) {
+      console.log('Waiting for data-index-targets in ' + filename)
       await page.waitForSelector('[data-index-targets]')
+      console.log('Found data-index-targets in ' + filename)
     } else {
       console.log('No index targeting in ' + path)
     }
