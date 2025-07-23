@@ -1,4 +1,4 @@
-/* global ActiveXObject, XMLHttpRequest */
+/* global ActiveXObject, Node, XMLHttpRequest */
 
 // Utility functions
 
@@ -45,9 +45,33 @@ function ebSlugify (string, indexTerm) {
   }
 }
 
-// Or get the language from a URL parameter
+// Decode HTML entities in an HTML string
+// without losing HTML tags. Useful for slugifying
+// HTML where the tags are important but we don't
+// want entities in the slug. Works in browser/Puppeteer.
+// This has a Cheerio equivalent in _tools/gulp/processors/indexes.js.
+function ebDecodeHtmlEntitiesPreservingTags (html) {
+  const div = document.createElement('div')
+  div.innerHTML = html
+
+  function decodeTextNodes (node) {
+    for (const child of node.childNodes) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const textarea = document.createElement('textarea')
+        textarea.innerHTML = child.nodeValue
+        child.nodeValue = textarea.value
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        decodeTextNodes(child)
+      }
+    }
+  }
+
+  decodeTextNodes(div)
+  return div.innerHTML
+}
+
+// Get the value of a URL parameter
 // https://stackoverflow.com/a/901144/1781075
-// eslint-disable-next-line no-unused-vars
 function ebGetParameterByName (name, url) {
   'use strict'
   if (!url) {

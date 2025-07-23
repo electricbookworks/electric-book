@@ -13,6 +13,7 @@ We recommend creating book indexes with an unbroken, unordered list, with a `ref
 
 This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](https://www.the-future-of-ideas.com/download/).
 
+- ### A
 -	access:
     -	competition in, 173
     -	granting of, 13–14, 20
@@ -110,7 +111,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	auction sites, 169
 -	audio changes, MP3, 123–24
 -	Audio Home Recording Act, 181
--	
+-	### B
 -	Baby Bells, 149
 -	backbone providers, 157
 -	Bagdikian, Ben, 117
@@ -189,7 +190,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	business methods:
 	-	patents on, 207, 208–9, 210
 	-	software-implemented, 208–9
--	
+-	### C
 -	cable broadband, 151–54, 166–68
 	-	building control into, 156–58, 168
 	-	and Communications Act, 155
@@ -528,7 +529,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 	-	as nonrivalrous, 116
 	-	vs. real space, 103–4, 121, 181, 182
 	-	world of ideas in, 116
--	
+-	### D
 -	dark fiber, 245
 -	data:
 	-	balance of power changed by, 128, 133
@@ -588,7 +589,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	DSL (digital subscriber line), 154–55, 161–62, 248
 -	Dunkin’ Donuts, 182
 -	DVD disks, 188–90, 256
--	
+-	### E
 -	Easterbrook, Frank, 186
 -	eBay, 169–71
 -	economics, and scarcity, 103, 115
@@ -623,7 +624,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	Ethernet, 77–78, 231
 -	European Union, 64
 -	exclusivity, 116, 128
--	
+-	### F
 -	fair use:
 	-	reverse engineering and, 185
 	-	rights of, 105, 108, 181, 188, 190, 254
@@ -688,7 +689,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	Free Software Foundation, 12, 53–54, 59
 -	Frost, Robert, 197
 -	FTC (Federal Trade Commission), 166
--	
+-	### G
 -	Gates, Bill, 62–67, 206, 214
 -	Gaynor, Mark, 89
 -	General Public License (GPL), 44, 54, 59–60, 97, 185–86
@@ -717,7 +718,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	graphical user interface (GUI) operating system, 62, 63
 -	Guggenheim, Davis, 3–4
 -	GUI-OS, 62, 63
--	
+-	### H
 -	Hamilton, Alexander, 265
 -	Hand, Learned, 106
 -	Hardin, Garrett, 22, 168, 175
@@ -751,7 +752,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	“Hush-a-Phone” device, 30
 -	HyperCard, 42
 -	hypertext, 42, 57
--	
+-	### I
 -	IBM:
 	-	and Apache server, 69–70, 71
 	-	and Linux, 69
@@ -878,7 +879,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	IPv4 of IPv6 name space, 172
 -	Isenberg, David, 38, 89–90
 -	ISPs (Internet service providers), 34, 82, 148, 157, 176, 246
--	
+-	### J
 -	Jaffe, Adam, 206, 207
 -	Jansson, Eddy, 184
 -	Jaszi, Peter, 198
@@ -887,7 +888,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	Jefferson, Thomas, 94–95, 104, 206–7
 -	jukeboxes, 109
 -	jurisdiction, problems of, 185
--	
+-	### J
 -	Kahin, Brian, 213
 -	Kapor, Mitch, 13, 35
 -	Kennard, William, 80, 223
@@ -898,7 +899,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	knowledge, commons of, 49, 55, 57–58
 -	Kozinski, Alex, 203–4
 -	Kreig, Andrew, 118
--	
+-	### L
 -	Lamarr, Hedy, 79
 -	Lange, David, 256
 -	language, as nonrivalrous commons, 21
@@ -926,7 +927,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	logical layer, *see also* code layer
 -	Lotus 1-2-3, 13
 -	lyric servers, 124–26
--	
+-	### M
 -	Machiavelli, Niccolò, 6
 -	Macintosh, *see also* Apple Computer
 -	McChesney, Robert, 117
@@ -1032,7 +1033,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 	-	production of, 127
 	-	unregulated, 8
 -	my.mp3.com, 127–29, 133, 192
--	
+-	### N
 -	Napster, 130–32, 194–96, 201, 254
 	-	and album sales, 200
 	-	bandwidth used by, 138
@@ -1101,7 +1102,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 	-	control via, 96, 146, 151
 	-	protection by, 58, 161, 167, 170
 -	NRC (National Research Council), 34–35, 40, 165–66, 176
--	
+-	### O
 -	object code, 50
 -	old vs. new, 6, 16, 139, 145–46, 199–201, 202–5, 212, 236–39, 265
 -	OLGA, 182–83
@@ -1131,7 +1132,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	Osterman, Jack, 32
 -	Ostrom, Elinor, 95
 -	overconsumption, prevention of, 22
--	
+-	### P
 -	P2P networks, 134–37, 159, 194, 258
 -	packet-switching technology, 31–34, 40, 46, 79, 157
 -	Parker, Sean, 130
@@ -1243,9 +1244,9 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 	-	scope of, 8
 -	publicity, right of, 203
 -	publishing industry, *see also* books
--	
+-	### Q
 -	Quality of Service (QoS) solutions, 46–47
--	
+-	### R
 -	radio:
 	-	commercials on, 74
 	-	early programming on, 74
@@ -1327,7 +1328,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	RSA Labs, 136
 -	Rubinfeld, Daniel, 166
 -	rules, control via, 151
--	
+-	### S
 -	Saltzer, Jerome, 34, 37, 38, 156
 -	satellite TV, 153
 -	scarcity:
@@ -1423,7 +1424,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 	-	on spectrum regulation, 74–75, 255
 -	Sykes, Alan, 192
 -	synchronicity, 10
--	
+-	### T
 -	Tannenbaum, Andrew, 54
 -	TCP/IP, 41, 56, 149, 248
 -	technology:
@@ -1512,7 +1513,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 	-	classic definition of, 170
 -	Turner, Ted, 152
 -	Twelve Monkeys (film), 4 2001, 196
--	
+-	### U
 -	uncertainty:
 	-	and free vs. controlled resources, 88–89
 	-	plasticity and, 39
@@ -1525,7 +1526,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 	-	GNU and, 53–54
 	-	licensing of, 53
 -	USENET, 96
--	
+-	### V
 -	Vaidhyanathan, Siva, 202
 -	Valenti, Jack, 195
 -	value, dimensions of, 93
@@ -1541,7 +1542,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 -	VisiCalc, 13
 -	Vixie, Paul, 56
 -	volunteerism, essential, 56
--	
+-	### W
 -	Walker, Jay, 212, 267
 -	Wall, Larry, 56
 -	Walzer, Michael, 93
@@ -1609,7 +1610,7 @@ This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](htt
 	-	royalty expenses of, 203
 -	Wu, Tim, 47–48
 -	WWW, *see also* World Wide Web
--	
+-	### X–Z
 -	Xerox PARC, 235–36
 -	
 -	Yahoo!, 28, 167, 169, 183

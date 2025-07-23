@@ -43,17 +43,19 @@ function ebIndexFindLinks (listItem) {
   // text value to the beginning of the tree array.
   // Iterate up the tree to add each possible parent.
 
-  // Get the text value of an li without its li children
+  // Get the text value of an li without its children
+  // or any index links already added by this process.
   function getListItemText (li) {
     const listItemClone = li.cloneNode(true)
-    listItemClone.querySelectorAll('li').forEach(function (childListItem) {
-      childListItem.remove()
+    listItemClone.querySelectorAll('ul, a').forEach(function (elementToRemove) {
+      elementToRemove.remove()
     })
 
-    // If page refs have already been added to the li,
-    // we don't want those in the text. They appear after
-    // a line break, so we regex everything from that \n.
-    const text = listItemClone.textContent.trim().replace(/\n.*/, '')
+    // If page refs have already been added to the li, they
+    // added a line break, so we regex everything from that \n.
+    // We use innerHTML to match spans like <sub>,
+    // whose text but not symbols we need in the slug.
+    const text = listItemClone.innerHTML.trim().replace(/\n.*/, '')
     return text
   }
 
@@ -61,7 +63,7 @@ function ebIndexFindLinks (listItem) {
 
   function buildTree (listItem) {
     if (listItem.parentElement &&
-                listItem.parentElement.closest('li')) {
+        listItem.parentElement.closest('li')) {
       listItemTree.unshift(getListItemText(listItem.parentElement.closest('li')))
       buildTree(listItem.parentElement.closest('li'))
     }

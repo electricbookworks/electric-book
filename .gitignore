@@ -1,5 +1,6 @@
 # Files and folders that should not normally
 # be committed to version control.
+
 _site/
 .sass-cache/
 .jekyll-metadata
@@ -13,10 +14,11 @@ _prince
 .DS_Store
 .vscode*
 
-# If your team needs strict node-package
-# version management, comment out this line
-# and commit package-lock.json.
-package-lock.json
+# If your team needs convenience over strict node-package
+# version management, uncomment this line,
+# delete package-lock.json, and commit the deletion.
+
+# package-lock.json
 
 # We don't .gitignore _output/, because we need that folder
 # for scripts to work, even if it's empty. Instead, there is

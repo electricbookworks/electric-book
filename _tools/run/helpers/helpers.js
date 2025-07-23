@@ -1597,7 +1597,7 @@ async function refreshIndexes (argv) {
 
     if (argv.format === 'web' ||
       argv.format === 'app') {
-      buildSearchIndex(argv.format, filesForIndexing)
+      buildSearchIndex(argv.format, filesForIndexing, configsObject())
     }
   } catch (error) {
     console.log(error)

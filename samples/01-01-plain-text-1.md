@@ -15,6 +15,10 @@ Most books comprise pages and pages of running text. A good design makes them lo
   caption="Scan the code to see this page online."
 %}
 
+<!--index:
+*Adventures of Sherlock Holmes*
+-->
+
 The text for this chapter is taken from Sir Arthur Conan Doyle's *Adventures of Sherlock Holmes*.
 
 ### A Scandal in Bohemia
