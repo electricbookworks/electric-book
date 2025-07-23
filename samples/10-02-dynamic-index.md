@@ -11,8 +11,12 @@ Also see the [docs on indexing](https://electricbookworks.github.io/electric-boo
 
 A dynamic index uses hyperlinks to the points in the text that it indexes, so that in print the page numbers are always accurate even if the text reflows, and online links to text are clickable. Here is a very short sample.
 
-- Adler, Irene 
+- ### A
+- Adler, Irene
+- *Adventures of Sherlock Holmes*
+- ### B
 - Briony Lodge
+- ### C
 - cases
   - Atkinson brothers
   - Holland royal family
@@ -21,6 +25,8 @@ A dynamic index uses hyperlinks to the points in the text that it indexes, so th
   - Study in Scarlet
   - Trepoff murder
 - Charing Cross
+- CO<sub>2</sub>
+- ### F–L
 - Fradkin, Chris
 - Holmes, Sherlock
 - King of Bohemia
@@ -28,6 +34,7 @@ A dynamic index uses hyperlinks to the points in the text that it indexes, so th
   - cigars
   - spirits
   - gasogene
+- ### M–Z
 - marriage
   - unhappy
   - secret
