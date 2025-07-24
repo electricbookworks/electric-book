@@ -16,6 +16,7 @@ const childProcess = require('child_process') // creates child processes
 const JSZip = require('jszip') // epub-friendly zip utility
 const buildReferenceIndex = require('./reindex/build-reference-index.js')
 const buildSearchIndex = require('./reindex/build-search-index.js')
+const merge = require('./merge')
 const options = require('./options.js').options
 const slugify = require('../../gulp/helpers/utilities.js').ebSlugify
 const htmlFilePaths = require('./paths/htmlFilePaths.js')
@@ -1494,7 +1495,29 @@ async function convertHTMLtoWord (argv) {
   console.log('Converting HTML to Word...')
 
   // Get file list for this format
-  const filePaths = await htmlFilePaths(argv)
+
+  // First, assume it's all the individual files
+  let filePaths = await htmlFilePaths(argv)
+
+  // But if we've merged the HTML files,
+  // use the merged file.
+  if (argv.merged) {
+
+    // Check if a merged.html exists
+    let mergedFilePath = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/merged.html')
+
+    if (argv.language) {
+      mergedFilePath = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/' + argv.language + '/merged.html')
+    }
+
+    const mergedFileExists = pathExists(mergedFilePath)
+
+    if (mergedFileExists) {
+      filePaths = [mergedFilePath]
+    }
+  }
 
   // Initialise a counter
   let totalConverted = 0
@@ -1518,7 +1541,13 @@ async function convertHTMLtoWord (argv) {
     // Loop through files and convert with Pandoc
     filePaths.forEach(function (filePath) {
       // Build path to output file
-      const fileBasename = fsPath.basename(filePath, '.html')
+      let fileBasename = fsPath.basename(filePath, '.html')
+
+      // If we're converting a merged file, use the book name
+      if (argv.merged) {
+        fileBasename = argv.book
+      }
+
       const outputFilePath = fsPath.normalize(outputLocation + '/' +
                     fileBasename + '.docx')
 
@@ -1565,8 +1594,17 @@ async function exportWord (argv) {
     // Word export does not yet support index comments
     // and index links. We need to extend the gulp tasks
     // that process comments to make them visible in Word.
-    // await renderIndexComments(argv)
-    // await renderIndexLinks(argv)
+    await renderIndexComments(argv)
+    await renderIndexLinks(argv)
+    await merge(argv)
+
+    // Math rendering doesn't work in Word, and
+    // original MathJax may be better in exports anyway
+    // await renderMathjax(argv)
+
+    if (argv.format === 'print-pdf' || argv.format === 'screen-pdf') {
+      await pdfHTMLTransformations(argv)
+    }
 
     await convertHTMLtoWord(argv)
   } catch (error) {
