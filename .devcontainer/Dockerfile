@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/base:dev-ubuntu-22.04
+FROM mcr.microsoft.com/devcontainers/base:dev-ubuntu-24.04
 
 # Main dependency installation
 # (Some of these might already exist in base image.)
