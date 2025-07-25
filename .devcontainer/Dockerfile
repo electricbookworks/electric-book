@@ -35,10 +35,6 @@ RUN apt-get install -y \
     libxfixes3 \
     libxrandr2
 
-# Dependencies for Prince 11.4
-RUN wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb \
-    && dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
-
 # Add node source for new nodejs, instead of old Ubuntu-installed node.
 # https://github.com/nodesource/distributions/wiki/How-to-migrate-to-the-new-repository
 
@@ -55,12 +51,6 @@ RUN apt-get install -y ca-certificates curl gnupg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update \
     && apt-get install -y nodejs
-
-# Install PrinceXML for printing to PDF.
-# This is a default version for older Electric Book template
-# projects. Newer projects will use Prince in a Node module.
-RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb \
-    && dpkg -i prince_11.4-1_ubuntu18.04_amd64.deb
 
 # Install pandoc for document conversion
 RUN wget https://github.com/jgm/pandoc/releases/download/3.7.0.2/pandoc-3.7.0.2-1-amd64.deb \
