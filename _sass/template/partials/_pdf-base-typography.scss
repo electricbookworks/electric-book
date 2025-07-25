@@ -8,6 +8,12 @@ $convert-images-to-color-profile: false !default;
         background-color: $color-background;
     }
 
+    // Prince layout defaults
+    :root {
+        -prince-baseline-grid: new;
+        -prince-change-line-breaks-for-pagination: yes;
+    }
+
     html {
         box-sizing: border-box;
     }
@@ -16,6 +22,7 @@ $convert-images-to-color-profile: false !default;
     }
 
     body {
+        -prince-line-break-choices: body-lookahead;
         margin: 0;
         padding: 0;
         font-family: $font-text-main;
@@ -26,6 +33,7 @@ $convert-images-to-color-profile: false !default;
         widows: $widows;
     }
     h1, h2, h3, h4, h5, h6 {
+        -prince-line-break-choices: heading-lookahead;
         font-family: $font-text-secondary;
         font-size: $font-size-default;
         line-height: $line-height-default;

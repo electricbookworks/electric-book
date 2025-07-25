@@ -9,6 +9,7 @@ $pdf-title-pages: true !default;
 	.half-title-page {
 		text-align: center;
 		p {
+			-prince-line-break-choices: title-page-lookahead;
 			text-indent: 0;
 			hyphens: none;
 			text-align: center;
@@ -18,6 +19,7 @@ $pdf-title-pages: true !default;
 		.halftitlepage-title, 
 		.title-page-title, 
 		.titlepage-title {
+			-prince-line-break-choices: title-page-lookahead;
 			font-weight: bold;
 			font-family: $font-display-main;
 			font-size: $font-size-default * $font-size-bigger;
@@ -27,6 +29,7 @@ $pdf-title-pages: true !default;
 		}
 		.title-page-subtitle, 
 		.titlepage-subtitle {
+			-prince-line-break-choices: title-page-lookahead;
 			font-family: $font-display-main;
 			font-size: $font-size-default * $font-size-bigger;
 			line-height: $line-height-default * $font-size-bigger;
@@ -35,6 +38,7 @@ $pdf-title-pages: true !default;
 		}
 		.title-page-author, 
 		.titlepage-author {
+			-prince-line-break-choices: title-page-lookahead;
 			font-size: $font-size-default * $font-size-bigger;
 			line-height: $line-height-default * $font-size-bigger;
 			margin: ($line-height-default * 4) 0;
@@ -42,6 +46,7 @@ $pdf-title-pages: true !default;
 		}
 		.title-page-publisher, 
 		.titlepage-publisher {
+			-prince-line-break-choices: title-page-lookahead;
 			position: absolute;
 			bottom: 0;
 			text-align: center;

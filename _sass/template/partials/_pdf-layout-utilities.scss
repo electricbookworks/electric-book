@@ -39,6 +39,29 @@ $pdf-layout-utilities: true !default;
     }
   }
 
+  // Ask Prince to fit this paragraph into fewer or more lines
+  // https://www.princexml.com/doc/prince-for-books/#the-property--prince-n-lines
+  .lines-auto#{$edition-suffix} {
+    -prince-n-lines: auto;
+  }
+
+  .lines-change#{$edition-suffix} {
+    -prince-n-lines: change;
+  }
+
+  @for $i from 1 through 100 {
+    $lines: $i * 1;
+    .lines-#{$i}-shorter#{$edition-suffix} {
+      -prince-n-lines: $i shorter;
+    }
+    .lines-#{$i}-longer#{$edition-suffix} {
+      -prince-n-lines: $i longer;
+    }
+    .lines-#{$i}#{$edition-suffix} {
+      -prince-n-lines: $i;
+    }
+  }
+
   // These classes set the height of any element relative to the $line-height-default.
   // Especially useful for controlling the height of images to retain a baseline grid.
   // $line-height-default should be set in a non-relative unit, like points,
@@ -80,5 +103,22 @@ $pdf-layout-utilities: true !default;
     &.keep-together#{$edition-suffix} {
       white-space: nowrap;
     }
+  }
+
+  // Try when possible to prevent spans from
+  // breaking over a line. Not as strict as .keep-together.
+  span, em, strong {
+    &.prefer-together#{$edition-suffix} {
+      -prince-wrap-inside: phrase;
+    }
+  }
+
+  // Other Prince options for guiding line breaks
+  .title-page-breaks {
+    -prince-line-break-choices: title-page-lookahead;
+  }
+
+  .heading-breaks {
+    -prince-line-break-choices: heading-lookahead;
   }
 }
