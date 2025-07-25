@@ -79,6 +79,9 @@ ENV PATH /usr/local/rvm/bin:/usr/local/rvm/rubies/ruby-3.3.5/bin:$PATH
 ENV GEM_HOME=/usr/local/rvm/gems/ruby-3.3.5
 ENV GEM_PATH=/usr/local/rvm/gems/ruby-3.3.5:/usr/local/rvm/gems/ruby-3.3.5@global
 
+# Add Prince binary path dynamically using workspace name
+ENV PATH=/workspaces/${WORKSPACE_NAME}/node_modules/prince/prince/bin:${PATH}
+
 # Install fonts for PrinceXML
 # 1. Accept the EULA
 # 2. Install packages
@@ -86,8 +89,3 @@ ENV GEM_PATH=/usr/local/rvm/gems/ruby-3.3.5:/usr/local/rvm/gems/ruby-3.3.5@globa
 RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections \
     && apt-get update && apt-get install -y --no-install-recommends fontconfig ttf-mscorefonts-installer \
     && fc-cache -f -v
-
-# Add Prince to PATH.
-# Prince will actually be installed here
-# by a Node process in the container
-ENV PATH="/workspaces/electric-book/node_modules/prince/prince/bin:${PATH}"
