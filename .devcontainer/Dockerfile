@@ -18,6 +18,13 @@ RUN apt-get update && apt-get install -y \
     graphicsmagick \
     default-jre
 
+# Install Prince dependencies
+RUN apt-get install -y \
+    libavif16 \
+    libwebp7 \
+    libwebpdemux2 \
+    libwebpmux3
+
 # Dependencies specifically for Puppeteer on unix
 # (Some of these might already exist in base image.)
 RUN apt-get install -y \
