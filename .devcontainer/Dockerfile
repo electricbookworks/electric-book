@@ -21,9 +21,9 @@ RUN apt-get update && apt-get install -y \
 # Dependencies specifically for Puppeteer on unix
 # (Some of these might already exist in base image.)
 RUN apt-get install -y \
-    libasound2 \
-    libatk1.0-0 \
-    libatk-bridge2.0-0 \
+    libasound2t64 \
+    libatk1.0-0t64 \
+    libatk-bridge2.0-0t64 \
     libcairo2 \
     libdrm2 \
     libgbm1 \
