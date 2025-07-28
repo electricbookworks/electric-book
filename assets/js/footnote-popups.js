@@ -40,12 +40,8 @@ function ebFootnotePopups () {
     const theSup = current.parentNode
     const theContainingElement = current.parentNode.parentNode
 
-    // Add the reference div to the sup
-    // (Technically, this creates invalid HTML because a sup
-    // should not contain a div. But this is necessary to
-    // position the popup under the sup, and no worse than
-    // making the popup a span that contains a p.)
-    theSup.appendChild(footnoteContainer)
+    // add the reference div after the footnote reference
+    theSup.insertAdjacentElement('afterend', footnoteContainer)
 
     // Move the li contents inside the div.reference
     footnoteContainer.innerHTML = targetReference.innerHTML
