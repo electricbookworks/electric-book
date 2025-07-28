@@ -2,7 +2,10 @@
 
 // Import Node modules
 const cheerio = require('gulp-cheerio')
+const cheerioCore = require('cheerio')
 const gulp = require('gulp')
+const { decode } = require('entities')
+const { marked } = require('marked')
 
 // Local helpers
 const {
@@ -12,6 +15,27 @@ const {
 const { ebSlugify } = require('../helpers/utilities.js')
 const { format } = require('../helpers/args.js')
 const htmlFilePaths = require('../../run/helpers/paths/htmlFilePaths.js')
+
+// A cheerio equivalent of ebDecodeHtmlEntitiesPreservingTags
+// from assets/js/utilities.js
+function decodeHtmlEntitiesPreservingTags (html) {
+  // Load as a fragment (not a full document)
+  const $ = cheerioCore.load(html, null, false)
+
+  function decodeTextNodes (el) {
+    $(el).contents().each((_, node) => {
+      if (node.type === 'text') {
+        node.data = decode(node.data)
+      } else if (node.type === 'tag') {
+        decodeTextNodes(node)
+      }
+    })
+  }
+
+  decodeTextNodes($.root())
+
+  return $.root().html()
+}
 
 // Check whether to use XML mode
 function isXMLMode () {
@@ -112,7 +136,11 @@ async function renderIndexCommentsAsTargets (done) {
 
               // Slugify the target text to use in an ID
               // and to check for duplicate instances later.
-              const entrySlug = ebSlugify(line, true)
+              // We process the text as markdown, because we need
+              // HTML tag content included, as it is for listItemSlug.
+              // But we remove HTML entities before slugifying.
+              const processedLine = decodeHtmlEntitiesPreservingTags(marked.parseInline(line))
+              const entrySlug = ebSlugify(processedLine, true)
 
               // Add the slug to the array of entries,
               // where will we count occurrences of this entry.
@@ -239,15 +267,19 @@ async function renderIndexListReferences (done) {
           // If the list item has a first child that contains text
           // use that text; otherwise use the entire list item's text.
 
-          // Get the text value of an li without its li children
+          // Get the text value of an li without its children
+          // or any index links already added by this process.
           function getListItemText (li) {
             const listItemClone = li.clone()
-            listItemClone.find('li').remove()
+            listItemClone.find('ul').remove()
+            listItemClone.find('a').remove()
 
             // If page refs have already been added to the li,
             // we don't want those in the text. They appear after
             // a line break, so we regex everything from that \n.
-            const text = listItemClone.text().trim().replace(/\n.*/, '')
+            // We need the tag names of HTML, but not the symbols, in the slug.
+            // So we have to decode the HTML first to remove encoded HTML.
+            const text = decode(listItemClone.html())
             return text
           }
 

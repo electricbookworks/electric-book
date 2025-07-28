@@ -42,6 +42,9 @@ layout: null
     {% comment %} Load after SVG management {% endcomment %}
     {% include_relative lazyload.js %}
 
+    {% comment %} Markdown processor in JS, mostly for utilities {% endcomment %}
+    {% include_relative vendor/marked.min.js %}
+
 {% endif %}
 
 {% include_relative testing-images.js %}

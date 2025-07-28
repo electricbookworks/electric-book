@@ -1,4 +1,4 @@
-/* global Prince, ebSlugify, NodeFilter */
+/* global Prince, ebDecodeHtmlEntitiesPreservingTags, ebSlugify, marked, NodeFilter */
 
 // This script helps create dynamic book indexes.
 // It finds all HTML comments that start with
@@ -126,7 +126,10 @@ function ebIndexProcessComments (comments) {
       // Slugify the target text to use in an ID
       // and to check for duplicate instances later.
       // The second argument indicates that we are slugifying an index term.
-      const entrySlug = ebSlugify(line, true)
+      // Process the text as markdown, because we need
+      // HTML tag content included, as it is for listItemSlug.
+      const processedLine = ebDecodeHtmlEntitiesPreservingTags(marked.parseInline(line))
+      const entrySlug = ebSlugify(processedLine, true)
 
       // Add the slug to the array of entries,
       // where will we count occurrences of this entry.
