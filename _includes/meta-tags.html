@@ -33,46 +33,49 @@ In order of preference:
 {% endif %}
 
 
-{% comment %} Image {% endcomment %}
+{% comment %} Image
 
-{% capture meta-tag-image-relative %}
+Fall back to the project image.
+Use the page image if one is defined,
+otherwise use the work's web image, as defined in default.yml.
+And if that's not available, but there is an image defined
+for the work or product, use that.
 
-    {% comment %} If the page has an image defined for it, use that... {% endcomment %}
-    {% if page.image %}
+{% endcomment %}
 
-        {% if is-root-directory == true or is-translation-root-directory == true %}
-            assets/images/web/{{ page.image }}
+{% assign meta-image-name = project-image %}
+{% if page.image and page.image != "" %}
+    {% assign meta-image-name = page.image %}
+{% elsif web-image and web-image != "" %}
+    {% assign meta-image-name = web-image %}
+{% elsif image and image != "" %}
+    {% assign meta-image-name = image %}
+{% endif %}
+
+{% comment %} The OG image URL must be absolute, not relative.
+If we are using remote media, use the `images` path ... {% endcomment %}
+
+{% if external-media and external-media != "" %}
+    {% capture meta-tag-image %}{{ images }}/{{ meta-image-name }}{% endcapture %}
+
+{% comment %} ... otherwise use the canonical URL. {% endcomment %}
+{% else %}
+
+    {% comment %} We have to work out if the image is in assets or a book directory,
+    and whether it's in a translated language folder. {% endcomment %}
+    {% if is-root-directory == true or is-translation-root-directory == true %}
+        {% if is-translation-root-directory == true %}
+            {% capture canonical-meta-image-path %}assets/{{ language }}/images/web{% endcapture %}
         {% else %}
-            {{ book-directory }}/{{ site.image-set }}/{{ page.image }}
+            {% capture canonical-meta-image-path %}assets/images/web{% endcapture %}
         {% endif %}
-
-    {% comment %} If no page image is defined...
-
-    on non-book pages use the project image,
-    and the translated version for translated home pages.
-    We don't check for the existence of the translated image file,
-    to save build time. Onus on user to add it to assets/[language]. {% endcomment %}
-    {% elsif is-root-directory == true or is-translation-root-directory == true %}
-        {% if is-translation-homepage == true %}
-            assets/{{ language }}/images/web/{{ project-image }}
+    {% elsif is-book-directory %}
+        {% if is-translation %}
+            {% capture canonical-meta-image-path %}{{ book-directory }}/{{ language }}/images/web{% endcapture %}
         {% else %}
-            assets/images/web/{{ project-image }}
+            {% capture canonical-meta-image-path %}{{ book-directory }}/images/web{% endcapture %}
         {% endif %}
-
-    {% comment %} Otherwise, if there is a web image, use that {% endcomment %}
-    {% elsif web-image != "" %}
-        {{ book-directory }}/{{ site.image-set }}/{{ web-image }}
-
-    {% comment %} Otherwise, if no web-image but there is an image defined
-    for the work or product, use that {% endcomment %}
-    {% elsif image != "" %}
-        {{ book-directory }}/{{ site.image-set }}/{{ image }}
-
-    {% comment %} Or fall back to the project image {% endcomment %}
-    {% else %}
-        assets/images/web/{{ project-image }}
     {% endif %}
-{% endcapture %}
 
-{% comment %} Add absolute-link prefix to the relative path {% endcomment %}
-{% capture meta-tag-image %}{{ site.canonical-url }}{{ site.baseurl }}/{{ meta-tag-image-relative | strip_newlines | strip }}{% endcapture %}
+    {% capture meta-tag-image %}{{ site.canonical-url }}{{ site.baseurl }}/{{ canonical-meta-image-path }}/{{ meta-image-name }}{% endcapture %}
+{% endif %}
