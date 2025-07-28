@@ -37,6 +37,17 @@ function decodeHtmlEntitiesPreservingTags (html) {
   return $.root().html()
 }
 
+// Check whether to use XML mode
+function isXMLMode () {
+  // Note: this needs to return a string,
+  // hence the quotes around 'true' and 'false'.
+  if (format === 'epub') {
+    return 'true'
+  } else {
+    return 'false'
+  }
+}
+
 // Turn HTML comments for book indexes into anchor tags.
 // This is a pre-processing alternative to assets/js/index-targets.js,
 // which dynamically adds index targets in web clients.
@@ -194,7 +205,8 @@ async function renderIndexCommentsAsTargets (done) {
       },
       parserOptions: {
         // XML mode necessary for epub output
-        xmlMode: true
+        // and must be false for PDF output
+        xmlMode: isXMLMode()
       }
     }))
     .pipe(gulp.dest('./'))
@@ -418,7 +430,8 @@ async function renderIndexListReferences (done) {
       },
       parserOptions: {
         // XML mode necessary for epub output
-        xmlMode: true
+        // and must be false for PDF output
+        xmlMode: isXMLMode()
       }
     }))
     .pipe(gulp.dest('./'))
