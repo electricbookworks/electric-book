@@ -503,7 +503,7 @@ products:
 
       # Comma-separate possible values, see
       # https://www.w3.org/TR/epub-a11y-tech-11/#accessibilityHazard
-      accessibility-hazard: unknown
+      accessibility-hazards: unknown
 
     # Files to include in this format.
     # In the epub files list, add a value to any file
