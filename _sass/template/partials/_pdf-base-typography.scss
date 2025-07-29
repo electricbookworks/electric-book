@@ -32,6 +32,7 @@ $convert-images-to-color-profile: false !default;
         orphans: $orphans;
         widows: $widows;
     }
+
     h1, h2, h3, h4, h5, h6 {
         -prince-line-break-choices: heading-lookahead;
         font-family: $font-text-secondary;
@@ -42,6 +43,7 @@ $convert-images-to-color-profile: false !default;
         page-break-after: avoid;
         page-break-inside: avoid;
     }
+
     h1 {
         font-family: $font-display-main;
         font-size: $font-size-default * $font-size-bigger;
@@ -49,30 +51,39 @@ $convert-images-to-color-profile: false !default;
         margin: ($line-height-default * 2) 0 ($line-height-default * 10) 0;
         text-align: center;
     }
+
     h2 {
         font-size: $font-size-default * ($font-size-bigger * 0.75);
         margin: ($line-height-default * 2) 0 $line-height-default 0;
     }
+
     h3 {}
+
     h4 {
         font-style: italic;
         font-weight: inherit;
     }
+
     h5 {
         font-family: $font-text-main;
         font-style: italic;
         font-weight: inherit;
     }
+
     h6 {
         font-family: $font-text-main;
         font-weight: inherit;
     }
+
     p, ul, ol, dl {
         text-align: $text-align;
         letter-spacing: $letter-spacing-text;
     }
+
     p {
         margin: 0;
+
+
         & + p {
             text-indent: $paragraph-indent;
         }
@@ -144,6 +155,7 @@ $convert-images-to-color-profile: false !default;
         word-wrap: break-word;
         word-break: break-word;
     }
+
     em, strong {
 
         // Prevent some fonts from expanding/contracting
@@ -156,7 +168,13 @@ $convert-images-to-color-profile: false !default;
 
     ul, ol {
         margin: 0 0 $line-height-default 0;
+
+        // Allow space for large numerals, and apply this
+        // to both ul and ol so that they align.
+        // Also see pdf-no-indent in pdf-layout-utilities.
+        padding: 0 0 0 $paragraph-indent * 2;
     }
+
     ol {
         list-style: decimal;
         ol {
@@ -166,29 +184,39 @@ $convert-images-to-color-profile: false !default;
             }
         }
     }
+
     ul {
         list-style-type: disc;
     }
+
     ul ul, ol ol, blockquote ul ul, blockquote ol ol {
         margin-bottom: 0; // See '@if spaced-paras' below
     }
-    li > ul {
-        margin-bottom: 0; // manages line space after sublists in lists
-    }
+
     li {
         list-style-position: outside;
-        margin-left: $paragraph-indent;
+
         &::marker {
-            width: $paragraph-indent;
-            text-align: left;
+            padding-right: 0.5em;
+            text-align: right;
+        }
+
+        & > ul,
+        & > ol {
+
+            // No line space after sublists in lists
+            margin-bottom: 0;
         }
     }
+
     li:first-of-type {
         page-break-after: avoid;
     }
+
     li:last-of-type {
         page-break-before: avoid;
     }
+
     li li:first-of-type {
         page-break-before:avoid;
     }
@@ -198,13 +226,16 @@ $convert-images-to-color-profile: false !default;
     blockquote {
         margin: $line-height-default 0;
         padding: 0 $paragraph-indent;
+
         p {
             margin: 0;
             padding: 0;
+
         }
         p:first-of-type {
             text-indent: 0;
         }
+
         p:last-child, & ol:last-child, & ul:last-child {
             margin-bottom: 0;
         }
@@ -215,10 +246,12 @@ $convert-images-to-color-profile: false !default;
     dl {
         margin: $line-height-default 0;
     }
+
     dt {
         page-break-after: avoid;
         font-weight: bold;
     }
+
     dd {
         margin: 0 0 $line-height-default $paragraph-indent;
     }
@@ -230,9 +263,11 @@ $convert-images-to-color-profile: false !default;
         line-height: 0;
         font-size: 1em * $font-size-smaller;
     }
+
     sup {
         vertical-align: super;
     }
+
     sub {
         vertical-align: sub;
     }
@@ -250,10 +285,12 @@ $convert-images-to-color-profile: false !default;
         font-family: $font-display-main;
         text-align: center;
         margin: $line-height-default auto;
+
         @if $text-divider-image != "" {
             content: $text-divider-image;
             height: $text-divider-image-height;
         }
+
         & + p {
             text-indent: 0;
         }
@@ -269,6 +306,7 @@ $convert-images-to-color-profile: false !default;
         border: $rule-thickness solid $color-mid;
         margin: $line-height-default 0;
         box-sizing: border-box;
+
         // Inline
         p > &,
         li > &,
@@ -317,10 +355,12 @@ $convert-images-to-color-profile: false !default;
     // An option to change the default text-indented paragraphs
     // and close-up lists etc. to have space-between instead.
     @if $spaced-paras {
+
         p, p + p {
             margin-bottom: $line-height-default;
             text-indent: 0;
         }
+
         ul ul, ol ol, blockquote ul ul, blockquote ol ol {
             // Disabled, because on most real projects we remove this.
             // margin-top: $line-height-default;

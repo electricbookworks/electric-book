@@ -12,10 +12,8 @@ $pdf-toc: true !default;
 	.page-ref-list {
 		ul, ol {
 			list-style-type: none;
-			text-align: left; // overrides possible justify applied in Sass configs
-			ul, ol {
-				margin-left: $paragraph-indent;
-			}
+			padding: 0 0 0 $paragraph-indent;
+			text-align: left;
 		}
 		li {
 			margin: 0;
@@ -61,5 +59,4 @@ $pdf-toc: true !default;
 			content: leader(" ") target-counter(attr(href), page);
 		}
 	}
-
 }
