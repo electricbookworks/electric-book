@@ -24,6 +24,29 @@ $pdf-layout-utilities: true !default;
     text-indent: $paragraph-indent;
   }
 
+  ul, ol {
+
+    // If you don't want a list indented, use this class
+    &.pdf-no-indent#{$edition-suffix} {
+      padding-left: $paragraph-indent;
+
+      li {
+
+        // This is default, but we reiterate it for clarity
+        list-style-position: outside;
+
+        &::marker {
+          display: inline-block;
+          text-align: left;
+
+          // Ensure a little space between marker and text
+          padding: 0 2pt 0 0;
+          width: $paragraph-indent - 2pt;
+        }
+      }
+    }
+  }
+
   // These classes control letter-spacing (tracking), usually to save widows and orphans.
   @for $i from 1 through 100 {
     $add-space: $i * 0.001em;
