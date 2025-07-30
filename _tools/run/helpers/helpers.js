@@ -1081,7 +1081,13 @@ async function runPrince (argv) {
     }
 
     if (argv.merged === false) {
+      console.log('Using separate HTML files for PDF rendering.')
       inputFiles = htmlFilePaths(argv)
+    } else if (pathExists(inputFiles)) {
+      console.log('Using merged HTML file for PDF rendering.')
+    } else {
+      console.log(chalk.red('Warning: Cannot find HTML file(s) for PDF rendering.'))
+      process.exit()
     }
 
     // Get the book's stylesheet, so we can pass it
@@ -1109,6 +1115,14 @@ async function runPrince (argv) {
       stylesheet = fsPath.normalize(process.cwd() +
       '/_site/' + argv.book + '/' + argv.language + '/' +
       '/styles/' + styleSheetFilename)
+    }
+
+    // Use the Prince for Books binary if required
+    if (princeConfig?.version.includes('books')) {
+      console.log('Using Prince for Books to render PDF.')
+      prince().config.binary = 'prince-books'
+    } else {
+      console.log('Using Prince to render PDF.')
     }
 
     // Currently, node-prince does not seem to
@@ -1557,7 +1571,6 @@ async function convertHTMLtoWord (argv) {
   // But if we've merged the HTML files,
   // use the merged file.
   if (argv.merged) {
-
     // Check if a merged.html exists
     let mergedFilePath = fsPath.normalize(process.cwd() +
       '/_site/' + argv.book + '/merged.html')
