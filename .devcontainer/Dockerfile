@@ -86,9 +86,6 @@ ENV PATH /usr/local/rvm/bin:/usr/local/rvm/rubies/ruby-3.3.5/bin:$PATH
 ENV GEM_HOME=/usr/local/rvm/gems/ruby-3.3.5
 ENV GEM_PATH=/usr/local/rvm/gems/ruby-3.3.5:/usr/local/rvm/gems/ruby-3.3.5@global
 
-# Add Prince binary path dynamically using workspace name
-ENV PATH=/workspaces/${WORKSPACE_NAME}/node_modules/prince/prince/bin:${PATH}
-
 # Install fonts for PrinceXML
 # 1. Accept the EULA
 # 2. Install packages
