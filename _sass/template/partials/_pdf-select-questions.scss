@@ -3,17 +3,28 @@ $pdf-select-questions: true !default;
 
     // Select lists
 
-    .select-list {
-        border: 0;
+    .select-list-wrapper {
         border-bottom: $rule-thickness solid $color-text-main;
+        display: inline-block;
+        width: $paragraph-indent * 3;
+    }
 
-        option {
+    // Prince adds a dropdown arrow that we don't want in PDF
+    // and often don't have a glyph for in project fonts.
+    .select-list {
+        display: none;
 
-            &.select-list-placeholder {
-                display: inline-block;
-                min-width: $paragraph-indent * 3;
-            }
-        }
+        // If we could style this, we might use:
+        // border: 0;
+        // border-bottom: $rule-thickness solid $color-text-main;
+
+        // option {
+
+        //     &.select-list-placeholder {
+        //         display: inline-block;
+        //         min-width: $paragraph-indent * 3;
+        //     }
+        // }
     }
 
 }
