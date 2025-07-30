@@ -14,6 +14,7 @@ const pandoc = require('node-pandoc') // for converting files, e.g. html to word
 const which = require('which') // finds installed executables
 const childProcess = require('child_process') // creates child processes
 const JSZip = require('jszip') // epub-friendly zip utility
+const chalk = require('chalk')
 const buildReferenceIndex = require('./reindex/build-reference-index.js')
 const buildSearchIndex = require('./reindex/build-search-index.js')
 const merge = require('./merge')
@@ -1016,10 +1017,12 @@ function checkPrinceVersion () {
       if (packageJSON.prince && packageJSON.prince.version) {
         preferredPrinceVersion = packageJSON.prince.version
 
+        // Do not output PDF if Prince version is wrong.
         if (installedVersion !== preferredPrinceVersion) {
-          console.log('\nWARNING: your installed Prince version is ' + installedVersion +
+          console.log(chalk.red('Warning: your installed Prince version is ' + installedVersion +
                           ' but your project requires ' + preferredPrinceVersion + '\n' +
-                          'You should delete node_modules/prince and run: npm install\n')
+                          'You should delete node_modules/prince and run: npm install\n'))
+          process.exit()
         } else {
           console.log('Prince version matches preferred version in package.json.')
         }
