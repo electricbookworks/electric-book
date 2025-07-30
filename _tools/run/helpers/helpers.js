@@ -513,17 +513,20 @@ async function renderMathjax (argv, options) {
       '/_tools/run/helpers/mathjax/tex2mml-page.js'
 
       // Process MathJax
-      let mathJaxProcess
-      inputFiles.forEach(async function (path) {
+      const mathJaxProcesses = inputFiles.map(async function (path) {
         if (pathExists(path)) {
           console.log('Rendering maths in ' + path)
-          mathJaxProcess = spawn(
+          const mathJaxProcess = spawn(
             'node',
             ['-r', 'esm', mathJaxScript, path, path, argv.format]
           )
-          await logProcess(mathJaxProcess, 'Rendering MathJax')
+          return await logProcess(mathJaxProcess, 'Rendering MathJax')
         }
+        return true
       })
+
+      // Wait for all MathJax processes to complete
+      await Promise.all(mathJaxProcesses)
       return true
     } else {
       return true
