@@ -12,6 +12,11 @@ $pdf-index: true !default;
 		columns: 2;
 		font-size: $font-size-default * $font-size-smaller;
 		margin: $line-height-default 0 0 0;
+		padding: 0; // for Prince 16+
+
+		ul {
+			padding: 0; // for Prince 16+
+		}
 
 		li {
 			list-style-type: none;
