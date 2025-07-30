@@ -137,11 +137,11 @@ $pdf-layout-utilities: true !default;
   }
 
   // Other Prince options for guiding line breaks
-  .title-page-breaks {
+  .title-page-breaks#{$edition-suffix} {
     -prince-line-break-choices: title-page-lookahead;
   }
 
-  .heading-breaks {
+  .heading-breaks#{$edition-suffix} {
     -prince-line-break-choices: heading-lookahead;
   }
 }
