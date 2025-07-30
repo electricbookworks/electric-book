@@ -324,12 +324,13 @@ app:
 # you can store your images in a separate location.
 # See the docs for more information.
 # Uncomment the following settings to activate remote media.
+# Do not include a trailing slash in the remote media URL.
 # remote-media:
   # development: ""
   # live: ""
   # testing: ""
 # local-media:
-#   development: ""
+  # development: ""
 
 # ----------------------------------------------------------
 # General output options

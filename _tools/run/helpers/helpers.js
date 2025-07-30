@@ -16,6 +16,7 @@ const childProcess = require('child_process') // creates child processes
 const JSZip = require('jszip') // epub-friendly zip utility
 const buildReferenceIndex = require('./reindex/build-reference-index.js')
 const buildSearchIndex = require('./reindex/build-search-index.js')
+const merge = require('./merge')
 const options = require('./options.js').options
 const slugify = require('../../gulp/helpers/utilities.js').ebSlugify
 const htmlFilePaths = require('./paths/htmlFilePaths.js')
@@ -24,6 +25,55 @@ const pathExists = require('./paths/pathExists.js')
 const variantSettings = require('./settings/variantSettings.js')
 const works = require('./paths/works.js')
 const translations = require('./paths/translations.js')
+const entities = require('entities')
+
+// Replaced named entities with numeric entities
+async function replaceNamedEntitiesWithNumeric (filePath) {
+  try {
+    // Read the file content
+    const fileContent = await fs.readFile(filePath, 'utf8')
+
+    // Process the content
+    const processedContent = fileContent
+      // Step 1: Handle escaped entities
+      .replace(/\\(&[a-zA-Z0-9#]+;)/g, (match, entity) => {
+        // Leave escaped entities unchanged
+        return `ESCAPED_ENTITY_${entity}`
+      })
+      // Step 2: Replace non-escaped entities with numeric entities
+      .replace(/&[a-zA-Z0-9#]+;/g, (match) => {
+        // Decode the named entity
+        const decodedChar = entities.decodeHTML(match)
+
+        // Re-encode the character as a numeric (hex) entity
+        return entities.encodeXML(decodedChar)
+      })
+      // Step 3: Restore escaped entities
+      .replace(/ESCAPED_ENTITY_(&[a-zA-Z0-9#]+;)/g, (match, entity) => `\\${entity}`)
+
+    // Write the processed content to the output file
+    await fs.writeFile(filePath, processedContent, 'utf8')
+
+    console.log(`Processed file saved to ${filePath}`)
+  } catch (error) {
+    console.error('Error processing file:', error)
+  }
+}
+
+// Process all HTML content as strings.
+// Useful for simple operations where we don't
+// want to parse the doc as HTML, because
+// rendering it through an AST will break things.
+async function processContent (argv) {
+  // get files
+  const files = await htmlFilePaths(argv)
+
+  // For each one, run processing tasks
+  files.forEach(function (file) {
+    // Replace unescaped named entities with XML entities
+    replaceNamedEntitiesWithNumeric(file)
+  })
+}
 
 // Output spawned-process data to console
 function logProcess (process, processName) {
@@ -1494,7 +1544,29 @@ async function convertHTMLtoWord (argv) {
   console.log('Converting HTML to Word...')
 
   // Get file list for this format
-  const filePaths = await htmlFilePaths(argv)
+
+  // First, assume it's all the individual files
+  let filePaths = await htmlFilePaths(argv)
+
+  // But if we've merged the HTML files,
+  // use the merged file.
+  if (argv.merged) {
+
+    // Check if a merged.html exists
+    let mergedFilePath = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/merged.html')
+
+    if (argv.language) {
+      mergedFilePath = fsPath.normalize(process.cwd() +
+      '/_site/' + argv.book + '/' + argv.language + '/merged.html')
+    }
+
+    const mergedFileExists = pathExists(mergedFilePath)
+
+    if (mergedFileExists) {
+      filePaths = [mergedFilePath]
+    }
+  }
 
   // Initialise a counter
   let totalConverted = 0
@@ -1518,7 +1590,13 @@ async function convertHTMLtoWord (argv) {
     // Loop through files and convert with Pandoc
     filePaths.forEach(function (filePath) {
       // Build path to output file
-      const fileBasename = fsPath.basename(filePath, '.html')
+      let fileBasename = fsPath.basename(filePath, '.html')
+
+      // If we're converting a merged file, use the book name
+      if (argv.merged) {
+        fileBasename = argv.book
+      }
+
       const outputFilePath = fsPath.normalize(outputLocation + '/' +
                     fileBasename + '.docx')
 
@@ -1565,8 +1643,17 @@ async function exportWord (argv) {
     // Word export does not yet support index comments
     // and index links. We need to extend the gulp tasks
     // that process comments to make them visible in Word.
-    // await renderIndexComments(argv)
-    // await renderIndexLinks(argv)
+    await renderIndexComments(argv)
+    await renderIndexLinks(argv)
+    await merge(argv)
+
+    // Math rendering doesn't work in Word, and
+    // original MathJax may be better in exports anyway
+    // await renderMathjax(argv)
+
+    if (argv.format === 'print-pdf' || argv.format === 'screen-pdf') {
+      await pdfHTMLTransformations(argv)
+    }
 
     await convertHTMLtoWord(argv)
   } catch (error) {
@@ -1597,7 +1684,7 @@ async function refreshIndexes (argv) {
 
     if (argv.format === 'web' ||
       argv.format === 'app') {
-      buildSearchIndex(argv.format, filesForIndexing)
+      buildSearchIndex(argv.format, filesForIndexing, configsObject())
     }
   } catch (error) {
     console.log(error)
@@ -1928,6 +2015,7 @@ module.exports = {
   openOutputFile,
   pdfHTMLTransformations,
   processImages,
+  processContent,
   refreshIndexes,
   renderIndexComments,
   renderIndexLinks,

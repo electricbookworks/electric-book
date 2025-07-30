@@ -13,6 +13,7 @@ We recommend creating book indexes with an unbroken, unordered list, with a `ref
 
 This is the index from [*The Future of Ideas* by Lawrence Lessig (CC BY NC)](https://www.the-future-of-ideas.com/download/).
 
+- ### A
 -	access:
     -	competition in, 173
     -	granting of, 13–14, 20

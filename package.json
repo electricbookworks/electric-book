@@ -22,6 +22,7 @@
   "homepage": "https://github.com/electricbookworks/electric-book#readme",
   "devDependencies": {
     "chalk": "^4.0.0",
+    "cheerio": "^1.1.0",
     "concatenate": "^0.0.2",
     "cordova-android": "^11.0.0",
     "cordova-ios": "^6.2.0",
@@ -29,6 +30,7 @@
     "cordova-windows": "^7.0.1",
     "cross-spawn": "^7.0.3",
     "del": "^6.1.1",
+    "entities": "^6.0.0",
     "epubchecker": "^5.1.0",
     "file-exists": "^5.0.1",
     "fs-extra": "^10.1.0",
@@ -48,6 +50,7 @@
     "js-yaml": "^4.1.0",
     "jsdom": "^20.0.1",
     "jszip": "^3.10.1",
+    "marked": "^15.0.12",
     "mathjax-full": "^3.2.0",
     "node-pandoc": "^0.3.0",
     "open": "^8.4.0",

@@ -22,8 +22,20 @@ async function writeContentAPIFile (pageObject) {
   }
 }
 
+// Returns whether to generate the content API
+// - check config for api collection
+// - only output on web format
+function generateContentAPI (outputFormat, configsObject) {
+  if (outputFormat === 'web' &&
+    configsObject?.collections?.docs?.output === true) {
+      return true
+  } else {
+    return false
+  }
+}
+
 // The main process for generating a search index
-async function buildSearchIndex (outputFormat, filesData) {
+async function buildSearchIndex (outputFormat, filesData, configsObject) {
   'use strict'
 
   // This will be the elasticllunr index without /docs.
@@ -34,13 +46,19 @@ async function buildSearchIndex (outputFormat, filesData) {
   // We'll close the array when we've added all its objects.
   let searchIndexWithDocs = 'const store = ['
 
+  // Are we generating the API?
+  const api = generateContentAPI (outputFormat, configsObject)
+
   // This will be an index for API access.
   // It will not include any /docs
   const contentIndexForAPI = []
 
-  // Remove existing the api/content so that
+  // If we are building API content,
+  // remove existing the api/content so that
   // we can completely refresh it.
-  await fsExtra.emptyDir(fsPath.normalize(process.cwd() + '/_api/content'))
+  if (api) {
+    await fsExtra.emptyDir(fsPath.normalize(process.cwd() + '/_api/content'))
+  }
 
   // Launch the browser
   // Run with no sandbox which is necessary for
@@ -196,8 +214,10 @@ async function buildSearchIndex (outputFormat, filesData) {
         searchIndexNoDocs += ','
       }
 
-      contentIndexForAPI.push(pageObjectForAPIIndex)
-      writeContentAPIFile(pageObjectForAPIContent)
+      if (api) {
+        contentIndexForAPI.push(pageObjectForAPIIndex)
+        writeContentAPIFile(pageObjectForAPIContent)
+      }
     }
 
     // Increment counter
@@ -238,7 +258,7 @@ async function buildSearchIndex (outputFormat, filesData) {
     console.log('Creating ' + indexFilePathWithDocs)
     await fsPromises.writeFile(indexFilePathWithDocs, '')
   }
-  if (!fs.existsSync(indexFilePathForAPI)) {
+  if (api && (!fs.existsSync(indexFilePathForAPI))) {
     console.log('Creating ' + indexFilePathForAPI)
     await fsPromises.writeFile(indexFilePathForAPI, '')
   }
@@ -257,11 +277,13 @@ async function buildSearchIndex (outputFormat, filesData) {
       console.log('Done.')
     })
 
-  fs.writeFile(indexFilePathForAPI,
-    JSON.stringify(contentIndexForAPI), function () {
-      console.log('Writing ' + indexFilePathForAPI)
-      console.log('Done.')
-    })
+  if (api) {
+    fs.writeFile(indexFilePathForAPI,
+      JSON.stringify(contentIndexForAPI), function () {
+        console.log('Writing ' + indexFilePathForAPI)
+        console.log('Done.')
+      })
+  }
 }
 
 // Run the rendering process
