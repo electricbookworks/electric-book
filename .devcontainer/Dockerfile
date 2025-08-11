@@ -85,7 +85,7 @@ RUN mkdir -p /usr/local/rvm/gems \
     && chmod -R g+w /usr/local/rvm
 
 # Set Ruby environment variables
-ENV PATH /usr/local/rvm/bin:/usr/local/rvm/rubies/ruby-3.3.5/bin:$PATH
+ENV PATH=/usr/local/rvm/bin:/usr/local/rvm/rubies/ruby-3.3.5/bin:$PATH
 ENV GEM_HOME=/usr/local/rvm/gems/ruby-3.3.5
 ENV GEM_PATH=/usr/local/rvm/gems/ruby-3.3.5:/usr/local/rvm/gems/ruby-3.3.5@global
 
