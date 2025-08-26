@@ -85,6 +85,9 @@ $web-search: true !default;
         left: 0;
         right: 0;
 
+        // Stack above .pagination
+        z-index: 8;
+
         // Appearance
         background-color: $color-background;
         box-shadow: 0px 0px 10px $grey-mid;
