@@ -1,13 +1,11 @@
 /* global ebToggleClickout, locales, pageLanguage */
 
-function ebNav () {
-  'use strict'
-
+function ebNav() {
   // let Opera Mini use the footer-anchor pattern
   if (navigator.userAgent.indexOf('Opera Mini') === -1) {
     // let newer browsers use js-powered menu
     if (document.querySelector !== 'undefined' &&
-                window.addEventListener) {
+      window.addEventListener) {
       // set js nav class
       document.documentElement.classList.add('js-nav')
 
