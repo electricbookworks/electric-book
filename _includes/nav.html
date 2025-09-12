@@ -235,7 +235,7 @@
                 {% endif %}
             {% else %}
                 {% if web-nav-tree and web-nav-tree != "" %}
-                    {% include nav-list.html nav-tree=web-nav-tree %}
+                    <ol id="nav-js-gen"></ol>
                 {% else %}
                     {% include nav-list-files.html %}
                 {% endif %}
