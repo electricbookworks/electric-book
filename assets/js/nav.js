@@ -1,94 +1,95 @@
-/* global ebToggleClickout, locales, pageLanguage */
+/* global config, currentUrlPath, ebToggleClickout, locales, pageLanguage */
 
-const baseUrl = '{{ site.baseurl }}'
-const currentUrlPath = new URL(window.location.href).pathname
-if (window.metadata) {
-  Object.keys(window.metadata.works).forEach(work => {
-    Object.keys(window.metadata.works[work]).forEach(version => {
-      const _version = version === 'default' ? '' : `/${version}`
-      const workPathBase = `${baseUrl}/${work}${_version}/`
-      if (currentUrlPath.startsWith(workPathBase)) {
-        const webNav = window.metadata.works[work][version]?.products?.web?.nav
-        if (webNav) {
-          const jsNavCont = document.querySelector('#nav-js-gen')
-          if (jsNavCont) {
-            // Clear existing content
-            jsNavCont.innerHTML = ''
-            // Iterate through nav items and create li elements
-            webNav.forEach(navItem => {
-              const li = document.createElement('li')
-              // Add class if specified
-              if (navItem.class) {
-                li.className = navItem.class
-              }
-
-              let hasActiveChild = false
-
-              // Create link if file is specified
-              if (navItem.file) {
-                const link = document.createElement('a')
-                const linkPath = `${workPathBase}${navItem.file}.html`
-                link.href = linkPath
-                link.textContent = navItem.label
-
-                // Check if current path matches this link
-                if (currentUrlPath === linkPath || currentUrlPath === `${workPathBase}${navItem.file}`) {
-                  li.classList.add('active')
+function ebBuildNav () {
+  if (window.metadata) {
+    Object.keys(window.metadata.works).forEach(work => {
+      Object.keys(window.metadata.works[work]).forEach(version => {
+        const _version = version === 'default' ? '' : `/${version}`
+        const workPathBase = `${config.baseUrl}/${work}${_version}/`
+        if (currentUrlPath.startsWith(workPathBase)) {
+          const webNav = window.metadata.works[work][version]?.products?.[config.format]?.nav
+          console.log(webNav);
+          if (webNav) {
+            const jsNavCont = document.querySelector('#nav-js-gen')
+            if (jsNavCont) {
+              // Clear existing content
+              jsNavCont.innerHTML = ''
+              // Iterate through nav items and create li elements
+              webNav.forEach(navItem => {
+                const li = document.createElement('li')
+                // Add class if specified
+                if (navItem.class) {
+                  li.className = navItem.class
                 }
-
-                li.appendChild(link)
-              } else {
-                // add top level label wrapped in an anchor for styling consistency
-                const labelLink = document.createElement('a')
-                labelLink.textContent = navItem.label
-                li.appendChild(labelLink)
-                li.classList.add('no-file')
-              }
-
-              // Handle children if they exist
-              if (navItem.children && navItem.children.length > 0) {
-                li.classList.add('has-children')
-                const childList = document.createElement('ol')
-                navItem.children.forEach(childItem => {
-                  const childLi = document.createElement('li')
-                  if (childItem.class) {
-                    childLi.className = childItem.class
+  
+                let hasActiveChild = false
+  
+                // Create link if file is specified
+                if (navItem.file) {
+                  const link = document.createElement('a')
+                  const linkPath = `${workPathBase}${navItem.file}.html`
+                  link.href = linkPath
+                  link.textContent = navItem.label
+  
+                  // Check if current path matches this link
+                  if (currentUrlPath === linkPath || currentUrlPath === `${workPathBase}${navItem.file}`) {
+                    li.classList.add('active')
                   }
-                  if (childItem.file) {
-                    const childLink = document.createElement('a')
-                    const childLinkPath = `${workPathBase}${childItem.file}.html`
-                    childLink.href = childLinkPath
-                    childLink.textContent = childItem.label
-
-                    // Check if current path matches this child link
-                    if (currentUrlPath === childLinkPath || currentUrlPath === `${workPathBase}${childItem.file}`) {
-                      childLi.classList.add('active')
-                      hasActiveChild = true
+  
+                  li.appendChild(link)
+                } else {
+                  // add top level label wrapped in an anchor for styling consistency
+                  const labelLink = document.createElement('a')
+                  labelLink.textContent = navItem.label
+                  li.appendChild(labelLink)
+                  li.classList.add('no-file')
+                }
+  
+                // Handle children if they exist
+                if (navItem.children && navItem.children.length > 0) {
+                  li.classList.add('has-children')
+                  const childList = document.createElement('ol')
+                  navItem.children.forEach(childItem => {
+                    const childLi = document.createElement('li')
+                    if (childItem.class) {
+                      childLi.className = childItem.class
                     }
-
-                    childLi.appendChild(childLink)
-                  } else {
-                    childLi.textContent = childItem.label
+                    if (childItem.file) {
+                      const childLink = document.createElement('a')
+                      const childLinkPath = `${workPathBase}${childItem.file}.html`
+                      childLink.href = childLinkPath
+                      childLink.textContent = childItem.label
+  
+                      // Check if current path matches this child link
+                      if (currentUrlPath === childLinkPath || currentUrlPath === `${workPathBase}${childItem.file}`) {
+                        childLi.classList.add('active')
+                        hasActiveChild = true
+                      }
+  
+                      childLi.appendChild(childLink)
+                    } else {
+                      childLi.textContent = childItem.label
+                    }
+                    childList.appendChild(childLi)
+                  })
+                  li.appendChild(childList)
+  
+                  // If any child is active, make the parent active too
+                  if (hasActiveChild) {
+                    li.classList.add('active')
                   }
-                  childList.appendChild(childLi)
-                })
-                li.appendChild(childList)
-
-                // If any child is active, make the parent active too
-                if (hasActiveChild) {
-                  li.classList.add('active')
                 }
-              }
-              jsNavCont.appendChild(li)
-            })
+                jsNavCont.appendChild(li)
+              })
+            }
           }
         }
-      }
+      })
     })
-  })
+  }
 }
 
-function ebNav() {
+function ebNavBehaviour() {
   // let Opera Mini use the footer-anchor pattern
   if (navigator.userAgent.indexOf('Opera Mini') === -1) {
     // let newer browsers use js-powered menu
@@ -209,4 +210,5 @@ function ebNav() {
   }
 }
 
-ebNav()
+ebBuildNav()
+ebNavBehaviour()

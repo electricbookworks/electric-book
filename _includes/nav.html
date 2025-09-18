@@ -229,13 +229,33 @@
             {% comment %}Fetch recursive navigation{% endcomment %}
             {% if site.output == "app" %}
                 {% if app-nav-tree and app-nav-tree != "" %}
-                    {% include nav-list.html nav-tree=app-nav-tree %}
+                    {% comment %} Create link to TOC, which will be replaced by JS
+                    with a full dropdown nav menu. {% endcomment %}
+                    <ol id="nav-js-gen">
+                        <li>
+                            {% if app-contents-page and app-contents-page != "" %}
+                                <a href="{{ path-to-root-directory }}{{ book-directory }}{% if is-translation %}/{{ language }}{% endif %}/{{ app-contents-page }}.html">{{ locale.nav.toc }}</a>
+                            {% else %}
+                                <a href="{{ path-to-root-directory }}{{ book-directory }}{% if is-translation %}/{{ language }}{% endif %}/{{ app-start-page }}.html">{{ locale.nav.read }}</a>
+                            {% endif %}
+                        </li>
+                    </ol>
                 {% else %}
                     {% include nav-list-files.html %}
                 {% endif %}
             {% else %}
                 {% if web-nav-tree and web-nav-tree != "" %}
-                    <ol id="nav-js-gen"></ol>
+                    {% comment %} Create link to TOC, which will be replaced by JS
+                    with a full dropdown nav menu. {% endcomment %}
+                    <ol id="nav-js-gen">
+                        <li>
+                            {% if web-contents-page and web-contents-page != "" %}
+                                <a href="{{ path-to-root-directory }}{{ book-directory }}{% if is-translation %}/{{ language }}{% endif %}/{{ web-contents-page }}.html">{{ locale.nav.toc }}</a>
+                            {% else %}
+                                <a href="{{ path-to-root-directory }}{{ book-directory }}{% if is-translation %}/{{ language }}{% endif %}/{{ web-start-page }}.html">{{ locale.nav.read }}</a>
+                            {% endif %}
+                        </li>
+                    </ol>
                 {% else %}
                     {% include nav-list-files.html %}
                 {% endif %}
