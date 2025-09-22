@@ -88,7 +88,7 @@ has already been run in this context.
 <nav epub:type="toc" role="doc-toc" id="toc"{% if site.data.settings.epub.hide-nav == true %} hidden=""{% endif %}>
 {% endif %}
 
-<ol {% if include.type == "toc" %}class="toc-list"{% endif %}>
+<ol {% if include.type == "toc" %}class="toc-list"{% endif %} {% if include.id %}id="{{ include.id }}"{% endif %}>
 
     {% for entry in new-files-tree-pages %}
 
