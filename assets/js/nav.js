@@ -4,10 +4,15 @@ function ebBuildNav () {
   if (window.metadata) {
     Object.keys(window.metadata.works).forEach(work => {
       Object.keys(window.metadata.works[work]).forEach(version => {
-        const _version = version === 'default' ? '' : `/${version}`
+        const isDefaultVersion = version === 'default'
+        const _version = isDefaultVersion ? '' : `/${version}`
         const workPathBase = `${config.baseUrl}/${work}${_version}/`
         if (currentUrlPath.startsWith(workPathBase)) {
-          const webNav = window.metadata.works[work][version]?.products?.[config.format]?.nav
+          const versionNode = window.metadata.works[work][version]
+          let webNav = versionNode?.products?.[config.format]?.nav
+          if (!isDefaultVersion) {
+            webNav = versionNode?.default?.products?.[config.format]?.nav
+          }
           if (webNav) {
             const jsNavCont = document.querySelector('#nav-js-gen')
             if (jsNavCont) {
@@ -88,7 +93,7 @@ function ebBuildNav () {
   }
 }
 
-function ebNavBehaviour() {
+function ebNavBehaviour () {
   // let Opera Mini use the footer-anchor pattern
   if (navigator.userAgent.indexOf('Opera Mini') === -1) {
     // let newer browsers use js-powered menu

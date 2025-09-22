@@ -1,7 +1,6 @@
 {
   "extends": "standard",
   "rules": {
-    "strict": ["error", "global"],
-    "space-before-function-paren": "off"
+    "strict": ["error", "global"]
   }
 }
