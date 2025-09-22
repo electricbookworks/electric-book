@@ -149,7 +149,7 @@ exclude:
   - /assets/js/redact.js
   - /assets/js/search-store.js
   - /assets/js/search-terms.js
-  # - /assets/js/nav.js
+  - /assets/js/nav.js
   - /assets/js/videos.js
   - /assets/js/mcqs.js
   - /assets/js/select-list.js
