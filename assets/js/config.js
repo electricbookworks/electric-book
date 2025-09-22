@@ -1,6 +1,6 @@
 // Load _config items into an object.
 
-let config = {}
+const config = {}
 
 config.baseUrl = ''
 

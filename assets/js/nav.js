@@ -8,7 +8,6 @@ function ebBuildNav () {
         const workPathBase = `${config.baseUrl}/${work}${_version}/`
         if (currentUrlPath.startsWith(workPathBase)) {
           const webNav = window.metadata.works[work][version]?.products?.[config.format]?.nav
-          console.log(webNav);
           if (webNav) {
             const jsNavCont = document.querySelector('#nav-js-gen')
             if (jsNavCont) {
@@ -21,21 +20,21 @@ function ebBuildNav () {
                 if (navItem.class) {
                   li.className = navItem.class
                 }
-  
+
                 let hasActiveChild = false
-  
+
                 // Create link if file is specified
                 if (navItem.file) {
                   const link = document.createElement('a')
                   const linkPath = `${workPathBase}${navItem.file}.html`
                   link.href = linkPath
                   link.textContent = navItem.label
-  
+
                   // Check if current path matches this link
                   if (currentUrlPath === linkPath || currentUrlPath === `${workPathBase}${navItem.file}`) {
                     li.classList.add('active')
                   }
-  
+
                   li.appendChild(link)
                 } else {
                   // add top level label wrapped in an anchor for styling consistency
@@ -44,7 +43,7 @@ function ebBuildNav () {
                   li.appendChild(labelLink)
                   li.classList.add('no-file')
                 }
-  
+
                 // Handle children if they exist
                 if (navItem.children && navItem.children.length > 0) {
                   li.classList.add('has-children')
@@ -59,13 +58,13 @@ function ebBuildNav () {
                       const childLinkPath = `${workPathBase}${childItem.file}.html`
                       childLink.href = childLinkPath
                       childLink.textContent = childItem.label
-  
+
                       // Check if current path matches this child link
                       if (currentUrlPath === childLinkPath || currentUrlPath === `${workPathBase}${childItem.file}`) {
                         childLi.classList.add('active')
                         hasActiveChild = true
                       }
-  
+
                       childLi.appendChild(childLink)
                     } else {
                       childLi.textContent = childItem.label
@@ -73,7 +72,7 @@ function ebBuildNav () {
                     childList.appendChild(childLi)
                   })
                   li.appendChild(childList)
-  
+
                   // If any child is active, make the parent active too
                   if (hasActiveChild) {
                     li.classList.add('active')
