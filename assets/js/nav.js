@@ -1,4 +1,21 @@
-/* global config, currentUrlPath, ebToggleClickout, locales, pageLanguage, settings */
+/* global config, currentUrlPath, ebToggleClickout, locales, pageLanguage, settings, marked */
+
+/**
+ * Processes markdown in text using marked.js
+ * Falls back to plain text if marked is not available
+ */
+function ebProcessMarkdown (text) {
+  if (typeof marked !== 'undefined' && marked.parseInline) {
+    try {
+      // Use parseInline for simple inline markdown (no paragraphs)
+      return marked.parseInline(text)
+    } catch (error) {
+      console.warn('Error processing markdown:', error)
+      return text
+    }
+  }
+  return text
+}
 
 /**
  * Builds navigation tree recursively from nav items
@@ -21,7 +38,7 @@ function ebBuildNavTreeRecursive (navTree, workKey) {
       const link = document.createElement('a')
       const linkPath = `${config.baseUrl}/${workKey}/${navItem.file}.html`
       link.href = linkPath
-      link.textContent = navItem.label
+      link.innerHTML = ebProcessMarkdown(navItem.label)
 
       // Check if current path matches this link
       if (currentUrlPath === linkPath || currentUrlPath === `${config.baseUrl}/${workKey}/${navItem.file}`) {
@@ -32,7 +49,7 @@ function ebBuildNavTreeRecursive (navTree, workKey) {
     } else {
       // Add top level label wrapped in an anchor for styling consistency
       const labelLink = document.createElement('a')
-      labelLink.textContent = navItem.label
+      labelLink.innerHTML = ebProcessMarkdown(navItem.label)
       li.appendChild(labelLink)
       li.classList.add('no-file')
     }
@@ -53,7 +70,7 @@ function ebBuildNavTreeRecursive (navTree, workKey) {
           const childLink = document.createElement('a')
           const childLinkPath = `${config.baseUrl}/${workKey}/${childItem.file}.html`
           childLink.href = childLinkPath
-          childLink.textContent = childItem.label
+          childLink.innerHTML = ebProcessMarkdown(childItem.label)
 
           // Check if current path matches this child link
           if (currentUrlPath === childLinkPath || currentUrlPath === `${config.baseUrl}/${workKey}/${childItem.file}`) {
@@ -63,7 +80,7 @@ function ebBuildNavTreeRecursive (navTree, workKey) {
 
           childLi.appendChild(childLink)
         } else {
-          childLi.textContent = childItem.label
+          childLi.innerHTML = ebProcessMarkdown(childItem.label)
         }
 
         // Handle nested children recursively
@@ -101,7 +118,6 @@ function ebBuildNavTreeRecursive (navTree, workKey) {
  * Builds the main book list navigation
  */
 function ebBuildBookList () {
-  console.log(window.metadata)
   if (window.metadata) {
     const jsBookList = document.querySelector('#nav-js-gen-book-list')
     if (jsBookList) {
@@ -177,7 +193,7 @@ function ebBuildBookList () {
         // Create the main link
         const link = document.createElement('a')
         link.href = `${config.baseUrl}/${workKey}/${bookStartPage}.html`
-        link.textContent = workTitle
+        link.innerHTML = ebProcessMarkdown(workTitle)
         li.appendChild(link)
 
         // If books should be expanded, add the navigation tree - replicate the liquid logic exactly
@@ -194,10 +210,14 @@ function ebBuildBookList () {
             const bookFiles = window.metadata.files && window.metadata.files[workKey] ? window.metadata.files[workKey] : []
 
             bookFiles.forEach(page => {
+              // Skip index.md files as they shouldn't appear in navigation lists
+              if (page.file === 'index') {
+                return
+              }
               const childLi = document.createElement('li')
               const childLink = document.createElement('a')
               childLink.href = `${config.baseUrl}/${workKey}/${page.file}.html`
-              childLink.textContent = page.title
+              childLink.innerHTML = ebProcessMarkdown(page.title)
               childLi.appendChild(childLink)
               childOl.appendChild(childLi)
             })
@@ -254,7 +274,7 @@ function ebBuildBookChapters () {
                   const link = document.createElement('a')
                   const linkPath = `${workPathBase}${navItem.file}.html`
                   link.href = linkPath
-                  link.textContent = navItem.label
+                  link.innerHTML = ebProcessMarkdown(navItem.label)
 
                   // Check if current path matches this link
                   if (currentUrlPath === linkPath || currentUrlPath === `${workPathBase}${navItem.file}`) {
@@ -265,7 +285,7 @@ function ebBuildBookChapters () {
                 } else {
                   // Add top level label wrapped in an anchor for styling consistency
                   const labelLink = document.createElement('a')
-                  labelLink.textContent = navItem.label
+                  labelLink.innerHTML = ebProcessMarkdown(navItem.label)
                   li.appendChild(labelLink)
                   li.classList.add('no-file')
                 }
@@ -286,7 +306,7 @@ function ebBuildBookChapters () {
                       const childLink = document.createElement('a')
                       const childLinkPath = `${workPathBase}${childItem.file}.html`
                       childLink.href = childLinkPath
-                      childLink.textContent = childItem.label
+                      childLink.innerHTML = ebProcessMarkdown(childItem.label)
 
                       // Check if current path matches this child link
                       if (currentUrlPath === childLinkPath || currentUrlPath === `${workPathBase}${childItem.file}`) {
@@ -296,7 +316,7 @@ function ebBuildBookChapters () {
 
                       childLi.appendChild(childLink)
                     } else {
-                      childLi.textContent = childItem.label
+                      childLi.innerHTML = ebProcessMarkdown(childItem.label)
                     }
 
                     childList.appendChild(childLi)
