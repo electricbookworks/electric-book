@@ -1858,11 +1858,13 @@ async function splitMarkdownFile (argv) {
   // Check that we have a valid marker to split on.
   // Our regex finds that marker at the start of the doc
   // or at the beginning of any new line.
+  // By default, we look for # not followed by another #,
+  // to prevent splitting at both # and ##.
   let splitMarker = '#'
-  let splitRegex = /^#|\n#/
+  let splitRegex = /^#(?!#)|\n#(?!#)/
   if (explicitOption('split') && argv.split !== '#') {
     splitMarker = argv.split
-    splitRegex = new RegExp('^' + splitMarker + '|' + '\n' + splitMarker)
+    splitRegex = new RegExp('^' + splitMarker + '(?!' + splitMarker + ')|\n' + splitMarker + '(?!' + splitMarker + ')')
   }
 
   // Check that we have a valid book to work in
