@@ -148,7 +148,20 @@
 
             {% else %}
 
-                <ol id="nav-js-gen-book-list" class="nav-book-list"></ol>
+                <ol id="nav-js-gen-book-list" class="nav-book-list">
+
+                    {% comment %} 
+                    Defaults that JS-generated nav will replace
+                    {% endcomment %}
+                    {% for work in site.data.works %}
+                        <li>
+                            <a href="{{ path-to-root-directory }}{{ work[0] }}{% if is-translation %}/{{ language }}{% endif %}/">
+                                {% if is-translation and work[1][language][variant].title %}{{ work[1][language][variant].title }}{% else %}{{ work[1][variant].title }}{% endif %}
+                            </a>
+                        </li>    
+                    {% endfor %}
+
+                </ol>
 
             {% endif %}
 
