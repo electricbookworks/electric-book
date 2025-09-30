@@ -1,5 +1,7 @@
 /* global settings */
 
+// TODO: find out what actually uses this script
+
 const puppeteer = require('puppeteer')
 const fs = require('fs')
 
@@ -17,8 +19,6 @@ const { store, output } = require('./search-engine.js')
 
 // The main process for generating an index of targets.
 function generateTargetsIndex () {
-  'use strict';
-
   // Start an async function to scrape all URLs.
   (async function () {
     // Launch the browser.
@@ -67,7 +67,7 @@ function generateTargetsIndex () {
       await page.goto('file://' + path)
 
       // Check that any index targets for the page have been processed.
-      // This is done by assets/js/index-targets.js (in bundle.js).
+      // This is done by assets/js/_src/index-targets.js (in main.js).
       // The settings var is defined in settings.js.
       if (settings.dynamicIndexing !== false) {
         await page.waitForSelector('[data-index-targets]')
@@ -157,7 +157,7 @@ function generateTargetsIndex () {
     // Write the book index 'database' file.
     // We add module.exports so that we can use indexTargets
     // in Node processes (i.e. gulp with cheerio).
-    fs.writeFile('assets/js/book-index-' + output + '.js',
+    fs.writeFile('assets/js/_src/book-index-' + output + '.js',
       'var ebIndexTargets = ' + JSON.stringify(targetsIndex) + ';' +
                 'if (typeof window === "undefined")' +
                 '{module.exports.' + output.replace('-', '') + 'IndexTargets = ebIndexTargets;}',

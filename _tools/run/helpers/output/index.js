@@ -95,9 +95,9 @@ async function epub (argv) {
     await addToEpub(bookAssetPaths(argv, 'images', 'assets'),
       'assets/images/epub')
 
-    if (pathExists(process.cwd() + '/_site/assets/js/bundle.js')) {
-      await addToEpub([process.cwd() + '/_site/assets/js/bundle.js'],
-        '/assets/js')
+    if (pathExists(process.cwd() + '/_site/assets/js/dist/main.dist.js')) {
+      await addToEpub([process.cwd() + '/_site/assets/js/dist/main.dist.js'],
+        '/assets/js/dist')
     }
 
     if (mathjaxEnabled(argv)) {
