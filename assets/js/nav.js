@@ -43,7 +43,7 @@ function ebNavCreateLink (item, basePath) {
  * @param {Array} navTree - The array of navigation items.
  * @param {string} basePath - The base URL path to prepend to file links.
  * @param {boolean} areChildren - Indicates if the current list items are children.
- * @returns {HTMLOListElement|Array[HTMLLIElement]} The generated <li> elements optionally appended into an <ol> if areChildren is true.
+ * @returns {HTMLOListElement|HTMLLIElement[]} The generated <li> elements optionally appended into an <ol> if areChildren is true.
  */
 function ebNavBuildTreeRecursive (navTree, basePath, areChildren = true) {
   const ol = document.createElement('ol')
