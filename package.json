@@ -9,10 +9,10 @@
     "electric-book": "node _tools/run/index.js",
     "eb": "node _tools/run/index.js",
     "setup": "npm install && bundle install",
-    "buildjs:web": "output=web webpack --config _webpack/webpack.config.js",
-    "buildjs:web:watch": "output=web webpack --config _webpack/webpack.config.js --watch",
-    "buildjs:web:prod": "output=web webpack --config _webpack/webpack.config.js --mode=production",
-    "buildjs:pdf": "output=screen-pdf webpack --config _webpack/webpack.config.js --mode=production"
+    "buildjs:web:dev": "output=web webpack --config _webpack/webpack.config.js --watch",
+    "buildjs:web": "output=web webpack --config _webpack/webpack.config.js --mode=production",
+    "buildjs:pdf": "output=screen-pdf webpack --config _webpack/webpack.config.js --mode=production",
+    "buildjs:app": "output=app webpack --config _webpack/webpack.config.js --mode=production"
   },
   "repository": {
     "type": "git",
