@@ -77,8 +77,6 @@ async function processContent (argv) {
 
 // Output spawned-process data to console
 function logProcess (process, processName) {
-  'use strict'
-
   return new Promise(function (resolve, reject) {
     processName = processName || 'Process: '
 
@@ -112,8 +110,6 @@ function logProcess (process, processName) {
 
 // Returns a filename for the output file
 function outputFilename (argv) {
-  'use strict'
-
   let filename
   let fileExtension = '.pdf'
   if (argv.format === 'epub') {
@@ -134,8 +130,6 @@ function outputFilename (argv) {
 // The 'option' argument takes a string of the option
 // name, e.g. 'book' or 'language' or 'format'.
 function explicitOption (option) {
-  'use strict'
-
   // Default is that option was not passed explicitly
   let optionWasExplicit = false
 
@@ -181,8 +175,6 @@ function explicitOption (option) {
 
 // Opens the output file. Accepts argv or a filepath.
 function openOutputFile (argvOrFilePath) {
-  'use strict'
-
   // If no filepath is provided, assume we're opening
   // the book file we've just generated.
   let filePath
@@ -203,8 +195,6 @@ function openOutputFile (argvOrFilePath) {
 // already saved in the _configs directory.
 // They will be added after the default _config.yml.
 function configString (argv) {
-  'use strict'
-
   // Start with default config
   let string = '_config.yml'
 
@@ -254,8 +244,6 @@ function configString (argv) {
 
 // Return array of switches for Jekyll
 function jekyllSwitches (argv) {
-  'use strict'
-
   const switchesArray = []
 
   // Add incremental switch if --incremental=true
@@ -281,10 +269,33 @@ function jekyllSwitches (argv) {
   return switchesArray
 }
 
+// Run Webpack
+async function webpack (argv) {
+  try {
+    console.log('Running webpack build...')
+
+    // Create an array of arguments to pass to spawn()
+    const webpackSpawnArgs = ['--config', '_webpack/webpack.config.js', '--mode=production']
+
+    // Set environment variable
+    const env = { ...process.env, output: argv.format, build: argv.build }
+
+    // Create a child process
+    const webpackProcess = spawn('webpack', webpackSpawnArgs, { env })
+    const result = await logProcess(webpackProcess, 'Webpack')
+
+    // If webpack fails, log error but don't kill the process
+    if (result === 1) {
+      console.log('Webpack build failed.')
+    }
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // Run Jekyll
 async function jekyll (argv) {
-  'use strict'
-
   // Use 'build' unless we're starting a webserver
   let command = 'build'
   if (argv.format === 'web' && argv._[0] === 'output') {
@@ -355,8 +366,6 @@ async function jekyll (argv) {
 // valid YAML, but it's okay in JSON, where
 // the last value overrides earlier ones.
 function configsObject (argv) {
-  'use strict'
-
   // Create an array of paths to the config files
   const configFiles = configString(argv).split(',')
   configFiles.map(function (file) {
@@ -373,8 +382,6 @@ function configsObject (argv) {
 
 // Config to exclude unnecessary books from Jekyll build
 async function extraExcludesConfig (argv) {
-  'use strict'
-
   // Default is an empty config file, for no excludes.
   // Create it and/or make it an empty file.
   const pathToTempExcludesConfig = '_output/.temp/_config.excludes.yml'
@@ -419,8 +426,6 @@ async function extraExcludesConfig (argv) {
 // - cordovaWorkingDirectory is the directory in which
 //   cordova must run, e.g. _site/app
 async function cordova (args, cordovaWorkingDirectory) {
-  'use strict'
-
   // Create a default/fallback working directory
   if (!cordovaWorkingDirectory) {
     cordovaWorkingDirectory = fsPath.normalize(process.cwd() + '/_site/app')
@@ -440,8 +445,6 @@ async function cordova (args, cordovaWorkingDirectory) {
 
 // Assemble app files
 async function assembleApp () {
-  'use strict'
-
   // Move everything in the _site folder to _site/app
   // except, of course, _site/app itself.
 
@@ -459,8 +462,6 @@ async function assembleApp () {
 
 // Check if MathJax is enabled in config or CLI arguments
 function mathjaxEnabled (argv) {
-  'use strict'
-
   // Check if Mathjax is enabled in Jekyll config
   const mathjaxConfig = configsObject(argv)['mathjax-enabled']
 
@@ -476,8 +477,6 @@ function mathjaxEnabled (argv) {
 
 // Processes mathjax in output HTML
 async function renderMathjax (argv, options) {
-  'use strict'
-
   try {
     if (mathjaxEnabled(argv) || argv.mathjax) {
       console.log('Rendering MathJax...')
@@ -559,8 +558,6 @@ async function processComments (work, language) {
 
 // Manage the rendering of index comments for one or all works
 async function renderIndexComments (argv, options) {
-  'use strict'
-
   try {
     const allWorks = await works()
 
@@ -589,8 +586,6 @@ async function renderIndexComments (argv, options) {
 
 // Processes index-list items as linked references in output HTML
 async function renderIndexLinks (argv) {
-  'use strict'
-
   if (projectSettings()['dynamic-indexing'] !== false) {
     console.log('Adding links to reference indexes ...')
 
@@ -622,7 +617,6 @@ async function renderIndexLinks (argv) {
 
 // Converts paths in links from *.html to *.xhtml
 async function convertXHTMLLinks (argv) {
-  'use strict'
   console.log('Converting links from .html to .xhtml ...')
 
   try {
@@ -649,7 +643,6 @@ async function convertXHTMLLinks (argv) {
 
 // Run HTML transformations on elements in epubs
 async function epubHTMLTransformations (argv) {
-  'use strict'
   console.log('Running epub HTML transformations ...')
 
   try {
@@ -676,7 +669,6 @@ async function epubHTMLTransformations (argv) {
 
 // Run HTML transformations on elements in pdf
 async function pdfHTMLTransformations (argv) {
-  'use strict'
   console.log('Running HTML transformations ...')
 
   try {
@@ -708,7 +700,6 @@ async function pdfHTMLTransformations (argv) {
 
 // Converts .html files to .xhtml, e.g. for epub output
 async function convertXHTMLFiles (argv) {
-  'use strict'
   console.log('Renaming files from .html to .xhtml ...')
 
   try {
@@ -735,7 +726,6 @@ async function convertXHTMLFiles (argv) {
 
 // Get project settings from settings.yml
 function projectSettings () {
-  'use strict'
   let settings
   try {
     settings = yaml.load(fs.readFileSync('./_data/settings.yml', 'utf8'))
@@ -790,8 +780,6 @@ function filesInProjectNav () {
 // - docs: include | exclude (Includes docs or not. Default is include)
 // - check: true | false (Check if files exist. Default is false.)
 async function allFilesListed (argv, options) {
-  'use strict'
-
   const data = []
   const allWorks = await works()
   const navFiles = await filesInProjectNav()
@@ -918,7 +906,6 @@ async function allFilesListed (argv, options) {
 
 // Cleans out old .html files after .xhtml conversions
 async function cleanHTMLFiles (argv) {
-  'use strict'
   console.log('Cleaning out old .html files ...')
 
   try {
@@ -945,8 +932,6 @@ async function cleanHTMLFiles (argv) {
 
 // Check Prince version
 function checkPrinceVersion () {
-  'use strict'
-
   return new Promise(function (resolve, reject) {
     // Get globally installed Prince version, if any
     const installedPrince = function () {
@@ -1041,8 +1026,6 @@ function checkPrinceVersion () {
 
 // Run Prince
 async function runPrince (argv) {
-  'use strict'
-
   // Check if we're using the correct Prince version
   await checkPrinceVersion()
 
@@ -1156,8 +1139,6 @@ async function runPrince (argv) {
 
 // Zip an epub folder
 async function epubZip () {
-  'use strict'
-
   return new Promise(function (resolve, reject) {
     // Check if the directory exists
     const uncompressedEpubDirectory = fsPath.normalize(process.cwd() +
@@ -1173,8 +1154,6 @@ async function epubZip () {
     // it cannot find META-INF/container.xml in epubs
     // generated on Windows machines.
     function getFiles (root, files, base) {
-      'use strict'
-
       base = base || ''
       files = files || []
       const directory = fsPath.posix.join(root, base)
@@ -1234,8 +1213,6 @@ async function epubZip () {
 
 // Move epub.zip to _output
 async function epubZipRename (argv) {
-  'use strict'
-
   return new Promise(function (resolve, reject) {
     const pathToZip = fsPath.normalize(process.cwd() +
               '/_site/epub.zip')
@@ -1276,8 +1253,6 @@ async function epubZipRename (argv) {
 // Done as async so that we can await epubchecker
 // and output its report to the console.
 async function epubValidate (pathToEpubOrArgv) {
-  'use strict'
-
   // Get path to epub from argument
   let pathToEpub
   if (pathToEpubOrArgv.book) {
@@ -1324,8 +1299,6 @@ async function epubValidate (pathToEpubOrArgv) {
 // If you include a directory in the arrayOfPaths,
 // its contents will be copied to the destination.
 async function addToEpub (arrayOfPaths, destinationFolder) {
-  'use strict'
-
   try {
     // Ensure the destinationFolder ends with a slash
     if (!destinationFolder.endsWith('/')) {
@@ -1379,8 +1352,6 @@ async function addToEpub (arrayOfPaths, destinationFolder) {
 // Get array of book-asset file paths for this output.
 // assetType can be images or styles.
 function bookAssetPaths (argv, assetType, folder) {
-  'use strict'
-
   // Provide fallback book folder, which lets us
   // specify the 'assets' folder.
   let book
@@ -1463,8 +1434,6 @@ function bookAssetPaths (argv, assetType, folder) {
 
 // Check that the --book value is valid
 async function bookIsValid (argv) {
-  'use strict'
-
   let validity = true
 
   // If the --book value is not among works
@@ -1492,8 +1461,6 @@ async function bookIsValid (argv) {
 
 // Install Node dependencies
 function installNodeModules () {
-  'use strict'
-
   console.log(
     'Running npm to install Node modules...\n' +
         'If you get errors, check that Node.js is installed \n' +
@@ -1508,8 +1475,6 @@ function installNodeModules () {
 
 // Install Ruby dependencies
 function installGems () {
-  'use strict'
-
   console.log(
     'Running Bundler to install Ruby gem dependencies...\n' +
         'If you get errors, check that Bundler is installed \n' +
@@ -1524,8 +1489,6 @@ function installGems () {
 
 // Processes images with gulp if -t images
 async function processImages (argv) {
-  'use strict'
-
   try {
     const gulpProcess = spawn(
       'gulp',
@@ -1539,8 +1502,6 @@ async function processImages (argv) {
 
 // Convert HTML files to another format
 async function convertHTMLtoWord (argv) {
-  'use strict'
-
   console.log('Converting HTML to Word...')
 
   // Get file list for this format
@@ -1551,7 +1512,6 @@ async function convertHTMLtoWord (argv) {
   // But if we've merged the HTML files,
   // use the merged file.
   if (argv.merged) {
-
     // Check if a merged.html exists
     let mergedFilePath = fsPath.normalize(process.cwd() +
       '/_site/' + argv.book + '/merged.html')
@@ -1634,8 +1594,6 @@ async function convertHTMLtoWord (argv) {
 
 // Word export
 async function exportWord (argv) {
-  'use strict'
-
   try {
     await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
@@ -1663,8 +1621,6 @@ async function exportWord (argv) {
 
 // Refresh indexes
 async function refreshIndexes (argv) {
-  'use strict'
-
   try {
     await fs.emptyDir(process.cwd() + '/_site')
     await jekyll(argv)
@@ -1693,8 +1649,6 @@ async function refreshIndexes (argv) {
 
 // Copy a book to create a new one
 async function newBook (argv) {
-  'use strict'
-
   let sourceName = 'book'
   if (argv.book) {
     sourceName = argv.book
@@ -1731,7 +1685,6 @@ async function newBook (argv) {
 
 // Convert with Pandoc
 async function convertToMarkdown (argv) {
-  'use strict'
   console.log('Converting ' + argv.source + ' …')
 
   try {
@@ -1817,8 +1770,6 @@ async function convertToMarkdown (argv) {
 
 // Generate a copy-pasteable file list in a file
 async function outputFileList (filesMetadata) {
-  'use strict'
-
   let list = ''
   filesMetadata.forEach(function (file) {
     list += '- ' + file.name + '\n'
@@ -1834,8 +1785,6 @@ async function outputFileList (filesMetadata) {
 
 // Generate a copy-pasteable nav list in a file
 async function outputNavList (filesMetadata) {
-  'use strict'
-
   let list = ''
   filesMetadata.forEach(function (file) {
     list += '- label: "' + file.label + '"\n' +
@@ -1853,8 +1802,6 @@ async function outputNavList (filesMetadata) {
 
 // Split a markdown file into separate files
 async function splitMarkdownFile (argv) {
-  'use strict'
-
   // Check that we have a valid marker to split on.
   // Our regex finds that marker at the start of the doc
   // or at the beginning of any new line.
@@ -2023,5 +1970,6 @@ module.exports = {
   renderIndexLinks,
   renderMathjax,
   runPrince,
-  splitMarkdownFile
+  splitMarkdownFile,
+  webpack
 }

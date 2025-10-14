@@ -125,7 +125,11 @@ web:
   # -----------------
   # Bookmarks
   # -----------------
-  bookmarks: true
+  bookmarks:
+    enabled: true
+    elements:
+      include: '.content [id]'
+      exclude: ''
   # --------------
   # Navigation
   # --------------
@@ -222,7 +226,7 @@ epub:
   # ----------
   # Javascript
   # ----------
-  # Javascript in bundle.js is included by default.
+  # Javascript is included by default.
   # If your epub should not include any Javascript,
   # set disabled to true. This does not disable MathJax.
   # Enable or disable MathJax in _config.
@@ -267,7 +271,11 @@ app:
   # -----------------
   # Bookmarks
   # -----------------
-  bookmarks: true
+  bookmarks:
+    enabled: true
+    elements:
+      include: '.content [id]'
+      exclude: ''
   # --------------
   # Expansion file
   # --------------

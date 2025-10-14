@@ -228,13 +228,13 @@
             {% endif %}
         {% endfor %}
 
-        {% comment %} If this epub has JS enabled, include an entry for bundle.js. {% endcomment %}
+        {% comment %} If this epub has JS enabled, include an entry for main.dist.js. {% endcomment %}
         {% unless site.data.settings.epub.javascript.disabled == true %}
 
-            {% comment %} Add the default bundle.js Javascript {% endcomment %}
-            <item id="script-bundle"
+            {% comment %} Add the default main.dist.js Javascript {% endcomment %}
+            <item id="script-main"
                     media-type="application/javascript"
-                    href="assets/js/bundle.js"
+                    href="assets/js/main.dist.js"
                     />
 
         {% endunless %}
