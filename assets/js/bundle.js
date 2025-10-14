@@ -6,6 +6,7 @@ layout: null
 
 {% include_relative polyfills.js %}
 {% include_relative utilities.js %}
+{% include_relative config.js %}
 {% include_relative settings.js %}
 {% include_relative metadata.js %}
 {% include_relative locales.js %}
@@ -18,6 +19,12 @@ layout: null
 
 {% if site.output == "web" or site.output == "app" %}
 
+    {% comment %} 
+        Markdown processor in JS, mostly for utilities. 
+        Used by nav.js 
+    {% endcomment %}
+    {% include_relative vendor/marked.min.js %}
+    
     {% comment %} This order is important. {% endcomment %}
     {% include_relative setup.js %}
     {% include_relative vendor/mark.min.js %}
@@ -41,9 +48,6 @@ layout: null
 
     {% comment %} Load after SVG management {% endcomment %}
     {% include_relative lazyload.js %}
-
-    {% comment %} Markdown processor in JS, mostly for utilities {% endcomment %}
-    {% include_relative vendor/marked.min.js %}
 
 {% endif %}
 

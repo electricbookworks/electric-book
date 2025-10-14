@@ -102,6 +102,14 @@ settings.web.accordion.autoClose = {{ site.data.settings.web.accordion-auto-clos
 settings.web.search.jumpBoxLocation = '{{ site.data.settings.web.search.jump-box-location }}'
 {% endif %}
 
+{% if site.data.settings.web.nav.home.expand-books != nil %}
+settings.web.nav = {
+    home: {
+        expandBooks: {{ site.data.settings.web.nav.home.expand-books }}
+    }
+}
+{% endif %}
+
 // App settings
 
 {% if site.data.settings.app.accordion != nil %}
@@ -114,6 +122,14 @@ settings.app.accordion.level = '{{ site.data.settings.app.accordion-level }}'
 
 {% if site.data.settings.app.accordion-auto-close != nil %}
 settings.app.accordion.autoClose = {{ site.data.settings.app.accordion-auto-close }}
+{% endif %}
+
+{% if site.data.settings.app.nav.home.expand-books != nil %}
+settings.app.nav = {
+    home: {
+        expandBooks: {{ site.data.settings.app.nav.home.expand-books }}
+    }
+}
 {% endif %}
 
 {% if site.data.settings.app.search.jump-box-location != nil %}
