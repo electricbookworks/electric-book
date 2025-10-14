@@ -42,21 +42,23 @@ module.exports = {
         test: /\.yml$/,
         use: 'yaml-loader'
       },
-      ...(isPrinceOutput ? [{
-        test: /\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              ['@babel/preset-env', {
-                modules: false,
-                forceAllTransforms: true,
-                loose: false
-              }]
-            ]
-          }
-        }
-      }] : [])
+      ...(isPrinceOutput
+        ? [{
+            test: /\.js$/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: [
+                  ['@babel/preset-env', {
+                    modules: false,
+                    forceAllTransforms: true,
+                    loose: false
+                  }]
+                ]
+              }
+            }
+          }]
+        : [])
     ]
   },
   resolve: {
@@ -78,7 +80,7 @@ module.exports = {
       {
         filePath: '_data/locales.yml',
         envVar: 'locales'
-      },
+      }
     ]),
     new BookIndexFilesPlugin({
       searchDir: 'assets/js/_src',

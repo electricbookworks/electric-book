@@ -1,5 +1,7 @@
 import { ebToggleClickout, currentUrlPath } from './utilities'
 import { locales, pageLanguage } from './locales'
+import config from '../../../_config.yml'
+
 let marked = null
 if (process.env.output !== 'print-pdf' && process.env.output !== 'screen-pdf') {
   marked = (await import('marked')).marked
@@ -143,22 +145,23 @@ function ebNavGetWorkProperty (workData, variant, keys) {
  * Builds the main book list navigation based on metadata and current URL.
  */
 function ebNavBuildBookList () {
-  if (!window.metadata) return
+  if (!process.env.works) return
 
   const jsBookList = document.querySelector('#nav-js-gen-book-list')
+  console.log('jsBookList:', jsBookList)
   if (!jsBookList) return
   jsBookList.innerHTML = ''
 
-  const sortedWorks = Object.keys(window.metadata.works).sort()
+  const sortedWorks = Object.keys(process.env.works).sort()
 
   // Determine context: are we on a variant landing page?
-  const variantLandingPattern = new RegExp(`^${settings.baseUrl}/([^/]+)/index(?:\\.html)?$`)
+  const variantLandingPattern = new RegExp(`^${config.baseUrl}/([^/]+)/index(?:\\.html)?$`)
   const variantLandingMatch = currentUrlPath.match(variantLandingPattern)
   const isVariantLandingPage = !!variantLandingMatch
   const currentVariant = isVariantLandingPage ? variantLandingMatch[1] : (window.currentVariant || 'default')
 
   sortedWorks.forEach(workKey => {
-    const work = window.metadata.works[workKey]
+    const work = process.env.works[workKey]
     let workData
 
     if (isVariantLandingPage) {
@@ -186,7 +189,7 @@ function ebNavBuildBookList () {
       const startPage = ebNavGetWorkProperty(workData, currentVariant, ['products', process.env.output, 'start-page']) ||
                         ebNavGetWorkProperty(workData, currentVariant, ['products', 'web', 'start-page']) ||
                         'index'
-      link.href = `${settings.baseUrl}/${workKey}/${startPage}.html`
+      link.href = `${config.baseUrl}/${workKey}/${startPage}.html`
       link.innerHTML = ebNavProcessMarkdown(workTitle)
     }
     li.appendChild(link)
@@ -197,13 +200,15 @@ function ebNavBuildBookList () {
     if (isVariantLandingPage || expandBooks) {
       let childTree
       const basePath = isVariantLandingPage
-        ? `${settings.baseUrl}/${workKey}/${currentVariant}`
-        : `${settings.baseUrl}/${workKey}`
+        ? `${config.baseUrl}/${workKey}/${currentVariant}`
+        : `${config.baseUrl}/${workKey}`
 
       if (navTree && navTree.length > 0) {
         childTree = ebNavBuildTreeRecursive(navTree, basePath)
       } else {
-        const bookFiles = window.metadata.files?.[workKey]
+        // TODO: fix files inclusion
+        // const bookFiles = process.env.works.files?.[workKey]
+        const bookFiles = process.env.works[workKey]
         childTree = ebNavGenerateTreeFromFiles(bookFiles, basePath)
       }
 
@@ -220,18 +225,18 @@ function ebNavBuildBookList () {
  * Builds chapter navigation for the current book.
  */
 function ebNavBuildBookChapters () {
-  if (!window.metadata) return
+  if (!process.env.works) return
 
   const jsNavCont = document.querySelector('#nav-js-gen-book-chapters')
   if (!jsNavCont) return
 
-  Object.keys(window.metadata.works).forEach(work => {
-    Object.keys(window.metadata.works[work]).forEach(version => {
+  Object.keys(process.env.works).forEach(work => {
+    Object.keys(process.env.works[work]).forEach(version => {
       const versionPath = version === 'default' ? '' : `/${version}`
-      const workPathBase = `${settings.baseUrl}/${work}${versionPath}`
+      const workPathBase = `${config.baseUrl}/${work}${versionPath}`
 
       if (currentUrlPath.startsWith(workPathBase)) {
-        const versionNode = window.metadata.works[work][version]
+        const versionNode = process.env.works[work][version]
         const navTree = versionNode?.products?.[process.env.output]?.nav ||
                         versionNode?.default?.products?.[process.env.output]?.nav
 
