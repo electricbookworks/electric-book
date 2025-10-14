@@ -1,6 +1,4 @@
-/* global currentUrlPath */
-
-import { ebToggleClickout } from './utilities'
+import { ebToggleClickout, currentUrlPath } from './utilities'
 import { locales, pageLanguage } from './locales'
 let marked = null
 if (process.env.output !== 'print-pdf' && process.env.output !== 'screen-pdf') {

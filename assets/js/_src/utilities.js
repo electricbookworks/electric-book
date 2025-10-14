@@ -1,5 +1,10 @@
 /* global Node, ActiveXObject, XMLHttpRequest */
 
+let currentUrlPath = null
+if (typeof window !== 'undefined') {
+  currentUrlPath = new URL(window.location.href).pathname
+}
+
 // Utility functions
 
 // https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
@@ -326,5 +331,6 @@ export {
   ebNearestPrecedingSibling,
   ebLastIndexOfRegex,
   ebTruncatedString,
-  ebToggleClickout
+  ebToggleClickout,
+  currentUrlPath
 }
