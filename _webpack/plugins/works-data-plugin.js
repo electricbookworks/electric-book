@@ -105,7 +105,7 @@ class WorksDataPlugin {
       .filter(dirent => dirent.isFile() && (dirent.name.endsWith('.yml') || dirent.name.endsWith('.yaml')))
       .map(dirent => dirent.name)
 
-    // Load direct YAML files (these are for the default language)
+    // Load direct YAML files (these are variants at the root level)
     for (const fileName of directFiles) {
       const filePath = path.join(bookDir, fileName)
       const variantName = path.basename(fileName, path.extname(fileName))
@@ -114,11 +114,8 @@ class WorksDataPlugin {
         const content = fs.readFileSync(filePath, 'utf8')
         const data = yaml.load(content)
 
-        // Store under the default language (or root level)
-        if (!bookData.default) {
-          bookData.default = {}
-        }
-        bookData.default[variantName] = data
+        // Store directly at the root level
+        bookData[variantName] = data
       } catch (error) {
         console.warn(`Warning: Could not parse ${filePath}:`, error.message)
       }

@@ -1,7 +1,6 @@
 import { ebToggleClickout, currentUrlPath } from './utilities'
 import { locales, pageLanguage } from './locales'
 import config from '../../../_config.yml'
-
 let marked = null
 if (process.env.output !== 'print-pdf' && process.env.output !== 'screen-pdf') {
   marked = (await import('marked')).marked
@@ -148,14 +147,13 @@ function ebNavBuildBookList () {
   if (!process.env.works) return
 
   const jsBookList = document.querySelector('#nav-js-gen-book-list')
-  console.log('jsBookList:', jsBookList)
   if (!jsBookList) return
   jsBookList.innerHTML = ''
 
   const sortedWorks = Object.keys(process.env.works).sort()
 
   // Determine context: are we on a variant landing page?
-  const variantLandingPattern = new RegExp(`^${config.baseUrl}/([^/]+)/index(?:\\.html)?$`)
+  const variantLandingPattern = new RegExp(`^${config.baseurl}/([^/]+)/index(?:\\.html)?$`)
   const variantLandingMatch = currentUrlPath.match(variantLandingPattern)
   const isVariantLandingPage = !!variantLandingMatch
   const currentVariant = isVariantLandingPage ? variantLandingMatch[1] : (window.currentVariant || 'default')
@@ -189,7 +187,7 @@ function ebNavBuildBookList () {
       const startPage = ebNavGetWorkProperty(workData, currentVariant, ['products', process.env.output, 'start-page']) ||
                         ebNavGetWorkProperty(workData, currentVariant, ['products', 'web', 'start-page']) ||
                         'index'
-      link.href = `${config.baseUrl}/${workKey}/${startPage}.html`
+      link.href = `${config.baseurl}/${workKey}/${startPage}.html`
       link.innerHTML = ebNavProcessMarkdown(workTitle)
     }
     li.appendChild(link)
@@ -200,8 +198,8 @@ function ebNavBuildBookList () {
     if (isVariantLandingPage || expandBooks) {
       let childTree
       const basePath = isVariantLandingPage
-        ? `${config.baseUrl}/${workKey}/${currentVariant}`
-        : `${config.baseUrl}/${workKey}`
+        ? `${config.baseurl}/${workKey}/${currentVariant}`
+        : `${config.baseurl}/${workKey}`
 
       if (navTree && navTree.length > 0) {
         childTree = ebNavBuildTreeRecursive(navTree, basePath)
@@ -232,7 +230,7 @@ function ebNavBuildBookChapters () {
   Object.keys(process.env.works).forEach(work => {
     Object.keys(process.env.works[work]).forEach(version => {
       const versionPath = version === 'default' ? '' : `/${version}`
-      const workPathBase = `${config.baseUrl}/${work}${versionPath}`
+      const workPathBase = `${config.baseurl}/${work}${versionPath}`
 
       if (currentUrlPath.startsWith(workPathBase)) {
         const versionNode = process.env.works[work][version]
