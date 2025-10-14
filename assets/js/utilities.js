@@ -5,13 +5,11 @@
 // Current page URL
 let currentUrlPath = null
 if (typeof window !== 'undefined') {
-  currentUrlPath = new URL(window.location.href).pathname
+  currentUrlPath = window.location.pathname
 }
 
 // https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function ebSlugify (string, indexTerm) {
-  'use strict'
-
   const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·_,:;'
   const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnooooooooprrsssssttuuuuuuuuuwxyyzzz-----'
   const p = new RegExp(a.split('').join('|'), 'g')
@@ -79,7 +77,6 @@ function ebDecodeHtmlEntitiesPreservingTags (html) {
 // Get the value of a URL parameter
 // https://stackoverflow.com/a/901144/1781075
 function ebGetParameterByName (name, url) {
-  'use strict'
   if (!url) {
     url = window.location.href
   }
@@ -99,7 +96,6 @@ function ebGetParameterByName (name, url) {
 // (Thanks https://stackoverflow.com/a/22097991/1781075)
 // eslint-disable-next-line no-unused-vars
 function ebCheckForPage (url) {
-  'use strict'
   let request
   let pageStatus = false
   if (window.XMLHttpRequest) {
@@ -119,7 +115,6 @@ function ebCheckForPage (url) {
 
 // Check if an element has a particular computed style
 function ebHasComputedStyle (element, property, value) {
-  'use strict'
   const style = window.getComputedStyle(element)
 
   // If the element has the property, and no value is specified,
@@ -142,8 +137,6 @@ function ebHasComputedStyle (element, property, value) {
 // but returns false, not BODY, if no relative parent.
 // eslint-disable-next-line no-unused-vars
 function ebIsPositionRelative (element) {
-  'use strict'
-
   if (ebHasComputedStyle(element, 'position', 'relative')) {
     return element
   } else {
@@ -158,8 +151,6 @@ function ebIsPositionRelative (element) {
 // Check if an element or its ancestors are position: fixed.
 // Returns the first fixed positioned parent.
 function ebIsPositionFixed (element) {
-  'use strict'
-
   if (ebHasComputedStyle(element, 'position', 'fixed')) {
     return element
   } else {
@@ -174,8 +165,6 @@ function ebIsPositionFixed (element) {
 // Get the nearest preceding sibling or cousin element
 // eslint-disable-next-line no-unused-vars
 function ebNearestPrecedingSibling (element, tagName, iterationTrue) {
-  'use strict'
-
   if (element) {
     // If this is our second pass, and the element matches, return it.
     if (iterationTrue && element.tagName === tagName) {
@@ -206,8 +195,6 @@ function ebNearestPrecedingSibling (element, tagName, iterationTrue) {
 // A regex alternative to String.prototype.lastIndexOf().
 // Inspired by https://stackoverflow.com/a/21420210/1781075
 function ebLastIndexOfRegex (string, regex, fromIndex) {
-  'use strict'
-
   if (fromIndex) {
     string = string.substring(0, fromIndex)
   }
@@ -224,8 +211,6 @@ function ebLastIndexOfRegex (string, regex, fromIndex) {
 // Get a truncated string without cutting a word
 // eslint-disable-next-line no-unused-vars
 function ebTruncatedString (string, characters, suffix) {
-  'use strict'
-
   // If the string is longer than the allowed characters,
   // we'll do a careful job of truncating it neatly.
   if (string.length > characters) {
@@ -265,8 +250,6 @@ function ebTruncatedString (string, characters, suffix) {
 let ebCurrentModalZIndex
 // eslint-disable-next-line no-unused-vars
 function ebToggleClickout (modalElement, callback) {
-  'use strict'
-
   let clickOut
 
   if (ebCurrentModalZIndex > 0) {
