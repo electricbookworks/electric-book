@@ -2,6 +2,12 @@
 
 // Utility functions
 
+// Current page URL
+let currentUrlPath = null
+if (typeof window !== 'undefined') {
+  currentUrlPath = new URL(window.location.href).pathname
+}
+
 // https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
 function ebSlugify (string, indexTerm) {
   'use strict'

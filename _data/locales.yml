@@ -145,6 +145,8 @@ en:
     next: "Next"
     previous: "Previous"
     back: "&larr;"
+    toc: "Contents"
+    read: "Read"
   input:
     submit: "Submit"
     send: "Send"
@@ -274,6 +276,8 @@ fr:
     next: "Suivant"
     previous: "Précédent"
     back: "&larr;"
+    toc: "Table des matières"
+    read: "Lire"
   input:
     submit: "Soumettre"
     send: "Envoyer"
@@ -685,6 +689,8 @@ es:
     next: "Siguiente"
     previous: "Anterior"
     back: "&larr;"
+    toc: "Tabla de contenidos"
+    read: "Leer"
   input:
     submit: "Enviar"
     send: "Enviar"

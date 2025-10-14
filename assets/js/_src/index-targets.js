@@ -1,4 +1,4 @@
-/* global Prince, NodeFilter */
+/* global NodeFilter */
 import { ebSlugify, ebDecodeHtmlEntitiesPreservingTags } from './utilities'
 // Conditionally import marked only when not building for PDF
 // because marked is not compatible with PrinceXML.

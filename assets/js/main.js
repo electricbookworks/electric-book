@@ -1,4 +1,4 @@
-/* 
+/*
 Unused imports will be tree-shaken in production mode when using process.env values as execution conditionals.
 The process.env values are created by webpack at buildtime - see _webpack/webpack.config.js.
 Conditionals using runtime values (e.g. from YAML data imported with yaml-loader) will not be tree-shaken.
@@ -61,7 +61,7 @@ if (process.env.output === 'web' || process.env.output === 'app') {
   ebAddCopyButtons()
   ebShare()
   ebExpandableBox()
-  if (process.env.settings.web.svg.inject == true) {
+  if (process.env.settings.web.svg.inject === true) {
     ebSVGManagement()
   }
   ebLazyLoad()
@@ -75,54 +75,51 @@ if (webDevAnnotation || webLiveAnnotation) {
   ebAnnotation()
 }
 
-/* 
-Enable bookmarks in _data settings.yml, and define options in assets/bookmarks.js. 
-This lets us have different behaviour for web or app. 
+/*
+Enable bookmarks in _data settings.yml, and define options in assets/bookmarks.js.
+This lets us have different behaviour for web or app.
 */
-const webBookmarks = process.env.output == 'web' && process.env.settings.web.bookmarks.enabled == true
-const appBookmarks = process.env.output == 'app' && process.env.settings.app.bookmarks.enabled == true
+const webBookmarks = process.env.output === 'web' && process.env.settings.web.bookmarks.enabled === true
+const appBookmarks = process.env.output === 'app' && process.env.settings.app.bookmarks.enabled === true
 if (webBookmarks || appBookmarks) {
   ebBookmarks()
 }
 
 if (process.env.output === 'screen-pdf' || process.env.output === 'print-pdf') {
+  // Load Prince-specific utilities.
+  ebPrinceBoxInfo()
 
-    // Load Prince-specific utilities.
-    ebPrinceBoxInfo()
-
-    /*
+  /*
     This script gives every heading a title attribute.
     This is useful to Prince, which can use title attributes for running heads.
     By default, we only load it for PDF outputs.
     */
-    ebHeadingTitles()
+  ebHeadingTitles()
 
-    // This script helps rotate large figures on the page.
-    ebRotate()
+  // This script helps rotate large figures on the page.
+  ebRotate()
 
-    // This script moves endnotes to the bottoms of pages.
-    ebFootnotes()
+  // This script moves endnotes to the bottoms of pages.
+  ebFootnotes()
 
-    // This script shifts elements in the DOM.
-    ebShiftElements()
+  // This script shifts elements in the DOM.
+  ebShiftElements()
 
-    /*
+  /*
     This script detects the page number we are on and provides
     the relevant page cross-reference text as generated content.
     */
-    ebPageReference()
+  ebPageReference()
 
-    /*
+  /*
     This aligns elements to a baseline grid.
     This is experimental, so it's commented out by default.
     */
-    // ebBaselineGrid()
-
+  // ebBaselineGrid()
 }
 
 // Tools for generating and displaying book indexes
 if (process.env.settings['dynamic-indexing'] !== false) {
-
   /*
   Script to turn HTML comments into anchor targets.
   Also handled by gulp in PDF, epub; but included
@@ -130,19 +127,18 @@ if (process.env.settings['dynamic-indexing'] !== false) {
   */
   ebIndexTargetsInit()
 
-  /* 
+  /*
   Script that adds index-reference links.
   This is done client-side in web and app, and pre-processed by gulp
-  in PDF and epub outputs. 
+  in PDF and epub outputs.
   */
-  if (process.env.output == 'web' || process.env.output == 'app') {
+  if (process.env.output === 'web' || process.env.output === 'app') {
     ebIndexLists()
   }
-
 }
 
 // Scripts for epub output. Do not expect support in many readers.
-if (process.env.output == 'epub') {
+if (process.env.output === 'epub') {
   ebMCQs()
   ebShowHide()
 }
