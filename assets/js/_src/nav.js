@@ -207,8 +207,7 @@ function ebNavBuildBookList () {
         childTree = ebNavBuildTreeRecursive(navTree, basePath)
       } else {
         // TODO: fix files inclusion
-        // const bookFiles = process.env.works.files?.[workKey]
-        const bookFiles = process.env.works[workKey]
+        const bookFiles = process.env.files[workKey]
         childTree = ebNavGenerateTreeFromFiles(bookFiles, basePath)
       }
 

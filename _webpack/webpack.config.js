@@ -4,6 +4,7 @@ const yargs = require('yargs')
 const WorksDataPlugin = require('./plugins/works-data-plugin')
 const YamlEnvPlugin = require('./plugins/yaml-env-plugin')
 const BookIndexFilesPlugin = require('./plugins/book-index-files-plugin')
+const FilesPlugin = require('./plugins/files-plugin')
 const mode = yargs.argv.mode || 'development'
 const ebBuild = mode === 'production' ? 'live' : mode
 
@@ -85,6 +86,9 @@ module.exports = {
     new BookIndexFilesPlugin({
       searchDir: 'assets/js/_src',
       envVar: 'bookIndexFiles'
+    }),
+    new FilesPlugin({
+      envVar: 'files'
     }),
     new webpack.DefinePlugin({
       'process.env.output': JSON.stringify(process.env.output || 'web'),
