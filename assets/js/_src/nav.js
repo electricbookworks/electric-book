@@ -96,7 +96,7 @@ function ebNavBuildTreeRecursive (navTree, basePath, areChildren = true) {
 }
 
 /**
- * Generates a navigation <ol> from a list of file metadata.
+ * Generates a navigation <ol> from a list of file data.
  * @param {Array} files - The files for a given book.
  * @param {string} basePath - The base URL for the links.
  * @returns {HTMLOListElement|null} The generated list or null if empty.
@@ -122,7 +122,7 @@ function ebNavGenerateTreeFromFiles (files, basePath) {
 
 /**
  * Safely retrieves a nested property from a work object with multiple fallbacks.
- * @param {object} workData - The work object from metadata.
+ * @param {object} workData - The work object.
  * @param {string} variant - The current variant (e.g., 'default').
  * @param {Array<string>} keys - The property path to retrieve (e.g., ['products', 'web', 'nav']).
  * @returns {any|undefined} The found property or undefined.
@@ -141,7 +141,7 @@ function ebNavGetWorkProperty (workData, variant, keys) {
 }
 
 /**
- * Builds the main book list navigation based on metadata and current URL.
+ * Builds the main book list navigation based on process.env.works and current URL.
  */
 function ebNavBuildBookList () {
   if (!process.env.works) return
@@ -172,7 +172,7 @@ function ebNavBuildBookList () {
     const displayData = workData.default || workData
     if (displayData.published === false) return
 
-    // Use helpers to get metadata with fallbacks.
+    // Use helpers to get data with fallbacks.
     const workTitle = ebNavGetWorkProperty(workData, currentVariant, ['title']) || workKey
     const navTree = ebNavGetWorkProperty(workData, currentVariant, ['products', process.env.output, 'nav']) ||
                     ebNavGetWorkProperty(workData, currentVariant, ['products', 'web', 'nav'])
@@ -193,7 +193,7 @@ function ebNavBuildBookList () {
     li.appendChild(link)
 
     // Build children if nav exists or if books should be expanded.
-    const expandBooks = !isVariantLandingPage && settings[process.env.output]?.nav?.home?.expandBooks === true
+    const expandBooks = !isVariantLandingPage && settings[process.env.output]?.nav?.home['expand-books'] === true
 
     if (isVariantLandingPage || expandBooks) {
       let childTree
