@@ -101,7 +101,7 @@ module.exports = {
       'process.env.build': JSON.stringify(ebBuild)
     })
   ],
-  devtool: mode === 'development' ? 'eval-source-map' : false,
+  devtool: process.env.debug === 'true' ? 'eval-source-map' : false,
   stats: {
     colors: true,
     modules: false,

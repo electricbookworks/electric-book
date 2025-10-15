@@ -152,6 +152,13 @@ const options = {
     default: '#',
     defaultDescription: '#',
     type: 'string'
+  },
+  debugjs: {
+    description: 'Whether to include source maps and live rebuild for JS',
+    alias: 'djs',
+    default: false,
+    defaultDescription: 'false',
+    type: 'boolean'
   }
 }
 
