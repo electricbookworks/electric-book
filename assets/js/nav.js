@@ -27,11 +27,8 @@ function ebNavProcessMarkdown (text) {
 function ebNavCreateLink (item, basePath) {
   const link = document.createElement('a')
   const linkPath = item.file ? `${basePath}/${item.file}.html` : '#'
-
   link.href = linkPath
   link.innerHTML = ebNavProcessMarkdown(item.label)
-
-  // For items without a file, prevent default click behavior.
   if (!item.file) {
     link.addEventListener('click', (e) => e.preventDefault())
   }
@@ -116,13 +113,14 @@ function ebNavGenerateTreeFromFiles (files, basePath) {
 /**
  * Safely retrieves a nested property from a work object with multiple fallbacks.
  * @param {object} workData - The work object from metadata.
- * @param {string} variant - The current variant (e.g., 'default').
  * @param {Array<string>} keys - The property path to retrieve (e.g., ['products', 'web', 'nav']).
  * @returns {any|undefined} The found property or undefined.
  */
-function ebNavGetWorkProperty (workData, variant, keys) {
+function ebNavGetWorkProperty (workData, keys) {
   const pathsToTry = [
-    [variant, ...keys],
+    [config.activeVariant, ...keys],
+    // We still have to check against 'default' because active variant may not be applied globally.
+    // i.e. {config.activeVariant}.yml may be added to only a subset of _data/works/**/*.
     ['default', ...keys]
   ]
 
@@ -145,40 +143,40 @@ function ebNavBuildBookList () {
 
   const sortedWorks = Object.keys(window.metadata.works).sort()
 
-  // Determine context: are we on a variant landing page?
-  const variantLandingPattern = new RegExp(`^${config.baseUrl}/([^/]+)/index(?:\\.html)?$`)
-  const variantLandingMatch = currentUrlPath.match(variantLandingPattern)
-  const isVariantLandingPage = !!variantLandingMatch
-  const currentVariant = isVariantLandingPage ? variantLandingMatch[1] : (window.currentVariant || 'default')
+  // Determine context: are we on a translation landing page?
+  const translationLandingPattern = new RegExp(`^${config.baseUrl}/([^/]+)/index(?:\\.html)?$`)
+  const translationLandingMatch = currentUrlPath.match(translationLandingPattern)
+  const isTranslationLandingPage = !!translationLandingMatch
+  const currentTranslation = isTranslationLandingPage ? translationLandingMatch[1] : (config.activeVariant || 'default')
 
   sortedWorks.forEach(workKey => {
     const work = window.metadata.works[workKey]
     let workData
 
-    if (isVariantLandingPage) {
-      if (!work[currentVariant]) return
-      workData = work[currentVariant]
+    if (isTranslationLandingPage) {
+      if (!work[currentTranslation]) return
+      workData = work[currentTranslation]
     } else {
       workData = work[pageLanguage] || work
     }
 
-    const displayData = workData.default || workData
+    const displayData = workData[config.activeVariant] || workData.default
     if (displayData.published === false) return
 
     // Use helpers to get metadata with fallbacks.
-    const workTitle = ebNavGetWorkProperty(workData, currentVariant, ['title']) || workKey
-    const navTree = ebNavGetWorkProperty(workData, currentVariant, ['products', config.output, 'nav']) ||
-                    ebNavGetWorkProperty(workData, currentVariant, ['products', 'web', 'nav'])
+    const workTitle = ebNavGetWorkProperty(workData, ['title']) || workKey
+    const navTree = ebNavGetWorkProperty(workData, ['products', config.output, 'nav']) ||
+                    ebNavGetWorkProperty(workData, ['products', 'web', 'nav'])
 
     const li = document.createElement('li')
     const link = document.createElement('a')
 
-    if (isVariantLandingPage) {
+    if (isTranslationLandingPage) {
       link.innerHTML = ebNavProcessMarkdown(workTitle)
       li.classList.add('no-file')
     } else {
-      const startPage = ebNavGetWorkProperty(workData, currentVariant, ['products', config.output, 'start-page']) ||
-                        ebNavGetWorkProperty(workData, currentVariant, ['products', 'web', 'start-page']) ||
+      const startPage = ebNavGetWorkProperty(workData, ['products', config.output, 'start-page']) ||
+                        ebNavGetWorkProperty(workData, ['products', 'web', 'start-page']) ||
                         'index'
       link.href = `${config.baseUrl}/${workKey}/${startPage}.html`
       link.innerHTML = ebNavProcessMarkdown(workTitle)
@@ -186,12 +184,12 @@ function ebNavBuildBookList () {
     li.appendChild(link)
 
     // Build children if nav exists or if books should be expanded.
-    const expandBooks = !isVariantLandingPage && settings[config?.output]?.nav?.home?.expandBooks === true
+    const expandBooks = !isTranslationLandingPage && settings[config?.output]?.nav?.home?.expandBooks === true
 
-    if (isVariantLandingPage || expandBooks) {
+    if (isTranslationLandingPage || expandBooks) {
       let childTree
-      const basePath = isVariantLandingPage
-        ? `${config.baseUrl}/${workKey}/${currentVariant}`
+      const basePath = isTranslationLandingPage
+        ? `${config.baseUrl}/${workKey}/${currentTranslation}`
         : `${config.baseUrl}/${workKey}`
 
       if (navTree && navTree.length > 0) {
@@ -220,15 +218,15 @@ function ebNavBuildBookChapters () {
   if (!jsNavCont) return
 
   Object.keys(window.metadata.works).forEach(work => {
-    Object.keys(window.metadata.works[work]).forEach(version => {
-      const versionPath = version === 'default' ? '' : `/${version}`
-      const workPathBase = `${config.baseUrl}/${work}${versionPath}`
+    Object.keys(window.metadata.works[work]).forEach(translation => {
+      const translationPath = translation === config.activeVariant || translation === 'default' ? '' : `/${translation}`
+      const workPathBase = `${config.baseUrl}/${work}${translationPath}`
 
       if (currentUrlPath.startsWith(workPathBase)) {
-        const versionNode = window.metadata.works[work][version]
-        const navTree = versionNode?.products?.[config.format]?.nav ||
-                        versionNode?.default?.products?.[config.format]?.nav
-
+        const translationNode = window.metadata.works[work][translation]
+        const defaultToWebNav = config.format === 'app' && !translationNode?.products?.[config.format]?.nav && !translationNode[config.activeVariant]?.products?.[config.format]?.nav && !translationNode?.default?.products?.[config.format]?.nav
+        const format = defaultToWebNav ? 'web' : config.format
+        const navTree = translationNode?.products?.[format]?.nav || translationNode[config.activeVariant]?.products?.[format]?.nav || translationNode?.default?.products?.[format]?.nav
         if (navTree) {
           jsNavCont.innerHTML = ''
           const items = ebNavBuildTreeRecursive(navTree, workPathBase, false)
