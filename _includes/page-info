@@ -95,6 +95,7 @@ See all the metadata gathered for a given page.
 | Print-PDF-specific format     | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `print-pdf-format`     | {{ print-pdf-format }}     | String |
 | Print-PDF-specific identifier | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `print-pdf-identifier` | {{ print-pdf-identifier }} | String |
 | Print-PDF-specific image      | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `print-pdf-image`      | {{ print-pdf-image }}      | String |
+| Print-PDF-specific rights     | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `print-pdf-rights`     | {{ print-pdf-rights }}     | String |
 | Print-PDF-specific file list  | Defined in `_data/works` as `files` for main book, and overriden there by any `translations` or `variants` | `print-pdf-file-list`  | {{ print-pdf-file-list }}  | Array  |
 | Print-PDF-specific TOC        | Defined in `_data/works` as `toc` for main book, and overriden there by any `translations` or `variants`   | `print-pdf-toc`        | {{ print-pdf-toc }}        | Array  |
 
@@ -106,6 +107,7 @@ See all the metadata gathered for a given page.
 | Screen-PDF-specific format     | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `screen-pdf-format`     | {{ screen-pdf-format }}     | String |
 | Screen-PDF-specific identifier | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `screen-pdf-identifier` | {{ screen-pdf-identifier }} | String |
 | Screen-PDF-specific image      | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `screen-pdf-image`      | {{ screen-pdf-image }}      | String |
+| Screen-PDF-specific rights     | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `screen-pdf-rights`     | {{ screen-pdf-rights }}     | String |
 | Screen-PDF-specific file list  | Defined in `_data/works` as `files` for main book, and overriden there by any `translations` or `variants` | `screen-pdf-file-list`  | {{ screen-pdf-file-list}}   | Array  |
 | Screen-PDF-specific TOC        | Defined in `_data/works` as `toc` for main book, and overriden there by any `translations` or `variants`   | `screen-pdf-toc`        | {{ screen-pdf-toc }}        | Array  |
 
@@ -117,6 +119,7 @@ See all the metadata gathered for a given page.
 | Web-specific format     | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `web-format`        | {{ web-format }}        | String |
 | Web-specific identifier | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `web-identifier`    | {{ web-identifier }}    | String |
 | Web-specific image      | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `web-image`         | {{ web-image }}         | String |
+| Web-specific rights     | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `web-rights`        | {{ web-rights }}        | String |
 | Web-specific TOC        | Defined in `_data/works` as `toc` for main book, and overriden there by any `translations` or `variants`   | `web-toc`           | {{ web-toc }}           | Array  |
 | Web start-page          | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `web-start-page`    | {{ web-start-page }}    | String |
 | Web contents-page       | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `web-contents-page` | {{ web-contents-page }} | String |
@@ -131,6 +134,7 @@ See all the metadata gathered for a given page.
 | Epub-specific format                       | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`              | `epub-format`        | {{ epub-format }}        | String |
 | Epub-specific identifier                   | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`              | `epub-identifier`    | {{ epub-identifier }}    | String |
 | Epub-specific image                        | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`              | `epub-image`         | {{ epub-image }}         | String |
+| Epub-specific rights                       | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`              | `epub-rights`        | {{ epub-rights }}        | String |
 | Epub-specific file list                    | Defined in `_data/works` as `files` for main book, and overriden there by any `translations` or `variants`   | `epub-file-list`     | {{ epub-file-list }}     | Array  |
 | Epub-specific TOC                          | Defined in `_data/works` as `toc` for main book, and overriden there by any `translations` or `variants`     | `epub-toc`           | {{ epub-toc }}           | Array  |
 | Epub-specific TOC page                     | Defined, optionally, in `_data/works` for main book, and overriden there by any `translations` or `variants` | `epub-contents-page` | {{ epub-contents-page }} | Array  |
@@ -144,6 +148,7 @@ See all the metadata gathered for a given page.
 | App-specific format                      | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `app-format`                         | {{ app-format }}                         | String  |
 | App-specific identifier                  | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `app-identifier`                     | {{ app-identifier }}                     | String  |
 | App-specific image                       | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `app-image`                          | {{ app-image }}                          | String  |
+| App-specific rights                      | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `app-rights`                         | {{ app-rights }}                         | String  |
 | App-specific TOC                         | Defined in `_data/works` as `toc` for main book, and overriden there by any `translations` or `variants`   | `app-toc`                            | {{ app-toc }}                            | Array   |
 | App start-page                           | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `app-start-page`                     | {{ app-start-page }}                     | String  |
 | App contents-page                        | Defined in `_data/works` for main book, and overriden there by any `translations` or `variants`            | `app-contents-page`                  | {{ app-contents-page }}                  | String  |
