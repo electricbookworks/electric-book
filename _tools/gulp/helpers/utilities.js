@@ -3,20 +3,12 @@
 // Local helpers
 const { imageSettings } = require('./paths.js')
 const { book } = require('../helpers/args.js')
+const pathToJsAssetsSrc = `${process.cwd()}/assets/js/_src/`
 
-// Load utilities from elsewhere in this repo,
-// wrapped in 'try' for when they don't exist.
-
-const pathToProjectRoot = '../../../'
-
-let ebSlugify
-try {
-  // We use the same slugifying function throughout the repo,
-  // so that slugs always match no matter where we create them.
-  ebSlugify = require(pathToProjectRoot + 'assets/js/utilities.js').ebSlugify
-} catch (utilitiesError) {
-  console.log(utilitiesError)
-  console.log('Could not find assets/js/utilities.js')
+// Load utilities from elsewhere in this repo
+const { ebSlugify } = require(`${pathToJsAssetsSrc}utilities.js`)
+if (!ebSlugify) {
+  console.log(`Could not load ebSlugify from ${pathToJsAssetsSrc}utilities.js`)
 }
 
 // Function for checking if an image should be processed

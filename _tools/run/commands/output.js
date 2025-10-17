@@ -10,8 +10,6 @@ const { pdf, epub, app, web } = require('../helpers/output')
 exports.command = 'output'
 exports.desc = 'Generate a project or publication'
 exports.handler = function (argv) {
-  'use strict'
-
   switch (argv.format) {
     case 'print-pdf':
     case 'screen-pdf':

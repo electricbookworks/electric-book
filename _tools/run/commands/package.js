@@ -10,7 +10,5 @@ const packageProject = require('../helpers/package/index.js')
 exports.command = 'package'
 exports.desc = 'Create a zip file of this project'
 exports.handler = function (argv) {
-  'use strict'
-
   packageProject()
 }
