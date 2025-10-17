@@ -226,9 +226,9 @@ function ebNavBuildBookChapters () {
 
       if (currentUrlPath.startsWith(workPathBase)) {
         const versionNode = window.metadata.works[work][version]
-        const navTree = versionNode?.products?.[config.format]?.nav ||
-                        versionNode?.default?.products?.[config.format]?.nav
-
+        const defaultToWebNav = config.format === 'app' && !versionNode?.products?.[config.format]?.nav && !versionNode?.default?.products?.[config.format]?.nav
+        const format = defaultToWebNav ? 'web' : config.format
+        const navTree = versionNode?.products?.[format]?.nav || versionNode?.default?.products?.[format]?.nav
         if (navTree) {
           jsNavCont.innerHTML = ''
           const items = ebNavBuildTreeRecursive(navTree, workPathBase, false)
