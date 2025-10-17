@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/base:dev-ubuntu-22.04
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
 # Main dependency installation
 # (Some of these might already exist in base image.)
@@ -16,7 +16,9 @@ RUN apt-get update && apt-get install -y \
     librsvg2-bin \
     zlib1g-dev \
     graphicsmagick \
-    default-jre
+    default-jre \
+    libwebp-dev \
+    libavif-dev
 
 # Dependencies specifically for Puppeteer on unix
 # (Some of these might already exist in base image.)
