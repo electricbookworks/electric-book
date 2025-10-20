@@ -116,13 +116,13 @@ function ebNavGenerateTreeFromFiles (files, basePath) {
 /**
  * Safely retrieves a nested property from a work object with multiple fallbacks.
  * @param {object} workData - The work object from metadata.
- * @param {string} variant - The current variant (e.g., 'default').
+ * @param {string} version - The current version (e.g., 'default').
  * @param {Array<string>} keys - The property path to retrieve (e.g., ['products', 'web', 'nav']).
  * @returns {any|undefined} The found property or undefined.
  */
-function ebNavGetWorkProperty (workData, variant, keys) {
+function ebNavGetWorkProperty (workData, version, keys) {
   const pathsToTry = [
-    [variant, ...keys],
+    [version, ...keys],
     ['default', ...keys]
   ]
 
@@ -145,19 +145,19 @@ function ebNavBuildBookList () {
 
   const sortedWorks = Object.keys(window.metadata.works).sort()
 
-  // Determine context: are we on a variant landing page?
-  const variantLandingPattern = new RegExp(`^${config.baseUrl}/([^/]+)/index(?:\\.html)?$`)
-  const variantLandingMatch = currentUrlPath.match(variantLandingPattern)
-  const isVariantLandingPage = !!variantLandingMatch
-  const currentVariant = isVariantLandingPage ? variantLandingMatch[1] : (window.currentVariant || 'default')
+  // Determine context: are we on a version landing page?
+  const versionLandingPattern = new RegExp(`^${config.baseUrl}/([^/]+)/index(?:\\.html)?$`)
+  const versionLandingMatch = currentUrlPath.match(versionLandingPattern)
+  const isVersionLandingPage = !!versionLandingMatch
+  const currentVersion = isVersionLandingPage ? versionLandingMatch[1] : (window.currentVersion || 'default')
 
   sortedWorks.forEach(workKey => {
     const work = window.metadata.works[workKey]
     let workData
 
-    if (isVariantLandingPage) {
-      if (!work[currentVariant]) return
-      workData = work[currentVariant]
+    if (isVersionLandingPage) {
+      if (!work[currentVersion]) return
+      workData = work[currentVersion]
     } else {
       workData = work[pageLanguage] || work
     }
@@ -166,19 +166,19 @@ function ebNavBuildBookList () {
     if (displayData.published === false) return
 
     // Use helpers to get metadata with fallbacks.
-    const workTitle = ebNavGetWorkProperty(workData, currentVariant, ['title']) || workKey
-    const navTree = ebNavGetWorkProperty(workData, currentVariant, ['products', config.output, 'nav']) ||
-                    ebNavGetWorkProperty(workData, currentVariant, ['products', 'web', 'nav'])
+    const workTitle = ebNavGetWorkProperty(workData, currentVersion, ['title']) || workKey
+    const navTree = ebNavGetWorkProperty(workData, currentVersion, ['products', config.output, 'nav']) ||
+                    ebNavGetWorkProperty(workData, currentVersion, ['products', 'web', 'nav'])
 
     const li = document.createElement('li')
     const link = document.createElement('a')
 
-    if (isVariantLandingPage) {
+    if (isVersionLandingPage) {
       link.innerHTML = ebNavProcessMarkdown(workTitle)
       li.classList.add('no-file')
     } else {
-      const startPage = ebNavGetWorkProperty(workData, currentVariant, ['products', config.output, 'start-page']) ||
-                        ebNavGetWorkProperty(workData, currentVariant, ['products', 'web', 'start-page']) ||
+      const startPage = ebNavGetWorkProperty(workData, currentVersion, ['products', config.output, 'start-page']) ||
+                        ebNavGetWorkProperty(workData, currentVersion, ['products', 'web', 'start-page']) ||
                         'index'
       link.href = `${config.baseUrl}/${workKey}/${startPage}.html`
       link.innerHTML = ebNavProcessMarkdown(workTitle)
@@ -186,12 +186,12 @@ function ebNavBuildBookList () {
     li.appendChild(link)
 
     // Build children if nav exists or if books should be expanded.
-    const expandBooks = !isVariantLandingPage && settings[config?.output]?.nav?.home?.expandBooks === true
+    const expandBooks = !isVersionLandingPage && settings[config?.output]?.nav?.home?.expandBooks === true
 
-    if (isVariantLandingPage || expandBooks) {
+    if (isVersionLandingPage || expandBooks) {
       let childTree
-      const basePath = isVariantLandingPage
-        ? `${config.baseUrl}/${workKey}/${currentVariant}`
+      const basePath = isVersionLandingPage
+        ? `${config.baseUrl}/${workKey}/${currentVersion}`
         : `${config.baseUrl}/${workKey}`
 
       if (navTree && navTree.length > 0) {
