@@ -23,7 +23,6 @@ config.activeVariant = 'default'
 {% if site.data.settings.active-variant and site.data.settings.active-variant != "" %}
 config.activeVariant = {{ site.data.settings.active-variant | jsonify | safe }}
 {% endif %}
-
-// in absence of module dependencies, safest for now
-// is to attach to window for use by other scripts
-window.config = config
+{% if site.active-variant and site.active-variant != "" %}
+config.activeVariant = {{ site.active-variant | jsonify | safe }}
+{% endif %}
