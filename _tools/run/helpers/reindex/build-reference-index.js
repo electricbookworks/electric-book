@@ -5,8 +5,6 @@ const fsPromises = require('fs/promises')
 
 // The main process for generating an index of targets.
 async function buildReferenceIndex (outputFormat, filesData) {
-  'use strict'
-
   // Initialise an array that will store an index
   // or 'database' of the book-index targets.
   const targetsIndex = []

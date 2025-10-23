@@ -13,10 +13,13 @@ const isPrinceOutput = process.env.output === 'print-pdf' || process.env.output 
 
 module.exports = {
   mode,
-  entry: path.resolve(process.cwd(), 'assets/js/main.js'),
+  entry: {
+    main: path.resolve(process.cwd(), 'assets/js/main.js'),
+    search: path.resolve(process.cwd(), 'assets/js/search.js')
+  },
   target: isPrinceOutput ? ['web', 'es5'] : 'web',
   output: {
-    filename: 'main.dist.js',
+    filename: '[name].dist.js',
     chunkFilename: (pathData) => {
       // Remove leading underscores from chunk names to avoid Jekyll ignoring them
       const name = pathData.chunk.name || pathData.chunk.id || 'chunk'

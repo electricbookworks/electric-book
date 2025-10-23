@@ -272,5 +272,7 @@ function ebSearchTerms () {
 export default ebSearchTerms
 
 export {
-  searchTerm
+  searchTerm,
+  getQueryVariable,
+  fillSearchBox
 }

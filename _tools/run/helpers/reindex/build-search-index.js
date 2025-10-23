@@ -28,7 +28,7 @@ async function writeContentAPIFile (pageObject) {
 function generateContentAPI (outputFormat, configsObject) {
   if (outputFormat === 'web' &&
     configsObject?.collections?.docs?.output === true) {
-      return true
+    return true
   } else {
     return false
   }
@@ -36,8 +36,6 @@ function generateContentAPI (outputFormat, configsObject) {
 
 // The main process for generating a search index
 async function buildSearchIndex (outputFormat, filesData, configsObject) {
-  'use strict'
-
   // This will be the elasticllunr index without /docs.
   // We'll close the array when we've added all its objects.
   let searchIndexNoDocs = 'const store = ['
@@ -47,7 +45,7 @@ async function buildSearchIndex (outputFormat, filesData, configsObject) {
   let searchIndexWithDocs = 'const store = ['
 
   // Are we generating the API?
-  const api = generateContentAPI (outputFormat, configsObject)
+  const api = generateContentAPI(outputFormat, configsObject)
 
   // This will be an index for API access.
   // It will not include any /docs
@@ -235,10 +233,9 @@ async function buildSearchIndex (outputFormat, filesData, configsObject) {
   // If we've got all the pages, close the array
   // and close the Puppeteer browser.
   if (count === filesData.length) {
-    const loadStoreFunctionString = ';store.forEach(function (doc) { index.addDoc(doc) })'
-
-    searchIndexNoDocs += ']' + loadStoreFunctionString
-    searchIndexWithDocs += ']' + loadStoreFunctionString
+    const exportStore = 'if (store) { module.exports = store }'
+    searchIndexNoDocs += ']; ' + exportStore
+    searchIndexWithDocs += ']; ' + exportStore
     browser.close()
   }
 
