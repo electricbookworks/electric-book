@@ -7,15 +7,16 @@ const BookIndexFilesPlugin = require('./plugins/book-index-files-plugin')
 const FilesPlugin = require('./plugins/files-plugin')
 const mode = yargs.argv.mode || 'development'
 const ebBuild = process.env.build || 'development'
-
-// Check if we're building for Prince-compatible PDF output
+const isWebAppOutput = process.env.output === 'web' || process.env.output === 'app'
 const isPrinceOutput = process.env.output === 'print-pdf' || process.env.output === 'screen-pdf'
 
 module.exports = {
   mode,
   entry: {
     main: path.resolve(process.cwd(), 'assets/js/main.js'),
-    search: path.resolve(process.cwd(), 'assets/js/search.js')
+    ...(isWebAppOutput && {
+      search: path.resolve(process.cwd(), 'assets/js/search.js')
+    })
   },
   target: isPrinceOutput ? ['web', 'es5'] : 'web',
   output: {
