@@ -187,13 +187,11 @@ async function buildReferenceIndex (outputFormat, filesData) {
 
   // Write the book index 'database' file.
   // We add module.exports so that we can use indexTargets
-  // in Node processes (i.e. gulp with cheerio).
+  // in Node processes (i.e. gulp with cheerio)
+  // and in other JS modules.
   fs.writeFile(indexFilePath,
     'var ebIndexTargets = ' + JSON.stringify(targetsIndex) + ';' +
-        'if (typeof window === "undefined")' +
-        '{module.exports.' +
-        outputFormat.replace('-', '') +
-        'IndexTargets = ebIndexTargets} else {module.exports = ebIndexTargets}',
+        'module.exports = ebIndexTargets',
     function () {
       console.log('Writing ' + indexFilePath)
       console.log('Done.')

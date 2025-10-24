@@ -14,7 +14,6 @@ try {
     fs.writeFileSync(pathToJsAssetsSrc + 'book-index-print-pdf.js', '')
   }
   printpdfIndexTargets = require(pathToJsAssetsSrc + 'book-index-print-pdf.js')
-    .printpdfIndexTargets
 } catch (printpdfIndexTargetsError) {
   console.log(printpdfIndexTargetsError)
   console.log(`Could not find ${pathToJsAssetsSrc}book-index-print-pdf.js.`)
@@ -27,7 +26,6 @@ try {
     fs.writeFileSync(pathToJsAssetsSrc + 'book-index-screen-pdf.js', '')
   }
   screenpdfIndexTargets = require(pathToJsAssetsSrc + 'book-index-screen-pdf.js')
-    .screenpdfIndexTargets
 } catch (screenpdfIndexTargetsError) {
   console.log(screenpdfIndexTargetsError)
   console.log(`Could not find ${pathToJsAssetsSrc}book-index-screen-pdf.js.`)
@@ -40,7 +38,6 @@ try {
     fs.writeFileSync(pathToJsAssetsSrc + 'book-index-epub.js', '')
   }
   epubIndexTargets = require(pathToJsAssetsSrc + 'book-index-epub.js')
-    .epubIndexTargets
 } catch (epubIndexTargetsError) {
   console.log(epubIndexTargetsError)
   console.log(`Could not find ${pathToJsAssetsSrc}book-index-epub.js.`)
@@ -53,7 +50,6 @@ try {
     fs.writeFileSync(pathToJsAssetsSrc + 'book-index-app.js', '')
   }
   appIndexTargets = require(pathToJsAssetsSrc + 'book-index-app.js')
-    .appIndexTargets
 } catch (appIndexTargetsError) {
   console.log(appIndexTargetsError)
   console.log(`Could not find ${pathToJsAssetsSrc}book-index-app.js.`)
