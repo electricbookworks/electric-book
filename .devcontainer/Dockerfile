@@ -61,6 +61,8 @@ RUN apt-get install -y ca-certificates curl gnupg \
 # Install PrinceXML for printing to PDF.
 # This is a default version for older Electric Book template
 # projects. Newer projects will use Prince in a Node module.
+# Force-update the certificate store right before using it
+RUN apt-get update && apt-get install -y --reinstall ca-certificates
 RUN wget https://www.princexml.com/download/prince_11.4-1_ubuntu18.04_amd64.deb \
     && dpkg -i prince_11.4-1_ubuntu18.04_amd64.deb
 
