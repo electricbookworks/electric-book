@@ -287,13 +287,19 @@ async function webpack (argv) {
 
     const configFiles = configString(argv)
 
+    let baseurl = null
+    if (argv.baseurl !== undefined) {
+      baseurl = argv.baseurl
+    }
+
     // Set environment variable
     const env = {
       ...process.env,
       output: argv.format,
       build: argv.build,
       debug: argv.debugjs,
-      configFiles
+      configFiles,
+      baseurl
     }
 
     // Create a child process
@@ -374,7 +380,7 @@ async function jekyll (argv) {
   if (configsObject(argv).baseurl) {
     baseurl = configsObject(argv).baseurl
   }
-  if (argv.baseurl) {
+  if (argv.baseurl !== undefined) {
     baseurl = argv.baseurl
   }
 
