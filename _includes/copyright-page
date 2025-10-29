@@ -10,4 +10,16 @@
 
 {% include identifiers scheme="ISBN" %}
 
+{% if site.output == "web" %}
+{{ web-rights }}
+{% elsif site.output == "print-pdf" %}
+{{ print-pdf-rights }}
+{% elsif site.output == "epub" %}
+{{ epub-rights }}
+{% elsif site.output == "screen-pdf" %}
+{{ screen-pdf-rights }}
+{% elsif site.output == "app" %}
+{{ app-rights }}
+{% else %}
 {{ rights }}
+{% endif %}

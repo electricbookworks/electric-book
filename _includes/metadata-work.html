@@ -190,6 +190,14 @@ we fall back to the value in the work's default.yml.
     {% capture print-pdf-image %}{{ image }}{% endcapture %}
 {% endif %}
 
+{% if work[work-variant].products.print-pdf.rights and work[work-variant].products.print-pdf.rights != "" %}
+    {% capture print-pdf-rights %}{{ work[work-variant].products.print-pdf.rights }}{% endcapture %}
+{% elsif work.default.products.print-pdf.rights and work.default.products.print-pdf.rights != "" %}
+    {% capture print-pdf-rights %}{{ work.default.products.print-pdf.rights }}{% endcapture %}
+{% else %}
+    {% capture print-pdf-rights %}{{ rights }}{% endcapture %}
+{% endif %}
+
 {% if work[work-variant].products.print-pdf.files and work[work-variant].products.print-pdf.files != "" %}
     {% assign print-pdf-file-list = work[work-variant].products.print-pdf.files %}
 {% elsif work.default.products.print-pdf.files and work.default.products.print-pdf.files != "" %}
@@ -239,6 +247,14 @@ we fall back to the value in the work's default.yml.
     {% capture web-image %}{{ work.default.products.web.image }}{% endcapture %}
 {% else %}
     {% capture web-image %}{{ image }}{% endcapture %}
+{% endif %}
+
+{% if work[work-variant].products.web.rights and work[work-variant].products.web.rights != "" %}
+    {% capture web-rights %}{{ work[work-variant].products.web.rights }}{% endcapture %}
+{% elsif work.default.products.web.rights and work.default.products.web.rights != "" %}
+    {% capture web-rights %}{{ work.default.products.web.rights }}{% endcapture %}
+{% else %}
+    {% capture web-rights %}{{ rights }}{% endcapture %}
 {% endif %}
 
 {% comment %} Find fallback start-page and contents-page {% endcomment %}
@@ -334,6 +350,14 @@ we fall back to the value in the work's default.yml.
     {% capture epub-image %}{{ image }}{% endcapture %}
 {% endif %}
 
+{% if work[work-variant].products.epub.rights and work[work-variant].products.epub.rights != "" %}
+    {% capture epub-rights %}{{ work[work-variant].products.epub.rights }}{% endcapture %}
+{% elsif work.default.products.epub.rights and work.default.products.epub.rights != "" %}
+    {% capture epub-rights %}{{ work.default.products.epub.rights }}{% endcapture %}
+{% else %}
+    {% capture epub-rights %}{{ rights }}{% endcapture %}
+{% endif %}
+
 {% if work[work-variant].products.epub.accessibility and work[work-variant].products.epub.accessibility != "" %}
     {% assign epub-accessibility  = work[work-variant].products.epub.accessibility %}
 {% elsif work.default.products.epub.accessibility and work.default.products.epub.accessibility != "" %}
@@ -416,6 +440,14 @@ we fall back to the value in the work's default.yml.
     {% capture screen-pdf-image %}{{ image }}{% endcapture %}
 {% endif %}
 
+{% if work[work-variant].products.screen-pdf.rights and work[work-variant].products.screen-pdf.rights != "" %}
+    {% capture screen-pdf-rights %}{{ work[work-variant].products.screen-pdf.rights }}{% endcapture %}
+{% elsif work.default.products.screen-pdf.rights and work.default.products.screen-pdf.rights != "" %}
+    {% capture screen-pdf-rights %}{{ work.default.products.screen-pdf.rights }}{% endcapture %}
+{% else %}
+    {% capture screen-pdf-rights %}{{ rights }}{% endcapture %}
+{% endif %}
+
 {% if work[work-variant].products.screen-pdf.files and work[work-variant].products.screen-pdf.files != "" %}
     {% assign screen-pdf-file-list = work[work-variant].products.screen-pdf.files %}
 {% elsif work.default.products.screen-pdf.files and work.default.products.screen-pdf.files != "" %}
@@ -475,6 +507,14 @@ we fall back to the value in the work's default.yml.
     {% else %}
         {% capture app-image %}{{ web-image }}{% endcapture %}
     {% endif %}
+
+{% if work[work-variant].products.app.rights and work[work-variant].products.app.rights != "" %}
+    {% capture app-rights %}{{ work[work-variant].products.app.rights }}{% endcapture %}
+{% elsif work.default.products.app.rights and work.default.products.app.rights != "" %}
+    {% capture app-rights %}{{ work.default.products.app.rights }}{% endcapture %}
+{% else %}
+    {% capture app-rights %}{{ rights }}{% endcapture %}
+{% endif %}
 
     {% if work[work-variant].products.app.start-page and work[work-variant].products.app.start-page != "" %}
         {% capture app-start-page %}{{ work[work-variant].products.app.start-page }}{% endcapture %}

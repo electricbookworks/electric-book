@@ -50,8 +50,8 @@
     {% if subject and subject != "" %}
         <dc:subject>{{ subject | escape }}</dc:subject>
     {% endif %}
-    {% if rights and rights != "" %}
-        <dc:rights>{{ rights | escape }}</dc:rights>
+    {% if epub-rights and epub-rights != "" %}
+        <dc:rights>{{ epub-rights | escape }}</dc:rights>
     {% endif %}
     {% if coverage and coverage != "" %}
         <dc:coverage>{{ coverage | escape }}</dc:coverage>

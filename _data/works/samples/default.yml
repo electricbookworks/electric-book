@@ -87,6 +87,14 @@ products:
     # this will inherit the parent ISBN above.
     identifier: ""
 
+    # E.g. cover image. If not specified,
+    # this will inherit the parent image above.
+    image: ""
+
+    # E.g. format-specific rights statement.
+    # If not specified, inherits parent rights.
+    rights: ""
+
     # Files to include in this format
     files:
       - "00-01-halftitle-page"
@@ -275,6 +283,14 @@ products:
 
     # E.g. ISBN or UUID
     identifier: ""
+
+    # E.g. cover image. If not specified,
+    # this will inherit the parent image above.
+    image: ""
+
+    # E.g. format-specific rights statement.
+    # If not specified, inherits parent rights.
+    rights: ""
 
     # Files to include in this format.
     # On web, this determines pagination order.
@@ -484,6 +500,10 @@ products:
     # The epub's cover image
     image: "cover.jpg"
 
+    # E.g. format-specific rights statement.
+    # If not specified, inherits parent rights.
+    rights: ""
+
     # Accessibility metadata to inform users
     # about the accessibility features in this epub.
     accessibility:
@@ -575,6 +595,14 @@ products:
 
     # E.g. ISBN or UUID
     identifier: ""
+
+    # E.g. cover image. If not specified,
+    # this will inherit the parent image above.
+    image: ""
+
+    # E.g. format-specific rights statement.
+    # If not specified, inherits parent rights.
+    rights: ""
 
     # Files to include in this format.
     # Note that a screen PDF usually starts
