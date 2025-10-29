@@ -1,5 +1,8 @@
 # See https://docs.netlify.com/configure-builds/file-based-configuration/
 
+[build.environment]
+  NODE_VERSION = "18"
+
 [context.production.environment]
 
   # We set NODE_ENV to production because we do not need
