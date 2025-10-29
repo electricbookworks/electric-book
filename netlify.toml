@@ -1,7 +1,7 @@
 # See https://docs.netlify.com/configure-builds/file-based-configuration/
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "22"
 
 [context.production.environment]
 
