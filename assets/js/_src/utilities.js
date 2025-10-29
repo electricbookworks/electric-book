@@ -2,7 +2,6 @@
 
 let currentUrlPath = null
 if (typeof window !== 'undefined') {
-  // TODO: get webpack to transpile URL for Prince
   // currentUrlPath = new URL(window.location.href).pathname
   currentUrlPath = window.location.pathname
 }
