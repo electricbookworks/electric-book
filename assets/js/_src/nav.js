@@ -115,7 +115,7 @@ function ebNavGenerateTreeFromFiles (files, basePath) {
 
 /**
  * Safely retrieves a nested property from a work object with multiple fallbacks.
- * @param {object} workData - The work.
+ * @param {object} workData - The work object.
  * @param {Array<string>} keys - The property path to retrieve (e.g., ['products', 'web', 'nav']).
  * @returns {any|undefined} The found property or undefined.
  */
