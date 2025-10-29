@@ -35,6 +35,7 @@ import ebIndexTargetsInit from './_src/index-targets'
 import ebIndexLists from './_src/index-lists'
 // import ebBaselineGrid from './src/baseline-grid'
 
+// console.log('Config:', process.env.config)
 // console.log('Settings:', process.env.settings)
 // console.log('Works:', process.env.works)
 // console.log('Output:', process.env.output)

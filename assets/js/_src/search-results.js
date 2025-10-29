@@ -2,9 +2,8 @@ import elasticlunr from 'elasticlunr'
 import { locales, pageLanguage } from './locales'
 import { index } from './search-index'
 import { fillSearchBox, searchTerm } from './search-terms'
-import config from './config'
 
-const store = config.collections.docs.output === true
+const store = process.env.config.collections?.docs?.output === true
   ? (Array.isArray(require(`./search-index-with-docs-${process.env.output}.js`)) ? require(`./search-index-with-docs-${process.env.output}.js`) : [])
   : (Array.isArray(require(`./search-index-${process.env.output}.js`)) ? require(`./search-index-${process.env.output}.js`) : [])
 

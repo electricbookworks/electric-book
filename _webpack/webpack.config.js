@@ -5,6 +5,7 @@ const WorksDataPlugin = require('./plugins/works-data-plugin')
 const YamlEnvPlugin = require('./plugins/yaml-env-plugin')
 const BookIndexFilesPlugin = require('./plugins/book-index-files-plugin')
 const FilesPlugin = require('./plugins/files-plugin')
+const ConfigMergePlugin = require('./plugins/config-merge-plugin')
 const mode = yargs.argv.mode || 'development'
 const ebBuild = process.env.build || 'development'
 const isWebAppOutput = process.env.output === 'web' || process.env.output === 'app'
@@ -79,6 +80,10 @@ module.exports = {
     }
   },
   plugins: [
+    new ConfigMergePlugin({
+      configFiles: process.env.configFiles || '_config.yml',
+      envVar: 'config'
+    }),
     new WorksDataPlugin({
       worksDir: '_data/works',
       envVar: 'works'

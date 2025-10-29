@@ -1,6 +1,5 @@
 import { ebToggleClickout, currentUrlPath } from './utilities'
 import { locales, pageLanguage } from './locales'
-import config from './config'
 import marked from './marked'
 
 /**
@@ -149,7 +148,7 @@ function ebNavBuildBookList () {
   const sortedWorks = Object.keys(process.env.works).sort()
 
   // Determine context: are we on a variant landing page?
-  const variantLandingPattern = new RegExp(`^${config.baseurl}/([^/]+)/index(?:\\.html)?$`)
+  const variantLandingPattern = new RegExp(`^${process.env.config.baseurl}/([^/]+)/index(?:\\.html)?$`)
   const variantLandingMatch = currentUrlPath.match(variantLandingPattern)
   const isVariantLandingPage = !!variantLandingMatch
   const currentVariant = isVariantLandingPage ? variantLandingMatch[1] : (window.currentVariant || 'default')
@@ -183,7 +182,7 @@ function ebNavBuildBookList () {
       const startPage = ebNavGetWorkProperty(workData, currentVariant, ['products', process.env.output, 'start-page']) ||
                         ebNavGetWorkProperty(workData, currentVariant, ['products', 'web', 'start-page']) ||
                         'index'
-      link.href = `${config.baseurl}/${workKey}/${startPage}.html`
+      link.href = `${process.env.config.baseurl}/${workKey}/${startPage}.html`
       link.innerHTML = ebNavProcessMarkdown(workTitle)
     }
     li.appendChild(link)
@@ -194,8 +193,8 @@ function ebNavBuildBookList () {
     if (isVariantLandingPage || expandBooks) {
       let childTree
       const basePath = isVariantLandingPage
-        ? `${config.baseurl}/${workKey}/${currentVariant}`
-        : `${config.baseurl}/${workKey}`
+        ? `${process.env.config.baseurl}/${workKey}/${currentVariant}`
+        : `${process.env.config.baseurl}/${workKey}`
 
       if (navTree && navTree.length > 0) {
         childTree = ebNavBuildTreeRecursive(navTree, basePath)
@@ -226,7 +225,7 @@ function ebNavBuildBookChapters () {
   Object.keys(process.env.works).forEach(work => {
     Object.keys(process.env.works[work]).forEach(version => {
       const versionPath = version === 'default' ? '' : `/${version}`
-      const workPathBase = `${config.baseurl ? config.baseurl : ''}/${work}${versionPath}`
+      const workPathBase = `${process.env.config.baseurl ? process.env.config.baseurl : ''}/${work}${versionPath}`
       if (currentUrlPath.startsWith(workPathBase)) {
         const versionNode = process.env.works[work][version]
         const defaultToWebNav = process.env.output === 'app' && !versionNode?.products?.[process.env.output]?.nav && !versionNode?.default?.products?.[process.env.output]?.nav

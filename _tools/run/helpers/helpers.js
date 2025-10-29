@@ -285,8 +285,16 @@ async function webpack (argv) {
       webpackSpawnArgs.push('--watch')
     }
 
+    const configFiles = configString(argv)
+
     // Set environment variable
-    const env = { ...process.env, output: argv.format, build: argv.build, debug: argv.debugjs }
+    const env = {
+      ...process.env,
+      output: argv.format,
+      build: argv.build,
+      debug: argv.debugjs,
+      configFiles
+    }
 
     // Create a child process
     const webpackProcess = spawn('webpack', webpackSpawnArgs, { env })
