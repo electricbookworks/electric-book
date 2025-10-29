@@ -166,6 +166,13 @@ const options = {
     default: false,
     defaultDescription: 'false',
     type: 'boolean'
+  },
+  dontserve: {
+    description: 'Whether to skip serving with Jekyll',
+    alias: 'ds',
+    default: false,
+    defaultDescription: 'false',
+    type: 'boolean'
   }
 }
 

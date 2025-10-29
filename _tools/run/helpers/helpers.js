@@ -369,7 +369,7 @@ async function webpack (argv) {
 async function jekyll (argv) {
   // Use 'build' unless we're starting a webserver
   let command = 'build'
-  if (argv.format === 'web' && argv._[0] === 'output') {
+  if (!argv.dontserve && argv.format === 'web' && argv._[0] === 'output') {
     command = 'serve'
   }
 
