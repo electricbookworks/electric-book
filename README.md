@@ -161,6 +161,14 @@ If you want to watch for JavaScript changes and to include a source map for impr
 npm run eb -- output --debugjs true
 ```
 
+#### Skipping webpack build
+
+If you have already built the necessary JavaScript and don't want to run webpack for an output, set the `--skipwebpack` option to `true`:
+
+```sh
+npm run eb -- output --skipwebpack true
+```
+
 ### Exporting to Word
 
 To get a Word export of a book, use the `export` command instead of `output`, e.g.:

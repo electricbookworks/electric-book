@@ -159,6 +159,13 @@ const options = {
     default: false,
     defaultDescription: 'false',
     type: 'boolean'
+  },
+  skipwebpack: {
+    description: 'Whether to skip webpack build',
+    alias: 'swp',
+    default: false,
+    defaultDescription: 'false',
+    type: 'boolean'
   }
 }
 

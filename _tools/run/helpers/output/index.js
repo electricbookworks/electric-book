@@ -35,7 +35,7 @@ const merge = require('../merge')
 async function web (argv) {
   try {
     await fs.emptyDir(process.cwd() + '/_site')
-    await webpack(argv)
+    !argv.skipwebpack && await webpack(argv)
     await jekyll(argv)
   } catch (error) {
     console.log(error)
@@ -44,7 +44,7 @@ async function web (argv) {
 async function pdf (argv) {
   try {
     await fs.emptyDir(process.cwd() + '/_site')
-    await webpack(argv)
+    !argv.skipwebpack && await webpack(argv)
     await jekyll(argv)
     await processContent(argv)
     await renderIndexComments(argv)
@@ -63,7 +63,7 @@ async function pdf (argv) {
 async function epub (argv) {
   try {
     await fs.emptyDir(process.cwd() + '/_site')
-    await webpack(argv)
+    !argv.skipwebpack && await webpack(argv)
     await jekyll(argv)
     await processContent(argv)
     await epubHTMLTransformations(argv)
@@ -154,7 +154,7 @@ async function epub (argv) {
 async function app (argv) {
   try {
     await fs.emptyDir(process.cwd() + '/_site')
-    await webpack(argv)
+    !argv.skipwebpack && await webpack(argv)
     await jekyll(argv)
     await fsPromises.mkdir(process.cwd() + '/_site/app/www')
     await assembleApp()
