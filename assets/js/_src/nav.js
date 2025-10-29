@@ -147,7 +147,7 @@ function ebNavBuildBookList () {
   const sortedWorks = Object.keys(process.env.works).sort()
 
   // Determine context: are we on a translation landing page?
-  const translationLandingPattern = new RegExp(`^${process.env.config.baseUrl}/([^/]+)/index(?:\\.html)?$`)
+  const translationLandingPattern = new RegExp(`^${process.env.config.baseurl}/([^/]+)/index(?:\\.html)?$`)
   const translationLandingMatch = currentUrlPath.match(translationLandingPattern)
   const isTranslationLandingPage = !!translationLandingMatch
   const currentTranslation = isTranslationLandingPage ? translationLandingMatch[1] : (activeVariant || 'default')
@@ -192,8 +192,8 @@ function ebNavBuildBookList () {
     if (isTranslationLandingPage || expandBooks) {
       let childTree
       const basePath = isTranslationLandingPage
-        ? `${process.env.config.baseUrl}/${workKey}/${currentTranslation}`
-        : `${process.env.config.baseUrl}/${workKey}`
+        ? `${process.env.config.baseurl}/${workKey}/${currentTranslation}`
+        : `${process.env.config.baseurl}/${workKey}`
 
       if (navTree && navTree.length > 0) {
         childTree = ebNavBuildTreeRecursive(navTree, basePath)
@@ -221,15 +221,15 @@ function ebNavBuildBookChapters () {
   const jsNavCont = document.querySelector('#nav-js-gen-book-chapters')
   if (!jsNavCont) return
 
-  Object.keys(window.metadata.works).forEach(work => {
-    Object.keys(window.metadata.works[work]).forEach(translation => {
+  Object.keys(process.env.works).forEach(work => {
+    Object.keys(process.env.works[work]).forEach(translation => {
       const translationPath = translation === activeVariant || translation === 'default' ? '' : `/${translation}`
-      const workPathBase = `${process.env.config.baseUrl}/${work}${translationPath}`
+      const workPathBase = `${process.env.config.baseurl}/${work}${translationPath}`
 
       if (currentUrlPath.startsWith(workPathBase)) {
-        const translationNode = window.metadata.works[work][translation]
-        const defaultToWebNav = process.env.config.format === 'app' && !translationNode?.products?.[process.env.config.format]?.nav && !translationNode[activeVariant]?.products?.[process.env.config.format]?.nav && !translationNode?.default?.products?.[process.env.config.format]?.nav
-        const format = defaultToWebNav ? 'web' : process.env.config.format
+        const translationNode = process.env.works[work][translation]
+        const defaultToWebNav = process.env.output === 'app' && !translationNode?.products?.app?.nav && !translationNode?.default?.products?.app?.nav
+        const format = defaultToWebNav ? 'web' : process.env.output
         const navTree = translationNode?.products?.[format]?.nav || translationNode[activeVariant]?.products?.[format]?.nav || translationNode?.default?.products?.[format]?.nav
         if (navTree) {
           jsNavCont.innerHTML = ''
