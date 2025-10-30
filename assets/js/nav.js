@@ -144,7 +144,7 @@ function ebNavBuildBookList () {
   const sortedWorks = Object.keys(window.metadata.works).sort()
 
   // Determine context: are we on a translation landing page?
-  const translationLandingPattern = new RegExp(`^${config.baseUrl}/([^/]+)/index(?:\\.html)?$`)
+  const translationLandingPattern = new RegExp(`^${config.baseUrl}/([^/]+)(?:/index(?:\\.html)?|/)$`)
   const translationLandingMatch = currentUrlPath.match(translationLandingPattern)
   const isTranslationLandingPage = !!translationLandingMatch
   const currentTranslation = isTranslationLandingPage ? translationLandingMatch[1] : (config.activeVariant || 'default')
