@@ -60,7 +60,7 @@ const options = {
   baseurl: {
     description: 'A custom base URL, e.g. /books',
     alias: 'u',
-    default: '',
+    default: null,
     defaultDescription: 'None',
     type: 'string',
     nargs: 1

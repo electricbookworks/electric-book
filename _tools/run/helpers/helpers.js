@@ -380,7 +380,7 @@ async function jekyll (argv) {
   if (configsObject(argv).baseurl) {
     baseurl = configsObject(argv).baseurl
   }
-  if (argv.baseurl !== undefined) {
+  if (argv.baseurl !== null) {
     baseurl = argv.baseurl
   }
 
