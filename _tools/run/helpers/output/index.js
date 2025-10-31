@@ -24,7 +24,8 @@ const {
   renderIndexComments,
   renderIndexLinks,
   renderMathjax,
-  runPrince
+  runPrince,
+  webpack
 } = require('../helpers.js')
 const htmlFilePaths = require('../paths/htmlFilePaths.js')
 const pathExists = require('../paths/pathExists.js')
@@ -32,22 +33,18 @@ const merge = require('../merge')
 
 // Web output
 async function web (argv) {
-  'use strict'
-
   try {
     await fs.emptyDir(process.cwd() + '/_site')
+    !argv.skipwebpack && await webpack(argv)
     await jekyll(argv)
   } catch (error) {
     console.log(error)
   }
-}
-
-// PDF output
+}// PDF output
 async function pdf (argv) {
-  'use strict'
-
   try {
     await fs.emptyDir(process.cwd() + '/_site')
+    !argv.skipwebpack && await webpack(argv)
     await jekyll(argv)
     await processContent(argv)
     await renderIndexComments(argv)
@@ -64,10 +61,9 @@ async function pdf (argv) {
 
 // Epub output
 async function epub (argv) {
-  'use strict'
-
   try {
     await fs.emptyDir(process.cwd() + '/_site')
+    !argv.skipwebpack && await webpack(argv)
     await jekyll(argv)
     await processContent(argv)
     await epubHTMLTransformations(argv)
@@ -95,9 +91,9 @@ async function epub (argv) {
     await addToEpub(bookAssetPaths(argv, 'images', 'assets'),
       'assets/images/epub')
 
-    if (pathExists(process.cwd() + '/_site/assets/js/bundle.js')) {
-      await addToEpub([process.cwd() + '/_site/assets/js/bundle.js'],
-        '/assets/js')
+    if (pathExists(process.cwd() + '/_site/assets/js/dist/main.dist.js')) {
+      await addToEpub([process.cwd() + '/_site/assets/js/dist/main.dist.js'],
+        '/assets/js/dist')
     }
 
     if (mathjaxEnabled(argv)) {
@@ -156,10 +152,9 @@ async function epub (argv) {
 
 // App output
 async function app (argv) {
-  'use strict'
-
   try {
     await fs.emptyDir(process.cwd() + '/_site')
+    !argv.skipwebpack && await webpack(argv)
     await jekyll(argv)
     await fsPromises.mkdir(process.cwd() + '/_site/app/www')
     await assembleApp()

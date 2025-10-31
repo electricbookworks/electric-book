@@ -60,7 +60,7 @@ const options = {
   baseurl: {
     description: 'A custom base URL, e.g. /books',
     alias: 'u',
-    default: '',
+    default: null,
     defaultDescription: 'None',
     type: 'string',
     nargs: 1
@@ -152,6 +152,27 @@ const options = {
     default: '#',
     defaultDescription: '#',
     type: 'string'
+  },
+  debugjs: {
+    description: 'Whether to include source maps and live rebuild for JS',
+    alias: 'djs',
+    default: false,
+    defaultDescription: 'false',
+    type: 'boolean'
+  },
+  skipwebpack: {
+    description: 'Whether to skip webpack build',
+    alias: 'swp',
+    default: false,
+    defaultDescription: 'false',
+    type: 'boolean'
+  },
+  dontserve: {
+    description: 'Whether to skip serving with Jekyll',
+    alias: 'ds',
+    default: false,
+    defaultDescription: 'false',
+    type: 'boolean'
   }
 }
 

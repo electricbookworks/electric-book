@@ -5,61 +5,54 @@ const fs = require('fs')
 const yaml = require('js-yaml')
 const { book, language } = require('../helpers/args.js')
 
-// Load scripts from elsewhere in this repo,
-// wrapped in 'try' for when they don't exist.
-
-// const pathToProjectRoot = '../../../'
-const pathToProjectRoot = process.cwd() + '/'
+// Load scripts from elsewhere in this repo
+const pathToJsAssetsSrc = `${process.cwd()}/assets/js/_src/`
 
 let printpdfIndexTargets
 try {
-  if (!fs.existsSync(pathToProjectRoot + 'assets/js/book-index-print-pdf.js')) {
-    fs.writeFileSync(pathToProjectRoot + 'assets/js/book-index-print-pdf.js', '')
+  if (!fs.existsSync(pathToJsAssetsSrc + 'book-index-print-pdf.js')) {
+    fs.writeFileSync(pathToJsAssetsSrc + 'book-index-print-pdf.js', '')
   }
-  printpdfIndexTargets = require(pathToProjectRoot + 'assets/js/book-index-print-pdf.js')
-    .printpdfIndexTargets
+  printpdfIndexTargets = require(pathToJsAssetsSrc + 'book-index-print-pdf.js')
 } catch (printpdfIndexTargetsError) {
   console.log(printpdfIndexTargetsError)
-  console.log('Could not find assets/js/book-index-print-pdf.js.')
+  console.log(`Could not find ${pathToJsAssetsSrc}book-index-print-pdf.js.`)
   console.log('This is fine if you are only processing images.')
 }
 
 let screenpdfIndexTargets
 try {
-  if (!fs.existsSync(pathToProjectRoot + 'assets/js/book-index-screen-pdf.js')) {
-    fs.writeFileSync(pathToProjectRoot + 'assets/js/book-index-screen-pdf.js', '')
+  if (!fs.existsSync(pathToJsAssetsSrc + 'book-index-screen-pdf.js')) {
+    fs.writeFileSync(pathToJsAssetsSrc + 'book-index-screen-pdf.js', '')
   }
-  screenpdfIndexTargets = require(pathToProjectRoot + 'assets/js/book-index-screen-pdf.js')
-    .screenpdfIndexTargets
+  screenpdfIndexTargets = require(pathToJsAssetsSrc + 'book-index-screen-pdf.js')
 } catch (screenpdfIndexTargetsError) {
   console.log(screenpdfIndexTargetsError)
-  console.log('Could not find assets/js/book-index-screen-pdf.js.')
+  console.log(`Could not find ${pathToJsAssetsSrc}book-index-screen-pdf.js.`)
   console.log('This is fine if you are only processing images.')
 }
 
 let epubIndexTargets
 try {
-  if (!fs.existsSync(pathToProjectRoot + 'assets/js/book-index-epub.js')) {
-    fs.writeFileSync(pathToProjectRoot + 'assets/js/book-index-epub.js', '')
+  if (!fs.existsSync(pathToJsAssetsSrc + 'book-index-epub.js')) {
+    fs.writeFileSync(pathToJsAssetsSrc + 'book-index-epub.js', '')
   }
-  epubIndexTargets = require(pathToProjectRoot + 'assets/js/book-index-epub.js')
-    .epubIndexTargets
+  epubIndexTargets = require(pathToJsAssetsSrc + 'book-index-epub.js')
 } catch (epubIndexTargetsError) {
   console.log(epubIndexTargetsError)
-  console.log('Could not find assets/js/book-index-epub.js.')
+  console.log(`Could not find ${pathToJsAssetsSrc}book-index-epub.js.`)
   console.log('This is fine if you are only processing images.')
 }
 
 let appIndexTargets
 try {
-  if (!fs.existsSync(pathToProjectRoot + 'assets/js/book-index-app.js')) {
-    fs.writeFileSync(pathToProjectRoot + 'assets/js/book-index-app.js', '')
+  if (!fs.existsSync(pathToJsAssetsSrc + 'book-index-app.js')) {
+    fs.writeFileSync(pathToJsAssetsSrc + 'book-index-app.js', '')
   }
-  appIndexTargets = require(pathToProjectRoot + 'assets/js/book-index-app.js')
-    .appIndexTargets
+  appIndexTargets = require(pathToJsAssetsSrc + 'book-index-app.js')
 } catch (appIndexTargetsError) {
   console.log(appIndexTargetsError)
-  console.log('Could not find assets/js/book-index-app.js.')
+  console.log(`Could not find ${pathToJsAssetsSrc}book-index-app.js.`)
   console.log('This is fine if you are only processing images.')
 }
 

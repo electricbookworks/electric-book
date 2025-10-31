@@ -164,14 +164,14 @@ async function merge (argv) {
         // When we've processed all the files,
         // write the serialized merged HTML to a file.
         // If this is not the last file, remove the script tag
-        // that loads bundle.js, so it doesn't load multiple times.
+        // that loads main.dist.js, so it doesn't load multiple times.
         if (fileCounter === filePaths.length) {
           console.log('Writing merged HTML to ' + destination)
           fsPromises.writeFile(destination, mergedDom.serialize())
           resolve(true)
         } else {
           const bundleScriptTag = mergedDom.window.document
-            .querySelector('[data-script-name="bundle"]')
+            .querySelector('[data-script-name="main"]')
           if (bundleScriptTag) {
             bundleScriptTag.remove()
           }

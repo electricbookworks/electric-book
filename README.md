@@ -153,6 +153,21 @@ npm run eb -- output --format screen-pdf --book samples --mathjax true
 
 Note that if maths is already enabled in a project's Jekyll config(s), the output script will detect that, and it isn't necessary to pass `--mathjax true` as well. (This is unlike older versions of the Electric Book output scripts, which did not check Jekyll configs.)
 
+#### Debugging JavaScript
+
+If you want to watch for JavaScript changes and to include a source map for improved debugging, set the `--debugjs` option to `true`:
+
+```sh
+npm run eb -- output --debugjs true
+```
+
+#### Skipping webpack build
+
+If you have already built the necessary JavaScript and don't want to run webpack for an output, set the `--skipwebpack` option to `true`:
+
+```sh
+npm run eb -- output --skipwebpack true
+```
 
 ### Exporting to Word
 
