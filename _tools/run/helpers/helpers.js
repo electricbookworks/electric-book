@@ -287,19 +287,17 @@ async function webpack (argv) {
 
     const configFiles = configString(argv)
 
-    let baseurl = null
-    if (argv.baseurl !== undefined) {
-      baseurl = argv.baseurl
-    }
-
     // Set environment variable
     const env = {
       ...process.env,
       output: argv.format,
       build: argv.build,
       debug: argv.debugjs,
-      configFiles,
-      baseurl
+      configFiles
+    }
+
+    if (argv.baseurl !== null) {
+      env.baseurl = argv.baseurl
     }
 
     // Create a child process

@@ -19,7 +19,7 @@ class ConfigMergePlugin {
         const mergedConfig = this.loadAndMergeConfigs(this.configFiles)
 
         // Override baseurl if provided via command line
-        if (process.env.baseurl !== null) {
+        if (process.env.baseurl !== null && process.env.baseurl !== undefined) {
           mergedConfig.baseurl = process.env.baseurl
           console.log(`✓ Overriding baseurl with command-line value: '${process.env.baseurl}'`)
         }
