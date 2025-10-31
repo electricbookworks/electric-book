@@ -14,21 +14,24 @@ This should contain a private SSH key that has write access to the target reposi
 
 1. **Generate a new SSH key pair** (or use an existing one):
    ```bash
-   ssh-keygen -t rsa -b 4096 -C "github-actions-deploy"
+   ssh-keygen -t rsa -b 4096 -C "github-actions-deploy" -f ~/.ssh/electric_book_deploy
    ```
    
-2. **Add the public key to your GitHub account**:
-   - Go to GitHub Settings → SSH and GPG keys
-   - Click "New SSH key"
-   - Paste the contents of the `.pub` file
-   - Give it a descriptive title like "Electric Book Actions Deploy Key"
+2. **Add the public key as a deploy key to the TARGET repository**:
+   - Go to the target repository: `https://github.com/alexmaughan/electric-book-server-template-automate`
+   - Navigate to Settings → Deploy keys
+   - Click "Add deploy key"
+   - Title: "Electric Book Actions Deploy Key"
+   - Key: Paste the contents of the `.pub` file (`~/.ssh/electric_book_deploy.pub`)
+   - ✅ **Check "Allow write access"**
+   - Click "Add key"
 
-3. **Add the private key as a repository secret**:
-   - Go to your repository on GitHub
+3. **Add the private key as a repository secret in the SOURCE repository**:
+   - Go to THIS repository: `https://github.com/alexmaughan/electric-book-automate`
    - Navigate to Settings → Secrets and variables → Actions
    - Click "New repository secret"
    - Name: `DEPLOY_SSH_KEY`
-   - Value: Paste the entire contents of the private key file (including the `-----BEGIN` and `-----END` lines)
+   - Value: Paste the entire contents of the private key file (`~/.ssh/electric_book_deploy`) including the `-----BEGIN` and `-----END` lines
 
 ## How the Workflow Works
 
@@ -49,6 +52,8 @@ The workflow can also be triggered manually from the GitHub Actions tab using th
 
 ## Troubleshooting
 
-- **SSH Key Issues**: Make sure the SSH key has the correct permissions and is added to an account with write access to the target repository
+- **Permission denied (publickey)**: Make sure you added the public key as a **deploy key** to the target repository (`alexmaughan/electric-book-server-template-automate`) with **write access enabled**, not to your personal GitHub account
+- **SSH Key Issues**: The deploy key must have write access enabled in the target repository settings
+- **Repository Access**: Ensure the target repository exists and you have admin access to it to add deploy keys
 - **Branch Issues**: The workflow will create the target branch if it doesn't exist in the destination repository
 - **Build Failures**: Check that `npm run setup` and `npm run eb` commands work locally first
