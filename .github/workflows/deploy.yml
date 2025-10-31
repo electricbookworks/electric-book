@@ -97,12 +97,15 @@ jobs:
         # Copy the built site to the public directory
         cp -r ../_site/electric-book public/
         
+        # Remove any .gitignore files from the copied content that might prevent tracking
+        find public/electric-book -name ".gitignore" -delete
+        
         # Configure git
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         
-        # Add changes and commit
-        git add .
+        # Add changes and commit (force add to override any gitignore rules)
+        git add . --force
         
         # Check if there are any changes to commit
         if git diff --staged --quiet; then
