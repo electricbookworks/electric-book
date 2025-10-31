@@ -113,7 +113,7 @@ jobs:
           exit 0
         fi
         
-        git commit -m "Deploy from ${{ github.ref_name }} on ${{ github.repository }}"
+        git commit -m "Deploy from ${{ github.ref_name }} on ${{ github.repository }}" -m "${{ github.event.head_commit.message }}"
         git push origin ${TARGET_BRANCH}
 
     - name: Deployment Summary
