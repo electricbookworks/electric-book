@@ -2,44 +2,47 @@
 
 This repository includes a GitHub Actions workflow that automatically builds and deploys the Electric Book to the server template repository whenever changes are pushed to the `master`, `staging`, or `live` branches.
 
-## Required Secrets
+## Required Setup
 
-To enable the deployment workflow, you need to set up the following secret in your GitHub repository:
+### 1. Create the Target Repository
 
-### DEPLOY_SSH_KEY
+First, you need to create the target repository:
+- Go to GitHub and create a new repository: `alexmaughan/electric-book-server-template-automate`
+- Make it public or private (your choice)
+- Initialize with a README or leave it empty
+- The workflow will create the `public` directory structure as needed
 
-This should contain a private SSH key that has write access to the target repository (`alexmaughan/electric-book-server-template-automate`).
+### 2. Create a Personal Access Token
 
-#### To set up the SSH key:
+To enable the deployment workflow, you need to set up a GitHub Personal Access Token:
 
-1. **Generate a new SSH key pair** (or use an existing one):
-   ```bash
-   ssh-keygen -t rsa -b 4096 -C "github-actions-deploy" -f ~/.ssh/electric_book_deploy
-   ```
-   
-2. **Add the public key as a deploy key to the TARGET repository**:
-   - Go to the target repository: `https://github.com/alexmaughan/electric-book-server-template-automate`
-   - Navigate to Settings → Deploy keys
-   - Click "Add deploy key"
-   - Title: "Electric Book Actions Deploy Key"
-   - Key: Paste the contents of the `.pub` file (`~/.ssh/electric_book_deploy.pub`)
-   - ✅ **Check "Allow write access"**
-   - Click "Add key"
+### DEPLOY_TOKEN
 
-3. **Add the private key as a repository secret in the SOURCE repository**:
+This should contain a GitHub Personal Access Token with write access to the target repository.
+
+#### To set up the token:
+
+1. **Create a Personal Access Token**:
+   - Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+   - Click "Generate new token (classic)"
+   - Name: "Electric Book Deploy Token"
+   - Expiration: Choose your preferred expiration (90 days, 1 year, or no expiration)
+   - Scopes: Select **`repo`** (Full control of private repositories)
+   - Click "Generate token"
+   - **Copy the token immediately** (you won't see it again!)
+
+2. **Add the token as a repository secret in the SOURCE repository**:
    - Go to THIS repository: `https://github.com/alexmaughan/electric-book-automate`
    - Navigate to Settings → Secrets and variables → Actions
    - Click "New repository secret"
-   - Name: `DEPLOY_SSH_KEY`
-   - Value: Paste the entire contents of the private key file (`~/.ssh/electric_book_deploy`) including the `-----BEGIN` and `-----END` lines
+   - Name: `DEPLOY_TOKEN`
+   - Value: Paste the Personal Access Token you copied
 
-#### Verify the setup:
-
-You can test if the deploy key is working by running this locally:
-```bash
-ssh -i ~/.ssh/electric_book_deploy -T git@github.com
-```
-You should see: "Hi alexmaughan/electric-book-server-template-automate! You've successfully authenticated, but GitHub does not provide shell access."
+#### Benefits of using Personal Access Token over SSH:
+- More reliable in GitHub Actions environment
+- Easier to set up and troubleshoot
+- No need for SSH key management
+- Works with both public and private repositories
 
 ## How the Workflow Works
 
@@ -60,8 +63,8 @@ The workflow can also be triggered manually from the GitHub Actions tab using th
 
 ## Troubleshooting
 
-- **Permission denied (publickey)**: Make sure you added the public key as a **deploy key** to the target repository (`alexmaughan/electric-book-server-template-automate`) with **write access enabled**, not to your personal GitHub account
-- **SSH Key Issues**: The deploy key must have write access enabled in the target repository settings
-- **Repository Access**: Ensure the target repository exists and you have admin access to it to add deploy keys
+- **Repository does not exist**: First create the target repository `alexmaughan/electric-book-server-template-automate` on GitHub
+- **Authentication failed**: Make sure you created a Personal Access Token with `repo` scope and added it as `DEPLOY_TOKEN` secret
+- **Token expired**: Personal Access Tokens can expire - check if yours needs to be renewed
 - **Branch Issues**: The workflow will create the target branch if it doesn't exist in the destination repository
 - **Build Failures**: Check that `npm run setup` and `npm run eb` commands work locally first

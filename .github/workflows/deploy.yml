@@ -36,29 +36,11 @@ jobs:
     - name: Build Electric Book
       run: npm run eb -- output --dontserve=true --deploy=true
 
-    - name: Setup SSH for deployment
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-        
-        # Debug: Check SSH key format
-        echo "SSH key format check:"
-        head -1 ~/.ssh/id_rsa
-        
-        # Debug: Test SSH connection
-        echo "Testing SSH connection to GitHub..."
-        ssh -T git@github.com || echo "SSH test completed (exit code: $?)"
-
-    - name: Test repository access
-      run: |
-        echo "Testing repository access..."
-        git ls-remote git@github.com:alexmaughan/electric-book-server-template-automate.git || echo "Repository access test completed (exit code: $?)"
-
     - name: Clone target repository and determine target branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
       run: |
-        git clone git@github.com:alexmaughan/electric-book-server-template-automate.git target-repo
+        git clone https://${{ secrets.DEPLOY_TOKEN }}@github.com/alexmaughan/electric-book-server-template-automate.git target-repo
         cd target-repo
         
         SOURCE_BRANCH="${{ github.ref_name }}"
@@ -88,8 +70,13 @@ jobs:
         echo "TARGET_BRANCH=${TARGET_BRANCH}" >> $GITHUB_ENV
 
     - name: Deploy to target repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
       run: |
         cd target-repo
+        
+        # Configure git to use the token for authentication
+        git config url."https://${{ secrets.DEPLOY_TOKEN }}@github.com/".insteadOf "https://github.com/"
         
         # Remove existing electric-book folder if it exists
         rm -rf public/electric-book
