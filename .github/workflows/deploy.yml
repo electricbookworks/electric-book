@@ -42,6 +42,19 @@ jobs:
         echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+        
+        # Debug: Check SSH key format
+        echo "SSH key format check:"
+        head -1 ~/.ssh/id_rsa
+        
+        # Debug: Test SSH connection
+        echo "Testing SSH connection to GitHub..."
+        ssh -T git@github.com || echo "SSH test completed (exit code: $?)"
+
+    - name: Test repository access
+      run: |
+        echo "Testing repository access..."
+        git ls-remote git@github.com:alexmaughan/electric-book-server-template-automate.git || echo "Repository access test completed (exit code: $?)"
 
     - name: Clone target repository and determine target branch
       run: |

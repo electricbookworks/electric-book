@@ -33,6 +33,14 @@ This should contain a private SSH key that has write access to the target reposi
    - Name: `DEPLOY_SSH_KEY`
    - Value: Paste the entire contents of the private key file (`~/.ssh/electric_book_deploy`) including the `-----BEGIN` and `-----END` lines
 
+#### Verify the setup:
+
+You can test if the deploy key is working by running this locally:
+```bash
+ssh -i ~/.ssh/electric_book_deploy -T git@github.com
+```
+You should see: "Hi alexmaughan/electric-book-server-template-automate! You've successfully authenticated, but GitHub does not provide shell access."
+
 ## How the Workflow Works
 
 1. **Trigger**: Runs on pushes to `master`, `staging`, or `live` branches
