@@ -1,0 +1,86 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - master
+      - staging
+      - live
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout source repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Need full history for proper git operations
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1'
+        bundler-cache: true # runs 'bundle install' and caches gems
+
+    - name: Install dependencies
+      run: npm run setup
+
+    - name: Build Electric Book
+      run: npm run eb -- output --dontserve=true --deploy=true
+
+    - name: Setup SSH for deployment
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+
+    - name: Clone target repository
+      run: |
+        git clone git@github.com:alexmaughan/electric-book-server-template-automate.git target-repo
+        cd target-repo
+        git checkout ${{ github.ref_name }} || git checkout -b ${{ github.ref_name }}
+
+    - name: Deploy to target repository
+      run: |
+        cd target-repo
+        
+        # Remove existing electric-book folder if it exists
+        rm -rf public/electric-book
+        
+        # Create public directory if it doesn't exist
+        mkdir -p public
+        
+        # Copy the built site to the public directory
+        cp -r ../_site/electric-book public/
+        
+        # Configure git
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        
+        # Add changes and commit
+        git add .
+        
+        # Check if there are any changes to commit
+        if git diff --staged --quiet; then
+          echo "No changes to deploy"
+          exit 0
+        fi
+        
+        git commit -m "Deploy from ${{ github.ref_name }} on ${{ github.repository }}"
+        git push origin ${{ github.ref_name }}
+
+    - name: Deployment Summary
+      run: |
+        echo "✅ Successfully deployed to electric-book-server-template-automate"
+        echo "📁 Source branch: ${{ github.ref_name }}"
+        echo "📁 Target branch: ${{ github.ref_name }}"
+        echo "🔗 Target repository: alexmaughan/electric-book-server-template-automate"
