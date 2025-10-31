@@ -21,7 +21,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '22'
         cache: 'npm'
 
     - name: Setup Ruby
@@ -43,11 +43,36 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
-    - name: Clone target repository
+    - name: Clone target repository and determine target branch
       run: |
         git clone git@github.com:alexmaughan/electric-book-server-template-automate.git target-repo
         cd target-repo
-        git checkout ${{ github.ref_name }} || git checkout -b ${{ github.ref_name }}
+        
+        SOURCE_BRANCH="${{ github.ref_name }}"
+        TARGET_BRANCH="${SOURCE_BRANCH}"
+        
+        # Check if the source branch exists in target repo
+        if git show-ref --verify --quiet refs/remotes/origin/${SOURCE_BRANCH}; then
+          echo "Using exact branch match: ${SOURCE_BRANCH}"
+          git checkout ${SOURCE_BRANCH}
+        else
+          # Handle master <-> main mapping
+          if [[ "${SOURCE_BRANCH}" == "master" ]] && git show-ref --verify --quiet refs/remotes/origin/main; then
+            echo "Source is master, but target repo has main. Using main branch."
+            TARGET_BRANCH="main"
+            git checkout main
+          elif [[ "${SOURCE_BRANCH}" == "main" ]] && git show-ref --verify --quiet refs/remotes/origin/master; then
+            echo "Source is main, but target repo has master. Using master branch."
+            TARGET_BRANCH="master"
+            git checkout master
+          else
+            echo "Creating new branch: ${SOURCE_BRANCH}"
+            git checkout -b ${SOURCE_BRANCH}
+          fi
+        fi
+        
+        # Save the target branch name for later steps
+        echo "TARGET_BRANCH=${TARGET_BRANCH}" >> $GITHUB_ENV
 
     - name: Deploy to target repository
       run: |
@@ -76,11 +101,11 @@ jobs:
         fi
         
         git commit -m "Deploy from ${{ github.ref_name }} on ${{ github.repository }}"
-        git push origin ${{ github.ref_name }}
+        git push origin ${TARGET_BRANCH}
 
     - name: Deployment Summary
       run: |
         echo "✅ Successfully deployed to electric-book-server-template-automate"
         echo "📁 Source branch: ${{ github.ref_name }}"
-        echo "📁 Target branch: ${{ github.ref_name }}"
+        echo "📁 Target branch: ${TARGET_BRANCH}"
         echo "🔗 Target repository: alexmaughan/electric-book-server-template-automate"
