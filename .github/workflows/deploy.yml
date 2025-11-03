@@ -19,7 +19,8 @@ jobs:
         # Load environment variables from .github/workflows/.env.deploy
         ENV_FILE=".github/workflows/.env.deploy"
         if [ -f "$ENV_FILE" ]; then
-          export $(cat "$ENV_FILE" | xargs)
+          # Export only lines that contain '=' and don't start with '#'
+          export $(grep -E '^[^#]*=' "$ENV_FILE" | xargs)
           echo "DEPLOY_DIR_NAME=${DEPLOY_DIR_NAME}" >> $GITHUB_ENV
           echo "DEPLOY_BRANCHES=${DEPLOY_BRANCHES}" >> $GITHUB_ENV
           echo "DEPLOY_REPO=${DEPLOY_REPO}" >> $GITHUB_ENV
