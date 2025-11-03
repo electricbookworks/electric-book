@@ -34,6 +34,7 @@ jobs:
         fi
 
     - name: Check if branch is allowed for deployment
+      id: check-branch
       run: |
         CURRENT_BRANCH="${{ github.ref_name }}"
         IFS=',' read -ra ALLOWED <<< "${DEPLOY_BRANCHES}"
@@ -49,27 +50,33 @@ jobs:
         if [[ "${BRANCH_ALLOWED}" == "false" ]]; then
           echo "❌ Branch '${CURRENT_BRANCH}' is not in the allowed branches list: ${DEPLOY_BRANCHES}"
           echo "Skipping deployment."
-          exit 1
+          echo "should_deploy=false" >> $GITHUB_OUTPUT
+          exit 0
         fi
         
         echo "✅ Branch '${CURRENT_BRANCH}' is allowed for deployment"
+        echo "should_deploy=true" >> $GITHUB_OUTPUT
 
     - name: Setup Node.js
+      if: steps.check-branch.outputs.should_deploy == 'true'
       uses: actions/setup-node@v4
       with:
         node-version: '22'
         cache: 'npm'
 
     - name: Setup Ruby
+      if: steps.check-branch.outputs.should_deploy == 'true'
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.1'
         bundler-cache: true # runs 'bundle install' and caches gems
 
     - name: Install dependencies
+      if: steps.check-branch.outputs.should_deploy == 'true'
       run: npm run setup
 
     - name: Build project
+      if: steps.check-branch.outputs.should_deploy == 'true'
       run: |
         # Ensure DEPLOY_DIR_NAME starts with a slash
         if [[ "${DEPLOY_DIR_NAME}" != /* ]]; then
@@ -80,6 +87,7 @@ jobs:
         npm run eb -- output --baseurl="${DEPLOY_DIR}" --dontserve=true --deploy=true
 
     - name: Clone target repository and determine target branch
+      if: steps.check-branch.outputs.should_deploy == 'true'
       env:
         DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
       run: |
@@ -123,6 +131,7 @@ jobs:
         echo "TARGET_BRANCH=${TARGET_BRANCH}" >> $GITHUB_ENV
 
     - name: Deploy to target repository
+      if: steps.check-branch.outputs.should_deploy == 'true'
       env:
         DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
       run: |
@@ -170,6 +179,7 @@ jobs:
         git push origin ${TARGET_BRANCH}
 
     - name: Deployment Summary
+      if: steps.check-branch.outputs.should_deploy == 'true'
       run: |
         echo "✅ Successfully deployed to ${DEPLOY_REPO}"
         echo "📁 Source branch: ${{ github.ref_name }}"
