@@ -107,8 +107,8 @@ jobs:
             BUILD_DIR="${DIR_NAME}"
           fi
           
-          # Build this version with the corresponding config
-          npm run eb -- output --baseurl="${BUILD_DIR}" --configs="${DEPLOY_CONFIGS},${CONFIG}" --dontserve=true --deploy=true
+          # Build this version with the corresponding config (prefix with _configs/)
+          npm run eb -- output --baseurl="${BUILD_DIR}" --configs="${DEPLOY_CONFIGS},_configs/${CONFIG}" --dontserve=true --deploy=true
           
           echo "✅ Completed build for ${DIR_NAME}"
         done
