@@ -185,4 +185,3 @@ jobs:
         echo "📁 Source branch: ${{ github.ref_name }}"
         echo "📁 Target branch: ${TARGET_BRANCH}"
         echo "📂 Deployed folder: ${DEPLOY_DIR_NAME}"
-        echo "🔗 Target repository: ${DEPLOY_REPO}"
