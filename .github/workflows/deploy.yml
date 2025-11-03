@@ -114,9 +114,10 @@ jobs:
           npm run eb -- output --baseurl="${BUILD_DIR}" --configs="${DEPLOY_CONFIGS},_configs/${CONFIG}" --dontserve=true --deploy=true
           
           # Copy the built files to staging directory to preserve them
+          # The built files are already in the correct subdirectory structure in _site
           echo "📁 Copying build to staging: ${BUILD_DIR}"
           mkdir -p "_build_staging${BUILD_DIR}"
-          cp -r _site/* "_build_staging${BUILD_DIR}/"
+          cp -r _site${BUILD_DIR}/* "_build_staging${BUILD_DIR}/"
           
           echo "✅ Completed build for ${DIR_NAME}"
         done
