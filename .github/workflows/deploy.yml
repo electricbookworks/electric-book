@@ -93,6 +93,9 @@ jobs:
         
         echo "🔨 Building ${#DIRS[@]} versions of the project..."
         
+        # Create a staging directory for all builds
+        mkdir -p _build_staging
+        
         # Build each version
         for i in "${!DIRS[@]}"; do
           DIR_NAME="${DIRS[$i]}"
@@ -109,6 +112,11 @@ jobs:
           
           # Build this version with the corresponding config (prefix with _configs/)
           npm run eb -- output --baseurl="${BUILD_DIR}" --configs="${DEPLOY_CONFIGS},_configs/${CONFIG}" --dontserve=true --deploy=true
+          
+          # Copy the built files to staging directory to preserve them
+          echo "📁 Copying build to staging: ${BUILD_DIR}"
+          mkdir -p "_build_staging${BUILD_DIR}"
+          cp -r _site/* "_build_staging${BUILD_DIR}/"
           
           echo "✅ Completed build for ${DIR_NAME}"
         done
@@ -191,8 +199,8 @@ jobs:
           # Create the full directory structure for nested paths
           mkdir -p public${DEPLOY_DIR}
           
-          # Copy the built site to the public directory
-          cp -r ../_site${DEPLOY_DIR}/* public${DEPLOY_DIR}/
+          # Copy the built site from staging directory
+          cp -r ../_build_staging${DEPLOY_DIR}/* public${DEPLOY_DIR}/
           
           # Remove any .gitignore files from the copied content that might prevent tracking
           find public${DEPLOY_DIR} -name ".gitignore" -delete
