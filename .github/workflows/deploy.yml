@@ -21,12 +21,14 @@ jobs:
         if [ -f "$ENV_FILE" ]; then
           # Export only lines that contain '=' and don't start with '#'
           export $(grep -E '^[^#]*=' "$ENV_FILE" | xargs)
-          echo "DEPLOY_DIR_NAME=${DEPLOY_DIR_NAME}" >> $GITHUB_ENV
           echo "DEPLOY_BRANCHES=${DEPLOY_BRANCHES}" >> $GITHUB_ENV
           echo "DEPLOY_REPO=${DEPLOY_REPO}" >> $GITHUB_ENV
           echo "DEPLOY_CONFIGS=${DEPLOY_CONFIGS}" >> $GITHUB_ENV
+          echo "BUILD_DIRS=${BUILD_DIRS}" >> $GITHUB_ENV
+          echo "BUILD_CONFIGS=${BUILD_CONFIGS}" >> $GITHUB_ENV
           echo "✅ Loaded deployment configuration:"
-          echo "  Directory: ${DEPLOY_DIR_NAME}"
+          echo "  Build directories: ${BUILD_DIRS}"
+          echo "  Build configs: ${BUILD_CONFIGS}"
           echo "  Allowed branches: ${DEPLOY_BRANCHES}"
           echo "  Target repo: ${DEPLOY_REPO}"
         else
@@ -79,13 +81,39 @@ jobs:
     - name: Build project
       if: steps.check-branch.outputs.should_deploy == 'true'
       run: |
-        # Ensure DEPLOY_DIR_NAME starts with a slash
-        if [[ "${DEPLOY_DIR_NAME}" != /* ]]; then
-          DEPLOY_DIR="/${DEPLOY_DIR_NAME}"
-        else
-          DEPLOY_DIR="${DEPLOY_DIR_NAME}"
+        # Use BUILD_DIRS and BUILD_CONFIGS for builds
+        IFS=',' read -ra DIRS <<< "${BUILD_DIRS}"
+        IFS=',' read -ra CONFIGS <<< "${BUILD_CONFIGS}"
+        
+        # Validate that we have the same number of directories and configs
+        if [[ ${#DIRS[@]} -ne ${#CONFIGS[@]} ]]; then
+          echo "❌ ERROR: Number of BUILD_DIRS (${#DIRS[@]}) does not match number of BUILD_CONFIGS (${#CONFIGS[@]})"
+          exit 1
         fi
-        npm run eb -- output --baseurl="${DEPLOY_DIR}" --configs="${DEPLOY_CONFIGS}" --dontserve=true --deploy=true
+        
+        echo "🔨 Building ${#DIRS[@]} versions of the project..."
+        
+        # Build each version
+        for i in "${!DIRS[@]}"; do
+          DIR_NAME="${DIRS[$i]}"
+          CONFIG="${CONFIGS[$i]}"
+          
+          echo "📦 Building version $((i+1))/${#DIRS[@]}: ${DIR_NAME} with config ${CONFIG}"
+          
+          # Ensure directory name starts with a slash
+          if [[ "${DIR_NAME}" != /* ]]; then
+            BUILD_DIR="/${DIR_NAME}"
+          else
+            BUILD_DIR="${DIR_NAME}"
+          fi
+          
+          # Build this version with the corresponding config
+          npm run eb -- output --baseurl="${BUILD_DIR}" --configs="${DEPLOY_CONFIGS},${CONFIG}" --dontserve=true --deploy=true
+          
+          echo "✅ Completed build for ${DIR_NAME}"
+        done
+        
+        echo "🎉 All builds completed successfully!"
 
     - name: Clone target repository and determine target branch
       if: steps.check-branch.outputs.should_deploy == 'true'
@@ -141,27 +169,38 @@ jobs:
         # Configure git to use the token for authentication
         git config url."https://${DEPLOY_TOKEN}@github.com/".insteadOf "https://github.com/"
         
-        # Ensure DEPLOY_DIR_NAME starts with a slash, add one if not
-        if [[ "${DEPLOY_DIR_NAME}" != /* ]]; then
-          DIR_NAME="/${DEPLOY_DIR_NAME}"
-        else
-          DIR_NAME="${DEPLOY_DIR_NAME}"
-        fi
+        # Deploy using BUILD_DIRS
+        IFS=',' read -ra DIRS <<< "${BUILD_DIRS}"
         
-        # Use the DIR_NAME for deployment
-        echo "📂 Deploying to directory: ${DIR_NAME}"
+        echo "📂 Deploying ${#DIRS[@]} directories..."
         
-        # Remove existing folder if it exists
-        rm -rf public${DIR_NAME}
+        # Deploy each directory
+        for DIR_NAME in "${DIRS[@]}"; do
+          # Ensure directory name starts with a slash
+          if [[ "${DIR_NAME}" != /* ]]; then
+            DEPLOY_DIR="/${DIR_NAME}"
+          else
+            DEPLOY_DIR="${DIR_NAME}"
+          fi
+          
+          echo "📂 Deploying to directory: ${DEPLOY_DIR}"
+          
+          # Remove existing folder if it exists
+          rm -rf public${DEPLOY_DIR}
+          
+          # Create the full directory structure for nested paths
+          mkdir -p public${DEPLOY_DIR}
+          
+          # Copy the built site to the public directory
+          cp -r ../_site${DEPLOY_DIR}/* public${DEPLOY_DIR}/
+          
+          # Remove any .gitignore files from the copied content that might prevent tracking
+          find public${DEPLOY_DIR} -name ".gitignore" -delete
+          
+          echo "✅ Deployed ${DEPLOY_DIR}"
+        done
         
-        # Create the full directory structure for nested paths
-        mkdir -p public${DIR_NAME}
-        
-        # Copy the built site to the public directory
-        cp -r ../_site${DIR_NAME}/* public${DIR_NAME}/
-        
-        # Remove any .gitignore files from the copied content that might prevent tracking
-        find public${DIR_NAME} -name ".gitignore" -delete
+        echo "🎉 All deployments completed!"
         
         # Configure git
         git config user.name "GitHub Actions"
@@ -185,4 +224,5 @@ jobs:
         echo "✅ Successfully deployed to ${DEPLOY_REPO}"
         echo "📁 Source branch: ${{ github.ref_name }}"
         echo "📁 Target branch: ${TARGET_BRANCH}"
-        echo "📂 Deployed folder: ${DEPLOY_DIR_NAME}"
+        echo "📂 Deployed directories: ${BUILD_DIRS}"
+        echo "🔧 Build configs used: ${BUILD_CONFIGS}"
