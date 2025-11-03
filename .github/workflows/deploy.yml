@@ -70,7 +70,14 @@ jobs:
       run: npm run setup
 
     - name: Build Electric Book
-      run: npm run eb -- output --baseurl="/${DEPLOY_DIR_NAME}" --dontserve=true --deploy=true
+      run: |
+        # Ensure DEPLOY_DIR_NAME starts with a slash
+        if [[ "${DEPLOY_DIR_NAME}" != /* ]]; then
+          DEPLOY_DIR="/${DEPLOY_DIR_NAME}"
+        else
+          DEPLOY_DIR="${DEPLOY_DIR_NAME}"
+        fi
+        npm run eb -- output --baseurl="${DEPLOY_DIR}" --dontserve=true --deploy=true
 
     - name: Clone target repository and determine target branch
       env:
@@ -124,20 +131,27 @@ jobs:
         # Configure git to use the token for authentication
         git config url."https://${DEPLOY_TOKEN}@github.com/".insteadOf "https://github.com/"
         
-        # Use the DEPLOY_DIR_NAME from environment
-        echo "📂 Deploying to directory: ${DEPLOY_DIR_NAME}"
+        # Ensure DEPLOY_DIR_NAME starts with a slash, add one if not
+        if [[ "${DEPLOY_DIR_NAME}" != /* ]]; then
+          DIR_NAME="/${DEPLOY_DIR_NAME}"
+        else
+          DIR_NAME="${DEPLOY_DIR_NAME}"
+        fi
+        
+        # Use the DIR_NAME for deployment
+        echo "📂 Deploying to directory: ${DIR_NAME}"
         
         # Remove existing folder if it exists
-        rm -rf public/${DEPLOY_DIR_NAME}
+        rm -rf public${DIR_NAME}
         
         # Create public directory if it doesn't exist
         mkdir -p public
         
         # Copy the built site to the public directory
-        cp -r ../_site/${DEPLOY_DIR_NAME} public/
+        cp -r ../_site${DIR_NAME} public${DIR_NAME}
         
         # Remove any .gitignore files from the copied content that might prevent tracking
-        find public/${DEPLOY_DIR_NAME} -name ".gitignore" -delete
+        find public${DIR_NAME} -name ".gitignore" -delete
         
         # Configure git
         git config user.name "GitHub Actions"
