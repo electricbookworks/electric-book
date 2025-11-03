@@ -88,17 +88,21 @@ jobs:
         # Configure git to use the token for authentication
         git config url."https://${DEPLOY_TOKEN}@github.com/".insteadOf "https://github.com/"
         
-        # Remove existing electric-book folder if it exists
-        rm -rf public/electric-book
+        # Extract baseurl from Jekyll config
+        BASEURL=$(ruby -ryaml -e "config = YAML.load_file('../_config.yml'); puts config['baseurl']")
+        BASEURL=${BASEURL#/}  # Remove leading slash if present
+        
+        # Remove existing folder if it exists
+        rm -rf public/${BASEURL}
         
         # Create public directory if it doesn't exist
         mkdir -p public
         
         # Copy the built site to the public directory
-        cp -r ../_site/electric-book public/
+        cp -r ../_site/${BASEURL} public/
         
         # Remove any .gitignore files from the copied content that might prevent tracking
-        find public/electric-book -name ".gitignore" -delete
+        find public/${BASEURL} -name ".gitignore" -delete
         
         # Configure git
         git config user.name "GitHub Actions"
@@ -118,7 +122,12 @@ jobs:
 
     - name: Deployment Summary
       run: |
+        # Extract baseurl for summary
+        BASEURL=$(ruby -ryaml -e "config = YAML.load_file('_config.yml'); puts config['baseurl']")
+        BASEURL=${BASEURL#/}  # Remove leading slash if present
+        
         echo "✅ Successfully deployed to electric-book-server-template-automate"
         echo "📁 Source branch: ${{ github.ref_name }}"
         echo "📁 Target branch: ${TARGET_BRANCH}"
+        echo "📂 Deployed folder: ${BASEURL}"
         echo "🔗 Target repository: alexmaughan/electric-book-server-template-automate"
