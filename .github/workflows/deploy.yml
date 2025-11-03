@@ -144,11 +144,11 @@ jobs:
         # Remove existing folder if it exists
         rm -rf public${DIR_NAME}
         
-        # Create public directory if it doesn't exist
-        mkdir -p public
+        # Create the full directory structure for nested paths
+        mkdir -p public${DIR_NAME}
         
         # Copy the built site to the public directory
-        cp -r ../_site${DIR_NAME} public${DIR_NAME}
+        cp -r ../_site${DIR_NAME}/* public${DIR_NAME}/
         
         # Remove any .gitignore files from the copied content that might prevent tracking
         find public${DIR_NAME} -name ".gitignore" -delete
