@@ -24,7 +24,7 @@ For security reasons complete steps 1 and 2 below in one interupted sequence wit
 
 ### Benefits of using Personal Access Token over SSH:
 - More reliable in GitHub Actions environment.
-- Easier to set up and manage - no need for SSH key management.
+- Easier to set up and manage; no need for SSH key management across source and target repos, as well as across different user profiles.
 - Works with both public and private repositories.
 – Can be generated once and never viewed again.
 
@@ -32,6 +32,6 @@ For security reasons complete steps 1 and 2 below in one interupted sequence wit
 
 In `.env.deploy` configure the following:
 
-1. The deployment repo. This is an [Electric Book Server](https://github.com/electricbookworks/electric-book-server-template) instance that serves publications from its `public` folder and is configured for its own continuous deployment. 
+1. The deployment repo. This is an [Electric Book Server](https://github.com/electricbookworks/electric-book-server-template) instance that serves projects from its `public` folder and is configured for its own continuous deployment. 
 2. The deployment directory that will be pushed to the deployment repo's `public` directory. If the directory already exists, it will be replaced entirely by the new deployment.
 3. The branches that will trigger deployments on new commits. The workflow will push to the same branch on the deployment repo, matching `main` to `master` and vica versa.
