@@ -69,7 +69,7 @@ jobs:
     - name: Install dependencies
       run: npm run setup
 
-    - name: Build Electric Book
+    - name: Build project
       run: |
         # Ensure DEPLOY_DIR_NAME starts with a slash
         if [[ "${DEPLOY_DIR_NAME}" != /* ]]; then
