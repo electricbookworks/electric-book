@@ -37,7 +37,7 @@ canonical-url: "https://electricbookworks.github.io"
 # the name of your repo, e.g. /electric-book
 # It must start with a slash. Otherwise you can leave it blank. See:
 # http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
-baseurl: "/another-project"
+baseurl: "/electric-book"
 
 # GitHub Pages repository
 # -----------------------

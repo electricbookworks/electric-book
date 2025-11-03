@@ -1,11 +1,7 @@
 name: Build and Deploy
 
 on:
-  push:
-    branches:
-      - master
-      - staging
-      - live
+  push: # Trigger on any push, but branch validation will filter
   workflow_dispatch: # Allow manual triggering
 
 jobs:
@@ -17,6 +13,45 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0 # Need full history for proper git operations
+
+    - name: Load deployment configuration
+      run: |
+        # Load environment variables from .github/workflows/.env.deploy
+        ENV_FILE=".github/workflows/.env.deploy"
+        if [ -f "$ENV_FILE" ]; then
+          export $(cat "$ENV_FILE" | xargs)
+          echo "DEPLOY_DIR_NAME=${DEPLOY_DIR_NAME}" >> $GITHUB_ENV
+          echo "DEPLOY_BRANCHES=${DEPLOY_BRANCHES}" >> $GITHUB_ENV
+          echo "DEPLOY_REPO=${DEPLOY_REPO}" >> $GITHUB_ENV
+          echo "✅ Loaded deployment configuration:"
+          echo "  Directory: ${DEPLOY_DIR_NAME}"
+          echo "  Allowed branches: ${DEPLOY_BRANCHES}"
+          echo "  Target repo: ${DEPLOY_REPO}"
+        else
+          echo "❌ ERROR: $ENV_FILE file not found"
+          exit 1
+        fi
+
+    - name: Check if branch is allowed for deployment
+      run: |
+        CURRENT_BRANCH="${{ github.ref_name }}"
+        IFS=',' read -ra ALLOWED <<< "${DEPLOY_BRANCHES}"
+        BRANCH_ALLOWED=false
+        
+        for branch in "${ALLOWED[@]}"; do
+          if [[ "${CURRENT_BRANCH}" == "${branch// /}" ]]; then
+            BRANCH_ALLOWED=true
+            break
+          fi
+        done
+        
+        if [[ "${BRANCH_ALLOWED}" == "false" ]]; then
+          echo "❌ Branch '${CURRENT_BRANCH}' is not in the allowed branches list: ${DEPLOY_BRANCHES}"
+          echo "Skipping deployment."
+          exit 1
+        fi
+        
+        echo "✅ Branch '${CURRENT_BRANCH}' is allowed for deployment"
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -34,7 +69,7 @@ jobs:
       run: npm run setup
 
     - name: Build Electric Book
-      run: npm run eb -- output --dontserve=true --deploy=true
+      run: npm run eb -- output --baseurl="${DEPLOY_DIR_NAME}" --dontserve=true --deploy=true
 
     - name: Clone target repository and determine target branch
       env:
@@ -50,7 +85,7 @@ jobs:
         echo "✅ DEPLOY_TOKEN is available"
         
         # Clone with token authentication
-        git clone "https://${DEPLOY_TOKEN}@github.com/alexmaughan/electric-book-server-template-automate.git" target-repo
+        git clone "https://${DEPLOY_TOKEN}@github.com/${DEPLOY_REPO}.git" target-repo
         cd target-repo
         
         SOURCE_BRANCH="${{ github.ref_name }}"
@@ -88,21 +123,20 @@ jobs:
         # Configure git to use the token for authentication
         git config url."https://${DEPLOY_TOKEN}@github.com/".insteadOf "https://github.com/"
         
-        # Extract baseurl from Jekyll config
-        BASEURL=$(ruby -ryaml -e "config = YAML.load_file('../_config.yml'); puts config['baseurl']")
-        BASEURL=${BASEURL#/}  # Remove leading slash if present
+        # Use the DEPLOY_DIR_NAME from environment
+        echo "📂 Deploying to directory: ${DEPLOY_DIR_NAME}"
         
         # Remove existing folder if it exists
-        rm -rf public/${BASEURL}
+        rm -rf public/${DEPLOY_DIR_NAME}
         
         # Create public directory if it doesn't exist
         mkdir -p public
         
         # Copy the built site to the public directory
-        cp -r ../_site/${BASEURL} public/
+        cp -r ../_site/${DEPLOY_DIR_NAME} public/
         
         # Remove any .gitignore files from the copied content that might prevent tracking
-        find public/${BASEURL} -name ".gitignore" -delete
+        find public/${DEPLOY_DIR_NAME} -name ".gitignore" -delete
         
         # Configure git
         git config user.name "GitHub Actions"
@@ -122,12 +156,8 @@ jobs:
 
     - name: Deployment Summary
       run: |
-        # Extract baseurl for summary
-        BASEURL=$(ruby -ryaml -e "config = YAML.load_file('_config.yml'); puts config['baseurl']")
-        BASEURL=${BASEURL#/}  # Remove leading slash if present
-        
-        echo "✅ Successfully deployed to electric-book-server-template-automate"
+        echo "✅ Successfully deployed to ${DEPLOY_REPO}"
         echo "📁 Source branch: ${{ github.ref_name }}"
         echo "📁 Target branch: ${TARGET_BRANCH}"
-        echo "📂 Deployed folder: ${BASEURL}"
-        echo "🔗 Target repository: alexmaughan/electric-book-server-template-automate"
+        echo "📂 Deployed folder: ${DEPLOY_DIR_NAME}"
+        echo "🔗 Target repository: ${DEPLOY_REPO}"
