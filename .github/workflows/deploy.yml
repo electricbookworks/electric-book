@@ -24,6 +24,7 @@ jobs:
           echo "DEPLOY_DIR_NAME=${DEPLOY_DIR_NAME}" >> $GITHUB_ENV
           echo "DEPLOY_BRANCHES=${DEPLOY_BRANCHES}" >> $GITHUB_ENV
           echo "DEPLOY_REPO=${DEPLOY_REPO}" >> $GITHUB_ENV
+          echo "DEPLOY_CONFIGS=${DEPLOY_CONFIGS}" >> $GITHUB_ENV
           echo "✅ Loaded deployment configuration:"
           echo "  Directory: ${DEPLOY_DIR_NAME}"
           echo "  Allowed branches: ${DEPLOY_BRANCHES}"
@@ -84,7 +85,7 @@ jobs:
         else
           DEPLOY_DIR="${DEPLOY_DIR_NAME}"
         fi
-        npm run eb -- output --baseurl="${DEPLOY_DIR}" --dontserve=true --deploy=true
+        npm run eb -- output --baseurl="${DEPLOY_DIR}" --configs="${DEPLOY_CONFIGS}" --dontserve=true --deploy=true
 
     - name: Clone target repository and determine target branch
       if: steps.check-branch.outputs.should_deploy == 'true'
