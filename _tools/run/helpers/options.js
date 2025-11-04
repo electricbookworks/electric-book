@@ -173,6 +173,13 @@ const options = {
     default: false,
     defaultDescription: 'false',
     type: 'boolean'
+  },
+  deploy: {
+    description: 'True will build into a subfolder in _site that matches baseurl. Allows for non-conflicting build folders.',
+    alias: 'dp',
+    default: false,
+    defaultDescription: 'false',
+    type: 'boolean'
   }
 }
 

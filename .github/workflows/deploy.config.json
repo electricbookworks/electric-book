@@ -1,0 +1,19 @@
+{
+  "deploy-repo": "alexmaughan/electric-book-server-template-automate",
+  "deploy-branches": [
+    "staging",
+    "live"
+  ],
+  "configs-comment": "All configs are relative to the _configs folder.",
+  "configs": ["_config.live.yml"],
+  "builds": [
+    {
+      "configs": ["_config.student.yml"],
+      "dir": "audience/student"
+    },
+    {
+      "configs": ["_config.teacher.yml"],
+      "dir": "audience/teacher"
+    }
+  ]
+}
