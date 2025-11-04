@@ -1,19 +1,34 @@
 {
-  "book-server": "electricbookworks/electric-book-server-template",
-  "branches": [
-    "staging",
-    "live"
-  ],
-  "configs-comment": "All configs are relative to the _configs folder.",
-  "configs": ["_config.live.yml"],
-  "builds": [
-    {
-      "configs": ["_config.student.yml"],
-      "dir": "audience/student"
-    },
-    {
-      "configs": ["_config.teacher.yml"],
-      "dir": "audience/teacher"
-    }
-  ]
+  "book-server": {
+    "repo": "electricbookworks/electric-book-server-template",
+    "branches": [
+      "staging",
+      "live"
+    ],
+    "configs-comment": "All configs are relative to the _configs folder.",
+    "configs": ["_config.live.yml"],
+    "builds": [
+      {
+        "configs": ["_config.student.yml"],
+        "dir": "audience/student"
+      },
+      {
+        "configs": ["_config.teacher.yml"],
+        "dir": "audience/teacher"
+      }
+    ]
+  },
+  "media" : {
+    "branches-comment": "Only live and staging branches will trigger these syncs. This is not configurable.",
+    "region": "eu-west-2",
+    "syncs": [
+      {
+        "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
+        "bucket": "electric-book",
+        "source": "assets/images/web",
+        "destination": "assets/images/web",
+        "options": ""
+      }
+    ]
+  }
 }
