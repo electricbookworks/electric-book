@@ -14,4 +14,4 @@ jobs:
       ruby-version: '3.1'
       checkout-fetch-depth: 0
     secrets:
-      DEPLOY_TOKEN: ${{ secrets.ORG_DEPLOY_TOKEN }}
+      ORG_DEPLOY_TOKEN: ${{ secrets.ORG_DEPLOY_TOKEN }}
