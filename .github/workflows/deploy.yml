@@ -8,11 +8,11 @@ jobs:
   deploy:
     # Use the reusable workflow from the electric-book-deploy-workflow repository
     # Pin to a specific version for stability (replace 'main' with 'v1' when available)
-    uses: electricbookworks/electric-book-deploy-workflow/.github/workflows/deploy.yml@v1.0.0
+    uses: electricbookworks/electric-book-deploy-workflow/.github/workflows/deploy.yml@v1.0.1
     with:
       config-file: '.github/workflows/deploy.config.json'
       node-version: '22'
       ruby-version: '3.1'
       checkout-fetch-depth: 0
     secrets:
-      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+      DEPLOY_TOKEN: ${{ secrets.ORG_DEPLOY_TOKEN }}

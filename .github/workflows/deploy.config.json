@@ -1,5 +1,5 @@
 {
-  "deploy-repo": "alexmaughan/electric-book-server-template-automate",
+  "deploy-repo": "electricbookworks/electric-book-server-template",
   "deploy-branches": [
     "staging",
     "live"
