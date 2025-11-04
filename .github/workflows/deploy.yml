@@ -14,4 +14,5 @@ jobs:
       node-version: '22'
       ruby-version: '3.1'
       checkout-fetch-depth: 0
-    secrets: inherit  # This passes all secrets including GITHUB_TOKEN
+    secrets:
+      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
