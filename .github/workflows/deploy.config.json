@@ -1,6 +1,6 @@
 {
-  "deploy-repo": "electricbookworks/electric-book-server-template",
-  "deploy-branches": [
+  "book-server": "electricbookworks/electric-book-server-template",
+  "branches": [
     "staging",
     "live"
   ],
