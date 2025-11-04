@@ -401,12 +401,19 @@ async function jekyll (argv) {
               'bundle exec jekyll ' + command +
               ' --config="' + configString(argv) + '"' +
               ' --baseurl="' + baseurl + '"' +
-              ' ' + jekyllSwitches(argv).join(' '))
+              ' ' + jekyllSwitches(argv).join(' ') +
+              ` ${argv.deploy ? '--destination="_site' + baseurl + '"' : ''}`)
 
     // Create an array of arguments to pass to spawn()
-    const jekyllSpawnArgs = ['exec', 'jekyll', command,
+    const jekyllSpawnArgs = [
+      'exec', 'jekyll', command,
       '--config', configs,
-      '--baseurl', baseurl]
+      '--baseurl', baseurl
+    ]
+
+    if (argv.deploy) {
+      jekyllSpawnArgs.push('--destination', '_site' + baseurl)
+    }
 
     // Add each of the switches to the args array
     jekyllSwitches(argv).forEach(function (switchString) {

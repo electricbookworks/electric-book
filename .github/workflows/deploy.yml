@@ -1,0 +1,17 @@
+name: Deploy to Electric Book Server
+
+on:
+  push: # Trigger on any push, but branch validation will filter
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  deploy:
+    # Use the reusable workflow from the electric-book-deploy-workflow repository
+    uses: electricbookworks/electric-book-deploy-workflow/.github/workflows/deploy.yml@main
+    with:
+      config-file: '.github/workflows/deploy.config.json'
+      node-version: '22'
+      ruby-version: '3.1'
+      checkout-fetch-depth: 0
+    secrets:
+      ORG_DEPLOY_TOKEN: ${{ secrets.ORG_DEPLOY_TOKEN }}
