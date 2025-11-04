@@ -5,15 +5,15 @@
     "live"
   ],
   "configs-comment": "All configs are relative to the _configs folder.",
-  "configs": ["_config.test.yml"],
+  "configs": ["_config.live.yml"],
   "builds": [
     {
-      "configs": ["_config.development.yml"],
-      "dir": "multiple/development"
+      "configs": ["_config.student.yml"],
+      "dir": "audience/student"
     },
     {
-      "configs": ["_config.live.yml"],
-      "dir": "multiple/live"
+      "configs": ["_config.teacher.yml"],
+      "dir": "audience/teacher"
     }
   ]
 }
