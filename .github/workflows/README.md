@@ -1,6 +1,6 @@
 # GitHub Actions Deployment Setup
 
-This repository includes a GitHub Actions workflow that automatically builds and deploys this project's web output to a specified book server repository whenever changes are pushed to any one of the branches defined for `DEPLOY_BRANCHES` in `.env.deploy`.
+This repository includes a GitHub Actions workflow that automatically builds and deploys this project's web output to a specified book server repository whenever changes are pushed to any one of the branches defined for `deploy-branches` in `deploy.config.json`.
 
 ## Setup
 
@@ -30,8 +30,9 @@ For security reasons complete steps 1 and 2 below in one interupted sequence wit
 
 ## Deployment configuration
 
-In `.env.deploy` configure the following:
+In `deploy.config.json` configure the following:
 
 1. The deployment repo. This is an [Electric Book Server](https://github.com/electricbookworks/electric-book-server-template) instance that serves projects from its `public` folder and is configured for its own continuous deployment. 
-2. The deployment directory that will be pushed to the deployment repo's `public` directory. If the directory already exists, it will be replaced entirely by the new deployment.
-3. The branches that will trigger deployments on new commits. The workflow will push to the same branch on the deployment repo, matching `main` to `master` and vica versa.
+2. The branches that will trigger deployments on new commits. The workflow will push to the same branch on the deployment repo, matching `main` to `master` and vica versa.
+3. Deployment configs to be used on all builds.
+4. The separate builds that need to be deployed. Each build has a deployment directory that will be pushed to the deployment repo's `public` directory. If the directory already exists, it will be replaced entirely by the new deployment. You can also configure build-specific configs for each.
