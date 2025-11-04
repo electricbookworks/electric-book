@@ -16,23 +16,33 @@ jobs:
 
     - name: Load deployment configuration
       run: |
-        # Load environment variables from .github/workflows/.env.deploy
-        ENV_FILE=".github/workflows/.env.deploy"
-        if [ -f "$ENV_FILE" ]; then
-          # Export only lines that contain '=' and don't start with '#'
-          export $(grep -E '^[^#]*=' "$ENV_FILE" | xargs)
+        # Load configuration from JSON file
+        CONFIG_FILE=".github/workflows/deploy.config.json"
+        if [ -f "$CONFIG_FILE" ]; then
+          # Parse JSON and extract values
+          DEPLOY_REPO=$(cat "$CONFIG_FILE" | jq -r '.["deploy-repo"]')
+          DEPLOY_BRANCHES=$(cat "$CONFIG_FILE" | jq -r '.["deploy-branches"] | join(",")')
+          DEPLOY_CONFIGS=$(cat "$CONFIG_FILE" | jq -r '.configs | join(",")')
+          
+          # Extract build configurations
+          BUILD_DIRS=$(cat "$CONFIG_FILE" | jq -r '.builds | map(.dir) | join(",")')
+          BUILD_CONFIGS=$(cat "$CONFIG_FILE" | jq -r '.builds | map(.configs | join(",")) | join(";")')
+          
+          # Export to GitHub environment
           echo "DEPLOY_BRANCHES=${DEPLOY_BRANCHES}" >> $GITHUB_ENV
           echo "DEPLOY_REPO=${DEPLOY_REPO}" >> $GITHUB_ENV
           echo "DEPLOY_CONFIGS=${DEPLOY_CONFIGS}" >> $GITHUB_ENV
           echo "BUILD_DIRS=${BUILD_DIRS}" >> $GITHUB_ENV
           echo "BUILD_CONFIGS=${BUILD_CONFIGS}" >> $GITHUB_ENV
+          
           echo "✅ Loaded deployment configuration:"
           echo "  Build directories: ${BUILD_DIRS}"
           echo "  Build configs: ${BUILD_CONFIGS}"
           echo "  Allowed branches: ${DEPLOY_BRANCHES}"
           echo "  Target repo: ${DEPLOY_REPO}"
+          echo "  Deploy configs: ${DEPLOY_CONFIGS}"
         else
-          echo "❌ ERROR: $ENV_FILE file not found"
+          echo "❌ ERROR: $CONFIG_FILE file not found"
           exit 1
         fi
 
@@ -83,11 +93,11 @@ jobs:
       run: |
         # Use BUILD_DIRS and BUILD_CONFIGS for builds
         IFS=',' read -ra DIRS <<< "${BUILD_DIRS}"
-        IFS=',' read -ra CONFIGS <<< "${BUILD_CONFIGS}"
+        IFS=';' read -ra CONFIGS_GROUPS <<< "${BUILD_CONFIGS}"
         
-        # Validate that we have the same number of directories and configs
-        if [[ ${#DIRS[@]} -ne ${#CONFIGS[@]} ]]; then
-          echo "❌ ERROR: Number of BUILD_DIRS (${#DIRS[@]}) does not match number of BUILD_CONFIGS (${#CONFIGS[@]})"
+        # Validate that we have the same number of directories and config groups
+        if [[ ${#DIRS[@]} -ne ${#CONFIGS_GROUPS[@]} ]]; then
+          echo "❌ ERROR: Number of BUILD_DIRS (${#DIRS[@]}) does not match number of BUILD_CONFIGS groups (${#CONFIGS_GROUPS[@]})"
           exit 1
         fi
         
@@ -99,9 +109,9 @@ jobs:
         # Build each version
         for i in "${!DIRS[@]}"; do
           DIR_NAME="${DIRS[$i]}"
-          CONFIG="${CONFIGS[$i]}"
+          CONFIG_GROUP="${CONFIGS_GROUPS[$i]}"
           
-          echo "📦 Building version $((i+1))/${#DIRS[@]}: ${DIR_NAME} with config ${CONFIG}"
+          echo "📦 Building version $((i+1))/${#DIRS[@]}: ${DIR_NAME} with configs ${CONFIG_GROUP}"
           
           # Ensure directory name starts with a slash
           if [[ "${DIR_NAME}" != /* ]]; then
@@ -110,8 +120,17 @@ jobs:
             BUILD_DIR="${DIR_NAME}"
           fi
           
-          # Build this version with the corresponding config (prefix with _configs/)
-          npm run eb -- output --baseurl="${BUILD_DIR}" --configs="${DEPLOY_CONFIGS},_configs/${CONFIG}" --dontserve=true --deploy=true
+          # Prepare config string - combine DEPLOY_CONFIGS with CONFIG_GROUP
+          if [[ -n "${DEPLOY_CONFIGS}" && -n "${CONFIG_GROUP}" ]]; then
+            FULL_CONFIGS="${DEPLOY_CONFIGS},_configs/${CONFIG_GROUP}"
+          elif [[ -n "${CONFIG_GROUP}" ]]; then
+            FULL_CONFIGS="_configs/${CONFIG_GROUP}"
+          else
+            FULL_CONFIGS="${DEPLOY_CONFIGS}"
+          fi
+          
+          # Build this version with the corresponding configs
+          npm run eb -- output --baseurl="${BUILD_DIR}" --configs="${FULL_CONFIGS}" --dontserve=true --deploy=true
           
           # Copy the built files to staging directory to preserve them
           # The built files are already in the correct subdirectory structure in _site
