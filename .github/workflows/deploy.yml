@@ -7,7 +7,7 @@ on:
 jobs:
   deploy:
     # Use the reusable workflow from the electric-book-deploy-workflow repository 
-    uses: electricbookworks/electric-book-deploy-workflow/.github/workflows/deploy.yml@v1.0.0
+    uses: electricbookworks/electric-book-deploy-workflow/.github/workflows/deploy.yml@main
     with:
       config-file: '.github/workflows/deploy.config.json'
       node-version: '22' # optional - defaults to 22
