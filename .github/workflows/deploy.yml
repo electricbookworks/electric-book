@@ -6,10 +6,5 @@ on:
 
 jobs:
   deploy:
-    # Use the reusable workflow from the electric-book-deploy-workflow repository 
     uses: electricbookworks/electric-book-deploy-workflow/.github/workflows/deploy.yml@v1.0.1
-    with:
-      config-file: '.github/workflows/deploy.config.json'
-      node-version: '22' # optional - defaults to 22
-      ruby-version: '3.1' # optional - defaults to 3.1
     secrets: inherit
