@@ -41,15 +41,13 @@
 
 // --
 
-let hasBookmarkApi = false
-let hasSessionApi = false
-const ebBookmarksCheckApi = async () => {
-  hasBookmarkApi = await fetch('/api/bookmark/list/').ok
-  hasSessionApi = await fetch('/api/session/').ok
+const ebBookmarksHasApi = async () => {
+  const bookmarkApi = await fetch('/api/bookmark/list/')
+  const sessionApi = await fetch('/api/session/')
+  const hasBookmarkApi = bookmarkApi.ok
+  const hasSessionApi = sessionApi.ok
+  return hasBookmarkApi && hasSessionApi
 }
-ebBookmarksCheckApi()
-console.log('Bookmark API available:', hasBookmarkApi)
-console.log('Session API available:', hasSessionApi)
 
 // Which elements should we make bookmarkable?
 function ebBookmarkableElements () {
@@ -367,14 +365,14 @@ function ebBookmarksConfirmDelete (button, bookmark) {
 }
 
 async function ebBookmarksBookmarkStore (bookmark) {
-  hasBookmarkApi && await fetch('/api/bookmark/upsert/', {
+  await ebBookmarksHasApi() && await fetch('/api/bookmark/upsert/', {
     method: 'POST',
     body: JSON.stringify(bookmark)
   })
 }
 
 async function ebBookmarksBookmarkStoreDelete (bookmark) {
-  hasBookmarkApi && await fetch('/api/bookmark/delete/', {
+  await ebBookmarksHasApi() && await fetch('/api/bookmark/delete/', {
     method: 'POST',
     body: JSON.stringify({ key: bookmark.key })
   })
@@ -564,7 +562,7 @@ function ebBookmarksListBookmarks (bookmarks) {
 // Check if a page has bookmarks
 async function ebBookmarksCheckForBookmarks () {
   let bookmarkResults = []
-  if (hasBookmarkApi) {
+  if (await ebBookmarksHasApi()) {
     bookmarkResults = await fetch('/api/bookmark/list/')
     bookmarkResults = await bookmarkResults.json()
   }
@@ -632,7 +630,7 @@ async function ebBookmarksDeleteAllBookmarks (type) {
 
   // Delete from storage
   if (type === 'userBookmark' || !type) {
-    hasBookmarkApi && await fetch('/api/bookmark/delete/all/')
+    await ebBookmarksHasApi() && await fetch('/api/bookmark/delete/all/')
   }
 
   // Refresh the bookmarks lists
@@ -1233,7 +1231,7 @@ async function ebReadyForBookmarks () {
   const readyForBookmarks = document.body.getAttribute('data-ids-assigned') &&
                             document.body.getAttribute('data-fingerprints-assigned')
   let userSession = null
-  if (hasSessionApi) {
+  if (await ebBookmarksHasApi()) {
     userSession = await fetch('/api/session/')
     userSession = await userSession.json()
   }
