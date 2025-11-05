@@ -167,7 +167,7 @@ exclude:
   - /assets/js/footnotes.js
   - /assets/js/shift-elements.js
   - /assets/js/page-reference.js
-  - /assets/js/bookmarks.js
+  # - /assets/js/bookmarks.js
 
   # Files for formats we're not building here
   - /assets/profiles

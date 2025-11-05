@@ -28,7 +28,8 @@ var settings = {
             elements: {
                 include: '.content [id]',
                 exclude: ''
-            }
+            },
+            noteMaxLength: 5000
         },
         accordion: {
             enabled: true,

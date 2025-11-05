@@ -41,10 +41,18 @@
 
 // --
 
+let hasBookmarkApi = false
+let hasSessionApi = false
+const ebBookmarksCheckApi = async () => {
+  hasBookmarkApi = await fetch('/api/bookmark/list/').ok
+  hasSessionApi = await fetch('/api/session/').ok
+}
+ebBookmarksCheckApi()
+console.log('Bookmark API available:', hasBookmarkApi)
+console.log('Session API available:', hasSessionApi)
+
 // Which elements should we make bookmarkable?
 function ebBookmarkableElements () {
-  'use strict'
-
   // Include anything in .content with an ID...
   let bookmarkableElements = document.querySelectorAll(settings.web.bookmarks.elements.include)
   // ... but exclude elements with data-bookmarkable="no",
@@ -75,7 +83,6 @@ let ebCurrentSelectionText
 // Disable bookmarks on browsers that don't support
 // what we need to provide them.
 function ebBookmarksSupport () {
-  'use strict'
   if (Object.prototype.hasOwnProperty.call(window, 'IntersectionObserver') &&
             window.getSelection &&
             window.getSelection().toString &&
@@ -94,8 +101,6 @@ function ebBookmarksSupport () {
 
 // Generate and store an index of fingerprints and IDs.
 function ebBookmarksCreateFingerprintIndex () {
-  'use strict'
-
   const indexOfBookmarks = {}
   const fingerprintedElements = document.querySelectorAll('[data-fingerprint]')
   fingerprintedElements.forEach(function (element) {
@@ -111,7 +116,6 @@ function ebBookmarksCreateFingerprintIndex () {
 // we extend this script to manage IDs that have moved
 // after content changes.
 function ebBookmarksFingerprintID (elementID) { // eslint-disable-line
-  'use strict'
 
   // If a bookmark's fingerprint isn't in the index,
   // we know that the bookmarked element has moved,
@@ -145,8 +149,6 @@ function ebBookmarksFingerprintID (elementID) { // eslint-disable-line
 
 // Prompt user to go to last location
 function ebBookmarksLastLocationPrompt (link) {
-  'use strict'
-
   // We need to detect if the user has only just arrived.
   // Checking the history length is unreliable, because
   // browsers differ. So we use sessionStorage to store
@@ -190,7 +192,6 @@ function ebBookmarksLastLocationPrompt (link) {
 
 // Create a session ID
 function ebBookmarksSessionDate () {
-  'use strict'
   // If a sessionDate has been set,
   // return the current sessionDate
   if (sessionStorage.getItem('sessionDate')) {
@@ -205,7 +206,6 @@ function ebBookmarksSessionDate () {
 
 // Clean up last locations of a title
 function ebBookmarksCleanLastLocations (bookTitleToClean) {
-  'use strict'
   let lastLocations = []
 
   // Loop through stored bookmarks and add them to the array.
@@ -263,8 +263,6 @@ function ebBookmarksCleanLastLocations (bookTitleToClean) {
 
 // Check if bookmark is on the current page
 function ebBookmarksCheckForCurrentPage (url) {
-  'use strict'
-
   const pageURL = window.location.href.split('#')[0]
   const bookmarkURL = url.split('#')[0]
 
@@ -275,8 +273,6 @@ function ebBookmarksCheckForCurrentPage (url) {
 
 // Mark bookmarks in the document
 function ebBookmarksMarkBookmarks (bookmarks) {
-  'use strict'
-
   // Clear existing bookmarks
   const bookmarkedElements = document.querySelectorAll('[data-bookmarked]')
   bookmarkedElements.forEach(function (element) {
@@ -325,8 +321,6 @@ function ebBookmarksMarkBookmarks (bookmarks) {
 
 // Have user confirm a deletion
 function ebBookmarksConfirmDelete (button, bookmark) {
-  'use strict'
-
   // Only run if a delete button exists and a bookmark argument.
   // E.g. if there are no bookmarks after deletion,
   // there is no button, nor its parent element.
@@ -372,10 +366,31 @@ function ebBookmarksConfirmDelete (button, bookmark) {
   }
 }
 
+async function ebBookmarksBookmarkStore (bookmark) {
+  hasBookmarkApi && await fetch('/api/bookmark/upsert/', {
+    method: 'POST',
+    body: JSON.stringify(bookmark)
+  })
+}
+
+async function ebBookmarksBookmarkStoreDelete (bookmark) {
+  hasBookmarkApi && await fetch('/api/bookmark/delete/', {
+    method: 'POST',
+    body: JSON.stringify({ key: bookmark.key })
+  })
+}
+
+async function ebBookmarksSaveNote ({ bookmark, note }) {
+  const _bookmark = {
+    ...bookmark
+  }
+  _bookmark.note = note
+  await ebBookmarksBookmarkStore(_bookmark)
+  ebBookmarksCheckForBookmarks()
+}
+
 // List bookmarks for user
 function ebBookmarksListBookmarks (bookmarks) {
-  'use strict'
-
   // Get the bookmarks lists
   const bookmarksList = document.querySelector('.bookmarks-list ul')
   const lastLocationsList = document.querySelector('.last-locations-list ul')
@@ -433,6 +448,35 @@ function ebBookmarksListBookmarks (bookmarks) {
       description.classList.add('bookmark-description')
       description.innerHTML = bookmark.description
       listItem.appendChild(description)
+    }
+
+    // Add the note field but not to last locations
+    if (bookmark.type !== 'lastLocation') {
+      let noteEvent = null
+      const handleNoteSave = (e) => {
+        if (e?.currentTarget) {
+          ebBookmarksSaveNote({ bookmark, note: e.currentTarget.value })
+        }
+      }
+      const handleNoteSaveUnload = (e) => {
+        e.preventDefault()
+        e.returnValue = true
+        handleNoteSave(noteEvent)
+      }
+      const noteTextArea = document.createElement('textarea')
+      noteTextArea.placeholder = 'Add a note for this bookmark...'
+      noteTextArea.maxLength = settings.web.bookmarks.noteMaxLength
+      noteTextArea.classList.add('bookmark-note')
+      noteTextArea.innerHTML = bookmark.note ?? ''
+      listItem.appendChild(noteTextArea)
+      noteTextArea.addEventListener('change', handleNoteSave)
+      noteTextArea.addEventListener('focus', (e) => {
+        noteEvent = e
+        window.addEventListener('beforeunload', handleNoteSaveUnload)
+      })
+      noteTextArea.addEventListener('blur', () => {
+        window.removeEventListener('beforeunload', handleNoteSaveUnload)
+      })
     }
 
     // Add title span with link
@@ -518,12 +562,13 @@ function ebBookmarksListBookmarks (bookmarks) {
 }
 
 // Check if a page has bookmarks
-function ebBookmarksCheckForBookmarks () {
-  'use strict'
-
-  // Create an empty array to write to
-  // when we read the localStorage bookmarks strings
-  const bookmarks = []
+async function ebBookmarksCheckForBookmarks () {
+  let bookmarkResults = []
+  if (hasBookmarkApi) {
+    bookmarkResults = await fetch('/api/bookmark/list/')
+    bookmarkResults = await bookmarkResults.json()
+  }
+  const bookmarks = Array.isArray(bookmarkResults?.bookmarks) ? bookmarkResults.bookmarks : []
 
   // Loop through stored bookmarks and clean out old ones.
   Object.keys(localStorage).forEach(function (key) {
@@ -540,12 +585,8 @@ function ebBookmarksCheckForBookmarks () {
   Object.keys(localStorage).forEach(function (key) {
     if (key.startsWith('bookmark-')) {
       const bookmark = JSON.parse(localStorage.getItem(key))
-
-      // Add any bookmark that isn't a last-location,
-      // only last-locations that are not from the current session.
-      if (bookmark.type !== 'lastLocation') {
-        bookmarks.push(bookmark)
-      } else if (bookmark.sessionDate !== ebBookmarksSessionDate()) {
+      // Add only last-locations that are not from the current session.
+      if (bookmark.type === 'lastLocation' && bookmark.sessionDate !== ebBookmarksSessionDate()) {
         bookmarks.push(bookmark)
       }
     }
@@ -559,19 +600,19 @@ function ebBookmarksCheckForBookmarks () {
 }
 
 // Delete a bookmark
-function ebBookmarksDeleteBookmark (bookmark) {
-  'use strict'
+async function ebBookmarksDeleteBookmark (bookmark) {
+  if (bookmark.type === 'lastLocation') {
+    localStorage.removeItem(bookmark.key)
+  } else {
+    await ebBookmarksBookmarkStoreDelete(bookmark)
+  }
 
-  // Delete from local storage
-  localStorage.removeItem(bookmark.key)
   // Remove the entry from the list
   ebBookmarksCheckForBookmarks()
 }
 
 // Delete all bookmarks
-function ebBookmarksDeleteAllBookmarks (type) {
-  'use strict'
-
+async function ebBookmarksDeleteAllBookmarks (type) {
   // Loop through stored bookmarks and delete
   Object.keys(localStorage).forEach(function (key) {
     if (key.startsWith('bookmark-')) {
@@ -589,14 +630,17 @@ function ebBookmarksDeleteAllBookmarks (type) {
     }
   })
 
+  // Delete from storage
+  if (type === 'userBookmark' || !type) {
+    hasBookmarkApi && await fetch('/api/bookmark/delete/all/')
+  }
+
   // Refresh the bookmarks lists
   ebBookmarksCheckForBookmarks()
 }
 
 // Return the ID of a bookmarkable element
 function ebBookmarksElementID (element) {
-  'use strict'
-
   // If we're bookmarking a specified element,
   // i.e. an element was passed to this function,
   // use its hash, otherwise use the first
@@ -618,9 +662,7 @@ function ebBookmarksElementID (element) {
 }
 
 // Create and store bookmark
-function ebBookmarksSetBookmark (type, element, description) {
-  'use strict'
-
+async function ebBookmarksSetBookmark (type, element, description) {
   // Get fallback description text
   if (!description) {
     // Use the opening characters of the text.
@@ -720,7 +762,13 @@ function ebBookmarksSetBookmark (type, element, description) {
   bookmark.key = bookmarkKey
 
   // Save the bookmark
-  localStorage.setItem(bookmarkKey, JSON.stringify(bookmark))
+  if (type !== 'lastLocation') {
+    await ebBookmarksBookmarkStore(bookmark)
+  } else {
+    // The current approach of using a set interval to save last locations may significantly increase storage usage costs,
+    // so continuing to use local storage for these types
+    localStorage.setItem(bookmarkKey, JSON.stringify(bookmark))
+  }
 
   // Refresh the bookmarks list.
   // No need to refresh for a lastLocation,
@@ -732,15 +780,12 @@ function ebBookmarksSetBookmark (type, element, description) {
 
 // Mark an element that has been user-bookmarked
 function ebBookmarkMarkBookmarkedElement (element) {
-  'use strict'
-
   // Set the new bookmark
   element.setAttribute('data-bookmarked', 'true')
 }
 
 // Remove a bookmark by clicking its icon
 function ebBookmarksRemoveByIconClick (button) {
-  'use strict'
   const bookmarkLocation = window.location.href.split('#')[0] + '#' + button.parentElement.id
 
   // Loop through stored bookmarks,
@@ -758,7 +803,6 @@ function ebBookmarksRemoveByIconClick (button) {
 
 // Listen for bookmark clicks
 function ebBookmarksListenForClicks (button) {
-  'use strict'
   button.addEventListener('click', function (event) {
     // Don't let click on bookmark trigger accordion-close etc.
     event.stopPropagation()
@@ -777,8 +821,6 @@ function ebBookmarksListenForClicks (button) {
 
 // Add a bookmark button to bookmarkable elements
 function ebBookmarksToggleButtonOnElement (element, positionX, positionY) {
-  'use strict'
-
   // Exit if no element
   if (!element) {
     return
@@ -891,8 +933,6 @@ function ebBookmarksToggleButtonOnElement (element, positionX, positionY) {
 
 // Mark elements in the viewport so we can bookmark them
 function ebBookmarksMarkVisibleElements (elements) {
-  'use strict'
-
   // Ensure we only use elements with IDs
   const elementsWithIDs = Array.from(elements).filter(function (element) {
     // Reasons not to include an element, e.g.
@@ -952,8 +992,6 @@ function ebBookmarksMarkVisibleElements (elements) {
 
 // Listen for user interaction to show bookmark button
 function ebBookmarksAddButtons (elements, action) {
-  'use strict'
-
   // If an action is specified e.g. 'click',
   // add the button when an element is clicked.
   if (action) {
@@ -969,8 +1007,6 @@ function ebBookmarksAddButtons (elements, action) {
 
 // Toggle the modal visibility
 function ebBookmarksToggleModal (modal) {
-  'use strict'
-
   if (!modal) {
     modal = document.getElementById('bookmarks-modal')
   }
@@ -992,7 +1028,6 @@ function ebBookmarksToggleModal (modal) {
 
 // Open the modal when the bookmarks button is clicked
 function ebBookmarksOpenOnClick () {
-  'use strict'
   const button = document.querySelector('.bookmarks button .bookmark-icon')
   if (button !== null) {
     button.addEventListener('click', function () {
@@ -1003,7 +1038,6 @@ function ebBookmarksOpenOnClick () {
 
 // In addition to CSS hover, mark clicked lists
 function ebBookmarkListsOpenOnClick () {
-  'use strict'
   const listHeaders = document.querySelectorAll('.bookmarks-list-header, .last-locations-list-header')
   listHeaders.forEach(function (header) {
     header.addEventListener('click', function () {
@@ -1032,7 +1066,6 @@ function ebBookmarkListsOpenOnClick () {
 
 // Always listen for and store user's text selection
 function ebBookmarksListenForTextSelection () {
-  'use strict'
   document.onselectionchange = function () {
     // console.log('New selection made');
     ebCurrentSelectionText = document.getSelection().toString()
@@ -1121,7 +1154,6 @@ function ebBookmarksListenForTextSelection () {
 
 // Set the lastLocation bookmark
 function ebBookmarksSetLastLocation () {
-  'use strict'
   if (ebBookmarksElementID()) {
     ebBookmarksSetBookmark('lastLocation',
       document.getElementById(ebBookmarksElementID()))
@@ -1130,7 +1162,6 @@ function ebBookmarksSetLastLocation () {
 
 // Move the modal HTML to an independent location
 function ebBookmarksMoveModal () {
-  'use strict'
   const modal = document.getElementById('bookmarks-modal')
   if (modal !== null) {
     document.body.appendChild(modal)
@@ -1139,8 +1170,6 @@ function ebBookmarksMoveModal () {
 
 // The main process
 function ebBookmarksProcess () {
-  'use strict'
-
   // Set the sessionDate
   ebBookmarksSessionDate()
 
@@ -1176,20 +1205,39 @@ function ebBookmarksProcess () {
   ebBookmarksListenForTextSelection()
 }
 
+// Move all userBookmark objects in local to new storage
+// and then remove from local storage
+async function ebBookmarksMigrateLegacyStorage () {
+  Object.keys(localStorage).forEach(async function (key) {
+    if (key.startsWith('bookmark-')) {
+      const bookmark = JSON.parse(localStorage.getItem(key))
+      if (bookmark.type === 'userBookmark') {
+        await ebBookmarksBookmarkStore(bookmark)
+        localStorage.removeItem(bookmark.key)
+      }
+    }
+  })
+}
+
 // Start bookmarking
-function ebBookmarksInit () {
-  'use strict'
-  // Check for support before running the main process
+async function ebBookmarksInit () {
+  // Check for support before running the legacy migration and main process
   if (ebBookmarksSupport()) {
+    await ebBookmarksMigrateLegacyStorage()
     ebBookmarksProcess()
   }
 }
 
-// A check if the document is ready for bookmarks
-function ebReadyForBookmarks () {
+// A check if the document is ready for bookmarks and if user is logged in
+async function ebReadyForBookmarks () {
   const readyForBookmarks = document.body.getAttribute('data-ids-assigned') &&
                             document.body.getAttribute('data-fingerprints-assigned')
-  if (readyForBookmarks) {
+  let userSession = null
+  if (hasSessionApi) {
+    userSession = await fetch('/api/session/')
+    userSession = await userSession.json()
+  }
+  if (readyForBookmarks && userSession?.ID) {
     return true
   } else {
     return false
@@ -1199,12 +1247,10 @@ function ebReadyForBookmarks () {
 // Wait for IDs and fingerprints to be loaded
 // and IDs to be assigned
 // before applying the accordion.
-function ebPrepareForBookmarks () {
-  'use strict'
-
+async function ebPrepareForBookmarks () {
   // If the doc is ready for bookmarks, go for it …
   //  … otherwise, watch for when it is ready.
-  if (ebReadyForBookmarks()) {
+  if (await ebReadyForBookmarks()) {
     ebBookmarksInit()
   } else {
     const bookmarksObserver = new MutationObserver(function (mutations) {
