@@ -1,4 +1,15 @@
 {
+  "book-server": {
+    "repo": "electricbookworks/electric-book-server-template",
+    "branches": [
+      "staging",
+      "live"
+    ],
+    "configs-comment": "All configs are relative to the _configs folder.",
+    "configs": ["_config.live.yml"],
+    "builds": [
+    ]
+  },
   "media" : {
     "branches-comment": "Only live and staging branches will trigger these syncs. This is not configurable.",
     "region": "eu-west-2",
