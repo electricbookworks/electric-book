@@ -17,18 +17,5 @@
         "dir": "another-audience/teacher"
       }
     ]
-  },
-  "media" : {
-    "branches-comment": "Only live and staging branches will trigger these syncs. This is not configurable.",
-    "region": "eu-west-2",
-    "syncs": [
-      {
-        "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
-        "bucket": "electric-book",
-        "source": "assets/images/web",
-        "destination": "assets/images/web",
-        "options": ""
-      }
-    ]
   }
 }
