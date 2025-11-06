@@ -7,8 +7,7 @@
     ],
     "configs-comment": "All configs are relative to the _configs folder.",
     "configs": ["_config.live.yml"],
-    "builds": [
-    ]
+    "builds": []
   },
   "media" : {
     "branches-comment": "Only live and staging branches will trigger these syncs. This is not configurable.",
