@@ -7,7 +7,16 @@
     ],
     "configs-comment": "All configs are relative to the _configs folder.",
     "configs": ["_config.live.yml"],
-    "builds": []
+    "builds": [
+      {
+        "configs": ["_config.student.yml"],
+        "dir": "another-audience/student"
+      },
+      {
+        "configs": ["_config.teacher.yml"],
+        "dir": "another-audience/teacher"
+      }
+    ]
   },
   "media" : {
     "branches-comment": "Only live and staging branches will trigger these syncs. This is not configurable.",
