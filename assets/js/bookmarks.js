@@ -723,8 +723,9 @@ async function ebBookmarksSetBookmark (type, element, description) {
   }
 
   // Create a bookmark object
+  const sessionDate = `${ebBookmarksSessionDate()}`
   const bookmark = {
-    sessionDate: ebBookmarksSessionDate(),
+    sessionDate,
     type,
     bookTitle: document.querySelector('.wrapper').dataset.title,
     pageTitle,
@@ -746,7 +747,7 @@ async function ebBookmarksSetBookmark (type, element, description) {
                 '-' +
                 bookmark.type +
                 '-' +
-                ebBookmarksSessionDate()
+                sessionDate
   } else {
     bookmarkKey = 'bookmark-' +
                 ebSlugify(bookmark.bookTitle) +
