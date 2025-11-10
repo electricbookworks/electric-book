@@ -28,7 +28,7 @@ async function writeContentAPIFile (pageObject) {
 function generateContentAPI (outputFormat, configsObject) {
   if (outputFormat === 'web' &&
     configsObject?.collections?.docs?.output === true) {
-      return true
+    return true
   } else {
     return false
   }
@@ -36,8 +36,6 @@ function generateContentAPI (outputFormat, configsObject) {
 
 // The main process for generating a search index
 async function buildSearchIndex (outputFormat, filesData, configsObject) {
-  'use strict'
-
   // This will be the elasticllunr index without /docs.
   // We'll close the array when we've added all its objects.
   let searchIndexNoDocs = 'const store = ['
@@ -47,7 +45,7 @@ async function buildSearchIndex (outputFormat, filesData, configsObject) {
   let searchIndexWithDocs = 'const store = ['
 
   // Are we generating the API?
-  const api = generateContentAPI (outputFormat, configsObject)
+  const api = generateContentAPI(outputFormat, configsObject)
 
   // This will be an index for API access.
   // It will not include any /docs
@@ -61,13 +59,8 @@ async function buildSearchIndex (outputFormat, filesData, configsObject) {
   }
 
   // Launch the browser
-  // Run with no sandbox which is necessary for
-  // containerized environments like Docker,
-  // and only safe in development environments.
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  })
+  const puppeteerArgs = process.env.PUPPETEER_ARGS ? process.env.PUPPETEER_ARGS.split(' ') : []
+  const browser = await puppeteer.launch({ headless: true, args: puppeteerArgs })
 
   let i
   let count = 0

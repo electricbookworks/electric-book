@@ -12,5 +12,8 @@
   },
   "postCreateCommand": "bundle install && npm install",
   "forwardPorts": [4000],
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "containerEnv": {
+    "PUPPETEER_ARGS": "--no-sandbox"
+  }
 }

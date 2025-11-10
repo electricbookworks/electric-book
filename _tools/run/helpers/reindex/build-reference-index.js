@@ -5,20 +5,13 @@ const fsPromises = require('fs/promises')
 
 // The main process for generating an index of targets.
 async function buildReferenceIndex (outputFormat, filesData) {
-  'use strict'
-
   // Initialise an array that will store an index
   // or 'database' of the book-index targets.
   const targetsIndex = []
 
   // Launch the browser.
-  // Run with no sandbox which is necessary for
-  // containerized environments like Docker,
-  // and only safe in development environments.
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  })
+  const puppeteerArgs = process.env.PUPPETEER_ARGS ? process.env.PUPPETEER_ARGS.split(' ') : []
+  const browser = await puppeteer.launch({ headless: true, args: puppeteerArgs })
 
   let i
   let count = 0

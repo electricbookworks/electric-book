@@ -10,12 +10,11 @@ const { store, output } = require('./search-engine.js')
 
 // The main process for generating a search index
 function generateIndex () {
-  'use strict';
-
   // Start an async function to scrape all URLs
   (async function () {
     // Launch the browser
-    const browser = await puppeteer.launch({ headless: true })
+    const puppeteerArgs = process.env.PUPPETEER_ARGS ? process.env.PUPPETEER_ARGS.split(' ') : []
+    const browser = await puppeteer.launch({ headless: true, args: puppeteerArgs })
 
     let i
     let count = 0
