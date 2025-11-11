@@ -26,7 +26,7 @@ function ebNavProcessMarkdown (text) {
  */
 function ebNavCreateLink (item, basePath) {
   const link = document.createElement('a')
-  const linkPath = item.file ? `${basePath}/${item.file}.html` : '#'
+  const linkPath = item.file ? `${basePath}/${item.file}.html${item.id ? '#' + item.id : ''}` : '#'
   link.href = linkPath
   link.innerHTML = ebNavProcessMarkdown(item.label)
   if (!item.file) {
