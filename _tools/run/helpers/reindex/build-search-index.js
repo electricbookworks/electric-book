@@ -228,18 +228,17 @@ async function buildSearchIndex (outputFormat, filesData, configsObject) {
   // If we've got all the pages, close the array
   // and close the Puppeteer browser.
   if (count === filesData.length) {
-    const loadStoreFunctionString = ';store.forEach(function (doc) { index.addDoc(doc) })'
-
-    searchIndexNoDocs += ']' + loadStoreFunctionString
-    searchIndexWithDocs += ']' + loadStoreFunctionString
+    const exportStore = 'if (store) { module.exports = store }'
+    searchIndexNoDocs += ']; ' + exportStore
+    searchIndexWithDocs += ']; ' + exportStore
     browser.close()
   }
 
   // Create empty index files to write to, if they don't exist
   const indexFilePathNoDocs = fsPath.normalize(process.cwd() +
-      '/assets/js/search-index-' + outputFormat + '.js')
+      '/assets/js/_src/search-index-' + outputFormat + '.js')
   const indexFilePathWithDocs = fsPath.normalize(process.cwd() +
-      '/assets/js/search-index-with-docs-' + outputFormat + '.js')
+      '/assets/js/_src/search-index-with-docs-' + outputFormat + '.js')
   const indexFilePathForAPI = fsPath.normalize(process.cwd() +
       '/_api/content/index.json')
 

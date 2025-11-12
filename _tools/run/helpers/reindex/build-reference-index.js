@@ -57,7 +57,7 @@ async function buildReferenceIndex (outputFormat, filesData) {
     await page.goto('file://' + path)
 
     // Check that any index targets for the page have been processed.
-    // This is done by assets/js/index-targets.js (in bundle.js).
+    // This is done by assets/js/_src/index-targets.js (in main.js).
 
     // Check if this is a page that actually
     // contains indexing Javascript
@@ -174,7 +174,7 @@ async function buildReferenceIndex (outputFormat, filesData) {
 
   // Create empty index file to write to, if it doesn't exist
   const indexFilePath = fsPath.normalize(process.cwd() +
-      '/assets/js/book-index-' + outputFormat + '.js')
+      '/assets/js/_src/book-index-' + outputFormat + '.js')
   if (!fs.existsSync(indexFilePath)) {
     console.log('Creating ' + indexFilePath)
     await fsPromises.writeFile(indexFilePath, '')
@@ -182,13 +182,11 @@ async function buildReferenceIndex (outputFormat, filesData) {
 
   // Write the book index 'database' file.
   // We add module.exports so that we can use indexTargets
-  // in Node processes (i.e. gulp with cheerio).
+  // in Node processes (i.e. gulp with cheerio)
+  // and in other JS modules.
   fs.writeFile(indexFilePath,
     'var ebIndexTargets = ' + JSON.stringify(targetsIndex) + ';' +
-        'if (typeof window === "undefined")' +
-        '{module.exports.' +
-        outputFormat.replace('-', '') +
-        'IndexTargets = ebIndexTargets;}',
+        'module.exports = ebIndexTargets',
     function () {
       console.log('Writing ' + indexFilePath)
       console.log('Done.')
