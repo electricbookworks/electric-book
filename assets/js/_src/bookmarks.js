@@ -562,7 +562,6 @@ function ebBookmarksListBookmarks (bookmarks) {
 }
 
 // Check if a page has bookmarks
-<<<<<<< HEAD:assets/js/bookmarks.js
 async function ebBookmarksCheckForBookmarks () {
   let bookmarkResults = []
   if (await ebBookmarksHasApi()) {
@@ -570,12 +569,6 @@ async function ebBookmarksCheckForBookmarks () {
     bookmarkResults = await bookmarkResults.json()
   }
   const bookmarks = Array.isArray(bookmarkResults?.bookmarks) ? bookmarkResults.bookmarks : []
-=======
-function ebBookmarksCheckForBookmarks () {
-  // Create an empty array to write to
-  // when we read the localStorage bookmarks strings
-  const bookmarks = []
->>>>>>> master:assets/js/_src/bookmarks.js
 
   // Loop through stored bookmarks and clean out old ones.
   Object.keys(localStorage).forEach(function (key) {
@@ -607,7 +600,6 @@ function ebBookmarksCheckForBookmarks () {
 }
 
 // Delete a bookmark
-<<<<<<< HEAD:assets/js/bookmarks.js
 async function ebBookmarksDeleteBookmark (bookmark) {
   if (bookmark.type === 'lastLocation') {
     localStorage.removeItem(bookmark.key)
@@ -615,21 +607,12 @@ async function ebBookmarksDeleteBookmark (bookmark) {
     await ebBookmarksBookmarkStoreDelete(bookmark)
   }
 
-=======
-function ebBookmarksDeleteBookmark (bookmark) {
-  // Delete from local storage
-  localStorage.removeItem(bookmark.key)
->>>>>>> master:assets/js/_src/bookmarks.js
   // Remove the entry from the list
   ebBookmarksCheckForBookmarks()
 }
 
 // Delete all bookmarks
-<<<<<<< HEAD:assets/js/bookmarks.js
 async function ebBookmarksDeleteAllBookmarks (type) {
-=======
-function ebBookmarksDeleteAllBookmarks (type) {
->>>>>>> master:assets/js/_src/bookmarks.js
   // Loop through stored bookmarks and delete
   Object.keys(localStorage).forEach(function (key) {
     if (key.startsWith('bookmark-')) {
@@ -679,11 +662,7 @@ function ebBookmarksElementID (element) {
 }
 
 // Create and store bookmark
-<<<<<<< HEAD:assets/js/bookmarks.js
 async function ebBookmarksSetBookmark (type, element, description) {
-=======
-function ebBookmarksSetBookmark (type, element, description) {
->>>>>>> master:assets/js/_src/bookmarks.js
   // Get fallback description text
   if (!description) {
     // Use the opening characters of the text.
@@ -1242,13 +1221,8 @@ async function ebBookmarksMigrateLegacyStorage () {
 }
 
 // Start bookmarking
-<<<<<<< HEAD:assets/js/bookmarks.js
 async function ebBookmarksInit () {
   // Check for support before running the legacy migration and main process
-=======
-function ebBookmarksInit () {
-  // Check for support before running the main process
->>>>>>> master:assets/js/_src/bookmarks.js
   if (ebBookmarksSupport()) {
     await ebBookmarksMigrateLegacyStorage()
     ebBookmarksProcess()
@@ -1274,11 +1248,7 @@ async function ebReadyForBookmarks () {
 // Wait for IDs and fingerprints to be loaded
 // and IDs to be assigned
 // before applying the accordion.
-<<<<<<< HEAD:assets/js/bookmarks.js
 async function ebPrepareForBookmarks () {
-=======
-function ebPrepareForBookmarks () {
->>>>>>> master:assets/js/_src/bookmarks.js
   // If the doc is ready for bookmarks, go for it …
   //  … otherwise, watch for when it is ready.
   if (await ebReadyForBookmarks()) {
