@@ -143,7 +143,7 @@ async function checkRequiredPaths () {
     {
       path: 'assets/js',
       type: 'required',
-      description: "Javascript used in the template. Advanced users might add their own scripts here and manage which scripts are included on pages in `bundle.js`. See the ['Using Javascript'](../advanced/javascript.html) section for more detail."
+      description: "Javascript used in the template. Advanced users might add their own scripts here and manage which scripts are included on pages in `main.js`. See the ['Using Javascript'](../advanced/javascript.html) section for more detail."
     },
     {
       path: '_config.yml',
