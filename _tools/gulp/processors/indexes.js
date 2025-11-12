@@ -49,7 +49,7 @@ function isXMLMode () {
 }
 
 // Turn HTML comments for book indexes into anchor tags.
-// This is a pre-processing alternative to assets/js/index-targets.js,
+// This is a pre-processing alternative to assets/js/_src/index-targets.js,
 // which dynamically adds index targets in web clients.
 // It duplicates much of what index-targets.js does. So, if you
 // update it, you may need to update index-targets.js as well.

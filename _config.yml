@@ -135,39 +135,13 @@ exclude:
   - package-lock.json
   - CNAME
   - .sass-cache
+  - _webpack
 
-  # Included as-is in other files, no need to process
-  - /assets/js/annotation.js
-  - /assets/js/baseline-grid.js
-  - /assets/js/polyfills.js
-  - /assets/js/utilities.js
-  - /assets/js/settings.js
-  - /assets/js/locales.js
-  - /assets/js/setup.js
-  - /assets/js/mark-parents.js
-  - /assets/js/mark.min.js
-  - /assets/js/redact.js
-  - /assets/js/search-store.js
-  - /assets/js/search-terms.js
-  - /assets/js/nav.js
-  - /assets/js/videos.js
-  - /assets/js/mcqs.js
-  - /assets/js/select-list.js
-  - /assets/js/tables.js
-  - /assets/js/footnote-popups.js
-  - /assets/js/show-hide.js
-  - /assets/js/elasticlunr.min.js
-  - /assets/js/elasticlunr-setup.js
-  - /assets/js/svg-management.js
-  - /assets/js/svg-inject.min.js
-  - /assets/js/lazyload.js
-  - /assets/js/accordion.js
-  - /assets/js/heading-titles.js
-  - /assets/js/rotate.js
-  - /assets/js/footnotes.js
-  - /assets/js/shift-elements.js
-  - /assets/js/page-reference.js
-  - /assets/js/bookmarks.js
+  # Watched & compiled by Webpack, no need for Jekyll to process.
+  # Jekyll only needs to watch /assets/js/dist
+  - /assets/js/main.js
+  - /assets/js/search.js
+  - /assets/js/_src
 
   # Files for formats we're not building here
   - /assets/profiles
