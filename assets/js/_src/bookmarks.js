@@ -465,7 +465,7 @@ function ebBookmarksListBookmarks (bookmarks) {
       }
       const noteTextArea = document.createElement('textarea')
       noteTextArea.placeholder = 'Add a note for this bookmark...'
-      noteTextArea.maxLength = settings.web.bookmarks.noteMaxLength
+      noteTextArea.maxLength = settings.web?.bookmarks['note-max-length'] ? settings.web?.bookmarks['note-max-length'] : 5000
       noteTextArea.classList.add('bookmark-note')
       noteTextArea.innerHTML = bookmark.note ?? ''
       listItem.appendChild(noteTextArea)

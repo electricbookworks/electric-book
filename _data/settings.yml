@@ -127,6 +127,7 @@ web:
   # -----------------
   bookmarks:
     enabled: true
+    note-max-length: 5000
     elements:
       include: '.content [id]'
       exclude: ''
