@@ -396,17 +396,28 @@ async function jekyll (argv) {
     configs += ',' + extraConfigs
   }
 
+  let destination = null
+  if (argv.destination) {
+    destination = argv.destination.endsWith('/') ? argv.destination.slice(0, -1) : argv.destination
+    destination = destination + baseurl
+  }
+
   try {
     console.log('Running Jekyll with command: ' +
               'bundle exec jekyll ' + command +
               ' --config="' + configString(argv) + '"' +
               ' --baseurl="' + baseurl + '"' +
-              ' ' + jekyllSwitches(argv).join(' '))
+              ' ' + jekyllSwitches(argv).join(' ') +
+              ` ${destination ? '--destination="' + destination + '"' : ''}`)
 
     // Create an array of arguments to pass to spawn()
     const jekyllSpawnArgs = ['exec', 'jekyll', command,
       '--config', configs,
       '--baseurl', baseurl]
+
+    if (destination) {
+      jekyllSpawnArgs.push('--destination', destination)
+    }
 
     // Add each of the switches to the args array
     jekyllSwitches(argv).forEach(function (switchString) {

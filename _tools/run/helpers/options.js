@@ -173,6 +173,13 @@ const options = {
     default: false,
     defaultDescription: 'false',
     type: 'boolean'
+  },
+  destination: {
+    description: 'Output destination directory',
+    alias: 'dest',
+    default: '_site',
+    defaultDescription: '_site',
+    type: 'string'
   }
 }
 
