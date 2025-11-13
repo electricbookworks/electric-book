@@ -2,6 +2,10 @@ const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 
+// Get the ConstDependency class
+const ConstDependency = webpack.dependencies.ConstDependency
+const pluginName = 'BookIndexFilesPlugin'
+
 class BookIndexFilesPlugin {
   constructor (options = {}) {
     this.options = {
@@ -13,23 +17,21 @@ class BookIndexFilesPlugin {
       envVar: options.envVar || 'bookIndexFiles',
       ...options
     }
+
+    // This is the variable key we'll look for in code
+    this.envVarKey = `process.env.${this.options.envVar}`
+
+    // This will store the stringified data
+    this.definition = '[]' // Default to an empty array
   }
 
   apply (compiler) {
-    const pluginName = 'BookIndexFilesPlugin'
-
     // Generate book index files data and set up DefinePlugin
     compiler.hooks.beforeCompile.tapAsync(pluginName, async (params, callback) => {
       try {
         const outputFormats = await this.generateBookIndexFilesData()
 
-        // Add DefinePlugin with the generated book index files data
-        const definePlugin = new webpack.DefinePlugin({
-          [`process.env.${this.options.envVar}`]: JSON.stringify(outputFormats || [])
-        })
-
-        // Apply the DefinePlugin to this compilation
-        definePlugin.apply(compiler)
+        this.definition = JSON.stringify(outputFormats || [])
 
         callback()
       } catch (err) {
@@ -37,13 +39,32 @@ class BookIndexFilesPlugin {
       }
     })
 
-    // Watch for changes in the search directory during development
+    // Hook into the compilation pipeline to replace the variable
+    compiler.hooks.compilation.tap(pluginName, (compilation, { normalModuleFactory }) => {
+      const handler = (parser) => {
+        // Tap into the parser's hook for our specific env var
+        parser.hooks.expression.for(this.envVarKey).tap(pluginName, (expr) => {
+          // Replace the expression `process.env.bookIndexFiles`
+          // with the *content* of this.definition.
+          const dep = new ConstDependency(this.definition, expr.range)
+          dep.loc = expr.loc
+          parser.state.current.addDependency(dep)
+          return true // Stop parsing this branch
+        })
+      }
+
+      // Hook into the javascript parser
+      normalModuleFactory.hooks.parser
+        .for('javascript/auto')
+        .tap(pluginName, handler)
+    })
+
+    // Watch for changes (this part was already correct)
     compiler.hooks.afterCompile.tap(pluginName, (compilation) => {
       const searchDir = path.resolve(process.cwd(), this.options.searchDir)
       if (fs.existsSync(searchDir)) {
         compilation.contextDependencies.add(searchDir)
 
-        // Also watch individual files that match our pattern
         try {
           const entries = fs.readdirSync(searchDir, { withFileTypes: true })
           entries.forEach(entry => {
@@ -73,8 +94,6 @@ class BookIndexFilesPlugin {
 
       for (const entry of entries) {
         if (entry.isFile() && this.options.filePattern.test(entry.name)) {
-          // Extract the output format from the filename
-          // e.g., "book-index-web.js" -> "web"
           const formatMatch = entry.name.match(/^book-index-(.+)\.js$/)
           if (formatMatch) {
             outputFormats.push(formatMatch[1])
@@ -82,7 +101,7 @@ class BookIndexFilesPlugin {
         }
       }
 
-      console.log(`✓ Found book index files for formats: [${outputFormats.join(', ')}] -> process.env.${this.options.envVar}`)
+      console.log(`✓ Found book index files for formats: [${outputFormats.join(', ')}] -> ${this.envVarKey}`)
 
       return outputFormats
     } catch (error) {
