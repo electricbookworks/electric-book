@@ -136,6 +136,7 @@ exclude:
   - CNAME
   - .sass-cache
   - _webpack
+  - vendor
 
   # Watched & compiled by Webpack, no need for Jekyll to process.
   # Jekyll only needs to watch /assets/js/dist

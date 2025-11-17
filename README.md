@@ -1,3 +1,5 @@
+[![Deploy to Electric Book Server and S3](https://github.com/electricbookworks/electric-book/actions/workflows/deploy.yml/badge.svg?branch=live)](https://github.com/electricbookworks/electric-book/actions/workflows/deploy.yml)
+
 # The Electric Book template
 
 A Jekyll template for creating books in multiple formats:
