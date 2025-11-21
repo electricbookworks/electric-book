@@ -9,12 +9,8 @@
     "configs": ["_config.live.yml"],
     "builds": [
       {
-        "configs": ["_config.student.yml"],
-        "dir": "another-audience/student"
-      },
-      {
-        "configs": ["_config.teacher.yml"],
-        "dir": "another-audience/teacher"
+        "configs": [],
+        "dir": "electric-book"
       }
     ]
   },
