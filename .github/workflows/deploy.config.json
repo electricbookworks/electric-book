@@ -6,7 +6,7 @@
     "configs": ["_config.live.yml"],
     "builds": [
       {
-        "configs": [""],
+        "configs": [],
         "dir": "electric-book"
       },
       {
