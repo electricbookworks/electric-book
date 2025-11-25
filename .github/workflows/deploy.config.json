@@ -6,6 +6,10 @@
     "configs": ["_config.live.yml"],
     "builds": [
       {
+        "configs": [""],
+        "dir": "electric-book"
+      },
+      {
         "configs": ["_config.student.yml"],
         "dir": "test/student"
       },
