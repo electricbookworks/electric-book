@@ -7,11 +7,11 @@
     "builds": [
       {
         "configs": ["_config.student.yml"],
-        "dir": "audience/student"
+        "dir": "test/student"
       },
       {
         "configs": ["_config.teacher.yml"],
-        "dir": "audience/teacher"
+        "dir": "test/teacher"
       }
     ]
   },
