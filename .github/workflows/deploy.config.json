@@ -1,10 +1,7 @@
 {
   "book-server": {
-    "repo": "electricbookworks/electric-book-server-template",
-    "branches": [
-      "staging",
-      "live"
-    ],
+    "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
+    "bucket": "ebt-books",
     "configs-comment": "All configs are relative to the _configs folder.",
     "configs": ["_config.live.yml"],
     "builds": [
