@@ -22,6 +22,9 @@
   "media" : {
     "branches-comment": "Only live and staging branches will trigger these syncs. This is not configurable.",
     "region": "eu-west-2",
+    "cloudfront-comment": "The CloudFront ID is used to invalidate the cache after deployment.",
+    "cloudfront-id-staging": "E7XZICS0M3W1S",
+    "cloudfront-id-live": "E2KTTVJ1I6I7D8",
     "syncs": [
       {
         "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
