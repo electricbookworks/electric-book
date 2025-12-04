@@ -14,3 +14,10 @@
 
 [context.branch-deploy.environment]
   NODE_ENV = "development"
+
+[build.processing.html]
+
+  # Prevents Netlify from eliding the .html on page URLs,
+  # which we need when users copy the URL for use elsewhere
+  # (e.g. for cross references during digitisation).
+  pretty_urls = false
