@@ -41,5 +41,29 @@
       "live": "https://api.vercel.com/v1/integrations/deploy/prj_3JQKhLSRlptDAqiKPWyuKMGhbaGG/QLpffactbx",
       "staging": "https://api.vercel.com/v1/integrations/deploy/prj_3JQKhLSRlptDAqiKPWyuKMGhbaGG/60HDpDIhWn"
     }
+  },
+  "ftp-ssh-disabled": {
+    "configs-comment": "All configs are relative to the _configs folder. ",
+    "configs": ["_config.live.yml"],
+    "builds": [
+      {
+        "configs": [],
+        "dir": ""
+      }
+    ],
+    "staging":{
+      "type": "ftp", 
+      "host": "host.com",
+      "port": 21,
+      "username": "username",
+      "path": "/"
+    },
+    "live": {
+      "type": "ssh", 
+      "host": "host.com",
+      "port": 2222,
+      "username": "username",
+      "path": "~/public_html/host.com/"
+    }
   }
 }
