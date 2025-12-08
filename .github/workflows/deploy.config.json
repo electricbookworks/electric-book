@@ -51,7 +51,7 @@
         "dir": ""
       }
     ],
-    "live":{
+    "live-disabled":{
       "type": "ftp", 
       "path": ""
     },
