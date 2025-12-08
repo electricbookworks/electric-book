@@ -1,5 +1,5 @@
 {
-  "book-server": {
+  "book-server-disabled": {
     "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
     "bucket": "ebt-books",
     "configs-comment": "All configs are relative to the _configs folder.",
@@ -19,7 +19,7 @@
       }
     ]
   },
-  "media" : {
+  "media-disabled" : {
     "branches-comment": "Only live and staging branches will trigger these syncs. This is not configurable.",
     "region": "eu-west-2",
     "cloudfront-comment": "The CloudFront ID is used to invalidate the cache after deployment.",
@@ -42,7 +42,7 @@
       "staging": "https://api.vercel.com/v1/integrations/deploy/prj_3JQKhLSRlptDAqiKPWyuKMGhbaGG/60HDpDIhWn"
     }
   },
-  "ftp-ssh-disabled": {
+  "ftp-ssh": {
     "configs-comment": "All configs are relative to the _configs folder. ",
     "configs": ["_config.live.yml"],
     "builds": [
@@ -51,19 +51,13 @@
         "dir": ""
       }
     ],
-    "staging":{
+    "live-disabled":{
       "type": "ftp", 
-      "host": "host.com",
-      "port": 21,
-      "username": "username",
-      "path": "/"
+      "path": ""
     },
-    "live": {
+    "staging": {
       "type": "ssh", 
-      "host": "host.com",
-      "port": 2222,
-      "username": "username",
-      "path": "~/public_html/host.com/"
+      "path": "public_html/ebt.ebw.co"
     }
   }
 }
