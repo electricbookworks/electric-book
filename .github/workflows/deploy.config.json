@@ -42,22 +42,24 @@
       "staging": "https://api.vercel.com/v1/integrations/deploy/prj_3JQKhLSRlptDAqiKPWyuKMGhbaGG/60HDpDIhWn"
     }
   },
-  "ftp-ssh": {
-    "configs-comment": "All configs are relative to the _configs folder. ",
+  "ftp-ssh-disabled": {
+    "configs-comment": "All configs are relative to the _configs folder.",
     "configs": ["_config.live.yml"],
     "builds": [
       {
         "configs": [],
-        "dir": ""
+        "dir": "electric-book"
       }
     ],
     "live-disabled":{
-      "type": "ftp", 
+      "type": "ftp",
+      "web-root": "",
       "path": ""
     },
-    "staging": {
-      "type": "ssh", 
-      "path": "public_html/ebt.ebw.co"
+    "staging-disabled": {
+      "type": "ssh",
+      "web-root": "public_html/ebt.ebw.co",
+      "path": ""
     }
   }
 }
