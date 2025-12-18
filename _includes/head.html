@@ -286,7 +286,7 @@ separate HTML files are merged into one body element.
     {% comment %} Prevent search indexing if set in settings.yml {% endcomment %}
     {% if site.build == "live" and site.data.settings.web.seo.indexing.live == "noindex" %}
         <meta name="robots" content="noindex">
-    {% elsif site.data.settings.web.seo.indexing.development == "noindex" %}
+    {% elsif site.build != "live" and site.data.settings.web.seo.indexing.development == "noindex" %}
         <meta name="robots" content="noindex">
     {% endif %}
 

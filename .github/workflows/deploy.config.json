@@ -1,0 +1,65 @@
+{
+  "book-server-disabled": {
+    "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
+    "bucket": "ebt-books",
+    "configs-comment": "All configs are relative to the _configs folder.",
+    "configs": ["_config.live.yml"],
+    "builds": [
+      {
+        "configs": [],
+        "dir": "electric-book"
+      },
+      {
+        "configs": ["_config.student.yml"],
+        "dir": "test/student"
+      },
+      {
+        "configs": ["_config.teacher.yml"],
+        "dir": "test/teacher"
+      }
+    ]
+  },
+  "media-disabled" : {
+    "branches-comment": "Only live and staging branches will trigger these syncs. This is not configurable.",
+    "region": "eu-west-2",
+    "cloudfront-comment": "The CloudFront ID is used to invalidate the cache after deployment.",
+    "cloudfront-id-staging": "E7XZICS0M3W1S",
+    "cloudfront-id-live": "E2KTTVJ1I6I7D8",
+    "syncs": [
+      {
+        "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
+        "bucket": "ebt-media",
+        "source": "assets/images/web",
+        "destination": "assets/images/web",
+        "options": ""
+      }
+    ]
+  },
+  "vercel-comment": "Vercel deployments are disabled for this public repo because triggers have been intentionally revoked.",
+  "vercel-disabled": {
+    "trigger": {
+      "live": "https://api.vercel.com/v1/integrations/deploy/prj_3JQKhLSRlptDAqiKPWyuKMGhbaGG/QLpffactbx",
+      "staging": "https://api.vercel.com/v1/integrations/deploy/prj_3JQKhLSRlptDAqiKPWyuKMGhbaGG/60HDpDIhWn"
+    }
+  },
+  "ftp-ssh-disabled": {
+    "configs-comment": "All configs are relative to the _configs folder.",
+    "configs": ["_config.live.yml"],
+    "builds": [
+      {
+        "configs": [],
+        "dir": "electric-book"
+      }
+    ],
+    "live-disabled":{
+      "type": "ftp",
+      "web-root": "",
+      "path": ""
+    },
+    "staging-disabled": {
+      "type": "ssh",
+      "web-root": "public_html/ebt.ebw.co",
+      "path": ""
+    }
+  }
+}

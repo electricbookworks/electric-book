@@ -1,0 +1,10 @@
+name: Deploy to Electric Book Server and S3
+
+on:
+  push: # Trigger on any push, but branch validation will filter
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  deploy:
+    uses: electricbookworks/electric-book-deploy-workflow/.github/workflows/deploy.yml@v2.0.2
+    secrets: inherit
