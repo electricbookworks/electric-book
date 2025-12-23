@@ -1,3 +1,4 @@
+import { locales, pageLanguage } from './locales'
 import ebUserSession, { ebHasSessionApi } from './user-session'
 
 const ebAddLoginButton = () => {
@@ -8,7 +9,7 @@ const ebAddLoginButton = () => {
     const direction = !ebUserSession?.ID ? 'in' : 'out'
     button.setAttribute('href', `/log${direction}${redirectPath}`)
     button.classList.add('controls-login')
-    button.innerHTML = `Log ${direction}`
+    button.innerHTML = !ebUserSession?.ID ? locales[pageLanguage].nav.login : locales[pageLanguage].nav.logout
     const controls = document.querySelector('.js-controls')
     if (controls) {
       controls.appendChild(button)

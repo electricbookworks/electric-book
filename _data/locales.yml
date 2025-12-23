@@ -147,6 +147,8 @@ en:
     back: "&larr;"
     toc: "Contents"
     read: "Read"
+    login: "Log in"
+    logout: "Log out"
   input:
     submit: "Submit"
     send: "Send"
@@ -281,6 +283,8 @@ fr:
     back: "&larr;"
     toc: "Table des matières"
     read: "Lire"
+    login: "Se connecter"
+    logout: "Se déconnecter"
   input:
     submit: "Soumettre"
     send: "Envoyer"
@@ -697,6 +701,8 @@ es:
     back: "&larr;"
     toc: "Tabla de contenidos"
     read: "Leer"
+    login: "Iniciar sesión"
+    logout: "Cerrar sesión"
   input:
     submit: "Enviar"
     send: "Enviar"
