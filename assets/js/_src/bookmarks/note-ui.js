@@ -40,7 +40,7 @@ const ebBookmarksNoteUI = ({ bookmark, bookmarkNotes, listItem }) => {
       listItem.appendChild(noteContainer)
 
       const noteTextArea = document.createElement('textarea')
-      noteTextArea.placeholder = 'Add a note for this bookmark...'
+      noteTextArea.placeholder = locales[pageLanguage].bookmarks['bookmark-note-placeholder']
       noteTextArea.maxLength = settings.web?.bookmarks['note-max-length'] ? settings.web?.bookmarks['note-max-length'] : 5000
       noteTextArea.classList.add('bookmark-note')
       noteTextArea.innerHTML = bookmarkNote?.note ?? ''
