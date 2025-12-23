@@ -186,7 +186,7 @@ en:
   bookmarks:
     bookmark: "Bookmark"
     bookmarks: "Bookmarks"
-    bookmarks-tip: "Tap or select text, and then tap the bookmark icon to save a bookmark. Bookmarks are saved in your browser cache when you are logged out. Clearing your cache without logging first will remove them permanently."
+    bookmarks-tip: "Tap or select text, and then tap the bookmark icon to save a bookmark. Bookmarks are saved in your browser cache when you are logged out. Clearing your cache without logging in first will remove them permanently."
     last-location: "Your last visit"
     last-locations-tip: "The last time you visited, you stopped reading here."
     last-location-prompt: "Continue from your last visit?"
