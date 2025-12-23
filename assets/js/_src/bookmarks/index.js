@@ -37,8 +37,8 @@
 
 // Bookmark notes are only saved to the server and require login.
 // Due to the requirement for both anonymous local storage
-// and user session server storage, a record of each deleted book has to be
-// kept in perpetuity so that deleted bookmarks do not get resurected
+// and user session server storage, a record of each deleted bookmark has to be
+// kept in perpetuity so that they do not get resurrected
 // by another device's local storage during sync.
 
 // Local storage bookmarks that have been deleted on another, logged-in device
