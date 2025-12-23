@@ -63,7 +63,7 @@ const ebBookmarksNoteUI = ({ bookmark, bookmarkNotes, listItem }) => {
       const loginLink = document.createElement('a')
       loginLink.setAttribute('href', '/login' + window.location.pathname)
       loginLink.classList.add('bookmark-note-sign-in')
-      loginLink.textContent = 'Log in to add and view notes for your bookmarks'
+      loginLink.textContent = locales[pageLanguage].bookmarks['bookmark-note-login']
       listItem.appendChild(loginLink)
     }
   }
