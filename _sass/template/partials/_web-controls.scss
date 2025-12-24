@@ -5,10 +5,22 @@ $web-controls: true !default;
 
     .controls {
         display: flex;
+        align-items: center;
         margin-left: 1rem;
 
         & > div {
             margin-right: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
+
+    .controls-login {
+        @include button();
+        line-height: 2rem;
+        padding: 0 .7em;
+        color: $color-buttons-text;
+    }
+
 }

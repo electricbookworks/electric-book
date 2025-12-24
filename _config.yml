@@ -160,6 +160,13 @@ exclude:
   # Books
   # - book
   # - samples
+  # - fr
+
+  # Collections
+  # - _app
+  # - _docs
+  # - _epub
+
   # - assets
 
 # Files to keep from the last Jekyll build

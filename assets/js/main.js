@@ -33,6 +33,7 @@ import ebShiftElements from './_src/shift-elements'
 import ebPageReference from './_src/page-reference'
 import ebIndexTargetsInit from './_src/index-targets'
 import ebIndexLists from './_src/index-lists'
+import ebAddLoginButton from './_src/add-login-button'
 // import ebBaselineGrid from './src/baseline-grid'
 
 console.log('Config:', process.env.config)
@@ -50,6 +51,7 @@ if (process.env.settings.redact === true) {
 }
 
 if (process.env.output === 'web' || process.env.output === 'app') {
+  ebAddLoginButton()
   ebSetup()
   ebSearchTerms()
   ebNav()

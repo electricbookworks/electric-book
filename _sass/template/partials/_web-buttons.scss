@@ -12,7 +12,7 @@ $web-buttons: true !default;
     a.button,
     em.button,
     strong.button,
-    span.button, {
+    span.button {
         @include button();
     }
 
@@ -29,7 +29,7 @@ $web-buttons: true !default;
     h3.button,
     h4.button,
     h5.button,
-    h6.button, {
+    h6.button {
         text-indent: 0;
         a {
             @include button();
