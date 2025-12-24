@@ -9,7 +9,7 @@ const ebBookmarksNoteUI = ({ bookmark, bookmarkNotes, listItem }) => {
   if (ebBookmarksHasApi && bookmark.type !== 'lastLocation') {
     if (ebUserSession?.ID) {
       let noteEvent = null
-      const bookmarkNote = bookmarkNotes.find((note) => note.key === bookmark.key)
+      const bookmarkNote = bookmarkNotes.find((note) => note && note.key === bookmark.key)
       const handleNoteSave = async (e) => {
         if (e?.currentTarget) {
           const noteContainer = e.currentTarget.closest('.bookmark-note-container')
