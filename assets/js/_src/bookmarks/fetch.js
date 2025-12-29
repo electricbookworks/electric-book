@@ -3,7 +3,7 @@ import ebUserSession from '../user-session'
 import ebBookmarksHasApi from './has-api'
 
 async function ebBookmarksFetch () {
-  const bookmarks = ebBookmarksGetLocalStorage({ prefix: 'bookmark-', excludePrefix: 'bookmark-deleted', excludeType: 'lastLocation' })
+  const bookmarks = ebBookmarksGetLocalStorage({ prefix: 'bookmark-', excludePrefix: 'bookmark-deleted' })
   let bookmarkNotes = []
   if (ebUserSession?.ID && ebBookmarksHasApi) {
     let bookmarkNoteResults = await fetch('/api/bookmark/note/list/')
