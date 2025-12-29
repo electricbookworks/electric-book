@@ -62,12 +62,7 @@ async function buildReferenceIndex (outputFormat, filesData) {
     // Check if this is a page that actually
     // contains indexing Javascript
     const pageRunsIndexTargets = await page.evaluate(function () {
-      const indexingScript = window.ebIndexInit
-      if (indexingScript) {
-        return true
-      } else {
-        return false
-      }
+      return window.ebHasIndexTargets === true
     })
 
     // Then if it does, wait for index targets to load
