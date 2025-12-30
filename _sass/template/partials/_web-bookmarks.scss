@@ -1,9 +1,16 @@
 $web-bookmarks: true !default;
 @if $web-bookmarks {
 
-    // Bookmarks
-
     $bookmarks-modal-header-height: 2.7rem!default;
+
+    @keyframes loadingAnimation {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
 
     // The bookmarks list
     .bookmarks {
@@ -31,6 +38,51 @@ $web-bookmarks: true !default;
         }
     }
 
+    .bookmarks-modal-toggle {
+        position: relative;
+        &.loading > svg {
+            opacity: .6;
+        }
+    }
+
+    .bookmarks-modal-toggle-loading {
+        .loading & {
+            display: block;
+        }
+        display: none;
+        width: 1em;
+        height: 1em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        animation: loadingAnimation 1s linear infinite;
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .bookmarks-modal-loading {
+        display: none;
+        .loading & {
+            display: flex;
+        }
+        z-index: 1000;
+        opacity: .6;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: #fff;
+        svg {
+            margin: auto;
+            width: 1em;
+            height: 1em;
+            animation: loadingAnimation 1s linear infinite;
+        }
+    }
+
     // The modal
     .bookmarks-modal {
         @include dialog-styles();
@@ -49,6 +101,9 @@ $web-bookmarks: true !default;
         list-style-type: none;
         padding: 0; // override default masthead padding
         overflow: auto;
+        &.loading {
+            overflow: hidden;
+        }
 
         // Position
         position: fixed;
@@ -454,39 +509,6 @@ $web-bookmarks: true !default;
     .home {
         .history-icon {
             visibility: hidden;
-        }
-    }
-
-    .bookmarks-toggle {
-        position: relative;
-        .loading & > svg {
-            opacity: .6;
-        }
-    }
-
-     @keyframes spin {
-        0% {
-            transform: translate(-50%, -50%) rotate(0deg);
-        }
-        100% {
-            transform: translate(-50%, -50%) rotate(360deg);
-        }
-    }
-
-    .bookmarks-toggle-loading {
-        .loading & {
-            display: block;
-        }
-        display: none;
-        width: 1em;
-        height: 1em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        animation: spin 1s linear infinite;
-        svg {
-            width: 100%;
-            height: 100%;
         }
     }
 

@@ -5,6 +5,7 @@ import ebBookmarksSessionDate from './session-date'
 import ebBookmarksConfirmDelete from './confirm-delete'
 import ebBookmarksLastLocationPrompt from './last-location-prompt'
 import ebBookmarksNoteUI from './note-ui'
+import ebBookmarksSetLastLocation from './set-last-location'
 
 function ebBookmarksList ({ bookmarks, bookmarkNotes }) {
   // Get the bookmarks lists
@@ -146,7 +147,8 @@ function ebBookmarksList ({ bookmarks, bookmarkNotes }) {
     ebAccordionListenForAnchorClicks('.bookmarks-modal a')
   }
 
-  // Prompt the user about their last location
+  // Set and prompt last location
+  ebBookmarksSetLastLocation()
   ebBookmarksLastLocationPrompt(lastLocationLink)
 }
 

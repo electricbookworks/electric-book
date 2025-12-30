@@ -6,7 +6,8 @@ function ebBookmarksBrowserSupport () {
           window.getSelection().toString &&
           window.localStorage &&
           Storage !== undefined &&
-          document.querySelector('.bookmarks')
+          document.querySelector('.bookmarks') &&
+          window.CustomEvent
 }
 
 function ebBookmarksEnabled () {

@@ -2,6 +2,7 @@
 import ebUserSession from '../user-session'
 import ebBookmarksCheckForBookmarks from './check-for-bookmarks'
 import ebBookmarksHasApi from './has-api'
+import { ebBookmarksModalSetLoading } from './modal'
 
 async function ebBookmarksBookmarkStoreDelete (bookmark) {
   const deleted = JSON.parse(localStorage.getItem('bookmark-deleted')) || []
@@ -16,6 +17,7 @@ async function ebBookmarksBookmarkStoreDelete (bookmark) {
 
 // Delete a bookmark
 async function ebBookmarksDeleteBookmark (bookmark) {
+  ebBookmarksModalSetLoading(true)
   if (bookmark.type === 'lastLocation') {
     localStorage.removeItem(bookmark.key)
   } else {
@@ -23,11 +25,13 @@ async function ebBookmarksDeleteBookmark (bookmark) {
   }
 
   // Remove the entry from the list
-  ebBookmarksCheckForBookmarks()
+  await ebBookmarksCheckForBookmarks()
+  ebBookmarksModalSetLoading(false)
 }
 
 // Delete all bookmarks
 async function ebBookmarksDeleteAllBookmarks (type) {
+  ebBookmarksModalSetLoading(true)
   // Loop through stored bookmarks and delete
   Object.keys(localStorage).forEach(function (key) {
     if (key.startsWith('bookmark-')) {
@@ -51,7 +55,8 @@ async function ebBookmarksDeleteAllBookmarks (type) {
   }
 
   // Refresh the bookmarks lists
-  ebBookmarksCheckForBookmarks()
+  await ebBookmarksCheckForBookmarks()
+  ebBookmarksModalSetLoading(false)
 }
 
 export {

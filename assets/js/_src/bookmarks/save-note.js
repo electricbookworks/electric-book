@@ -1,5 +1,4 @@
 import ebUserSession from '../user-session'
-import ebBookmarksCheckForBookmarks from './check-for-bookmarks'
 import ebBookmarksHasApi from './has-api'
 
 async function ebBookmarksSaveNote ({ bookmark, note }) {
@@ -12,7 +11,6 @@ async function ebBookmarksSaveNote ({ bookmark, note }) {
         key: bookmark.key
       })
     })
-    ebBookmarksCheckForBookmarks()
   }
 }
 

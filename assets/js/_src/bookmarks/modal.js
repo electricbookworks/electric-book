@@ -1,4 +1,5 @@
 import { ebToggleClickout } from '../utilities'
+import ebBookmarksSync from './sync'
 
 // Move the modal HTML to an independent location
 function ebBookmarksMoveModal () {
@@ -10,6 +11,8 @@ function ebBookmarksMoveModal () {
 
 // Toggle the modal visibility
 function ebBookmarksToggleModal (modal) {
+  ebBookmarksSync()
+
   modal = modal ?? document.getElementById('bookmarks-modal')
 
   // Toggle the clickable clickOut area
@@ -60,16 +63,32 @@ function ebBookmarkListsOpenOnClick () {
   }
 }
 
-const ebBookmarksModalIsReady = () => {
-  const bookmarksToggle = document.querySelector('.bookmarks')
-  bookmarksToggle && bookmarksToggle.classList.remove('loading')
+const ebBookmarksModalLoadingSetter = ({ element, isLoading }) => {
+  if (!element) return
+  if (isLoading) {
+    element.classList.add('loading')
+  } else {
+    element.classList.remove('loading')
+  }
+}
+
+const ebBookmarksModalSetLoading = (isLoading) => {
+  const modal = document.getElementById('bookmarks-modal')
+  modal && (modal.scrollTop = 0)
+  ebBookmarksModalLoadingSetter({ element: modal, isLoading })
+}
+
+const ebBookmarksModalToggleSetLoading = (isLoading) => {
+  const modalToggle = document.getElementById('bookmarks-modal-toggle')
+  ebBookmarksModalLoadingSetter({ element: modalToggle, isLoading })
 }
 
 const ebBookmarksModal = () => {
   ebBookmarksMoveModal()
   ebBookmarksOpenOnClick()
   ebBookmarkListsOpenOnClick()
-  ebBookmarksModalIsReady()
 }
 
 export default ebBookmarksModal
+
+export { ebBookmarksModalSetLoading, ebBookmarksModalToggleSetLoading }

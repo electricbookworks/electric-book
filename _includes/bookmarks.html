@@ -1,8 +1,8 @@
-<div class="bookmarks visuallyhidden loading" title="{{ locale.bookmarks.bookmarks }}">
+<div class="bookmarks visuallyhidden" title="{{ locale.bookmarks.bookmarks }}">
 
-    <button class="bookmarks-toggle" aria-label="{{ locale.bookmarks.bookmark }}">
+    <button id="bookmarks-modal-toggle" class="bookmarks-modal-toggle" aria-label="{{ locale.bookmarks.bookmark }}">
         {% include icons/bookmark-icon.svg %}
-        <span class="bookmarks-toggle-loading">
+        <span class="bookmarks-modal-toggle-loading">
             {% include icons/loading.svg %}
         </span>
     </button>
@@ -31,6 +31,9 @@
                 </div>
             </div>
         </div>
+        <span class="bookmarks-modal-loading">
+            {% include icons/loading.svg %}
+        </span>
     </div>
 
     {% include icons/history-icon.svg %}

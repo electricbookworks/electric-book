@@ -53,42 +53,11 @@
 // --
 
 import ebBookmarksEnabled from './enabled'
-import ebBookmarksSessionDate from './session-date'
-import ebBookmarksCheckForBookmarks from './check-for-bookmarks'
 import ebBookmarksSync from './sync'
-import ebBookmarksSelect from './select'
-import ebBookmarksModal from './modal'
-import ebBookmarksCreateFingerprintIndex from './create-fingerprint-index'
-import ebBookmarksSetLastLocation from './set-last-location'
-
-const ebBookmarksSyncComplete = () => {
-  document.addEventListener('bookmarksSyncComplete', (event) => {
-    // Debugging info
-    // const { success, synced, deletedCount, syncedFromServer, syncedToServer, error } = event.detail
-    // if (success) {
-    //   if (synced) {
-    //     console.log(`Bookmarks sync completed: ${syncedFromServer} from server, ${syncedToServer} to server, ${deletedCount} deleted.`)
-    //   } else {
-    //     console.log('Bookmarks sync skipped (user not logged in or no API).')
-    //   }
-    // } else {
-    //   console.error('Bookmarks Sync failed:', error)
-    // }
-    ebBookmarksSessionDate()
-    ebBookmarksCreateFingerprintIndex()
-    ebBookmarksModal()
-    ebBookmarksSelect()
-    ebBookmarksCheckForBookmarks()
-    ebBookmarksSetLastLocation()
-  })
-}
 
 function ebBookmarks () {
   if (ebBookmarksEnabled()) {
-    // decoupled subscription to sync, so that it is not awaited here,
-    // allowing other scripts to continue
-    ebBookmarksSyncComplete()
-    ebBookmarksSync()
+    ebBookmarksSync({ firstLoad: true })
   }
 }
 
