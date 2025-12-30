@@ -11,9 +11,8 @@ function ebBookmarksMoveModal () {
 
 // Toggle the modal visibility
 function ebBookmarksToggleModal (modal) {
-  ebBookmarksSync()
-
   modal = modal ?? document.getElementById('bookmarks-modal')
+  if (!modal) return
 
   // Toggle the clickable clickOut area
   ebToggleClickout(modal, function () {
@@ -26,6 +25,8 @@ function ebBookmarksToggleModal (modal) {
     } else {
       modal.style.display = 'flex'
       modal.setAttribute('data-bookmark-modal', 'open')
+      modal.scrollTop = 0
+      ebBookmarksSync()
     }
   })
 }
@@ -63,8 +64,10 @@ function ebBookmarkListsOpenOnClick () {
   }
 }
 
-const ebBookmarksModalLoadingSetter = ({ element, isLoading }) => {
+const ebBookmarksModalLoadingSetter = ({ id, isLoading }) => {
+  const element = document.getElementById(id)
   if (!element) return
+  element.scrollTop = 0
   if (isLoading) {
     element.classList.add('loading')
   } else {
@@ -73,14 +76,11 @@ const ebBookmarksModalLoadingSetter = ({ element, isLoading }) => {
 }
 
 const ebBookmarksModalSetLoading = (isLoading) => {
-  const modal = document.getElementById('bookmarks-modal')
-  modal && (modal.scrollTop = 0)
-  ebBookmarksModalLoadingSetter({ element: modal, isLoading })
+  ebBookmarksModalLoadingSetter({ id: 'bookmarks-modal', isLoading })
 }
 
 const ebBookmarksModalToggleSetLoading = (isLoading) => {
-  const modalToggle = document.getElementById('bookmarks-modal-toggle')
-  ebBookmarksModalLoadingSetter({ element: modalToggle, isLoading })
+  ebBookmarksModalLoadingSetter({ id: 'bookmarks-modal-toggle', isLoading })
 }
 
 const ebBookmarksModal = () => {
