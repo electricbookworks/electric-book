@@ -10,17 +10,8 @@ import ebBookmarksCreateFingerprintIndex from './create-fingerprint-index'
 
 // Decoupled subscription to sync, to avoid subsequent script blocking on page load
 document.addEventListener('bookmarksSyncComplete', async (event) => {
-  /* Debugging info
+  /* Available details:
   const { firstLoad, success, synced, deletedFromServer, deletedFromLocal, syncedFromServer, syncedToServer, error } = event.detail
-  if (success) {
-    if (synced) {
-      console.log(`Bookmarks sync completed: ${syncedFromServer} from server, ${syncedToServer} to server, ${deletedFromServer} deleted from server, ${deletedFromLocal} deleted from local.`)
-    } else {
-      console.log('Bookmarks sync skipped (user not logged in or no API).')
-    }
-  } else {
-    console.error('Bookmarks Sync failed:', error)
-  }
   */
   if (event.detail.firstLoad) {
     ebBookmarksSessionDate()
@@ -87,10 +78,27 @@ const ebBookmarksSync = async ({ firstLoad = false } = {}) => {
       })
       syncResult.syncedFromServer = bookmarks.length
 
-      // Check for any local bookmarks not on the server and sync them
       const localBookmarks = ebBookmarksGetLocalStorage({ prefix: 'bookmark-', excludePrefix: 'bookmark-deleted', excludeType: 'lastLocation' })
+      const migratedLocalBookmarks = []
       const bookmarksNotOnServer = []
+
+      // Migrate to cleaner keys for userBookmarks (faster queries; less storage required)
       localBookmarks.forEach(localBookmark => {
+        const splitKey = localBookmark.key.split('-')
+        const newKey = splitKey.length > 3 ? `${splitKey[0]}-${splitKey[splitKey.length - 1]}` : null
+        if (newKey) {
+          const bookmark = {
+            ...localBookmark,
+            key: newKey
+          }
+          localStorage.setItem(bookmark.key, JSON.stringify(bookmark))
+          localStorage.removeItem(localBookmark.key)
+          migratedLocalBookmarks.push(bookmark)
+        }
+      })
+
+      // Check for any local bookmarks not on the server and sync them
+      migratedLocalBookmarks.forEach(localBookmark => {
         const match = bookmarks.find(bookmark => bookmark.key === localBookmark.key)
         !match && bookmarksNotOnServer.push(localBookmark)
       })

@@ -85,8 +85,6 @@ async function ebBookmarksSetBookmark (type, element, description) {
 
   // Set a bookmark named for its type only.
   // So there will only ever be one bookmark of each type saved.
-  // To save more bookmarks, make the key more unique.
-  // Note that the prefix 'bookmark-' is used in ebBookmarksCheckForBookmarks().
   let bookmarkKey
   if (bookmark.type === 'lastLocation') {
     bookmarkKey = 'bookmark-' +
@@ -96,12 +94,7 @@ async function ebBookmarksSetBookmark (type, element, description) {
                 '-' +
                 sessionDate
   } else {
-    bookmarkKey = 'bookmark-' +
-                ebSlugify(bookmark.bookTitle) +
-                '-' +
-                bookmark.type +
-                '-' +
-                Date.now() // this makes each userBookmark unique
+    bookmarkKey = 'bookmark-' + Date.now() // current timestamp makes it unique
   }
 
   // Add the key to the bookmark object for easy reference
