@@ -60,10 +60,16 @@ function ebBookmarkListsOpenOnClick () {
   }
 }
 
+const ebBookmarksModalIsReady = () => {
+  const bookmarksToggle = document.querySelector('.bookmarks')
+  bookmarksToggle && bookmarksToggle.classList.remove('loading')
+}
+
 const ebBookmarksModal = () => {
   ebBookmarksMoveModal()
   ebBookmarksOpenOnClick()
   ebBookmarkListsOpenOnClick()
+  ebBookmarksModalIsReady()
 }
 
 export default ebBookmarksModal

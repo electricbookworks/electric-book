@@ -1,7 +1,13 @@
 import ebBookmarksFetch from './fetch'
 import ebBookmarksList from './list'
-import ebBookmarksCheckForCurrentPage from './check-for-current-page'
 import { ebBookmarksToggleButtonOnElement } from './select'
+
+// Check if bookmark is on the current page
+function ebBookmarksCheckForCurrentPage (url) {
+  const pageURL = window.location.href.split('#')[0]
+  const bookmarkURL = url.split('#')[0]
+  return pageURL === bookmarkURL
+}
 
 // Mark bookmarks in the document
 function ebBookmarksMarkBookmarks (bookmarks) {
