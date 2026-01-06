@@ -3,6 +3,7 @@ import ebUserSession from '../user-session'
 import ebBookmarksCheckForBookmarks from './check-for-bookmarks'
 import ebBookmarksHasApi from './has-api'
 import { ebBookmarksModalSetLoading } from './modal'
+import ebBookmarksSessionDate from './session-date'
 
 async function ebBookmarksBookmarkStoreDelete (bookmark) {
   const deleted = JSON.parse(localStorage.getItem('bookmark-deleted')) || []
@@ -11,7 +12,7 @@ async function ebBookmarksBookmarkStoreDelete (bookmark) {
   localStorage.removeItem(bookmark.key)
   ebUserSession?.ID && ebBookmarksHasApi && fetch('/api/bookmark/delete/', {
     method: 'POST',
-    body: JSON.stringify({ keys: [bookmark.key] })
+    body: JSON.stringify({ keys: [bookmark.key], sessionDate: ebBookmarksSessionDate() })
   })
 }
 

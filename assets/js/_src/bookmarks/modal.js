@@ -1,5 +1,4 @@
 import { ebToggleClickout } from '../utilities'
-import ebBookmarksSync from './sync'
 
 // Move the modal HTML to an independent location
 function ebBookmarksMoveModal () {
@@ -20,13 +19,11 @@ function ebBookmarksToggleModal (modal) {
     if (document.querySelector('[data-bookmark-modal="open"]')) {
       modal.style.display = 'none'
       modal.setAttribute('data-bookmark-modal', 'closed')
-
       // Otherwise, show it
     } else {
       modal.style.display = 'flex'
       modal.setAttribute('data-bookmark-modal', 'open')
       modal.scrollTop = 0
-      ebBookmarksSync()
     }
   })
 }

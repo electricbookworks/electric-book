@@ -1,5 +1,6 @@
 import ebUserSession from '../user-session'
 import ebBookmarksHasApi from './has-api'
+import ebBookmarksSessionDate from './session-date'
 
 async function ebBookmarksSaveNote ({ bookmark, note }) {
   if (ebUserSession?.ID && ebBookmarksHasApi) {
@@ -8,7 +9,8 @@ async function ebBookmarksSaveNote ({ bookmark, note }) {
       body: JSON.stringify({
         note,
         id: bookmark.id,
-        key: bookmark.key
+        key: bookmark.key,
+        sessionDate: ebBookmarksSessionDate()
       })
     })
   }
