@@ -29,34 +29,36 @@
 // that IDs have shifted, and that bookmarked locations may be inaccurate.
 // This script does not yet do anything about that inaccuracy.
 
-// --------- Hybrid storage features and limitations --------- //
+/* --------- Hybrid storage features and limitations --------- //
 
-// Bookmarks without notes can be stored anonymously in local storage.
-// For logged in users, the local storage bookmarks are synced to a server DB
-// via an API provided by the Electric Book Server.
+Bookmarks without notes can be stored anonymously in local storage.
+For logged in users, the local storage bookmarks are synced to a server DB
+via an API provided by the Electric Book Server.
 
-// Bookmark notes are only saved to the server and require login.
-// Due to the requirement for both anonymous local storage
-// and user session server storage, a record of each deleted bookmark has to be
-// kept in perpetuity so that they do not get resurrected
-// by another device's local storage during sync.
+Bookmark notes are only saved to the server and require login.
+Due to the requirement for both anonymous local storage
+and user session server storage, a record of each deleted bookmark has to be
+kept in perpetuity so that they do not get resurrected
+by another device's local storage during sync.
 
-// Local storage bookmarks that have been deleted on another, logged-in device
-// will be deleted during sync. This may present a twofold UX issue for users:
-// 1. They may be confused or frustrated by bookmarks they deleted on another device
-// still being visible while they are not logged in on their current device.
-// 2. Bookmarks suddenly disappear as soon as they log in and they
-// fail to remember these were previously deleted by them on another device.
-// However, with the current hybrid requirement, there is no way around this.
-// It could possibly be mitigated by some kind of UI messaging.
+Local storage bookmarks that have been deleted on another, logged-in device
+will be deleted during sync. This may present a twofold UX issue for users:
+1. They may be confused or frustrated by bookmarks they deleted on another device
+still being visible while they are not logged in on their current device.
+2. Bookmarks suddenly disappear as soon as they log in and they
+fail to remember these were previously deleted by them on another device.
+However, with the current hybrid requirement, there is no way around this.
+It could possibly be mitigated by some kind of UI messaging.
 
-// --
+*/
 
 import ebBookmarksEnabled from './enabled'
+import ebBookmarksSubscribe from './subscribe'
 import ebBookmarksSync from './sync'
 
 function ebBookmarks () {
   if (ebBookmarksEnabled()) {
+    ebBookmarksSubscribe()
     ebBookmarksSync({ firstLoad: true })
   }
 }
