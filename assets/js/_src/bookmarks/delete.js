@@ -4,25 +4,39 @@ import ebBookmarksCheckForBookmarks from './check-for-bookmarks'
 import ebBookmarksHasApi from './has-api'
 import { ebBookmarksModalSetLoading } from './modal'
 import ebBookmarksSessionDate from './session-date'
+import ebBookmarksGetLocalStorage from './get-local-storage'
+const canSync = ebUserSession?.ID && ebBookmarksHasApi
 
-async function ebBookmarksBookmarkStoreDelete (bookmark) {
-  const deleted = JSON.parse(localStorage.getItem('bookmark-deleted')) || []
-  deleted.push(bookmark.key)
-  localStorage.setItem('bookmark-deleted', JSON.stringify(deleted))
-  localStorage.removeItem(bookmark.key)
-  ebUserSession?.ID && ebBookmarksHasApi && fetch('/api/bookmark/delete/', {
-    method: 'POST',
-    body: JSON.stringify({ keys: [bookmark.key], sessionDate: ebBookmarksSessionDate() })
+async function ebBookmarksDeleteSync ({ keys, all = false }) {
+  Array.isArray(keys) && keys.forEach((key) => {
+    localStorage.removeItem(key)
+    if (!canSync) {
+      // create deleted record to prevent logged-out to logged-in resurection
+      const deleted = JSON.parse(localStorage.getItem('bookmark-deleted')) || []
+      localStorage.setItem('bookmark-deleted', JSON.stringify([...deleted, key]))
+    }
   })
+  if (canSync) {
+    if (all) {
+      // Make sure all bookmarks are deleted server-side, even if not in localStorage for whatever reason
+      await fetch('/api/bookmark/delete/all/')
+    } else {
+      fetch('/api/bookmark/delete/', {
+        method: 'POST',
+        body: JSON.stringify({ keys, sessionDate: ebBookmarksSessionDate() })
+      })
+    }
+  }
 }
 
 // Delete a bookmark
 async function ebBookmarksDeleteBookmark (bookmark) {
   ebBookmarksModalSetLoading(true)
-  if (bookmark.type === 'lastLocation') {
-    localStorage.removeItem(bookmark.key)
+
+  if (bookmark.type === 'userBookmark') {
+    await ebBookmarksDeleteSync({ keys: [bookmark.key] })
   } else {
-    await ebBookmarksBookmarkStoreDelete(bookmark)
+    localStorage.removeItem(bookmark.key)
   }
 
   // Remove the entry from the list
@@ -30,29 +44,27 @@ async function ebBookmarksDeleteBookmark (bookmark) {
   ebBookmarksModalSetLoading(false)
 }
 
-// Delete all bookmarks
 async function ebBookmarksDeleteAllBookmarks (type) {
+  // Bookmark type is compulsory
+  if (!type) return
+
   ebBookmarksModalSetLoading(true)
-  // Loop through stored bookmarks and delete
-  Object.keys(localStorage).forEach(function (key) {
-    if (key.startsWith('bookmark-')) {
-      // If a type has been specified, only delete
-      // bookmarks of that type. Otherwise,
-      // delete all bookmarks of any type.
-      const bookmarkType = JSON.parse(localStorage[key]).type
-      if (type) {
-        if (type === bookmarkType) {
-          localStorage.removeItem(key)
-        }
+  const userBookmarksToDelete = []
+
+  const bookmarks = ebBookmarksGetLocalStorage({ prefix: 'bookmark-', excludePrefix: 'bookmark-deleted' })
+  bookmarks.forEach(function (bookmark) {
+    if (bookmark.type === type) {
+      if (type === 'userBookmark') {
+        userBookmarksToDelete.push(bookmark.key)
       } else {
-        localStorage.removeItem(key)
+        localStorage.removeItem(bookmark.key)
       }
     }
   })
 
-  // Delete from storage
-  if (type === 'userBookmark' || !type) {
-    ebUserSession?.ID && ebBookmarksHasApi && await fetch('/api/bookmark/delete/all/')
+  // Delete userBookmarks, which requires hybrid localStorage + server sync
+  if (type === 'userBookmark' && userBookmarksToDelete.length > 0) {
+    await ebBookmarksDeleteSync({ keys: userBookmarksToDelete, all: true })
   }
 
   // Refresh the bookmarks lists
