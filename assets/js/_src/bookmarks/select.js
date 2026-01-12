@@ -47,6 +47,8 @@ function ebBookmarksListenForTextSelection () {
       : false
     const selectionEndPoint = window.getSelection().focusNode
 
+    if (!selectionEndPoint) return
+
     // Check if an excluded element is being clicked/selected
     // If not a DOM Element, assign to parent element
     const clickedElement = selectionEndPoint instanceof Element
