@@ -94,6 +94,8 @@ const ebBookmarksSync = async ({ firstLoad = false } = {}) => {
           localStorage.setItem(bookmark.key, JSON.stringify(bookmark))
           localStorage.removeItem(localBookmark.key)
           migratedLocalBookmarks.push(bookmark)
+        } else {
+          migratedLocalBookmarks.push(localBookmark)
         }
       })
 
@@ -102,6 +104,7 @@ const ebBookmarksSync = async ({ firstLoad = false } = {}) => {
         const match = bookmarks.find(bookmark => bookmark.key === localBookmark.key)
         !match && bookmarksNotOnServer.push(localBookmark)
       })
+
       if (bookmarksNotOnServer.length > 0) {
         await fetch('/api/bookmark/upsert/batch/', {
           method: 'POST',
