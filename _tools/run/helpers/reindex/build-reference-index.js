@@ -48,7 +48,10 @@ async function buildReferenceIndex (outputFormat, filesData) {
     const debug = true
     if (debug === true) {
       page.on('console', function (consoleObj) {
-        console.log(consoleObj.text())
+        const message = consoleObj.text()
+        // Suppress fetch API errors
+        if (message.includes('/api/session') || message.includes('/api/bookmark')) return
+        console.log(message)
       })
     }
 
