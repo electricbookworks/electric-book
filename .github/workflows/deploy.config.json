@@ -1,5 +1,5 @@
 {
-  "book-server-disabled": {
+  "book-server": {
     "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
     "bucket": "ebt-books",
     "configs-comment": "All configs are relative to the _configs folder.",
@@ -8,14 +8,6 @@
       {
         "configs": [],
         "dir": "electric-book"
-      },
-      {
-        "configs": ["_config.student.yml"],
-        "dir": "test/student"
-      },
-      {
-        "configs": ["_config.teacher.yml"],
-        "dir": "test/teacher"
       }
     ]
   },

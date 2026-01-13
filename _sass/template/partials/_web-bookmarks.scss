@@ -1,9 +1,16 @@
 $web-bookmarks: true !default;
 @if $web-bookmarks {
 
-    // Bookmarks
-
     $bookmarks-modal-header-height: 2.7rem!default;
+
+    @keyframes loadingAnimation {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
 
     // The bookmarks list
     .bookmarks {
@@ -31,6 +38,51 @@ $web-bookmarks: true !default;
         }
     }
 
+    .bookmarks-modal-toggle {
+        position: relative;
+        &.loading > svg {
+            opacity: .6;
+        }
+    }
+
+    .bookmarks-modal-toggle-loading {
+        .loading & {
+            display: block;
+        }
+        display: none;
+        width: 1em;
+        height: 1em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        animation: loadingAnimation 1s linear infinite;
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .bookmarks-modal-loading {
+        display: none;
+        .loading & {
+            display: flex;
+        }
+        z-index: 1000;
+        opacity: .6;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: #fff;
+        svg {
+            margin: auto;
+            width: 1em;
+            height: 1em;
+            animation: loadingAnimation 1s linear infinite;
+        }
+    }
+
     // The modal
     .bookmarks-modal {
         @include dialog-styles();
@@ -49,6 +101,9 @@ $web-bookmarks: true !default;
         list-style-type: none;
         padding: 0; // override default masthead padding
         overflow: auto;
+        &.loading {
+            overflow: hidden;
+        }
 
         // Position
         position: fixed;
@@ -158,8 +213,8 @@ $web-bookmarks: true !default;
 
                 // Appearance
                 color: $bookmark-text-color-secondary;
-                font-size: 0.8em;
-                line-height: $line-height-default;
+                font-size: 0.7em;
+                line-height: $line-height-default*0.7;
                 min-height: 4em; // helps last-location tip obscure bookmark tip
                 padding: 1em;
                 text-align: center;
@@ -191,11 +246,6 @@ $web-bookmarks: true !default;
                     }
 
                     .bookmark-title {
-                        color: $bookmark-text-color-secondary;
-                        font-family: $font-text-secondary;
-                        font-size: 0.7em;
-                        letter-spacing: 0.05em;
-                        text-transform: uppercase;
 
                         &::after {
                             color: $bookmark-text-color-secondary;
@@ -206,10 +256,10 @@ $web-bookmarks: true !default;
                         }
                     }
 
-                    .bookmark-date {
+                    .bookmark-title, .bookmark-date {
                         color: $bookmark-text-color-secondary;
                         font-family: $font-text-secondary;
-                        font-size: 0.7em;
+                        font-size: 0.6em;
                         letter-spacing: 0.05em;
                         text-transform: uppercase;
                     }
@@ -240,13 +290,19 @@ $web-bookmarks: true !default;
                         font-family: $font-text-main;
                         font-size: 0.9em;
                         line-height: 1.2;
-                        margin: ($line-height-default * 0.25) 0;
+                        margin: ($line-height-default * 0.25) 0 .3em;
                     }
 
                     .bookmark-delete {
                         float: right;
                     }
 
+                    &.bookmarks-delete-all button, .bookmark-delete {
+                        border: 1px solid #f73e14;
+                        background-color: #fff;
+                        color: #f73e14;
+                    }
+                    
                     &.bookmarks-delete-all {
                         text-align: center;
                         // Don't show if there are no bookmarks listed
@@ -453,6 +509,46 @@ $web-bookmarks: true !default;
     .home {
         .history-icon {
             visibility: hidden;
+        }
+    }
+
+    .bookmark-note-container {
+        position: relative;
+        &.saving {
+            opacity: 0.5;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+    }
+
+    .bookmark-note {
+        font-size: 16px;
+        font-family: $font-text-main;
+        border: 1px solid #ccc;
+        margin: 1em 0;
+        padding-bottom: 2em;
+        resize: vertical;
+    }
+
+    .bookmark-note-sign-in {
+        display: block;
+        margin: 1em 0;
+        font-size: 0.7em;
+        text-align: center;
+        border: 1px dashed #ccc;
+        padding: 0.5em;
+        transition: border-color 0.3s;
+        &:hover {
+            border-color: #777;
+        }
+    }
+
+    .bookmark-note-save {
+        position: absolute;
+        bottom: .5em;
+        right: .5em;
+        .unedited & {
+            display: none;
         }
     }
 }
