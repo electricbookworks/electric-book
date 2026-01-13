@@ -8,9 +8,9 @@
         the book folder from the page path directly. {% endcomment %}
         {% assign book-for-opener-image = page.path | split: "/" | pop %}
 
-        {% include image class="opener-image" file=page.opener-image folder=book-for-opener-image alt=page.opener-image-alt-text position=page.opener-image-position %}
+        {% include image class="opener-image" file=page.opener-image folder=book-for-opener-image alt=page.opener-image-alt-text position=page.opener-image-position loading="eager" %}
     {% else %}
-        {% include image class="opener-image" file=page.opener-image folder="assets" alt=page.opener-image-alt-text position=page.opener-image-position %}
+        {% include image class="opener-image" file=page.opener-image folder="assets" alt=page.opener-image-alt-text position=page.opener-image-position loading="eager" %}
     {% endif %}
 </div>
 {% endif %}

@@ -8,45 +8,29 @@ if (typeof window !== 'undefined') {
 
 // Utility functions
 
-// https://medium.com/@mhagemann/the-ultimate-way-to-slugify-a-url-string-in-javascript-b8e4a0d849e1
-function ebSlugify (string, indexTerm) {
-  const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·_,:;'
-  const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnooooooooprrsssssttuuuuuuuuuwxyyzzz-----'
-  const p = new RegExp(a.split('').join('|'), 'g')
-
-  if (string && indexTerm) {
-    // For dynamic index terms, we want to take a different approach
-    // to ensure unique ids
-    return string.toString().toLowerCase()
-      .replace(/\s+/g, '-') // Replace spaces with -
-      .replace(p, function (c) {
-        return b.charAt(a.indexOf(c))
-      }) // Replace special characters
-      .replace(/&/g, '-and-') // Replace & with 'and'
-      .replace(/--+/g, '-') // Replace multiple - with single -
-      .replace(/^-+/, '') // Trim - from start of text
-      .replace(/-+$/, '') // Trim - from end of text
-      .replace(/-\\\\-/g, '--') // Replace \\ with --
-      .replace(/[^\w-]+/g, '') // Remove all non-word characters
+function ebSlugify (string) {
+  const from = 'ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç\'{}´-+¿?.,;:[]*¨¡!=()&%$#/"_'
+  const to = ' '
+  const mapping = {}
+  for (let i = 0, j = from.length; i < j; i++) {
+    mapping[from.charAt(i)] = to
+  }
+  const ret = []
+  for (let i = 0, j = string.length; i < j; i++) {
+    const c = string.charAt(i)
+    if (Object.prototype.hasOwnProperty.call(mapping, string.charAt(i))) {
+      ret.push(mapping[c])
+    } else {
+      ret.push(c)
+    }
   }
 
-  if (string) {
-    return string.toString().toLowerCase()
-      .replace(/\s+/g, '-') // Replace spaces with -
-      .replace(p, function (c) {
-        return b.charAt(a.indexOf(c))
-      }) // Replace special characters
-      .replace(/\//g, '-') // Replace any / with - (in non-index strings)
-      .replace(/&/g, '-and-') // Replace & with 'and'
-      .replace(/[^\w-]+/g, '') // Remove all non-word characters
-      .replace(/--+/g, '-') // Replace multiple - with single -
-      .replace(/^-+/, '') // Trim - from start of text
-      .replace(/-+$/, '') // Trim - from end of text
-  } else {
-    // We must return a string, even empty, otherwise
-    // an undefined slug will cause errors elsewhere.
-    return ''
-  }
+  // Allowed word character ranges - add more as needed
+  // E.g. const KOREAN_CHARS = '\\u1100-\\u11FF\\u3130-\\u318F\\uA960-\\uA97F\\uAC00-\\uD7AF\\uD7B0-\\uD7FF'
+  const LATIN_CHARS = '-A-Za-z0-9'
+  const allowedChars = `[^${LATIN_CHARS}]+`
+
+  return ret.join('').trim().replace(new RegExp(allowedChars, 'g'), '-').toLowerCase()
 }
 
 // Decode HTML entities in an HTML string
