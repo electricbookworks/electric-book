@@ -1,6 +1,9 @@
-import { locales, pageLanguage } from './_src/locales'
-import { getQueryVariable } from './_src/search-terms'
-import ebSearchResults from './_src/search-results.js'
+import { locales, pageLanguage } from '@electricbookworks/electric-book-modules/assets/js/_src/locales'
+import { getQueryVariable } from '@electricbookworks/electric-book-modules/assets/js/_src/search-terms'
+import ebSearchResults from '@electricbookworks/electric-book-modules/assets/js/_src/search-results.js'
+
+const storeFileName = process.env.config.collections?.docs?.output === true ? 'search-index-with-docs-' + process.env.output : 'search-index-' + process.env.output
+const store = require(`../../_indexes/${storeFileName}`)
 
 // display a 'Searching' progress placeholder
 function ebSearchShowSearchingNotice () {
@@ -40,10 +43,10 @@ function ebSearchResultsProcess () {
   ebSearchCheckForResultsLoad = window.setInterval(ebSearchWaitingForResults, 500)
 
   // Let notification show before loading index and results
-  window.setTimeout(
-    ebSearchResults,
-    500
-  )
+  window.setTimeout(function () {
+    ebSearchResults(store)
+  },
+  500)
 }
 
 function ebSearchCheckForSearchString () {

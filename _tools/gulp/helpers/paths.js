@@ -6,7 +6,7 @@ const yaml = require('js-yaml')
 const { book, language } = require('../helpers/args.js')
 
 // Load scripts from elsewhere in this repo
-const pathToJsAssetsSrc = `${process.cwd()}/assets/js/_src/`
+const pathToJsAssetsSrc = `${process.cwd()}/_indexes/`
 
 let printpdfIndexTargets
 try {

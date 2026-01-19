@@ -172,7 +172,7 @@ async function buildReferenceIndex (outputFormat, filesData) {
 
   // Create empty index file to write to, if it doesn't exist
   const indexFilePath = fsPath.normalize(process.cwd() +
-      '/assets/js/_src/book-index-' + outputFormat + '.js')
+      '/_indexes/book-index-' + outputFormat + '.js')
   if (!fs.existsSync(indexFilePath)) {
     console.log('Creating ' + indexFilePath)
     await fsPromises.writeFile(indexFilePath, '')

@@ -70,7 +70,8 @@
     "webpack-cli": "^6.0.1",
     "which": "^2.0.2",
     "yaml-loader": "^0.8.1",
-    "yargs": "^17.5.1"
+    "yargs": "^17.5.1",
+    "@electricbookworks/electric-book-modules": "^1.0.3"
   },
   "cordova": {
     "plugins": {

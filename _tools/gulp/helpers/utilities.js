@@ -3,18 +3,15 @@
 // Local helpers
 const { imageSettings } = require('./paths.js')
 const { book } = require('../helpers/args.js')
-const pathToJsAssetsSrc = `${process.cwd()}/assets/js/_src/`
 
 // Load utilities from elsewhere in this repo
-const { ebSlugify } = require(`${pathToJsAssetsSrc}utilities.js`)
+const { ebSlugify } = require('@electricbookworks/electric-book-modules/assets/js/_src/utilities.js')
 if (!ebSlugify) {
-  console.log(`Could not load ebSlugify from ${pathToJsAssetsSrc}utilities.js`)
+  console.log('Could not load ebSlugify from @electricbookworks/electric-book-modules/assets/js/_src/utilities.js')
 }
 
 // Function for checking if an image should be processed
 function modifyImageCheck (filename, format) {
-  'use strict'
-
   // Assume true
   let modifyImage = true
 
@@ -70,7 +67,6 @@ function modifyImageCheck (filename, format) {
 
 // Function for getting a filename in gulp tap
 function getFilenameFromPath (path) {
-  'use strict'
   let filename = path.split('/').pop() // for unix slashes
   filename = filename.split('\\').pop() // for windows backslashes
   return filename
@@ -78,8 +74,6 @@ function getFilenameFromPath (path) {
 
 // Function for default gulp tap step
 function getFileDetailsFromTap (file, format) {
-  'use strict'
-
   if (!format) {
     format = 'all'
   }
@@ -88,7 +82,7 @@ function getFileDetailsFromTap (file, format) {
 
   return {
     prefix: file.basename.replace('.', '').replace(' ', ''),
-    filename: filename,
+    filename,
     modifyImage: modifyImageCheck(filename, format)
   }
 }
@@ -97,8 +91,6 @@ function lookupColorSettings (gmfile,
   colorProfile, colorSpace,
   colorProfileGrayscale, colorSpaceGrayscale,
   outputFormat) {
-  'use strict'
-
   const filename = getFilenameFromPath(gmfile.source)
 
   // Look up image settings
@@ -124,8 +116,8 @@ function lookupColorSettings (gmfile,
   }
 
   return {
-    colorSpace: colorSpace,
-    colorProfile: colorProfile
+    colorSpace,
+    colorProfile
   }
 }
 

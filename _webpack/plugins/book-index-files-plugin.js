@@ -10,7 +10,7 @@ class BookIndexFilesPlugin {
   constructor (options = {}) {
     this.options = {
       // Directory to scan for book index files
-      searchDir: options.searchDir || 'assets/js/_src',
+      searchDir: options.searchDir || '_indexes',
       // Pattern to match book index files
       filePattern: options.filePattern || /^book-index-.*\.js$/,
       // Environment variable name

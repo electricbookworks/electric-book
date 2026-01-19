@@ -236,9 +236,9 @@ async function buildSearchIndex (outputFormat, filesData, configsObject) {
 
   // Create empty index files to write to, if they don't exist
   const indexFilePathNoDocs = fsPath.normalize(process.cwd() +
-      '/assets/js/_src/search-index-' + outputFormat + '.js')
+      '/_indexes/search-index-' + outputFormat + '.js')
   const indexFilePathWithDocs = fsPath.normalize(process.cwd() +
-      '/assets/js/_src/search-index-with-docs-' + outputFormat + '.js')
+      '/_indexes/search-index-with-docs-' + outputFormat + '.js')
   const indexFilePathForAPI = fsPath.normalize(process.cwd() +
       '/_api/content/index.json')
 

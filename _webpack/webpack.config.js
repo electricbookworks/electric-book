@@ -99,7 +99,7 @@ module.exports = {
       }
     ]),
     new BookIndexFilesPlugin({
-      searchDir: 'assets/js/_src',
+      searchDir: '_indexes',
       envVar: 'bookIndexFiles'
     }),
     new FilesPlugin({
