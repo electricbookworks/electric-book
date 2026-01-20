@@ -1,13 +1,11 @@
-let ebHasSessionApi, ebUserSession
-
-try {
-  const ebSessionApi = await fetch('/api/session/')
-  ebHasSessionApi = ebSessionApi.status !== 404
-  ebUserSession = ebHasSessionApi ? await ebSessionApi.json() : null
-} catch (error) {
-  ebHasSessionApi = false
-  ebUserSession = null
+async function ebUserSession () {
+  try {
+    const ebSessionApi = await fetch('/api/session/')
+    const ebHasSessionApi = ebSessionApi.status !== 404
+    return ebHasSessionApi ? await ebSessionApi.json() : {}
+  } catch (error) {
+    return null
+  }
 }
 
 export default ebUserSession
-export { ebHasSessionApi }
