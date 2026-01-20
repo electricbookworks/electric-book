@@ -7,7 +7,7 @@ const settings = process.env.settings
 
 const ebBookmarksNoteUI = async ({ bookmark, bookmarkNotes, listItem }) => {
   if (await ebBookmarksHasApi() && bookmark.type !== 'lastLocation') {
-    if (await ebUserSession()?.ID) {
+    if ((await ebUserSession())?.ID) {
       let noteEvent = null
       const bookmarkNote = bookmarkNotes.find((note) => note && note.key === bookmark.key)
       const handleNoteSave = async (e) => {

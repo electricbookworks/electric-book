@@ -3,7 +3,7 @@ import ebBookmarksHasApi from './has-api'
 import ebBookmarksSessionDate from './session-date'
 
 async function ebBookmarksSaveNote ({ bookmark, note }) {
-  if (await ebUserSession()?.ID && await ebBookmarksHasApi()) {
+  if ((await ebUserSession())?.ID && await ebBookmarksHasApi()) {
     await fetch('/api/bookmark/note/upsert/', {
       method: 'POST',
       body: JSON.stringify({
