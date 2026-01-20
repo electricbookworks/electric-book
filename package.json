@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/electricbookworks/electric-book#readme",
   "dependencies": {
-    "@electricbookworks/electric-book-modules": "1.0.8"
+    "@electricbookworks/electric-book-modules": "1.0.9"
   }
 }
