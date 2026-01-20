@@ -13,6 +13,8 @@ _app/plugins
 _prince
 .DS_Store
 .vscode*
+.yalc/
+yalc.lock
 
 # If your team needs convenience over strict node-package
 # version management, uncomment this line,
