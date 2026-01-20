@@ -1,13 +1,13 @@
 import { locales, pageLanguage } from '../locales'
-import ebBookmarksHasApi from './has-api'
-import ebUserSession from '../user-session'
 import ebBookmarksSaveNote from './save-note'
+import ebBookmarksCanSync from './can-sync'
 
 const settings = process.env.settings
 
 const ebBookmarksNoteUI = async ({ bookmark, bookmarkNotes, listItem }) => {
-  if (await ebBookmarksHasApi() && bookmark.type !== 'lastLocation') {
-    if (await ebUserSession()?.ID) {
+  const canSync = await ebBookmarksCanSync()
+  if (canSync.hasApi && bookmark.type !== 'lastLocation') {
+    if (canSync.userSession?.ID) {
       let noteEvent = null
       const bookmarkNote = bookmarkNotes.find((note) => note && note.key === bookmark.key)
       const handleNoteSave = async (e) => {

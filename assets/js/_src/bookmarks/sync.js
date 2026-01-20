@@ -1,12 +1,11 @@
 /* global fetch, localStorage */
-import ebUserSession from '../user-session'
 import ebBookmarksGetLocalStorage from './get-local-storage'
-import ebBookmarksHasApi from './has-api'
 import ebBookmarksSessionDate from './session-date'
 import ebBookmarksCheckForBookmarks from './check-for-bookmarks'
 import ebBookmarksSelect from './select'
 import ebBookmarksModal, { ebBookmarksModalSetLoading, ebBookmarksModalToggleSetLoading } from './modal'
 import ebBookmarksCreateFingerprintIndex from './create-fingerprint-index'
+import ebBookmarksCanSync from './can-sync'
 
 // Decoupled subscription to sync, to avoid subsequent script blocking on page load
 document.addEventListener('bookmarksSyncComplete', async (event) => {
@@ -42,7 +41,8 @@ const ebBookmarksSync = async ({ firstLoad = false } = {}) => {
   }
 
   try {
-    if (await ebUserSession()?.ID && await ebBookmarksHasApi()) {
+    const canSync = await ebBookmarksCanSync()
+    if (canSync.canSync) {
       // Clean up deleted bookmarks first
       const bookmarkDeletedLocal = JSON.parse(localStorage.getItem('bookmark-deleted')) || []
       let bookmarkDeletedServer = await fetch('/api/bookmark/deleted/')
