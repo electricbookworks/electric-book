@@ -1,6 +1,6 @@
-import { locales, pageLanguage } from '@electricbookworks/electric-book-modules/assets/js/_src/locales'
-import { getQueryVariable } from '@electricbookworks/electric-book-modules/assets/js/_src/search-terms'
-import ebSearchResults from '@electricbookworks/electric-book-modules/assets/js/_src/search-results.js'
+import { locales, pageLanguage } from '@electricbookworks/electric-book-modules/assets/js/locales'
+import { getQueryVariable } from '@electricbookworks/electric-book-modules/assets/js/search-terms'
+import ebSearchResults from '@electricbookworks/electric-book-modules/assets/js/search-results.js'
 
 const storeFileName = process.env.config.collections?.docs?.output === true ? 'search-index-with-docs-' + process.env.output : 'search-index-' + process.env.output
 const store = require(`../../_indexes/${storeFileName}`)
