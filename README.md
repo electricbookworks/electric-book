@@ -181,6 +181,13 @@ To get a Word export of a book, use the `export` command instead of `output`, e.
 npm run eb -- export --book samples --format screen-pdf
 ```
 
+### Outputting PDFs on macOS
+
+When running a PDF output locally on macOS, you may run into Prince issues because the Node module binary is not executable by default. To make it executable, run the following:
+
+```sh
+chmod +x node_modules/prince/prince/lib/prince-books/bin/prince-books
+```
 
 ### Project setup check
 

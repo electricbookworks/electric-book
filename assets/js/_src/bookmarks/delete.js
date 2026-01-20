@@ -5,9 +5,9 @@ import ebBookmarksHasApi from './has-api'
 import { ebBookmarksModalSetLoading } from './modal'
 import ebBookmarksSessionDate from './session-date'
 import ebBookmarksGetLocalStorage from './get-local-storage'
-const canSync = ebUserSession?.ID && ebBookmarksHasApi
 
 async function ebBookmarksDeleteSync ({ keys, all = false }) {
+  const canSync = await ebUserSession()?.ID && await ebBookmarksHasApi()
   Array.isArray(keys) && keys.forEach((key) => {
     localStorage.removeItem(key)
     if (!canSync) {

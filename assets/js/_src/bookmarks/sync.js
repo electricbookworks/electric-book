@@ -42,7 +42,7 @@ const ebBookmarksSync = async ({ firstLoad = false } = {}) => {
   }
 
   try {
-    if (ebUserSession?.ID && ebBookmarksHasApi) {
+    if (await ebUserSession()?.ID && await ebBookmarksHasApi()) {
       // Clean up deleted bookmarks first
       const bookmarkDeletedLocal = JSON.parse(localStorage.getItem('bookmark-deleted')) || []
       let bookmarkDeletedServer = await fetch('/api/bookmark/deleted/')

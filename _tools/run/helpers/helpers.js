@@ -371,20 +371,21 @@ async function jekyll (argv) {
     command = 'serve'
   }
 
-  // Get the baseurl from Jekyll config, unless
-  // it's been overridden by one set in
-  // a --baseurl command-line argument
   let baseurl = ''
-  if (configsObject(argv).baseurl) {
-    baseurl = configsObject(argv).baseurl
-  }
-  if (argv.baseurl !== null) {
-    baseurl = argv.baseurl
-  }
 
-  // Ensure baseurl string starts with a slash
-  if (baseurl !== '' && baseurl.indexOf('/') !== 0) {
-    baseurl = '/' + baseurl
+  // The baseurl is only relevant for web, and can break other outputs.
+  if (argv.format === 'web') {
+    if (argv.baseurl !== null) {
+      // A baseurl passed as argv with CLI trumps Jekyll config
+      baseurl = argv.baseurl
+    } else if (configsObject(argv).baseurl) {
+      // Get the baseurl from Jekyll config
+      baseurl = configsObject(argv).baseurl
+    }
+    // Ensure baseurl string starts with a slash
+    if (baseurl !== '' && baseurl.indexOf('/') !== 0) {
+      baseurl = '/' + baseurl
+    }
   }
 
   // Build the string of config files.

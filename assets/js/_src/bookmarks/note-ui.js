@@ -5,9 +5,9 @@ import ebBookmarksSaveNote from './save-note'
 
 const settings = process.env.settings
 
-const ebBookmarksNoteUI = ({ bookmark, bookmarkNotes, listItem }) => {
-  if (ebBookmarksHasApi && bookmark.type !== 'lastLocation') {
-    if (ebUserSession?.ID) {
+const ebBookmarksNoteUI = async ({ bookmark, bookmarkNotes, listItem }) => {
+  if (await ebBookmarksHasApi() && bookmark.type !== 'lastLocation') {
+    if (await ebUserSession()?.ID) {
       let noteEvent = null
       const bookmarkNote = bookmarkNotes.find((note) => note && note.key === bookmark.key)
       const handleNoteSave = async (e) => {
