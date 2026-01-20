@@ -1,10 +1,10 @@
 /* global localStorage */
-import ebUserSession from '../user-session'
-import ebBookmarksHasApi from './has-api'
+import ebBookmarksCanSync from './can-sync'
 
 async function ebBookmarksSave (bookmark) {
   localStorage.setItem(bookmark.key, JSON.stringify(bookmark))
-  if ((await ebUserSession())?.ID && await ebBookmarksHasApi()) {
+  const canSync = await ebBookmarksCanSync()
+  if (canSync.canSync) {
     await fetch('/api/bookmark/upsert/', {
       method: 'POST',
       body: JSON.stringify(bookmark)

@@ -1,11 +1,11 @@
 import ebBookmarksGetLocalStorage from './get-local-storage'
-import ebUserSession from '../user-session'
-import ebBookmarksHasApi from './has-api'
+import ebBookmarksCanSync from './can-sync'
 
 async function ebBookmarksFetch () {
   const bookmarks = ebBookmarksGetLocalStorage({ prefix: 'bookmark-', excludePrefix: 'bookmark-deleted' })
   let bookmarkNotes = []
-  if ((await ebUserSession())?.ID && await ebBookmarksHasApi()) {
+  const canSync = await ebBookmarksCanSync()
+  if (canSync.canSync) {
     let bookmarkNoteResults = await fetch('/api/bookmark/note/list/')
     bookmarkNoteResults = await bookmarkNoteResults.json()
     bookmarkNotes = Array.isArray(bookmarkNoteResults?.results) ? bookmarkNoteResults.results : []
