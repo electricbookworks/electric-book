@@ -39,8 +39,8 @@ import ebAddLoginButton from '@electricbookworks/electric-book-modules/assets/js
 const bookIndexFileExists = process.env.bookIndexFiles && process.env.bookIndexFiles.includes(process.env.output)
 const ebIndexTargets = bookIndexFileExists ? require(`../../_indexes/book-index-${process.env.output}`) : []
 
-console.log('Config:', process.env.config)
-console.log('Settings:', process.env.settings)
+// console.log('Config:', process.env.config)
+// console.log('Settings:', process.env.settings)
 // console.log('Works:', process.env.works)
 // console.log('Output:', process.env.output)
 // console.log('Build:', process.env.build)
