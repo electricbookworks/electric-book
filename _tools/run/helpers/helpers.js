@@ -1208,7 +1208,20 @@ async function runPrince (argv) {
 
       .timeout(100 * 100000) // large timeout required for large books
       .maxbuffer(10 * 1024) // show progress more often
-      .on('stderr', function (line) { console.error(line) })
+      .on('stderr', function (line) {
+        console.error(line)
+        if (line.includes('assets/js/dist')) {
+          console.log('\n\n-----------------------\n')
+          console.log('TAKE NOTE:\n\n')
+          console.error('The PDF build has failed.')
+          console.error('Prince encountered an error in the compiled JavaScript in assets/js/dist.')
+          console.error('Report this to your nearest EBW developer or your project lead.')
+          console.log('\n\nThe error:\n')
+          console.log(line)
+          console.log('\n\n-----------------------\n\n')
+          process.exit(1)
+        }
+      })
       .on('stdout', function (line) { console.log(line) })
       .execute()
       .then(function () {
