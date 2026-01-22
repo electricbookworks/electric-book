@@ -3,38 +3,41 @@ Unused imports will be tree-shaken in production mode when using process.env val
 The process.env values are created by webpack at buildtime - see _webpack/webpack.config.js.
 Conditionals using runtime values (e.g. from YAML data imported with yaml-loader) will not be tree-shaken.
 */
-import './_src/polyfills'
-import ebMarkParents from './_src/mark-parents'
-import ebColorPanels from './_src/color-panels'
-import ebRedact from './_src/redact'
-import ebSetup from './_src/setup'
-import ebSearchTerms from './_src/search-terms'
-import ebNav from './_src/nav'
-import ebVideos from './_src/videos'
-import ebMCQs from './_src/mcqs'
-import ebSelectList from './_src/select-list'
-import ebTables from './_src/tables'
-import ebFootnotePopups from './_src/footnote-popups'
-import ebSlides from './_src/slides'
-import ebShowHide from './_src/show-hide'
-import { ebAddCopyButtons } from './_src/copy-to-clipboard'
-import ebShare from './_src/share'
-import ebExpandableBox from './_src/expandable-box'
-import ebSVGManagement from './_src/svg-management'
-import ebLazyLoad from './_src/lazyload'
-import ebTestingImages from './_src/testing-images'
-import ebAnnotation from './_src/annotation'
-import ebBookmarks from './_src/bookmarks'
-import ebPrinceBoxInfo from './_src/prince-box-info'
-import ebHeadingTitles from './_src/heading-titles'
-import ebRotate from './_src/rotate'
-import ebFootnotes from './_src/footnotes'
-import ebShiftElements from './_src/shift-elements'
-import ebPageReference from './_src/page-reference'
-import ebIndexTargetsInit from './_src/index-targets'
-import ebIndexLists from './_src/index-lists'
-import ebAddLoginButton from './_src/add-login-button'
-// import ebBaselineGrid from './src/baseline-grid'
+import '@electricbookworks/electric-book-modules/assets/js/polyfills'
+import ebMarkParents from '@electricbookworks/electric-book-modules/assets/js/mark-parents'
+import ebColorPanels from '@electricbookworks/electric-book-modules/assets/js/color-panels'
+import ebRedact from '@electricbookworks/electric-book-modules/assets/js/redact'
+import ebSetup from '@electricbookworks/electric-book-modules/assets/js/setup'
+import ebSearchTerms from '@electricbookworks/electric-book-modules/assets/js/search-terms'
+import ebNav from '@electricbookworks/electric-book-modules/assets/js/nav'
+import ebVideos from '@electricbookworks/electric-book-modules/assets/js/videos'
+import ebMCQs from '@electricbookworks/electric-book-modules/assets/js/mcqs'
+import ebSelectList from '@electricbookworks/electric-book-modules/assets/js/select-list'
+import ebTables from '@electricbookworks/electric-book-modules/assets/js/tables'
+import ebFootnotePopups from '@electricbookworks/electric-book-modules/assets/js/footnote-popups'
+import ebSlides from '@electricbookworks/electric-book-modules/assets/js/slides'
+import ebShowHide from '@electricbookworks/electric-book-modules/assets/js/show-hide'
+import { ebAddCopyButtons } from '@electricbookworks/electric-book-modules/assets/js/copy-to-clipboard'
+import ebShare from '@electricbookworks/electric-book-modules/assets/js/share'
+import ebExpandableBox from '@electricbookworks/electric-book-modules/assets/js/expandable-box'
+import ebSVGManagement from '@electricbookworks/electric-book-modules/assets/js/svg-management'
+import ebLazyLoad from '@electricbookworks/electric-book-modules/assets/js/lazyload'
+import ebTestingImages from '@electricbookworks/electric-book-modules/assets/js/testing-images'
+import ebAnnotation from '@electricbookworks/electric-book-modules/assets/js/annotation'
+import ebBookmarks from '@electricbookworks/electric-book-modules/assets/js/bookmarks'
+import ebPrinceBoxInfo from '@electricbookworks/electric-book-modules/assets/js/prince-box-info'
+import ebHeadingTitles from '@electricbookworks/electric-book-modules/assets/js/heading-titles'
+import ebRotate from '@electricbookworks/electric-book-modules/assets/js/rotate'
+import ebFootnotes from '@electricbookworks/electric-book-modules/assets/js/footnotes'
+import ebShiftElements from '@electricbookworks/electric-book-modules/assets/js/shift-elements'
+import ebPageReference from '@electricbookworks/electric-book-modules/assets/js/page-reference'
+import ebIndexTargetsInit from '@electricbookworks/electric-book-modules/assets/js/index-targets'
+import ebIndexLists from '@electricbookworks/electric-book-modules/assets/js/index-lists'
+import ebAddLoginButton from '@electricbookworks/electric-book-modules/assets/js/add-login-button'
+// import ebBaselineGrid from '@electricbookworks/electric-book-modules/assets/js/baseline-grid'
+
+const bookIndexFileExists = process.env.bookIndexFiles && process.env.bookIndexFiles.includes(process.env.output)
+const ebIndexTargets = bookIndexFileExists ? require(`../../_indexes/book-index-${process.env.output}`) : []
 
 // console.log('Config:', process.env.config)
 // console.log('Settings:', process.env.settings)
@@ -137,7 +140,7 @@ if (process.env.settings['dynamic-indexing'] !== false) {
   in PDF and epub outputs.
   */
   if (process.env.output === 'web' || process.env.output === 'app') {
-    ebIndexLists()
+    ebIndexLists(ebIndexTargets)
   }
 }
 
