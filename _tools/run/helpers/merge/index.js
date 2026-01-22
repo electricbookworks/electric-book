@@ -143,7 +143,7 @@ async function merge (argv) {
 
       filePaths.forEach(async function (filePath) {
         // Parse the HTML
-        let dom = new JSDOM(fs.readFileSync(filePath))
+        let dom = new JSDOM(fs.readFileSync(filePath, 'utf8'))
 
         // Update the IDs and links
         const filename = fsPath.basename(filePath)
