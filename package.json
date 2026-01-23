@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "electric-book": "node _tools",
     "eb": "node _tools",
-    "setup": "npm install && bundle install"
+    "setup": "npm install && bundle install",
+    "update-modules": "rm -rf node_modules/@electricbookworks/electric-book-modules && rm package-lock.json && npm install"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,6 @@
   },
   "homepage": "https://github.com/electricbookworks/electric-book#readme",
   "dependencies": {
-    "@electricbookworks/electric-book-modules": "github:electricbookworks/electric-book-modules#v1.0.18"
+    "@electricbookworks/electric-book-modules": "github:electricbookworks/electric-book-modules#v1.0.22"
   }
 }
