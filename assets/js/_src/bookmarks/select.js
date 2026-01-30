@@ -1,9 +1,9 @@
 /* global localStorage, IntersectionObserver, Element */
 
 import { locales, pageLanguage } from '../locales'
-import { ebBookmarksDeleteBookmark } from './delete'
 import ebBookmarksSetBookmark from './set-bookmark'
 import { ebIsPositionRelative } from '../utilities'
+import { ebBookmarksToggleModal } from './modal'
 
 const settings = process.env.settings
 
@@ -128,18 +128,17 @@ function ebBookmarkMarkBookmarkedElement (element) {
   element.setAttribute('data-bookmarked', 'true')
 }
 
-// Remove a bookmark by clicking its icon
-function ebBookmarksRemoveByIconClick (button) {
+// Reveal a bookmark by clicking its icon
+function ebBookmarksRevealByIconClick (button) {
   const bookmarkLocation = window.location.href.split('#')[0] + '#' + button.parentElement.id
 
   // Loop through stored bookmarks,
-  // find this one, and delete it.
-  // Note there is no 'confirm delete' step here.
+  // find this one, and show it.
   Object.keys(localStorage).forEach(function (key) {
     if (key.startsWith('bookmark-')) {
       const entry = JSON.parse(localStorage.getItem(key))
       if (entry.location === bookmarkLocation) {
-        ebBookmarksDeleteBookmark(entry)
+        ebBookmarksToggleModal({ scrollTo: entry.key + '-list-item' })
       }
     }
   })
@@ -158,7 +157,7 @@ function ebBookmarksListenForClicks (button) {
       ebBookmarkMarkBookmarkedElement(button.parentNode)
       button.parentElement.classList.remove('bookmark-pending')
     } else {
-      ebBookmarksRemoveByIconClick(button)
+      ebBookmarksRevealByIconClick(button)
     }
   })
 }

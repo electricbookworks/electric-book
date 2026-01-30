@@ -36,8 +36,8 @@ import ebIndexLists from './_src/index-lists'
 import ebAddLoginButton from './_src/add-login-button'
 // import ebBaselineGrid from './src/baseline-grid'
 
-console.log('Config:', process.env.config)
-console.log('Settings:', process.env.settings)
+// console.log('Config:', process.env.config)
+// console.log('Settings:', process.env.settings)
 // console.log('Works:', process.env.works)
 // console.log('Output:', process.env.output)
 // console.log('Build:', process.env.build)
