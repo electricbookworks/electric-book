@@ -9,8 +9,8 @@ function ebBookmarksMoveModal () {
 }
 
 // Toggle the modal visibility
-function ebBookmarksToggleModal (modal) {
-  modal = modal ?? document.getElementById('bookmarks-modal')
+function ebBookmarksToggleModal ({ scrollTo } = {}) {
+  const modal = document.getElementById('bookmarks-modal')
   if (!modal) return
 
   // Toggle the clickable clickOut area
@@ -23,7 +23,12 @@ function ebBookmarksToggleModal (modal) {
     } else {
       modal.style.display = 'flex'
       modal.setAttribute('data-bookmark-modal', 'open')
-      modal.scrollTop = 0
+      if (scrollTo) {
+        const element = document.getElementById(scrollTo)
+        element && element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      } else {
+        modal.scrollTop = 0
+      }
     }
   })
 }
@@ -88,4 +93,4 @@ const ebBookmarksModal = () => {
 
 export default ebBookmarksModal
 
-export { ebBookmarksModalSetLoading, ebBookmarksModalToggleSetLoading }
+export { ebBookmarksToggleModal, ebBookmarksModalSetLoading, ebBookmarksModalToggleSetLoading }
