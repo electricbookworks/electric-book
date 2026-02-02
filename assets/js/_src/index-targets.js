@@ -362,6 +362,5 @@ export default function ebIndexTargetsInit () {
 
   if (marked) {
     ebIndexGetComments()
-    window.ebHasIndexTargets = true
   }
 }
