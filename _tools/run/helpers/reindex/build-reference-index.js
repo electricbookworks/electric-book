@@ -59,22 +59,12 @@ async function buildReferenceIndex (outputFormat, filesData) {
     // Puppeteer requires the protocol (file://) on unix.
     await page.goto('file://' + path)
 
-    // Check that any index targets for the page have been processed.
-    // This is done by assets/js/_src/index-targets.js (in main.js).
-
-    // Check if this is a page that actually
-    // contains indexing Javascript
-    const pageRunsIndexTargets = await page.evaluate(function () {
-      return window.ebHasIndexTargets === true
-    })
-
-    // Then if it does, wait for index targets to load
-    if (pageRunsIndexTargets) {
-      console.log('Waiting for data-index-targets in ' + filename)
-      await page.waitForSelector('[data-index-targets]')
-      console.log('Found data-index-targets in ' + filename)
-    } else {
-      console.log('No index targeting in ' + path)
+    // Check if the page has index targets.
+    const hasIndexTargets = await page.$('[data-index-targets]')
+    if (!hasIndexTargets) {
+      console.log('No index targets found for ' + filename + ', skipping.')
+      await page.close()
+      continue
     }
 
     // Note: we can only pass serialized data
