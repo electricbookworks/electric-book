@@ -37,6 +37,7 @@ function ebBookmarksList ({ bookmarks, bookmarkNotes }) {
     // Create list item
     const listItem = document.createElement('li')
     listItem.setAttribute('data-bookmark-type', bookmark.type)
+    listItem.setAttribute('id', bookmark.key + '-list-item')
 
     // Add the page title
     if (bookmark.pageTitle) {
