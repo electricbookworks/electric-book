@@ -1,14 +1,17 @@
 {
   "name": "electric-book",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Build tools for the Electric Book workflow",
   "main": "index.js",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "electric-book": "node _tools",
-    "eb": "node _tools",
-    "setup": "npm install && bundle install",
-    "update-modules": "rm -rf node_modules/@electricbookworks/electric-book-modules && rm package-lock.json && npm install"
+    "electric-book": "node _tools/run/index.js",
+    "eb": "node _tools/run/index.js",
+    "setup": "rm -rf node_modules/@electricbookworks/electric-book-modules && rm -f package-lock.json && npm install && bundle install",
+    "update-modules": "rm -rf node_modules/@electricbookworks/electric-book-modules && rm -f package-lock.json && npm install"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,10 @@
   },
   "homepage": "https://github.com/electricbookworks/electric-book#readme",
   "dependencies": {
-    "@electricbookworks/electric-book-modules": "github:electricbookworks/electric-book-modules#v1.0.22"
+    "@electricbookworks/electric-book-modules": "github:electricbookworks/electric-book-modules#v1.1.1"
+  },
+  "prince": {
+    "version": "books-20220701",
+    "license": "_prince/license.dat"
   }
 }
