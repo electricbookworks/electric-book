@@ -17,7 +17,7 @@ const { format } = require('../helpers/args.js')
 const htmlFilePaths = require('../../run/helpers/paths/htmlFilePaths.js')
 
 // A cheerio equivalent of ebDecodeHtmlEntitiesPreservingTags
-// from assets/js/utilities.js
+// from assets/js/utilities-cjs.js
 function decodeHtmlEntitiesPreservingTags (html) {
   // Load as a fragment (not a full document)
   const $ = cheerioCore.load(html, null, false)
