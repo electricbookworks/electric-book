@@ -55,6 +55,14 @@ Note that if you're using Gitpod, you don't need this step: it's done for you au
 
 Now the Electric Book template is ready to use.
 
+### Updating Electric Book Modules
+
+The publicly available [modules package](https://github.com/electricbookworks/electric-book-modules) uses a GitHub repository and tag version approach in the dependencies config to avoid having to use an auth token. This can result in `npm install` not correctly updating this package when changing the version. To make sure `npm` does update to a new version after changing the value, use the following:
+
+```sh
+npm run update-modules
+```
+
 
 ### List possible commands
 

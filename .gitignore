@@ -13,6 +13,13 @@ _app/plugins
 _prince
 .DS_Store
 .vscode*
+.yalc/
+yalc.lock
+
+# Installed from @electricbookworks/electric-book-modules
+_tools
+_webpack
+gulpfile.js
 
 # If your team needs convenience over strict node-package
 # version management, uncomment this line,
