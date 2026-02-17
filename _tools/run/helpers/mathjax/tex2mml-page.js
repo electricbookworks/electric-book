@@ -131,7 +131,13 @@ MathJax.startup.promise.then(() => {
     function (match, miAttrs, base, accent) {
       const combining = combiningAccents[accent]
       if (combining) {
-        return '<mi' + miAttrs + '>' + base + combining + '</mi>'
+        // Adding the combining character makes <mi> multi-character,
+        // which MathML renders upright. Force italic to match the
+        // original single-char <mi> default styling.
+        const variantAttr = miAttrs.includes('mathvariant')
+          ? ''
+          : ' mathvariant="italic"'
+        return '<mi' + variantAttr + miAttrs + '>' + base + combining + '</mi>'
       }
       return match
     }
