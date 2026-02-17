@@ -3,11 +3,6 @@ $pdf-maths: true !default;
 
     // Math
 
-    math[display="block"] {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
     // Automatic fractions
 
     .fractions { 
@@ -20,7 +15,7 @@ $pdf-maths: true !default;
     // not to style the maths itself. For dire warnings, see
     // http://stackoverflow.com/questions/5639827/styling-mathjax/25329062#25329062
     // MathJax output should be styled in _includes/mathjax-config.html
-    .MathJax_Display, .mjpage__block {
+    math[display="block"], .MathJax_Display, .mjpage__block {
         margin: $line-height-default auto;
         & + p {
            text-indent: 0;

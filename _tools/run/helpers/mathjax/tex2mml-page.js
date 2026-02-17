@@ -117,6 +117,26 @@ MathJax.startup.promise.then(() => {
     '<mover accent="true">$1'
   )
 
+  // Prince also positions accents at a uniform height regardless
+  // of the base character (e.g. tilde over z sits as high as over F).
+  // For single-character bases, replace <mover> with combining
+  // Unicode characters so the font handles correct per-character
+  // accent height positioning.
+  const combiningAccents = {
+    '~': '\u0303',
+    '^': '\u0302'
+  }
+  outputFileContents = outputFileContents.replace(
+    /<mover accent="true"[^>]*>\s*<mi([^>]*)>(.)<\/mi>\s*<mo stretchy="false">(.)<\/mo>\s*<\/mover>/g,
+    function (match, miAttrs, base, accent) {
+      const combining = combiningAccents[accent]
+      if (combining) {
+        return '<mi' + miAttrs + '>' + base + combining + '</mi>'
+      }
+      return match
+    }
+  )
+
   fs.writeFile(outputFilePath, outputFileContents, (err) => {
     if (err) throw err
   })
