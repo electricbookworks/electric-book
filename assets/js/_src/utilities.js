@@ -305,7 +305,7 @@ function ebToggleClickout (modalElement, callback) {
 //   module.exports.ebSlugify = ebSlugify
 // }
 
-export {
+module.exports = {
   ebSlugify,
   ebDecodeHtmlEntitiesPreservingTags,
   ebGetParameterByName,

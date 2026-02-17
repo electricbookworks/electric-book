@@ -105,7 +105,18 @@ MathJax.startup.promise.then(() => {
   // console.log(adaptor.outerHTML(adaptor.root(html.document)))
 
   // Write the converted HTML file
-  const outputFileContents = adaptor.outerHTML(adaptor.root(html.document))
+  let outputFileContents = adaptor.outerHTML(adaptor.root(html.document))
+
+  // Prince doesn't compute the default MathML accent attribute
+  // from the operator dictionary, causing accents like tildes
+  // to render too high above base characters. This explicitly
+  // sets accent="true" on <mover> elements where MathJax outputs
+  // a non-stretchy <mo> (indicating an accent like ~ ^ etc.).
+  outputFileContents = outputFileContents.replace(
+    /<mover(?![^>]*accent)>((?:(?!<\/mover>)[\s\S])*?<mo stretchy="false">)/g,
+    '<mover accent="true">$1'
+  )
+
   fs.writeFile(outputFilePath, outputFileContents, (err) => {
     if (err) throw err
   })
