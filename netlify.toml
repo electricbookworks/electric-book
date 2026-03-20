@@ -1,5 +1,10 @@
 # See https://docs.netlify.com/configure-builds/file-based-configuration/
 
+[build]
+  # We add 'npm rebuild' or 'npm run postinstall' to ensure the tools are created
+  command = "npm install && npm rebuild && npm run eb -- output --baseurl='' --dontserve=true"
+  publish = "_site"
+
 [build.environment]
   NODE_VERSION = "22"
 
