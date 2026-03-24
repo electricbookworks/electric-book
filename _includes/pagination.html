@@ -101,17 +101,17 @@ pages like landing and search pages. {% endcomment %}
     it points to the page we're on. This can happen when the page
     is the first file in the file-list.{% endcomment %}
 
-    <div class="pagination">
+    <div class="pagination" role="navigation" aria-label="pagination navigation">
         {% unless include.direction == "next" %}    
             {% if previous-page and previous-page-url != "" and previous-page-url != this-page-url %}
                 <div class="pagination-previous">
                     <a href="{{ path-to-root-directory }}{{ previous-page-url | replace_first: "/" }}">
                         <span class="pagination-marker">
                             {% if previous-page-title and previous-page-title != "" and pagination-type == "titles" %}
-                                <span class="pagination-previous-text">{{ previous-page-title }}</span>
+                                <span class="pagination-previous-text">{{ previous-page-title | replace: ". ", "\. " | markdownify | replace: "<p>", "" | replace: "</p>", "" | strip_newlines }}</span>
                             {% elsif previous-page-title and previous-page-title != "" and pagination-type == "title-arrows" %}
                                 <span class="pagination-previous-arrow">&#x2190;</span>
-                                <span class="pagination-previous-text">{{ previous-page-title }}</span>
+                                <span class="pagination-previous-text">{{ previous-page-title | replace: ". ", "\. " | markdownify | replace: "<p>", "" | replace: "</p>", "" | strip_newlines }}</span>
                             {% elsif pagination-type == "direction" %}
                                 <span class="pagination-previous-text">{{ locale.nav.previous }}</span>
                             {% else %}
@@ -129,9 +129,9 @@ pages like landing and search pages. {% endcomment %}
                     <a href="{{ path-to-root-directory }}{{ next-page-url | replace_first: "/" }}">
                         <span class="pagination-marker">
                             {% if next-page-title and next-page-title != "" and pagination-type == "titles" %}
-                                <span class="pagination-next-text">{{ next-page-title }}</span>
+                                <span class="pagination-next-text">{{ next-page-title | replace: ". ", "\. " | markdownify | replace: "<p>", "" | replace: "</p>", "" | strip_newlines }}</span>
                             {% elsif next-page-title and next-page-title != "" and pagination-type == "title-arrows" %}
-                                <span class="pagination-next-text">{{ next-page-title }}</span>
+                                <span class="pagination-next-text">{{ next-page-title | replace: ". ", "\. " | markdownify | replace: "<p>", "" | replace: "</p>", "" | strip_newlines }}</span>
                                 <span class="pagination-next-arrow">&#x2192;</span>
                             {% elsif pagination-type == "direction" %}
                                 <span class="pagination-next-arrow">{{ locale.nav.next }}</span>
