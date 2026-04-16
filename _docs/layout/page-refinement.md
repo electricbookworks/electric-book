@@ -149,15 +149,16 @@ All refine code lives in `_tools/run/` within the electric-book-modules package:
 | File | Purpose |
 |---|---|
 | `commands/refine.js` | Yargs command entry point |
-| `helpers/lib/refine/index.js` | Orchestrator — coordinates the Prince and PDF.js pipelines |
+| `helpers/refine/index.js` | Orchestrator — coordinates the Prince and PDF.js pipelines |
 | `helpers/lib/runPrince.js` | Shared Prince runner (used by both `eb output` and `eb refine`) |
-| `helpers/lib/refine/prince-refine.prince` | Prince-side detection script (ES5 JavaScript) |
-| `helpers/lib/refine/injectScript.js` | Injects/removes the Prince script from merged HTML |
-| `helpers/lib/refine/parseManifest.js` | Parses the structured manifest from Prince's stdout |
-| `helpers/lib/refine/mapToSource.js` | Fingerprint and fuzzy-text matching to source markdown |
-| `helpers/lib/refine/applyClasses.js` | Writes `{:.tighten-N}` IALs into markdown files |
-| `helpers/lib/refine/parsePdf.js` | PDF.js parser (fallback method) |
-| `helpers/lib/refine/detectIssues.js` | Heuristic issue detection from PDF text positions (fallback) |
+| `helpers/lib/pdfPipeline.js` | Shared post-Jekyll PDF build pipeline |
+| `helpers/refine/prince-refine.prince` | Prince-side detection script (ES5 JavaScript) |
+| `helpers/refine/injectScript.js` | Injects/removes the Prince script from merged HTML |
+| `helpers/refine/parseManifest.js` | Parses the structured manifest from Prince's stdout |
+| `helpers/refine/mapToSource.js` | Fingerprint and fuzzy-text matching to source markdown |
+| `helpers/refine/applyClasses.js` | Writes `{:.tighten-N}` IALs into markdown files |
+| `helpers/refine/parsePdf.js` | PDF.js parser (fallback method) |
+| `helpers/refine/detectIssues.js` | Heuristic issue detection from PDF text positions (fallback) |
 
 The Prince script file uses a `.prince` extension (not `.js`) to prevent Node's `require-all` from attempting to load it as a Node module.
 
