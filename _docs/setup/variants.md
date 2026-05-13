@@ -96,9 +96,13 @@ variants:
     app-variant-stylesheet: "app-anothervariant.css"
 ```
 
+Note that the file extension is `.css` not `.scss`, because it refers to the final CSS stylesheet that Jekyll/Sass will generate from `.scss` files.
+
 You can list as many variants as you like in this way. The one that applies is the one set as the `active-variant` (see above). If no `active-variant` is set, then none of the variant stylesheets will apply on output.
 
 You then create that stylesheet in a book's `styles` folder, alongside the existing default `web.scss`, `print-pdf.scss`, `screen-pdf.scss`, `epub.scss`, and `app.scss` files, which the variant replaces.
+
+Variant stylesheets must duplicate the stylesheet they replace. For example, to create a variant of the `print-pdf.scss` file in a book's `styles` folder, copy that file, save it (usually named after the variant name) and then make relevant changes to it. It's not possible to `@import` the `print-pdf.scss` file.
 
 ## Variant metadata
 
