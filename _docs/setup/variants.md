@@ -85,7 +85,7 @@ Variants listed in top-of-page YAML also determine whether that page will be inc
 
 ## Variant stylesheets
 
-You can create new stylesheets in addition to our standard ones, and specify these in `_data/settings.yml` file, like this:
+You can create new stylesheets in addition to our standard ones, and specify these in `_data/settings.yml`, like this:
 
 ``` yaml
 variants:
@@ -98,11 +98,11 @@ variants:
 
 Note that the file extension is `.css` not `.scss`, because it refers to the final CSS stylesheet that Jekyll/Sass will generate from `.scss` files.
 
-You can list as many variants as you like in this way. The one that applies is the one set as the `active-variant` (see above). If no `active-variant` is set, then none of the variant stylesheets will apply on output.
+You can list as many variants as you like in this way. The one that applies during output is the one set as the `active-variant` (see above). If no `active-variant` is set, then none of the variant stylesheets will apply on output.
 
 You then create that stylesheet in a book's `styles` folder, alongside the existing default `web.scss`, `print-pdf.scss`, `screen-pdf.scss`, `epub.scss`, and `app.scss` files, which the variant replaces.
 
-Variant stylesheets must duplicate the stylesheet they replace. For example, to create a variant of the `print-pdf.scss` file in a book's `styles` folder, copy that file, save it (usually named after the variant name) and then make relevant changes to it. It's not possible to `@import` the `print-pdf.scss` file.
+Note that a variant stylesheet *replaces* the book's default stylesheet file for a given output, it doesn't extend the default file. For example, to create a variant of the `print-pdf.scss` file in a book's `styles` folder, copy that file, save it (usually named after the variant name) and then make the relevant variant changes to it. When that variant is active (and its stylesheet is listed in `variants` in `_data/settings.yml` as described above), the book will use the variant stylesheet during print-PDF output instead of `print-pdf.scss`. It's not possible to `@import` the default `print-pdf.scss` file into a variant stylesheet (because book-folder stylesheets must begin with top-of-page YAML, which isn't allowed in an `@import`ed file).
 
 ## Variant metadata
 
