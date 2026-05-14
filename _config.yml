@@ -29,7 +29,7 @@ language: en
 # include the url where this site will live when it's live (production).
 # E.g. canonical-url: "https://example.com"
 # In Open Graph metadata, the base URL will be appended.
-canonical-url: "https://electricbookworks.github.io"
+canonical-url: "https://electric-book.netlify.app"
 
 # Base URL
 # --------
@@ -37,7 +37,7 @@ canonical-url: "https://electricbookworks.github.io"
 # the name of your repo, e.g. /electric-book
 # It must start with a slash. Otherwise you can leave it blank. See:
 # http://downtothewire.io/2015/08/15/configuring-jekyll-for-user-and-project-github-pages/
-baseurl: "/electric-book"
+baseurl: ""
 
 # GitHub Pages repository
 # -----------------------

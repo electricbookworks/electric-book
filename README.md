@@ -55,6 +55,14 @@ Note that if you're using Gitpod, you don't need this step: it's done for you au
 
 Now the Electric Book template is ready to use.
 
+### Updating Electric Book Modules
+
+The publicly available [modules package](https://github.com/electricbookworks/electric-book-modules) uses a GitHub repository and tag version approach in the dependencies config to avoid having to use an auth token. This can result in `npm install` not correctly updating this package when changing the version. To make sure `npm` does update to a new version after changing the value, use the following:
+
+```sh
+npm run update-modules
+```
+
 
 ### List possible commands
 
@@ -181,6 +189,13 @@ To get a Word export of a book, use the `export` command instead of `output`, e.
 npm run eb -- export --book samples --format screen-pdf
 ```
 
+### Outputting PDFs on macOS
+
+When running a PDF output locally on macOS, you may run into Prince issues because the Node module binary is not executable by default. To make it executable, run the following:
+
+```sh
+chmod +x node_modules/prince/prince/lib/prince-books/bin/prince-books
+```
 
 ### Project setup check
 

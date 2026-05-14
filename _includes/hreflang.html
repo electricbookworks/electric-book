@@ -31,22 +31,22 @@ Google will ignore them, since Google requires bidirectional links. {% endcommen
 
     {% if translations-array contains parent-language or language == parent-language %}
 
-        <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/book/text/{{ current-file }}.html" />
+        <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ current-file }}.html" />
 
     {% else %}
 
-        <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/book/{{ language }}/text/{{ current-file }}.html" />
+        <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ language }}/{{ current-file }}.html" />
 
     {% endif %}
 
     {% comment %} Add alternate link for this language {% endcomment %}
     {% if language == parent-language %}
 
-        <link rel="alternate" hreflang="{{ language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/book/text/{{ current-file }}.html" />
+        <link rel="alternate" hreflang="{{ language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ current-file }}.html" />
 
     {% else %}
 
-        <link rel="alternate" hreflang="{{ language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/book/{{ language }}/text/{{ current-file }}.html" />
+        <link rel="alternate" hreflang="{{ language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ language }}/{{ current-file }}.html" />
 
     {% endif %}
 
@@ -55,11 +55,11 @@ Google will ignore them, since Google requires bidirectional links. {% endcommen
 
         {% if translation == parent-language %}
 
-            <link rel="alternate" hreflang="{{ translation }}" href="{{ site.canonical-url }}{{ site.baseurl }}/book/text/{{ current-file }}.html" />
+            <link rel="alternate" hreflang="{{ translation }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ current-file }}.html" />
 
         {% else %}
 
-            <link rel="alternate" hreflang="{{ translation }}" href="{{ site.canonical-url }}{{ site.baseurl }}/book/{{ translation }}/text/{{ current-file }}.html" />
+            <link rel="alternate" hreflang="{{ translation }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ translation }}/{{ current-file }}.html" />
 
         {% endif %}
 

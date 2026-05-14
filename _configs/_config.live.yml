@@ -6,7 +6,7 @@ build: live
 
 # URLs
 canonical-url: "https://example.com"
-baseurl: "/example"
+baseurl: ""
 
 # Only the `api` collection should render by default.
 # See _config.yml for notes on collections.
