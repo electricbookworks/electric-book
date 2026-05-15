@@ -205,10 +205,17 @@ The `check` command checks that your project and its books include the folders a
 npm run eb -- check
 ```
 
+## Automated deployment
+
+The web output of the template can be deployed (often for free) with a service like Netlify. For example, the official template repo's master branch deploys to [electric-book.netlify.app](https://electric-book.netlify.app/), using the Netlify build command `npm run eb -- output --baseurl="" --dontserve=true`.
+
+For more advanced setup with access control and backend APIs and storage, you can use the [Electric Book Server template](https://github.com/electricbookworks/electric-book-server-template), designed to be hosted with Vercel.
+
+Note: the Electric Book template no longer deploys with GitHub Pages by default, because it [now requires](https://github.com/electricbookworks/electric-book/pull/814/) an `npm run eb -- output` build command. It is possible to use GitHub Pages with a [custom GitHub Actions workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#creating-a-custom-github-actions-workflow-to-publish-your-site).
 
 ## Dependencies
 
-If you want to use the Electric Book template on your local computer, you need to have several things installed:
+We recommend using GitHub Codespaces, which sets up dependencies automatically, rather than going to the trouble of setting up the dependencies locally. If you really want to use the Electric Book template on your local computer, you need to have several things installed:
 
 - [Jekyll](https://jekyllrb.com/) (which also requires Ruby and Bundler)
 - [Node.js](https://nodejs.org)
