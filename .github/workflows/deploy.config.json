@@ -1,11 +1,5 @@
 {
-  "aws": {
-    "role-arn": "arn:aws:iam::381492306053:role/GitHubActionsS3Access",
-    "region": "eu-west-2"
-  },
-  "book-server": {
-    "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
-    "bucket": "ebt-books",
+  "ftp-ssh": {
     "configs-comment": "All configs are relative to the _configs folder.",
     "configs": ["_config.live.yml"],
     "builds": [
@@ -13,26 +7,16 @@
         "configs": [],
         "dir": "electric-book"
       }
-    ]
-  },
-  "media" : {
-    "cloudfront-comment": "The CloudFront ID is used to invalidate the cache after deployment.",
-    "cloudfront-id-staging": "E7XZICS0M3W1S",
-    "cloudfront-id-live": "E2KTTVJ1I6I7D8",
-    "syncs": [
-      {
-        "bucket-comment": "The bucket name is suffixed with -live or -staging depending on the branch.",
-        "bucket": "ebt-media",
-        "source": "assets/images/web",
-        "destination": "assets/images/web",
-        "options": ""
-      }
-    ]
-  },
-  "vercel-disabled": {
-    "trigger": {
-      "live": "https://api.vercel.com/v1/integrations/deploy/{IDs}",
-      "staging": "https://api.vercel.com/v1/integrations/deploy/{IDs}"
+    ],
+    "live-disabled":{
+      "type": "ftp",
+      "web-root": "",
+      "path": ""
+    },
+    "staging": {
+      "type": "ssh",
+      "web-root": "public_html/ebt.ebw.co",
+      "path": ""
     }
   }
 }
