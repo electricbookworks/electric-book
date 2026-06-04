@@ -33,14 +33,11 @@ If you happen to be a front-end developer with experience using static-site gene
 The guidance below will get you started. You will also need to consult the docs for more detail as you create books this way. Those are in the `_docs` folder here, or you can read [the current template docs online](https://electricbookworks.github.io/electric-book/docs/), keeping in mind that your project might not include the latest updates to the template.
 
 
-### Quick start with Gitpod
+### Quick start with GitHub Codespaces
 
-The fastest way to get working is by using [Gitpod](https://gitpod.io). If you open this project with Gitpod, Gitpod will automatically create a virtual machine for you to work on in your browser – no need to install anything on your own computer. To do that:
+The fastest way to get working is by using GitHub Codespaces. On any repo page on GitHub, look for the 'Code' button, and click through to create a Codespace.
 
-1. Go to this repo's page on GitHub. (This can be the [original page](https://github.com/electricbookworks/electric-book/) or the page for the fork or branch you want to work in.)
-2. In the browser address bar, insert this *before* the URL: `https://gitpod.io/#`. Then hit enter.
-3. Follow the prompts to create a Gitpod workspace, using your GitHub account. If you're prompted to choose an editor, we recommend the VS Code (browser) option.
-4. After a few minutes, your Gitpod workspace will appear: a code editor and a Terminal for you to enter the commands described below.
+Codespaces will automatically create a virtual machine for you to work on in your browser – no need to install anything on your own computer.
 
 
 ### Setup
@@ -51,7 +48,7 @@ The first time you work on this project on your machine, run this at the command
 npm run setup
 ```
 
-Note that if you're using Gitpod, you don't need this step: it's done for you automatically.
+Note that if you're using GitHub Codespaces, you don't need this step: it's done for you automatically.
 
 Now the Electric Book template is ready to use.
 
