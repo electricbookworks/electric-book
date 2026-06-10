@@ -8,6 +8,15 @@
       "extensions": [
         "yandeu.five-server"
       ]
+    },
+    "codespaces": {
+      "repositories": {
+        "electricbookworks/ebw-agent-skills": {
+          "permissions": {
+            "contents": "read"
+          }
+        }
+      }
     }
   },
   "postCreateCommand": "bundle install && npm install",
