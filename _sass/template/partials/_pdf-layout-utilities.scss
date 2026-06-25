@@ -81,4 +81,37 @@ $pdf-layout-utilities: true !default;
       white-space: nowrap;
     }
   }
+
+  // Vertical-spacing refinement (add-n / save-n)
+  //
+  // These classes shift an opening element (usually a chapter's first
+  // paragraph) down or up by whole lines, in multiples of
+  // $line-height-default. They solve page-refinement issues that
+  // letter-spacing (tighten/loosen) cannot, by moving content by a full
+  // line so that a widow or orphan lands on a different page.
+  //
+  //   .add-n  pushes the element down by n lines (text starts n lines lower)
+  //   .save-n pulls the element up by n lines (text starts n lines higher)
+  //
+  // We use padding-top for add-n, because vertical margins can collapse at
+  // a chapter opener, so padding is more reliable for adding space. We use
+  // a negative margin-top for save-n, because there is no negative padding.
+  //
+  // NOTE FOR CSS AUTHORS: chapter-opener layouts vary between books, so
+  // these defaults will not suit every design. If your opener uses a
+  // different mechanism (e.g. a fixed-height masthead, flexbox, or its own
+  // padding), override .add-n/.save-n in your theme design to
+  // shift content the way your layout needs. The !important here exists to
+  // beat default opener margins, so your overrides must match or exceed its
+  // specificity to take effect.
+  @for $i from 1 through 30 {
+    .add-#{$i}#{$edition-suffix} {
+      padding-top: $line-height-default * $i !important;
+      background-color: $highlight-added;
+    }
+    .save-#{$i}#{$edition-suffix} {
+      margin-top: -($line-height-default * $i) !important;
+      background-color: $highlight-saved;
+    }
+  }
 }
