@@ -4,6 +4,17 @@ This is a working design note for the automatic page-refinement feature (the `eb
 
 The note exists so that we can rethink the foundational approach from a shared understanding rather than from scratch. It captures the reasoning behind the current architecture and, importantly, the structural reasons it cannot reliably find the solutions a human editor finds by eye.
 
+## Where things live (orientation for picking this up later)
+
+If you are returning to this after a break, start here.
+
+- **User docs:** [`_docs/layout/page-refinement.md`](_docs/layout/page-refinement.md) — how to *use* `eb refine`, including the IAL vocabulary and the `--highlight` flag.
+- **The implementation:** `_tools/run/helpers/refine/`. The heart of it is `prince-refine.prince` (the Prince-side detection and fix script); supporting files are `index.js`, `injectScript.js`, and `options.js`. **Note:** `_tools/` is gitignored in this repo — it is installed from the `@electricbookworks/electric-book-modules` npm package. The real source of truth is the **electric-book-modules** repo, branch `auto-refine` (PR #3). Any change tested in `_tools/` here must be synced back to that repo (we have used `npm run update-modules` to pull, and patches to push) or it will be lost on the next install.
+- **The two open PRs:** electric-book PR #824 (`auto-refine` branch — docs and this design note) and electric-book-modules PR #3 (`auto-refine` branch — the engine code). Keep both open as the working record.
+- **Past-work memory:** Arthur's dotfiles carry accumulated notes on this feature at `~/dotfiles/agents/ebt/memories/` (read `index.md` first). The shared EBT context repo is at `~/.agent-context/ebt/`. These record what was tried, what worked, and the current sync state — check them before resuming.
+- **Running a clean test:** the refine process **mutates its input** (it writes IALs into `samples/*.md`), so always `git checkout -- samples/*.md` before a fresh run, and run with `--highlight` to see the proposed fixes colour-coded in the PDF.
+- **The two test chains referenced below:** the **altar** chain is in `samples/01-01-plain-text-2.md` (the "I was half-dragged up to the altar" paragraph, and "You see," remarked Holmes); the **Bohemia** coupled-straddle is in `samples/01-01-plain-text-1.md`.
+
 ## The problem
 
 Given a book's source (Markdown, rendered to HTML and then laid out by Prince into a PDF at a fixed page geometry), automatically write a small set of annotations into the Markdown that nudge line-breaking and vertical position so that the rendered PDF has fewer typographic bad breaks.
