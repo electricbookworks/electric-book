@@ -368,6 +368,8 @@ $right-margin-text-color: $color-text-main !default;
 // Specify a colour for highlighting; use 'inherit' for none.
 $highlight-tightened: inherit !default;
 $highlight-loosened: inherit !default;
+$highlight-added: inherit !default;
+$highlight-saved: inherit !default;
 
 // Show or hide a baseline grid, based on line-height-default.
 // Set to true to show or false to hide.
