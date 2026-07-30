@@ -51,7 +51,7 @@ $web-masthead: true !default;
             }
         }
 
-        ul {
+        ul, ol {
 
             // Position
             display: inline-block;
@@ -72,6 +72,7 @@ $web-masthead: true !default;
 
                 @media only screen and (min-width: $break-width-small) {
                     align-items: center;
+                    column-gap: 0.25em; // ensures space between <strong> and text
                     display: inline-flex;
                     margin: 0 0.25em 0 0;
                     min-height: $masthead-height - (0.5rem * 2);
@@ -82,7 +83,7 @@ $web-masthead: true !default;
                     &:after {
                         content: $masthead-breadcrumb-divider;
                         color: $masthead-text-color;
-                        margin-left: 0.5em;
+                        margin-left: 0.25em; // combines with column-gap above for 0.5em space
                     }
 
                     // No symbol after last item
