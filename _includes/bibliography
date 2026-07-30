@@ -1,0 +1,73 @@
+{% comment %}Get the book metadata for this page{% endcomment %}
+{% include metadata %}
+
+{% comment %}Capture each bibliography entry as an li element{% endcomment %}
+{% capture bibliography %}
+
+{% comment %}By default, we assume the bibliography is 
+the whole of _data/bibliography.yml{% endcomment %}
+{% assign bibliography = site.data.works.[book-directory].bibliography %}
+
+{% comment %}If a chapter has been specified, only include the references
+for that chapter.{% endcomment %}
+{% if include.chapter %}
+    {% assign bibliography = site.data.works.[book-directory].bibliography | where_exp: "x", "x.chapters contains include.chapter" %}
+{% endif %}
+
+{% comment %}If we're outputting a translation,
+get the translation bibliography{% endcomment %}
+{% if is-translation %}
+    {% assign bibliography = site.data.works.[book-directory].[language].bibliography %}
+    {% if include.chapter %}
+        {% assign bibliography = site.data.works.[book-directory].[language].bibliography | where_exp: "x", "x.chapters contains include.chapter" %}
+    {% endif %}
+{% endif %}
+
+{% comment %}Jekyll 3.3 sorts case-sensitively, which we don't want. So:
+create a map of terms to their slugified equivalents.{% endcomment %}
+{% capture slug-map %}
+    {% for entry in bibliography %}
+        {% comment %}
+        First create a version of the term with non-ascii characters
+        replaced by ascii versions, for accurate sorting.
+        {% endcomment %}
+        {% capture ascii-reference %}
+            {% include ascii-version string=entry.reference %}
+        {% endcapture %}
+        {{ ascii-reference | strip_html | strip_liquid | slugify | replace: "-", "" }}^{{ entry.reference }}|
+    {% endfor %}
+{% endcapture %}
+
+{% comment %}Now split that into an array and sort by the slug{% endcomment %}
+{% assign slug-map = slug-map | split:'|' | sort %}
+
+{% comment %}Now loop through the sorted slug-map{% endcomment %}
+{% for line in slug-map %}
+
+{% comment %}Turn each mapping into a little array{% endcomment %}
+{% assign map = line | split: "^" %}
+
+    {% comment %}Loop through each entry in the original glossary...{% endcomment %}
+    {% for entry in bibliography %}
+
+        {% comment %}...and check if it maps to the slug we're on. If it does,
+        pop the full, markdownified reference into an li element.
+        We have to do funky remove: '<p>' | remove: '</p>' | strip_newlines
+        because https://github.com/jekyll/jekyll/issues/2248. {% endcomment %}
+        {% if map[1] == entry.reference %}
+
+            <li class="bibliography-entry">{{ entry.reference | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</li>
+
+        {% endif %}
+
+    {% endfor %}
+
+{% endfor %}
+
+{% endcapture %}{% comment %}glossary li's captured!{% endcomment %}
+
+{% comment %}Now that we've got the glossary, output the surrounding ul.
+Remember no indentation. Indents in md render as a code block.{% endcomment %}
+<ul class="bibliography{% if include.class %} {{ include.class }}{% endif %}">
+{{ bibliography | strip_newlines }}
+</ul>

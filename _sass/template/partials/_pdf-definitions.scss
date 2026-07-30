@@ -1,0 +1,112 @@
+.definition {
+    @include sidenote();
+
+    // padding overrides sidenote mixin, allowing for this feature's border
+    padding: ($line-height-default * 0.5) ($sidebar-gap-width * 0.5 + 0.005pt);
+
+    border: $rule-thickness solid $color-accent;
+    border: 0;
+    background: $color-accent;
+    color: white;
+    // width: $sidebar-content-width - $sidebar-gap-width;
+    font-family: $font-text-secondary;
+    font-size: $font-size-default * 0.8;
+    page-break-inside: avoid;
+
+    // because it should always float beside the para it precedes
+    page-break-after: avoid;
+
+    text-indent: 0;
+
+    // Links
+    a {
+        color: inherit
+    }
+
+    // A wider variant for large or combined definitions that would
+    // otherwise make too tall a float in the narrow sidebar. It floats
+    // wide on the outside edge, spanning the sidebar plus part of the
+    // text column. Ported from CORE's wide-sidenotes() mixin.
+    &.pdf-wide {
+        -prince-float: wide outside;
+        margin-inside: $sidebar-gap-width;
+        margin-top: $line-height-default;
+        margin-bottom: $line-height-default;
+        width: $sidebar-content-width + ($main-text-width * 0.25);
+    }
+
+    // No space after last element.
+    // Parent padding takes care of this.
+    & > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .definition-term {
+        font-weight: bold;
+        display: inline;
+        margin-right: 0.2em;
+        hyphens: manual;
+    }
+
+    .definition-description {
+        display: inline;
+        margin: 0;
+
+        // Create a line break after each dd, in case a definition box
+        // includes more than one definition.
+        &:after {
+            content: "";
+            display: block;
+        }
+
+        // A visible warning if a definition term isn't in the glossary
+        &.no-definition {
+            background: $color-highlight;
+        }
+    }
+}
+
+// Don't indent paragraphs that, but for a definition
+// or up to five, would follow a heading, list or blockquote;
+// or would be followed by a div.footnote-detail.
+// Note: div.footnote-detail is created by footnotes-pdf.js,
+// which only runs in Prince and cannot be seen in output HTML.
+h1, h2, h3, h4, h5, h6,
+.subheadline,
+ol, ul,
+blockquote {
+    & + .definition + p,
+    & + .definition + .definition + p,
+    & + .definition + .definition + .definition + p,
+    & + .definition + .definition + .definition + .definition + p,
+    & + .definition + .definition + .definition + .definition + .definition + p,
+    & + .definition + .footnote-detail + p,
+    & + .definition + .definition + .footnote-detail + p,
+    & + .definition + .definition + .definition + .footnote-detail + p,
+    & + .definition + .definition + .definition + .definition + .footnote-detail + p,
+    & + .definition + .definition + .definition + .definition + .definition + .footnote-detail + p,
+    & + .definition + .footnote-detail + .footnote-detail + p,
+    & + .definition + .footnote-detail + .footnote-detail + .footnote-detail + p,
+    & + .definition + .footnote-detail + .footnote-detail + .footnote-detail + .footnote-detail + p,
+    & + .sidenote + .definition + p {
+        text-indent: 0;
+    }
+}
+
+// Do indent paragraphs that, but for a floated definition
+// or up to five, would follow another paragraph and be indented.
+p,
+.figure,
+.slides,
+.pullquote,
+.video,
+.info,
+.pdf-sidebar {
+    & + .definition + p,
+    & + .definition + .definition + p,
+    & + .definition + .definition + .definition + p,
+    & + .definition + .definition + .definition + .definition + p,
+    & + .definition + .definition + .definition + .definition + .definition + p {
+        text-indent: $paragraph-indent;
+    }
+}

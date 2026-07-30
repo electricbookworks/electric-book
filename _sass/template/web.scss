@@ -315,6 +315,7 @@ $web-pagination: true !default;
 $web-questions: true !default;
 $web-select-questions: true !default;
 $web-slides: true !default;
+$web-definitions: true !default;
 
 // Docs
 $web-docs: true !default;
@@ -411,6 +412,7 @@ $web-reset-sequences: true !default;
 @import "template/partials/web-questions";
 @import "template/partials/web-select-questions";
 @import "template/partials/web-slides";
+@import "template/partials/web-definitions";
 
 // Docs
 @import "template/partials/web-docs";

@@ -1,0 +1,113 @@
+// Definitions
+
+.definition {
+  background: $color-accent;
+  color: $white;
+  font-family: $font-text-secondary;
+  padding: ($line-height-default / 2);
+  
+  // on larger screens, text wraps around definitions
+  @media (min-width: $break-width-medium) {
+    clear: right;
+    float: right;
+    min-width: 5em;
+    margin: 0 0 ($line-height-default / 2) 2em;
+    max-width: 40%;
+    position: relative;
+  }
+}
+
+.js-definitions {
+  .definition {
+    background-color: $color-background;
+    border: 2 * $rule-thickness solid $color-accent;
+    color: $color-accent;
+  }
+}
+
+[data-term] {
+  color: $color-links;
+  cursor: pointer;
+}
+
+.definition-term {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 0.25em;
+}
+
+.definition-description {
+  display: inline;
+  margin-bottom: 0;
+  
+  // Create a line break after each definition in a multiple-definitions box
+  &:after {
+    content: "";
+    display: block;
+  }
+  
+  &.no-definition {
+    background: $color-highlight;
+  }
+}
+
+.definition-example {
+  // Put a line break before the example
+  &:before {
+    content: "";
+    display: block;
+    margin-top: 0.5em;
+  }
+}
+
+.definitions {
+  display: none;
+}
+
+.definition-description-hover {
+  @include dialog-styles();
+  
+  position: absolute;
+  // look and feel
+  border-bottom-right-radius: $box-border-radius;
+  color: $color-text-main;
+  // when these are attached to an italic term,
+  // they must not inherit that font style
+  font-style: initial;
+  font-weight: normal;
+  left: $max-width-default * 0.25 / 3;
+  right: $max-width-default * 0.25 / 3;
+  max-width: $max-width-default * 0.8;
+  
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: $line-height-default;
+
+  // pull definition-description-hover out of the doc
+  // flow so they hover above text, pagination, and search nav
+  z-index: 10;
+  
+  p {
+    margin-bottom: 0;
+  }
+  
+  // Make wider when in a sidenote
+  .sidenote & {
+    left: 0;
+    right: 0;
+  }
+}
+
+.definition-hover-term {
+  font-weight: bold;
+}
+
+.definition-description-hover {
+  .close {
+    @include button-close($color-accent);
+  }
+}
+
+.hidden-definition-list {
+  display: none;
+}
