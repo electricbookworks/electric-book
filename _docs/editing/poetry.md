@@ -1,7 +1,7 @@
 ---
 title: Poetry
 categories: editing
-order: 9
+order: 12
 ---
 
 # Poetry

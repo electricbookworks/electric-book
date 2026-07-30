@@ -1,7 +1,7 @@
 ---
 title: QR codes
 categories: editing
-order: 12
+order: 15
 ---
 
 # Adding QR codes

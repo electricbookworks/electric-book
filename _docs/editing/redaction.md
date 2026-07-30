@@ -1,7 +1,7 @@
 ---
 title: Redaction
 categories: editing
-order: 15
+order: 17
 ---
 
 # Redaction
