@@ -1,0 +1,74 @@
+# Bibliography for the samples book.
+#
+# Each entry has a 'reference' (the formatted citation, in markdown) and a
+# 'chapters' list naming the sections the source is cited in. The bibliography
+# include filters by chapter, e.g. {% include bibliography chapter="7" %};
+# calling it with no chapter, e.g. {% include bibliography %}, lists every entry.
+# The include sorts entries alphabetically, so the order here does not matter.
+
+- reference: "Bastos, A. M., W. M. Usrey, R. A. Adams, G. R. Mangun, P. Fries, and K. J. Friston. 2012. ‘Canonical microcircuits for predictive coding’. *Neuron* 76 (4): 695–711."
+  chapters:
+    - "7"
+- reference: "Cahalane, D. J., C. J. Charvet, and B. L. Finlay. 2014. ‘Modeling local and cross-species neuron number variations in the cerebral cortex as arising from a common mechanism’. *Proceedings of the National Academy of Sciences* 111 (49): 17642–17647."
+  chapters:
+    - "7"
+- reference: "Dickens, Charles. 1859. *A Tale of Two Cities*. London: Chapman & Hall."
+  chapters:
+    - "4"
+- reference: "Doyle, Arthur Conan. 1892. ‘A Scandal in Bohemia’. In *The Adventures of Sherlock Holmes*. London: George Newnes."
+  chapters:
+    - "1"
+- reference: "Ercsey-Ravasz, M., N. T. Markov, C. Lamy, D. C. Van Essen, K. Knoblauch, Z. Toroczkai, et al. 2013. ‘A predictive network model of cerebral cortical connectivity based on a distance rule’. *Neuron* 80: 184–197."
+  chapters:
+    - "7"
+- reference: "Finlay, B. L., and P. B. Brodsky. 2006. ‘Cortical evolution as the expression of a program for disproportionate growth and the proliferation of areas’. In *Evolution of Nervous Systems*, edited by J. H. Kaas, 73–96. Oxford: Elsevier/Oxford University Press."
+  chapters:
+    - "7"
+- reference: "Finlay, B. L., and R. B. Darlington. 1995. ‘Linked regularities in the development and evolution of mammalian brains’. *Science* 268 (5217): 1578–1584."
+  chapters:
+    - "7"
+- reference: "Finlay, B. L., and R. Uchiyama. 2015. ‘Developmental mechanisms channeling cortical evolution’. *Trends in Neurosciences* 38 (2): 69–76."
+  chapters:
+    - "7"
+- reference: "Fradkin, C. 2016. [‘Pre-Cloak Comic Superheroes: Tools for the Empowerment of Children’](https://www.comicsgrid.com/articles/10.16995/cg.85/){:.show-url}. *The Comics Grid: Journal of Comics Scholarship* 6: p.13."
+  chapters:
+    - "2"
+- reference: "Fradkin, C., G. V. Weschenfelder, and M. A. M. Yunes. 2016. ‘Shared adversities of children and comic superheroes as resources for promoting resilience’. *Child Abuse & Neglect* 51: 407–415."
+  chapters:
+    - "2"
+- reference: "Horvát, Sz., R. Gămănuț, M. Ercsey-Ravasz, L. Magrou, B. Gămănuț, D. C. Van Essen, et al. 2016. ‘Spatial embedding and wiring cost constrain the functional layout of the cortical network of rodents and primates’. *PLoS Biology* 14 (7): e1002512."
+  chapters:
+    - "7"
+- reference: "Innocenti, G. M., A. Vercelli, and R. Caminiti. 2014. ‘The diameter of cortical axons depends both on the area of origin and target’. *Cerebral Cortex* 24 (8): 2178–2188."
+  chapters:
+    - "7"
+- reference: "Kaas, J. 2000. ‘Why is brain size so important: design problems and solutions as neocortex gets bigger or smaller’. *Brain and Mind* 1: 7–23."
+  chapters:
+    - "7"
+- reference: "Krubitzer, L. 2009. ‘In search of a unifying theory of complex brain evolution’. *Annals of the New York Academy of Sciences* 1156: 44–67."
+  chapters:
+    - "7"
+- reference: "Markov, N. T., M. M. Ercsey-Ravasz, A. R. Ribeiro Gomes, C. Lamy, L. Magrou, J. Vezoli, et al. 2014. ‘A weighted and directed interareal connectivity matrix for macaque cerebral cortex’. *Cerebral Cortex* 24 (1): 17–36."
+  chapters:
+    - "7"
+- reference: "Miller, K. D. 2016. ‘Canonical computations of cerebral cortex’. *Current Opinion in Neurobiology* 37: 75–84."
+  chapters:
+    - "7"
+- reference: "Oh, S. W., J. A. Harris, L. Ng, B. Winslow, N. Cain, S. Mihalas, et al. 2014. ‘A mesoscale connectome of the mouse brain’. *Nature* 508 (7495): 207–214."
+  chapters:
+    - "7"
+- reference: "O’Reilly, R. C., S. A. Herd, and W. M. Pauli. 2010. ‘Computational models of cognitive control’. *Current Opinion in Neurobiology* 20 (2): 257–261."
+  chapters:
+    - "7"
+- reference: "Wang, S. S.-H., J. R. Shultz, M. J. Burish, K. H. Harrison, P. R. Hof, L. C. Towns, et al. 2008. ‘Functional trade-offs in white matter axonal scaling’. *Journal of Neuroscience* 28 (15): 4047–4056."
+  chapters:
+    - "7"
+- reference: "Warner, Gertrude Chandler. 1924. *The Box-Car Children*. Chicago: Rand McNally."
+  chapters:
+    - "6"
+- reference: "Workman, A., C. J. Charvet, B. Clancy, R. B. Darlington, and B. L. Finlay. 2013. ‘Modeling transformations of neurodevelopmental sequences across mammalian species’. *Journal of Neuroscience* 33 (17): 7368–7383."
+  chapters:
+    - "7"
+- reference: "Zingg, B., H. Hintiryan, L. Gou, M. Y. Song, M. Bay, M. S. Bienkowski, et al. 2014. ‘Neural networks of the mouse neocortex’. *Cell* 156: 1096–1111."
+  chapters:
+    - "7"

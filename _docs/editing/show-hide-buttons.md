@@ -1,7 +1,7 @@
 ---
 title: Show-hide buttons
 categories: editing
-order: 16
+order: 18
 ---
 
 # Show-hide buttons

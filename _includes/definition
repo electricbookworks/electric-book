@@ -1,0 +1,111 @@
+{% comment %}This include looks up one or more terms in the glossary and outputs 
+definitions, and any cross-references, in an HTML definition list with a 'definition' class.
+
+The include should be called from text as {% include definition term="apple" %}.
+If you're referring to a glossary file other than _data/glossary.yml, include with
+{% include definition term="apple" glossary=site.data.otherglossary %} where
+otherglossary refers to the file, say, _data/otherglossary.yml.
+
+You can include multiple terms by separating them with |, e.g.:
+{% include definition term="apple|pear|orange" %}
+
+It assumes the glossary file includes only definitions in YAML structured as:
+
+---
+-
+  term: "apple"
+  definition: |
+    A crunchy fruit.
+  cross-reference: ""
+-
+  term: "banana"
+  definition: |
+    A mushy fruit.
+---
+
+How it works:
+
+* puts the glossary in a variable 'glossary'
+* loops through the glossary to find the terms
+* outputs the terms, their definitions and cross-references, if any
+* captures everything in as 'definition', and
+* finally outputs definition list HTML with no newlines or <p> tags.
+
+{% endcomment %}
+
+{% comment %}Ensure book-directory and related metadata variables are set,
+since this include is called from page content, where they are not yet
+available. Other in-content includes (image, figure, video) do the same.{% endcomment %}
+{% include metadata %}
+
+{% capture definition %}
+
+{% comment %}Use the glossary specified in the include tag, otherwise
+use the glossary.yml file in _data.{% endcomment %}
+{% if include.glossary %}
+    {% assign glossary = include.glossary %}
+{% else %}
+    {% assign glossary = site.data.works.[book-directory].glossary %}
+
+    {% comment %}If we're outputting a translation,
+    get the translation glossary{% endcomment %}
+    {% if is-translation %}
+        {% assign glossary = site.data.works.[book-directory].[language].glossary %}
+    {% endif %}
+
+{% endif %}
+
+{% comment %}Make an array of all terms to be defined,
+whether include paramater is term= or terms=.
+Remove spaces around |s in the list.{% endcomment %}
+{% capture term-list %}{{ include.term | replace: " |", "|" | replace: "| ", "|" }}{% if include.term and include.terms %},{% endif %}{{ include.terms | replace: " |", "|" | replace: "| ", "|" }}{% endcapture %}
+
+{% assign terms = term-list | split: "|" %}
+
+{% comment %}Look up the term in the glossary and output the definition.
+If it includes a cross-reference, include that, too, in italics. Remember
+no indentation. Indents cause markdown to render output as code block.
+We have to do funky remove: '<p>' | remove: '</p>' | strip_newlines
+because https://github.com/jekyll/jekyll/issues/2248. {% endcomment %}
+
+{% for t in terms %}
+
+    {% comment %}Get a selection of definitions from the glossary{% endcomment %}
+    {% assign definitions = glossary | where: "term", t %}
+
+    {% comment %}Check if all our terms are defined, and if not,
+    output some warning HTML.{% endcomment %}
+    {% capture defs %}{{ definitions | size }}{% endcapture %}
+    {% if defs == "0" %}
+<dt class="definition-term">{{ t }}</dt> <dd class="definition-description no-definition">No definition available.</dd>
+    {% endif %}
+
+    {% comment %}For those terms that are defined, output HTML with definitions.{% endcomment %}
+    {% for entry in definitions %}
+
+      {% if site.output == "print-pdf" or site.output == "screen-pdf" %}
+
+{% comment %}For PDF, we need a line-breaking space after the definition term.
+This breaks the definitions script in web.
+Don't indent this, or kramdown thinks its a code block{% endcomment %}
+<dt class="definition-term">{{ entry.term | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}<span class="line-breaking-space"> </span></dt> <dd class="definition-description">{{ entry.definition | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}{% if entry.example and entry.example != "" %} <span class="definition-example">{{ entry.example | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>{% endif %}{% if entry.cross-reference and entry.cross-reference != "" %} <em class="definition-cross-reference">{{ entry.cross-reference | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</em>{% endif %}</dd>
+
+      {% else %}
+
+{% comment %}Don't indent this, or kramdown thinks its a code block{% endcomment %}
+<dt class="definition-term">{{ entry.term | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</dt> <dd class="definition-description">{{ entry.definition | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}{% if entry.example and entry.example != "" %} <span class="definition-example">{{ entry.example | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>{% endif %}{% if entry.cross-reference and entry.cross-reference != "" %} <em class="definition-cross-reference">{{ entry.cross-reference | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</em>{% endif %}</dd>
+
+
+      {% endif %}
+
+    {% endfor %}
+
+{% endfor %}
+
+{% endcapture %}{% comment %}i.e. definition{% endcomment %}
+
+{% comment %}Now that we've got the definition, output the surrounding HTML
+with a fallback warning if the term is not in the glossary.{% endcomment %}
+<dl class="definition{% if include.class %} {{ include.class }}{% endif %}{% if error %} {{ error }}{% endif %}">
+{{ definition | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+</dl>

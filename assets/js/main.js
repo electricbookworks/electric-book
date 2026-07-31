@@ -11,6 +11,7 @@ import ebSetup from '@electricbookworks/electric-book-modules/assets/js/setup'
 import ebSearchTerms from '@electricbookworks/electric-book-modules/assets/js/search-terms'
 import ebNav from '@electricbookworks/electric-book-modules/assets/js/nav'
 import ebVideos from '@electricbookworks/electric-book-modules/assets/js/videos'
+import ebDefinitions from '@electricbookworks/electric-book-modules/assets/js/definitions'
 import ebMCQs from '@electricbookworks/electric-book-modules/assets/js/mcqs'
 import ebSelectList from '@electricbookworks/electric-book-modules/assets/js/select-list'
 import ebTables from '@electricbookworks/electric-book-modules/assets/js/tables'
@@ -59,6 +60,7 @@ if (process.env.output === 'web' || process.env.output === 'app') {
   ebSearchTerms()
   ebNav()
   ebVideos()
+  ebDefinitions()
   ebMCQs()
   ebSelectList()
   ebTables()

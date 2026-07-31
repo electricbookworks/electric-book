@@ -1,7 +1,7 @@
 ---
 title: Figures
 categories: editing
-order: 4
+order: 5
 ---
 
 # Figures

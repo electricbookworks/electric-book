@@ -430,6 +430,7 @@ $pdf-questions: true !default;
 $pdf-select-questions: true !default;
 $pdf-cross-refs: true !default;
 $pdf-slides: true !default;
+$pdf-definitions: true !default;
 $pdf-reset-sequences: true !default; // Resets p indents, margins after other elements. Must be last @import in list.
 $pdf-margin-box-content: true !default; // Sets content for headers and footers
 $pdf-margin-box-style: true !default; // Sets styling for headers and footers
@@ -525,6 +526,7 @@ $pdf-page-setup-ingram: false !default;
 @import "template/partials/pdf-select-questions";
 @import "template/partials/pdf-cross-refs";
 @import "template/partials/pdf-slides";
+@import "template/partials/pdf-definitions";
 
 // Classes for floating, tracking, shrinking, etc.
 @import "template/partials/pdf-layout-utilities";

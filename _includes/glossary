@@ -1,0 +1,104 @@
+{% comment %}This include outputs the full glossary in _data/glossary.yml
+in an HTML definition list with a 'glossary' class.
+The include should be called from text as {% include glossary %}.
+You can specify a different glossary file with glossary=site.data.myfile, e.g.
+{% include glossary glossary=site.data.myfile %}. Note no quotes.
+It assumes the glossary file includes only definitions in YAML structured as:
+
+---
+-
+  term: "apple"
+  definition: |
+    A crunchy fruit.
+  cross-reference: ""
+-
+  term: "banana"
+  definition: |
+    A mushy fruit.
+---
+
+How it works:
+
+* puts the glossary in a variable 'glossary'
+* creates a list of terms in slug form for sorting
+  (because Jekyll 3.3/Liquid 3 does case-sensitive sort)
+* loops through the glossary to find the terms
+* outputs the terms, their definitions and cross-references, if any
+* captures everything in a 'glossary' variable, and
+* finally outputs definition-list HTML with no newlines or <p> tags.
+
+{% endcomment %}
+
+{% capture glossary %}
+
+{% comment %}Get the metadata to tell if we're a translation.{% endcomment %}
+{% include metadata %}
+
+{% comment %}Use data/glossary.yml as the glossary{% endcomment %}
+{% assign glossary = site.data.works.[book-directory].glossary %}
+
+{% comment %}If we're outputting a translation,
+get the translation glossary{% endcomment %}
+{% if is-translation %}
+    {% assign glossary = site.data.works.[book-directory].[language].glossary %}
+{% endif %}
+
+{% comment %}Unless the include specifies a glossary to use{% endcomment %}
+{% if include.glossary %}
+    {% assign glossary = include.glossary %}
+{% endif %}
+
+{% comment %} If the include tag specifies a type,
+filter the glossary accordingly. {% endcomment %}
+{% if include.type %}
+    {% assign glossary = glossary | where_exp: 'entry', 'entry.type == include.type' %}
+{% endif %}
+
+{% comment %}Create a map of terms to their slugified equivalents{% endcomment %}
+{% capture slug-map %}
+    {% for entry in glossary %}
+        {% comment %}
+        First create a version of the term with non-ascii characters
+        replaced by ascii versions, for accurate sorting.
+        {% endcomment %}
+        {% capture ascii-term %}
+            {% include ascii-version string=entry.term %}
+        {% endcapture %}
+        {{ ascii-term | slugify | replace: "-", "" }}^splithere^{{ entry.term }}|
+    {% endfor %}
+{% endcapture %}
+
+{% comment %}Now split that into an array and sort (by the lowercased term){% endcomment %}
+{% assign slug-map = slug-map | split:'|' | sort %}
+
+{% comment %}Now loop through the sorted slug-map{% endcomment %}
+{% for term in slug-map %}
+
+{% comment %}Turn each mapping into a little array{% endcomment %}
+{% assign map = term | split: "^splithere^" %}
+
+    {% comment %}Look up each entry in the original glossary...{% endcomment %}
+    {% for entry in glossary %}
+
+        {% comment %}... and check if it maps to the slug term we're on.{% endcomment %}
+        {% if map[1] == entry.term %}
+
+{% comment %}If it does, then output the glossary HTML dt and dd.
+Don't indent this, or kramdown thinks its a code block{% endcomment %}
+<dt class="glossary-term" id="glossary-{{ entry.term | slugify }}">{{ entry.term | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</dt> <dd class="glossary-definition">{{ entry.definition | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}{% if entry.example and entry.example != "" %} <span class="glossary-example">{{ entry.example | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>{% endif %}{% if entry.cross-reference and entry.cross-reference != "" %} <em class="glossary-cross-reference">{{ entry.cross-reference | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</em>{% endif %}</dd>
+
+        {% endif %}
+
+    {% endfor %}
+
+{% endfor %}
+
+{% endcapture %}{% comment %}i.e. glossary{% endcomment %}
+
+{% comment %}Now that we've got the glossary, output the surrounding HTML.
+Remember no indentation. Indents in md render as a code block.
+We have to do funky remove: '<p>' | remove: '</p>' | strip_newlines
+because https://github.com/jekyll/jekyll/issues/2248. {% endcomment %}
+<dl class="glossary{% if include.class %} {{ include.class }}{% endif %}">
+{{ glossary | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}
+</dl>

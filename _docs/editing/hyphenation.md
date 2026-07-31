@@ -2,7 +2,7 @@
 title: Hyphenation
 categories:
   - editing
-order: 7
+order: 10
 ---
 
 # Hyphenation

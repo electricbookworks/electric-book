@@ -1,0 +1,24 @@
+# Glossary for the samples book.
+#
+# Each entry defines a term that can be looked up from the text with a
+# definition include, e.g. {% include definition term="neuron" %}, and
+# marked up inline with a matching {:data-term="neuron"} attribute.
+#
+# The 'term' value must match the data-term attribute in the text exactly.
+# 'cross-reference' is optional and, if present, is shown in italics.
+
+- term: "isocortex"
+  definition: "The largest part of the cerebral cortex: a layered sheet of neurons. Sometimes just called the cortex, it is disproportionately large in primates and grows mainly in surface area as brain volume increases."
+  cross-reference: ""
+- term: "neuron"
+  definition: "A nerve cell, the basic signalling unit of the brain and nervous system. Neurons receive, process, and pass on information through electrical and chemical signals, and connect to one another by way of axons."
+  cross-reference: ""
+- term: "axon"
+  definition: "The long, thread-like projection of a neuron that carries electrical signals away from the cell body towards other neurons. Because axons must span the whole brain, their length has to increase as brains and bodies get larger."
+  cross-reference: ""
+- term: "action potential"
+  definition: "A brief electrical impulse by which a neuron sends a signal along its axon. Its duration and underlying biophysics are largely the same regardless of the size of the brain or body."
+  cross-reference: ""
+- term: "myelination"
+  definition: "The process of wrapping an axon in a fatty insulating sheath (myelin), which speeds up the electrical signals travelling along it. Faster transmission comes at the cost of adding mass to the nervous system."
+  cross-reference: "See also *axon*."

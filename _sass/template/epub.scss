@@ -196,6 +196,7 @@ $epub-verse: true !default;
 $epub-video: true !default;
 $epub-questions: true !default;
 $epub-select-questions: true !default;
+$epub-definitions: true !default;
 
 // Type-control classes
 $epub-smallcaps: true !default;
@@ -272,6 +273,7 @@ $epub-reset-sequences: true !default;
 @import "template/partials/epub-questions";
 @import "template/partials/epub-select-questions";
 @import "template/partials/epub-slides";
+@import "template/partials/epub-definitions";
 
 // Type-control classes
 @import "template/partials/epub-smallcaps";

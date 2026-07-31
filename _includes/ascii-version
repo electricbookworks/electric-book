@@ -1,0 +1,152 @@
+{% comment %}
+We want one place and one function where we can take things like ids, links,
+etc and replace characers with diacritics (à, è, ù etc) with ascii versions
+of those characters (a, e, u).
+
+This include needs to take a string as an argument (say the id) and return
+a cleaned up version of that string, by doing a big replace.
+{% endcomment %}
+
+{% capture string %}
+{{ include.string | 
+    replace: "â", "a" |
+    replace: "à", "a" |
+    replace: "á", "a" |
+    replace: "ä", "a" |
+    replace: "ã", "a" |
+    replace: "å", "a" |
+    replace: "ā", "a" |
+    replace: "ă", "a" |
+    replace: "ą", "a" |
+    replace: "Â", "a" |
+    replace: "À", "a" |
+    replace: "Á", "a" |
+    replace: "Ä", "a" |
+    replace: "Ã", "a" |
+    replace: "Å", "a" |
+    replace: "Ā", "a" |
+    replace: "Ă", "a" |
+    replace: "Ą", "a" |
+    replace: "ç", "c" |
+    replace: "č", "c" |
+    replace: "ć", "c" |
+    replace: "Ç", "c" |
+    replace: "Č", "c" |
+    replace: "Ć", "c" |
+    replace: "ď", "d" |
+    replace: "đ", "d" |
+    replace: "ð", "d" |
+    replace: "Ď", "d" |
+    replace: "Đ", "d" |
+    replace: "Ð", "d" |
+    replace: "é", "e" |
+    replace: "ê", "e" |
+    replace: "è", "e" |
+    replace: "ë", "e" |
+    replace: "ē", "e" |
+    replace: "ě", "e" |
+    replace: "ę", "e" |
+    replace: "É", "e" |
+    replace: "Ê", "e" |
+    replace: "È", "e" |
+    replace: "Ë", "e" |
+    replace: "Ē", "e" |
+    replace: "Ě", "e" |
+    replace: "Ę", "e" |
+    replace: "ğ", "g" |
+    replace: "ģ", "g" |
+    replace: "Ğ", "g" |
+    replace: "Ģ", "g" |
+    replace: "î", "i" |
+    replace: "ï", "i" |
+    replace: "í", "i" |
+    replace: "ì", "i" |
+    replace: "ī", "i" |
+    replace: "į", "i" |
+    replace: "Î", "i" |
+    replace: "Ï", "i" |
+    replace: "Í", "i" |
+    replace: "Ì", "i" |
+    replace: "Ī", "i" |
+    replace: "Į", "i" |
+    replace: "ľ", "l" |
+    replace: "ł", "l" |
+    replace: "ĺ", "l" |
+    replace: "ļ", "l" |
+    replace: "Ľ", "l" |
+    replace: "Ł", "l" |
+    replace: "Ĺ", "l" |
+    replace: "Ļ", "l" |
+    replace: "ñ", "n" |
+    replace: "ń", "n" |
+    replace: "ň", "n" |
+    replace: "ņ", "n" |
+    replace: "Ñ", "n" |
+    replace: "Ń", "n" |
+    replace: "Ň", "n" |
+    replace: "Ņ", "n" |
+    replace: "ó", "o" |
+    replace: "ô", "o" |
+    replace: "ö", "o" |
+    replace: "õ", "o" |
+    replace: "ø", "o" |
+    replace: "ō", "o" |
+    replace: "Ó", "o" |
+    replace: "Ô", "o" |
+    replace: "Ö", "o" |
+    replace: "Õ", "o" |
+    replace: "Ø", "o" |
+    replace: "Ō", "o" |
+    replace: "ř", "r" |
+    replace: "ŕ", "r" |
+    replace: "Ř", "r" |
+    replace: "Ŕ", "r" |
+    replace: "š", "s" |
+    replace: "ś", "s" |
+    replace: "ş", "s" |
+    replace: "ș", "s" |
+    replace: "Š", "s" |
+    replace: "Ś", "s" |
+    replace: "Ş", "s" |
+    replace: "Ș", "s" |
+    replace: "ť", "t" |
+    replace: "ţ", "t" |
+    replace: "ț", "t" |
+    replace: "Ť", "t" |
+    replace: "Ţ", "t" |
+    replace: "Ț", "t" |
+    replace: "û", "u" |
+    replace: "ù", "u" |
+    replace: "ü", "u" |
+    replace: "ū", "u" |
+    replace: "ů", "u" |
+    replace: "ų", "u" |
+    replace: "Û", "u" |
+    replace: "Ù", "u" |
+    replace: "Ü", "u" |
+    replace: "Ū", "u" |
+    replace: "Ů", "u" |
+    replace: "Ų", "u" |
+    replace: "ý", "y" |
+    replace: "ÿ", "y" |
+    replace: "Ý", "y" |
+    replace: "Ÿ", "y" |
+    replace: "ž", "z" |
+    replace: "ź", "z" |
+    replace: "ż", "z" |
+    replace: "Ž", "z" |
+    replace: "Ź", "z" |
+    replace: "Ż", "z" |
+    replace: "æ", "ae" |
+    replace: "Æ", "ae" |
+    replace: "œ", "oe" |
+    replace: "Œ", "oe" |
+    replace: "ß", "ss" |
+    replace: "ẞ", "ss" |
+    replace: "þ", "th" |
+    replace: "Þ", "th" |
+}}
+{% endcapture %}
+
+{% comment %}Return the clean string{% endcomment %}
+{{ string }}
