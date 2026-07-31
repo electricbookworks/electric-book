@@ -14,8 +14,11 @@ $web-color-switches: true !default;
                     color: $color-headings-switched;
                 }
 
-                a {
-                    color: $color-links-switched;
+                // Links except for buttons
+                :not(.button) {
+                    > a {
+                        color: $color-links-switched;
+                    }
                 }
 
                 // Do not switch color of headings
