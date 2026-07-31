@@ -13,6 +13,11 @@ $share-icon-color: $color-accent !default;
         max-width: 90%;
         z-index: 2000; // not great, but should be higher than clickout div's 999+ increments
 
+        // Hidden by default; JS toggles this class to open/close the modal.
+        &.share-hidden {
+            display: none;
+        }
+
         .share-links-close {
 
             // Position
