@@ -301,7 +301,11 @@ separate HTML files are merged into one body element.
     {% endif %}
 
     {% comment %} Add favicon {% endcomment %}
+    {% if external-media and external-media != "" %}
+        <link rel="icon" type="image/png" href="{{ external-media }}/assets/images/web/favicon.png">
+    {% else %}
     <link rel="icon" type="image/png" href="{{ path-to-root-directory }}assets/images/web/favicon.png">
+    {% endif %}
 
     {% comment %} OpenGraph metadata {% endcomment %}
 
