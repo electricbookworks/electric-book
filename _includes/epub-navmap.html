@@ -53,7 +53,16 @@ as the include calls itself for each list of children.
 
     {% assign navpoint-id = navpoint-id | plus: 1 %}
 
-    <navPoint id="navPoint-{{ navpoint-id }}" playOrder="{{ navpoint-id }}">
+    {% comment %}We deliberately omit the optional `playOrder` attribute.
+    A part-divider item with no `file` borrows its first child's page for its
+    `<content src>`, so the part-divider navPoint and that first child navPoint
+    point to the same target. NCX requires that navPoints referring to the same
+    target share a playOrder; emitting a simple incrementing playOrder breaks
+    that rule (EPUBCheck RSC-005, "different playOrder values ... for same
+    target"). `playOrder` is optional in the NCX spec, and reading systems fall
+    back to document order (which is identical here), so omitting it is valid
+    and avoids the conflict.{% endcomment %}
+    <navPoint id="navPoint-{{ navpoint-id }}">
 
         {% comment %}Assume we will use every item in the toc-branch{% endcomment %}
         {% assign include-in-toc = true %}
