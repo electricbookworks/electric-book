@@ -70,7 +70,7 @@
         min-width: auto;
 
         @if $wide == true {
-            float: wide;
+            float: wide top-bottom;
         }
 
         &.pdf-align-top {
