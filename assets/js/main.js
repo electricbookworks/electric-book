@@ -32,13 +32,9 @@ import ebRotate from '@electricbookworks/electric-book-modules/assets/js/rotate'
 import ebFootnotes from '@electricbookworks/electric-book-modules/assets/js/footnotes'
 import ebShiftElements from '@electricbookworks/electric-book-modules/assets/js/shift-elements'
 import ebPageReference from '@electricbookworks/electric-book-modules/assets/js/page-reference'
-import ebIndexTargetsInit from '@electricbookworks/electric-book-modules/assets/js/index-targets'
-import ebIndexLists from '@electricbookworks/electric-book-modules/assets/js/index-lists'
 import ebAddLoginButton from '@electricbookworks/electric-book-modules/assets/js/add-login-button'
+import ebIndexTargetsInit from '@electricbookworks/electric-book-modules/assets/js/index-targets'
 // import ebBaselineGrid from '@electricbookworks/electric-book-modules/assets/js/baseline-grid'
-
-const bookIndexFileExists = process.env.bookIndexFiles && process.env.bookIndexFiles.includes(process.env.output)
-const ebIndexTargets = bookIndexFileExists ? require(`../../_indexes/book-index-${process.env.output}`) : []
 
 // console.log('Config:', process.env.config)
 // console.log('Settings:', process.env.settings)
@@ -46,6 +42,17 @@ const ebIndexTargets = bookIndexFileExists ? require(`../../_indexes/book-index-
 // console.log('Output:', process.env.output)
 // console.log('Build:', process.env.build)
 // console.log('Files:', process.env.files)
+
+// Create index targets first because this script reconstructs the DOM,
+// potentially breaking event listeners, state, and node lists for other scripts.
+if (process.env.settings['dynamic-indexing'] !== false) {
+  /*
+    Script to turn HTML comments into anchor targets.
+    Also handled by gulp in PDF, epub; but included
+    in all outputs so that Puppeteer can index.
+  */
+  ebIndexTargetsInit()
+}
 
 ebMarkParents()
 ebColorPanels()
@@ -125,25 +132,6 @@ if (process.env.output === 'screen-pdf' || process.env.output === 'print-pdf') {
     This is experimental, so it's commented out by default.
     */
   // ebBaselineGrid()
-}
-
-// Tools for generating and displaying book indexes
-if (process.env.settings['dynamic-indexing'] !== false) {
-  /*
-  Script to turn HTML comments into anchor targets.
-  Also handled by gulp in PDF, epub; but included
-  in all outputs so that Puppeteer can index.
-  */
-  ebIndexTargetsInit()
-
-  /*
-  Script that adds index-reference links.
-  This is done client-side in web and app, and pre-processed by gulp
-  in PDF and epub outputs.
-  */
-  if (process.env.output === 'web' || process.env.output === 'app') {
-    ebIndexLists(ebIndexTargets)
-  }
 }
 
 // Scripts for epub output. Do not expect support in many readers.

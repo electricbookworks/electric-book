@@ -3,6 +3,7 @@ title: "Dynamic index"
 style: endmatter-page
 image: "library.jpg"
 description: "Ideally, the page numbers in a book index should be clickable links. Here is a small example."
+type: book-index
 ---
 
 ## Dynamic index

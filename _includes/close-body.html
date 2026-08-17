@@ -1,4 +1,4 @@
-{% comment %} Include main.dist.js unless we're making an epub and its JS is off. {% endcomment %}
+{% comment %} Include dist build of main.js unless we're making an epub and its JS is off. {% endcomment %}
 {% comment %} Since we pre-process HTML with Cheerio in XML Mode
 in epub and PDF outputs, we must include a space between the script tags,
 otherwise Cheerio will make the tag self-closing, which will break
@@ -9,6 +9,15 @@ in browsers that expect a closing tag. {% endcomment %}
 
 {% unless site.output == "epub" and site.data.settings.epub.javascript.disabled == true %}
     <script data-script-name="main" src="{{ path-to-root-directory }}assets/js/dist/main.dist.js"> </script>
+    {% if site.output == "app" or site.output == "web" %}
+        {% if page.type contains 'book-index' %}
+            {% if is-translation %}
+                <script data-script-name="main" src="{{ path-to-root-directory }}assets/js/dist/{{ site.output }}-{{ book-directory }}-{{ language }}-indexing.dist.js"> </script>
+            {% else %}
+                <script data-script-name="main" src="{{ path-to-root-directory }}assets/js/dist/{{ site.output }}-{{ book-directory }}-indexing.dist.js"> </script>
+            {% endif %}
+        {% endif %}
+    {% endif %}
 {% endunless %}
 
 {% comment %} Add search JS on web and app search pages. {% endcomment %}

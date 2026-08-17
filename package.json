@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/electricbookworks/electric-book#readme",
   "dependencies": {
-    "@electricbookworks/electric-book-modules": "github:electricbookworks/electric-book-modules#v2.0.5"
+    "@electricbookworks/electric-book-modules": "github:electricbookworks/electric-book-modules#update-tools"
   },
   "prince": {
     "version": "books-20220701",
