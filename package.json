@@ -8,7 +8,7 @@
     "electric-book": "node _tools/run/index.js",
     "eb": "node _tools/run/index.js",
     "setup": "rm -rf node_modules/@electricbookworks/electric-book-modules && rm -f package-lock.json && npm install && bundle install",
-    "update-modules": "rm -rf node_modules/@electricbookworks/electric-book-modules && rm -f package-lock.json && npm install",
+    "update-modules": "rm -rf node_modules package-lock.json && npm install",
     "postyalc": "node node_modules/@electricbookworks/electric-book-modules/install.js"
   },
   "repository": {
