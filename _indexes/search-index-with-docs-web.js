@@ -18,7 +18,7 @@ const store = [
     path: 'book/0-2-copyright.html',
     title: 'Copyright – Template',
     description: "The Electric Book's blank template.",
-    content: 'Copyright Template ISBN (Print): 1786950172 ISBN (PDF): 1786950172 ISBN (Ebook): 1786950172 ISBN (Online): 1786950172 All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher.'
+    content: 'Copyright Template ISBN (Print): 1787156345 ISBN (PDF): 1787156345 ISBN (Ebook): 1787156345 ISBN (Online): 1787156345 All rights reserved. No part of this book may be reproduced or transmitted in any form or by any electronic or mechanical means, including photocopying and recording, or any other information storage or retrieval system, without written permission from the publisher.'
   },
   {
     id: 3,
@@ -305,7 +305,7 @@ const store = [
     path: 'samples/10-02-dynamic-index.html',
     title: 'Dynamic index – Samples',
     description: 'Ideally, the page numbers in a book index should be clickable links. Here is a small example.',
-    content: 'Dynamic index Also see the docs on indexing. A dynamic index uses hyperlinks to the points in the text that it indexes, so that in print the page numbers are always accurate even if the text reflows, and online links to text are clickable. Here is a very short sample. A Adler, Irene Adventures of Sherlock Holmes B Briony Lodge C cases Atkinson brothers Holland royal family Scandal in Bohemia letter Study in Scarlet Trepoff murder Charing Cross CO2 F–L Fradkin, Chris Holmes, Sherlock King of Bohemia luxuries cigars spirits gasogene M–Z marriage unhappy secret Norton, Irene occupations clergy fake Nonconformist'
+    content: 'Dynamic index Also see the docs on indexing. A dynamic index uses hyperlinks to the points in the text that it indexes, so that in print the page numbers are always accurate even if the text reflows, and online links to text are clickable. Here is a very short sample. A Adler, Irene Adventures of Sherlock Holmes B Briony Lodge C cases Atkinson brothers Holland royal family Scandal in Bohemia letter Study in Scarlet Trepoff murder Charing Cross CO2 F–L Fradkin, Chris Holmes, Sherlock King of Bohemia luxuries cigars spirits gasogene M–Z marriage unhappy secret Norton, Irene occupations clergy fake Nonconformist temple'
   },
   {
     id: 44,
@@ -767,7 +767,7 @@ const store = [
     path: 'samples/es/00-04-copyright-page.html',
     title: 'Derechos – Muestras',
     description: 'Ejemplos de contenido',
-    content: 'Derechos Muestras © Arthur Attwell ISBN (Print): 1786950172 ISBN (Digital download): 1786950172 ISBN (Digital download): 1786950172 ISBN (Digital online): 1786950172 This work is licensed under a Creative Commons Attribution 4.0 International License. This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.'
+    content: 'Derechos Muestras © Arthur Attwell ISBN (Print): 1787156345 ISBN (Digital download): 1787156345 ISBN (Digital download): 1787156345 ISBN (Digital online): 1787156345 This work is licensed under a Creative Commons Attribution 4.0 International License. This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.'
   },
   {
     id: 110,
@@ -823,7 +823,7 @@ const store = [
     path: 'samples/fr/00-04-copyright-page.html',
     title: 'Droits – Échantillons',
     description: 'Exemples de contenu pour le livre électrique',
-    content: 'Droits Échantillons © Arthur Attwell ISBN (Print): 1786950172 ISBN (Digital download): 1786950172 ISBN (Digital download): 1786950172 ISBN (Digital online): 1786950172 This work is licensed under a Creative Commons Attribution 4.0 International License. This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.'
+    content: 'Droits Échantillons © Arthur Attwell ISBN (Print): 1787156345 ISBN (Digital download): 1787156345 ISBN (Digital download): 1787156345 ISBN (Digital online): 1787156345 This work is licensed under a Creative Commons Attribution 4.0 International License. This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose, even commercially, as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.'
   },
   {
     id: 118,

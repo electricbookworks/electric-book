@@ -193,6 +193,14 @@ const ebIndexTargets = [
       id: 'occupations-clergy-nonconformist--iid-1',
       range: '',
       filename: '01-01-plain-text-2.html'
+    },
+    {
+      entrySlug: 'adler-irene',
+      entryText: 'Adler, Irene',
+      entryTree: '["Adler, Irene"]',
+      id: 'adler-irene--iid-1',
+      range: '',
+      filename: '01-01-plain-text-2.html'
     }
   ],
   [
@@ -273,6 +281,14 @@ const ebIndexTargets = [
       entryText: 'clergy',
       entryTree: '["clergy"]',
       id: 'clergy--iid-1',
+      range: '',
+      filename: '01-01-plain-text-3.html'
+    },
+    {
+      entrySlug: 'temple',
+      entryText: 'temple',
+      entryTree: '["temple"]',
+      id: 'temple--iid-1',
       range: '',
       filename: '01-01-plain-text-3.html'
     },
