@@ -44,4 +44,5 @@ A dynamic index uses hyperlinks to the points in the text that it indexes, so th
   - clergy
     - fake
     - Nonconformist
+- temple
 {:.reference-index}
