@@ -6,7 +6,7 @@
   {% comment %} Include landing pages {% endcomment %}
 
   <url>
-    <loc>{{ site.canonical-url }}{{ site.baseurl }}/</loc>
+    <loc>{{ site.domain }}{{ site.baseurl }}/</loc>
     <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -21,7 +21,7 @@
           {% if page.url == translation-landing-page-url %}
 
             <url>
-              <loc>{{ site.canonical-url }}{{ site.baseurl }}/{{ lang }}/</loc>
+              <loc>{{ site.domain }}{{ site.baseurl }}/{{ lang }}/</loc>
               <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
               <changefreq>monthly</changefreq>
               <priority>0.5</priority>
@@ -34,7 +34,7 @@
 
   {% comment %} Include search page {% endcomment %}
   <url>
-    <loc>{{ site.canonical-url }}{{ site.baseurl }}/search.html</loc>
+    <loc>{{ site.domain }}{{ site.baseurl }}/search.html</loc>
     <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -44,7 +44,7 @@
   {% include files-listed.html %}
   {% for path in array-of-files %}
     <url>
-      <loc>{{ site.canonical-url }}{{ site.baseurl }}{{ path | replace: "/index.html", "/" }}</loc>
+      <loc>{{ site.domain }}{{ site.baseurl }}{{ path | replace: "/index.html", "/" }}</loc>
       <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.5</priority>
