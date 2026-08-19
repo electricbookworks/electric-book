@@ -1,8 +1,7 @@
 # See https://docs.netlify.com/configure-builds/file-based-configuration/
 
 [build]
-  # We add 'npm rebuild' or 'npm run postinstall' to ensure the tools are created
-  command = "npm install && npm rebuild && npm run eb -- output --baseurl='' --dontserve=true"
+  command = "npm run update-modules && npm run eb -- output --baseurl='' --deploytype=development --dontserve=true"
   publish = "_site"
 
 [build.environment]
