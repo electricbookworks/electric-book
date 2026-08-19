@@ -296,8 +296,8 @@ separate HTML files are merged into one body element.
     caused by ‘duplicate’ content appearing on multiple URLs.
     https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls
     {% endcomment %}
-    {% if site.canonical-url and site.canonical-url != "" %}
-        <link rel="canonical" href="{{ page.url | replace:'/index.html','/' | prepend: site.baseurl | prepend: site.canonical-url }}">
+    {% if site.domain and site.domain != "" %}
+        <link rel="canonical" href="{{ page.url | replace:'/index.html','/' | prepend: site.baseurl | prepend: site.domain }}">
     {% endif %}
 
     {% comment %} Add favicon {% endcomment %}

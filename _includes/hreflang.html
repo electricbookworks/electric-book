@@ -6,15 +6,15 @@ Google will ignore them, since Google requires bidirectional links. {% endcommen
 {% if is-homepage or is-translation-homepage %}
 
     {% comment %} Add x-default for all languages {% endcomment %}
-    <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/" />
+    <link rel="alternate" hreflang="x-default" href="{{ site.domain }}{{ site.baseurl }}/" />
 
     {% comment %} Add link for project language {% endcomment %}
-    <link rel="alternate" hreflang="{{ project-language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/" />
+    <link rel="alternate" hreflang="{{ project-language }}" href="{{ site.domain }}{{ site.baseurl }}/" />
 
     {% comment %} Add alternate links for available translations {% endcomment %}
     {% for each-language in languages %}
         {% unless each-language == project-language %}
-            <link rel="alternate" hreflang="{{ each-language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ each-language }}/" />
+            <link rel="alternate" hreflang="{{ each-language }}" href="{{ site.domain }}{{ site.baseurl }}/{{ each-language }}/" />
         {% endunless %}
     {% endfor %}
 
@@ -31,22 +31,22 @@ Google will ignore them, since Google requires bidirectional links. {% endcommen
 
     {% if translations-array contains parent-language or language == parent-language %}
 
-        <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ current-file }}.html" />
+        <link rel="alternate" hreflang="x-default" href="{{ site.domain }}{{ site.baseurl }}/{{ book-directory }}/{{ current-file }}.html" />
 
     {% else %}
 
-        <link rel="alternate" hreflang="x-default" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ language }}/{{ current-file }}.html" />
+        <link rel="alternate" hreflang="x-default" href="{{ site.domain }}{{ site.baseurl }}/{{ book-directory }}/{{ language }}/{{ current-file }}.html" />
 
     {% endif %}
 
     {% comment %} Add alternate link for this language {% endcomment %}
     {% if language == parent-language %}
 
-        <link rel="alternate" hreflang="{{ language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ current-file }}.html" />
+        <link rel="alternate" hreflang="{{ language }}" href="{{ site.domain }}{{ site.baseurl }}/{{ book-directory }}/{{ current-file }}.html" />
 
     {% else %}
 
-        <link rel="alternate" hreflang="{{ language }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ language }}/{{ current-file }}.html" />
+        <link rel="alternate" hreflang="{{ language }}" href="{{ site.domain }}{{ site.baseurl }}/{{ book-directory }}/{{ language }}/{{ current-file }}.html" />
 
     {% endif %}
 
@@ -55,11 +55,11 @@ Google will ignore them, since Google requires bidirectional links. {% endcommen
 
         {% if translation == parent-language %}
 
-            <link rel="alternate" hreflang="{{ translation }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ current-file }}.html" />
+            <link rel="alternate" hreflang="{{ translation }}" href="{{ site.domain }}{{ site.baseurl }}/{{ book-directory }}/{{ current-file }}.html" />
 
         {% else %}
 
-            <link rel="alternate" hreflang="{{ translation }}" href="{{ site.canonical-url }}{{ site.baseurl }}/{{ book-directory }}/{{ translation }}/{{ current-file }}.html" />
+            <link rel="alternate" hreflang="{{ translation }}" href="{{ site.domain }}{{ site.baseurl }}/{{ book-directory }}/{{ translation }}/{{ current-file }}.html" />
 
         {% endif %}
 

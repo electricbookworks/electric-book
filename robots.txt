@@ -2,7 +2,7 @@
 # Jekyll will populate this file when your site is generated.
 layout: min
 ---
-Sitemap: {{ site.canonical-url }}/{{ site.baseurl }}sitemap.xml
+Sitemap: {{ site.domain }}/{{ site.baseurl }}sitemap.xml
 
 
 # To discourage AI bots from scraping your pages,
