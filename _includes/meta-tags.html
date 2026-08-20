@@ -14,7 +14,7 @@ and similar uses, e.g. social sharing. {% endcomment %}
 
 {% comment %} Page URL {% endcomment %}
 
-{% capture meta-tag-url %}{{ site.canonical-url}}{{ site.baseurl }}{{ page.url }}{% endcapture %}
+{% capture meta-tag-url %}{{ site.domain}}{{ site.baseurl }}{{ page.url }}{% endcapture %}
 
 
 {% comment %} Page description
@@ -77,5 +77,5 @@ If we are using remote media, use the `images` path ... {% endcomment %}
         {% endif %}
     {% endif %}
 
-    {% capture meta-tag-image %}{{ site.canonical-url }}{{ site.baseurl }}/{{ canonical-meta-image-path }}/{{ meta-image-name }}{% endcapture %}
+    {% capture meta-tag-image %}{{ site.domain }}{{ site.baseurl }}/{{ canonical-meta-image-path }}/{{ meta-image-name }}{% endcapture %}
 {% endif %}

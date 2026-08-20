@@ -5,7 +5,7 @@
 build: live
 
 # URLs
-canonical-url: "https://example.com"
+domain: "https://example.com"
 baseurl: ""
 
 # Only the `api` collection should render by default.
