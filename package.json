@@ -8,7 +8,7 @@
     "electric-book": "node _tools/run/index.js",
     "eb": "node _tools/run/index.js",
     "setup": "rm -rf node_modules/@electricbookworks/electric-book-modules && rm -f package-lock.json && npm install && bundle install",
-    "update-modules": "rm -rf node_modules/@electricbookworks/electric-book-modules && rm -f package-lock.json && npm install",
+    "update-modules": "rm -rf node_modules package-lock.json && npm install",
     "postyalc": "node node_modules/@electricbookworks/electric-book-modules/install.js"
   },
   "repository": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/electricbookworks/electric-book#readme",
   "dependencies": {
-    "@electricbookworks/electric-book-modules": "github:electricbookworks/electric-book-modules#v3.0.1"
+    "@electricbookworks/electric-book-modules": "github:electricbookworks/electric-book-modules#v3.1.0"
   },
   "prince": {
     "version": "books-20220701",

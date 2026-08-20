@@ -1,5 +1,6 @@
 ---
 title: "Index dynamique"
+type: book-index
 ---
 
 ## Index dynamique
