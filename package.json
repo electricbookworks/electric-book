@@ -27,5 +27,11 @@
   "prince": {
     "version": "books-20220701",
     "license": "_prince/license.dat"
+  },
+  "devDependencies": {
+    "pdf-to-img": "^6.2.0",
+    "pixelmatch": "^5.3.0",
+    "pngjs": "^7.0.0",
+    "require-all": "^3.0.0"
   }
 }

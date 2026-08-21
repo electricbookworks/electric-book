@@ -1,0 +1,36 @@
+settings:
+  threshold: 0.1
+  dpi: 150
+  formats:
+    - print-pdf
+    - screen-pdf
+custom: {}
+books:
+  book:
+    print-pdf:
+      canonical-path: _tests/pdf/canonical/book-print-pdf.pdf
+      sha256: 14091b78e76d8e0b90112437d9c5de9dd651129ad5413a544ed1d3d4cc37114b
+      pages: 7
+      updated: '2026-08-21'
+    screen-pdf:
+      canonical-path: _tests/pdf/canonical/book-screen-pdf.pdf
+      sha256: 8671b13f237470b6d90342f112e2819ca9136fcfd6cebfd62a988028fa379d91
+      pages: 9
+      updated: '2026-08-21'
+  samples:
+    print-pdf:
+      canonical-path: _tests/pdf/canonical/samples-print-pdf.pdf
+      sha256: 8d73a03aa5fe15f77d29352403de3d51743c2d27c46c6daff65185bdc43b6dbe
+      pages: 151
+      updated: '2026-08-21'
+      languages:
+        es:
+          canonical-path: _tests/pdf/canonical/samples-es-print-pdf.pdf
+          sha256: cb5634c0eee66f5d98520b45a898927ef8d76533c830143c071aba7fc4429256
+          pages: 27
+          updated: '2026-08-21'
+        fr:
+          canonical-path: _tests/pdf/canonical/samples-fr-print-pdf.pdf
+          sha256: 047d337d13a58a5a24e54f4b97f7c09b44fc08f16c2e455f37ab60b25cbba366
+          pages: 47
+          updated: '2026-08-21'

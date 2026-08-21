@@ -194,6 +194,30 @@ When running a PDF output locally on macOS, you may run into Prince issues becau
 chmod +x node_modules/prince/prince/lib/prince-books/bin/prince-books
 ```
 
+### Regression testing
+
+The `test` command runs PDF visual regression tests, comparing your PDF output against a stored canonical PDF to catch unintended layout changes. Canonical PDFs live in `_tests/pdf/canonical/` and are configured in `_data/tests.yml`.
+
+Run all configured PDF tests:
+
+```sh
+npm run eb -- test
+```
+
+Scope to a book, format or language with the usual `-b`, `-f` and `-l` options:
+
+```sh
+npm run eb -- test -b samples -f print-pdf -l fr
+```
+
+Save the current output as the canonical to compare against in future:
+
+```sh
+npm run eb -- test --update -b samples -f print-pdf
+```
+
+If the PDF being tested hasn't been built yet, it is built automatically first. Use `-g` to override the pixel-difference threshold (percentage of pixels per page). An HTML report of any differences is written to `_tests/pdf/reports/`.
+
 ### Project setup check
 
 The `check` command checks that your project and its books include the folders and files required. It checks this for any books for which there are folders in `_data/works`. To run it, enter this at the command line:
