@@ -28,11 +28,16 @@ module.exports = {
 
     const outputDir = fsPath.join(context.reportDir, context.slug)
 
+    const reportProgress = context.makeProgress
+      ? context.makeProgress('comparing pages')
+      : function () {}
+
     const pages = []
     const results = []
 
     for (let i = 0; i < pageCount; i++) {
       const pageNumber = i + 1
+      reportProgress(i + 1, pageCount)
       const canonicalBuffer = canonical.pages[i]
       const currentBuffer = current.pages[i]
 

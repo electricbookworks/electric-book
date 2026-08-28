@@ -9,13 +9,18 @@ const BASE_DPI = 72
 async function renderPages (pdfPath, options = {}) {
   const dpi = options.dpi || 150
   const scale = dpi / BASE_DPI
+  const onProgress = typeof options.onProgress === 'function' ? options.onProgress : null
 
   const { pdf } = await import('pdf-to-img')
   const document = await pdf(pdfPath, { scale })
+  const total = document.length
 
   const pages = []
   for await (const page of document) {
     pages.push(page)
+    if (onProgress) {
+      onProgress(pages.length, total)
+    }
   }
 
   const metadata = document.metadata || {}

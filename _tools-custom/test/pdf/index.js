@@ -10,6 +10,7 @@ const render = require('./render.js')
 const fetch = require('./fetch.js')
 const report = require('./report.js')
 const integrity = require('./integrity.js')
+const progress = require('./progress.js')
 const explicitOption = require('../../../_tools/run/helpers/lib/explicitOption.js')
 const outputFilename = require('../../../_tools/run/helpers/lib/outputFilename.js')
 const languagePathSegment = require('../../../_tools/run/helpers/paths/languagePathSegment.js')
@@ -252,7 +253,15 @@ async function run (argv) {
   const runReportDir = fsPath.join(reportsRoot, timestamp())
   const results = []
 
+  console.log('')
+  console.log('Running PDF tests on ' + targets.length +
+    (targets.length === 1 ? ' target…' : ' targets…'))
+
+  let index = 0
   for (const target of targets) {
+    index += 1
+    console.log('')
+    console.log('[' + index + '/' + targets.length + '] ' + targetLabel(target))
     const entry = await runTarget(target, argv, tests, dpi, runReportDir)
     results.push(entry)
   }
@@ -290,8 +299,9 @@ async function runTarget (target, argv, tests, dpi, runReportDir) {
 
   let canonicalRender, currentRender
   try {
-    canonicalRender = await render.renderPages(canonicalPath, { dpi })
-    currentRender = await render.renderPages(currentPath, { dpi })
+    console.log('  Rendering pages for comparison…')
+    canonicalRender = await render.renderPages(canonicalPath, { dpi, onProgress: progress.reporter('reference PDF') })
+    currentRender = await render.renderPages(currentPath, { dpi, onProgress: progress.reporter('current PDF') })
   } catch (error) {
     entry.error = 'Failed to render PDF: ' + error.message
     return entry
@@ -310,6 +320,7 @@ async function runTarget (target, argv, tests, dpi, runReportDir) {
     argv,
     threshold,
     dpi,
+    makeProgress: progress.reporter,
     entry: canonicalEntry,
     canonicalPath,
     currentPath,
@@ -322,6 +333,7 @@ async function runTarget (target, argv, tests, dpi, runReportDir) {
 
   for (const test of tests) {
     try {
+      console.log('  ' + test.name + '…')
       const result = await test.run(context)
       entry.tests.push(Object.assign({ name: test.name }, result))
     } catch (error) {
