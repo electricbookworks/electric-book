@@ -11,6 +11,7 @@ const fetch = require('./fetch.js')
 const report = require('./report.js')
 const explicitOption = require('../../../_tools/run/helpers/lib/explicitOption.js')
 const outputFilename = require('../../../_tools/run/helpers/lib/outputFilename.js')
+const languagePathSegment = require('../../../_tools/run/helpers/paths/languagePathSegment.js')
 const buildHelpers = require('../../../_tools/run/helpers/helpers.js')
 const mergeHtml = require('../../../_tools/run/helpers/merge')
 const fsExtra = require('fs-extra')
@@ -22,6 +23,17 @@ const reportsRoot = fsPath.join(process.cwd(), '_tests', 'pdf', 'reports')
 // (e.g. samples-fr-print-pdf.pdf), including any active variant.
 function pdfFilename (target) {
   return outputFilename({ book: target.book, format: target.format, language: target.language })
+}
+
+// Treat a book's default/parent language as the base target: its output
+// is the book-root PDF, identical to a no-language build. Only a real
+// translation keeps its language code (mirrors languagePathSegment, which
+// the build helpers use to resolve output paths and filenames).
+function normaliseLanguage (book, language) {
+  if (language && languagePathSegment({ book, language })) {
+    return language
+  }
+  return null
 }
 
 // A slug (filename without extension) used for report subfolders.
@@ -143,23 +155,36 @@ function resolveTargets (argv) {
         return
       }
 
-      // An explicit --language narrows to that single language.
+      // An explicit --language narrows to that single language. The book's
+      // default language normalises to the base (no-language) target.
       if (languageFilter) {
-        targets.push({ book, format, language: languageFilter })
+        targets.push({ book, format, language: normaliseLanguage(book, languageFilter) })
         return
       }
 
       // Otherwise test the base (no-language) entry, if configured, plus
-      // every language configured under this format.
+      // every translation configured under this format.
       const formatEntry = manifest.getCanonicalEntry(book, format) || {}
       const languages = manifest.getLanguages(book, format)
       const hasBase = !!(formatEntry['canonical-path'] || formatEntry['canonical-url'])
 
+      // Dedupe by normalised language, so a configured entry that is really
+      // the book's default language doesn't produce a second base target.
+      const seen = new Set()
+      const pushTarget = function (language) {
+        const key = language || ''
+        if (seen.has(key)) {
+          return
+        }
+        seen.add(key)
+        targets.push({ book, format, language })
+      }
+
       if (hasBase || languages.length === 0) {
-        targets.push({ book, format, language: null })
+        pushTarget(null)
       }
       languages.forEach(function (language) {
-        targets.push({ book, format, language })
+        pushTarget(normaliseLanguage(book, language))
       })
     })
   })
@@ -272,7 +297,8 @@ async function update (argv) {
     return { passed: false, results: [] }
   }
 
-  const language = explicitOption('language') && argv.language ? argv.language : null
+  const languageArg = explicitOption('language') && argv.language ? argv.language : null
+  const language = normaliseLanguage(argv.book, languageArg)
   const target = { book: argv.book, format: argv.format, language }
   const filename = pdfFilename(target)
   let currentPath
