@@ -76,7 +76,7 @@ When you're sure a new PDF is correct, save it as the reference with `--update`:
 npm run eb -- test --update --book samples --format print-pdf
 ```
 
-This copies your latest PDF into the `canonical` folder and records its details in the settings file. From then on, tests compare against this new version.
+This **copies your latest PDF** into the `canonical` folder and records its details in the settings file. From then on, tests compare against this new version.
 
 Only do this when you're sure the new PDF is the one you want to test against. Updating tells the template 'this is now correct'. If you update by mistake, you make the wrong PDF the reference, and later tests will trust it. When in doubt, open the PDF and check it first.
 
