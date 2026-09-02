@@ -9,6 +9,8 @@ const manifest = require('./manifest.js')
 const render = require('./render.js')
 const fetch = require('./fetch.js')
 const report = require('./report.js')
+const integrity = require('./integrity.js')
+const progress = require('./progress.js')
 const explicitOption = require('../../../_tools/run/helpers/lib/explicitOption.js')
 const outputFilename = require('../../../_tools/run/helpers/lib/outputFilename.js')
 const languagePathSegment = require('../../../_tools/run/helpers/paths/languagePathSegment.js')
@@ -191,6 +193,44 @@ function resolveTargets (argv) {
   return targets
 }
 
+// Print a plain-language report when a PDF in the canonical folder no longer
+// matches what is recorded in _data/tests.yml, so the user can decide whether
+// to accept it or restore the correct PDF. Avoids technical jargon: the
+// audience is often non-technical editors.
+function reportIntegrityProblems (problems) {
+  console.error('')
+  console.error('Canonical PDF check failed')
+  console.error('══════════════════════════')
+  console.error('')
+  console.error('Before testing, we check that each reference ("canonical") PDF still')
+  console.error('matches what is recorded in the test settings file (_data/tests.yml).')
+  console.error('These do not match:')
+  console.error('')
+  problems.forEach(function (problem) {
+    console.error('✗ ' + targetLabel(problem.target))
+    console.error('  ' + problem.path)
+    if (problem.kind === 'missing-hash') {
+      console.error('  This PDF is in the canonical folder but has not been recorded in the')
+      console.error('  test settings yet.')
+    } else if (problem.kind === 'page-count-mismatch') {
+      console.error('  This PDF has ' + problem.actualPages + ' pages, but the test settings expect ' +
+        problem.expectedPages + '.')
+    } else if (problem.kind === 'unreadable') {
+      console.error('  This PDF could not be opened. It may be damaged or incomplete.')
+    } else {
+      console.error('  This PDF is different from the one recorded in the test settings.')
+    }
+    console.error('  If this PDF is the correct new reference you want to test against, run:')
+    console.error('    ' + updateHint(problem.target))
+    console.error('')
+  })
+  console.error('Only run the command above if you are sure the PDF in the canonical folder')
+  console.error('is the one you want to test against. If it was changed or added by mistake,')
+  console.error('put the correct PDF back instead — running the command would make the wrong')
+  console.error('PDF the reference and quietly break future tests.')
+  console.error('')
+}
+
 // Run the full PDF regression suite.
 async function run (argv) {
   const targets = resolveTargets(argv)
@@ -200,12 +240,28 @@ async function run (argv) {
     return { passed: true, results: [] }
   }
 
+  // Fail fast if any canonical has drifted from _data/tests.yml before we
+  // spend time building and rendering PDFs.
+  const integrityProblems = await integrity.checkCanonicalIntegrity(targets, pdfFilename)
+  if (integrityProblems.length > 0) {
+    reportIntegrityProblems(integrityProblems)
+    return { passed: false, results: [] }
+  }
+
   const tests = loadTests()
   const dpi = manifest.getDpi()
   const runReportDir = fsPath.join(reportsRoot, timestamp())
   const results = []
 
+  console.log('')
+  console.log('Running PDF tests on ' + targets.length +
+    (targets.length === 1 ? ' target…' : ' targets…'))
+
+  let index = 0
   for (const target of targets) {
+    index += 1
+    console.log('')
+    console.log('[' + index + '/' + targets.length + '] ' + targetLabel(target))
     const entry = await runTarget(target, argv, tests, dpi, runReportDir)
     results.push(entry)
   }
@@ -243,8 +299,9 @@ async function runTarget (target, argv, tests, dpi, runReportDir) {
 
   let canonicalRender, currentRender
   try {
-    canonicalRender = await render.renderPages(canonicalPath, { dpi })
-    currentRender = await render.renderPages(currentPath, { dpi })
+    console.log('  Rendering pages for comparison…')
+    canonicalRender = await render.renderPages(canonicalPath, { dpi, onProgress: progress.reporter('reference PDF') })
+    currentRender = await render.renderPages(currentPath, { dpi, onProgress: progress.reporter('current PDF') })
   } catch (error) {
     entry.error = 'Failed to render PDF: ' + error.message
     return entry
@@ -263,6 +320,7 @@ async function runTarget (target, argv, tests, dpi, runReportDir) {
     argv,
     threshold,
     dpi,
+    makeProgress: progress.reporter,
     entry: canonicalEntry,
     canonicalPath,
     currentPath,
@@ -275,6 +333,7 @@ async function runTarget (target, argv, tests, dpi, runReportDir) {
 
   for (const test of tests) {
     try {
+      console.log('  ' + test.name + '…')
       const result = await test.run(context)
       entry.tests.push(Object.assign({ name: test.name }, result))
     } catch (error) {

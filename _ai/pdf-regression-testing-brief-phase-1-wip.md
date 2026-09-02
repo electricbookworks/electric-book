@@ -471,6 +471,52 @@ A reusable workflow (`.github/workflows/test.yml`) that:
 
 Triggered on push to main/master, or on pull requests that touch book content, styles, or `_includes/`/`_layouts/`. Individual projects can customise triggers.
 
+### Phase 9 — Canonical render caching (performance enhancement)
+
+> **Status: not implemented.** A potential optimisation for later, once Phase 1 is stable.
+
+Every run currently re-rasterises both PDFs from scratch in `runTarget` (`render.renderPages` for the canonical, then again for the current output). The current PDF genuinely changes between runs, so it has to be re-rendered. But the canonical only changes when someone runs `--update`, so re-rendering its pages at 150 DPI on every run is wasted work – roughly half the render time, and half the quiet window before results appear.
+
+We can cache the canonical's rendered page images and reuse them until the canonical itself changes. The canonical's bytes are already identified by a SHA-256 hash (computed in the integrity pre-flight, and available via `fetch.sha256File()`), and that hash becomes the cache key.
+
+#### How it would work
+
+The cache lives under the existing gitignored `_tests/.cache/` folder that `fetch.js` already uses for downloaded canonicals:
+
+```
+_tests/.cache/
+  renders/
+    <sha256>-<dpi>/          ← one folder per canonical + resolution
+      page-0001.png
+      page-0002.png
+      ...
+      meta.json              ← page count and cache-format version
+```
+
+Per target, the runner would:
+
+1. Work out the key from the canonical's hash and the render DPI (a 150-DPI render and a 300-DPI render are different images, so DPI is part of the key).
+2. If `_tests/.cache/renders/<key>/` exists, read the page PNGs back into buffers and skip rendering.
+3. If it doesn't, render as now, then write the PNGs into that folder for next time.
+
+Only the canonical uses the cache; the current PDF stays on the direct render path.
+
+#### Why key on the hash
+
+The hash is the invalidation mechanism. When someone updates a canonical, its bytes change, so its hash changes, so the key changes – the old cache is never looked up again, and a fresh render is cached under the new key. There is no separate 'is this stale?' logic and no time-based expiry: same bytes means a hit, different bytes means a miss. To guard against changes in the render pipeline itself (a new `pdf-to-img` version, or a different scale formula) producing subtly different images, the key should also include a small cache-format version token, and optionally the `pdf-to-img` version.
+
+#### Considerations
+
+- **Disk usage.** Page PNGs at 150 DPI can run to tens or hundreds of MB per canonical, multiplied across books, formats, and languages. This needs a cleanup story: prune any `renders/<key>` folder whose hash no longer appears in `_data/tests.yml`, a `--no-cache` flag to bypass the cache, and a `test --clean` command to clear it. Everything stays under the gitignored `_tests/.cache/`, so none of it touches version control.
+- **Correctness.** The cache stores the exact PNG bytes, and `pixelmatch` reads them through `PNG.sync.read`, so a reloaded page is identical to a freshly rendered one.
+- **Concurrency.** If two runs render the same canonical at once, write to a temporary folder and rename it into place, so a half-written cache is never read.
+
+#### Where it would plug in
+
+Keep `render.renderPages` pure and add a thin wrapper – e.g. `renderCanonical(path, { dpi, sha256 })` in a new `renderCache.js` – that does the lookup-or-render-and-store. `runTarget` calls the wrapper for the canonical and the plain `renderPages` for the current PDF. On a cache hit, it can log 'Using cached reference pages', which doubles as a signal that the cache is working.
+
+The net effect: the first run for a given canonical costs the same as today; every run after that skips the reference render, roughly halving render time and shrinking the silent window before results appear.
+
 ### Implementation sequence
 
 | Order | Milestone | Effort | Depends on |
@@ -486,6 +532,7 @@ Triggered on push to main/master, or on pull requests that touch book content, s
 | 9     | 6 EPUB regression | Medium | 1.4 pattern |
 | 10    | 7 Unit tests | Small | 1.1 |
 | 11    | 8 GitHub Actions CI | Medium | All phases |
+| 12    | 9 Canonical render caching | Small–Medium | 1.4 |
 
 ### Key design principles
 
