@@ -21,11 +21,10 @@ _tools
 _webpack
 gulpfile.js
 
-# If your team needs convenience over strict node-package
-# version management, uncomment this line,
-# delete package-lock.json, and commit the deletion.
-
-# package-lock.json
+# Due to variance in Node and NPM versions of different team members and VM runners,
+# the NPM cache is invalidated too frequently to be useful.
+# We currently don't lock to specific Node and NPM versions. Currently unproblematic.
+package-lock.json
 
 # We don't .gitignore _output/, because we need that folder
 # for scripts to work, even if it's empty. Instead, there is
