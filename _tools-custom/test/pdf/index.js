@@ -11,6 +11,7 @@ const fetch = require('./fetch.js')
 const report = require('./report.js')
 const integrity = require('./integrity.js')
 const progress = require('./progress.js')
+const release = require('./release.js')
 const explicitOption = require('../../../_tools/run/helpers/lib/explicitOption.js')
 const outputFilename = require('../../../_tools/run/helpers/lib/outputFilename.js')
 const languagePathSegment = require('../../../_tools/run/helpers/paths/languagePathSegment.js')
@@ -346,6 +347,10 @@ async function runTarget (target, argv, tests, dpi, runReportDir) {
 }
 
 // Update the canonical PDF for a target from the current _output/ PDF.
+// A canonical repo + release must be configured in _data/tests.yml (there is
+// no default). When the gh CLI is available the PDF is published as a release
+// asset and its download URL recorded; otherwise an in-repo copy is stored as
+// a fallback.
 async function update (argv) {
   const bookExplicit = explicitOption('book')
   const formatExplicit = explicitOption('format')
@@ -359,7 +364,22 @@ async function update (argv) {
   const languageArg = explicitOption('language') && argv.language ? argv.language : null
   const language = normaliseLanguage(argv.book, languageArg)
   const target = { book: argv.book, format: argv.format, language }
+  const label = targetLabel(target)
   const filename = pdfFilename(target)
+
+  // A canonical repo + release must be configured; there is no default.
+  const repo = manifest.getCanonicalRepo()
+  const tag = manifest.getCanonicalRelease()
+  if (!repo || !tag) {
+    console.error('No canonical repository is configured. Set both ' +
+      'settings.canonical-repo and settings.canonical-release in _data/tests.yml,')
+    console.error('e.g.:')
+    console.error('  settings:')
+    console.error('    canonical-repo: electricbookworks/electric-book-canonicals')
+    console.error('    canonical-release: my-project')
+    return { passed: false, results: [] }
+  }
+
   let currentPath
   try {
     currentPath = await ensureCurrentPdf(target, argv)
@@ -368,25 +388,65 @@ async function update (argv) {
     return { passed: false, results: [] }
   }
 
+  const info = await render.readInfo(currentPath)
+  const sha256 = fetch.sha256File(currentPath)
+  const today = new Date().toISOString().slice(0, 10)
+
+  // Publish to the configured GitHub release when the gh CLI is available.
+  if (release.hasGh()) {
+    try {
+      console.log('Publishing canonical to ' + repo + ' (release "' + tag + '")…')
+      release.uploadAsset(repo, tag, currentPath, tag)
+      const url = release.assetUrl(repo, tag, filename)
+      manifest.setCanonicalEntry(target.book, target.format, language, {
+        'canonical-url': url,
+        'canonical-path': null,
+        sha256,
+        pages: info.length,
+        updated: today
+      })
+      cacheCanonical(filename, currentPath)
+      console.log('Updated canonical for ' + label + ':')
+      console.log('  ' + url + ' — ' + info.length + ' pages')
+      console.log('  sha256: ' + sha256)
+      return { passed: true, results: [] }
+    } catch (error) {
+      console.error('Could not upload to ' + repo + ': ' + error.message)
+      console.error('You may not have write access to that repository. Ask a maintainer to')
+      console.error('upload ' + filename + ' to the "' + tag + '" release, or paste the')
+      console.error('download URL into _data/tests.yml manually. Storing a local copy for now.')
+    }
+  } else {
+    console.log('GitHub CLI (gh) not found, so the canonical cannot be published remotely.')
+    console.log('Storing a local copy. To publish it, upload ' + filename + ' to the "' +
+      tag + '" release in ' + repo + ' and paste the download URL into _data/tests.yml.')
+  }
+
+  // Local fallback: store the canonical in-repo under _tests/pdf/canonical/.
   fs.mkdirSync(fetch.canonicalDir, { recursive: true })
   const canonicalPath = fetch.defaultCanonicalPath(filename)
   fs.copyFileSync(currentPath, canonicalPath)
 
-  const info = await render.readInfo(canonicalPath)
-  const sha256 = fetch.sha256File(canonicalPath)
   const relativePath = fsPath.relative(process.cwd(), canonicalPath)
-
   manifest.setCanonicalEntry(target.book, target.format, language, {
     'canonical-path': relativePath,
+    'canonical-url': null,
     sha256,
     pages: info.length,
-    updated: new Date().toISOString().slice(0, 10)
+    updated: today
   })
 
-  console.log('Updated canonical for ' + targetLabel(target) + ':')
+  console.log('Updated canonical for ' + label + ':')
   console.log('  ' + relativePath + ' — ' + info.length + ' pages')
   console.log('  sha256: ' + sha256)
   return { passed: true, results: [] }
+}
+
+// Copy a freshly published PDF into the local cache so an immediate test run
+// after `--update` does not have to re-download it from the release.
+function cacheCanonical (filename, sourcePath) {
+  fs.mkdirSync(fetch.cacheDir, { recursive: true })
+  fs.copyFileSync(sourcePath, fsPath.join(fetch.cacheDir, filename))
 }
 
 // A filesystem-safe timestamp for report directory names.

@@ -63,15 +63,26 @@ function setCanonicalEntry (book, format, language, entry) {
     if (!data.books[book][format].languages) {
       data.books[book][format].languages = {}
     }
-    data.books[book][format].languages[language] = Object.assign(
+    data.books[book][format].languages[language] = stripNull(Object.assign(
       {}, data.books[book][format].languages[language], entry
-    )
+    ))
     writeTestConfig(data)
     return data.books[book][format].languages[language]
   }
-  data.books[book][format] = Object.assign({}, data.books[book][format], entry)
+  data.books[book][format] = stripNull(Object.assign({}, data.books[book][format], entry))
   writeTestConfig(data)
   return data.books[book][format]
+}
+
+// Remove keys whose value is null, so callers can unset a field (e.g. clear
+// canonical-path when switching a target to remote canonical-url storage).
+function stripNull (object) {
+  Object.keys(object).forEach(function (key) {
+    if (object[key] === null) {
+      delete object[key]
+    }
+  })
+  return object
 }
 
 // Return the languages configured for a book+format, as an array of codes.
@@ -94,6 +105,21 @@ function getThreshold (book) {
     return data.settings.threshold
   }
   return 0.1
+}
+
+// Return the GitHub repo used to store canonical PDFs as release assets, or
+// null if not configured. There is no default: remote storage is only used
+// when settings.canonical-repo is set in _data/tests.yml.
+function getCanonicalRepo () {
+  const data = readTestConfig()
+  return data.settings['canonical-repo'] || null
+}
+
+// Return the release tag (one per project) under which canonical PDFs are
+// stored, or null if not configured (in which case remote storage is off).
+function getCanonicalRelease () {
+  const data = readTestConfig()
+  return data.settings['canonical-release'] || null
 }
 
 // Return the render DPI from settings, defaulting to 150.
@@ -127,5 +153,7 @@ module.exports = {
   getLanguages,
   getThreshold,
   getDpi,
-  getFormats
+  getFormats,
+  getCanonicalRepo,
+  getCanonicalRelease
 }

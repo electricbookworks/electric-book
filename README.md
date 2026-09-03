@@ -196,7 +196,7 @@ chmod +x node_modules/prince/prince/lib/prince-books/bin/prince-books
 
 ### Regression testing
 
-The `test` command runs PDF visual regression tests, comparing your PDF output against a stored canonical PDF to catch unintended layout changes. Canonical PDFs live in `_tests/pdf/canonical/` and are configured in `_data/tests.yml`.
+The `test` command runs PDF visual regression tests, comparing your PDF output against a stored canonical PDF to catch unintended layout changes. Tests are configured in `_data/tests.yml`.
 
 Run all configured PDF tests:
 
@@ -217,6 +217,23 @@ npm run eb -- test --update -b samples -f print-pdf
 ```
 
 If the PDF being tested hasn't been built yet, it is built automatically first. Use `-g` to override the pixel-difference threshold (percentage of pixels per page). An HTML report of any differences is written to `_tests/pdf/reports/`.
+
+#### Canonical file storage
+
+Canonical files are too large to commit, so they are stored as assets on a GitHub release in a separate repo. Set both keys under `settings` in `_data/tests.yml`:
+
+```yaml
+settings:
+  canonical-repo: electricbookworks/electric-book-canonicals
+  canonical-release: electric-book
+```
+
+`canonical-repo` is the `owner/repo` holding the releases; `canonical-release` is the release tag for this project (one release per project). Grant a Codespace access to the repo by matching it in `.devcontainer/devcontainer.json`.
+
+`--update` uploads the file to that release (via the `gh` CLI) and records its download URL in `_data/tests.yml`. Tests then download canonicals from the release using `$GITHUB_TOKEN` (present automatically in Codespaces and CI). Locally, authenticate with `gh auth login`, select `Github.com`, skip SSH public key upload, and select login with web browser. The canonicals repo needs to have at least one commit before you can publish releases to it.
+
+Alternatively to `gh auth login`, export a [GitHub personal access token](https://github.com/settings/tokens) that has read access to the canonicals repo (and write access if you use `--update`) as the `GH_TOKEN` environment variable, e.g. `export GH_TOKEN=ghp_xxxx`. Without the `gh` CLI or write access, `--update` falls back to storing a local canonical in `_tests/pdf/canonical/`.
+
 
 ### Project setup check
 

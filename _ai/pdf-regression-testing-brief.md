@@ -20,21 +20,6 @@ Test commands should be integrated with the existing `npm run eb` Node CLI.
 
 ---
 
-## Implementation status
-
-Phase 1 (PDF visual regression testing) is implemented. The build deviates from the original plan below in a few ways:
-
-- **Canonical storage is in-repo.** Canonical PDFs are committed under `_tests/pdf/canonical/` as `<book>[-<language>]-<format>.pdf`. Remote storage (GitHub Releases, Phase 3) is not implemented; `_data/tests.yml` entries use a local `canonical-path` (an optional `canonical-url` is still supported for future remote use).
-- **CLI options live in the command's `builder`.** `--update` and `--threshold`/`-g` are defined in `_tools-custom/run/commands/test.js`, not in a shared `options.js` — a custom `options.js` would overwrite the stock one during the `_tools-custom` → `_tools` merge.
-- **Threshold is a percentage of pixels per page (0–100), default `0.1`.**
-- **Language support.** `--language`/`-l` scopes tests to a translation; test filenames match the build output via the existing `outputFilename` helper, and per-language canonicals are nested under a `languages:` key in `_data/tests.yml`.
-- **Missing output is built automatically.** If the current `_output/` PDF doesn't exist, it is built first (webpack → Jekyll → Prince) without opening the result in a viewer.
-- **No CLI wiring changes.** The `test` command and `test/` framework are added purely in `_tools-custom/`; the stock `.commandDir('./commands/')` discovers the command after the merge.
-
-The sections below are the original development plan; Phases 2 and 4–8 remain future work.
-
----
-
 ## Development plan
 
 ### Migration note
@@ -46,7 +31,7 @@ In this repo, `_tools/` is version-controlled locally. In the latest EBT, most J
 The test suite is structured as a new `test` command in the `npm run eb` CLI, with a modular architecture that starts with PDF visual regression testing and expands to cover web output, EPUB validation, link checking, and unit tests.
 
 ```
-_tools-custom/
+_tools/
   run/
     commands/
       test.js                     ← yargs command: `npm run eb -- test`
@@ -55,16 +40,16 @@ _tools-custom/
     pdf/
       index.js                    ← PDF test runner (orchestrates all PDF tests)
       manifest.js                 ← read/write test config from _data/tests.yml
-      fetch.js                    ← resolve in-repo canonical PDFs (optional URL download/cache)
+      fetch.js                    ← download/cache canonical PDFs
       render.js                   ← PDF → page images (via pdf-to-img)
       report.js                   ← HTML/console report generation
       tests/                      ← individual PDF test modules
         page/
           pixel-match.js          ← page-by-page pixel comparison
           count.js                ← page-count regression check
-        file/                     ← (future) structural checks
-          size.js                 ← (future) file-size change detection
-          metadata.js             ← (future) PDF metadata validation
+        file/
+          size.js                 ← file-size change detection
+          metadata.js             ← PDF metadata validation
     web/                          ← (future) Playwright web tests
     epub/                         ← (future) EPUB regression tests
     links/                        ← (future) link-resolution tests
@@ -77,61 +62,71 @@ _tools-custom/
     question-count.js             ← example: non-format-specific custom test
     ...
 _data/
-  tests.yml                       ← test config: canonical paths, thresholds, languages
+  tests.yml                       ← test config: canonical URLs, thresholds, etc.
 _tests/
   pdf/
-    canonical/                    ← committed canonical PDFs (<book>[-<language>]-<format>.pdf)
     reports/                      ← generated diff reports (gitignored)
-      <book>[-<language>]-<format>/  ← per-target diff images
-  .cache/                         ← downloaded canonical cache (gitignored)
+      <book>-<format>/            ← per-book, per-format diff images
   .gitignore
 ```
 
 ### Test configuration in `_data/tests.yml`
 
-Test settings live in `_data/tests.yml`, alongside the existing book metadata in `_data/works/`. This keeps test config where users expect to manage book data, but in a separate file so that canonical paths and thresholds are never exposed in web output metadata. The file is user-editable, but the `--update` command writes canonical entries automatically (`canonical-path`, SHA-256 hash, page count and date). Note that `--update` rewrites the file with js-yaml, so any comments in it are not preserved.
+Test settings live in `_data/tests.yml`, alongside the existing book metadata in `_data/works/`. This keeps test config where users expect to manage book data, but in a separate file so that canonical PDF URLs and thresholds are never exposed in web output metadata. The file is user-editable — users paste canonical URLs here rather than typing them at the command line. When using GitHub Releases for storage (see Phase 3), the `--update` command writes these URLs automatically.
 
 ```yaml
 # _data/tests.yml
 settings:
-  threshold: 0.1            # default diff sensitivity: % of pixels per page (0–100)
+  canonical-repo: "electricbookworks/canonical-editions"  # also update .devcontainer/devcontainer.json to match
+  threshold: 0.1            # default pixel-diff sensitivity (0–1)
   dpi: 150                  # rendering resolution for comparison
   formats:                  # default formats to test for all books in this project
     - print-pdf
     - screen-pdf
 
-# Reserved for future custom tests. Leave empty to skip.
-custom: {}
+# Custom tests from _tools-custom/test/.
+# Each entry is the filename (without .js) → config for that test.
+# Omit this section or leave empty to skip custom tests.
+custom:
+  grayscale-images:           # runs _tools-custom/test/pdf/tests/grayscale-images.js
+    books:                    # restrict to specific books (omit to run for all)
+      - die-rooi-angelier
+      - die-vyf-susters
+  question-count:             # runs _tools-custom/test/question-count.js
+    min-answers: 4            # custom config passed to the test module
+    books:
+      - wisani-and-the-bafokeng-brothers
 
 books:
-  book:
+  die-rooi-angelier:
+    threshold: 0.05          # per-book override (stricter for this title)
     print-pdf:
-      canonical-path: _tests/pdf/canonical/book-print-pdf.pdf
-      sha256: "…"
-      pages: 7
-      updated: "2026-08-21"
+      canonical-url: "https://github.com/electricbookworks/canonical-editions/releases/download/baker-series/die-rooi-angelier-print-pdf.pdf"
+      sha256: "a1b2c3..."
+      pages: 248
+      updated: "2026-04-09"
     screen-pdf:
-      canonical-path: _tests/pdf/canonical/book-screen-pdf.pdf
-  samples:
-    threshold: 0.05          # optional per-book override (stricter)
+      canonical-url: "https://github.com/electricbookworks/canonical-editions/releases/download/baker-series/die-rooi-angelier-screen-pdf.pdf"
+      sha256: "d4e5f6..."
+      pages: 248
+      updated: "2026-04-09"
+  die-vyf-susters:           # uses project defaults (print-pdf + screen-pdf)
     print-pdf:
-      canonical-path: _tests/pdf/canonical/samples-print-pdf.pdf
-      languages:             # per-language canonicals, named to match build output
-        fr:
-          canonical-path: _tests/pdf/canonical/samples-fr-print-pdf.pdf
+      canonical-url: "..."
+  wisani-and-the-bafokeng-brothers:
+    formats:                 # override: this book only tests web output
+      - web
 ```
 
 ### Custom tests in `_tools-custom/test/`
 
 Repo-specific or book-specific tests live in `_tools-custom/test/`, mirroring the EBT modules pattern where `_tools-custom/` is merged into `_tools/` when modules are installed. This means custom tests can add new tests and also replace default test modules. This directory is optional — projects that don't need custom tests simply don't create it.
 
-Custom tests are organised by format (e.g. `_tools-custom/test/pdf/tests/`) to mirror the built-in structure at `_tools-custom/test/pdf/tests/`. Non-format-specific custom tests live directly in `_tools-custom/test/`.
+Custom tests are organised by format (e.g. `_tools-custom/test/pdf/tests/`) to mirror the built-in structure at `_tools/test/pdf/tests/`. Non-format-specific custom tests live directly in `_tools-custom/test/`.
 
 #### How it works
 
-Test modules are auto-discovered at runtime using `require-all` (the same pattern used for transformations in the existing codebase). The PDF runner (`_tools-custom/test/pdf/index.js`) loads every module under `_tools-custom/test/pdf/tests/` (recursively) and runs each one; results are included in the same console/HTML report. Dropping a new module in that folder adds a test, and once `_tools-custom` is merged into `_tools`, a custom module of the same name overrides the built-in one.
-
-> **Status:** module auto-discovery is implemented. The `custom:` config in `_data/tests.yml` (per-book scoping and config passthrough, described below) is planned but not yet wired.
+Test modules are auto-discovered at runtime using `require-all` (the same pattern used for transformations in the existing codebase). The orchestrator (`_tools/test/index.js`) loads all tests from `_tools/test/pdf/tests/` and merges in any from `_tools-custom/test/pdf/tests/`, with custom modules overriding built-in ones of the same name. Custom tests run alongside the built-in tests and their results are included in the same console/HTML report.
 
 #### Module contract
 
@@ -189,34 +184,34 @@ This is the core deliverable. Build in four milestones:
 
 **New files:**
 
-- `_tools-custom/run/commands/test.js` — yargs command module (`npm run eb -- test`) using the existing `--format`, `--book` and `--language` options to scope tests:
+- `_tools/run/commands/test.js` — yargs command module (`npm run eb -- test`) using the existing `--format` and `--book` options to scope tests:
   ```
-  npm run eb -- test                                  # test all configured books/formats
-  npm run eb -- test -f print-pdf                     # only print-pdf
-  npm run eb -- test -b mybook -f print-pdf           # single book + format
-  npm run eb -- test -b mybook -f print-pdf -l fr     # a translation
-  npm run eb -- test --update -b mybook -f print-pdf  # update a canonical
+  npm run eb -- test                          # run all tests for all formats
+  npm run eb -- test -f print-pdf             # PDF regression only
+  npm run eb -- test -f print-pdf -b mybook   # single book, single format
+  npm run eb -- test --update -b mybook       # update canonical reference
+  npm run eb -- test -f web                   # (future) web tests
   ```
-  The `--format`, `--book` and `--language` options already exist and scope tests the same way they scope `output`. When no format is given explicitly, all configured PDF formats run.
+  The `--format` option already exists and accepts `print-pdf`, `screen-pdf`, `web`, `epub`, `app`. The `test` command reuses it to determine which test module to invoke. When no format is specified, all configured tests run.
 
-- `_data/tests.yml` — user-editable YAML file with test config per book (see structure above). The `--update` command writes canonical entries (`canonical-path`, hash, page count, date) automatically. Stored alongside other `_data/` files where users expect to manage book metadata, but separate from `default.yml` to avoid exposing test data in web output. Supports per-book threshold overrides.
+- `_data/tests.yml` — user-editable YAML file with test config per book (see structure above). Users paste canonical URLs here rather than entering them at the CLI. Stored alongside other `_data/` files where users expect to manage book metadata, but separate from `default.yml` to avoid exposing test data in web output. Supports per-book threshold overrides.
 
-**New CLI options** (defined in the `test` command's `builder` in `_tools-custom/run/commands/test.js`, so they travel with the command through the `_tools-custom` → `_tools` merge without overwriting the shared `options.js`):
-- `--update`: flag to update the canonical reference instead of comparing
-- `--threshold` / `-g`: diff sensitivity as a % of pixels per page (0–100, default `0.1`); overrides the global and per-book threshold in `_data/tests.yml`
+**New CLI options** (added to `_tools/run/helpers/options.js`):
+- `--update`: flag to update canonical reference instead of comparing
+- `--threshold` / `-g`: pixel-diff sensitivity (0–1, default `0.1`); overrides both the global and per-book threshold in `_data/tests.yml`
 
 **Tasks:**
-1. Create `_tools-custom/run/commands/test.js` as a yargs command module following the existing pattern (exports `command`, `desc`, `builder`, `handler`).
+1. Create `_tools/run/commands/test.js` as a yargs command module following the existing pattern (exports `command`, `desc`, `handler`).
 2. Create `_data/tests.yml` with initial structure (empty `books:` section, default `settings:`).
 3. Create `_tests/pdf/reports/.gitignore` (ignore everything except `.gitignore`).
-4. Define `--update` and `--threshold`/`-g` in the `test` command's `builder`.
-5. Create `_tools-custom/test/index.js` that dispatches to a suite based on `--format` (PDF for now); the PDF runner discovers test modules with `require-all`.
-6. Create `_tools-custom/test/pdf/manifest.js`:
-   - `readTestConfig()` / `writeTestConfig(data)` — parse/write `_data/tests.yml`
-   - `getCanonicalEntry(book, format, language)` — look up a specific entry (language optional)
-   - `setCanonicalEntry(book, format, language, entry)` — set/update an entry
-   - `getThreshold(book)` — per-book threshold, falling back to global
-   - `getDpi()`, `getFormats(book)`, `getLanguages(book, format)`
+4. Add `--update` and `--threshold` to `options.js`.
+5. Create `_tools/test/index.js` that dispatches to test modules based on `--format`, and discovers/runs custom tests from `_tools-custom/test/` using `require-all`.
+6. Create `_tools/test/pdf/manifest.js`:
+   - `readTestConfig()` — parse `_data/tests.yml`
+   - `writeTestConfig(data)` — write updated config
+   - `getCanonicalEntry(book, format)` — look up a specific entry
+   - `setCanonicalEntry(book, format, entry)` — set/update an entry
+   - `getThreshold(book)` — return per-book threshold, falling back to global
 
 #### Milestone 1.2: PDF rendering and canonical fetching
 
@@ -226,30 +221,29 @@ This is the core deliverable. Build in four milestones:
 - `pngjs` — PNG encode/decode (required by pixelmatch)
 - `require-all` — auto-discover and load test modules from a directory (already used for transformations in the existing codebase)
 
-Note: `pdf-to-img` (v6) is ESM-only, so it is loaded via a dynamic `import()`; `pixelmatch` is pinned to v5 (CommonJS). `puppeteer` is already a dependency and could render PDFs as an alternative, but `pdf-to-img` is lighter and purpose-built.
+Note: `puppeteer` is already a dependency and could be used for PDF→image rendering as an alternative, but `pdf-to-img` is lighter and purpose-built.
 
 **New files:**
 
-- `_tools-custom/test/pdf/render.js`:
-  - `renderPages(pdfPath, { dpi })` — returns `{ pages, metadata, length }`, where `pages` is an array of PNG buffers, one per page
-  - `readInfo(pdfPath)` — page count and metadata without rendering every page
-  - Loads `pdf-to-img` (ESM-only) via dynamic `import()`; scale = dpi / 72 (150 DPI default)
+- `_tools/test/pdf/render.js`:
+  - `renderPages(pdfPath)` — returns array of PNG buffers, one per page
+  - Uses `pdf-to-img` with a fixed DPI (150 default, balancing speed vs fidelity)
 
-- `_tools-custom/test/pdf/fetch.js`:
-  - `getCachedOrFetch(filename, entry, label, updateHint)` — resolves the canonical PDF: a local `canonical-path`, else an optional `canonical-url` (downloaded to `_tests/.cache/<filename>` and SHA-256-verified), else the default in-repo `_tests/pdf/canonical/<filename>`
-  - `defaultCanonicalPath(filename)` and `sha256File(path)` helpers
+- `_tools/test/pdf/fetch.js`:
+  - `fetchCanonical(url, destPath)` — downloads canonical PDF from URL to a temp location; verifies SHA-256 hash if present in config
+  - `getCachedOrFetch(book, format, config)` — checks `_tests/.cache/<book>-<format>.pdf`; fetches only if missing or hash mismatch
   - Cache location: `_tests/.cache/` (gitignored)
 
 **Tasks:**
 1. Add `pdf-to-img`, `pixelmatch`, `pngjs`, `require-all` to `devDependencies`.
 2. Create `render.js` with `renderPages()`.
-3. Create `fetch.js` with canonical resolution and caching logic.
+3. Create `fetch.js` with `fetchCanonical()` and caching logic.
 4. Create `_tests/.cache/.gitignore`.
 5. Write a smoke test: render a small PDF and verify page count matches.
 
 #### Milestone 1.3: Page-by-page comparison engine
 
-**New file: `_tools-custom/test/pdf/tests/page/pixel-match.js`**
+**New file: `_tools/test/pdf/tests/page/pixel-match.js`**
 
 Core comparison logic:
 
@@ -278,7 +272,7 @@ comparePDFs(canonicalPath, currentPath, options)
 
 #### Milestone 1.4: Report generation and orchestrator
 
-**New file: `_tools-custom/test/pdf/report.js`**
+**New file: `_tools/test/pdf/report.js`**
 
 Two report formats:
 - **Console report**: summary table printed to stdout
@@ -297,7 +291,7 @@ Two report formats:
   - Filterable: show only changed pages
   - Self-contained (inline CSS/JS, base64 images) so it can be shared
 
-**New file: `_tools-custom/test/pdf/index.js`**
+**New file: `_tools/test/pdf/index.js`**
 
 Orchestrates a full PDF regression run:
 ```
@@ -307,7 +301,7 @@ run(argv)
   → resolve per-book threshold (CLI override > per-book > global default)
   → for each book+format:
       fetch/cache canonical PDF
-      locate current PDF in _output/ (builds a new one if missing)
+      locate current PDF in _output/ (error if missing — tell user to build first)
       run comparison
       collect results
   → generate reports
@@ -317,17 +311,18 @@ run(argv)
 **Update command: `npm run eb -- test --update`**
 
 When `--update` is passed:
-- Takes the current PDF in `_output/` for the specified book+format(+language) (builds a new one if missing)
+- Takes the current PDF in `_output/` for the specified book+format
 - Computes SHA-256 hash and page count
-- Copies the PDF to `_tests/pdf/canonical/<book>[-<language>]-<format>.pdf` and records `canonical-path`, `sha256`, `pages` and `updated` in the book's entry in `_data/tests.yml`
-- (Future) When remote storage is enabled (Phase 3), uploads the PDF as a release asset and records a `canonical-url` instead
+- Updates the book's entry in `_data/tests.yml` with hash, page count, and date
+- If running in a Codespace with access to a `canonical-editions` repo (see Phase 3), uploads the PDF as a release asset and writes the download URL into `tests.yml`
+- Otherwise, prints a message asking the user to upload the PDF and paste the URL into `_data/tests.yml`
 
 **Tasks:**
 1. Create `report.js` with `consoleReport()` and `htmlReport()`.
 2. Create `pdf/index.js` orchestrator.
-3. Wire everything into `_tools-custom/test/index.js`.
-4. Wire into `_tools-custom/run/commands/test.js`.
-5. Add `.gitignore` files so `_tests/pdf/reports/` and `_tests/.cache/` are ignored while `_tests/pdf/canonical/` is committed.
+3. Wire everything into `_tools/test/index.js`.
+4. Wire into `_tools/run/commands/test.js`.
+5. Add `_tests/pdf/reports/` and `_tests/.cache/` to `.gitignore`.
 6. End-to-end test with this project's books.
 
 ### Phase 2 — Structural PDF checks (quick, no canonical needed)
@@ -342,13 +337,13 @@ These can use `pdf-lib` (lightweight PDF parser, no rendering needed).
 
 ### Phase 3 — GitHub Releases for canonical storage
 
-> **Status: not implemented.** Canonicals are currently committed in-repo under `_tests/pdf/canonical/`. The remote-storage design below is retained as future work; `_data/tests.yml` already accepts an optional `canonical-url` for when it lands.
-
 Use GitHub Releases on a dedicated repo (e.g. `electricbookworks/canonical-editions`) as the storage backend for canonical PDFs. Release assets don't count against git repo size, support files up to 2GB, and can be overwritten without history bloat — unlike git-tracked files, which would compound over time (7 books × 2 formats × 30MB = ~420MB per generation).
 
 #### Release structure
 
 One release per project, tagged by project name:
+
+Note: this is release metadata, not a file tree in the git repository. The PDFs are release assets attached to a tag.
 
 ```
 canonical-editions repo
@@ -364,6 +359,13 @@ canonical-editions repo
 ```
 
 Download URLs follow the pattern: `https://github.com/electricbookworks/canonical-editions/releases/download/<tag>/<asset-filename>`
+
+In this pattern:
+- `<tag>` is the release tag (for example, `baker-series`)
+- `<asset-filename>` is the exact asset filename on that release (for example, `die-rooi-angelier-print-pdf.pdf`)
+
+Example:
+- `https://github.com/electricbookworks/canonical-editions/releases/download/baker-series/die-rooi-angelier-print-pdf.pdf`
 
 The test runner downloads assets using `$GITHUB_TOKEN` (available in Codespaces and CI) via the GitHub REST API. Anyone with read access to the `canonical-editions` repo can run tests.
 
@@ -402,7 +404,7 @@ Since `canonical-editions` is a private repo, users without access cannot downlo
 Add Playwright (preferred over Cypress for headless CI) tests for web output:
 
 ```
-_tools-custom/test/web/
+_tools/test/web/
   index.js           ← start Jekyll server, run tests, shut down
   navigation.js      ← test that all nav links resolve
   content.js         ← test that book pages render expected content
@@ -415,7 +417,7 @@ Integrate as `npm run eb -- test -f web`.
 ### Phase 5 — Link and asset validation
 
 ```
-_tools-custom/test/links/
+_tools/test/links/
   index.js
   internal.js        ← verify all internal links in built HTML resolve
   images.js          ← verify all image src paths resolve
@@ -430,7 +432,7 @@ These tests operate on the built `_site/` output. They can run after any format 
 Similar approach to PDF regression, but comparing EPUB contents:
 
 ```
-_tools-custom/test/epub/
+_tools/test/epub/
   index.js           ← orchestrator
   extract.js         ← unzip EPUB to temp directory
   compare.js         ← diff XHTML content, CSS, OPF manifest
@@ -451,7 +453,7 @@ Integrate as `npm run eb -- test -f epub`.
 Add a lightweight test runner (likely `node --test` built-in, or `vitest` for its speed) for unit-testing EBT's own code:
 
 ```
-_tools-custom/test/unit/
+_tools/test/unit/
   index.js
   helpers.test.js        ← test utility functions in helpers.js
   merge.test.js          ← test HTML merge logic
@@ -532,14 +534,13 @@ The net effect: the first run for a given canonical costs the same as today; eve
 | 9     | 6 EPUB regression | Medium | 1.4 pattern |
 | 10    | 7 Unit tests | Small | 1.1 |
 | 11    | 8 GitHub Actions CI | Medium | All phases |
-| 12    | 9 Canonical render caching | Small–Medium | 1.4 |
 
 ### Key design principles
 
-1. **Template-first**: for now all new code lives in `_tools-custom/`; it will later be refactored into the consumed modules that install `_tools/`, so it ships with the EBT and rolls out to every project that updates. Designed for later migration to `electric-book-modules`.
-2. **Canonical storage**: for now canonical PDFs are committed in-repo under `_tests/pdf/canonical/`. Storing them as GitHub Release assets to avoid repo bloat is planned (Phase 3). Only `_data/tests.yml` and the test code are otherwise needed in the project repo.
+1. **Template-first**: all code lives in `_tools/` so it ships with the EBT and rolls out to every project that updates. Designed for later migration to `electric-book-modules`.
+2. **No repo bloat**: canonical PDFs are stored as GitHub Release assets (not git-tracked blobs). Only `_data/tests.yml` and the test code are in the project repo.
 3. **User-editable config**: test settings live in `_data/tests.yml`, where users already manage book data. Per-book thresholds let demanding titles use stricter sensitivity.
-4. **Reuses existing options**: `--format`, `--book` and `--language` scope tests the same way they scope output. No new option needed for test type.
+4. **Reuses existing options**: `--format` and `--book` scope tests the same way they scope output. No new option needed for test type.
 5. **Progressive**: each phase is independently useful. Phase 1 alone solves the immediate PDF regression problem.
 6. **CI-friendly**: all commands return appropriate exit codes. Reports are generated as artefacts. No GUI required.
 7. **Standard JS**: all code follows Standard JS syntax (no semicolons), matching the project convention.

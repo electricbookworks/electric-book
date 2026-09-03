@@ -1,15 +1,22 @@
 // Resolve and, if necessary, download the canonical PDF for a book+format.
 //
-// For now canonical PDFs are stored in the repo under _tests/pdf/canonical/,
-// named to match the build output (e.g. samples-fr-print-pdf.pdf).
 // A book+format(+language) entry in _data/tests.yml may specify:
-//   canonical-path: <repo-relative path>   (preferred, in-repo storage)
-//   canonical-url:  <http(s) URL>          (optional, downloaded and cached)
+//   canonical-path: <repo-relative path>   (in-repo storage)
+//   canonical-url:  <http(s) URL>          (downloaded and cached; a GitHub
+//                                           release URL is fetched via the API
+//                                           so private repos work)
 //   sha256:         <hash>                  (optional, verified when present)
+//
+// When neither is set but a canonical repo + release are configured in
+// settings, the canonical is resolved implicitly from that release by
+// filename. Downloaded canonicals are cached under _tests/.cache/.
 
 const fsPath = require('path')
 const fs = require('fs')
 const crypto = require('crypto')
+
+const release = require('./release.js')
+const manifest = require('./manifest.js')
 
 const canonicalDir = fsPath.join(process.cwd(), '_tests', 'pdf', 'canonical')
 const cacheDir = fsPath.join(process.cwd(), '_tests', '.cache')
@@ -55,14 +62,41 @@ async function getCachedOrFetch (filename, entry, label, updateHint) {
       '. Run `' + updateHint + '` to create it.')
   }
 
-  // 2. Remote URL, cached locally and hash-verified when a hash is given.
-  if (entry['canonical-url'] && /^https?:\/\//.test(entry['canonical-url'])) {
+  // 2. Remote canonical: an explicit URL, or an implicit lookup by filename
+  //    from the configured canonical repo + release.
+  const url = entry['canonical-url']
+  const hasExplicitUrl = url && /^https?:\/\//.test(url)
+  const repo = manifest.getCanonicalRepo()
+  const tag = manifest.getCanonicalRelease()
+  const canImplicit = repo && tag
+
+  if (hasExplicitUrl || canImplicit) {
     const cachePath = fsPath.join(cacheDir, filename)
+    const expectedHash = entry.sha256 == null ? null : String(entry.sha256)
     const cacheValid = fs.existsSync(cachePath) &&
-      (!entry.sha256 || sha256File(cachePath) === entry.sha256)
+      (!expectedHash || sha256File(cachePath) === expectedHash)
+
     if (!cacheValid) {
-      await downloadTo(entry['canonical-url'], cachePath)
-      if (entry.sha256 && sha256File(cachePath) !== entry.sha256) {
+      const asset = hasExplicitUrl ? release.parseAssetUrl(url) : null
+      try {
+        if (hasExplicitUrl && !asset) {
+          // A non-release URL (e.g. a Dropbox link): plain download.
+          await downloadTo(url, cachePath)
+        } else {
+          // A GitHub release URL, or an implicit repo+release lookup.
+          const source = asset || { repo, tag, filename }
+          await release.downloadAsset(source.repo, source.tag, source.filename,
+            cachePath, release.githubToken())
+        }
+      } catch (error) {
+        if (error instanceof release.NoAccessError) {
+          throw new Error('Cannot fetch canonical PDF for ' + label + ': ' +
+            error.message + '\n  PDF regression tests need read access to the ' +
+            'canonical repository; other tests are unaffected.')
+        }
+        throw error
+      }
+      if (expectedHash && sha256File(cachePath) !== expectedHash) {
         throw new Error('Downloaded canonical PDF hash does not match the expected sha256 for ' +
           label + '.')
       }

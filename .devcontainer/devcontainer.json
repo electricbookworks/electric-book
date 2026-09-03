@@ -15,6 +15,11 @@
           "permissions": {
             "contents": "read"
           }
+        },
+        "electricbookworks/electric-book-canonicals": {
+          "permissions": {
+            "contents": "write"
+          }
         }
       }
     }
