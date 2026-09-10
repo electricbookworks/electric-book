@@ -339,6 +339,16 @@ These can use `pdf-lib` (lightweight PDF parser, no rendering needed).
 
 Use GitHub Releases on a dedicated repo (e.g. `electricbookworks/canonical-editions`) as the storage backend for canonical PDFs. Release assets don't count against git repo size, support files up to 2GB, and can be overwritten without history bloat — unlike git-tracked files, which would compound over time (7 books × 2 formats × 30MB = ~420MB per generation).
 
+#### Why a dedicated repo, not each project's own releases?
+
+The obvious alternative is to store each project's canonical PDFs as releases on that project's *own* repo, avoiding a separate `canonical-editions` repo entirely. We chose a dedicated repo for one hard reason plus two softer benefits:
+
+- **Public project repos would expose the PDFs (the deciding factor).** GitHub Release assets inherit their repo's visibility, and many EBT-based projects — including `electric-book` itself — are public. On a public repo, every release asset is downloadable by anyone, with no authentication and a guessable URL pattern. Canonical PDFs are the finished, often commercial or copyrighted book outputs, so storing them on a public project's own releases would publish them to the world. A dedicated *private* repo keeps the PDFs access-controlled regardless of whether the project repo is public or private.
+- **IP isolation.** The `settings.canonical-repo` indirection lets a sensitive client point at its own separate private repo (e.g. `client-name-editions`) without touching the test code — a clean seam for keeping one client's editions away from another's.
+- **Centralised management.** One place to administer canonical editions across all projects: one permissions surface and one `devcontainer.json` pattern.
+
+The trade-off: for a repo that is *already private*, its own releases would be access-controlled too, so a dedicated repo buys little there and adds the overhead of a second repo, a cross-repo token, and the `canonical-repo` indirection. The dedicated-repo design is driven by the need for **one storage model that is safe even when the project repo is public** — the only option that works uniformly for both public and private projects. If a deployment could guarantee that every project storing canonical PDFs is private, per-project releases would be a reasonable simplification.
+
 #### Release structure
 
 One release per project, tagged by project name:
