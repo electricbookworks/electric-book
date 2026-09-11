@@ -1,0 +1,3 @@
+# Ignore generated reports, keep this file.
+*
+!.gitignore

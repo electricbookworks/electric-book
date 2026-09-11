@@ -1,0 +1,3 @@
+# Ignore cached downloaded canonical PDFs, keep this file.
+*
+!.gitignore
