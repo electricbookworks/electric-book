@@ -14,9 +14,11 @@ We put a lot of care into PDF page layout. A small change to a stylesheet can qu
 
 ## How it works
 
-For each book and format you want to watch, you keep one approved PDF as the reference. This is called the *canonical* PDF, and it lives in the `_tests/pdf/canonical` folder. When you run a test, the template builds (or reuses) your latest PDF and compares it to the reference, page by page. If nothing has moved, the test passes. If something has shifted, the test fails and points you to the pages that changed.
+For each book and format you want to watch, you keep one approved PDF as the reference. This is called the *canonical* PDF. Because these files are large, they aren't stored in the project itself. Instead they live in a separate *canonicals repository*, attached to a release as downloadable files, and the settings file records the download link for each one. When you run a test, the template fetches the reference (downloading it once and keeping a copy on your computer for next time), builds or reuses your latest PDF, and compares the two page by page. If nothing has moved, the test passes. If something has shifted, the test fails and points you to the pages that changed.
 
-The list of books, formats, and reference PDFs lives in a settings file at `_data/tests.yml`. You can read it, but you don't usually edit it by hand – the update command does that for you.
+The list of books, formats, and reference PDFs lives in a settings file at `_data/tests.yml`. You can read it, but you don't usually edit it by hand – the update command does that for you. The settings file also records which canonicals repository and release to use, under `settings`.
+
+To download references, you need read access to the canonicals repository. In a Codespace this is usually already arranged. If you can't reach it, the PDF tests are skipped with a clear message, and the rest of your tests carry on as normal.
 
 ## Running a test
 
@@ -76,24 +78,28 @@ When you're sure a new PDF is correct, save it as the reference with `--update`:
 npm run eb -- test --update --book samples --format print-pdf
 ```
 
-This **copies your latest PDF** into the `canonical` folder and records its details in the settings file. From then on, tests compare against this new version.
+This **publishes your latest PDF** to the canonicals repository as a release download and records its link and details in the settings file. From then on, tests compare against this new version.
+
+For this to work, the `gh` command-line tool needs to be signed in with write access to the canonicals repository (in a Codespace this is usually already set up). If it isn't available, the template keeps a local copy in the `_tests/pdf/canonical` folder instead and tells you how to publish it by hand.
 
 Only do this when you're sure the new PDF is the one you want to test against. Updating tells the template 'this is now correct'. If you update by mistake, you make the wrong PDF the reference, and later tests will trust it. When in doubt, open the PDF and check it first.
 
 ## 'Canonical PDF check failed'
 
-Before it runs any tests, the template checks that the reference PDFs in the `canonical` folder still match what's recorded in the settings file. If they don't, you'll see a message that starts with 'Canonical PDF check failed', naming the book and PDF involved.
+Before it runs any tests, the template checks that each reference PDF still matches what's recorded in the settings file. Downloaded references are checked automatically as they're fetched. A reference kept locally – in the `_tests/pdf/canonical` folder, used only when a PDF couldn't be published to the canonicals repository – is checked too, and if it doesn't match you'll see a message that starts with 'Canonical PDF check failed', naming the book and PDF involved.
 
-This usually means a reference PDF was changed or added by hand instead of through the update command. The message tells you how to put it right:
+This usually means a local reference PDF was changed or added by hand instead of through the update command. The message tells you how to put it right:
 
 - If the PDF now in the `canonical` folder is the correct one to test against, run the update command it suggests, so its details are recorded properly.
 - If it isn't – for example, it was copied there by mistake – put the correct PDF back instead. Don't run the update command, or you'll lock in the wrong reference.
 
 ## Where things live
 
-- `_tests/pdf/canonical` – the approved reference PDFs. These are kept in the project, so the whole team shares the same references.
+- The **canonicals repository** – the approved reference PDFs, kept as release downloads in a separate repository (by default `electricbookworks/electric-book-canonicals`) so the whole team shares the same references without bloating this project. The repository and release are set in `_data/tests.yml` under `settings`.
+- `_tests/.cache` – reference PDFs downloaded to your computer, kept so tests don't fetch them every time. This is just for you, and isn't saved to the project.
+- `_tests/pdf/canonical` – a local fallback for reference PDFs, used only when one can't be published to the canonicals repository. Usually empty.
 - `_tests/pdf/reports` – the reports from each test run. These are just for you, and aren't saved to the project.
-- `_data/tests.yml` – the settings: which books and formats to test, and the details of each reference PDF.
+- `_data/tests.yml` – the settings: which books and formats to test, where the canonicals repository is, and the link and details of each reference PDF.
 
 ## Fine-tuning sensitivity
 

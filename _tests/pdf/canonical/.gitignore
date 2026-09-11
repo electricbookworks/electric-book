@@ -1,2 +1,6 @@
-# Canonical PDFs live here and ARE committed to the repo, so nothing
-# is ignored. This file only ensures the directory exists in git.
+# Canonical PDFs are normally stored as release assets in the canonicals
+# repository (see settings.canonical-repo in _data/tests.yml). This folder is
+# only a local fallback, used when a canonical can't be published remotely, so
+# any PDFs left here are ignored. This file just keeps the directory in git.
+*
+!.gitignore
