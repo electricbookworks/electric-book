@@ -21,6 +21,16 @@ The LaTeX is turned into displayed maths by [MathJax](https://docs.mathjax.org/e
 
 Sometimes you have to use actual HTML code in your markdown, for instance when adding an HTML table to a figure include. In that case, surround LaTeX with `$$` … `$$` for displayed maths (centered, with blank space above and below), and `\(` … `\)` for inline maths.
 
+## Preventing line breaks in maths
+
+MathJax can break a line at some operators, such as `\times`, even if there is a non-breaking space before the operator. To keep an operator on the same line as the content before it, put `\nobreak` immediately before the operator:
+
+```latex
+$$\varepsilon=-\frac{P}{Q}\nobreak\times \text{slope}$$
+```
+
+Do not use `&nbsp;` inside `$$` … `$$` for this. It does not prevent the break, and it can stop the maths from rendering correctly.
+
 ## Avoid using LaTeX for content layout
 
 LaTeX syntax can store two different kinds of info:
