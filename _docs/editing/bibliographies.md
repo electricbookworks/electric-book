@@ -41,6 +41,7 @@ You don't need to worry about the order of entries in the file. The include sort
 
 To list every source, add the include with no options:
 
+{% raw %}
 ```md
 {% include bibliography %}
 ```
@@ -57,6 +58,8 @@ You can also add `class="..."` to put a class on the list, for custom styling.
 
 > Note: the include relies on the `ascii-version` include to sort references with accented characters correctly. If you see references with diacritics sorting to the end of the list, check that `_includes/ascii-version` is present.
 {:.box}
+
+{% endraw %}
 
 ## Translations
 

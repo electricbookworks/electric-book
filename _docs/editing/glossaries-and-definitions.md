@@ -53,6 +53,8 @@ The value of `data-term` must match the `term` in your glossary exactly, includi
 
 Second, add a `definition` include just before the paragraph that contains the term:
 
+
+{% raw %}
 ```md
 {% include definition term="supply side" %}
 
@@ -79,6 +81,8 @@ To print the entire glossary – for a glossary page at the back of the book, fo
 ```md
 {% include glossary %}
 ```
+
+{% endraw %}
 
 This outputs every term and definition, sorted alphabetically. As with the `definition` include, you can point it at another file with `glossary=site.data.works.myotherbook.glossary`.
 
